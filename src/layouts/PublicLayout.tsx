@@ -14,7 +14,7 @@ const PublicLayout = () => {
         className="basis-1/2 lg:hidden flex flex-col gap-4 justify-center items-center"
       >
         <img className="h-16" src="/images/robolaunch-horizontal.svg" alt="" />
-        <h1 className="text-2xl font-medium">
+        <h1 className="text-2xl font-medium text-white">
           Develop, Deploy and Manage at Scale!
         </h1>
         <p className="text-center px-20">
