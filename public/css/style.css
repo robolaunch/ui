@@ -585,6 +585,10 @@ video {
   height: 9rem;
 }
 
+.h-64{
+  height: 16rem;
+}
+
 .basis-1\/2{
   flex-basis: 50%;
 }
@@ -674,6 +678,12 @@ video {
 
 @media (max-width: 1023px){
   .lg\:hidden{
+    display: none;
+  }
+}
+
+@media (max-width: 767px){
+  .md\:hidden{
     display: none;
   }
 }

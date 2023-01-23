@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
+import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
 
 const AppRoutes = () => {
   const user = null;
@@ -11,6 +12,7 @@ const AppRoutes = () => {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/registration" element={<RegistrationPage />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Route>
     </Routes>

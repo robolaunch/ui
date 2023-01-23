@@ -26,13 +26,12 @@ const PublicLayout = () => {
       );
     },
   };
-
   const motionForce = (x: number, y: number): ParticleForce => {
     return forces.disturbance(x, y, 5);
   };
 
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row h-screen animate__animated animate__fadeIn">
       <div className="basis-1/2">
         <Outlet />
       </div>
@@ -43,20 +42,21 @@ const PublicLayout = () => {
         className="basis-1/2 lg:hidden flex flex-col gap-4 justify-center items-center text-white"
       >
         <ParticleImage
-          className="h-48"
+          className="h-64 animate__animated animate__fadeInDown"
           src="/images/rocket.png"
           scale={0.75}
           entropy={20}
-          maxParticles={4000}
+          maxParticles={2000}
           particleOptions={particleOptions}
           mouseMoveForce={motionForce}
           touchMoveForce={motionForce}
           backgroundColor="transparent"
+          alt="Robolaunch"
         />
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-2xl font-semibold animate__animated animate__fadeInUp">
           Develop, Deploy and Manage at Scale!
         </h1>
-        <p className="text-sm text-center font-light px-20">
+        <p className="text-sm text-center font-light px-20 animate__animated animate__fadeInUp">
           robolaunch is a Cloud-Native Robotics Platform that provides the
           end-to-end infrastructure, software stack and tools for developing,
           simulating, deploying and operating ROS/ROS2 robots at scale.
