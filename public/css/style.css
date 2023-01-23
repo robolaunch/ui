@@ -618,15 +618,3 @@ video {
     display: none;
   }
 }
-
-@media (max-width: 767px) {
-  .md\:hidden {
-    display: none;
-  }
-}
-
-@media (max-width: 639px) {
-  .sm\:hidden {
-    display: none;
-  }
-}
