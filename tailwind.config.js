@@ -3,7 +3,11 @@ module.exports = {
   darkMode: ["class", '[data-mode="dark"]'],
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Poppins, sans-serif"],
+      },
+    },
     screens: {
       "2xl": { max: "1535px" },
       // => @media (max-width: 1535px) { ... }
@@ -21,6 +25,8 @@ module.exports = {
       // => @media (max-width: 639px) { ... }
     },
     colors: {
+      white: "#ffffff",
+      black: "#000000",
       primary: "#35B8FA",
       primary: {
         50: "#f0f9ff",
