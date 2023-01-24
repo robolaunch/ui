@@ -32,14 +32,14 @@ const PublicLayout = () => {
 
   return (
     <div className="flex flex-row h-screen animate__animated animate__fadeIn">
-      <div className="basis-1/2">
+      <div className="basis-1/2 xl:basis-full flex justify-center items-center h-full animate__animated animate__fadeInLeft">
         <Outlet />
       </div>
       <div
         style={{
           background: "linear-gradient(rgb(71, 16, 106), rgb(21, 83, 114))",
         }}
-        className="basis-1/2 lg:hidden flex flex-col gap-4 justify-center items-center text-white"
+        className="basis-1/2 xl:hidden flex flex-col gap-4 justify-center items-center text-white"
       >
         <ParticleImage
           className="h-64 animate__animated animate__fadeInDown"
