@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { LoginSchema } from "../../../validations/Validations";
-import InputText from "../../../components/InputText/InputText";
-import InputError from "../../../components/InputError/InputError";
+import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Input, Tooltip } from "antd";
 
 const LoginPage = () => {
   const formik = useFormik({
@@ -16,41 +16,45 @@ const LoginPage = () => {
     },
   });
 
+  useEffect(() => {
+    console.log(formik.errors);
+  }, [formik.values]);
+
   return (
-    <form className="flex flex-col gap-2" onSubmit={formik.handleSubmit}>
-      <div>
-        <InputText
-          labelText="Username"
-          id="username"
-          name="username"
-          info={false}
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.username}
-        />
-        <InputError
-          touched={formik.touched.username}
-          error={formik.errors.username}
-        />
-      </div>
-      <div>
-        <InputText
-          labelText="Password"
-          id="password"
-          name="password"
-          info={false}
-          type="password"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-        <InputError
-          touched={formik.touched.password}
-          error={formik.errors.password}
-        />
-      </div>
-      <button className="btn btn-primary w-full" type="submit">
-        Submit
-      </button>
+    <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
+      <Input
+        placeholder="Username"
+        type="text"
+        id="username"
+        name="username"
+        status={formik.errors.username ? "error" : ""}
+        onChange={formik.handleChange}
+        value={formik.values.username}
+        prefix={<UserOutlined className="site-form-item-icon" />}
+        suffix={
+          <Tooltip title="Enter your username">
+            <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
+          </Tooltip>
+        }
+      />
+      <Input
+        placeholder="Password"
+        type="password"
+        id="password"
+        name="password"
+        status={formik.errors.password ? "error" : ""}
+        onChange={formik.handleChange}
+        value={formik.values.password}
+        prefix={<UserOutlined className="site-form-item-icon" />}
+        suffix={
+          <Tooltip title="Enter your password">
+            <InfoCircleOutlined style={{ color: "rgba(0,0,0,.45)" }} />
+          </Tooltip>
+        }
+      />
+      <Button onClick={() => formik.handleSubmit()} type="primary" block>
+        Login
+      </Button>
     </form>
   );
 };
