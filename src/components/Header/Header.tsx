@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div>
+    <div className="shadow-xl">
       <div>header</div>
     </div>
   );

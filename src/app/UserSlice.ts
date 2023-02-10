@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toastifyProperties } from "../tools/Toastify";
+import { toast } from "react-toastify";
 
 export const loginUser = createAsyncThunk(
   "user/login",
@@ -55,6 +57,9 @@ export const UserSlice = createSlice({
           "authTokens",
           JSON.stringify(payload.responseLogin.data)
         );
+        window.location.reload();
+      } else {
+        toast.error(payload.responseLogin.message, toastifyProperties);
       }
     },
     [loginUser.pending.toString()]: (state) => {

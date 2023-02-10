@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 682.66669 682.66669" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+  <g>
+    <defs id="defs913">
+      <clipPath id="clipPath927">
+        <path d="M 0,512 H 512 V 0 H 0 Z" id="path925" fill="#ffffff" data-original="#000000"/>
+      </clipPath>
+    </defs>
+    <g id="g915" transform="matrix(1.3333333,0,0,-1.3333333,0,682.66667)">
+      <g id="g917" transform="translate(37.5,302)">
+        <path d="M 0,0 V 90 H 437 V 60" style="stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" id="path919" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000"/>
+      </g>
+      <g id="g921">
+        <g id="g923" clip-path="url(#clipPath927)">
+          <g id="g929" transform="translate(474.5,30)">
+            <path d="m 0,0 h -437 c -16.568,0 -30,13.432 -30,30 v 392 c 0,16.568 13.432,30 30,30 h 146.073 c 7.957,0 15.587,-3.161 21.214,-8.787 L -218.5,392 H 0 c 16.568,0 30,-13.432 30,-30 V 30 C 30,13.432 16.568,0 0,0 Z" style="stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" id="path931" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000"/>
+          </g>
+          <g id="g933" transform="translate(328.4268,362)">
+            <path d="M 0,0 C -7.957,0 -15.587,-3.161 -21.214,-8.787 L -72.427,-60 h -218.5 c -16.568,0 -30,-13.432 -30,-30" style="stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" id="path935" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000"/>
+          </g>
+          <g id="g937" transform="translate(67.5,362)">
+            <path d="M 0,0 H -30" style="stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" id="path939" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000"/>
+          </g>
+          <g id="g941" transform="translate(504.5,332)">
+            <path d="M 0,0 C 0,16.568 -13.432,30 -30,30 H -407" style="stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" id="path943" fill="none" stroke="#ffffff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
