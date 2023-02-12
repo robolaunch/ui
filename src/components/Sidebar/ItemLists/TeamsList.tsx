@@ -1,17 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { useAppDispatch } from "../../../hooks/redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
+import { getTeams } from "../../../app/TeamSlice";
+import { SidebarContext } from "../../../context/SidebarContext";
 
 export const TeamsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([
-    { name: "Team1" },
-    { name: "Team2" },
-    { name: "Team3" },
-  ]);
+  const [responseTeams, setResponseTeams] = useState<any>([]);
+  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
+  const dispatch = useAppDispatch();
+  const { currentOrganization } = useSelector(
+    (state: RootState) => state.organization
+  );
 
   useEffect(() => {
     setLoading(true);
-
+    dispatch(
+      getTeams({
+        organization: {
+          name: currentOrganization.name,
+        },
+      })
+    ).then((res: any) => {
+      if (res?.payload?.data?.teams?.success) {
+        setResponseTeams(res?.payload?.data?.teams?.data);
+      }
+    });
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -25,14 +41,16 @@ export const TeamsList = () => {
         />
       ) : (
         <>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseTeams.map((team: any, index: number) => {
             return (
               <SidebarListItem
-                type="robot"
-                name={robot?.name}
-                description={robot?.name}
+                type="team"
+                name={team?.name}
+                description={team?.users?.length + " members"}
                 key={index}
-                url={`##`}
+                url={"/" + currentOrganization.name + "/" + team?.name}
+                data={team}
+                selected={team?.name === selectedState?.team?.name}
               />
             );
           })}

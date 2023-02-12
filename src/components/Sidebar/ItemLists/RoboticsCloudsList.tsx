@@ -11,7 +11,6 @@ export const RoboticsCloudList = () => {
 
   useEffect(() => {
     setLoading(true);
-
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

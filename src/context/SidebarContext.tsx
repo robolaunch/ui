@@ -1,20 +1,38 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { useAppSelector } from "../hooks/redux";
 
 export const SidebarContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const { currentOrganization } = useAppSelector((state) => state.organization);
+
   const [sidebarState, setSidebarState] = useState({
     isOpen: true,
     mode: "",
     page: "robot",
   });
 
+  const [selectedState, setSelectedState] = useState({
+    organization: {
+      name: currentOrganization?.name,
+    },
+    team: null,
+    roboticscloud: null,
+    fleet: null,
+  });
+
+  useEffect(() => {
+    console.log(selectedState);
+  }, [selectedState]);
+
   return (
     <SidebarContext.Provider
       value={{
         sidebarState,
         setSidebarState,
+        selectedState,
+        setSelectedState,
       }}
     >
       {children}

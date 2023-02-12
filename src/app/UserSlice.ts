@@ -27,9 +27,7 @@ export const loginUser = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-    } catch (error) {
-      console.log("Error login! ", error);
-    }
+    } catch (error) {}
   }
 );
 
@@ -51,6 +49,7 @@ export const UserSlice = createSlice({
     [loginUser.fulfilled.toString()]: (state, { payload }) => {
       console.log("loginUser fulfilled: ", payload);
       state.isPendingLoginUser = false;
+      state.isErrorLoginUser = false;
       if (payload.responseLogin.success) {
         state.isSuccessLoginUser = true;
         localStorage.setItem(
@@ -59,6 +58,7 @@ export const UserSlice = createSlice({
         );
         window.location.reload();
       } else {
+        state.isSuccessLoginUser = false;
         toast.error(payload.responseLogin.message, toastifyProperties);
       }
     },
@@ -70,7 +70,11 @@ export const UserSlice = createSlice({
       console.log("loginUser rejected: ", payload);
       state.isPendingLoginUser = false;
       state.isErrorLoginUser = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
     },
+    //
+    //
+    //
   },
 });
 

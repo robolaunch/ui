@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
 import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
-import dayjs from "dayjs";
 import { PrivateLayout } from "../layouts/PrivateLayout";
 import { Dashboard } from "../pages/private/Dashboard/Dashboard";
 import SidebarContext from "../context/SidebarContext";
 import jwt_decode from "jwt-decode";
+import dayjs from "dayjs";
+import { LandingPage } from "../pages/public/LandingPage/LandingPage";
 
 const AppRoutes = () => {
   const userToken: any = () => {
@@ -26,7 +27,6 @@ const AppRoutes = () => {
       return false;
     }
   };
-
   const organizationUserToken: any = () => {
     try {
       const token: any = JSON.parse(localStorage.authTokens_organization);
@@ -94,14 +94,6 @@ const AppRoutes = () => {
     }, 10000);
   }, []);
 
-  // const userToken = () => {
-  //   return true;
-  // };
-
-  // const organizationUserToken = () => {
-  //   return true;
-  // };
-
   return (
     <Routes>
       {!userToken() && !organizationUserToken() ? (
@@ -111,15 +103,9 @@ const AppRoutes = () => {
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
       ) : userToken() && !organizationUserToken() ? (
-        <Route
-          element={
-            <SidebarContext>
-              <PrivateLayout />
-            </SidebarContext>
-          }
-        >
-          <Route path="/test" element={<Dashboard />} />
-          <Route path="*" element={<Navigate to="/test" />} />
+        <Route>
+          <Route path="/organizations" element={<LandingPage />} />
+          <Route path="*" element={<Navigate to="/organizations" />} />
         </Route>
       ) : (
         <Route

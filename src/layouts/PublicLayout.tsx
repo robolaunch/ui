@@ -32,7 +32,14 @@ const PublicLayout = () => {
 
   return (
     <div className="flex flex-row h-screen animate__animated animate__fadeIn">
-      <div className="basis-1/2 xl:basis-full flex justify-center items-center h-full animate__animated animate__fadeInLeft">
+      <div className="basis-1/2 xl:basis-full flex flex-col  justify-center items-center h-full animate__animated animate__fadeInLeft">
+        <div className="flex flex-col gap-2">
+          <img
+            className="w-52"
+            src="/svg/general/rocket.svg"
+            alt="Robolaunch"
+          />
+        </div>
         <Outlet />
       </div>
       <div

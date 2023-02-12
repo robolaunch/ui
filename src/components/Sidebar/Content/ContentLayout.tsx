@@ -8,6 +8,7 @@ import { OrganizationsList } from "../ItemLists/OrganizationsList";
 import { TeamsList } from "../ItemLists/TeamsList";
 import { RoboticsCloudList } from "../ItemLists/RoboticsCloudsList";
 import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
+import { CreateTeamForm } from "../CreateForms/CreateTeamForm";
 interface ContentLayoutProps {
   children?: ReactNode;
 }
@@ -15,10 +16,22 @@ interface ContentLayoutProps {
 export const ContentLayout = ({ children }: ContentLayoutProps) => {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
+  const handleButtonText = () => {
+    if (sidebarState?.mode) {
+      return `Cancel`;
+    } else {
+      return `Create ${stringCapitalize(sidebarState?.page, true)}`;
+    }
+  };
+
   return (
     <div className="absolute flex flex-col justify-between left-24 w-[36rem] h-screen bg-lightLayer-100 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8">
       <div className="animate__animated animate__fadeInLeftBig">
-        <div className="flex gap-4 items-center pb-10">
+        <div
+          className={`flex gap-4 items-center ${
+            sidebarState?.mode ? "pb-16" : " pb-10"
+          }`}
+        >
           <h2 className="text-3xl font-semibold">
             {stringCapitalize(sidebarState?.page + "s", true)}
           </h2>
@@ -38,6 +51,9 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
               }
               return <OrganizationsList />;
             case "team":
+              if (sidebarState?.mode) {
+                return <CreateTeamForm />;
+              }
               return <TeamsList />;
             case "roboticscloud":
               return <RoboticsCloudList />;
@@ -49,7 +65,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         })()}
       </div>
       <Button
-        text={`Create ${stringCapitalize(sidebarState?.page, true)}`}
+        text={handleButtonText()}
         onClick={() => {
           if (sidebarState?.mode) {
             setSidebarState((prev: any) => ({ ...prev, mode: false }));

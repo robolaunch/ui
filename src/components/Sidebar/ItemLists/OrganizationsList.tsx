@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { getOrganizations } from "../../../app/OrganizationSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { SidebarContext } from "../../../context/SidebarContext";
 
 export const OrganizationsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([
-    { name: "Organization1" },
-    { name: "Organization2" },
-    { name: "Organization3" },
-  ]);
-
+  const [responseOrganizations, setResponseOrganizations] = useState<any>([]);
+  const dispatch = useAppDispatch();
+  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
   useEffect(() => {
     setLoading(true);
-
+    dispatch(getOrganizations()).then((res: any) => {
+      if (res?.payload?.data?.responseUserOrganizations?.success) {
+        setResponseOrganizations(
+          res?.payload?.data.responseUserOrganizations.data
+        );
+      }
+    });
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -25,14 +31,22 @@ export const OrganizationsList = () => {
         />
       ) : (
         <>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseOrganizations.map((organization: any, index: number) => {
             return (
               <SidebarListItem
-                type="robot"
-                name={robot?.name}
-                description={robot?.name}
+                type="organization"
+                name={organization?.name}
+                description={
+                  organization?.enterprise
+                    ? "Enterprise Organization"
+                    : "Standard Organization"
+                }
                 key={index}
-                url={`##`}
+                url={`/${organization?.name}`}
+                data={organization}
+                selected={
+                  organization?.name === selectedState?.organization?.name
+                }
               />
             );
           })}

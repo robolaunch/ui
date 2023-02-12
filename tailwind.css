@@ -3,8 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.p-inputtext {
+  @apply !w-full;
+}
+.p-float-label {
+  @apply !text-sm;
+}
+
 .p-button {
-  @apply !bg-primary hover:!bg-primaryLayers-700 !border-primary !ring-primary !transition-all;
+  @apply !bg-primary !h-11 active:!ring-primary hover:!bg-primaryLayers-700 !border-primary !ring-primary !transition-all;
+}
+
+.p-button-label {
+  @apply !text-white !text-sm !font-semibold;
 }
 
 .Toastify__toast-body {
