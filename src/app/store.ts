@@ -6,6 +6,9 @@ import userReducer from "./UserSlice";
 import organizationReducer from "./OrganizationSlice";
 import teamReducer from "./TeamSlice";
 import roboticsCloudReducer from "./RoboticsCloudSlice";
+import ProviderReducer from "./ProviderSlice";
+import RegionReducer from "./RegionSlice";
+import FleetReducer from "./FleetSlice";
 /* Data must be persisted in order not to lose them on page refresh. */
 /* Redux-persist basically saves the data into localStorage so the data is not lost on refresh. */
 
@@ -49,12 +52,45 @@ const persistedReducerRoboticsCloud = persistReducer<any, any>(
   roboticsCloudReducer
 );
 
+const persistConfigProvider = {
+  key: "provider",
+  version: 1,
+  storage,
+};
+const persistedReducerProvider = persistReducer<any, any>(
+  persistConfigProvider,
+  ProviderReducer
+);
+
+const persistConfigRegion = {
+  key: "region",
+  version: 1,
+  storage,
+};
+const persistedReducerRegion = persistReducer<any, any>(
+  persistConfigRegion,
+  RegionReducer
+);
+
+const persistConfigFleet = {
+  key: "fleet",
+  version: 1,
+  storage,
+};
+const persistedReducerFleet = persistReducer<any, any>(
+  persistConfigFleet,
+  FleetReducer
+);
+
 const store = configureStore({
   reducer: {
     user: persistedReducerUser,
     organization: persistedReducerOrganization,
     team: persistedReducerTeam,
     roboticsCloud: persistedReducerRoboticsCloud,
+    provider: persistedReducerProvider,
+    region: persistedReducerRegion,
+    fleet: persistedReducerFleet,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

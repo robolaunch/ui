@@ -97,6 +97,161 @@ export const getOrganizationUsers = createAsyncThunk(
   }
 );
 
+export const inviteUser = createAsyncThunk(
+  "/inviteUser",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await axiosInstanceOrganization.post("/inviteUser", {
+        organization: {
+          name: values.organization.name,
+        },
+        email: values.email,
+      });
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const addUserToOrganizationAsManager = createAsyncThunk(
+  "/addUserToOrganizationAsManager",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        "/addUserToOrganizationAsManager",
+        {
+          organization: {
+            name: value.organization.name,
+          },
+          user: {
+            username: value.user.username,
+          },
+        }
+      );
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const deleteUserManagershipFromOrganization = createAsyncThunk(
+  "/deleteUserManagershipFromOrganization",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(
+        "/deleteUserManagershipFromOrganization",
+        {
+          organization: {
+            name: value.organization.name,
+          },
+          user: {
+            username: value.user.username,
+          },
+        }
+      );
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const invitedUserRegistration = createAsyncThunk(
+  "organizations/invitedUserRegistration",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/invitedUserRegistration`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        }
+      );
+      const data = await response.json();
+      if (response.status === 201) {
+        return data.user;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const invitedUserAccepted = createAsyncThunk(
+  "/invitedUserAccepted",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/invitedUserAccepted", value);
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const invitedUserRejected = createAsyncThunk(
+  "/invitedUserRejected",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/invitedUserRejected", value);
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const deleteUserFromOrganization = createAsyncThunk(
+  "/deleteUserFromOrganization",
+  async (value: any, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post("/deleteUserFromOrganization", {
+        organization: {
+          name: value.organization.name,
+        },
+        user: {
+          username: value.user.username,
+        },
+      });
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const OrganizationSlice = createSlice({
   name: "organization",
   initialState: {
@@ -120,6 +275,34 @@ export const OrganizationSlice = createSlice({
     isSuccessGetOrganizationUsers: false,
     isErrorGetOrganizationUsers: false,
     isPendingGetOrganizationUsers: false,
+
+    isSuccessInviteUser: false,
+    isErrorInviteUser: false,
+    isPendingInviteUser: false,
+
+    isSuccessAddUserToOrganizationAsManager: false,
+    isErrorAddUserToOrganizationAsManager: false,
+    isPendingAddUserToOrganizationAsManager: false,
+
+    isSuccessDeleteUserManagershipFromOrganization: false,
+    isErrorDeleteUserManagershipFromOrganization: false,
+    isPendingDeleteUserManagershipFromOrganization: false,
+
+    isSuccessInvitedUserRegistration: false,
+    isErrorInvitedUserRegistration: false,
+    isPendingInvitedUserRegistration: false,
+
+    isSuccessInvitedUserAccepted: false,
+    isErrorInvitedUserAccepted: false,
+    isPendingInvitedUserAccepted: false,
+
+    isSuccessInvitedUserRejected: false,
+    isErrorInvitedUserRejected: false,
+    isPendingInvitedUserRejected: false,
+
+    isSuccessDeleteUserFromOrganization: false,
+    isErrorDeleteUserFromOrganization: false,
+    isPendingDeleteUserFromOrganization: false,
   },
   reducers: {
     clearStateCreateOrganization: (state) => {
@@ -225,6 +408,142 @@ export const OrganizationSlice = createSlice({
     ) => {
       state.isPendingGetOrganizationUsers = false;
       state.isErrorGetOrganizationUsers = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [inviteUser.fulfilled.toString()]: (state: any, { payload }: any) => {
+      console.log(payload);
+    },
+    [inviteUser.pending.toString()]: (state: any) => {
+      state.isPendingInviteUser = true;
+    },
+    [inviteUser.rejected.toString()]: (state: any, { payload }: any) => {
+      state.isPendingInviteUser = false;
+      state.isErrorInviteUser = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [addUserToOrganizationAsManager.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [addUserToOrganizationAsManager.pending.toString()]: (state: any) => {
+      state.isPendingAddUserToOrganizationAsManager = true;
+    },
+    [addUserToOrganizationAsManager.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingAddUserToOrganizationAsManager = false;
+      state.isErrorAddUserToOrganizationAsManager = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [deleteUserManagershipFromOrganization.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [deleteUserManagershipFromOrganization.pending.toString()]: (
+      state: any
+    ) => {
+      state.isPendingDeleteUserManagershipFromOrganization = true;
+    },
+    [deleteUserManagershipFromOrganization.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingDeleteUserManagershipFromOrganization = false;
+      state.isErrorDeleteUserManagershipFromOrganization = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [invitedUserRegistration.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [invitedUserRegistration.pending.toString()]: (state: any) => {
+      state.isPendingInvitedUserRegistration = true;
+    },
+    [invitedUserRegistration.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingInvitedUserRegistration = false;
+      state.isErrorInvitedUserRegistration = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [invitedUserAccepted.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [invitedUserAccepted.pending.toString()]: (state: any) => {
+      state.isPendingInvitedUserAccepted = true;
+    },
+    [invitedUserAccepted.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingInvitedUserAccepted = false;
+      state.isErrorInvitedUserAccepted = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [invitedUserRejected.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [invitedUserRejected.pending.toString()]: (state: any) => {
+      state.isPendingInvitedUserRejected = true;
+    },
+    [invitedUserRejected.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingInvitedUserRejected = false;
+      state.isErrorInvitedUserRejected = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [deleteUserFromOrganization.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [deleteUserFromOrganization.pending.toString()]: (state: any) => {
+      state.isPendingDeleteUserFromOrganization = true;
+    },
+    [deleteUserFromOrganization.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingDeleteUserFromOrganization = false;
+      state.isErrorDeleteUserFromOrganization = true;
       toast.error("An error occurred while fetching data.", toastifyProperties);
     },
   },

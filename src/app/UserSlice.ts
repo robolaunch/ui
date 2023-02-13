@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toastifyProperties } from "../tools/Toastify";
 import { toast } from "react-toastify";
+import axiosInstanceOrganization from "../utils/axiosInstanceOrganization";
 
 export const registerUser = createAsyncThunk(
   "user/register",
@@ -65,6 +66,27 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getCurrentUser = createAsyncThunk(
+  "organizations/getCurrentUser",
+  async (value: any, thunkAPI) => {
+    console.log("getCurrent", value);
+    try {
+      const response = await axiosInstanceOrganization.post(`/getCurrentUser`, {
+        organization: {
+          name: value.organization.name,
+        },
+      });
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
   async (values: any, thunkAPI) => {
@@ -106,6 +128,10 @@ export const UserSlice = createSlice({
     isSuccessForgotPassword: false,
     isPendingForgotPassword: false,
     isErrorForgotPassword: false,
+
+    isSuccessGetCurrentUser: false,
+    isPendingGetCurrentUser: false,
+    isErrorGetCurrentUser: false,
   },
   reducers: {
     clearStateLoginUser: (state) => {
@@ -172,6 +198,17 @@ export const UserSlice = createSlice({
     //
     //
     //
+    [getCurrentUser.fulfilled.toString()]: (state, { payload }) => {
+      console.log("getCurrentUser fulfilled: ", payload);
+    },
+    [getCurrentUser.pending.toString()]: (state) => {
+      state.isPendingGetCurrentUser = true;
+    },
+    [getCurrentUser.rejected.toString()]: (state, { payload }) => {
+      state.isPendingGetCurrentUser = false;
+      state.isErrorGetCurrentUser = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
   },
 });
 
