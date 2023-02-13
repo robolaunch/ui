@@ -15,7 +15,7 @@ export const PrivateLayout: FC = () => {
           ...previousState,
           isOpen: false,
           page: undefined,
-          mode: false,
+          isCreateMode: false,
         };
       });
     }

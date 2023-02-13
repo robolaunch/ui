@@ -6,7 +6,7 @@ import { InputText } from "primereact/inputtext";
 import {
   CreateOrganizationSchema,
   LoginOrganizationSchema,
-} from "../../../validations/Validations";
+} from "../../../validations/OrganizationsValidations";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import {
@@ -94,7 +94,7 @@ const CreateFirstOrganizationPage: FC = () => {
           />
           <label htmlFor="name">Organization Name</label>
         </span>
-        <InputError error={formik.errors.name} touched={formik.errors.name} />
+        <InputError error={formik.errors.name} touched={formik.touched.name} />
       </div>
       <Button
         type="submit"
@@ -107,7 +107,13 @@ const CreateFirstOrganizationPage: FC = () => {
   );
 };
 
-const LoginOrganizationPage = ({ responseOrganizations }: any) => {
+interface LoginOrganizationPageProps {
+  responseOrganizations: any;
+}
+
+const LoginOrganizationPage: FC<LoginOrganizationPageProps> = ({
+  responseOrganizations,
+}) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 

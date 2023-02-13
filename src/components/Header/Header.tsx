@@ -2,8 +2,9 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="shadow-xl">
-      <div>header</div>
+    <div className="shadow-xl flex justify-between">
+      <div>breadcrumb</div>
+      <div>content</div>
     </div>
   );
 };

@@ -1,14 +1,20 @@
 import React, { ReactNode, useContext } from "react";
-import { SidebarContext } from "../../../context/SidebarContext";
-import { stringCapitalize } from "@ricardojrmcom/string-capitalize";
-import { RobotsList } from "../ItemLists/RobotsList";
-import { Button } from "../../Button/Button";
-import { FleetsList } from "../ItemLists/FleetsList";
+
 import { OrganizationsList } from "../ItemLists/OrganizationsList";
 import { TeamsList } from "../ItemLists/TeamsList";
 import { RoboticsCloudList } from "../ItemLists/RoboticsCloudsList";
+import { FleetsList } from "../ItemLists/FleetsList";
+import { RobotsList } from "../ItemLists/RobotsList";
+
 import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
 import { CreateTeamForm } from "../CreateForms/CreateTeamForm";
+import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm";
+import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
+import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
+
+import { SidebarContext } from "../../../context/SidebarContext";
+import { stringCapitalize } from "@ricardojrmcom/string-capitalize";
+import { Button } from "../../Button/Button";
 interface ContentLayoutProps {
   children?: ReactNode;
 }
@@ -17,7 +23,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
   const handleButtonText = () => {
-    if (sidebarState?.mode) {
+    if (sidebarState?.isCreateMode) {
       return `Cancel`;
     } else {
       return `Create ${stringCapitalize(sidebarState?.page, true)}`;
@@ -29,7 +35,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       <div className="animate__animated animate__fadeInLeftBig">
         <div
           className={`flex gap-4 items-center ${
-            sidebarState?.mode ? "pb-16" : " pb-10"
+            sidebarState?.isCreateMode ? "pb-16" : " pb-10"
           }`}
         >
           <h2 className="text-3xl font-semibold">
@@ -46,20 +52,29 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         {(() => {
           switch (sidebarState?.page) {
             case "organization":
-              if (sidebarState?.mode) {
+              if (sidebarState?.isCreateMode) {
                 return <CreateOrganizationForm />;
               }
               return <OrganizationsList />;
             case "team":
-              if (sidebarState?.mode) {
+              if (sidebarState?.isCreateMode) {
                 return <CreateTeamForm />;
               }
               return <TeamsList />;
             case "roboticscloud":
+              if (sidebarState?.isCreateMode) {
+                return <CreateRoboticsCloudForm />;
+              }
               return <RoboticsCloudList />;
             case "fleet":
+              if (sidebarState?.isCreateMode) {
+                return <CreateFleetForm />;
+              }
               return <FleetsList />;
             case "robot":
+              if (sidebarState?.isCreateMode) {
+                return <CreateRobotForm />;
+              }
               return <RobotsList />;
           }
         })()}
@@ -67,10 +82,10 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       <Button
         text={handleButtonText()}
         onClick={() => {
-          if (sidebarState?.mode) {
-            setSidebarState((prev: any) => ({ ...prev, mode: false }));
+          if (sidebarState?.isCreateMode) {
+            setSidebarState((prev: any) => ({ ...prev, isCreateMode: false }));
           } else {
-            setSidebarState((prev: any) => ({ ...prev, mode: true }));
+            setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
           }
         }}
       />

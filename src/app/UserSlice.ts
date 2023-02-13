@@ -2,6 +2,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toastifyProperties } from "../tools/Toastify";
 import { toast } from "react-toastify";
 
+export const registerUser = createAsyncThunk(
+  "user/register",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/userRegistration`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: {
+              username: values.username,
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+            },
+          }),
+        }
+      );
+      const data = await response.json();
+      if (response.status === 201) {
+        return data.user;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   "user/login",
   async (values: any, thunkAPI) => {
@@ -31,12 +65,47 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  "user/forgotPassword",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/forgotPassword`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user: { username: values } }),
+        }
+      );
+      const data = await response.json();
+      if (response.status === 201) {
+        return data.user;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const UserSlice = createSlice({
   name: "user",
   initialState: {
     isSuccessLoginUser: false,
     isPendingLoginUser: false,
     isErrorLoginUser: false,
+
+    isSuccessRegisterUser: false,
+    isPendingRegisterUser: false,
+    isErrorRegisterUser: false,
+
+    isSuccessForgotPassword: false,
+    isPendingForgotPassword: false,
+    isErrorForgotPassword: false,
   },
   reducers: {
     clearStateLoginUser: (state) => {
@@ -70,6 +139,34 @@ export const UserSlice = createSlice({
       console.log("loginUser rejected: ", payload);
       state.isPendingLoginUser = false;
       state.isErrorLoginUser = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [registerUser.fulfilled.toString()]: (state, { payload }) => {
+      console.log("registerUser fulfilled: ", payload);
+    },
+    [registerUser.pending.toString()]: (state) => {
+      state.isPendingRegisterUser = true;
+    },
+    [registerUser.rejected.toString()]: (state, { payload }) => {
+      state.isPendingRegisterUser = false;
+      state.isErrorRegisterUser = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [forgotPassword.fulfilled.toString()]: (state, { payload }) => {
+      console.log("forgotPassword fulfilled: ", payload);
+    },
+    [forgotPassword.pending.toString()]: (state) => {
+      state.isPendingForgotPassword = true;
+    },
+    [forgotPassword.rejected.toString()]: (state, { payload }) => {
+      state.isPendingForgotPassword = false;
+      state.isErrorForgotPassword = true;
       toast.error("An error occurred while fetching data.", toastifyProperties);
     },
     //

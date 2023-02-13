@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import { LoginSchema } from "../../../validations/Validations";
-import {
-  InfoCircleOutlined,
-  UserOutlined,
-  LockOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { Input, Tooltip } from "antd";
+import { LoginSchema } from "../../../validations/UsersValidations";
 import { useAppDispatch } from "../../../hooks/redux";
 import { loginUser } from "../../../app/UserSlice";
 import { InputText } from "primereact/inputtext";

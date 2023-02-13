@@ -94,6 +94,9 @@ export const teamSlice = createSlice({
       state.isErrorCreateTeam = true;
       toast.error("An error occurred while fetching data.", toastifyProperties);
     },
+    //
+    //
+    //
   },
 });
 

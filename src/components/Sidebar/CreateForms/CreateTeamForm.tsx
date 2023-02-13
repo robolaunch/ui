@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import InputError from "../../InputError/InputError";
 import { Button } from "primereact/button";
-import { CreateTeamSchema } from "../../../validations/Validations";
+import { CreateTeamSchema } from "../../../validations/TeamValidations";
 import { createTeam } from "../../../app/TeamSlice";
 
 export const CreateTeamForm = () => {
@@ -32,7 +32,7 @@ export const CreateTeamForm = () => {
 
       setTimeout(() => {
         setLoading(false);
-        setSidebarState({ ...sidebarState, mode: false });
+        setSidebarState({ ...sidebarState, isCreateMode: false });
       }, 5000);
     },
   });

@@ -47,6 +47,9 @@ export const roboticsCloudSlice = createSlice({
       state.isPendingCreateRoboticsCloud = false;
       state.isErrorCreateRoboticsCloud = true;
     },
+    //
+    //
+    //
   },
 });
 

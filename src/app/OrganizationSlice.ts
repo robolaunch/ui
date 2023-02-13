@@ -2,6 +2,29 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../utils/axiosInstance";
 import { toast } from "react-toastify";
 import { toastifyProperties } from "../tools/Toastify";
+import axiosInstanceOrganization from "../utils/axiosInstanceOrganization";
+
+export const createOrganization = createAsyncThunk(
+  "organizations/createOrganization",
+  async (value: any, thunkAPI) => {
+    try {
+      console.log("createOrg", value);
+      const response = await axiosInstance.post(`/createOrganization`, {
+        organization: {
+          name: value.organization.name,
+          enterprise: value.organization.enterprise,
+        },
+      });
+      if (response.status === 201) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
 
 export const loginOrganization = createAsyncThunk(
   "organizations/userLoginOrganization",
@@ -49,17 +72,20 @@ export const getOrganizations = createAsyncThunk(
   }
 );
 
-export const createOrganization = createAsyncThunk(
-  "organizations/createOrganization",
+export const getOrganizationUsers = createAsyncThunk(
+  "organizations/getOrganizationUsers",
   async (value: any, thunkAPI) => {
+    console.log("istek bu ", value);
     try {
-      console.log("createOrg", value);
-      const response = await axiosInstance.post(`/createOrganization`, {
-        organization: {
-          name: value.organization.name,
-          enterprise: value.organization.enterprise,
-        },
-      });
+      const response = await axiosInstanceOrganization.post(
+        "/getOrganizationUsers",
+        {
+          organization: {
+            name: value.organization.name,
+          },
+        }
+      );
+      console.log("slices", response);
       if (response.status === 201) {
         return response;
       } else {
@@ -90,6 +116,10 @@ export const OrganizationSlice = createSlice({
     isSuccessGetOrganizations: false,
     isErrorGetOrganizations: false,
     isPendingGetOrganizations: false,
+
+    isSuccessGetOrganizationUsers: false,
+    isErrorGetOrganizationUsers: false,
+    isPendingGetOrganizationUsers: false,
   },
   reducers: {
     clearStateCreateOrganization: (state) => {
@@ -175,6 +205,26 @@ export const OrganizationSlice = createSlice({
     ) => {
       state.isPendingCreateOrganization = false;
       state.isErrorCreateOrganization = true;
+      toast.error("An error occurred while fetching data.", toastifyProperties);
+    },
+    //
+    //
+    //
+    [getOrganizationUsers.fulfilled.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      console.log(payload);
+    },
+    [getOrganizationUsers.pending.toString()]: (state: any) => {
+      state.isPendingGetOrganizationUsers = true;
+    },
+    [getOrganizationUsers.rejected.toString()]: (
+      state: any,
+      { payload }: any
+    ) => {
+      state.isPendingGetOrganizationUsers = false;
+      state.isErrorGetOrganizationUsers = true;
       toast.error("An error occurred while fetching data.", toastifyProperties);
     },
   },

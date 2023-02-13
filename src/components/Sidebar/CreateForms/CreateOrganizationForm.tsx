@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import React, { useContext, useState } from "react";
 import { useAppDispatch } from "../../../hooks/redux";
-import { CreateOrganizationSchema } from "../../../validations/Validations";
+import { CreateOrganizationSchema } from "../../../validations/OrganizationsValidations";
 import { InputText } from "primereact/inputtext";
 import InputError from "../../InputError/InputError";
 import { Button } from "primereact/button";
@@ -31,7 +31,7 @@ export const CreateOrganizationForm = () => {
       );
       setTimeout(() => {
         setLoading(false);
-        setSidebarState({ ...sidebarState, mode: false });
+        setSidebarState({ ...sidebarState, isCreateMode: false });
       }, 5000);
     },
   });

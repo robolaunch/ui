@@ -9,8 +9,8 @@ export default ({ children }: any) => {
 
   const [sidebarState, setSidebarState] = useState({
     isOpen: true,
-    mode: "",
-    page: "robot",
+    isCreateMode: false,
+    page: "",
   });
 
   const [selectedState, setSelectedState] = useState({

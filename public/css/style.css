@@ -913,6 +913,10 @@ video {
   font-weight: 400;
 }
 
+.lowercase{
+  text-transform: lowercase;
+}
+
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
