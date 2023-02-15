@@ -11,7 +11,7 @@
 }
 
 .p-button {
-  @apply !bg-primary !h-11 active:!ring-primary hover:!bg-primaryLayers-700 !border-primary !ring-primary !transition-all;
+  @apply !bg-primary !h-11 active:!ring-primary hover:!bg-layer-primary-700 !border-primary !ring-primary !transition-all;
 }
 
 .p-button-label {

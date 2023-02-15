@@ -105,10 +105,10 @@ export const OrganizationDashboard: FC = () => {
 
   return (
     <div className="grid gap-4">
-      <div className="grid lg:grid-cols-1 grid-cols-3">
-        <div>1</div>
-        <div>2</div>
-        <div>
+      <div className="grid lg:grid-cols-1 grid-cols-6">
+        <div className="col-span-2">1</div>
+        <div className="col-span-2">2</div>
+        <div className="col-span-3">
           <UtilizationWidget />
         </div>
       </div>

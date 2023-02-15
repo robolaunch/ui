@@ -44,8 +44,8 @@ export const SidebarListItem = ({
         onClick={() => handleSelectItem()}
         className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg  ${
           selected
-            ? "bg-secondaryLayers-200 border-secondaryLayers-600 hover:bg-secondaryLayers-300"
-            : "bg-primaryLayers-200 border-primaryLayers-600 hover:bg-primaryLayers-300"
+            ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
+            : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
         }`}
       >
         <img
@@ -64,13 +64,13 @@ export const SidebarListItem = ({
         href={url}
         className={`flex items-center justify-center px-4 rounded-r-lg ${
           selected
-            ? "bg-secondaryLayers-200 hover:bg-secondaryLayers-300"
-            : "bg-primaryLayers-200 hover:bg-primaryLayers-300"
+            ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
+            : "bg-layer-primary-200 hover:bg-layer-primary-300"
         } `}
       >
         <i
           className={`pi pi-angle-right ${
-            selected ? "text-secondaryLayers-700" : "text-primaryLayers-700"
+            selected ? "text-layer-secondary-700" : "text-layer-primary-700"
           }`}
           style={{ fontSize: "1.25rem" }}
         ></i>

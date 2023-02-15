@@ -13,12 +13,12 @@ export const UtilizationWidget: FC = () => {
   };
 
   return (
-    <div className="shadow-lg rounded-xl pt-4 pr-4 bg-lightLayers-50">
+    <div className="shadow-lg rounded-xl pt-8 pl-4 pr-8 bg-layer-light-50">
       <div className="flex items-center gap-2 pl-4">
         <div>
-          <i className="pi pi-chart-line" style={{ fontSize: "1rem" }}></i>
+          <i className="pi pi-chart-line " style={{ fontSize: "1rem" }}></i>
         </div>
-        <div>Utilization Widget</div>
+        <span className="font-medium">Utilization Widget</span>
       </div>
       <div className="p-2">
         <ReactApexChart
@@ -34,7 +34,7 @@ export const UtilizationWidget: FC = () => {
               categories: data?.labels,
               labels: {
                 style: {
-                  colors: "#666666",
+                  colors: "#bfbfbf",
                   fontSize: "12px",
                 },
               },
@@ -42,7 +42,7 @@ export const UtilizationWidget: FC = () => {
             yaxis: {
               labels: {
                 style: {
-                  colors: "#666666",
+                  colors: "#bfbfbf",
                   fontSize: "12px",
                 },
               },

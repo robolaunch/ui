@@ -26,11 +26,11 @@ export const PrivateLayout: FC = () => {
         <Sidebar />
         <div
           className="flex flex-col"
-          style={{ width: "calc(100% - 6rem)" }}
+          style={{ width: "calc(100% - 6rem)", marginLeft: "6rem" }}
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="p-10 bg-lightLayers-bg">
+          <div className="p-10 bg-layer-light-bg">
             <Outlet />
           </div>
         </div>

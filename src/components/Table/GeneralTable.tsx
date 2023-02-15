@@ -22,7 +22,7 @@ export const GeneralTable = ({
 }: GeneralTableProps) => {
   return (
     <div
-      className="flex flex-col py-2 rounded-xl shadow-lg bg-lightLayers-50"
+      className="flex flex-col p-6 rounded-xl shadow-lg bg-layer-light-50"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex px-4 py-6 items-center gap-2">
