@@ -1,17 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { SidebarContext } from "../../../context/SidebarContext";
+import {
+  getRobotsFleet,
+  getRobotsOrganization,
+  getRobotsRoboticsCloud,
+  getRobotsTeam,
+} from "../../../app/RobotSlice";
+import { useAppDispatch } from "../../../hooks/redux";
 
 export const RobotsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([
-    { name: "RobotName1" },
-    { name: "RobotName2" },
-    { name: "RobotName2" },
-  ]);
-
+  const [responseRobots, setResponseRobots] = React.useState<any>([]);
+  const { selectedState }: any = useContext(SidebarContext);
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setLoading(true);
 
+    if (selectedState.fleet) {
+      dispatch(
+        getRobotsFleet({
+          fleetProcessId: selectedState.fleet.processId,
+        })
+      ).then((res: any) => {
+        setResponseRobots(res.payload.data.responseRobots.data);
+      });
+    } else if (selectedState.roboticscloud) {
+      dispatch(
+        getRobotsRoboticsCloud({
+          roboticsCloudProcessId: selectedState.roboticscloud.processId,
+        })
+      ).then((res: any) => {
+        setResponseRobots(res.payload.data.responseRobots.data);
+      });
+    } else if (selectedState.team) {
+      dispatch(
+        getRobotsTeam({
+          teamProcessId: selectedState.team.processId,
+        })
+      ).then((res: any) => {
+        setResponseRobots(res.payload.data.responseRobots.data);
+      });
+    } else {
+      dispatch(
+        getRobotsOrganization({
+          organizationProcessId: selectedState.organization.processId,
+        })
+      ).then((res: any) => {
+        setResponseRobots(res.payload.data.responseRobots.data);
+      });
+    }
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

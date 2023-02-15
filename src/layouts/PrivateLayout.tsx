@@ -9,7 +9,6 @@ export const PrivateLayout: FC = () => {
 
   const handleCloseSidebar = () => {
     if (sidebarState?.isOpen) {
-      console.log("aaaaaa");
       setSidebarState((previousState: any) => {
         return {
           ...previousState,
@@ -31,7 +30,9 @@ export const PrivateLayout: FC = () => {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <Outlet />
+          <div className="p-10 bg-lightLayers-bg">
+            <Outlet />
+          </div>
         </div>
       </div>
     </>

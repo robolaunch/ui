@@ -62,7 +62,9 @@ export const loginUser = createAsyncThunk(
       } else {
         return thunkAPI.rejectWithValue(data);
       }
-    } catch (error) {}
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
   }
 );
 

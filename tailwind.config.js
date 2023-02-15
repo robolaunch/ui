@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: "class",
-  content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{html,js,ts,jsx,tsx}",
+    "./public/**/*.{html,js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -11,7 +14,8 @@ module.exports = {
         secondary: "#35B8FA",
         primary: "#AC2DFE",
 
-        lightLayer: {
+        lightLayers: {
+          bg: "#f4f8fa",
           50: "#FFFFFF",
           100: "#FAFAFA",
           200: "#F0F0F0",

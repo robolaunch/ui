@@ -8,7 +8,7 @@ export default ({ children }: any) => {
   const { currentOrganization } = useAppSelector((state) => state.organization);
 
   const [sidebarState, setSidebarState] = useState({
-    isOpen: true,
+    isOpen: false,
     isCreateMode: false,
     page: "",
   });
@@ -21,10 +21,6 @@ export default ({ children }: any) => {
     roboticscloud: null,
     fleet: null,
   });
-
-  useEffect(() => {
-    console.log(selectedState);
-  }, [selectedState]);
 
   return (
     <SidebarContext.Provider

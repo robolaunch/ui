@@ -10,10 +10,6 @@ export const SideBarMenuItem = ({ type }: SideBarMenuItemProps) => {
   const { theme }: any = useContext(ThemeContext);
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
-  useEffect(() => {
-    console.log(sidebarState);
-  }, [sidebarState]);
-
   const colorSwitcher = () => {
     if (theme === "light") {
       return "gray";

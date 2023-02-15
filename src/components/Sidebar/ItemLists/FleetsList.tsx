@@ -1,16 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { SidebarContext } from "../../../context/SidebarContext";
+import { useAppDispatch } from "../../../hooks/redux";
+import { getRoboticsCloudsOrganization } from "../../../app/RoboticsCloudSlice";
+import {
+  getFleetsOrganization,
+  getFleetsRoboticsCloud,
+  getFleetsTeam,
+} from "../../../app/FleetSlice";
 
 export const FleetsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([
+  const [responseFleets, setResponseFleets] = React.useState<any>([
     { name: "FleetName1" },
     { name: "FleetName2" },
     { name: "FleetName3" },
   ]);
 
+  const { selectedState }: any = useContext(SidebarContext);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     setLoading(true);
+    if (selectedState?.team) {
+      dispatch(
+        getFleetsTeam({
+          organization: { name: selectedState.organization.name },
+          teamId: selectedState.team.id,
+        })
+      ).then((res: any) => {
+        setResponseFleets(res.payload.data.responseFleets.data);
+      });
+    } else if (selectedState?.roboticscloud) {
+      dispatch(
+        getFleetsRoboticsCloud({
+          roboticsCloudProcessId: selectedState.roboticscloud.processId,
+        })
+      ).then((res: any) => {
+        setResponseFleets(res.payload.data.responseFleets.data);
+      });
+    } else {
+      dispatch(
+        getFleetsOrganization({
+          organization: {
+            name: selectedState?.organization?.name,
+          },
+        })
+      ).then((res: any) => {
+        setResponseFleets(res.payload.data.responseFleets.data);
+      });
+    }
 
     setTimeout(() => setLoading(false), 1000);
   }, []);
@@ -25,12 +64,12 @@ export const FleetsList = () => {
         />
       ) : (
         <>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseFleets.map((fleet: any, index: number) => {
             return (
               <SidebarListItem
-                type="robot"
-                name={robot?.name}
-                description={robot?.name}
+                type="fleet"
+                name={fleet?.name}
+                description={fleet?.name}
                 key={index}
                 url={`##`}
               />

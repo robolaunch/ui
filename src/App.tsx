@@ -1,7 +1,6 @@
 import React from "react";
 import AppRoutes from "./routes/AppRoutes";
 import "animate.css";
-import { ConfigProvider } from "antd";
 import ThemeContext from "./context/ThemeContext";
 import "react-toastify/dist/ReactToastify.css";
 import "animate.css";
@@ -15,18 +14,10 @@ import "primeicons/primeicons.css";
 import { ToastContainer } from "react-toastify";
 function App() {
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#AC2DFE",
-        },
-      }}
-    >
-      <ThemeContext>
-        <ToastContainer />
-        <AppRoutes />
-      </ThemeContext>
-    </ConfigProvider>
+    <ThemeContext>
+      <ToastContainer />
+      <AppRoutes />
+    </ThemeContext>
   );
 }
 

@@ -4,7 +4,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
 import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
 import { PrivateLayout } from "../layouts/PrivateLayout";
-import { Dashboard } from "../pages/private/Dashboard/Dashboard";
+import { OrganizationDashboard } from "../pages/private/Dashboards/OrganizationDashboard";
 import SidebarContext from "../context/SidebarContext";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
@@ -115,7 +115,7 @@ const AppRoutes = () => {
             </SidebarContext>
           }
         >
-          <Route path="/test" element={<Dashboard />} />
+          <Route path="/test" element={<OrganizationDashboard />} />
           <Route path="*" element={<Navigate to="/test" />} />
         </Route>
       )}

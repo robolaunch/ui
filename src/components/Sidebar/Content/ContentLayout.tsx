@@ -13,7 +13,6 @@ import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
 
 import { SidebarContext } from "../../../context/SidebarContext";
-import { stringCapitalize } from "@ricardojrmcom/string-capitalize";
 import { Button } from "../../Button/Button";
 interface ContentLayoutProps {
   children?: ReactNode;
@@ -26,21 +25,19 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
     if (sidebarState?.isCreateMode) {
       return `Cancel`;
     } else {
-      return `Create ${stringCapitalize(sidebarState?.page, true)}`;
+      return `Create ${sidebarState?.page}`;
     }
   };
 
   return (
-    <div className="absolute flex flex-col justify-between left-24 w-[36rem] h-screen bg-lightLayer-100 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8">
+    <div className="absolute flex flex-col justify-between left-24 w-[36rem] h-screen bg-lightLayer-100 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[3]">
       <div className="animate__animated animate__fadeInLeftBig">
         <div
           className={`flex gap-4 items-center ${
             sidebarState?.isCreateMode ? "pb-16" : " pb-10"
           }`}
         >
-          <h2 className="text-3xl font-semibold">
-            {stringCapitalize(sidebarState?.page + "s", true)}
-          </h2>
+          <h2 className="text-3xl font-semibold">{sidebarState?.page + "s"}</h2>
           <span className="bg-secondaryLayers-300 px-3 py-1 rounded-lg">
             {0}
           </span>

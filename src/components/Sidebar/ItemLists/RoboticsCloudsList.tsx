@@ -1,16 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { SidebarContext } from "../../../context/SidebarContext";
+import { useAppDispatch } from "../../../hooks/redux";
+import {
+  getRoboticsCloudsOrganization,
+  getRoboticsCloudsTeam,
+} from "../../../app/RoboticsCloudSlice";
 
 export const RoboticsCloudList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([
-    { name: "RoboticsCloud1" },
-    { name: "RoboticsCloud2" },
-    { name: "RoboticsCloud3" },
-  ]);
+  const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
+  const { selectedState }: any = useContext(SidebarContext);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setLoading(true);
+    if (selectedState?.team) {
+      dispatch(
+        getRoboticsCloudsTeam({
+          organization: {
+            name: selectedState?.organization?.name,
+          },
+          teamId: selectedState?.team?.id,
+        })
+      ).then((res: any) => {
+        setResponseRoboticsClouds(res?.payload?.data?.roboticsClouds?.data);
+      });
+    } else {
+      dispatch(
+        getRoboticsCloudsOrganization({
+          organization: {
+            name: selectedState?.organization?.name,
+          },
+        })
+      ).then((res: any) => {
+        setResponseRoboticsClouds(res?.payload?.data?.roboticsClouds?.data);
+      });
+    }
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -24,12 +50,12 @@ export const RoboticsCloudList = () => {
         />
       ) : (
         <>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseRoboticsClouds.map((roboticscloud: any, index: number) => {
             return (
               <SidebarListItem
-                type="robot"
-                name={robot?.name}
-                description={robot?.name}
+                type="roboticscloud"
+                name={roboticscloud?.name}
+                description={roboticscloud?.name}
                 key={index}
                 url={`##`}
               />

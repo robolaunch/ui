@@ -18,6 +18,17 @@
   @apply !text-white !text-sm !font-semibold;
 }
 
+.p-column-title {
+  @apply !text-sm !font-bold;
+}
+
+.p-datatable-tbody,
+.p-paginator-current,
+.p-sortable-column-icon,
+.p-column-filter-menu-button {
+  @apply !text-sm;
+}
+
 .Toastify__toast-body {
   @apply !text-sm;
 }
