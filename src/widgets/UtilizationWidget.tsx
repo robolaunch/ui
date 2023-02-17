@@ -1,7 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { SelectButton } from "primereact/selectbutton";
 
 export const UtilizationWidget: FC = () => {
+  const [activeTab, setActiveTab] = useState<string>("1D");
+
   const data = {
     series: [
       {
@@ -13,12 +16,17 @@ export const UtilizationWidget: FC = () => {
   };
 
   return (
-    <div className="shadow-lg rounded-xl pt-8 pl-4 pr-8 bg-layer-light-50">
-      <div className="flex items-center gap-2 pl-4">
-        <div>
+    <div className="shadow-lg rounded-xl p-6 bg-layer-light-50">
+      <div className="flex justify-between items-center  pl-1">
+        <div className="flex gap-2 items-center">
           <i className="pi pi-chart-line " style={{ fontSize: "1rem" }}></i>
+          <span className="font-medium">Utilization Widget</span>
         </div>
-        <span className="font-medium">Utilization Widget</span>
+        <SelectButton
+          value={activeTab}
+          onChange={(e) => setActiveTab(e.value)}
+          options={["1D", "1W", "1M"]}
+        />
       </div>
       <div className="p-2">
         <ReactApexChart
@@ -27,8 +35,13 @@ export const UtilizationWidget: FC = () => {
             dataLabels: {
               enabled: false,
             },
+            fill: {
+              colors: ["#AC2DFE"],
+            },
+
             stroke: {
               curve: "smooth",
+              colors: ["#AC2DFE"],
             },
             xaxis: {
               categories: data?.labels,
@@ -50,6 +63,7 @@ export const UtilizationWidget: FC = () => {
           }}
           type="area"
           height={350}
+          className="!min-h-[10rem]"
         />
       </div>
     </div>

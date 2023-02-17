@@ -104,8 +104,8 @@ export const OrganizationDashboard: FC = () => {
   };
 
   return (
-    <div className="grid gap-4">
-      <div className="grid lg:grid-cols-1 grid-cols-6">
+    <div className="grid gap-8">
+      <div className="grid lg:grid-cols-1 grid-cols-7">
         <div className="col-span-2">1</div>
         <div className="col-span-2">2</div>
         <div className="col-span-3">
