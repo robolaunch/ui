@@ -9,6 +9,7 @@ import SidebarContext from "../context/SidebarContext";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 import { LandingPage } from "../pages/public/LandingPage/LandingPage";
+import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
 
 const AppRoutes = () => {
   const userToken: any = () => {
@@ -98,8 +99,10 @@ const AppRoutes = () => {
     <Routes>
       {!userToken() && !organizationUserToken() ? (
         <Route element={<PublicLayout />}>
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
       ) : userToken() && !organizationUserToken() ? (
