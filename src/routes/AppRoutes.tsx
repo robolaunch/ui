@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
@@ -6,95 +6,25 @@ import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage"
 import { PrivateLayout } from "../layouts/PrivateLayout";
 import { OrganizationDashboard } from "../pages/private/Dashboards/OrganizationDashboard";
 import SidebarContext from "../context/SidebarContext";
-import jwt_decode from "jwt-decode";
-import dayjs from "dayjs";
 import { LandingPage } from "../pages/public/LandingPage/LandingPage";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
+import { useAppSelector } from "../hooks/redux";
+import { RootState } from "../app/store";
+import TeamsPage from "../pages/private/URM/TeamsPage";
+import TeamMembersPage from "../pages/private/URM/TeamMembersPage";
 
-const AppRoutes = () => {
+export default function AppRoutes(): ReactElement {
   const userToken: any = () => {
-    try {
-      const token: any = JSON.parse(localStorage.authTokens);
-
-      return Number(
-        // @ts-ignore
-        jwt_decode(token?.refreshToken).exp - Number(dayjs().unix())
-      ) > 0
-        ? true
-        : false;
-    } catch (error) {
-      localStorage.removeItem(`authTokens`);
-      localStorage.removeItem(`authTokens_organization`);
-      return false;
-    }
+    return true;
   };
+
   const organizationUserToken: any = () => {
-    try {
-      const token: any = JSON.parse(localStorage.authTokens_organization);
-
-      return Number(
-        // @ts-ignore
-        jwt_decode(token.refreshToken).exp - Number(dayjs().unix())
-      ) > 0
-        ? true
-        : false;
-    } catch (error) {
-      localStorage.removeItem(`authTokens_organization`);
-      return false;
-    }
+    return true;
   };
 
-  // Loop;
-  useEffect(() => {
-    setInterval(() => {
-      userToken();
-      organizationUserToken();
-      if (userToken()) {
-        if (
-          Number(
-            // @ts-ignore
-            jwt_decode(
-              JSON.parse(
-                // @ts-ignore
-                localStorage.getItem(`authTokens`)
-              ).refreshToken
-            ).exp -
-              Number(dayjs().unix()) <
-              100
-          )
-        ) {
-          // dispatch(getOrganizations());
-          console.log("authTokens Renewed with Routes loop");
-        }
-      }
-      if (organizationUserToken()) {
-        if (
-          Number(
-            // @ts-ignore
-            jwt_decode(
-              JSON.parse(
-                // @ts-ignore
-                localStorage.getItem(`authTokens_organization`)
-              ).refreshToken
-            ).exp -
-              Number(dayjs().unix()) <
-              100
-          )
-        ) {
-          // dispatch(
-          //   getCurrentUser({
-          //     organization: {
-          //       name: currentOrganization.name,
-          //     },
-          //   })
-          // );
-          console.log("authTokens_organization Renewed with Routes loop");
-        }
-      }
-      console.log("Loop working...");
-    }, 10000);
-  }, []);
-
+  const { currentOrganization } = useAppSelector(
+    (state: RootState) => state.organization
+  );
   return (
     <Routes>
       {!userToken() && !organizationUserToken() ? (
@@ -118,12 +48,24 @@ const AppRoutes = () => {
             </SidebarContext>
           }
         >
-          <Route path="/test" element={<OrganizationDashboard />} />
-          <Route path="*" element={<Navigate to="/test" />} />
+          <Route
+            path={`/${currentOrganization.name}`}
+            element={<OrganizationDashboard />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/teams`}
+            element={<TeamsPage />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/:teamName/members`}
+            element={<TeamMembersPage />}
+          />
+          <Route
+            path="*"
+            element={<Navigate to={`/${currentOrganization.name}`} />}
+          />
         </Route>
       )}
     </Routes>
   );
-};
-
-export default AppRoutes;
+}

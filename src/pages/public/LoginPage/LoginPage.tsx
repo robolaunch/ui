@@ -1,17 +1,12 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { useFormik } from "formik";
 import { LoginSchema } from "../../../validations/UsersValidations";
-import { useAppDispatch } from "../../../hooks/redux";
-import { loginUser } from "../../../app/UserSlice";
+import InputText from "../../../components/InputText/InputText";
 import InputError from "../../../components/InputError/InputError";
+import Button from "../../../components/Button/Button";
 import { Link } from "react-router-dom";
-import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
-import { Button } from "primereact/button";
 
 export default function LoginPage(): ReactElement {
-  const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
   const formik = useFormik({
     validationSchema: LoginSchema,
     initialValues: {
@@ -19,15 +14,10 @@ export default function LoginPage(): ReactElement {
       password: "",
     },
     onSubmit: (values) => {
-      setLoading(true);
-      dispatch(
-        loginUser({
-          username: values.username,
-          password: values.password,
-        })
-      );
+      formik.setSubmitting(true);
+
       setTimeout(() => {
-        setLoading(false);
+        formik.setSubmitting(false);
       }, 2000);
     },
   });
@@ -38,55 +28,50 @@ export default function LoginPage(): ReactElement {
       onSubmit={formik.handleSubmit}
     >
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("username")}
-            type="text"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="username">Username</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("username")}
+          placeholder="Username"
+          disabled={formik.isSubmitting}
+        />
         <InputError
-          error={formik.errors.username}
           touched={formik.touched.username}
+          error={formik.errors.username}
         />
       </div>
       <div>
-        <span className="p-float-label">
-          <Password
-            {...formik.getFieldProps("password")}
-            className="p-inputtext-sm w-full"
-            toggleMask
-            feedback={false}
-          />
-          <label htmlFor="password">Password</label>
-        </span>
-        <InputError
-          error={formik.errors.password}
-          touched={formik.touched.password}
+        <InputText
+          {...formik.getFieldProps("password")}
+          placeholder="Password"
+          type="password"
+          disabled={formik.isSubmitting}
         />
-        <div className="text-right pt-1">
-          <Link
-            className="text-xs font-base  text-primary"
-            to={`/forgot-password`}
-          >
-            Forgot Password?
-          </Link>
-        </div>
+        <InputError
+          touched={formik.touched.password}
+          error={formik.errors.password}
+        />
+        <Link
+          className="pt-3 text-sm font-base float-right text-primary"
+          to={`/forgot-password`}
+        >
+          forgot password?
+        </Link>
       </div>
-      <Button
-        type="submit"
-        label="Login to robolaunch"
-        onClick={() => formik.handleSubmit()}
-        disabled={loading || !formik.isValid}
-        loading={loading}
-      />
-      <p className="text-sm font-base text-center text-layer-dark-200">
-        Not a Member yet?{" "}
-        <Link className="text-primary" to={`/registration`}>
-          Sign up
-        </Link>{" "}
-      </p>
+      <div>
+        <Button
+          type="submit"
+          text="Login to robolaunch"
+          disabled={formik.isSubmitting || !formik.isValid}
+          loading={formik.isSubmitting}
+        />
+      </div>
+      <div>
+        <p className="text-sm font-base text-center text-layer-dark-200">
+          If you have not a account?{" "}
+          <Link className="text-primary" to="/registration">
+            Register
+          </Link>
+        </p>
+      </div>
     </form>
   );
 }

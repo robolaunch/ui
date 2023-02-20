@@ -3,22 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.p-inputtext {
+/* .p-inputtext {
   @apply !w-full;
 }
 .p-float-label {
   @apply !text-sm;
-}
+} */
 
-.p-button {
+/* .p-button {
   @apply !bg-primary !h-11 active:!ring-primary hover:!bg-layer-primary-700 !border-primary !ring-primary !transition-all;
-}
+} */
 
-.p-button-label {
+/* .p-button-label {
   @apply !text-white !text-sm !font-semibold;
-}
+} */
 
-.p-column-title {
+/* .p-column-title {
   @apply !text-sm !font-bold;
 }
 
@@ -29,10 +29,12 @@
   @apply !text-sm;
 }
 
-.Toastify__toast-body {
-  @apply !text-sm;
-}
 
+/* 
 div > [aria-expanded="false"] {
   @apply !bg-layer-primary-300;
+} */
+
+.Toastify__toast-body {
+  @apply !text-sm;
 }

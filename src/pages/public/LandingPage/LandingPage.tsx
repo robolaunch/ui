@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import InputError from "../../../components/InputError/InputError";
 import { InputText } from "primereact/inputtext";
@@ -9,28 +9,13 @@ import {
 } from "../../../validations/OrganizationsValidations";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-import {
-  clearStateCreateOrganization,
-  createOrganization,
-  loginOrganization,
-} from "../../../app/OrganizationSlice";
+
 import jwt_decode from "jwt-decode";
-import { getOrganizations } from "../../../app/OrganizationSlice";
 import { RootState } from "../../../app/store";
 
 export const LandingPage = () => {
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getOrganizations()).then((res: any) => {
-      if (res?.payload?.data?.responseUserOrganizations?.success) {
-        setResponseOrganizations(
-          res?.payload?.data.responseUserOrganizations.data
-        );
-      }
-    });
-  }, []);
 
   return (
     <div className="flex h-screen items-center justify-center ">
@@ -62,20 +47,9 @@ const CreateFirstOrganizationPage: FC = () => {
     validationSchema: CreateOrganizationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
-      dispatch(
-        createOrganization({
-          organization: {
-            name: values.name,
-            enterprise: values.enterprise,
-          },
-        })
-      );
+
       setTimeout(() => {
         setLoading(false);
-        if (isSuccessCreateOrganization) {
-          dispatch(clearStateCreateOrganization());
-          dispatch(getOrganizations());
-        }
       }, 5000);
     },
   });
@@ -131,13 +105,7 @@ const LoginOrganizationPage: FC<LoginOrganizationPageProps> = ({
     onSubmit: (values) => {
       setLoading(true);
       console.log(values);
-      dispatch(
-        loginOrganization({
-          username: values.username,
-          password: values.password,
-          organization: values.organization.name,
-        })
-      );
+
       setTimeout(() => {
         setLoading(false);
       }, 2000);

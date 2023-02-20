@@ -3,7 +3,6 @@ import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import { getTeams } from "../../../app/TeamSlice";
 import { SidebarContext } from "../../../context/SidebarContext";
 
 export const TeamsList = () => {
@@ -17,17 +16,8 @@ export const TeamsList = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(
-      getTeams({
-        organization: {
-          name: currentOrganization.name,
-        },
-      })
-    ).then((res: any) => {
-      if (res?.payload?.data?.teams?.success) {
-        setResponseTeams(res?.payload?.data?.teams?.data);
-      }
-    });
+
+    setResponseTeams([]);
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

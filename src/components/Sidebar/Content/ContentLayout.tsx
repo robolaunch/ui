@@ -13,7 +13,7 @@ import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
 
 import { SidebarContext } from "../../../context/SidebarContext";
-import { Button } from "../../Button/Button";
+import Button from "../../Button/Button";
 interface ContentLayoutProps {
   children?: ReactNode;
 }

@@ -1,71 +1,72 @@
-import React, { FC, useState } from "react";
-import ReactApexChart from "react-apexcharts";
-import { SelectButton } from "primereact/selectbutton";
+import React, { ReactElement, useEffect, useState } from "react";
+import { GoGraph } from "react-icons/go";
+import Widget from "../components/Widget/Widget";
+import { Chart } from "primereact/chart";
+export default function UtilizationWidget(): ReactElement {
+  const [chartData, setChartData] = useState({});
+  const [chartOptions, setChartOptions] = useState({});
 
-export const UtilizationWidget: FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("1D");
-
-  const data = {
-    series: [
-      {
-        name: "Utilization Data #1",
-        data: [31, 40, 28, 51, 42, 109, 100],
+  useEffect(() => {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue("--text-color");
+    const textColorSecondary = documentStyle.getPropertyValue(
+      "--text-color-secondary"
+    );
+    const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
+    const data = {
+      labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"],
+      datasets: [
+        {
+          label: "Third Dataset",
+          data: [12, 51, 62, 33, 21, 62, 45],
+          fill: true,
+          borderColor: documentStyle.getPropertyValue("--blue-500"),
+          tension: 0.4,
+          backgroundColor: documentStyle.getPropertyValue("--blue-500"),
+        },
+      ],
+    };
+    const options = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor,
+          },
+        },
       },
-    ],
-    labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  };
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+          },
+        },
+        y: {
+          ticks: {
+            color: textColorSecondary,
+          },
+          grid: {
+            color: surfaceBorder,
+          },
+        },
+      },
+    };
+
+    setChartData(data);
+    setChartOptions(options);
+  }, []);
 
   return (
-    <div className="shadow-lg rounded-xl p-6 bg-layer-light-50">
-      <div className="flex justify-between items-center  pl-1">
-        <div className="flex gap-2 items-center">
-          <i className="pi pi-chart-line " style={{ fontSize: "1rem" }}></i>
-          <span className="font-medium">Utilization Widget</span>
-        </div>
-        <SelectButton
-          value={activeTab}
-          onChange={(e) => setActiveTab(e.value)}
-          options={["1D", "1W", "1M"]}
-        />
-      </div>
-      <div className="p-2">
-        <ReactApexChart
-          series={data?.series}
-          options={{
-            dataLabels: {
-              enabled: false,
-            },
-            fill: {
-              colors: ["#AC2DFE"],
-            },
-
-            stroke: {
-              curve: "smooth",
-              colors: ["#AC2DFE"],
-            },
-            xaxis: {
-              categories: data?.labels,
-              labels: {
-                style: {
-                  colors: "#bfbfbf",
-                  fontSize: "12px",
-                },
-              },
-            },
-            yaxis: {
-              labels: {
-                style: {
-                  colors: "#bfbfbf",
-                  fontSize: "12px",
-                },
-              },
-            },
-          }}
-          type="area"
-          height={350}
-          className="!min-h-[10rem]"
-        />
-      </div>
-    </div>
+    <Widget
+      title={`Utilization Widget`}
+      subtitle={`Organization Base Utilization`}
+      icon={<GoGraph size={18} className="text-layer-light-700 sm:hidden" />}
+    >
+      <Chart type="line" data={chartData} options={chartOptions} />
+    </Widget>
   );
-};
+}

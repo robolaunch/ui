@@ -1,34 +1,56 @@
-import React, { FC, Fragment, useEffect, useMemo, useState } from "react";
-import { GeneralTable } from "../../../components/Table/GeneralTable";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { UsersCell } from "../../../components/Cells/UsersCell";
+import { RootState } from "../../../app/store";
 import { InfoCell } from "../../../components/Cells/InfoCell";
-import UtilizationWidget from "../../../widgets/UtilizationWidget";
-import CountWidget from "../../../widgets/CountWidget";
+import { UsersCell } from "../../../components/Cells/UsersCell";
+import TeamActionCells from "../../../components/ActionCells/TeamActionCells";
+import { GeneralTable } from "../../../components/Table/GeneralTable";
 
-export const OrganizationDashboard: FC = () => {
-  const { currentOrganization } = useAppSelector((state) => state.organization);
+export default function TeamMembersPage(): ReactElement {
   const [reload, setReload] = React.useState(false);
-
-  const [responseTeams, setResponseTeams] = useState<any>(null);
+  const [responseTeamMembers, setResponseTeamMembers] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const { currentOrganization } = useAppSelector(
+    (state: RootState) => state.organization
+  );
+
+  const [mockResponseTeamMembers, setMockResponseTeamMembers] = useState<any>([
+    {
+      name: "user-1",
+      email: "test@test.com",
+      organizationManager: true,
+      teamManager: true,
+    },
+    {
+      name: "user-2",
+      email: "test@test.com",
+      organizationManager: false,
+      teamManager: false,
+    },
+  ]);
 
   useEffect(() => {
     setLoading(true);
 
-    setResponseTeams([]);
+    setResponseTeamMembers(mockResponseTeamMembers);
   }, [currentOrganization.name, dispatch, reload]);
 
   useEffect(() => {
-    if (responseTeams?.length) {
+    if (responseTeamMembers?.length) {
       setLoading(false);
     }
-  }, [responseTeams]);
+  }, [responseTeamMembers]);
 
   const data: any = useMemo(
     () =>
-      responseTeams?.map((team: any) => {
+      responseTeamMembers?.map((team: any) => {
         return {
           key: team?.name,
           name: team,
@@ -36,7 +58,7 @@ export const OrganizationDashboard: FC = () => {
           users: team?.users,
         };
       }),
-    [currentOrganization.name, responseTeams]
+    [currentOrganization.name, responseTeamMembers]
   );
 
   const columns: any = useMemo(
@@ -51,6 +73,7 @@ export const OrganizationDashboard: FC = () => {
           return (
             <InfoCell
               title={rowData?.name?.name}
+              titleURL={`/${currentOrganization.name}/${rowData?.name?.name}/members`}
               subtitle={rowData?.users?.length + " Members"}
             />
           );
@@ -85,11 +108,7 @@ export const OrganizationDashboard: FC = () => {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <button>{"Actions"}</button>
-            </Fragment>
-          );
+          return <TeamActionCells data={rowData.name} />;
         },
       },
     ],
@@ -101,26 +120,15 @@ export const OrganizationDashboard: FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 lg:grid-cols-1 grid-cols-12">
-        <div className="col-span-4">1</div>
-        <div className="col-span-3">
-          <CountWidget />
-        </div>
-        <div className="col-span-5">
-          <UtilizationWidget />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
-        <GeneralTable
-          type="team"
-          title="Teams"
-          data={data}
-          columns={columns}
-          loading={loading}
-          handleReload={() => handleReload()}
-        />
-      </div>
+    <div>
+      <GeneralTable
+        type="team"
+        title="Teams"
+        data={data}
+        columns={columns}
+        loading={loading}
+        handleReload={() => handleReload()}
+      />
     </div>
   );
-};
+}

@@ -31,15 +31,14 @@ const PublicLayout = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen animate__animated animate__fadeIn">
-      <div className="basis-1/2 xl:basis-full flex flex-col gap-12  justify-center items-center h-full animate__animated animate__fadeInLeft">
-        <div className="flex flex-col gap-2">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 h-screen animate__animated animate__fadeIn">
+      <div className="col-span-1 flex flex-col gap-12 justify-center items-center h-full animate__animated animate__fadeInLeft">
+        <div className="flex flex-col">
           <img
             className="w-32 mx-auto"
             src="/svg/general/rocket.svg"
             alt="Robolaunch"
           />
-
           <p className="text-xl font-semibold text-layer-dark-900">
             Login to robolaunch
           </p>
@@ -50,7 +49,7 @@ const PublicLayout = () => {
         style={{
           background: "linear-gradient(rgb(71, 16, 106), rgb(21, 83, 114))",
         }}
-        className="basis-1/2 xl:hidden flex flex-col gap-4 justify-center items-center text-white"
+        className="col-span-1 flex flex-col gap-4 justify-center items-center text-white"
       >
         <ParticleImage
           className="h-64 animate__animated animate__fadeInDown"

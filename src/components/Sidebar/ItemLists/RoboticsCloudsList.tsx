@@ -2,10 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../../context/SidebarContext";
 import { useAppDispatch } from "../../../hooks/redux";
-import {
-  getRoboticsCloudsOrganization,
-  getRoboticsCloudsTeam,
-} from "../../../app/RoboticsCloudSlice";
 
 export const RoboticsCloudList = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,28 +11,7 @@ export const RoboticsCloudList = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (selectedState?.team) {
-      dispatch(
-        getRoboticsCloudsTeam({
-          organization: {
-            name: selectedState?.organization?.name,
-          },
-          teamId: selectedState?.team?.id,
-        })
-      ).then((res: any) => {
-        setResponseRoboticsClouds(res?.payload?.data?.roboticsClouds?.data);
-      });
-    } else {
-      dispatch(
-        getRoboticsCloudsOrganization({
-          organization: {
-            name: selectedState?.organization?.name,
-          },
-        })
-      ).then((res: any) => {
-        setResponseRoboticsClouds(res?.payload?.data?.roboticsClouds?.data);
-      });
-    }
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -50,7 +25,7 @@ export const RoboticsCloudList = () => {
         />
       ) : (
         <>
-          {responseRoboticsClouds.map((roboticscloud: any, index: number) => {
+          {responseRoboticsClouds?.map((roboticscloud: any, index: number) => {
             return (
               <SidebarListItem
                 type="roboticscloud"

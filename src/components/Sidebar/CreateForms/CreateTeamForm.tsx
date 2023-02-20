@@ -6,7 +6,6 @@ import { InputText } from "primereact/inputtext";
 import InputError from "../../InputError/InputError";
 import { Button } from "primereact/button";
 import { CreateTeamSchema } from "../../../validations/TeamValidations";
-import { createTeam } from "../../../app/TeamSlice";
 
 export const CreateTeamForm = () => {
   const [loading, setLoading] = useState(false);
@@ -21,14 +20,6 @@ export const CreateTeamForm = () => {
     validationSchema: CreateTeamSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
-      dispatch(
-        createTeam({
-          organization: {
-            name: currentOrganization.name,
-          },
-          teamName: values.name,
-        })
-      );
 
       setTimeout(() => {
         setLoading(false);

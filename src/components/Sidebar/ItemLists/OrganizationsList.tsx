@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { getOrganizations } from "../../../app/OrganizationSlice";
 import { useAppDispatch } from "../../../hooks/redux";
 import { SidebarContext } from "../../../context/SidebarContext";
 
@@ -11,13 +10,7 @@ export const OrganizationsList = () => {
   const { selectedState, setSelectedState }: any = useContext(SidebarContext);
   useEffect(() => {
     setLoading(true);
-    dispatch(getOrganizations()).then((res: any) => {
-      if (res?.payload?.data?.responseUserOrganizations?.success) {
-        setResponseOrganizations(
-          res?.payload?.data.responseUserOrganizations.data
-        );
-      }
-    });
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

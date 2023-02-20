@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: "jit",
   darkMode: "class",
   content: [
     "./src/**/*.{html,js,ts,jsx,tsx}",
@@ -28,6 +29,7 @@ module.exports = {
             800: "#5c5c5c",
             900: "#474747",
           },
+
           dark: {
             50: "#b8b8b8",
             100: "#a3a3a3",
@@ -68,22 +70,6 @@ module.exports = {
           },
         },
       },
-    },
-    screens: {
-      "2xl": { max: "1535px" },
-      // => @media (max-width: 1535px) { ... }
-
-      xl: { max: "1279px" },
-      // => @media (max-width: 1279px) { ... }
-
-      lg: { max: "1023px" },
-      // => @media (max-width: 1023px) { ... }
-
-      md: { max: "767px" },
-      // => @media (max-width: 767px) { ... }
-
-      sm: { max: "639px" },
-      // => @media (max-width: 639px) { ... }
     },
   },
   plugins: [],

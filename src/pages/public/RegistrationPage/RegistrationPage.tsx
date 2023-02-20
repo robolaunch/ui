@@ -1,18 +1,13 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { useFormik } from "formik";
-import { useAppDispatch } from "../../../hooks/redux";
 import { RegisterSchema } from "../../../validations/UsersValidations";
-import { InputText } from "primereact/inputtext";
 import InputError from "../../../components/InputError/InputError";
 import { Link } from "react-router-dom";
-import { Button } from "primereact/button";
-import { registerUser } from "../../../app/UserSlice";
-import { Checkbox } from "primereact/checkbox";
+import InputText from "../../../components/InputText/InputText";
+import Button from "../../../components/Button/Button";
+import InputCheckbox from "../../../components/InputCheckbox/InputCheckbox";
 
 export default function RegistrationPage(): ReactElement {
-  const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
-
   const formik = useFormik({
     validationSchema: RegisterSchema,
     initialValues: {
@@ -23,18 +18,11 @@ export default function RegistrationPage(): ReactElement {
       userAgreement: false,
     },
     onSubmit: (values) => {
-      setLoading(true);
+      formik.setSubmitting(true);
       console.log(values);
-      dispatch(
-        registerUser({
-          username: values.username,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-        })
-      );
+
       setTimeout(() => {
-        setLoading(false);
+        formik.setSubmitting(false);
       }, 2000);
     },
   });
@@ -45,56 +33,45 @@ export default function RegistrationPage(): ReactElement {
       onSubmit={formik.handleSubmit}
     >
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("username")}
-            type="text"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="username">Username</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("username")}
+          placeholder="Username"
+          disabled={formik.isSubmitting}
+        />
         <InputError
           error={formik.errors.username}
           touched={formik.touched.username}
         />
       </div>
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("firstName")}
-            type="text"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="firstName">First Name</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("firstName")}
+          placeholder="First Name"
+          disabled={formik.isSubmitting}
+        />
         <InputError
           error={formik.errors.firstName}
           touched={formik.touched.firstName}
         />
       </div>
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("lastName")}
-            type="text"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="lastName">Last Name</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("lastName")}
+          placeholder="Last Name"
+          disabled={formik.isSubmitting}
+        />
         <InputError
           error={formik.errors.lastName}
           touched={formik.touched.lastName}
         />
       </div>
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("email")}
-            type="email"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="email">Email</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("email")}
+          placeholder="Email"
+          type="email"
+          disabled={formik.isSubmitting}
+        />
         <InputError
           error={formik.errors.email}
           touched={formik.touched.email}
@@ -102,26 +79,28 @@ export default function RegistrationPage(): ReactElement {
       </div>
       <div>
         <span className="flex items-center gap-2">
-          <Checkbox
-            checked={formik.values.userAgreement}
-            {...formik.getFieldProps("userAgreement")}
-          />
+          <InputCheckbox {...formik.getFieldProps("userAgreement")} />
           <label
             className="text-xs text-layer-dark-300"
             htmlFor="userAgreement"
           >
-            Agree to User Agreement, Privacy Policy and Cookie Policy.
+            Agree to User Agreement and Privacy Policy.
           </label>
         </span>
+        <InputError
+          error={formik.errors.userAgreement}
+          touched={formik.touched.userAgreement}
+        />
       </div>
 
-      <Button
-        type="submit"
-        label="Register to robolaunch"
-        onClick={() => formik.handleSubmit()}
-        disabled={loading || !formik.isValid}
-        loading={loading}
-      />
+      <div>
+        <Button
+          type="submit"
+          text="Register to robolaunch"
+          disabled={formik.isSubmitting || !formik.isValid}
+          loading={formik.isSubmitting}
+        />
+      </div>
       <p className="text-sm font-base text-center text-layer-dark-200">
         If you have a account?{" "}
         <Link className="text-primary" to={`/login`}>

@@ -22,7 +22,7 @@ export const GeneralTable = ({
 }: GeneralTableProps) => {
   return (
     <div
-      className="flex flex-col p-8 rounded-xl shadow-lg bg-layer-light-50"
+      className="flex flex-col p-8 rounded-lg shadow-lg bg-layer-light-50"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex px-4 pt-1 pb-8 items-center gap-2">
@@ -48,12 +48,10 @@ export const GeneralTable = ({
             onClick={() => handleReload()}
             type="button"
             icon="pi pi-refresh"
-            className="p-button-text !text-white"
           />
         }
       >
         {columns.map((col: any, index: number) => {
-          console.log(col);
           return (
             <Column
               style={col?.style || {}}

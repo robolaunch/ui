@@ -1,27 +1,21 @@
-import React, { ReactElement, useState } from "react";
-import { useAppDispatch } from "../../../hooks/redux";
+import React, { ReactElement } from "react";
 import { useFormik } from "formik";
 import { ForgotPasswordSchema } from "../../../validations/UsersValidations";
-import { InputText } from "primereact/inputtext";
 import InputError from "../../../components/InputError/InputError";
-import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
+import Button from "../../../components/Button/Button";
+import InputText from "../../../components/InputText/InputText";
 
 export default function ForgotPasswordPage(): ReactElement {
-  const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
   const formik = useFormik({
     validationSchema: ForgotPasswordSchema,
     initialValues: {
       username: "",
     },
     onSubmit: (values) => {
-      setLoading(true);
-      // dispatch(
-
-      // )
+      formik.setSubmitting(true);
       setTimeout(() => {
-        setLoading(false);
+        formik.setSubmitting(false);
       }, 2000);
     },
   });
@@ -32,32 +26,32 @@ export default function ForgotPasswordPage(): ReactElement {
       onSubmit={formik.handleSubmit}
     >
       <div>
-        <span className="p-float-label">
-          <InputText
-            {...formik.getFieldProps("username")}
-            type="text"
-            className="p-inputtext-sm w-full"
-          />
-          <label htmlFor="username">Username</label>
-        </span>
+        <InputText
+          {...formik.getFieldProps("username")}
+          placeholder="Username"
+          disabled={formik.isSubmitting}
+        />
         <InputError
           error={formik.errors.username}
           touched={formik.touched.username}
         />
       </div>
-      <Button
-        type="submit"
-        label="Submit"
-        onClick={() => formik.handleSubmit()}
-        disabled={loading || !formik.isValid}
-        loading={loading}
-      />
-      <p className="text-sm font-base text-center text-layer-dark-200">
-        Not a Member yet?{" "}
-        <Link className="text-primary" to={`/registration`}>
-          Sign up
-        </Link>{" "}
-      </p>
+      <div>
+        <Button
+          type="submit"
+          text="Submit"
+          disabled={formik.isSubmitting || !formik.isValid}
+          loading={formik.isSubmitting}
+        />
+      </div>
+      <div>
+        <p className="text-sm font-base text-center text-layer-dark-200">
+          Not a Member yet?{" "}
+          <Link className="text-primary" to={`/registration`}>
+            Sign up
+          </Link>{" "}
+        </p>
+      </div>
     </form>
   );
 }

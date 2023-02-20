@@ -5,7 +5,7 @@ import ThemeContext from "./context/ThemeContext";
 import "react-toastify/dist/ReactToastify.css";
 import "animate.css";
 //theme
-import "primereact/resources/themes/tailwind-light/theme.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 //core
 import "primereact/resources/primereact.min.css";
 //icons

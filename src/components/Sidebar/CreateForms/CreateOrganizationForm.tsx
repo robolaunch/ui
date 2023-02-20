@@ -5,7 +5,6 @@ import { CreateOrganizationSchema } from "../../../validations/OrganizationsVali
 import { InputText } from "primereact/inputtext";
 import InputError from "../../InputError/InputError";
 import { Button } from "primereact/button";
-import { createOrganization } from "../../../app/OrganizationSlice";
 import { SidebarContext } from "../../../context/SidebarContext";
 
 export const CreateOrganizationForm = () => {
@@ -21,14 +20,7 @@ export const CreateOrganizationForm = () => {
     validationSchema: CreateOrganizationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       setLoading(true);
-      dispatch(
-        createOrganization({
-          organization: {
-            name: values.name,
-            enterprise: values.enterprise,
-          },
-        })
-      );
+
       setTimeout(() => {
         setLoading(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
