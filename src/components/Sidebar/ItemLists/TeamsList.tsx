@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../../hooks/redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import { SidebarContext } from "../../../context/SidebarContext";
+import { getTeams } from "../../../app/TeamSlice";
 
 export const TeamsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,7 +18,10 @@ export const TeamsList = () => {
   useEffect(() => {
     setLoading(true);
 
-    setResponseTeams([]);
+    dispatch(getTeams()).then((res: any) => {
+      setResponseTeams(res?.payload?.data?.data || []);
+    });
+
     setTimeout(() => setLoading(false), 1000);
   }, []);
 

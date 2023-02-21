@@ -6,8 +6,11 @@ import { Link } from "react-router-dom";
 import InputText from "../../../components/InputText/InputText";
 import Button from "../../../components/Button/Button";
 import InputCheckbox from "../../../components/InputCheckbox/InputCheckbox";
+import { useAppDispatch } from "../../../hooks/redux";
+import { register } from "../../../app/UserSlice";
 
 export default function RegistrationPage(): ReactElement {
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     validationSchema: RegisterSchema,
     initialValues: {
@@ -19,8 +22,14 @@ export default function RegistrationPage(): ReactElement {
     },
     onSubmit: (values) => {
       formik.setSubmitting(true);
-      console.log(values);
-
+      dispatch(
+        register({
+          username: values.username,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+        })
+      );
       setTimeout(() => {
         formik.setSubmitting(false);
       }, 2000);

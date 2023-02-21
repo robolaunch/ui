@@ -29,6 +29,12 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
     }
   };
 
+  const handleButtonClassNames = () => {
+    if (sidebarState?.isCreateMode) {
+      return `bg-layer-light-50 text-layer-primary-700 border border-layer-primary-700 hover:text-layer-light-50`;
+    }
+  };
+
   return (
     <div className="fixed flex flex-col justify-between left-24 w-[36rem] h-screen bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[3]">
       <div className="animate__animated animate__fadeInLeftBig">
@@ -75,6 +81,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         })()}
       </div>
       <Button
+        className={handleButtonClassNames()}
         text={handleButtonText()}
         onClick={() => {
           if (sidebarState?.isCreateMode) {

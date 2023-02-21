@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { SidebarContext } from "../../../context/SidebarContext";
 
 interface SidebarListItemProps {
-  key: number;
   name: string;
   description: string;
   type: string;
@@ -12,7 +11,6 @@ interface SidebarListItemProps {
 }
 
 export const SidebarListItem = ({
-  key,
   name,
   description,
   type,
@@ -23,23 +21,38 @@ export const SidebarListItem = ({
   const { selectedState, setSelectedState }: any = useContext(SidebarContext);
 
   const handleSelectItem = () => {
-    if (type === "team") {
-      if (selectedState.team === data) {
-        setSelectedState({
-          ...selectedState,
-          team: null,
-        });
-      } else {
-        setSelectedState({
-          ...selectedState,
-          team: data,
-        });
-      }
+    switch (type) {
+      case "team":
+        if (selectedState.team === data) {
+          setSelectedState({
+            ...selectedState,
+            team: null,
+          });
+        } else {
+          setSelectedState({
+            ...selectedState,
+            team: data,
+          });
+        }
+        break;
+      case "roboticscloud":
+        if (selectedState.roboticscloud === data) {
+          setSelectedState({
+            ...selectedState,
+            roboticscloud: null,
+          });
+        } else {
+          setSelectedState({
+            ...selectedState,
+            roboticscloud: data,
+          });
+        }
+        break;
     }
   };
 
   return (
-    <div key={key} className="flex animate__animated animate__fadeIn">
+    <div key={name} className="flex animate__animated animate__fadeIn">
       <div
         onClick={() => handleSelectItem()}
         className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg  ${

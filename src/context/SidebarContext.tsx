@@ -14,13 +14,14 @@ export default ({ children }: any) => {
   });
 
   const [selectedState, setSelectedState] = useState({
-    organization: {
-      name: currentOrganization?.name,
-    },
     team: null,
     roboticscloud: null,
     fleet: null,
   });
+
+  useEffect(() => {
+    console.log(selectedState);
+  }, [selectedState]);
 
   return (
     <SidebarContext.Provider

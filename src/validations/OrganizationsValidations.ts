@@ -10,5 +10,4 @@ export const LoginOrganizationSchema = Yup.object().shape({
 
 export const CreateOrganizationSchema = Yup.object().shape({
   name: Yup.string().required("Organization name is required."),
-  enterprise: Yup.boolean().required("Enterprise is required."),
 });

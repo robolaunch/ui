@@ -1,16 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch } from "../../../hooks/redux";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { getOrganizations } from "../../../app/OrganizationSlice";
 
 export const OrganizationsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseOrganizations, setResponseOrganizations] = useState<any>([]);
   const dispatch = useAppDispatch();
-  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
+
+  const { currentOrganization } = useAppSelector((state) => state.organization);
+
   useEffect(() => {
     setLoading(true);
-
+    dispatch(getOrganizations()).then((res: any) => {
+      setResponseOrganizations(res?.payload?.data?.data || []);
+    });
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -23,27 +27,25 @@ export const OrganizationsList = () => {
           alt="Loading..."
         />
       ) : (
-        <>
+        <Fragment>
           {responseOrganizations.map((organization: any, index: number) => {
             return (
               <SidebarListItem
+                key={index}
                 type="organization"
                 name={organization?.name}
                 description={
-                  organization?.enterprise
-                    ? "Enterprise Organization"
-                    : "Standard Organization"
+                  organization.name === currentOrganization?.name
+                    ? "Active Organization"
+                    : "Inactive Organization"
                 }
-                key={index}
                 url={`/${organization?.name}`}
                 data={organization}
-                selected={
-                  organization?.name === selectedState?.organization?.name
-                }
+                selected={organization.name === currentOrganization?.name}
               />
             );
           })}
-        </>
+        </Fragment>
       )}
     </div>
   );

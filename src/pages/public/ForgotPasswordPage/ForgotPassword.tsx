@@ -5,8 +5,11 @@ import InputError from "../../../components/InputError/InputError";
 import { Link } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import InputText from "../../../components/InputText/InputText";
+import { useAppDispatch } from "../../../hooks/redux";
+import { forgotPassword } from "../../../app/UserSlice";
 
 export default function ForgotPasswordPage(): ReactElement {
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     validationSchema: ForgotPasswordSchema,
     initialValues: {
@@ -14,6 +17,13 @@ export default function ForgotPasswordPage(): ReactElement {
     },
     onSubmit: (values) => {
       formik.setSubmitting(true);
+
+      dispatch(
+        forgotPassword({
+          username: values.username,
+        })
+      );
+
       setTimeout(() => {
         formik.setSubmitting(false);
       }, 2000);

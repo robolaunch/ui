@@ -1,6 +1,6 @@
 export const toastifyProperties: any = {
   theme: localStorage.theme === "dark" ? "dark" : "light",
-  position: "bottom-right",
+  position: "top-right",
   autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,

@@ -5,8 +5,12 @@ import InputText from "../../../components/InputText/InputText";
 import InputError from "../../../components/InputError/InputError";
 import Button from "../../../components/Button/Button";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/redux";
+import { login } from "../../../app/UserSlice";
 
 export default function LoginPage(): ReactElement {
+  const dispatch = useAppDispatch();
+
   const formik = useFormik({
     validationSchema: LoginSchema,
     initialValues: {
@@ -15,7 +19,7 @@ export default function LoginPage(): ReactElement {
     },
     onSubmit: (values) => {
       formik.setSubmitting(true);
-
+      dispatch(login({ username: values.username, password: values.password }));
       setTimeout(() => {
         formik.setSubmitting(false);
       }, 2000);
@@ -66,7 +70,7 @@ export default function LoginPage(): ReactElement {
       </div>
       <div>
         <p className="text-sm font-base text-center text-layer-dark-200">
-          If you have not a account?{" "}
+          If you have not a account?
           <Link className="text-primary" to="/registration">
             Register
           </Link>

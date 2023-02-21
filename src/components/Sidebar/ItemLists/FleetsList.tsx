@@ -1,21 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../../context/SidebarContext";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import {
+  getFleets,
+  getFleetsByRoboticsCloud,
+  getFleetsByTeam,
+} from "../../../app/FleetSlice";
+import { RootState } from "../../../app/store";
 
 export const FleetsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseFleets, setResponseFleets] = React.useState<any>([
-    { name: "FleetName1" },
-    { name: "FleetName2" },
-    { name: "FleetName3" },
-  ]);
+  const [responseFleets, setResponseFleets] = React.useState<any>([]);
+  const { currentOrganization } = useAppSelector(
+    (state: RootState) => state.organization
+  );
 
   const { selectedState }: any = useContext(SidebarContext);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setLoading(true);
+
+    if (selectedState?.team) {
+      if (selectedState?.roboticscloud) {
+        dispatch(
+          getFleetsByRoboticsCloud({
+            teamName: selectedState?.team?.name,
+            roboticsCloudName: selectedState?.roboticscloud?.name,
+          })
+        ).then((res: any) => {
+          setResponseFleets(res?.payload?.data?.data || []);
+        });
+      } else {
+        dispatch(getFleetsByTeam({ teamName: selectedState?.team?.name })).then(
+          (res: any) => {
+            setResponseFleets(res?.payload?.data?.data || []);
+          }
+        );
+      }
+    } else {
+      dispatch(getFleets()).then((res: any) => {
+        setResponseFleets(res?.payload?.data?.data || []);
+      });
+    }
 
     setTimeout(() => setLoading(false), 1000);
   }, []);
@@ -37,7 +65,7 @@ export const FleetsList = () => {
                 name={fleet?.name}
                 description={fleet?.name}
                 key={index}
-                url={`##`}
+                url={`${currentOrganization.name}/${fleet?.teamName}/${fleet?.roboticsCloudName}/${fleet?.name}`}
               />
             );
           })}
