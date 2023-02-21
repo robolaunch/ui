@@ -48,6 +48,19 @@ export const SidebarListItem = ({
           });
         }
         break;
+      case "fleet":
+        if (selectedState.fleet === data) {
+          setSelectedState({
+            ...selectedState,
+            fleet: null,
+          });
+        } else {
+          setSelectedState({
+            ...selectedState,
+            fleet: data,
+          });
+        }
+        break;
     }
   };
 

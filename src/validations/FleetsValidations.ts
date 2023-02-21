@@ -5,4 +5,5 @@ export const createFleetSchema = Yup.object().shape({
     .required("Name is required")
     .min(8, "Min 8 Character")
     .matches(/^[a-z]*$/, "Only lowercase english characters"),
+  isFederated: Yup.string().required("Is Federated is required"),
 });

@@ -66,6 +66,8 @@ export const FleetsList = () => {
                 description={fleet?.name}
                 key={index}
                 url={`${currentOrganization.name}/${fleet?.teamName}/${fleet?.roboticsCloudName}/${fleet?.name}`}
+                data={fleet}
+                selected={fleet?.name === selectedState?.fleet?.name}
               />
             );
           })}
