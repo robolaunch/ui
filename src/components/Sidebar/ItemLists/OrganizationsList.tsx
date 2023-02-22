@@ -42,6 +42,7 @@ export const OrganizationsList = () => {
                 url={`/${organization?.name}`}
                 data={organization}
                 selected={organization.name === currentOrganization?.name}
+                notSelectable
               />
             );
           })}
