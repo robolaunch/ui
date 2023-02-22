@@ -7,13 +7,17 @@ import {
   getRobotsByRoboticsCloud,
   getRobotsByTeam,
 } from "../../../app/RobotSlice";
-import { useAppDispatch } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { RootState } from "../../../app/store";
 
 export const RobotsList = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseRobots, setResponseRobots] = React.useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
   const dispatch = useAppDispatch();
+  const { currentOrganization } = useAppSelector(
+    (state: RootState) => state.organization
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -71,7 +75,8 @@ export const RobotsList = () => {
                 name={robot?.name}
                 description={robot?.name}
                 key={index}
-                url={`##`}
+                url={`/${currentOrganization.name}/${robot?.teamName}/${robot?.roboticsCloudName}/${robot?.fleetName}/${robot?.name}`}
+                notSelectable
               />
             );
           })}

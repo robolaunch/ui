@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { SidebarContext } from "../../../context/SidebarContext";
+import { toast } from "react-toastify";
+import { toastifyProperties } from "../../../tools/Toastify";
 
 interface SidebarListItemProps {
   name: string;
@@ -8,6 +10,7 @@ interface SidebarListItemProps {
   url: string;
   data?: any;
   selected?: boolean;
+  notSelectable?: boolean;
 }
 
 export const SidebarListItem = ({
@@ -17,13 +20,19 @@ export const SidebarListItem = ({
   url,
   data,
   selected,
+  notSelectable,
 }: SidebarListItemProps) => {
-  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
+  const {
+    selectedState,
+    setSelectedState,
+    sidebarState,
+    setSidebarState,
+  }: any = useContext(SidebarContext);
 
   const handleSelectItem = () => {
     switch (type) {
       case "team":
-        if (selectedState.team === data) {
+        if (selectedState?.team?.name === data?.name) {
           setSelectedState({
             ...selectedState,
             team: null,
@@ -33,33 +42,81 @@ export const SidebarListItem = ({
             ...selectedState,
             team: data,
           });
+          setSidebarState((sidebarState: any) => {
+            return {
+              ...sidebarState,
+              page: "roboticscloud",
+            };
+          });
         }
+
         break;
       case "roboticscloud":
-        if (selectedState.roboticscloud === data) {
-          setSelectedState({
-            ...selectedState,
-            roboticscloud: null,
-          });
+        if (selectedState?.team) {
+          if (selectedState?.roboticscloud?.name === data?.name) {
+            setSelectedState({
+              ...selectedState,
+              roboticscloud: null,
+            });
+          } else {
+            setSelectedState({
+              ...selectedState,
+              roboticscloud: data,
+            });
+            setSidebarState((sidebarState: any) => {
+              return {
+                ...sidebarState,
+                page: "fleet",
+              };
+            });
+          }
         } else {
-          setSelectedState({
-            ...selectedState,
-            roboticscloud: data,
+          toast.warning("Please select a team first.", toastifyProperties);
+          setSidebarState((sidebarState: any) => {
+            return {
+              ...sidebarState,
+              page: "team",
+            };
           });
         }
+
         break;
       case "fleet":
-        if (selectedState.fleet === data) {
-          setSelectedState({
-            ...selectedState,
-            fleet: null,
-          });
+        if (selectedState?.team) {
+          if (selectedState?.roboticscloud) {
+            if (selectedState.fleet === data) {
+              setSelectedState({
+                ...selectedState,
+                fleet: null,
+              });
+            } else {
+              setSelectedState({
+                ...selectedState,
+                fleet: data,
+              });
+            }
+          } else {
+            toast.warning(
+              "Please select a robotics cloud first.",
+              toastifyProperties
+            );
+            setSidebarState((sidebarState: any) => {
+              return {
+                ...sidebarState,
+                page: "roboticscloud",
+              };
+            });
+          }
         } else {
-          setSelectedState({
-            ...selectedState,
-            fleet: data,
+          toast.warning("Please select a team first.", toastifyProperties);
+          setSidebarState((sidebarState: any) => {
+            return {
+              ...sidebarState,
+              page: "team",
+            };
           });
         }
+
         break;
     }
   };
