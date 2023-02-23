@@ -12,6 +12,7 @@ import { useAppSelector } from "../hooks/redux";
 import { RootState } from "../app/store";
 import TeamsPage from "../pages/private/URM/TeamsPage";
 import TeamMembersPage from "../pages/private/URM/TeamMembersPage";
+import RemoteDesktop from "../pages/private/RemoteDesktop/RemoteDesktop";
 
 export default function AppRoutes(): ReactElement {
   const userToken: any = () => {
@@ -59,6 +60,10 @@ export default function AppRoutes(): ReactElement {
           <Route
             path={`/${currentOrganization.name}/:teamName/members`}
             element={<TeamMembersPage />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName/:robotName/remote-desktop`}
+            element={<RemoteDesktop />}
           />
           <Route
             path="*"
