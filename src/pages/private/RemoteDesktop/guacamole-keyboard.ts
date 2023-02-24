@@ -1,4 +1,4 @@
-import GuacamoleKeyboard from "./GuacamoleKeyboard.js";
+import GuacamoleKeyboard from "./guacamole-keyboard.js";
 
 export interface GuacamoleKeyboardInterface {
   /**

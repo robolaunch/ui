@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useRef, useEffect, useState, Fragment } from "react";
+import InputSelect from "../../../components/InputSelect/InputSelect";
+import GuacamoleKeyboard from "./guacamole-keyboard.ts";
+import Button from "../../../components/Button/Button";
+import { GiSpeaker } from "react-icons/gi";
 // @ts-ignore
 import randomstring from "randomstring";
-import InputSelect from "../../../components/InputSelect/InputSelect";
-import Button from "../../../components/Button/Button";
 
 const RemoteDesktop = () => {
   const video = useRef<any>(null);
@@ -13,8 +15,14 @@ const RemoteDesktop = () => {
   const candidate = useRef<any>(null);
   const client = useRef<any>(null);
   const channel = useRef<any>(null);
-  const [currentResolution, setCurrentResolution] = useState<any>(null);
+  const keyboard = useRef<any>(null);
+  const overlay = useRef<any>(null);
   const [allResolutions, setAllResolutions] = useState<any>(null);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [members, setMembers] = useState<any>(null);
+  const [chatMessages, setChatMessages] = useState<any>([]);
+
+  let currentResolution: any = null;
 
   useEffect(() => {
     const onTrack = (event: RTCTrackEvent) => {
@@ -22,10 +30,12 @@ const RemoteDesktop = () => {
         video.current.srcObject = event.streams[0];
       }
     };
+
     client.current = new WebSocket(`ws://localhost:8080/ws?password=admin`);
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);
+
       if (event === "signal/candidate") {
         const newPayload = JSON.parse(payload.data);
         if (peer.current) {
@@ -61,20 +71,77 @@ const RemoteDesktop = () => {
           currentResolution?.width !== payload.width &&
           currentResolution?.height !== payload.height
         ) {
-          setCurrentResolution(payload);
+          currentResolution = payload;
         }
       }
 
       if (event === "screen/configurations") {
         setAllResolutions(payload.configurations);
       }
+
+      if (event === "member/list") {
+        const { members } = payload;
+
+        setMembers(members);
+      }
+
+      if (event === "member/connected") {
+        setMembers((prev: any) => {
+          return [...prev, payload];
+        });
+      }
+
+      if (event === "member/disconnected") {
+        setMembers((prev: any) => {
+          return prev?.filter((member: any) => member.id !== payload?.id);
+        });
+      }
+
+      if (event === "chat/message") {
+        setChatMessages((prev: any) => [...prev, payload]);
+      }
     };
   }, []);
 
-  // Mouse Events
-  let buffer: ArrayBuffer;
-  let payload: DataView;
+  // Control Events
+  var buffer: ArrayBuffer;
+  var payload: DataView;
   useEffect(() => {
+    keyboard.current = GuacamoleKeyboard();
+
+    keyboard.current.onkeydown = (key: number) => {
+      buffer = new ArrayBuffer(11);
+      payload = new DataView(buffer);
+      payload.setUint8(0, 0x03);
+      payload.setUint16(1, 8, true);
+      payload.setBigUint64(3, BigInt(key), true);
+      if (
+        typeof buffer !== "undefined" &&
+        channel.current!.readyState === "open"
+      ) {
+        channel.current!.send(buffer);
+      }
+    };
+
+    keyboard.current.onkeyup = (key: number) => {
+      buffer = new ArrayBuffer(11);
+      payload = new DataView(buffer);
+      payload.setUint8(0, 0x04);
+      payload.setUint16(1, 8, true);
+      payload.setBigUint64(3, BigInt(key), true);
+      if (typeof buffer !== "undefined") {
+        channel.current!.send(buffer);
+      }
+    };
+
+    keyboard.current.listenTo(overlay.current);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    overlay.current.liste;
+
+    video.current?.addEventListener("mouseenter", () => {
+      overlay.current!.focus();
+    });
+
     video.current?.addEventListener("mousemove", (key: any) => {
       // 0x01;
       if (typeof video.current === "undefined") return;
@@ -153,8 +220,8 @@ const RemoteDesktop = () => {
         payload = new DataView(buffer);
         payload.setUint8(0, 0x02);
         payload.setUint16(1, 4, true);
-        payload.setInt16(3, key.deltaX / -100, true);
-        payload.setInt16(5, key.deltaY / -100, true);
+        payload.setInt16(3, key.deltaX / -120, true);
+        payload.setInt16(5, key.deltaY / -120, true);
         if (
           typeof buffer !== "undefined" &&
           channel.current.readyState === "open"
@@ -165,6 +232,7 @@ const RemoteDesktop = () => {
       }
     });
   }, [currentResolution]);
+  // Control Events
 
   function handleChangeResolution(e: any) {
     client.current.send(
@@ -185,70 +253,133 @@ const RemoteDesktop = () => {
     if (!controlReq.current) {
       client.current.send(JSON.stringify({ event: "control/request" }));
       controlReq.current = true;
+      video.current?.focus();
     } else {
       client.current.send(JSON.stringify({ event: "control/release" }));
       controlReq.current = false;
     }
   }
 
+  function handleVolumeControl(volume: number) {
+    video.current.volume = volume;
+  }
+
+  function handleMute() {
+    setIsMuted(!isMuted);
+  }
+
   return (
-    <div className="max-h-[40vh]">
-      <div className="flex ">
-        <div tabIndex={1}>
+    <div className="grid grid-cols-4">
+      <div className="col-span-3 relative bg-layer-dark-900 h-[50rem]">
+        <span
+          className="outline-none appearance-none"
+          ref={overlay}
+          tabIndex={1}
+        >
           <video
             onContextMenu={(e) => e.preventDefault()}
+            className="outline-none appearance-none mx-auto"
             playsInline
             ref={video}
             autoPlay
-            muted
+            muted={isMuted}
             style={{
+              position: "relative",
               backgroundColor: "#000",
-              maxHeight: "50rem",
-              minHeight: "50rem",
+              height: "50rem",
             }}
           />
+        </span>
+        {isMuted && (
+          <div
+            onClick={() => handleMute()}
+            className="absolute w-full h-full flex items-center justify-center top-0 bg-[#00000075] text-layer-light-50 cursor-pointer animate__animated animate__fadeIn"
+          >
+            <GiSpeaker size={48} />
+          </div>
+        )}
+      </div>
+      <div className="col-span-1 flex flex-col gap-4">
+        <div>
+          <InputSelect
+            onChange={(e: any) => {
+              handleChangeResolution({
+                width: Number(e.target.value.split("x")[0]),
+                height: Number(e.target.value.split("x")[1]),
+              });
+            }}
+          >
+            <Fragment>
+              {allResolutions &&
+                Object.keys(allResolutions).map((key: any, index: number) => {
+                  return (
+                    <option
+                      key={index}
+                      value={
+                        allResolutions[
+                          key.width + "x" + allResolutions[key].height
+                        ]
+                      }
+                      defaultChecked={
+                        allResolutions[key].width ===
+                          currentResolution?.width &&
+                        allResolutions[key].height === currentResolution?.height
+                      }
+                    >
+                      {allResolutions[key].width}x{allResolutions[key].height}
+                    </option>
+                  );
+                })}
+            </Fragment>
+          </InputSelect>
         </div>
-        <div className="flex gap-4">
-          <div>
-            <InputSelect
-              onChange={(e: any) => {
-                handleChangeResolution({
-                  width: Number(e.target.value.split("x")[0]),
-                  height: Number(e.target.value.split("x")[1]),
-                });
-              }}
-            >
-              <Fragment>
-                {allResolutions &&
-                  Object.keys(allResolutions).map((key: any) => {
-                    return (
-                      <option
-                        key={key}
-                        value={
-                          allResolutions[
-                            key.width + "x" + allResolutions[key].height
-                          ]
-                        }
-                        defaultChecked={
-                          allResolutions[key].width ===
-                            currentResolution?.width &&
-                          allResolutions[key].height ===
-                            currentResolution?.height
-                        }
-                      >
-                        {allResolutions[key].width}x{allResolutions[key].height}
-                      </option>
-                    );
-                  })}
-              </Fragment>
-            </InputSelect>
-          </div>
-          <div>
-            <Button text="Full Screen" onClick={() => handleSetFullScreen()} />
-          </div>
-          <div>
-            <Button text="Control" onClick={() => handleControl()} />
-          </div>
+        <div>
+          <Button text="Full Screen" onClick={() => handleSetFullScreen()} />
+        </div>
+        <div>
+          <Button text="Control" onClick={() => handleControl()} />
+        </div>
+        <div>
+          <input
+            onChange={(e) => handleVolumeControl(Number(e.target.value) / 100)}
+            type="range"
+            min="1"
+            max="100"
+            defaultValue={100}
+          />
+        </div>
+        <div>
+          <Button text="Mute" onClick={() => handleMute()} />
+        </div>
+        <div>
+          {members?.map((member: any, index: number) => {
+            return (
+              <div key={index}>
+                <div className="flex items-center gap-2">
+                  <div>{member.displayname}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          chatMessages
+          {chatMessages?.map((message: any, index: number) => {
+            return (
+              <div key={index}>
+                <div className="flex items-center gap-2">
+                  <div>
+                    {members.map((mem: any) => {
+                      if (mem.id === message.id) {
+                        return mem.displayname;
+                      }
+                    })}
+                  </div>
+                  <div>{message.content}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
