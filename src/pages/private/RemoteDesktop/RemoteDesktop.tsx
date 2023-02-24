@@ -7,6 +7,7 @@ import Button from "../../../components/Button/Button";
 import { GiSpeaker } from "react-icons/gi";
 // @ts-ignore
 import randomstring from "randomstring";
+import ChatScreen from "../../../components/ChatScreen/ChatScreen.tsx";
 
 const RemoteDesktop = () => {
   const video = useRef<any>(null);
@@ -269,37 +270,42 @@ const RemoteDesktop = () => {
   }
 
   return (
-    <div className="grid grid-cols-4">
-      <div className="col-span-3 relative bg-layer-dark-900 h-[50rem]">
-        <span
-          className="outline-none appearance-none"
-          ref={overlay}
-          tabIndex={1}
-        >
-          <video
-            onContextMenu={(e) => e.preventDefault()}
-            className="outline-none appearance-none mx-auto"
-            playsInline
-            ref={video}
-            autoPlay
-            muted={isMuted}
-            style={{
-              position: "relative",
-              backgroundColor: "#000",
-              height: "50rem",
-            }}
-          />
-        </span>
-        {isMuted && (
-          <div
-            onClick={() => handleMute()}
-            className="absolute w-full h-full flex items-center justify-center top-0 bg-[#00000075] text-layer-light-50 cursor-pointer animate__animated animate__fadeIn"
+    <div className="bg-layer-light-50 p-2 shadow-lg rounded-lg">
+      <div className="grid grid-cols-12 gap-2 " style={{ height: "51rem" }}>
+        <div className="col-span-10 relative flex justify-center  bg-layer-dark-900">
+          <span
+            className="relative outline-none appearance-none"
+            ref={overlay}
+            tabIndex={1}
           >
-            <GiSpeaker size={48} />
-          </div>
-        )}
+            <video
+              onContextMenu={(e) => e.preventDefault()}
+              className="absolute top-0 bottom-0"
+              playsInline
+              ref={video}
+              autoPlay
+              muted={isMuted}
+              style={{
+                position: "relative",
+                backgroundColor: "#000",
+                height: "50rem",
+              }}
+            />
+            {isMuted && (
+              <div
+                onClick={() => handleMute()}
+                className="absolute z-10 w-full h-full flex items-center justify-center top-0 bg-[#00000075] text-layer-light-50 cursor-pointer animate__animated animate__fadeIn"
+              >
+                <GiSpeaker size={48} />
+              </div>
+            )}
+          </span>
+        </div>
+        <div className="col-span-2 flex flex-col gap-4">
+          <ChatScreen chatMessages={chatMessages} members={members} />
+        </div>
       </div>
-      <div className="col-span-1 flex flex-col gap-4">
+      <div className="flex gap-4 pt-4">
         <div>
           <InputSelect
             onChange={(e: any) => {
@@ -357,25 +363,6 @@ const RemoteDesktop = () => {
               <div key={index}>
                 <div className="flex items-center gap-2">
                   <div>{member.displayname}</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          chatMessages
-          {chatMessages?.map((message: any, index: number) => {
-            return (
-              <div key={index}>
-                <div className="flex items-center gap-2">
-                  <div>
-                    {members.map((mem: any) => {
-                      if (mem.id === message.id) {
-                        return mem.displayname;
-                      }
-                    })}
-                  </div>
-                  <div>{message.content}</div>
                 </div>
               </div>
             );
