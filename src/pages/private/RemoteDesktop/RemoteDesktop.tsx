@@ -5,7 +5,7 @@ import InputSelect from "../../../components/InputSelect/InputSelect";
 import GuacamoleKeyboard from "./guacamole-keyboard.ts";
 import Button from "../../../components/Button/Button";
 import { GiSpeaker } from "react-icons/gi";
-
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import ChatScreen from "../../../components/ChatScreen/ChatScreen.tsx";
 import VolumeControl from "../../../components/VolumeControl/VolumeControl.tsx";
 import { toast } from "sonner";
@@ -13,6 +13,7 @@ import { useAppSelector } from "../../../hooks/redux.ts";
 import { RootState } from "../../../app/store.ts";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../components/ChatViewers/ChatViewers.tsx";
+import useWindowDimensions from "../../../hooks/useWindowDimensions.tsx";
 
 const RemoteDesktop = () => {
   const video = useRef<any>(null);
@@ -196,6 +197,7 @@ const RemoteDesktop = () => {
   var payload: DataView;
   useEffect(() => {
     keyboard.current = GuacamoleKeyboard();
+    const targetElement: any = document.querySelector("body");
 
     keyboard.current.onkeydown = (key: number) => {
       buffer = new ArrayBuffer(11);
@@ -231,37 +233,40 @@ const RemoteDesktop = () => {
     });
 
     video.current?.addEventListener("mousemove", (key: any) => {
-      // 0x01;
-      if (typeof video.current === "undefined") return;
+      if (controller.current?.displayname === user?.username) {
+        // 0x01;
+        disableBodyScroll(targetElement);
 
-      const rect = video.current?.getBoundingClientRect();
-      if (rect) {
-        buffer = new ArrayBuffer(7);
-        payload = new DataView(buffer);
-        payload.setUint8(0, 0x01);
-        payload.setUint16(1, 4, true);
-        payload.setUint16(
-          3,
-          Math.round(
-            (Number(currentResolution?.width) / rect.width) *
-              (key.clientX - rect.left)
-          ),
-          true
-        );
-        payload.setUint16(
-          5,
-          Math.round(
-            (Number(currentResolution?.height) / rect.height) *
-              (key.clientY - rect.top)
-          ),
-          true
-        );
+        if (typeof video.current === "undefined") return;
+        const rect = video.current?.getBoundingClientRect();
+        if (rect) {
+          buffer = new ArrayBuffer(7);
+          payload = new DataView(buffer);
+          payload.setUint8(0, 0x01);
+          payload.setUint16(1, 4, true);
+          payload.setUint16(
+            3,
+            Math.round(
+              (Number(currentResolution?.width) / rect.width) *
+                (key.clientX - rect.left)
+            ),
+            true
+          );
+          payload.setUint16(
+            5,
+            Math.round(
+              (Number(currentResolution?.height) / rect.height) *
+                (key.clientY - rect.top)
+            ),
+            true
+          );
 
-        if (
-          typeof buffer !== "undefined" &&
-          channel.current.readyState === "open"
-        ) {
-          channel.current!.send(buffer);
+          if (
+            typeof buffer !== "undefined" &&
+            channel.current.readyState === "open"
+          ) {
+            channel.current!.send(buffer);
+          }
         }
       }
     });
@@ -318,6 +323,10 @@ const RemoteDesktop = () => {
           console.log("cancelled!");
         }
       }
+    });
+
+    video.current?.addEventListener("mouseleave", () => {
+      enableBodyScroll(targetElement);
     });
   }, [currentResolution]);
   // Control Events
@@ -377,9 +386,9 @@ const RemoteDesktop = () => {
   }
 
   return (
-    <div className="bg-layer-light-50 p-2 shadow-lg rounded-lg animate__animated animate__fadeIn">
-      <div className="grid grid-cols-12" style={{ height: "51rem" }}>
-        <div className="md:col-span-7 lg:col-span-8 xl:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900">
+    <div className="bg-layer-light-50 p-2 shadow-lg rounded-lg animate__animated animate__fadeIn transition-all duration-500">
+      <div className="grid grid-cols-12">
+        <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900">
           <span
             className="relative outline-none appearance-none"
             ref={overlay}
@@ -395,7 +404,6 @@ const RemoteDesktop = () => {
               style={{
                 position: "relative",
                 backgroundColor: "#000",
-                maxHeight: "50rem",
               }}
             />
             {isMuted && (
@@ -480,7 +488,7 @@ const RemoteDesktop = () => {
                       return "Took Control";
                     })()}
                     onClick={() => handleControl()}
-                    className="!py-0 px-5"
+                    className="text-xs h-10 w-28"
                   />
                 </div>
               </div>
@@ -497,7 +505,7 @@ const RemoteDesktop = () => {
             <div>{controllerState?.displayname || "none"}</div>
           </div>
         </div>
-        <div className="col-span-2 flex flex-col gap-4">
+        <div className="col-span-5 md:col-span-4 lg:col-span-3 2xl:col-span-2 flex flex-col">
           <ul className="w-full flex items-center justify-center gap-8 p-2">
             {tabs.map((tab: any, index: number) => {
               return (

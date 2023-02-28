@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 interface ButtonProps {
   type?: "button" | "submit" | "reset";
-  text: string;
+  text: any;
   onClick?: () => void;
   loading?: boolean;
   disabled?: boolean;
