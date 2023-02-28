@@ -12,10 +12,12 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 import { ToastContainer } from "react-toastify";
+import { Toaster } from "sonner";
 function App() {
   return (
     <ThemeContext>
       <ToastContainer />
+      <Toaster position="top-center" />
       <AppRoutes />
     </ThemeContext>
   );

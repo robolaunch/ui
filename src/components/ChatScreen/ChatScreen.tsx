@@ -1,19 +1,25 @@
 import React, { ReactElement } from "react";
-import InputTextArea from "../InputTextArea/InputTextArea";
-import Button from "../Button/Button";
+import { TbMessageCircle2 } from "react-icons/tb";
+import InputText from "../InputText/InputText";
 
 interface IChatScreen {
+  handleOnChangeMessage: any;
+  handleSendMessage: any;
   chatMessages: any;
+  inputValue: any;
   members: any;
 }
 
-export default function ChatScreem({
+export default function ChatScreen({
+  handleOnChangeMessage,
+  handleSendMessage,
   chatMessages,
+  inputValue,
   members,
 }: IChatScreen): ReactElement {
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-col gap-4 h-[44rem] overflow-auto">
+    <div className="h-full flex flex-col items-center justify-between">
+      <div className="flex flex-col gap-4 overflow-auto">
         {chatMessages?.map((message: any, index: number) => {
           return (
             <div className="flex gap-4 text-sm" key={index}>
@@ -25,28 +31,36 @@ export default function ChatScreem({
                 })}
               </div>
               <div className="flex flex-col">
-                <div className="font-semibold">
+                <div className="text-xs font-semibold">
                   {members?.map((mem: any) => {
                     if (mem.id === message.id) {
                       return mem.displayname;
                     }
                   })}
                 </div>
-                <div className="break-words w-[210px]">{message.content}</div>
+                <div className="text-xs break-words w-[210px]">
+                  {message.content}
+                </div>
               </div>
             </div>
           );
         })}
-      </div>
 
-      <div className="grid grid-cols-5">
-        <div className="col-span-4">
-          <InputTextArea placeholder="Message" />
-        </div>
-        <div className="col-span-1">
-          <Button text="Send" />
-        </div>
+        {chatMessages?.length === 0 && (
+          <div className="h-full flex flex-col gap-3 items-center justify-center">
+            <TbMessageCircle2 size={24} className="text-layer-light-400" />
+            <div className="text-xs text-layer-light-500">
+              No messages yet. Start the conversation.
+            </div>
+          </div>
+        )}
       </div>
+      <InputText
+        onChange={(e) => handleOnChangeMessage(e.target.value)}
+        onSubmitEnter={() => handleSendMessage()}
+        placeholder="Message"
+        value={inputValue}
+      />
     </div>
   );
 }

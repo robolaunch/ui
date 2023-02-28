@@ -6,6 +6,7 @@ interface InputTextProps {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  onSubmitEnter?: () => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -17,6 +18,7 @@ export default function InputText({
   value,
   placeholder,
   disabled,
+  onSubmitEnter,
   onFocus,
   onChange,
   onBlur,
@@ -45,6 +47,11 @@ export default function InputText({
         onBlur={(e) => {
           onBlur && onBlur(e);
           !value && setIsFocused(false);
+        }}
+        onKeyDown={(e: any) => {
+          if (e.key === "Enter") {
+            onSubmitEnter && onSubmitEnter();
+          }
         }}
       />
     </div>

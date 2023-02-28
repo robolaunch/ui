@@ -73,7 +73,14 @@ export const forgotPassword = createAsyncThunk(
 
 export const UserSlice = createSlice({
   name: "user",
-  initialState: {},
+  initialState: {
+    user: {
+      username: "gokhangunduz",
+      firstName: "Gökhan",
+      lastName: "Gündüz",
+      email: "test@test.com",
+    },
+  },
   reducers: {},
   extraReducers: {
     [login.pending.type]: (state, action) => {

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 
 interface IInputTextArea {
   type?: "text" | "password" | "email";
@@ -6,8 +6,9 @@ interface IInputTextArea {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  onSubmitEnter?: () => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
@@ -17,6 +18,7 @@ export default function InputText({
   value,
   placeholder,
   disabled,
+  onSubmitEnter,
   onFocus,
   onChange,
   onBlur,
@@ -40,11 +42,19 @@ export default function InputText({
       focus:border-layer-primary focus:ring-2 focus:ring-primary`}
         name={name}
         value={value}
-        onFocus={() => setIsFocused(true)}
-        onChange={() => onChange}
+        onFocus={(e: any) => {
+          onFocus && onFocus(e);
+          setIsFocused(true);
+        }}
+        onChange={(e: any) => onChange(e)}
         onBlur={(e: any) => {
           onBlur && onBlur(e);
           !value && setIsFocused(false);
+        }}
+        onKeyDown={(e: any) => {
+          if (e.key === "Enter") {
+            onSubmitEnter && onSubmitEnter();
+          }
         }}
       />
     </div>
