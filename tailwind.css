@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.ui-resizable-handle {
+  @apply !opacity-25;
+}
+
+.grid-stack-item-content {
+  @apply !shadow-lg;
+}
+
 /* .p-inputtext {
   @apply !w-full;
 }

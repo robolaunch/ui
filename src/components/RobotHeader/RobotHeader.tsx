@@ -37,7 +37,7 @@ export default function RobotHeader({
   ];
 
   return (
-    <div className="flex flex-col justify-between bg-layer-light-50 rounded-lg">
+    <div className="flex flex-col justify-between bg-layer-light-50 rounded-lg shadow">
       <div className="h-[10rem]">robot header</div>
       <ul className="flex gap-8 px-6">
         {tabs.map((tab: any, index: number) => {

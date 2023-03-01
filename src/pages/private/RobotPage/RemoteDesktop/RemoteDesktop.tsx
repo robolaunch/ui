@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useRef, useEffect, useState, Fragment } from "react";
-import InputSelect from "../../../components/InputSelect/InputSelect";
+import InputSelect from "../../../../components/InputSelect/InputSelect.tsx";
 import GuacamoleKeyboard from "./guacamole-keyboard.ts";
-import Button from "../../../components/Button/Button";
+import Button from "../../../../components/Button/Button.tsx";
 import { GiSpeaker } from "react-icons/gi";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import ChatScreen from "../../../components/ChatScreen/ChatScreen.tsx";
-import VolumeControl from "../../../components/VolumeControl/VolumeControl.tsx";
+import ChatScreen from "../../../../components/ChatScreen/ChatScreen.tsx";
+import VolumeControl from "../../../../components/VolumeControl/VolumeControl.tsx";
 import { toast } from "sonner";
-import { useAppSelector } from "../../../hooks/redux.ts";
-import { RootState } from "../../../app/store.ts";
+import { useAppSelector } from "../../../../hooks/redux.ts";
+import { RootState } from "../../../../app/store.ts";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import ChatViewers from "../../../components/ChatViewers/ChatViewers.tsx";
-import useWindowDimensions from "../../../hooks/useWindowDimensions.tsx";
+import ChatViewers from "../../../../components/ChatViewers/ChatViewers.tsx";
 
 const RemoteDesktop = () => {
   const video = useRef<any>(null);
@@ -85,8 +84,8 @@ const RemoteDesktop = () => {
 
       if (event === "screen/resolution") {
         if (
-          currentResolution?.width !== payload.width &&
-          currentResolution?.height !== payload.height
+          currentResolution?.width !== payload?.width &&
+          currentResolution?.height !== payload?.height
         ) {
           // eslint-disable-next-line react-hooks/exhaustive-deps
           currentResolution = payload;
@@ -185,6 +184,12 @@ const RemoteDesktop = () => {
           return;
         });
       }
+
+      if (event === "control/clipboard") {
+        const { text } = payload;
+        console.log(text);
+        navigator.clipboard.writeText(text);
+      }
     };
 
     return () => {
@@ -230,6 +235,19 @@ const RemoteDesktop = () => {
 
     video.current?.addEventListener("mouseenter", () => {
       overlay.current!.focus();
+
+      if (controller.current?.displayname === user?.username) {
+        navigator.clipboard.readText().then((text) => {
+          if (text.length > 0) {
+            client.current!.send(
+              JSON.stringify({
+                event: "control/clipboard",
+                text,
+              })
+            );
+          }
+        });
+      }
     });
 
     video.current?.addEventListener("mousemove", (key: any) => {
