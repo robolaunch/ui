@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import { BiTrashAlt } from "react-icons/bi";
 import { GoGraph } from "react-icons/go";
 import ReactApexChart from "react-apexcharts";
 import { useComponentSize } from "react-use-size";

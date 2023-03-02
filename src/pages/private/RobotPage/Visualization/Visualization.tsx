@@ -9,7 +9,7 @@ import { RootState } from "../../../../app/store";
 import RosTopicListWidget from "../../../../components/RosTopicListWidget/RosTopicListWidget";
 import RosCmdVelWidget from "../../../../components/RosCmdVelWidget/RosCmdVelWidget";
 import { CircleMenu, CircleMenuItem } from "react-circular-menu";
-import { BsCameraVideo, BsPinMap } from "react-icons/bs";
+import { BsBatteryFull, BsCameraVideo, BsPinMap } from "react-icons/bs";
 import { AiOutlineCode, AiOutlinePlus } from "react-icons/ai";
 import RosRosOutWidget from "../../../../components/RosRosOutWidget/RosRosOutWidget";
 import RosMapWidget from "../../../../components/RosMapWidget/RosMapWidget";
@@ -20,6 +20,7 @@ import RosResourceUsageWidget from "../../../../components/RosResourceUsageWidge
 import { GoGraph } from "react-icons/go";
 import { BiErrorCircle } from "react-icons/bi";
 import RosEmergencyControlWidget from "../../../../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
+import RosBatteryWidget from "../../../../components/RosBatteryWidget/RosBatteryWidget";
 interface IVisualization {
   ros: any;
   topicList: string[];
@@ -142,9 +143,17 @@ export default function Visualization({
                 handleRemoveWidget={handleRemoveWidget}
               />
             )
-          : widget === "RosEmergencyControlWidget" &&
-            ReactDOMServer.renderToString(
+          : widget === "RosEmergencyControlWidget"
+          ? ReactDOMServer.renderToString(
               <RosEmergencyControlWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosBatteryWidget" &&
+            ReactDOMServer.renderToString(
+              <RosBatteryWidget
                 id={grid.save(true, true).children.length}
                 ros={ros}
                 handleRemoveWidget={handleRemoveWidget}
@@ -182,7 +191,6 @@ export default function Visualization({
     <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">
       <div className="col-span-1 grid-stack min-h-[40rem] max-h-[40rem] z-0">
         {gridLayout.map((item: any, index: number) => {
-          console.log(item);
           return (
             <div
               key={index}
@@ -246,6 +254,13 @@ export default function Visualization({
                 )}
                 {item.content.search("RosEmergencyControlWidget") > 0 && (
                   <RosEmergencyControlWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
+                {item.content.search("RosBatteryWidget") > 0 && (
+                  <RosBatteryWidget
                     id={index}
                     ros={ros}
                     handleRemoveWidget={handleRemoveWidget}
@@ -339,6 +354,14 @@ export default function Visualization({
             onClick={() => handleAddWidget("RosEmergencyControlWidget")}
           >
             <BiErrorCircle size={20} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Battery"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosBatteryWidget")}
+          >
+            <BsBatteryFull size={22} className="text-layer-light-800" />
           </CircleMenuItem>
         </CircleMenu>
       </div>
