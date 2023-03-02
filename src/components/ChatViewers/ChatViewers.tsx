@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import Button from "../Button/Button";
 import { MdStopScreenShare } from "react-icons/md";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 interface IChatViewers {
   roomMembersState: any;
 }
@@ -8,8 +9,13 @@ interface IChatViewers {
 export default function ChatViewers({
   roomMembersState,
 }: IChatViewers): ReactElement {
+  const { width } = useWindowDimensions();
+
   return (
-    <div className="h-full flex flex-col gap-6 px-2">
+    <div
+      className="h-full flex flex-col gap-6 px-2 scrollbar-hide overflow-auto"
+      style={{ height: width / 2.75 }}
+    >
       {roomMembersState?.map((member: any, index: number) => {
         return (
           <div

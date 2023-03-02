@@ -100,6 +100,16 @@ export default function RobotPage(): ReactElement {
                 return <RemoteDesktop />;
               case "Settings":
                 return <div>Settings</div>;
+              case "Loading":
+                return (
+                  <div>
+                    <img
+                      className="mx-auto scale-75"
+                      src="/svg/general/loading.svg"
+                      alt="loading"
+                    />
+                  </div>
+                );
             }
           })()}
         </div>

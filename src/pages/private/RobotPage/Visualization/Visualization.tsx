@@ -8,7 +8,18 @@ import { useAppSelector } from "../../../../hooks/redux";
 import { RootState } from "../../../../app/store";
 import RosTopicListWidget from "../../../../components/RosTopicListWidget/RosTopicListWidget";
 import RosCmdVelWidget from "../../../../components/RosCmdVelWidget/RosCmdVelWidget";
-
+import { CircleMenu, CircleMenuItem } from "react-circular-menu";
+import { BsCameraVideo, BsPinMap } from "react-icons/bs";
+import { AiOutlineCode, AiOutlinePlus } from "react-icons/ai";
+import RosRosOutWidget from "../../../../components/RosRosOutWidget/RosRosOutWidget";
+import RosMapWidget from "../../../../components/RosMapWidget/RosMapWidget";
+import { CiViewList } from "react-icons/ci";
+import { IoMdCodeWorking } from "react-icons/io";
+import RosNetworkWidget from "../../../../components/RosNetworkWidget/RosNetworkWidget";
+import RosResourceUsageWidget from "../../../../components/RosResourceUsageWidget/RosResourceUsageWidget";
+import { GoGraph } from "react-icons/go";
+import { BiErrorCircle } from "react-icons/bi";
+import RosEmergencyControlWidget from "../../../../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
 interface IVisualization {
   ros: any;
   topicList: string[];
@@ -24,6 +35,7 @@ export default function Visualization({
   const { currentOrganization } = useAppSelector(
     (state: RootState) => state.organization
   );
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 
   const url = useParams();
 
@@ -43,6 +55,7 @@ export default function Visualization({
 
   useEffect(() => {
     const grid: any = GridStack.init({
+      float: true,
       acceptWidgets: true,
       alwaysShowResizeHandle: true,
       removable: false,
@@ -53,8 +66,6 @@ export default function Visualization({
     setGrid(grid);
 
     grid.on("change", function () {
-      console.log("change");
-      console.log(grid.save(true, true).children);
       setTimeout(() => {
         window.localStorage.setItem(
           // @ts-ignore
@@ -66,13 +77,12 @@ export default function Visualization({
   }, [localStoragePath]);
 
   const handleAddWidget = (widget: string) => {
-    console.log("handleAddWidget", widget);
     const temp = grid.save(true, true).children;
     temp.push({
-      x: 99,
-      y: 99,
-      w: 4,
-      h: 4,
+      x: null,
+      y: null,
+      w: 3,
+      h: 3,
       content:
         widget === "RosCameraWidget"
           ? ReactDOMServer.renderToString(
@@ -92,9 +102,49 @@ export default function Visualization({
                 handleRemoveWidget={handleRemoveWidget}
               />
             )
-          : widget === "RosCmdVelWidget" &&
-            ReactDOMServer.renderToString(
+          : widget === "RosCmdVelWidget"
+          ? ReactDOMServer.renderToString(
               <RosCmdVelWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosRosOutWidget"
+          ? ReactDOMServer.renderToString(
+              <RosRosOutWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosMapWidget"
+          ? ReactDOMServer.renderToString(
+              <RosMapWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosNetworkWidget"
+          ? ReactDOMServer.renderToString(
+              <RosNetworkWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosResourceUsageWidget"
+          ? ReactDOMServer.renderToString(
+              <RosResourceUsageWidget
+                id={grid.save(true, true).children.length}
+                ros={ros}
+                handleRemoveWidget={handleRemoveWidget}
+              />
+            )
+          : widget === "RosEmergencyControlWidget" &&
+            ReactDOMServer.renderToString(
+              <RosEmergencyControlWidget
                 id={grid.save(true, true).children.length}
                 ros={ros}
                 handleRemoveWidget={handleRemoveWidget}
@@ -130,18 +180,7 @@ export default function Visualization({
 
   return (
     <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">
-      <div className="col-span-1 w-full flex gap-4 p-4 bg-layer-light-50 rounded-lg shadow">
-        <button onClick={() => handleAddWidget("RosCameraWidget")}>
-          add RosCameraWidget
-        </button>
-        <button onClick={() => handleAddWidget("RosTopicListWidget")}>
-          add RosTopicListWidget
-        </button>
-        <button onClick={() => handleAddWidget("RosCmdVelWidget")}>
-          add RosCmdVelWidget
-        </button>
-      </div>
-      <div className="col-span-1 grid-stack min-h-[40rem] max-h-[40rem]">
+      <div className="col-span-1 grid-stack min-h-[40rem] max-h-[40rem] z-0">
         {gridLayout.map((item: any, index: number) => {
           console.log(item);
           return (
@@ -177,10 +216,131 @@ export default function Visualization({
                     handleRemoveWidget={handleRemoveWidget}
                   />
                 )}
+                {item.content.search("RosRosOutWidget") > 0 && (
+                  <RosRosOutWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
+                {item.content.search("RosMapWidget") > 0 && (
+                  <RosMapWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
+                {item.content.search("RosNetworkWidget") > 0 && (
+                  <RosNetworkWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
+                {item.content.search("RosResourceUsageWidget") > 0 && (
+                  <RosResourceUsageWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
+                {item.content.search("RosEmergencyControlWidget") > 0 && (
+                  <RosEmergencyControlWidget
+                    id={index}
+                    ros={ros}
+                    handleRemoveWidget={handleRemoveWidget}
+                  />
+                )}
               </div>
             </div>
           );
         })}
+      </div>
+      <div className="fixed block  bottom-5 left-1/2 right-1/2 z-10">
+        <CircleMenu
+          startAngle={180}
+          rotationAngle={180}
+          itemSize={2}
+          radius={10}
+          rotationAngleInclusive={true}
+          menuToggleElement={
+            <div className="flex items-center justify-center w-12 h-12 bg-layer-light-50 hover:bg-layer-light-100 rounded-full cursor-pointer border border-layer-light-200 transition-all duration-500 hover:scale-90">
+              <AiOutlinePlus
+                size={24}
+                className={`text-layer-dark-900 ${
+                  isOpenMenu && "rotate-45"
+                } transition-all duration-500`}
+              />
+            </div>
+          }
+          onMenuToggle={(isOpen) => {
+            setIsOpenMenu(isOpen);
+          }}
+        >
+          <CircleMenuItem
+            tooltip="Camera"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosCameraWidget")}
+          >
+            <BsCameraVideo size={24} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="cmd_vel Logs"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosCmdVelWidget")}
+          >
+            <AiOutlineCode size={26} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Topic List"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosTopicListWidget")}
+          >
+            <CiViewList size={26} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="ros_out Logs"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosRosOutWidget")}
+          >
+            <IoMdCodeWorking size={26} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Map"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosMapWidget")}
+          >
+            <BsPinMap size={20} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Network"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosNetworkWidget")}
+          >
+            <BsPinMap size={20} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Resorce Usage"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosResourceUsageWidget")}
+          >
+            <GoGraph size={20} className="text-layer-light-800" />
+          </CircleMenuItem>
+
+          <CircleMenuItem
+            tooltip="Emergency Control"
+            className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+            onClick={() => handleAddWidget("RosEmergencyControlWidget")}
+          >
+            <BiErrorCircle size={20} className="text-layer-light-800" />
+          </CircleMenuItem>
+        </CircleMenu>
       </div>
     </div>
   );

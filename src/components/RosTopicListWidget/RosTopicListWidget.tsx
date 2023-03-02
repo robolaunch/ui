@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import ROSLIB from "roslib";
-import { BiTrashAlt } from "react-icons/bi";
-import { RxActivityLog } from "react-icons/rx";
+import { CiViewList } from "react-icons/ci";
+import WidgetLayout from "../../layouts/WidgetLayout";
 
 interface IRosTopicListWidget {
   ros: any;
@@ -35,21 +35,13 @@ export default function RosTopicListWidget({
   }, [ros]);
 
   return (
-    <div
-      id="RosTopicListWidget"
-      className="flex flex-col gap-3 h-full bg-layer-light-50 rounded-lg p-2"
+    <WidgetLayout
+      id={id}
+      type="RosTopicListWidget"
+      handleRemoveWidget={handleRemoveWidget}
+      icon={<CiViewList size={26} className="text-layer-light-400" />}
+      title="Topic List"
     >
-      <div className="flex justify-between items-center gap-4 ">
-        <RxActivityLog size={20} className="text-layer-light-400" />
-        <span className="text-sm font-medium  text-layer-dark-700">
-          Topic List
-        </span>
-        <BiTrashAlt
-          onClick={() => handleRemoveWidget(id)}
-          size={24}
-          className="text-layer-light-400"
-        />
-      </div>
       <div className="flex flex-col gap-2 overflow-auto scrollbar-hide p-2">
         {topicList.map((topic: any, key: number) => {
           return (
@@ -63,6 +55,6 @@ export default function RosTopicListWidget({
           );
         })}
       </div>
-    </div>
+    </WidgetLayout>
   );
 }

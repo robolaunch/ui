@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { RxActivityLog } from "react-icons/rx";
+import { AiOutlineCode } from "react-icons/ai";
 import { BiTrashAlt } from "react-icons/bi";
 import ROSLIB from "roslib";
+import WidgetLayout from "../../layouts/WidgetLayout";
 
 interface IRosCmdVelWidget {
   ros: any;
@@ -33,21 +34,13 @@ export default function RosCmdVelWidget({
   }, []);
 
   return (
-    <div
-      id="RosCmdVelWidget"
-      className="flex flex-col gap-3 h-full bg-layer-light-50 rounded-lg p-2"
+    <WidgetLayout
+      id={id}
+      type="RosCmdVelWidget"
+      handleRemoveWidget={handleRemoveWidget}
+      icon={<AiOutlineCode size={26} className="text-layer-light-400" />}
+      title="cmd_vel"
     >
-      <div className="flex justify-between items-center gap-4 ">
-        <RxActivityLog size={20} className="text-layer-light-400" />
-        <span className="text-sm font-medium  text-layer-dark-700">
-          cmd_vel
-        </span>
-        <BiTrashAlt
-          onClick={() => handleRemoveWidget(id)}
-          size={24}
-          className="text-layer-light-400"
-        />
-      </div>
       <div className="flex flex-col gap-2 overflow-auto scrollbar-hide p-2">
         {logs.map((log: any, key: number) => {
           return (
@@ -62,6 +55,6 @@ export default function RosCmdVelWidget({
           );
         })}
       </div>
-    </div>
+    </WidgetLayout>
   );
 }
