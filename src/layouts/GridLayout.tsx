@@ -32,7 +32,7 @@ export function GridLayout({
         return (
           <div
             key={index}
-            className="grid-stack-item ui-draggable ui-resizable"
+            className="grid-stack-item"
             gs-w={item.w}
             gs-h={item.h}
             gs-x={item.x}

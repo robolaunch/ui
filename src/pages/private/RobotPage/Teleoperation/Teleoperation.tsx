@@ -1,5 +1,4 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
@@ -7,7 +6,8 @@ import { RootState } from "../../../../app/store";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import "gridstack/dist/gridstack.min.css";
-import "gridstack/dist/gridstack-extra.min.css";
+import "gridstack/dist/gridstack-extra.css";
+import ROSLIB from "roslib";
 
 interface ITeleoperation {
   ros: any;
@@ -45,13 +45,14 @@ export default function Teleoperation({
       acceptWidgets: true,
       alwaysShowResizeHandle: true,
       removable: false,
-      //   resizable: {
-      //     handles: "e, se, s, sw, w",
-      //   },
+      resizable: {
+        handles: "e, se, s, sw, w",
+      },
       draggable: {
         handle: ".grid-stack-item-content",
       },
       column: 24,
+
       //   row: 36,
       //   cellHeight: 25,
     });
@@ -106,7 +107,7 @@ export default function Teleoperation({
   return (
     <Fragment>
       <div
-        className="col-span-1 grid-stack !h-[55rem] w-96 z-0"
+        className="col-span-1 grid-stack grid-stack-24 !h-[55rem] w-full z-0"
         style={{
           backgroundImage: `url(${cameraData})`,
           backgroundPosition: "center",

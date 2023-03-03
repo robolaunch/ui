@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
