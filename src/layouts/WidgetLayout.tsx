@@ -21,17 +21,15 @@ export default function WidgetLayout({
   return (
     <div
       id={type}
-      className="flex flex-col gap-3 h-full bg-layer-light-50 rounded-lg p-2"
+      className="flex flex-col gap-3 h-full bg-layer-light-50 rounded-lg p-4"
     >
       <div className="flex justify-between items-center gap-4 ">
         {icon}
-        <span className="text-sm font-medium  text-layer-dark-700">
-          {title}
-        </span>
+        <span className="text-sm font-medium text-layer-dark-700">{title}</span>
         <BiTrashAlt
           onClick={() => handleRemoveWidget(id)}
-          size={24}
-          className="text-layer-light-400"
+          size={20}
+          className="cursor-pointer text-layer-light-400 hover:text-layer-primary-400 hover:scale-90 transition-all duration-200"
         />
       </div>
       {children}

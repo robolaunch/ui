@@ -18,7 +18,6 @@ export default function ChatScreen({
   inputValue,
   members,
 }: IChatScreen): ReactElement {
-  const { width } = useWindowDimensions();
   const { ref, height } = useComponentSize();
 
   return (

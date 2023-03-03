@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import ROSLIB from "roslib";
 import InputSelect from "../InputSelect/InputSelect";
 import { BsCameraVideo } from "react-icons/bs";
-import { BiTrashAlt } from "react-icons/bi";
 import WidgetLayout from "../../layouts/WidgetLayout";
 
 const RosCameraWidget = ({

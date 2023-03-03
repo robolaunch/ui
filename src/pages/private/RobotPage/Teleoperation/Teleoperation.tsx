@@ -1,28 +1,32 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
 import { RootState } from "../../../../app/store";
-import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
-interface IVisualization {
+import { GridLayout } from "../../../../layouts/GridLayout";
+import "gridstack/dist/gridstack.min.css";
+import "gridstack/dist/gridstack-extra.min.css";
+
+interface ITeleoperation {
   ros: any;
   topicList: string[];
   handleForceUpdate: (page: string) => void;
 }
 
-export default function Visualization({
+export default function Teleoperation({
   ros,
   topicList,
   handleForceUpdate,
-}: IVisualization): ReactElement {
+}: ITeleoperation): ReactElement {
   const [grid, setGrid] = useState<any>();
   const { currentOrganization } = useAppSelector(
     (state: RootState) => state.organization
   );
+
   const url = useParams();
-  const localStoragePath = `visualization_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
+  const localStoragePath = `teleoperation_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
   const [gridLayout, setGridLayout] = useState<any>(() => {
     if (localStorage.getItem(localStoragePath)) {
       return JSON.parse(
@@ -33,6 +37,7 @@ export default function Visualization({
 
     return [];
   });
+  const [cameraData, setCameraData] = useState<string>("");
 
   useEffect(() => {
     const grid: any = GridStack.init({
@@ -40,10 +45,17 @@ export default function Visualization({
       acceptWidgets: true,
       alwaysShowResizeHandle: true,
       removable: false,
-      resizable: {
-        handles: "e, se, s, sw, w",
+      //   resizable: {
+      //     handles: "e, se, s, sw, w",
+      //   },
+      draggable: {
+        handle: ".grid-stack-item-content",
       },
+      column: 24,
+      //   row: 36,
+      //   cellHeight: 25,
     });
+
     setGrid(grid);
 
     grid.on("change", function () {
@@ -72,12 +84,35 @@ export default function Visualization({
       JSON.stringify(temp)
     );
 
-    handleForceUpdate("Visualization");
+    handleForceUpdate("Teleoperation");
   }
 
+  useEffect(() => {
+    setCameraData("");
+    // const cameraCompressedTopic = new ROSLIB.Topic({
+    //   ros: ros,
+    //   name: "/target/compressed",
+    //   messageType: "sensor_msgs/msg/CompressedImage",
+    // });
+    // cameraCompressedTopic?.subscribe(function (message: any) {
+    //   setCameraData("data:image/jpg;base64," + message.data);
+    // });
+
+    // return () => {
+    //   cameraCompressedTopic.unsubscribe();
+    // };
+  }, []);
+
   return (
-    <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">
-      <div className="col-span-1 grid-stack min-h-[40rem] max-h-[40rem] z-0">
+    <Fragment>
+      <div
+        className="col-span-1 grid-stack !h-[55rem] w-96 z-0"
+        style={{
+          backgroundImage: `url(${cameraData})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <GridLayout
           gridLayout={gridLayout}
           ros={ros}
@@ -86,17 +121,15 @@ export default function Visualization({
           handleRemoveWidget={handleRemoveWidget}
         />
       </div>
-      <div className="fixed block  bottom-5 left-1/2 right-1/2 z-10">
-        <FloatMenu
-          grid={grid}
-          type="Visualization"
-          ros={ros}
-          topicList={topicList}
-          localStoragePath={localStoragePath}
-          handleRemoveWidget={handleRemoveWidget}
-          handleForceUpdate={handleForceUpdate}
-        />
-      </div>
-    </div>
+      <FloatMenu
+        grid={grid}
+        type="Teleoperation"
+        ros={ros}
+        topicList={topicList}
+        localStoragePath={localStoragePath}
+        handleRemoveWidget={handleRemoveWidget}
+        handleForceUpdate={handleForceUpdate}
+      />
+    </Fragment>
   );
 }

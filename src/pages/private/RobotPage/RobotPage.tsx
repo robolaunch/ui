@@ -3,6 +3,7 @@ import RobotHeader from "../../../components/RobotHeader/RobotHeader";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import ROSLIB from "roslib";
+import Teleoperation from "./Teleoperation/Teleoperation";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Remote Desktop");
@@ -95,7 +96,13 @@ export default function RobotPage(): ReactElement {
                   />
                 );
               case "Teleoperation":
-                return <div>Teleoperation</div>;
+                return (
+                  <Teleoperation
+                    ros={ros}
+                    topicList={topicList}
+                    handleForceUpdate={handleForceUpdate}
+                  />
+                );
               case "Remote Desktop":
                 return <RemoteDesktop />;
               case "Settings":
