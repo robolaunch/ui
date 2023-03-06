@@ -24,8 +24,6 @@ const RosCameraWidget = ({
     }
   });
 
-  console.log(JSON.parse(localStorage.getItem(localStoragePath) || ""));
-
   useEffect(() => {
     setSelectableTopic([]);
     topicList?.map((topic: any) => {
@@ -78,13 +76,15 @@ const RosCameraWidget = ({
           </InputSelect>
         }
       >
-        <img
-          className={`w-full h-full appearance-none rounded ${
-            !cameraData && "scale-50"
-          }`}
-          src={cameraData || "/svg/general/loading.svg"}
-          alt={cameraData && "Camera"}
-        />
+        <div className="relative w-full h-full" resource={selectedTopic}>
+          <img
+            className={`absolute inset-0 w-full h-full appearance-none rounded ${
+              !cameraData && "scale-50"
+            }`}
+            src={cameraData || "/svg/general/loading.svg"}
+            alt={cameraData && "Camera"}
+          />
+        </div>
       </WidgetLayout>
     </>
   );

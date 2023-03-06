@@ -33,9 +33,6 @@ export default function Teleoperation({
   const { currentOrganization } = useAppSelector(
     (state: RootState) => state.organization
   );
-
-  const { user } = useAppSelector((state: RootState) => state.user);
-
   const url = useParams();
   const localStoragePath = `teleoperation_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
   const [gridLayout, setGridLayout] = useState<any>(() => {
@@ -45,15 +42,22 @@ export default function Teleoperation({
         localStorage.getItem(localStoragePath)
       );
     }
-
     return [];
   });
   const [cameraData, setCameraData] = useState<string>("");
   const [isRemoteDesktopStream, setIsRemoteDesktopStream] =
-    useState<boolean>(false);
+    useState<any>(undefined);
   const [selectableTopic, setSelectableTopic] = useState<any>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
+  const video = useRef<any>(null);
+  const peer = useRef<any>(null);
+  const client = useRef<any>(null);
+  const candidate = useRef<any>(null);
+  const channel = useRef<any>(null);
+  const handleFullScreen = useFullScreenHandle();
+  const { user } = useAppSelector((state: RootState) => state.user);
 
+  // GRID
   useEffect(() => {
     const grid: any = GridStack.init({
       float: true,
@@ -70,16 +74,13 @@ export default function Teleoperation({
     setGrid(grid);
 
     grid.on("change", function () {
-      setTimeout(() => {
-        window.localStorage.setItem(
-          // @ts-ignore
-          localStoragePath,
-          JSON.stringify(grid.save(true, true).children)
-        );
-      }, 1000);
+      window.localStorage.setItem(
+        // @ts-ignore
+        localStoragePath,
+        JSON.stringify(grid.save(true, true).children)
+      );
     });
   }, [localStoragePath]);
-
   function handleRemoveWidget(id: number) {
     const temp = JSON.parse(
       // @ts-ignore
@@ -96,6 +97,7 @@ export default function Teleoperation({
 
     handleForceUpdate("Teleoperation");
   }
+  // GRID
 
   useEffect(() => {
     setSelectableTopic([]);
@@ -125,12 +127,6 @@ export default function Teleoperation({
       cameraCompressedTopic.unsubscribe();
     };
   }, [isRemoteDesktopStream, selectedTopic, ros]);
-
-  const video = useRef<any>(null);
-  const peer = useRef<any>(null);
-  const client = useRef<any>(null);
-  const candidate = useRef<any>(null);
-  const channel = useRef<any>(null);
 
   // webRTC Stream
   useEffect(() => {
@@ -202,13 +198,33 @@ export default function Teleoperation({
   }, [isRemoteDesktopStream]);
   // webRTC Stream
 
-  const handleFullScreen = useFullScreenHandle();
+  useEffect(() => {
+    if (localStorage.getItem("Layout" + localStoragePath)) {
+      const { selectedTopic, isRemoteDesktopStream } = JSON.parse(
+        // @ts-ignore
+        localStorage.getItem("Layout" + localStoragePath)
+      );
+
+      setSelectedTopic(selectedTopic);
+      setIsRemoteDesktopStream(isRemoteDesktopStream);
+    }
+  }, [localStoragePath]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "Layout" + localStoragePath,
+      JSON.stringify({
+        selectedTopic: selectedTopic,
+        isRemoteDesktopStream: isRemoteDesktopStream,
+      })
+    );
+  }, [selectedTopic, isRemoteDesktopStream, localStoragePath]);
 
   return (
     <Fragment>
       <FullScreen className="relative" handle={handleFullScreen}>
         <div
-          className="col-span-1 grid-stack w-full z-0 shadow-lg rounded"
+          className="col-span-1 grid-stack w-full z-0 shadow-lg rounded bg-layer-dark-900"
           style={{
             height: handleFullScreen.active ? "100vh" : "unset",
             backgroundImage: `url(${cameraData})`,

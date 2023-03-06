@@ -25,278 +25,253 @@ export default function RosResourceUsageWidget({
       icon={<GoGraph size={20} className="text-layer-light-400" />}
       title="Resource Widget"
     >
-      <div className="grid grid-cols-2 gap-4 h-full p-2">
-        <div ref={ref} className="col-span-1 flex flex-col text-xs font-medium">
-          <div className="flex justify-between">
-            <div>CPU Usage</div>
-            <div>48%</div>
-          </div>
-          <ReactApexChart
-            options={{
-              chart: {
-                height: height / 1.23,
-                type: "area",
-                toolbar: {
+      <div className="relative h-full w-full">
+        <div ref={ref} className="absolute inset-0 grid grid-cols-2 p-2">
+          <div className="col-span-1 text-xs font-medium">
+            <ReactApexChart
+              options={{
+                chart: {
+                  height: height / 2.35,
+                  type: "area",
+                  toolbar: {
+                    show: false,
+                  },
+                },
+                colors: ["#AC2DFE"],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: "smooth",
+                },
+                xaxis: {
+                  type: "datetime",
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                  categories: [
+                    "2018-09-19T00:00:00.000Z",
+                    "2018-09-19T01:30:00.000Z",
+                    "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z",
+                    "2018-09-19T04:30:00.000Z",
+                    "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                },
+
+                tooltip: {
+                  x: {
+                    format: "dd/MM/yy HH:mm",
+                  },
+                },
+                legend: {
                   show: false,
                 },
-              },
-              colors: ["#AC2DFE"],
-              dataLabels: {
-                enabled: false,
-              },
-              stroke: {
-                curve: "smooth",
-              },
-              xaxis: {
-                type: "datetime",
-                labels: {
-                  style: {
-                    colors: "#00000075",
-                  },
+              }}
+              series={[
+                {
+                  name: "CPU Usage",
+                  data: [31, 30, 28, 32, 31, 30, 34],
                 },
-                categories: [
-                  "2018-09-19T00:00:00.000Z",
-                  "2018-09-19T01:30:00.000Z",
-                  "2018-09-19T02:30:00.000Z",
-                  "2018-09-19T03:30:00.000Z",
-                  "2018-09-19T04:30:00.000Z",
-                  "2018-09-19T05:30:00.000Z",
-                  "2018-09-19T06:30:00.000Z",
-                ],
-              },
-              yaxis: {
-                labels: {
-                  style: {
-                    colors: "#00000075",
-                  },
-                  formatter(val, opts) {
-                    return val + " Mbps";
-                  },
-                },
-              },
-
-              tooltip: {
-                x: {
-                  format: "dd/MM/yy HH:mm",
-                },
-              },
-              legend: {
-                show: false,
-              },
-            }}
-            series={[
-              {
-                name: "Internal Network",
-                data: [31, 30, 28, 32, 31, 30, 34],
-              },
-            ]}
-            type="area"
-            height={height / 1.23}
-          />
-        </div>
-        <div className="col-span-1 flex flex-col text-xs font-medium">
-          <div className="flex justify-between">
-            <div>Ram Usage</div>
-            <div>58%</div>
+              ]}
+              type="area"
+              height={height / 2.35}
+            />
           </div>
-          <ReactApexChart
-            options={{
-              chart: {
-                height: height / 1.23,
-                type: "area",
-                toolbar: {
+          <div className="col-span-1 text-xs font-medium">
+            <ReactApexChart
+              options={{
+                chart: {
+                  height: height / 2.35,
+                  type: "area",
+                  toolbar: {
+                    show: false,
+                  },
+                },
+                colors: ["#35B8FA"],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: "smooth",
+                },
+                xaxis: {
+                  type: "datetime",
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                  categories: [
+                    "2018-09-19T00:00:00.000Z",
+                    "2018-09-19T01:30:00.000Z",
+                    "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z",
+                    "2018-09-19T04:30:00.000Z",
+                    "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                },
+
+                tooltip: {
+                  x: {
+                    format: "dd/MM/yy HH:mm",
+                  },
+                },
+                legend: {
                   show: false,
                 },
-              },
-              colors: ["#35B8FA"],
-              dataLabels: {
-                enabled: false,
-              },
-              stroke: {
-                curve: "smooth",
-              },
-              xaxis: {
-                type: "datetime",
-                labels: {
-                  style: {
-                    colors: "#00000075",
+              }}
+              series={[
+                {
+                  name: "Ram Usage",
+                  data: [31, 30, 28, 32, 31, 30, 34],
+                },
+              ]}
+              type="area"
+              height={height / 2.35}
+            />
+          </div>{" "}
+          <div className="col-span-1 text-xs font-medium">
+            <ReactApexChart
+              options={{
+                chart: {
+                  height: height / 2.35,
+                  type: "area",
+                  toolbar: {
+                    show: false,
                   },
                 },
-                categories: [
-                  "2018-09-19T00:00:00.000Z",
-                  "2018-09-19T01:30:00.000Z",
-                  "2018-09-19T02:30:00.000Z",
-                  "2018-09-19T03:30:00.000Z",
-                  "2018-09-19T04:30:00.000Z",
-                  "2018-09-19T05:30:00.000Z",
-                  "2018-09-19T06:30:00.000Z",
-                ],
-              },
-              yaxis: {
-                labels: {
-                  style: {
-                    colors: "#00000075",
+                colors: ["#5492fc"],
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: "smooth",
+                },
+                xaxis: {
+                  type: "datetime",
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
                   },
-                  formatter(val, opts) {
-                    return val + " Mbps";
+                  categories: [
+                    "2018-09-19T00:00:00.000Z",
+                    "2018-09-19T01:30:00.000Z",
+                    "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z",
+                    "2018-09-19T04:30:00.000Z",
+                    "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
                   },
                 },
-              },
 
-              tooltip: {
-                x: {
-                  format: "dd/MM/yy HH:mm",
+                tooltip: {
+                  x: {
+                    format: "dd/MM/yy HH:mm",
+                  },
                 },
-              },
-              legend: {
-                show: false,
-              },
-            }}
-            series={[
-              {
-                name: "Internal Network",
-                data: [31, 30, 28, 32, 31, 30, 34],
-              },
-            ]}
-            type="area"
-            height={height / 1.23}
-          />
-        </div>{" "}
-        <div className="col-span-1 flex flex-col text-xs font-medium">
-          <div className="flex justify-between">
-            <div>GPU Usage</div>
-            <div>63%</div>
-          </div>
-          <ReactApexChart
-            options={{
-              chart: {
-                height: height / 1.23,
-                type: "area",
-                toolbar: {
+                legend: {
                   show: false,
                 },
-              },
-              colors: ["#5492fc"],
-              dataLabels: {
-                enabled: false,
-              },
-              stroke: {
-                curve: "smooth",
-              },
-              xaxis: {
-                type: "datetime",
-                labels: {
-                  style: {
-                    colors: "#00000075",
+              }}
+              series={[
+                {
+                  name: "GPU Usage",
+                  data: [31, 30, 28, 32, 31, 30, 34],
+                },
+              ]}
+              type="area"
+              height={height / 2.35}
+            />
+          </div>{" "}
+          <div className="col-span-1 text-xs font-medium">
+            <ReactApexChart
+              options={{
+                chart: {
+                  height: height / 2.35,
+                  type: "area",
+                  toolbar: {
+                    show: false,
                   },
                 },
-                categories: [
-                  "2018-09-19T00:00:00.000Z",
-                  "2018-09-19T01:30:00.000Z",
-                  "2018-09-19T02:30:00.000Z",
-                  "2018-09-19T03:30:00.000Z",
-                  "2018-09-19T04:30:00.000Z",
-                  "2018-09-19T05:30:00.000Z",
-                  "2018-09-19T06:30:00.000Z",
-                ],
-              },
-              yaxis: {
-                labels: {
-                  style: {
-                    colors: "#00000075",
-                  },
-                  formatter(val, opts) {
-                    return val + " Mbps";
-                  },
-                },
-              },
 
-              tooltip: {
-                x: {
-                  format: "dd/MM/yy HH:mm",
+                colors: ["#c77bfc"],
+                dataLabels: {
+                  enabled: false,
                 },
-              },
-              legend: {
-                show: false,
-              },
-            }}
-            series={[
-              {
-                name: "Internal Network",
-                data: [31, 30, 28, 32, 31, 30, 34],
-              },
-            ]}
-            type="area"
-            height={height / 1.23}
-          />
-        </div>{" "}
-        <div className="col-span-1 flex flex-col text-xs font-medium">
-          <div className="flex justify-between">
-            <div>Disk Usage</div>
-            <div>25%</div>
-          </div>
-          <ReactApexChart
-            options={{
-              chart: {
-                height: height / 1.23,
-                type: "area",
-                toolbar: {
+                stroke: {
+                  curve: "smooth",
+                },
+                xaxis: {
+                  type: "datetime",
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                  categories: [
+                    "2018-09-19T00:00:00.000Z",
+                    "2018-09-19T01:30:00.000Z",
+                    "2018-09-19T02:30:00.000Z",
+                    "2018-09-19T03:30:00.000Z",
+                    "2018-09-19T04:30:00.000Z",
+                    "2018-09-19T05:30:00.000Z",
+                    "2018-09-19T06:30:00.000Z",
+                  ],
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: "#00000075",
+                    },
+                  },
+                },
+
+                tooltip: {
+                  x: {
+                    format: "dd/MM/yy HH:mm",
+                  },
+                },
+                legend: {
                   show: false,
                 },
-              },
-              colors: ["#c77bfc"],
-              dataLabels: {
-                enabled: false,
-              },
-              stroke: {
-                curve: "smooth",
-              },
-              xaxis: {
-                type: "datetime",
-                labels: {
-                  style: {
-                    colors: "#00000075",
-                  },
+              }}
+              series={[
+                {
+                  name: "Disk Usage",
+                  data: [31, 30, 28, 32, 31, 30, 34],
                 },
-                categories: [
-                  "2018-09-19T00:00:00.000Z",
-                  "2018-09-19T01:30:00.000Z",
-                  "2018-09-19T02:30:00.000Z",
-                  "2018-09-19T03:30:00.000Z",
-                  "2018-09-19T04:30:00.000Z",
-                  "2018-09-19T05:30:00.000Z",
-                  "2018-09-19T06:30:00.000Z",
-                ],
-              },
-              yaxis: {
-                labels: {
-                  style: {
-                    colors: "#00000075",
-                  },
-                  formatter(val, opts) {
-                    return val + " Mbps";
-                  },
-                },
-              },
-
-              tooltip: {
-                x: {
-                  format: "dd/MM/yy HH:mm",
-                },
-              },
-              legend: {
-                show: false,
-              },
-            }}
-            series={[
-              {
-                name: "Internal Network",
-                data: [31, 30, 28, 32, 31, 30, 34],
-              },
-            ]}
-            type="area"
-            height={height / 1.23}
-          />
+              ]}
+              type="area"
+              height={height / 2.35}
+            />
+          </div>
         </div>
       </div>
     </WidgetLayout>

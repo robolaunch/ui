@@ -22,7 +22,7 @@ export default function RosEmergencyControlWidget({
       icon={<BiErrorCircle size={22} className="text-layer-light-400" />}
       title="Emergency Control"
     >
-      <div className="flex flex-col items-center justify-center gap-6 h-full p-2">
+      <div className="flex flex-col items-center justify-center gap-6 h-full">
         <div className="flex gap-2">
           <Button className="w-28" text="Start" disabled />
           <Button className="w-28" text="Stop" />

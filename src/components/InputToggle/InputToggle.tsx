@@ -31,7 +31,7 @@ export default function InputToggle({
           color={"#AC2DFE"}
           icons={icons}
           onChange={(e) => onChange(e.target.checked)}
-          defaultChecked={checked}
+          checked={checked}
         />
         {rightLabel && <span>{rightLabel}</span>}
       </div>

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { FaSignal } from "react-icons/fa";
 import ReactApexChart from "react-apexcharts";
@@ -31,6 +31,10 @@ export default function RosNetworkWidget({
 
   const { ref, height } = useComponentSize();
 
+  useEffect(() => {
+    console.log(height);
+  }, [height]);
+
   return (
     <WidgetLayout
       id={id}
@@ -39,11 +43,8 @@ export default function RosNetworkWidget({
       icon={<FaSignal size={22} className="text-layer-light-400" />}
       title="Network"
     >
-      <div
-        ref={ref}
-        className="grid grid-cols-1 gap-2 overflow-auto scrollbar-hide p-2"
-      >
-        <div className="col-span-1">
+      <div ref={ref} className="relative h-full w-full">
+        <div className="absolute inset-0">
           <ReactApexChart
             options={{
               chart: {
@@ -82,9 +83,6 @@ export default function RosNetworkWidget({
                 labels: {
                   style: {
                     colors: "#00000075",
-                  },
-                  formatter(val, opts) {
-                    return val + " Mbps";
                   },
                 },
               },

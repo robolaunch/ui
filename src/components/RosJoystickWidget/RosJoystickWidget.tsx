@@ -4,6 +4,11 @@ import WidgetLayout from "../../layouts/WidgetLayout";
 import { Joystick } from "react-joystick-component";
 import ROSLIB from "roslib";
 import { useComponentSize } from "react-use-size";
+import {
+  ContextMenuTrigger,
+  ContextMenu,
+  ContextMenuItem,
+} from "rctx-contextmenu";
 
 interface IRosJoystickWidget {
   ros: any;
@@ -49,9 +54,12 @@ export default function RosJoystickWidget({
       icon={<BsJoystick size={20} className="text-layer-light-400" />}
       title="Joystick"
     >
-      <div ref={ref} className="flex h-full items-center justify-center">
+      <div
+        ref={ref}
+        className="flex h-full items-center justify-center !overflow-hidden !scrollbar-hide"
+      >
         <Joystick
-          size={height / 1.5}
+          size={height / 1.75}
           sticky={false}
           move={(e: any) => {
             moveHandler(e);

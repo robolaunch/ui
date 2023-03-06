@@ -565,6 +565,10 @@ video {
   visibility: visible;
 }
 
+.invisible{
+  visibility: hidden;
+}
+
 .collapse{
   visibility: collapse;
 }
@@ -1034,6 +1038,14 @@ video {
   overflow: auto;
 }
 
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.\!overflow-hidden{
+  overflow: hidden !important;
+}
+
 .break-words{
   overflow-wrap: break-word;
 }
@@ -1259,6 +1271,10 @@ video {
 
 .p-8{
   padding: 2rem;
+}
+
+.p-1{
+  padding: 0.25rem;
 }
 
 .px-20{
@@ -1579,8 +1595,17 @@ video {
   scrollbar-width: none;
 }
 
+.\!scrollbar-hide{
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 .scrollbar-hide::-webkit-scrollbar{
   display: none;
+}
+
+.\!scrollbar-hide::-webkit-scrollbar{
+  display: none !important;
 }
 
 .ui-resizable-handle{
