@@ -566,11 +566,17 @@ export default function TeleoperationControlBar({
 
       {handleFullScreen.active ? (
         <button onClick={handleFullScreen.exit}>
-          <BsFullscreenExit size={24} className="text-layer-light-700" />
+          <BsFullscreenExit
+            size={24}
+            className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+          />
         </button>
       ) : (
         <button onClick={handleFullScreen.enter}>
-          <BsFullscreen size={24} className="text-layer-light-700" />
+          <BsFullscreen
+            size={24}
+            className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+          />
         </button>
       )}
     </div>
