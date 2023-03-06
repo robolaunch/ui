@@ -14,7 +14,11 @@ import { RootState } from "../../../../app/store.ts";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../../components/ChatViewers/ChatViewers.tsx";
 
-const RemoteDesktop = () => {
+interface IRemoteDesktop {
+  connectionURLs: any;
+}
+
+const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
   const controller = useRef<any>(null);
@@ -47,7 +51,7 @@ const RemoteDesktop = () => {
       }
     };
 
-    client.current = new WebSocket(`ws://localhost:8080/ws?password=admin`);
+    client.current = new WebSocket(connectionURLs.remoteDesktopURL || "");
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);
@@ -406,7 +410,7 @@ const RemoteDesktop = () => {
   return (
     <div className="bg-layer-light-50 p-2 shadow-lg rounded-lg animate__animated animate__fadeIn transition-all duration-500">
       <div className="grid grid-cols-12">
-        <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900">
+        <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900 min-h-[40rem]">
           <span
             className="relative outline-none appearance-none"
             ref={overlay}

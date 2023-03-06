@@ -10,9 +10,14 @@ export default function RobotPage(): ReactElement {
   const [ros, setRos] = useState<any>(null);
   const [topicList, setTopicList] = useState<any>([]);
 
+  const [connectionURLs, setConnectionURLs] = useState<any>({
+    rosURL: "ws://172.16.44.153:9090",
+    remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
+  });
+
   useEffect(() => {
     const ros = new ROSLIB.Ros({
-      url: "ws://172.16.44.153:9090",
+      url: connectionURLs.rosURL,
     });
     setRos(ros);
 
@@ -100,11 +105,12 @@ export default function RobotPage(): ReactElement {
                   <Teleoperation
                     ros={ros}
                     topicList={topicList}
+                    connectionURLs={connectionURLs}
                     handleForceUpdate={handleForceUpdate}
                   />
                 );
               case "Remote Desktop":
-                return <RemoteDesktop />;
+                return <RemoteDesktop connectionURLs={connectionURLs} />;
               case "Settings":
                 return <div>Settings</div>;
               case "Loading":

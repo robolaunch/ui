@@ -24,6 +24,8 @@ const RosCameraWidget = ({
     }
   });
 
+  console.log(JSON.parse(localStorage.getItem(localStoragePath) || ""));
+
   useEffect(() => {
     setSelectableTopic([]);
     topicList?.map((topic: any) => {
