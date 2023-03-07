@@ -4,11 +4,6 @@ import WidgetLayout from "../../layouts/WidgetLayout";
 import { Joystick } from "react-joystick-component";
 import ROSLIB from "roslib";
 import { useComponentSize } from "react-use-size";
-import {
-  ContextMenuTrigger,
-  ContextMenu,
-  ContextMenuItem,
-} from "rctx-contextmenu";
 
 interface IRosJoystickWidget {
   ros: any;

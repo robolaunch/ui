@@ -5,6 +5,7 @@ import { useAppSelector } from "../../../../hooks/redux";
 import { RootState } from "../../../../app/store";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
+
 interface IVisualization {
   ros: any;
   topicList: string[];
@@ -33,6 +34,29 @@ export default function Visualization({
     return [];
   });
 
+  function handleRemoveWidget(id: any) {
+    const localGrid = JSON.parse(
+      // @ts-ignore
+      localStorage.getItem(localStoragePath)
+    );
+
+    let temp = localGrid.filter((item: any) => {
+      if (
+        Number(item?.content.split(`item-id="`)[1].split(`"`)[0]) !== Number(id)
+      ) {
+        return item;
+      }
+    });
+
+    window.localStorage.setItem(
+      // @ts-ignore
+      localStoragePath,
+      JSON.stringify(temp)
+    );
+
+    handleForceUpdate("Visualization");
+  }
+
   useEffect(() => {
     const grid: any = GridStack.init({
       float: true,
@@ -47,32 +71,28 @@ export default function Visualization({
 
     grid.on("change", function () {
       setTimeout(() => {
-        window.localStorage.setItem(
-          // @ts-ignore
-          localStoragePath,
-          JSON.stringify(grid.save(true, true).children)
-        );
-      }, 1000);
+        handleSaveWidgets();
+      }, 500);
     });
   }, [localStoragePath]);
 
-  function handleRemoveWidget(id: number) {
-    const temp = JSON.parse(
-      // @ts-ignore
-
-      localStorage.getItem(localStoragePath)
-    );
-
-    temp.splice(id, 1);
-
+  function handleSaveWidgets() {
     window.localStorage.setItem(
       // @ts-ignore
       localStoragePath,
-      JSON.stringify(temp)
+      JSON.stringify(grid.save(true, true).children)
     );
-
-    handleForceUpdate("Visualization");
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.localStorage.setItem(
+        // @ts-ignore
+        localStoragePath,
+        JSON.stringify(grid.save(true, true).children)
+      );
+    }, 500);
+  }, [grid, localStoragePath]);
 
   return (
     <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">

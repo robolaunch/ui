@@ -74,20 +74,29 @@ export default function Teleoperation({
     setGrid(grid);
 
     grid.on("change", function () {
-      window.localStorage.setItem(
-        // @ts-ignore
-        localStoragePath,
-        JSON.stringify(grid.save(true, true).children)
-      );
+      setTimeout(() => {
+        window.localStorage.setItem(
+          // @ts-ignore
+          localStoragePath,
+          JSON.stringify(grid.save(true, true).children)
+        );
+      }, 500);
     });
   }, [localStoragePath]);
+
   function handleRemoveWidget(id: number) {
-    const temp = JSON.parse(
+    const localGrid = JSON.parse(
       // @ts-ignore
       localStorage.getItem(localStoragePath)
     );
 
-    temp.splice(id, 1);
+    let temp = localGrid.filter((item: any) => {
+      if (
+        Number(item?.content.split(`item-id="`)[1].split(`"`)[0]) !== Number(id)
+      ) {
+        return item;
+      }
+    });
 
     window.localStorage.setItem(
       // @ts-ignore
@@ -219,6 +228,16 @@ export default function Teleoperation({
       })
     );
   }, [selectedTopic, isRemoteDesktopStream, localStoragePath]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.localStorage.setItem(
+        // @ts-ignore
+        localStoragePath,
+        JSON.stringify(grid.save(true, true).children)
+      );
+    }, 500);
+  }, [grid, localStoragePath]);
 
   return (
     <Fragment>

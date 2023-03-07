@@ -23,6 +23,7 @@ export default function WidgetLayout({
 
   return (
     <div
+      item-id={id}
       id={type}
       className={`flex flex-col h-full rounded-lg ${
         isVisible ? "bg-transparent" : "bg-layer-light-50"
