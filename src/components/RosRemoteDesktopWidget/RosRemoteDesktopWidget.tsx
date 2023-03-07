@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { MdOutlineScreenShare } from "react-icons/md";
 import WidgetLayout from "../../layouts/WidgetLayout";
-import { useAppSelector } from "../../hooks/redux";
 import { useComponentSize } from "react-use-size";
 
 interface IRosRemoteDesktopWidget {
@@ -19,7 +18,7 @@ export default function RosRemoteDesktopWidget({
   const channel = useRef<any>(null);
   const video = useRef<any>(null);
 
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = JSON.parse(localStorage.getItem("persist:user") || "{}");
 
   const { ref, width, height } = useComponentSize();
 

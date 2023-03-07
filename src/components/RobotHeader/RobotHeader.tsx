@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { ReactElement } from "react";
 
 interface IRobotHeader {
   handleChangeActiveTab: any;
@@ -39,7 +39,7 @@ export default function RobotHeader({
   return (
     <div className="flex flex-col justify-between bg-layer-light-50 rounded-lg shadow">
       <div className="h-[10rem]">robot header</div>
-      <ul className="flex gap-8 px-6">
+      <ul className="flex gap-8 px-6 overflow-x-auto">
         {tabs.map((tab: any, index: number) => {
           return (
             <div
@@ -48,7 +48,7 @@ export default function RobotHeader({
               key={index}
             >
               <li
-                className={`text-xs font-medium px-2 transition-all duration-500 ${
+                className={`text-xs font-medium px-2 transition-all duration-500 min-w-max ${
                   tab.name === activeTab
                     ? "text-layer-primary-500"
                     : "text-layer-light-500"

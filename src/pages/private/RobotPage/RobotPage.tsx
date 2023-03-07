@@ -6,7 +6,7 @@ import ROSLIB from "roslib";
 import Teleoperation from "./Teleoperation/Teleoperation";
 
 export default function RobotPage(): ReactElement {
-  const [activeTab, setActiveTab] = useState<string>("Remote Desktop");
+  const [activeTab, setActiveTab] = useState<string>("Overview");
   const [ros, setRos] = useState<any>(null);
   const [topicList, setTopicList] = useState<any>([]);
 

@@ -8,7 +8,7 @@ import {
   BsJoystick,
   BsPinMap,
 } from "react-icons/bs";
-import { CiViewList } from "react-icons/ci";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoMdCodeWorking } from "react-icons/io";
 import { GoGraph } from "react-icons/go";
 import { BiErrorCircle } from "react-icons/bi";
@@ -41,7 +41,7 @@ export function FloatMenu({
         startAngle={180}
         rotationAngle={180}
         itemSize={2}
-        radius={10}
+        radius={12}
         rotationAngleInclusive={true}
         menuToggleElement={
           <div className="flex items-center justify-center w-12 h-12 bg-layer-light-50 hover:bg-layer-light-100 rounded-full cursor-pointer border border-layer-light-200 transition-all duration-500 hover:scale-90">
@@ -62,8 +62,8 @@ export function FloatMenu({
           className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
-              grid,
               widget: "RosCameraWidget",
+              grid,
               type,
               ros,
               topicList,
@@ -81,8 +81,8 @@ export function FloatMenu({
           className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
-              grid,
               widget: "RosCmdVelWidget",
+              grid,
               type,
               ros,
               topicList,
@@ -111,7 +111,7 @@ export function FloatMenu({
             })
           }
         >
-          <CiViewList size={26} className="text-layer-light-800" />
+          <AiOutlineUnorderedList size={26} className="text-layer-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem

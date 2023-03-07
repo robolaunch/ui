@@ -21,10 +21,6 @@ export default function TeleoperationControlBar({
   setIsRemoteDesktopStream,
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
-  useEffect(() => {
-    console.log(isRemoteDesktopStream);
-  }, [isRemoteDesktopStream]);
-
   return (
     <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-lg z-10 rounded-t">
       <div className="flex gap-2">

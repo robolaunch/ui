@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import ROSLIB from "roslib";
-import { CiViewList } from "react-icons/ci";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import WidgetLayout from "../../layouts/WidgetLayout";
 
 interface IRosTopicListWidget {
@@ -39,7 +39,9 @@ export default function RosTopicListWidget({
       id={id}
       type="RosTopicListWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<CiViewList size={26} className="text-layer-light-400" />}
+      icon={
+        <AiOutlineUnorderedList size={26} className="text-layer-light-400" />
+      }
       title="Topic List"
     >
       <div className="flex flex-col gap-2 overflow-auto scrollbar-hide p-2">

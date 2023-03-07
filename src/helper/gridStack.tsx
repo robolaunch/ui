@@ -153,36 +153,3 @@ export function handleSaveLayout({
     JSON.stringify(grid.save(true, true).children)
   );
 }
-
-interface IhandleRemoveWidget {
-  id: number;
-  localStoragePath: string;
-  handleForceUpdate: (page: string) => void;
-}
-
-export function handleRemoveWidget({
-  id,
-  localStoragePath,
-  handleForceUpdate,
-}: IhandleRemoveWidget) {
-  const localGrid = JSON.parse(
-    // @ts-ignore
-    localStorage.getItem(localStoragePath)
-  );
-
-  let temp = localGrid.filter((item: any) => {
-    if (
-      Number(item?.content.split(`item-id="`)[1].split(`"`)[0]) !== Number(id)
-    ) {
-      return item;
-    }
-  });
-
-  window.localStorage.setItem(
-    // @ts-ignore
-    localStoragePath,
-    JSON.stringify(temp)
-  );
-
-  handleForceUpdate("Visualization");
-}

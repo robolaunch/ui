@@ -25,7 +25,6 @@ export default function Visualization({
 
   const url = useParams();
   const localStoragePath = `visualization_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
-
   // @ts-ignore
   const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
 
@@ -49,13 +48,11 @@ export default function Visualization({
   }, [localStoragePath]);
 
   useEffect(() => {
-    setTimeout(() => {
-      window.localStorage.setItem(
-        // @ts-ignore
-        localStoragePath,
-        JSON.stringify(grid.save(true, true).children)
-      );
-    }, 500);
+    if (grid) {
+      setTimeout(() => {
+        handleSaveLayout({ grid, localStoragePath });
+      }, 500);
+    }
   }, [grid, localStoragePath]);
 
   function handleRemoveWidget(id: any) {
@@ -92,7 +89,7 @@ export default function Visualization({
           handleRemoveWidget={handleRemoveWidget}
         />
       </div>
-      <div className="fixed block  bottom-5 left-1/2 right-1/2 z-10">
+      <div className="fixed block bottom-5 left-1/2 right-1/2 z-10">
         <FloatMenu
           grid={grid}
           type="Visualization"

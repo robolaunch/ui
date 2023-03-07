@@ -17,10 +17,6 @@ export default function RosBatteryWidget({
 }: IRosBatteryWidget): ReactElement {
   const { ref, height, width } = useComponentSize();
 
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
-
   return (
     <WidgetLayout
       handleRemoveWidget={handleRemoveWidget}

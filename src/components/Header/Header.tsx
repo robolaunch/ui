@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="w-full h-16 bg-layer-light-50 shadow-sm  flex justify-between">
+    <div className="w-full h-16 bg-layer-light-50 shadow-sm flex justify-between animate__animated animate__fadeInDown">
       <div>breadcrumb</div>
       <div>content</div>
     </div>

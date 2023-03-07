@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
-import { BiTrashAlt } from "react-icons/bi";
+import React, { ReactElement } from "react";
 import { FaSignal } from "react-icons/fa";
 import ReactApexChart from "react-apexcharts";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
@@ -30,10 +29,6 @@ export default function RosNetworkWidget({
   };
 
   const { ref, height } = useComponentSize();
-
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
 
   return (
     <WidgetLayout
