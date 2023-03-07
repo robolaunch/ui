@@ -138,6 +138,22 @@ export function handleAddWidget({
   handleForceUpdate(type);
 }
 
+interface IhandleSaveLayout {
+  grid: any;
+  localStoragePath: string;
+}
+
+export function handleSaveLayout({
+  grid,
+  localStoragePath,
+}: IhandleSaveLayout) {
+  window.localStorage.setItem(
+    // @ts-ignore
+    localStoragePath,
+    JSON.stringify(grid.save(true, true).children)
+  );
+}
+
 interface IhandleRemoveWidget {
   id: number;
   localStoragePath: string;

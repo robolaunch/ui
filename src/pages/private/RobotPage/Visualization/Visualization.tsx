@@ -5,6 +5,7 @@ import { useAppSelector } from "../../../../hooks/redux";
 import { RootState } from "../../../../app/store";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
+import { handleSaveLayout } from "../../../../helper/gridStack";
 
 interface IVisualization {
   ros: any;
@@ -21,18 +22,41 @@ export default function Visualization({
   const { currentOrganization } = useAppSelector(
     (state: RootState) => state.organization
   );
+
   const url = useParams();
   const localStoragePath = `visualization_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
-  const [gridLayout, setGridLayout] = useState<any>(() => {
-    if (localStorage.getItem(localStoragePath)) {
-      return JSON.parse(
-        // @ts-ignore
-        localStorage.getItem(localStoragePath)
-      );
-    }
 
-    return [];
-  });
+  // @ts-ignore
+  const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
+
+  useEffect(() => {
+    const grid: any = GridStack.init({
+      float: true,
+      acceptWidgets: true,
+      alwaysShowResizeHandle: true,
+      removable: false,
+      resizable: {
+        handles: "e, se, s, sw, w",
+      },
+    });
+    setGrid(grid);
+
+    grid.on("change", function () {
+      setTimeout(() => {
+        handleSaveLayout({ grid, localStoragePath });
+      }, 500);
+    });
+  }, [localStoragePath]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.localStorage.setItem(
+        // @ts-ignore
+        localStoragePath,
+        JSON.stringify(grid.save(true, true).children)
+      );
+    }, 500);
+  }, [grid, localStoragePath]);
 
   function handleRemoveWidget(id: any) {
     const localGrid = JSON.parse(
@@ -56,43 +80,6 @@ export default function Visualization({
 
     handleForceUpdate("Visualization");
   }
-
-  useEffect(() => {
-    const grid: any = GridStack.init({
-      float: true,
-      acceptWidgets: true,
-      alwaysShowResizeHandle: true,
-      removable: false,
-      resizable: {
-        handles: "e, se, s, sw, w",
-      },
-    });
-    setGrid(grid);
-
-    grid.on("change", function () {
-      setTimeout(() => {
-        handleSaveWidgets();
-      }, 500);
-    });
-  }, [localStoragePath]);
-
-  function handleSaveWidgets() {
-    window.localStorage.setItem(
-      // @ts-ignore
-      localStoragePath,
-      JSON.stringify(grid.save(true, true).children)
-    );
-  }
-
-  useEffect(() => {
-    setTimeout(() => {
-      window.localStorage.setItem(
-        // @ts-ignore
-        localStoragePath,
-        JSON.stringify(grid.save(true, true).children)
-      );
-    }, 500);
-  }, [grid, localStoragePath]);
 
   return (
     <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">
