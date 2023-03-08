@@ -102,7 +102,7 @@ export const OrganizationDashboard: FC = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-8 lg:grid-cols-1 grid-cols-12">
+      <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
         <div className="col-span-4">1</div>
         <div className="col-span-3">
           <CountWidget />

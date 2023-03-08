@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { GoGraph } from "react-icons/go";
 import Widget from "../components/Widget/Widget";
 import { Chart } from "primereact/chart";
+import ReactApexChart from "react-apexcharts";
 export default function UtilizationWidget(): ReactElement {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
@@ -64,9 +65,67 @@ export default function UtilizationWidget(): ReactElement {
     <Widget
       title={`Utilization Widget`}
       subtitle={`Organization Base Utilization`}
-      icon={<GoGraph size={18} className="text-layer-light-700 sm:hidden" />}
+      icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <Chart type="line" data={chartData} options={chartOptions} />
+      <ReactApexChart
+        options={{
+          chart: {
+            type: "area",
+            toolbar: {
+              show: false,
+            },
+          },
+          colors: ["#35B8FA", "#AC2DFE"],
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            curve: "smooth",
+          },
+
+          xaxis: {
+            type: "datetime",
+            labels: {
+              style: {
+                colors: "#00000075",
+              },
+            },
+            categories: [
+              "2018-09-19T00:00:00.000Z",
+              "2018-09-19T01:30:00.000Z",
+              "2018-09-19T02:30:00.000Z",
+              "2018-09-19T03:30:00.000Z",
+              "2018-09-19T04:30:00.000Z",
+              "2018-09-19T05:30:00.000Z",
+              "2018-09-19T06:30:00.000Z",
+            ],
+          },
+          yaxis: {
+            labels: {
+              style: {
+                colors: "#00000075",
+              },
+            },
+          },
+
+          tooltip: {
+            x: {
+              format: "dd/MM/yy HH:mm",
+            },
+          },
+          legend: {
+            show: false,
+          },
+        }}
+        series={[
+          {
+            name: "Organization Base Utilization",
+            data: [31, 30, 28, 32, 31, 30, 34],
+          },
+        ]}
+        type="area"
+        height={300}
+      />
     </Widget>
   );
 }

@@ -4,6 +4,7 @@ import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import ROSLIB from "roslib";
 import Teleoperation from "./Teleoperation/Teleoperation";
+import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -13,6 +14,7 @@ export default function RobotPage(): ReactElement {
   const [connectionURLs, setConnectionURLs] = useState<any>({
     rosURL: "ws://172.16.44.153:9090",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
+    ideURL: "http://18.159.124.174:32581",
   });
 
   useEffect(() => {
@@ -92,6 +94,8 @@ export default function RobotPage(): ReactElement {
                 return <div>Robot Workspaces</div>;
               case "Kubernetes Resources":
                 return <div>Kubernetes Resources</div>;
+              case "Code Editor":
+                return <div>Code Editor</div>;
               case "Visualization":
                 return (
                   <Visualization
@@ -113,6 +117,8 @@ export default function RobotPage(): ReactElement {
                 return <RemoteDesktop connectionURLs={connectionURLs} />;
               case "Settings":
                 return <div>Settings</div>;
+              case "Development Suite":
+                return <DevelopmentSuite connectionURLs={connectionURLs} />;
               case "Loading":
                 return (
                   <div>

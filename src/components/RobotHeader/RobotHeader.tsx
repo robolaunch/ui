@@ -23,6 +23,9 @@ export default function RobotHeader({
       name: "Kubernetes Resources",
     },
     {
+      name: "Code Editor",
+    },
+    {
       name: "Visualization",
     },
     {
@@ -34,11 +37,14 @@ export default function RobotHeader({
     {
       name: "Settings",
     },
+    {
+      name: "Development Suite",
+    },
   ];
 
   return (
     <div className="flex flex-col justify-between bg-layer-light-50 rounded-lg shadow">
-      <div className="h-[10rem]">robot header</div>
+      <div className="h-[5rem]">robot header</div>
       <ul className="flex gap-8 px-6 overflow-x-auto">
         {tabs.map((tab: any, index: number) => {
           return (

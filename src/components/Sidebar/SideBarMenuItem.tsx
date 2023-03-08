@@ -39,10 +39,10 @@ export const SideBarMenuItem = ({ type }: SideBarMenuItemProps) => {
   return (
     <div
       onClick={() => handleClick()}
-      className={`${activeSwitcher()} transition-all duration-500 p-2  rounded-md`}
+      className={`${activeSwitcher()} transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90`}
     >
       <img
-        className="w-11"
+        className="w-10"
         src={`/svg/sidebar/${type}/${type}-${colorSwitcher()}.svg`}
         alt="Robolaunch"
       />

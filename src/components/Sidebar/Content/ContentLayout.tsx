@@ -36,7 +36,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
   };
 
   return (
-    <div className="fixed flex flex-col justify-between left-24 w-[36rem] h-screen bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[3]">
+    <div className="fixed flex flex-col justify-between left-20 w-[33rem] h-screen bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[3]">
       <div className="animate__animated animate__fadeInLeftBig">
         <div
           className={`flex gap-4 items-center ${

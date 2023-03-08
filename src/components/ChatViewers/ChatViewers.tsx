@@ -24,11 +24,11 @@ export default function ChatViewers({
           >
             <div className="flex gap-2">
               <div className="flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
-                {member.displayname[0].toUpperCase()}
+                {member?.displayname[0].toUpperCase()}
               </div>
               <div className="flex flex-col justify-between">
                 <span className="text-xs font-semibold">
-                  {member.displayname}
+                  {member?.displayname}
                 </span>
                 <span className="text-xs font-normal">Team User</span>
               </div>
