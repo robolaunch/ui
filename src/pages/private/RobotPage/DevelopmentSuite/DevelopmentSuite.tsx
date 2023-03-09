@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { ReactElement } from "react";
 import SampleSplitter from "./Splitter";
 import { useResizable } from "react-resizable-layout";
 import Stream from "./Stream";
-import { BsCodeSquare } from "react-icons/bs";
 import { useComponentSize } from "react-use-size";
 import Button from "../../../../components/Button/Button";
 import { Joystick } from "react-joystick-component";
@@ -16,9 +14,9 @@ export default function DevelopmentSuite({
   connectionURLs,
 }: IDevelopmentSuiteProps): ReactElement {
   const {
-    isDragging: isTerminalDragging,
-    position: terminalH,
-    splitterProps: terminalDragBarProps,
+    isDragging: isControlDragging,
+    position: controlH,
+    splitterProps: controlDragBarProps,
   } = useResizable({
     axis: "y",
     initial: 1550,
@@ -27,9 +25,9 @@ export default function DevelopmentSuite({
     disabled: true,
   });
   const {
-    isDragging: isFileDragging,
-    position: fileW,
-    splitterProps: fileDragBarProps,
+    isDragging: isIDEDragging,
+    position: ideW,
+    splitterProps: ideDragBarProps,
   } = useResizable({
     axis: "x",
     initial: 850,
@@ -44,26 +42,27 @@ export default function DevelopmentSuite({
   return (
     <div
       className={
-        "flex flex-column h-[55rem] max-h-[55rem] bg-dark font-mono color-white overflow-hidden"
+        "flex flex-column h-[55rem] max-h-[55rem] bg-dark font-mono color-white overflow-hidden animate__animated animate__fadeIn"
       }
     >
       <div className={"flex grow"}>
         <div
           className={cn(
             "shrink-0 contents h-[55rem]",
-            isFileDragging && "dragging"
+            isIDEDragging && "dragging"
           )}
-          style={{ width: fileW }}
+          style={{ width: ideW }}
           ref={ref}
         >
           <iframe
             className={`h-full w-full ${
-              isFileDragging && "invisible"
+              isIDEDragging && "invisible"
             } animate__animated animate__fadeIn`}
             src={connectionURLs?.ideURL}
+            title="Code Editor"
           />
         </div>
-        <SampleSplitter isDragging={isFileDragging} {...fileDragBarProps} />
+        <SampleSplitter isDragging={isIDEDragging} {...ideDragBarProps} />
         <div
           className={"flex flex-column h-[60rem] max-h-[60rem]"}
           style={{ width: "100%" }}
@@ -75,20 +74,17 @@ export default function DevelopmentSuite({
           </div>
           <SampleSplitter
             dir={"horizontal"}
-            isDragging={isTerminalDragging}
-            {...terminalDragBarProps}
+            isDragging={isControlDragging}
+            {...controlDragBarProps}
           />
           <div
             className={cn(
               "shrink-0 bg-darker contents relative",
-              isTerminalDragging && "dragging"
+              isControlDragging && "dragging"
             )}
-            style={{ height: terminalH }}
+            style={{ height: controlH }}
           >
-            <div
-              className="absolute inset-0 bg-layer-light-100"
-              style={{ height: terminalH }}
-            >
+            <div className="absolute inset-0 bg-layer-light-100">
               <div
                 className="w-full flex items-center justify-between gap-2 p-4"
                 id="content"

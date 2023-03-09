@@ -23,6 +23,9 @@ export default function RobotHeader({
       name: "Kubernetes Resources",
     },
     {
+      name: "Development Suite",
+    },
+    {
       name: "Code Editor",
     },
     {
@@ -36,9 +39,6 @@ export default function RobotHeader({
     },
     {
       name: "Settings",
-    },
-    {
-      name: "Development Suite",
     },
   ];
 

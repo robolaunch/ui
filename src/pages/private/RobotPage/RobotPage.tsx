@@ -5,6 +5,7 @@ import Visualization from "./Visualization/Visualization";
 import ROSLIB from "roslib";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
+import CodeEditor from "./CodeEditor/CodeEditor";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -95,7 +96,7 @@ export default function RobotPage(): ReactElement {
               case "Kubernetes Resources":
                 return <div>Kubernetes Resources</div>;
               case "Code Editor":
-                return <div>Code Editor</div>;
+                return <CodeEditor connectionURLs={connectionURLs} />;
               case "Visualization":
                 return (
                   <Visualization
