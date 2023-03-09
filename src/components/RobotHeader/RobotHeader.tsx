@@ -26,10 +26,10 @@ export default function RobotHeader({
       name: "Task Management",
     },
     {
-      name: "Robot Workspaces",
+      name: "ROS Workspaces",
     },
     {
-      name: "Kubernetes Resources",
+      name: "K8S Resources",
     },
     {
       name: "Development Suite",

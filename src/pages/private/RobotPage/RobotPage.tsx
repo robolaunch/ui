@@ -6,6 +6,10 @@ import ROSLIB from "roslib";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
 import CodeEditor from "./CodeEditor/CodeEditor";
+import Overview from "./Overview/Overview";
+import TaskManagement from "./TaskManagement/TaskManagement";
+import Workspaces from "./Workspaces/Workspaces";
+import K8SResources from "./K8SResources/K8SResources";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -88,13 +92,13 @@ export default function RobotPage(): ReactElement {
           {(() => {
             switch (activeTab) {
               case "Overview":
-                return <div>Overview</div>;
+                return <Overview />;
               case "Task Management":
-                return <div>Task Management</div>;
-              case "Robot Workspaces":
-                return <div>Robot Workspaces</div>;
-              case "Kubernetes Resources":
-                return <div>Kubernetes Resources</div>;
+                return <TaskManagement />;
+              case "ROS Workspaces":
+                return <Workspaces />;
+              case "K8S Resources":
+                return <K8SResources />;
               case "Code Editor":
                 return <CodeEditor connectionURLs={connectionURLs} />;
               case "Visualization":
