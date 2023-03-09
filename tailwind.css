@@ -7,6 +7,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.react-toggle--checked .react-toggle-track {
+  @apply !bg-primary;
+}
+
 .ui-resizable-handle {
   @apply !opacity-0;
 }

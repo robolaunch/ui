@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { BsBatteryFull } from "react-icons/bs";
 import ReactApexChart from "react-apexcharts";

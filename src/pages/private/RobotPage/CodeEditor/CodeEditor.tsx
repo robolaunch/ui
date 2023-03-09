@@ -15,7 +15,7 @@ export default function CodeEditor({
 
   return (
     <div
-      className="bg-layer-light-50 shadow-lg p-2 rounded-lg"
+      className="bg-layer-light-50 shadow-lg p-2 rounded-lg animate__animated animate__fadeIn"
       style={
         loading
           ? {
