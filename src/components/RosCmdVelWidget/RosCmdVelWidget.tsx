@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { AiOutlineCode } from "react-icons/ai";
 import ScrollToBottom from "react-scroll-to-bottom";
 import ROSLIB from "roslib";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { useComponentSize } from "react-use-size";
 import { css } from "@emotion/css";
 interface IRosCmdVelWidget {
@@ -42,7 +42,7 @@ export default function RosCmdVelWidget({
   });
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosCmdVelWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -68,6 +68,6 @@ export default function RosCmdVelWidget({
           })}
         </ScrollToBottom>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

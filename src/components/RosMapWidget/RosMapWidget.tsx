@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BsPinMap } from "react-icons/bs";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosMapWidget {
   ros: any;
@@ -14,7 +14,7 @@ export default function RosMapWidget({
   handleRemoveWidget,
 }: IRosMapWidget): ReactElement {
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosMapWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -30,6 +30,6 @@ export default function RosMapWidget({
           />
         )}
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

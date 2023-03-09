@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { FaSignal } from "react-icons/fa";
 import ReactApexChart from "react-apexcharts";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosNetworkWidget {
   ros: any;
@@ -31,7 +31,7 @@ export default function RosNetworkWidget({
   const { ref, height } = useComponentSize();
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosNetworkWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -97,6 +97,6 @@ export default function RosNetworkWidget({
           />
         </div>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

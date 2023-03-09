@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { BsBatteryFull } from "react-icons/bs";
 import ReactApexChart from "react-apexcharts";
 import { useComponentSize } from "react-use-size";
@@ -18,7 +18,7 @@ export default function RosBatteryWidget({
   const { ref, height, width } = useComponentSize();
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       handleRemoveWidget={handleRemoveWidget}
       id={id}
       type="RosBatteryWidget"
@@ -129,6 +129,6 @@ export default function RosBatteryWidget({
           </div>
         </div>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

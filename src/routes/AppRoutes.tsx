@@ -4,7 +4,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
 import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
 import { PrivateLayout } from "../layouts/PrivateLayout";
-import { OrganizationDashboard } from "../pages/private/Dashboards/OrganizationDashboard";
+import OrganizationDashboardPage from "../pages/private/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
 import SidebarContext from "../context/SidebarContext";
 import { LandingPage } from "../pages/public/LandingPage/LandingPage";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
@@ -13,6 +13,9 @@ import { RootState } from "../app/store";
 import TeamsPage from "../pages/private/URM/TeamsPage";
 import TeamMembersPage from "../pages/private/URM/TeamMembersPage";
 import RobotPage from "../pages/private/RobotPage/RobotPage";
+import TeamDashboardPage from "../pages/private/Dashboards/TeamDashboardPage/TeamDashboardPage";
+import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
+import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
 
 export default function AppRoutes(): ReactElement {
   const userToken: any = () => {
@@ -49,10 +52,30 @@ export default function AppRoutes(): ReactElement {
             </SidebarContext>
           }
         >
+          {/* Dashboard Pages */}
           <Route
             path={`/${currentOrganization.name}`}
-            element={<OrganizationDashboard />}
+            element={<OrganizationDashboardPage />}
           />
+          <Route
+            path={`/${currentOrganization.name}/:teamName`}
+            element={<TeamDashboardPage />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName`}
+            element={<RoboticsCloudDashboardPage />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName`}
+            element={<FleetDashboardPage />}
+          />
+          <Route
+            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName/:robotName`}
+            element={<RobotPage />}
+          />
+          {/* Dashboard Pages */}
+
+          {/* URM Pages */}
           <Route
             path={`/${currentOrganization.name}/teams`}
             element={<TeamsPage />}
@@ -61,10 +84,8 @@ export default function AppRoutes(): ReactElement {
             path={`/${currentOrganization.name}/:teamName/members`}
             element={<TeamMembersPage />}
           />
-          <Route
-            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName/:robotName`}
-            element={<RobotPage />}
-          />
+          {/* URM Pages */}
+
           <Route
             path="*"
             element={<Navigate to={`/${currentOrganization.name}`} />}

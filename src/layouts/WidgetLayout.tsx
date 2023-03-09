@@ -1,59 +1,46 @@
-import React, { ReactElement, useState } from "react";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { BiTrashAlt } from "react-icons/bi";
+import { ReactElement } from "react";
 
-interface IWidgetLayout {
-  id: number;
-  type: string;
-  title: any;
-  children: ReactElement;
-  icon: ReactElement;
-  handleRemoveWidget: (id: number) => void;
+interface WidgetLayoutProps {
+  icon?: ReactElement;
+  title: string;
+  subtitle?: string;
+  children?: ReactElement | ReactElement[];
+  options?: ReactElement;
 }
 
 export default function WidgetLayout({
-  id,
-  type,
-  title,
-  children,
   icon,
-  handleRemoveWidget,
-}: IWidgetLayout): ReactElement {
-  const [isVisible, setIsVisible] = useState(false);
-
+  title,
+  subtitle,
+  children,
+  options,
+}: WidgetLayoutProps): ReactElement {
   return (
     <div
-      item-id={id}
-      id={type}
-      className={`flex flex-col h-full rounded-lg ${
-        isVisible ? "bg-transparent" : "bg-layer-light-50"
-      }  `}
+      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-full"
+      style={{
+        backgroundImage: `url("/images/abstract-white.jpg")`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        filter: "filter: brightness(1.75);",
+      }}
     >
-      <div className="flex justify-between items-center gap-4 p-2">
-        <div className={`${isVisible && "invisible"}`}>{icon}</div>
-        <span
-          className={`text-sm font-medium text-layer-dark-700 cursor-pointer ${
-            isVisible && "hidden"
-          }`}
-        >
-          {title}
-        </span>
-        <div className="flex gap-2">
-          <AiOutlineEyeInvisible
-            onClick={() => setIsVisible(!isVisible)}
-            size={20}
-            className="cursor-pointer text-layer-light-400 hover:text-layer-primary-400 hover:scale-90 transition-all duration-200"
-          />
-          <BiTrashAlt
-            onClick={() => handleRemoveWidget(id)}
-            size={20}
-            className={`cursor-pointer text-layer-light-400 hover:text-layer-primary-400 hover:scale-90 transition-all duration-200 ${
-              isVisible && "hidden"
-            }`}
-          />
+      <div className="flex justify-between items-center p-3 border-b border-layer-light-100">
+        {icon}
+        <div className="flex flex-col gap-1 items-center">
+          <span className="font-semibold text-sm text-layer-dark-600 ">
+            {title}
+          </span>
+          <span className="font-medium text-xs text-layer-dark-300">
+            {subtitle}
+          </span>
         </div>
+        <div>{options}</div>
       </div>
-      {children}
+      <div id="widgetBody" className=" px-2 pb-1 ">
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { BsJoystick } from "react-icons/bs";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { Joystick } from "react-joystick-component";
 import ROSLIB from "roslib";
 import { useComponentSize } from "react-use-size";
@@ -42,7 +42,7 @@ export default function RosJoystickWidget({
   const { ref, height } = useComponentSize();
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosJoystickWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -72,6 +72,6 @@ export default function RosJoystickWidget({
           stickColor="#0ca0eb"
         ></Joystick>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoMdCodeWorking } from "react-icons/io";
 import ROSLIB from "roslib";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { css } from "@emotion/css";
 import { useComponentSize } from "react-use-size";
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -43,7 +43,7 @@ export default function RosRosOutWidget({
   });
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosRosOutWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -67,6 +67,6 @@ export default function RosRosOutWidget({
           })}
         </ScrollToBottom>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

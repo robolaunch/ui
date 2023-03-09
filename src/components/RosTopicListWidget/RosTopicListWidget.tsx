@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import ROSLIB from "roslib";
 import { AiOutlineUnorderedList } from "react-icons/ai";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosTopicListWidget {
   ros: any;
@@ -35,7 +35,7 @@ export default function RosTopicListWidget({
   }, [ros]);
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosTopicListWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -57,6 +57,6 @@ export default function RosTopicListWidget({
           );
         })}
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { GoGraph } from "react-icons/go";
 import ReactApexChart from "react-apexcharts";
 import { useComponentSize } from "react-use-size";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosResourceUsageWidget {
   ros: any;
@@ -18,7 +18,7 @@ export default function RosResourceUsageWidget({
   const { ref, height } = useComponentSize();
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosResourceUsageWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -274,6 +274,6 @@ export default function RosResourceUsageWidget({
           </div>
         </div>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

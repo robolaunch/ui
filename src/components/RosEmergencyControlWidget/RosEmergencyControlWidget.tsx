@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import Button from "../Button/Button";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosEmergencyControlWidget {
   ros: any;
@@ -15,7 +15,7 @@ export default function RosEmergencyControlWidget({
   handleRemoveWidget,
 }: IRosEmergencyControlWidget): ReactElement {
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosEmergencyControlWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -33,6 +33,6 @@ export default function RosEmergencyControlWidget({
           <span>Robot is running</span>
         </div>
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

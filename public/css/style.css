@@ -790,6 +790,26 @@ video {
   height: 8px;
 }
 
+.\!h-12{
+  height: 3rem !important;
+}
+
+.\!h-8{
+  height: 2rem !important;
+}
+
+.\!h-9{
+  height: 2.25rem !important;
+}
+
+.\!h-10{
+  height: 2.5rem !important;
+}
+
+.\!h-11{
+  height: 2.75rem !important;
+}
+
 .max-h-\[46rem\]{
   max-height: 46rem;
 }
@@ -868,6 +888,22 @@ video {
 
 .w-\[8px\]{
   width: 8px;
+}
+
+.\!w-20{
+  width: 5rem !important;
+}
+
+.\!w-40{
+  width: 10rem !important;
+}
+
+.\!w-32{
+  width: 8rem !important;
+}
+
+.\!w-28{
+  width: 7rem !important;
 }
 
 .min-w-max{
@@ -967,6 +1003,10 @@ video {
   justify-content: space-between;
 }
 
+.justify-around{
+  justify-content: space-around;
+}
+
 .gap-12{
   gap: 3rem;
 }
@@ -997,6 +1037,10 @@ video {
 
 .gap-8{
   gap: 2rem;
+}
+
+.gap-5{
+  gap: 1.25rem;
 }
 
 .gap-y-10{
@@ -1217,6 +1261,14 @@ video {
   padding: 2rem;
 }
 
+.p-14{
+  padding: 3.5rem;
+}
+
+.p-6{
+  padding: 1.5rem;
+}
+
 .px-20{
   padding-left: 5rem;
   padding-right: 5rem;
@@ -1280,6 +1332,31 @@ video {
 .px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+}
+
+.py-14{
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.py-12{
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.py-8{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-10{
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 .pt-1{
@@ -1359,6 +1436,16 @@ video {
 .text-3xl{
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.\!text-sm{
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
+.\!text-xs{
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
 }
 
 .font-semibold{
@@ -1478,6 +1565,21 @@ video {
 .text-layer-light-100{
   --tw-text-opacity: 1;
   color: rgb(235 235 235 / var(--tw-text-opacity));
+}
+
+.text-layer-dark-100{
+  --tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--tw-text-opacity));
+}
+
+.text-layer-dark-50{
+  --tw-text-opacity: 1;
+  color: rgb(184 184 184 / var(--tw-text-opacity));
+}
+
+.text-layer-dark-500{
+  --tw-text-opacity: 1;
+  color: rgb(82 82 82 / var(--tw-text-opacity));
 }
 
 .accent-primary{

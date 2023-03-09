@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 import { MdOutlineScreenShare } from "react-icons/md";
-import WidgetLayout from "../../layouts/WidgetLayout";
+import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { useComponentSize } from "react-use-size";
 
 interface IRosRemoteDesktopWidget {
@@ -72,7 +72,7 @@ export default function RosRemoteDesktopWidget({
   }, []);
 
   return (
-    <WidgetLayout
+    <RosWidgetLayout
       id={id}
       type="RosRemoteDesktopWidget"
       handleRemoveWidget={handleRemoveWidget}
@@ -95,6 +95,6 @@ export default function RosRemoteDesktopWidget({
           }}
         />
       </div>
-    </WidgetLayout>
+    </RosWidgetLayout>
   );
 }

@@ -1,18 +1,27 @@
-import React, { FC, Fragment, useEffect, useMemo, useState } from "react";
-import { GeneralTable } from "../../../components/Table/GeneralTable";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { UsersCell } from "../../../components/Cells/UsersCell";
-import { InfoCell } from "../../../components/Cells/InfoCell";
-import UtilizationWidget from "../../../widgets/UtilizationWidget";
-import CountWidget from "../../../widgets/CountWidget";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { GeneralTable } from "../../../../components/Table/GeneralTable";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import { UsersCell } from "../../../../components/Cells/UsersCell";
+import { InfoCell } from "../../../../components/Cells/InfoCell";
+import UtilizationWidget from "../../../../components/UtilizationWidget/UtilizationWidget";
+import CountWidget from "../../../../components/CountWidget/CountWidget";
+import Button from "../../../../components/Button/Button";
+import InformationWidget from "../../../../components/InformationWidget/InformationWidget";
+import { useParams } from "react-router-dom";
 
-export const OrganizationDashboard: FC = () => {
+export default function RoboticsCloudDashboardPage(): ReactElement {
   const { currentOrganization } = useAppSelector((state) => state.organization);
   const [reload, setReload] = React.useState(false);
-
   const [responseTeams, setResponseTeams] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const url = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -103,18 +112,30 @@ export const OrganizationDashboard: FC = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
-        <div className="col-span-4">1</div>
-        <div className="col-span-3">
-          <CountWidget />
+        <div className="col-span-4">
+          <InformationWidget
+            title={url?.roboticsCloudName || ""}
+            subtitle="From this page, you can view, control or get information about all
+            the details of the teams in your organization."
+            actiontitle="If you need to create a new team or check the users in the team you
+            can proceed here."
+            component={
+              <Button text="Manage Fleets" className="!w-28 !h-10 !text-xs" />
+            }
+          />
         </div>
         <div className="col-span-5">
-          <UtilizationWidget />
+          <UtilizationWidget title="Robotics Cloud" />
+        </div>
+
+        <div className="col-span-3">
+          <CountWidget data={[5, 2, 4, 3]} title="Robotics Cloud" />
         </div>
       </div>
       <div className="grid grid-cols-1">
         <GeneralTable
-          type="team"
-          title="Teams"
+          type="fleet"
+          title="Fleets"
           data={data}
           columns={columns}
           loading={loading}
@@ -123,4 +144,4 @@ export const OrganizationDashboard: FC = () => {
       </div>
     </div>
   );
-};
+}
