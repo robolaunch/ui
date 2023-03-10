@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CircleMenu, CircleMenuItem } from "react-circular-menu";
 import { AiOutlineCode, AiOutlinePlus } from "react-icons/ai";
-import { handleAddWidget } from "../../helper/gridStack";
+import { handleAddWidget } from "../../helpers/gridStack";
 import {
   BsBatteryFull,
   BsCameraVideo,

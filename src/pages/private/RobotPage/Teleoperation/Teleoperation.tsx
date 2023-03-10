@@ -16,7 +16,8 @@ import "gridstack/dist/gridstack-extra.css";
 import ROSLIB from "roslib";
 import TeleoperationControlBar from "../../../../components/TeleoperationControlBar/TeleoperationControlBar";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { handleSaveLayout } from "../../../../helper/gridStack";
+import { handleSaveLayout } from "../../../../helpers/gridStack";
+import CardLayout from "../../../../layouts/CardLayout";
 
 interface ITeleoperation {
   ros: any;
@@ -231,63 +232,65 @@ export default function Teleoperation({
   }, [selectedTopic, isRemoteDesktopStream, localStoragePath]);
 
   return (
-    <Fragment>
-      <FullScreen className="relative" handle={handleFullScreen}>
-        <div
-          className="col-span-1 grid-stack w-full z-0 shadow-lg rounded bg-layer-dark-900 animate__animated animate__fadeIn"
-          style={{
-            height: handleFullScreen.active ? "100vh" : "unset",
-            backgroundImage: `url(${cameraData})`,
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        >
-          <GridLayout
-            gridLayout={gridLayout}
-            ros={ros}
-            topicList={topicList}
-            localStoragePath={localStoragePath}
-            handleRemoveWidget={handleRemoveWidget}
+    <CardLayout>
+      <Fragment>
+        <FullScreen className="relative" handle={handleFullScreen}>
+          <div
+            className="col-span-1 grid-stack w-full z-0 rounded bg-layer-dark-900 animate__animated animate__fadeIn"
+            style={{
+              height: handleFullScreen.active ? "100vh" : "unset",
+              backgroundImage: `url(${cameraData})`,
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <GridLayout
+              gridLayout={gridLayout}
+              ros={ros}
+              topicList={topicList}
+              localStoragePath={localStoragePath}
+              handleRemoveWidget={handleRemoveWidget}
+            />
+            {isRemoteDesktopStream && (
+              <div className="absolute inset-0 -z-10">
+                <video
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="absolute top-0 bottom-0"
+                  playsInline
+                  ref={video}
+                  autoPlay
+                  muted={true}
+                  style={{
+                    position: "relative",
+                    backgroundColor: "#000",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <TeleoperationControlBar
+            selectedTopic={selectedTopic}
+            selectableTopic={selectableTopic}
+            setSelectedTopic={setSelectedTopic}
+            isRemoteDesktopStream={isRemoteDesktopStream}
+            setIsRemoteDesktopStream={setIsRemoteDesktopStream}
+            handleFullScreen={handleFullScreen}
           />
-          {isRemoteDesktopStream && (
-            <div className="absolute inset-0 -z-10">
-              <video
-                onContextMenu={(e) => e.preventDefault()}
-                className="absolute top-0 bottom-0"
-                playsInline
-                ref={video}
-                autoPlay
-                muted={true}
-                style={{
-                  position: "relative",
-                  backgroundColor: "#000",
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            </div>
-          )}
-        </div>
+        </FullScreen>
 
-        <TeleoperationControlBar
-          selectedTopic={selectedTopic}
-          selectableTopic={selectableTopic}
-          setSelectedTopic={setSelectedTopic}
-          isRemoteDesktopStream={isRemoteDesktopStream}
-          setIsRemoteDesktopStream={setIsRemoteDesktopStream}
-          handleFullScreen={handleFullScreen}
+        <FloatMenu
+          grid={grid}
+          type="Teleoperation"
+          ros={ros}
+          topicList={topicList}
+          localStoragePath={localStoragePath}
+          handleRemoveWidget={handleRemoveWidget}
+          handleForceUpdate={handleForceUpdate}
         />
-      </FullScreen>
-
-      <FloatMenu
-        grid={grid}
-        type="Teleoperation"
-        ros={ros}
-        topicList={topicList}
-        localStoragePath={localStoragePath}
-        handleRemoveWidget={handleRemoveWidget}
-        handleForceUpdate={handleForceUpdate}
-      />
-    </Fragment>
+      </Fragment>
+    </CardLayout>
   );
 }

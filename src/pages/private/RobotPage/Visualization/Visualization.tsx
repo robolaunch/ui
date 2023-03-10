@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../../hooks/redux";
 import { RootState } from "../../../../app/store";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
-import { handleSaveLayout } from "../../../../helper/gridStack";
+import { handleSaveLayout } from "../../../../helpers/gridStack";
 
 interface IVisualization {
   ros: any;

@@ -3,12 +3,13 @@ import UtilizationWidget from "../../../../components/UtilizationWidget/Utilizat
 import InformationWidget from "../../../../components/InformationWidget/InformationWidget";
 import Button from "../../../../components/Button/Button";
 import { useParams } from "react-router-dom";
+import ActivitiesWidget from "../../../../components/ActivitiesWidget/ActivitiesWidget";
 
 export default function Overview(): ReactElement {
   const url = useParams();
 
   return (
-    <div className="grid gap-8 grid-cols-1 lg:grid-rows-2 lg:grid-cols-12">
+    <div className="grid gap-6 grid-cols-1 lg:grid-rows-2 lg:grid-cols-12 animate__animated animate__fadeIn">
       <div className="col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
@@ -28,11 +29,13 @@ export default function Overview(): ReactElement {
         <UtilizationWidget title="Team" />
       </div>
 
-      <div className="col-span-3">
-        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full"></div>
+      <div className="col-span-3 row-span-2">
+        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full">
+          <ActivitiesWidget />
+        </div>
       </div>
 
-      <div className="col-span-12">
+      <div className="col-span-9">
         <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full"></div>
       </div>
     </div>

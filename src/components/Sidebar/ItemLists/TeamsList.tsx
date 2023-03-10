@@ -3,7 +3,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import { getTeams } from "../../../app/TeamSlice";
 
 export const TeamsList = () => {

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import InputSelect from "../../../../components/InputSelect/InputSelect.tsx";
 import GuacamoleKeyboard from "./guacamole-keyboard.ts";
@@ -13,6 +11,7 @@ import { useAppSelector } from "../../../../hooks/redux.ts";
 import { RootState } from "../../../../app/store.ts";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../../components/ChatViewers/ChatViewers.tsx";
+import CardLayout from "../../../../layouts/CardLayout.tsx";
 
 interface IRemoteDesktop {
   connectionURLs: any;
@@ -408,7 +407,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   }
 
   return (
-    <div className="bg-layer-light-50 p-2 shadow-lg rounded-lg animate__animated animate__fadeIn transition-all duration-500">
+    <CardLayout>
       <div className="grid grid-cols-12">
         <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900 min-h-[40rem]">
           <span
@@ -574,7 +573,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           })()}
         </div>
       </div>
-    </div>
+    </CardLayout>
   );
 };
 

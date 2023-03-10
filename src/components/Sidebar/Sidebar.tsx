@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 import { MainSidebar } from "./MainSidebar";
-import { SidebarContext } from "../../context/SidebarContext";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import { ContentLayout } from "./Content/ContentLayout";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";

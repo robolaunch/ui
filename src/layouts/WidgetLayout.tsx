@@ -23,7 +23,6 @@ export default function WidgetLayout({
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
-        filter: "filter: brightness(1.75);",
       }}
     >
       <div className="flex justify-between items-center p-3 border-b border-layer-light-100">

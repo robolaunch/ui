@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import { toast } from "react-toastify";
 import { toastifyProperties } from "../../../tools/Toastify";
 

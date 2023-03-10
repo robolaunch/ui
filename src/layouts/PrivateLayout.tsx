@@ -2,7 +2,7 @@ import React, { FC, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
-import { SidebarContext } from "../context/SidebarContext";
+import { SidebarContext } from "../contexts/SidebarContext";
 
 export const PrivateLayout: FC = () => {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
@@ -30,7 +30,7 @@ export const PrivateLayout: FC = () => {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="p-10 bg-layer-light-bg">
+          <div className="p-6 bg-layer-light-bg">
             <Outlet />
           </div>
         </div>

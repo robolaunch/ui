@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useAppDispatch } from "../../../hooks/redux";
 import { CreateOrganizationSchema } from "../../../validations/OrganizationsValidations";
 import InputError from "../../InputError/InputError";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
 import { createOrganization } from "../../../app/OrganizationSlice";

@@ -7,7 +7,7 @@ import InputSelect from "../../InputSelect/InputSelect";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
 import { createRoboticsCloud } from "../../../app/RoboticsCloudSlice";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import { getProviders } from "../../../app/ProviderSlice";
 import { getRegions } from "../../../app/RegionSlice";
 

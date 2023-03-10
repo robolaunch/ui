@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useAppDispatch } from "../../../hooks/redux";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import { useFormik } from "formik";
 import InputError from "../../InputError/InputError";
 import { CreateTeamSchema } from "../../../validations/TeamValidations";

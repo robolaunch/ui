@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect } from "react";
+import React, { Fragment, ReactElement } from "react";
 import InputToggle from "../InputToggle/InputToggle";
 import ReactApexChart from "react-apexcharts";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
@@ -22,7 +22,7 @@ export default function TeleoperationControlBar({
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
   return (
-    <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-lg z-10 rounded-t">
+    <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-t-lg z-10 rounded-t">
       <div className="flex gap-2">
         <InputSelect
           disabled={isRemoteDesktopStream}

@@ -12,7 +12,7 @@ import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm"
 import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
 
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import Button from "../../Button/Button";
 interface ContentLayoutProps {
   children?: ReactNode;

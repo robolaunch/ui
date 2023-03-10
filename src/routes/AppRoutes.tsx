@@ -5,7 +5,7 @@ import LoginPage from "../pages/public/LoginPage/LoginPage";
 import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
 import { PrivateLayout } from "../layouts/PrivateLayout";
 import OrganizationDashboardPage from "../pages/private/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
-import SidebarContext from "../context/SidebarContext";
+import SidebarContext from "../contexts/SidebarContext";
 import { LandingPage } from "../pages/public/LandingPage/LandingPage";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
 import { useAppSelector } from "../hooks/redux";

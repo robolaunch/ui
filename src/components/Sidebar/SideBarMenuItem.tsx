@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
-import { SidebarContext } from "../../context/SidebarContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
 interface SideBarMenuItemProps {
   type: string;

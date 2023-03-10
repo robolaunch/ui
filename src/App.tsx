@@ -1,7 +1,7 @@
 import React from "react";
 import AppRoutes from "./routes/AppRoutes";
 import "animate.css";
-import ThemeContext from "./context/ThemeContext";
+import ThemeContext from "./contexts/ThemeContext";
 import "react-toastify/dist/ReactToastify.css";
 import "animate.css";
 //theme

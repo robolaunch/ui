@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { SidebarContext } from "../../../context/SidebarContext";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 import {
   getRobots,
   getRobotsByFleet,

@@ -7,6 +7,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.animate__animated {
+  animation-fill-mode: unset !important;
+}
+
 .react-toggle--checked .react-toggle-track {
   @apply !bg-primary;
 }
