@@ -1691,6 +1691,12 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.ContextMenuWindow-module_menuRow__x2Jkz{
+  padding: 0.75rem !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
 .animate__animated {
   -webkit-animation-fill-mode: unset !important;
           animation-fill-mode: unset !important;

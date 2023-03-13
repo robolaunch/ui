@@ -1,17 +1,25 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { SlArrowDown, SlArrowRight } from "react-icons/sl";
 
 interface IAccordion {
+  id: number;
   children: ReactElement;
   header?: ReactElement | string;
+  setActiveMission?: (id: number) => void;
 }
 
 export default function Accordion({
+  id,
   children,
   header,
+  setActiveMission,
 }: IAccordion): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setActiveMission?.(isOpen ? id : -1);
+  }, [isOpen]);
 
   return (
     <Collapsible

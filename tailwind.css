@@ -7,6 +7,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+.ContextMenuWindow-module_menuRow__x2Jkz {
+  @apply !text-xs !p-3;
+}
+
 .animate__animated {
   animation-fill-mode: unset !important;
 }
