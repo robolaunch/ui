@@ -20,7 +20,10 @@ export default function TaskManagement(): ReactElement {
         {
           name: "Waypoint 1",
           type: "go",
-          coordinates: "39.90, 27,23",
+          coordinates: {
+            x: 20,
+            y: 920,
+          },
           icon: <BsPinMap size={24} />,
         },
       ],
@@ -34,13 +37,20 @@ export default function TaskManagement(): ReactElement {
   });
 
   function handleaddWaypointToMission(type: string) {
+    console.log(tempCordinates);
+    console.log(activeMission);
+    console.log(missions);
+
     if (activeMission !== -1) {
       setMissions((prev: any) => {
         let temp = [...prev];
-        temp[activeMission!].waypoints.push({
+        temp[activeMission!]?.waypoints?.push({
           name: "Waypoint " + Number(temp[activeMission!].waypoints.length + 1),
           type: type,
-          coordinates: `${tempCordinates?.x}, ${tempCordinates?.y}`,
+          coordinates: {
+            x: Math.ceil(tempCordinates?.x),
+            y: Math.ceil(tempCordinates?.y),
+          },
           icon: handleMissionIcon(type),
         });
 
@@ -117,8 +127,8 @@ export default function TaskManagement(): ReactElement {
                     </div>
                   }
                 >
-                  <div className="flex flex-col gap-3">
-                    {mission?.waypoints?.map((waypoint: any, index: number) => {
+                  <div className="relative flex flex-col gap-3">
+                    {mission?.waypoints?.map((waypoint: any) => {
                       return (
                         <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
                           <div className="flex items-center gap-3">
@@ -128,7 +138,9 @@ export default function TaskManagement(): ReactElement {
                             <div className="flex flex-col text-sm font-medium gap-1">
                               <span>{waypoint?.name}</span>
                               <span className="text-xs font-light">
-                                {waypoint?.coordinates}
+                                {waypoint?.coordinates?.x +
+                                  " , " +
+                                  waypoint?.coordinates?.y}
                               </span>
                             </div>
                           </div>
@@ -194,18 +206,34 @@ export default function TaskManagement(): ReactElement {
             })
           }
           adaptive={true}
-          setController={(controller: any) => {
-            console.log(controller);
-          }}
           items={activeMission !== -1 ? items : []}
         >
-          <div className="relative h-full w-full">
+          <div className="relative">
             <img
               ref={ref}
               className="absolute inset-0"
               src="/images/abstract3-white.jpg"
               alt="robolaunch"
             />
+            {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
+              return (
+                <div
+                  className="absolute"
+                  style={{
+                    top:
+                      waypoint?.coordinates?.y /
+                      (ref?.current?.naturalHeight /
+                        ref?.current?.offsetHeight),
+                    left:
+                      ref?.current?.naturalWidth /
+                      ref?.current?.offsetWidth /
+                      waypoint?.coordinates?.x,
+                  }}
+                >
+                  {waypoint?.icon}
+                </div>
+              );
+            })}
           </div>
         </ContextMenu>
       </CardLayout>
