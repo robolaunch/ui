@@ -9,8 +9,13 @@ import useMouse from "@react-hook/mouse-position";
 import { ContextMenu } from "@ni7r0g3n/react-context-menu";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { toast } from "sonner";
+import ROSLIB from "roslib";
 
-export default function TaskManagement(): ReactElement {
+interface ITaskManagement {
+  ros: any;
+}
+
+export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   const [mouseCoordinates, setMouseCoordinates] = useState<any>({ x: 0, y: 0 });
   const [activeMission, setActiveMission] = useState<number>();
   const [missions, setMissions] = useState<any>([]);
@@ -84,6 +89,21 @@ export default function TaskManagement(): ReactElement {
     }
   }
 
+  useEffect(() => {
+    const odom = new ROSLIB.Topic({
+      ros: ros,
+      name: "/odom_rf2o",
+      messageType: "nav_msgs/msg/Odometry",
+    });
+    odom?.subscribe(function (message: any) {
+      console.log(message);
+    });
+
+    return () => {
+      odom.unsubscribe();
+    };
+  }, []);
+
   return (
     <div className="grid grid-cols-12 gap-6 h-[42rem]">
       <CardLayout className="col-span-3 !p-4">
@@ -155,7 +175,7 @@ export default function TaskManagement(): ReactElement {
               <BsPlusCircle size={24} />
             </button>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4">
             <span>
               img: {ref?.current?.naturalWidth} x {ref?.current?.naturalHeight}
             </span>
@@ -177,45 +197,56 @@ export default function TaskManagement(): ReactElement {
         </Fragment>
       </CardLayout>
       <CardLayout className="col-span-9">
-        <ContextMenu
-          onOpen={() =>
-            setMouseCoordinates({
-              x:
-                (ref?.current?.naturalWidth / ref?.current?.offsetWidth) *
-                mouse.x!,
-              y:
-                (ref?.current?.naturalHeight / ref?.current?.offsetHeight) *
-                mouse.y!,
-            })
-          }
-          adaptive={true}
-          items={activeMission !== -1 ? items : []}
-        >
-          <div className="relative w-full h-full">
-            <img ref={ref} src="/images/mockMap.jpg" alt="robolaunch" />
-            {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
-              return (
-                <div
-                  className="absolute"
-                  style={{
-                    top:
-                      waypoint?.coordinates?.y /
-                        (ref?.current?.naturalHeight /
-                          ref?.current?.offsetHeight) -
-                      10,
-                    left:
-                      waypoint?.coordinates?.x /
-                        (ref?.current?.naturalWidth /
-                          ref?.current?.offsetWidth) -
-                      10,
-                  }}
-                >
-                  {waypoint?.icon}
-                </div>
-              );
-            })}
-          </div>
-        </ContextMenu>
+        <div ref={ref} className="relative w-full h-full">
+          <ContextMenu
+            onOpen={() =>
+              setMouseCoordinates({
+                x:
+                  (ref?.current?.naturalWidth / ref?.current?.offsetWidth) *
+                  mouse.x!,
+                y:
+                  (ref?.current?.naturalHeight / ref?.current?.offsetHeight) *
+                  mouse.y!,
+              })
+            }
+            adaptive={true}
+            items={activeMission !== -1 ? items : []}
+          >
+            {ros?.socket?.url && (
+              <iframe
+                className="absolute inset-0"
+                title="map"
+                style={{
+                  minWidth: "100%",
+                  minHeight: "100%",
+                  pointerEvents: "none",
+                }}
+                src={"/html/rosMap.html?" + ros.socket.url}
+              />
+            )}
+          </ContextMenu>
+
+          {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
+            return (
+              <div
+                className="absolute"
+                style={{
+                  top:
+                    waypoint?.coordinates?.y /
+                      (ref?.current?.naturalHeight /
+                        ref?.current?.offsetHeight) -
+                    10,
+                  left:
+                    waypoint?.coordinates?.x /
+                      (ref?.current?.naturalWidth / ref?.current?.offsetWidth) -
+                    10,
+                }}
+              >
+                {waypoint?.icon}
+              </div>
+            );
+          })}
+        </div>
       </CardLayout>
     </div>
   );

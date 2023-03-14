@@ -1,5 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { BsPinMap } from "react-icons/bs";
+import { useComponentSize } from "react-use-size";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosMapWidget {
@@ -21,9 +22,10 @@ export default function RosMapWidget({
       icon={<BsPinMap size={20} className="text-layer-light-400" />}
       title="Map"
     >
-      <div className="flex flex-col gap-2 overflow-auto scrollbar-hide p-2">
+      <div className="relative h-full">
         {ros?.socket?.url && (
           <iframe
+            className="absolute inset-0"
             title="map"
             style={{ minWidth: "100%", minHeight: "100%" }}
             src={"/html/rosMap.html?" + ros.socket.url}

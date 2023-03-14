@@ -12,7 +12,7 @@ import Workspaces from "./Workspaces/Workspaces";
 import K8SResources from "./K8SResources/K8SResources";
 
 export default function RobotPage(): ReactElement {
-  const [activeTab, setActiveTab] = useState<string>("Task Management");
+  const [activeTab, setActiveTab] = useState<string>("Overview");
   const [ros, setRos] = useState<any>(null);
   const [topicList, setTopicList] = useState<any>([]);
 
@@ -94,7 +94,7 @@ export default function RobotPage(): ReactElement {
               case "Overview":
                 return <Overview />;
               case "Task Management":
-                return <TaskManagement />;
+                return <TaskManagement ros={ros} />;
               case "ROS Workspaces":
                 return <Workspaces />;
               case "K8S Resources":
