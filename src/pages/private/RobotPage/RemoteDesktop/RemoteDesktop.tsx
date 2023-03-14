@@ -1,17 +1,18 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
-import InputSelect from "../../../../components/InputSelect/InputSelect.tsx";
+import InputSelect from "../../../../components/InputSelect/InputSelect";
+// @ts-ignore
 import GuacamoleKeyboard from "./guacamole-keyboard.ts";
-import Button from "../../../../components/Button/Button.tsx";
+import Button from "../../../../components/Button/Button";
 import { GiSpeaker } from "react-icons/gi";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import ChatScreen from "../../../../components/ChatScreen/ChatScreen.tsx";
-import VolumeControl from "../../../../components/VolumeControl/VolumeControl.tsx";
+import ChatScreen from "../../../../components/ChatScreen/ChatScreen";
+import VolumeControl from "../../../../components/VolumeControl/VolumeControl";
 import { toast } from "sonner";
-import { useAppSelector } from "../../../../hooks/redux.ts";
-import { RootState } from "../../../../app/store.ts";
+import { useAppSelector } from "../../../../hooks/redux";
+import { RootState } from "../../../../app/store";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import ChatViewers from "../../../../components/ChatViewers/ChatViewers.tsx";
-import CardLayout from "../../../../layouts/CardLayout.tsx";
+import ChatViewers from "../../../../components/ChatViewers/ChatViewers";
+import CardLayout from "../../../../layouts/CardLayout";
 
 interface IRemoteDesktop {
   connectionURLs: any;

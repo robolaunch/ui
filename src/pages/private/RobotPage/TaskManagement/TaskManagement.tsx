@@ -8,27 +8,12 @@ import { CgTrashEmpty } from "react-icons/cg";
 import useMouse from "@react-hook/mouse-position";
 import { ContextMenu } from "@ni7r0g3n/react-context-menu";
 import { AiOutlinePauseCircle } from "react-icons/ai";
+import { toast } from "sonner";
 
 export default function TaskManagement(): ReactElement {
-  const [tempCordinates, setTempCordinates] = useState<any>({ x: 0, y: 0 });
+  const [mouseCoordinates, setMouseCoordinates] = useState<any>({ x: 0, y: 0 });
   const [activeMission, setActiveMission] = useState<number>();
-  const [missions, setMissions] = useState<any>([
-    {
-      name: "Mission 1 (Surveillance)",
-      active: true,
-      waypoints: [
-        {
-          name: "Waypoint 1",
-          type: "go",
-          coordinates: {
-            x: 20,
-            y: 920,
-          },
-          icon: <BsPinMap size={24} />,
-        },
-      ],
-    },
-  ]);
+  const [missions, setMissions] = useState<any>([]);
 
   const ref = React.useRef<any>(null);
   const mouse = useMouse(ref, {
@@ -37,10 +22,6 @@ export default function TaskManagement(): ReactElement {
   });
 
   function handleaddWaypointToMission(type: string) {
-    console.log(tempCordinates);
-    console.log(activeMission);
-    console.log(missions);
-
     if (activeMission !== -1) {
       setMissions((prev: any) => {
         let temp = [...prev];
@@ -48,14 +29,16 @@ export default function TaskManagement(): ReactElement {
           name: "Waypoint " + Number(temp[activeMission!].waypoints.length + 1),
           type: type,
           coordinates: {
-            x: Math.ceil(tempCordinates?.x),
-            y: Math.ceil(tempCordinates?.y),
+            x: Math.ceil(mouseCoordinates?.x),
+            y: Math.ceil(mouseCoordinates?.y),
           },
           icon: handleMissionIcon(type),
         });
 
         return temp;
       });
+    } else {
+      toast.error("Please right click on the map to add a waypoint");
     }
   }
 
@@ -196,7 +179,7 @@ export default function TaskManagement(): ReactElement {
       <CardLayout className="col-span-9">
         <ContextMenu
           onOpen={() =>
-            setTempCordinates({
+            setMouseCoordinates({
               x:
                 (ref?.current?.naturalWidth / ref?.current?.offsetWidth) *
                 mouse.x!,
@@ -208,13 +191,8 @@ export default function TaskManagement(): ReactElement {
           adaptive={true}
           items={activeMission !== -1 ? items : []}
         >
-          <div className="relative">
-            <img
-              ref={ref}
-              className="absolute inset-0"
-              src="/images/abstract3-white.jpg"
-              alt="robolaunch"
-            />
+          <div className="relative w-full h-full">
+            <img ref={ref} src="/images/mockMap.jpg" alt="robolaunch" />
             {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
               return (
                 <div
@@ -222,12 +200,14 @@ export default function TaskManagement(): ReactElement {
                   style={{
                     top:
                       waypoint?.coordinates?.y /
-                      (ref?.current?.naturalHeight /
-                        ref?.current?.offsetHeight),
+                        (ref?.current?.naturalHeight /
+                          ref?.current?.offsetHeight) -
+                      10,
                     left:
-                      ref?.current?.naturalWidth /
-                      ref?.current?.offsetWidth /
-                      waypoint?.coordinates?.x,
+                      waypoint?.coordinates?.x /
+                        (ref?.current?.naturalWidth /
+                          ref?.current?.offsetWidth) -
+                      10,
                   }}
                 >
                   {waypoint?.icon}
