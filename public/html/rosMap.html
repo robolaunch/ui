@@ -47,6 +47,25 @@
             );
           });
         }
+
+        var poseTopic = new ROSLIB.Topic({
+          ros: ros,
+          name: "/odom_rf2o",
+          messageType: "nav_msgs/msg/Odometry",
+        });
+
+        var robotMarker = new ROS2D.NavigationArrow({
+          size: 0.5,
+          strokeSize: 0.5,
+          pulse: false,
+        });
+
+        poseTopic.subscribe(function (pose) {
+          robotMarker.x = pose.pose.pose.position.x;
+          robotMarker.y = -pose.pose.pose.position.y;
+        });
+
+        gridClient.rootObject.addChild(robotMarker);
       }
     </script>
   </head>
