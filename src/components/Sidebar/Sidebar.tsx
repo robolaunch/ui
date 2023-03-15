@@ -13,7 +13,7 @@ export const Sidebar: FC = () => {
   );
   return (
     <>
-      <div className="fixed flex flex-col items-center gap-4 h-screen w-20 py-2 bg-layer-light-50 shadow-2xl z-10 animate__animated animate__fadeInLeft">
+      <div className="fixed flex flex-col items-center gap-4 h-screen w-20 py-2 bg-layer-light-50 shadow-2xl z-40 animate__animated animate__fadeInLeft">
         <Link to={`${currentOrganization.name}/`}>
           <img
             className="w-14 cursor-pointer hover:scale-90 transition-all duration-500"

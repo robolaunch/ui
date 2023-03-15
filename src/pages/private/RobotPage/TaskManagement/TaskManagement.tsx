@@ -19,6 +19,10 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   const [mouseCoordinates, setMouseCoordinates] = useState<any>({ x: 0, y: 0 });
   const [activeMission, setActiveMission] = useState<number>();
   const [missions, setMissions] = useState<any>([]);
+  const [rosMapDetails, setRosMapDetails] = useState<any>({
+    x: 0,
+    y: 0,
+  });
 
   const ref = React.useRef<any>(null);
   const mouse = useMouse(ref, {
@@ -90,19 +94,64 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   }
 
   useEffect(() => {
-    const odom = new ROSLIB.Topic({
+    const map = new ROSLIB.Topic({
       ros: ros,
-      name: "/odom_rf2o",
-      messageType: "nav_msgs/msg/Odometry",
+      name: "/map",
+      messageType: "nav_msgs/msg/OccupancyGrid",
     });
-    odom?.subscribe(function (message: any) {
-      console.log(message);
+    map?.subscribe(function (message: any) {
+      setRosMapDetails({
+        x: message.info.origin.position.x * -2,
+        y: message.info.origin.position.y * -2,
+      });
     });
 
     return () => {
-      odom.unsubscribe();
+      map.unsubscribe();
     };
   }, []);
+
+  function handleWaypoints(coordinates: any) {
+    var waypoints = new ROSLIB.Topic({
+      ros: ros,
+      name: "/way_points_web",
+      messageType: "std_msgs/msg/String",
+    });
+
+    waypoints.publish({
+      data: coordinates.x + `/` + coordinates.y,
+    });
+  }
+
+  function handleSetWaypointsCoordinates(type: string) {
+    let x = (rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!;
+    let y = (rosMapDetails?.x / ref?.current?.clientHeight) * mouse?.y!;
+
+    if (x > rosMapDetails?.x / 2) {
+      x = x - rosMapDetails?.x / 2;
+    } else {
+      x = x - rosMapDetails?.x / 2;
+    }
+
+    if (y > rosMapDetails?.y / 2) {
+      console.log(y);
+    } else {
+      console.log(y);
+    }
+
+    handleWaypoints({
+      x: x,
+      y: 0,
+    });
+  }
+
+  useEffect(() => {
+    console.log(rosMapDetails);
+  }, [rosMapDetails]);
+
+  useEffect(() => {
+    console.log(ref);
+  }, [ref]);
 
   return (
     <div className="grid grid-cols-12 gap-6 h-[42rem]">
@@ -177,22 +226,36 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
           </div>
           <div className="flex flex-col gap-4">
             <span>
-              img: {ref?.current?.naturalWidth} x {ref?.current?.naturalHeight}
+              img: {ref?.current?.clientWidth} x {ref?.current?.clientHeight}
             </span>
             <span>x: {mouse.x}</span>
             <span>y: {mouse.y}</span>{" "}
+            <span>
+              GGX: {(rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!}
+            </span>
+            <span>
+              GGX: {(rosMapDetails?.y / ref?.current?.clientHeight) * mouse?.y!}
+            </span>
             <span>rendered img x: {ref?.current?.offsetWidth}</span>
             <span>rendered img y: {ref?.current?.offsetHeight}</span>
             <span>
-              real x:{" "}
-              {(ref?.current?.naturalWidth / ref?.current?.offsetWidth) *
-                mouse.x!}
+              rosmap x: {rosMapDetails?.x} rosmap y: {rosMapDetails?.y}
             </span>
-            <span>
-              real y:{" "}
-              {(ref?.current?.naturalHeight / ref?.current?.offsetHeight) *
-                mouse.y!}
-            </span>
+            <button onClick={() => handleWaypoints({ x: 0, y: 0 })}>
+              eve dön
+            </button>
+            <button onClick={() => handleWaypoints({ x: 6.8, y: 0 })}>
+              x top
+            </button>
+            <button onClick={() => handleWaypoints({ x: -6.8, y: 0 })}>
+              x bottom
+            </button>
+            <button onClick={() => handleWaypoints({ x: 0, y: 10 })}>
+              y top
+            </button>
+            <button onClick={() => handleWaypoints({ x: 0, y: -10 })}>
+              y bottom
+            </button>
           </div>
         </Fragment>
       </CardLayout>
@@ -212,18 +275,23 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
             adaptive={true}
             items={activeMission !== -1 ? items : []}
           >
-            {ros?.socket?.url && (
-              <iframe
-                className="absolute inset-0"
-                title="map"
-                style={{
-                  minWidth: "100%",
-                  minHeight: "100%",
-                  pointerEvents: "none",
-                }}
-                src={"/html/rosMap.html?" + ros.socket.url}
-              />
-            )}
+            <div
+              onClick={() => handleSetWaypointsCoordinates("go")}
+              className="absolute inset-0 z-10"
+            >
+              {ros?.socket?.url && (
+                <iframe
+                  className="absolute inset-0"
+                  title="map"
+                  style={{
+                    minWidth: "100%",
+                    minHeight: "100%",
+                    pointerEvents: "none",
+                  }}
+                  src={"/html/rosMap.html?" + ros.socket.url}
+                />
+              )}
+            </div>
           </ContextMenu>
 
           {missions[activeMission!]?.waypoints?.map((waypoint: any) => {

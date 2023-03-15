@@ -2364,12 +2364,11 @@ var ROS2D = (function (exports, createjs, ROSLIB) {
      *   * pulse (optional) - if the marker should "pulse" over time
      */
     constructor(options) {
-      var that = this;
       options = options || {};
       var size = options.size || 10;
       var strokeSize = options.strokeSize || 3;
       var strokeColor =
-        options.strokeColor || createjs__namespace.Graphics.getRGB(0, 0, 0);
+        options.strokeColor || createjs__namespace.Graphics.getRGB(255, 0, 0);
       var fillColor =
         options.fillColor || createjs__namespace.Graphics.getRGB(255, 0, 0);
       var pulse = options.pulse;
@@ -2389,24 +2388,6 @@ var ROS2D = (function (exports, createjs, ROSLIB) {
 
       // create the shape
       super(graphics);
-
-      // check if we are pulsing
-      if (pulse) {
-        // have the model "pulse"
-        var growCount = 0;
-        var growing = true;
-        createjs__namespace.Ticker.addEventListener("tick", function () {
-          if (growing) {
-            that.scaleX *= 1.035;
-            that.scaleY *= 1.035;
-            growing = ++growCount < 10;
-          } else {
-            that.scaleX /= 1.035;
-            that.scaleY /= 1.035;
-            growing = --growCount < 0;
-          }
-        });
-      }
     }
   }
 

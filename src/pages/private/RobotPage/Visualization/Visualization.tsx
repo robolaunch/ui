@@ -6,6 +6,7 @@ import { RootState } from "../../../../app/store";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
 import { handleSaveLayout } from "../../../../helpers/gridStack";
+import ROSLIB from "roslib";
 
 interface IVisualization {
   ros: any;
@@ -77,6 +78,36 @@ export default function Visualization({
 
     handleForceUpdate("Visualization");
   }
+
+  useEffect(() => {
+    const map = new ROSLIB.Topic({
+      ros: ros,
+      name: "/map",
+      messageType: "nav_msgs/msg/OccupancyGrid",
+    });
+    map?.subscribe(function (message: any) {
+      console.log("map: ", message.info);
+    });
+
+    return () => {
+      map.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    const poseTopic = new ROSLIB.Topic({
+      ros: ros,
+      name: "/odom_rf2o",
+      messageType: "nav_msgs/msg/Odometry",
+    });
+    poseTopic?.subscribe(function (message: any) {
+      // console.log("pose", message.pose.pose.position);
+    });
+
+    return () => {
+      poseTopic.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">

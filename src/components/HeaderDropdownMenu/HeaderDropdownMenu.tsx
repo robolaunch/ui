@@ -3,6 +3,7 @@ import { useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../app/store";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Link } from "react-router-dom";
+import InputSelect from "../InputSelect/InputSelect";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -11,6 +12,12 @@ export default function HeaderDropdownMenu(): ReactElement {
   const ref = useOnclickOutside(() => {
     setIsOpen(false);
   });
+
+  const { organizations }: any = useAppSelector(
+    (state: RootState) => state.organization
+  );
+
+  console.log(organizations);
 
   return (
     <Fragment>
@@ -24,7 +31,7 @@ export default function HeaderDropdownMenu(): ReactElement {
       </div>
       {isOpen && (
         <ul
-          className="flex flex-col gap-7 absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeIn"
+          className="flex flex-col gap-7 w-60 absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
           ref={ref}
         >
           <Link
@@ -43,7 +50,20 @@ export default function HeaderDropdownMenu(): ReactElement {
               </span>
             </div>
           </Link>
-          <li>Active Organization select</li>
+          <li className="flex flex-col gap-1">
+            <span className="text-xs text-layer-dark-500">
+              Active Organization
+            </span>
+            <InputSelect className="text-layer-dark-600">
+              {organizations?.map((organization: any, index: number) => {
+                return (
+                  <option key={index} value={organization.name}>
+                    {organization.name}
+                  </option>
+                );
+              })}
+            </InputSelect>
+          </li>
           <li>Account Settings</li>
           <li>Signout</li>
         </ul>
