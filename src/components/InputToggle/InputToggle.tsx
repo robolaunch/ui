@@ -22,7 +22,11 @@ export default function InputToggle({
   color,
 }: IInputToggle): ReactElement {
   return (
-    <div className="flex flex-col gap-1 text-xs text-layer-light-700 ">
+    <div
+      className={`flex flex-col text-xs text-layer-light-700 ${
+        placeholder && "gap-1"
+      } `}
+    >
       <label>{placeholder}</label>
       <div className="flex items-center gap-2">
         {leftLabel && <span>{leftLabel}</span>}

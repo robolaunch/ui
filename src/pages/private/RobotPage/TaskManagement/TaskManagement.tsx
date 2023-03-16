@@ -27,7 +27,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     },
     {
       name: "Mission 2",
-      active: true,
+      active: false,
       waypoints: [],
     },
   ]);
@@ -265,14 +265,13 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   src={"/html/rosMap.html?" + ros.socket.url}
                 />
               )}
-            </div>
-
-            <div className="absolute inset-0 z-10">
               <GridLines
                 columns={Math.round(rosMapDetails?.x)}
                 rows={Math.round(rosMapDetails?.y)}
               />
             </div>
+
+            <div className="absolute inset-0 z-10"></div>
           </ContextMenu>
 
           {missions[activeMission!]?.waypoints?.map((waypoint: any) => {

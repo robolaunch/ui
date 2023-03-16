@@ -29,7 +29,9 @@ export default function RosRemoteDesktopWidget({
       }
     };
 
-    client.current = new WebSocket(`ws://localhost:8080/ws?password=admin`);
+    client.current = new WebSocket(
+      `ws://172.16.44.200:32682/vdi/ws?password=admin`
+    );
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);

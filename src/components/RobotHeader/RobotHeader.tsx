@@ -6,7 +6,6 @@ import { AiOutlineTeam } from "react-icons/ai";
 import { BsFillCpuFill } from "react-icons/bs";
 import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
-import ReactApexChart from "react-apexcharts";
 import CardLayout from "../../layouts/CardLayout";
 interface IRobotHeader {
   handleChangeActiveTab: any;
@@ -61,66 +60,78 @@ export default function RobotHeader({
               <span className="text-xs font-light">Ankara, Turkiye</span>
             </span>
           </div>
-          <div className="flex flex-col gap-4">
-            <span className="text-xs text-center font-semibold">
-              Virtual Resources
-            </span>
-            <div id="resources" className="grid grid-cols-2 gap-4">
-              <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={16} color="#666666" />
-                <span className="text-xs font-light">4 Core</span>
-              </div>
-              <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={16} color="#666666" />
-                <span className="text-xs font-light">4 Core</span>
-              </div>{" "}
-              <div className="col-span-1 flex items-center gap-2">
-                <FaMemory size={16} color="#666666" />
-                <span className="text-xs font-light">8 RAM</span>
-              </div>{" "}
-              <div className="col-span-1 flex items-center gap-2">
-                <MdOutlineStorage size={16} color="#666666" />
-                <span className="text-xs font-light">100 GB</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <span className="text-xs text-center font-semibold">
-              Physical Resources
-            </span>
-            <div id="resources" className="grid grid-cols-2 gap-4">
-              <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={16} color="#666666" />
-                <span className="text-xs font-light">4 Core</span>
-              </div>
-              <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={16} color="#666666" />
-                <span className="text-xs font-light">4 Core</span>
-              </div>{" "}
-              <div className="col-span-1 flex items-center gap-2">
-                <FaMemory size={16} color="#666666" />
-                <span className="text-xs font-light">8 RAM</span>
-              </div>{" "}
-              <div className="col-span-1 flex items-center gap-2">
-                <MdOutlineStorage size={16} color="#666666" />
-                <span className="text-xs font-light">100 GB</span>
-              </div>
-            </div>
-          </div>
 
           <div className="text-xs font-medium text-layer-dark-400 flex gap-8">
-            <div className="flex flex-col gap-2 items-center border border-layer-secondary-100 rounded-lg py-3 px-7 shadow">
-              <span>Code Editor</span>
-              <InputToggle icons={false} checked={true} onChange={() => {}} />
-            </div>
-            <div className="flex flex-col gap-2 items-center border border-layer-secondary-100 rounded-lg py-3 px-7 shadow">
-              <span>Teleoperation</span>
-              <InputToggle icons={false} checked={true} onChange={() => {}} />
-            </div>
-            <div className="flex flex-col gap-2 items-center border border-layer-secondary-100 rounded-lg py-3 px-7 shadow">
-              <span>Remote Desktop</span>
-              <InputToggle icons={false} checked={true} onChange={() => {}} />
+            <div className="flex flex-col items-end gap-4">
+              <div className="flex gap-2">
+                <div className="flex  items-center rounded-lg p-2">
+                  <span>Code Editor</span>
+                  <InputToggle
+                    icons={false}
+                    checked={true}
+                    onChange={() => {}}
+                  />
+                </div>
+                <div className="flex  items-center rounded-lg p-2">
+                  <span>Teleoperation</span>
+                  <InputToggle
+                    icons={false}
+                    checked={true}
+                    onChange={() => {}}
+                  />
+                </div>
+                <div className="flex  items-center rounded-lg p-2">
+                  <span>Remote Desktop</span>
+                  <InputToggle
+                    icons={false}
+                    checked={true}
+                    onChange={() => {}}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center gap-3 pt-6">
+                <span className="text-xs text-center font-semibold">
+                  Virtual Resources:
+                </span>
+                <div className="col-span-1 flex items-center gap-2">
+                  <BsFillCpuFill size={16} color="#666666" />
+                  <span className="text-xs font-light">4 Core</span>
+                </div>
+                <div className="col-span-1 flex items-center gap-2">
+                  <BsFillCpuFill size={16} color="#666666" />
+                  <span className="text-xs font-light">4 Core</span>
+                </div>{" "}
+                <div className="col-span-1 flex items-center gap-2">
+                  <FaMemory size={16} color="#666666" />
+                  <span className="text-xs font-light">8 RAM</span>
+                </div>{" "}
+                <div className="col-span-1 flex items-center gap-2">
+                  <MdOutlineStorage size={16} color="#666666" />
+                  <span className="text-xs font-light">100 GB</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-center font-semibold">
+                  Physical Resources:
+                </span>
+                <div className="col-span-1 flex items-center gap-2">
+                  <BsFillCpuFill size={16} color="#666666" />
+                  <span className="text-xs font-light">4 Core</span>
+                </div>
+                <div className="col-span-1 flex items-center gap-2">
+                  <BsFillCpuFill size={16} color="#666666" />
+                  <span className="text-xs font-light">4 Core</span>
+                </div>{" "}
+                <div className="col-span-1 flex items-center gap-2">
+                  <FaMemory size={16} color="#666666" />
+                  <span className="text-xs font-light">8 RAM</span>
+                </div>{" "}
+                <div className="col-span-1 flex items-center gap-2">
+                  <MdOutlineStorage size={16} color="#666666" />
+                  <span className="text-xs font-light">100 GB</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
