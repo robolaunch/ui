@@ -49,23 +49,43 @@
 
           var poseTopic = new ROSLIB.Topic({
             ros: ros,
-            name: "/odom_rf2o",
-            messageType: "nav_msgs/msg/Odometry",
+            name: "/robot_position",
+            messageType: "geometry_msgs/msg/PoseStamped",
           });
 
           var robotMarker = new ROS2D.NavigationArrow({
             size: 0.1,
+            strokeColor: "green",
             strokeSize: 0.25,
-            pulse: false,
+            pulse: true,
           });
 
           poseTopic.subscribe(function (pose) {
-            robotMarker.x = pose.pose.pose.position.x;
-            robotMarker.y = -1 * pose.pose.pose.position.y;
+            console.log(pose);
+            robotMarker.x = pose.pose.position.x;
+            robotMarker.y = -1 * pose.pose.position.y;
           });
 
           gridClient.rootObject.addChild(robotMarker);
         }
+
+        pathView = new ROS2D.PathShape({
+          ros: ros,
+          strokeSize: 0.02,
+          strokeColor: "green",
+        });
+
+        gridClient.rootObject.addChild(pathView);
+
+        pathTopic = new ROSLIB.Topic({
+          ros: ros,
+          name: "/plan",
+          messageType: "nav_msgs/msg/Path",
+        });
+
+        pathTopic.subscribe(function (message) {
+          pathView.setPath(message);
+        });
       }
     </script>
   </head>

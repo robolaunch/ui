@@ -10,6 +10,7 @@ import { ContextMenu } from "@ni7r0g3n/react-context-menu";
 import { AiOutlinePauseCircle } from "react-icons/ai";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
+import GridLines from "../../../../components/GridLines/GridLines";
 
 interface ITaskManagement {
   ros: any;
@@ -18,7 +19,18 @@ interface ITaskManagement {
 export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   const [mouseCoordinates, setMouseCoordinates] = useState<any>({ x: 0, y: 0 });
   const [activeMission, setActiveMission] = useState<number>();
-  const [missions, setMissions] = useState<any>([]);
+  const [missions, setMissions] = useState<any>([
+    {
+      name: "Mission 1",
+      active: true,
+      waypoints: [],
+    },
+    {
+      name: "Mission 2",
+      active: true,
+      waypoints: [],
+    },
+  ]);
   const [rosMapDetails, setRosMapDetails] = useState<any>({
     x: 0,
     y: 0,
@@ -111,6 +123,16 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     };
   }, []);
 
+  function handleSetWaypointsCoordinates(type: string) {
+    let x = (rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!;
+    let y = (rosMapDetails?.y / ref?.current?.clientHeight) * mouse?.y!;
+
+    handleWaypoints({
+      x: x - rosMapDetails?.x / 2,
+      y: (y - rosMapDetails?.y / 2) * -1,
+    });
+  }
+
   function handleWaypoints(coordinates: any) {
     var waypoints = new ROSLIB.Topic({
       ros: ros,
@@ -118,40 +140,11 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       messageType: "std_msgs/msg/String",
     });
 
+    console.log("work");
     waypoints.publish({
       data: coordinates.x + `/` + coordinates.y,
     });
   }
-
-  function handleSetWaypointsCoordinates(type: string) {
-    let x = (rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!;
-    let y = (rosMapDetails?.x / ref?.current?.clientHeight) * mouse?.y!;
-
-    if (x > rosMapDetails?.x / 2) {
-      x = x - rosMapDetails?.x / 2;
-    } else {
-      x = x - rosMapDetails?.x / 2;
-    }
-
-    if (y > rosMapDetails?.y / 2) {
-      console.log(y);
-    } else {
-      console.log(y);
-    }
-
-    handleWaypoints({
-      x: x,
-      y: 0,
-    });
-  }
-
-  useEffect(() => {
-    console.log(rosMapDetails);
-  }, [rosMapDetails]);
-
-  useEffect(() => {
-    console.log(ref);
-  }, [ref]);
 
   return (
     <div className="grid grid-cols-12 gap-6 h-[42rem]">
@@ -236,31 +229,15 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
             <span>
               GGX: {(rosMapDetails?.y / ref?.current?.clientHeight) * mouse?.y!}
             </span>
-            <span>rendered img x: {ref?.current?.offsetWidth}</span>
-            <span>rendered img y: {ref?.current?.offsetHeight}</span>
-            <span>
-              rosmap x: {rosMapDetails?.x} rosmap y: {rosMapDetails?.y}
-            </span>
-            <button onClick={() => handleWaypoints({ x: 0, y: 0 })}>
-              eve dön
-            </button>
-            <button onClick={() => handleWaypoints({ x: 6.8, y: 0 })}>
-              x top
-            </button>
-            <button onClick={() => handleWaypoints({ x: -6.8, y: 0 })}>
-              x bottom
-            </button>
-            <button onClick={() => handleWaypoints({ x: 0, y: 10 })}>
-              y top
-            </button>
-            <button onClick={() => handleWaypoints({ x: 0, y: -10 })}>
-              y bottom
-            </button>
           </div>
         </Fragment>
       </CardLayout>
       <CardLayout className="col-span-9">
-        <div ref={ref} className="relative w-full h-full">
+        <div
+          onClick={() => handleSetWaypointsCoordinates("go")}
+          ref={ref}
+          className="relative w-full h-full"
+        >
           <ContextMenu
             onOpen={() =>
               setMouseCoordinates({
@@ -275,10 +252,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
             adaptive={true}
             items={activeMission !== -1 ? items : []}
           >
-            <div
-              onClick={() => handleSetWaypointsCoordinates("go")}
-              className="absolute inset-0 z-10"
-            >
+            <div className="absolute inset-0 z-10">
               {ros?.socket?.url && (
                 <iframe
                   className="absolute inset-0"
@@ -291,6 +265,13 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   src={"/html/rosMap.html?" + ros.socket.url}
                 />
               )}
+            </div>
+
+            <div className="absolute inset-0 z-10">
+              <GridLines
+                columns={Math.round(rosMapDetails?.x)}
+                rows={Math.round(rosMapDetails?.y)}
+              />
             </div>
           </ContextMenu>
 

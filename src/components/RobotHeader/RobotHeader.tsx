@@ -61,106 +61,54 @@ export default function RobotHeader({
               <span className="text-xs font-light">Ankara, Turkiye</span>
             </span>
           </div>
-          <div className="flex gap-6">
-            <div id="resources" className="grid grid-cols-2 gap-x-6">
+          <div className="flex flex-col gap-4">
+            <span className="text-xs text-center font-semibold">
+              Virtual Resources
+            </span>
+            <div id="resources" className="grid grid-cols-2 gap-4">
               <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={18} />
-                <span className="text-xs font-normal">4 Core</span>
+                <BsFillCpuFill size={16} color="#666666" />
+                <span className="text-xs font-light">4 Core</span>
               </div>
               <div className="col-span-1 flex items-center gap-2">
-                <BsFillCpuFill size={18} />
-                <span className="text-xs font-normal">4 Core</span>
+                <BsFillCpuFill size={16} color="#666666" />
+                <span className="text-xs font-light">4 Core</span>
               </div>{" "}
               <div className="col-span-1 flex items-center gap-2">
-                <FaMemory size={18} />
-                <span className="text-xs font-normal">8 RAM</span>
+                <FaMemory size={16} color="#666666" />
+                <span className="text-xs font-light">8 RAM</span>
               </div>{" "}
               <div className="col-span-1 flex items-center gap-2">
-                <MdOutlineStorage size={18} />
-                <span className="text-xs font-normal">100 GB</span>
+                <MdOutlineStorage size={16} color="#666666" />
+                <span className="text-xs font-light">100 GB</span>
               </div>
             </div>
-            <ReactApexChart
-              series={[75]}
-              options={{
-                chart: {
-                  type: "radialBar",
-                  toolbar: {
-                    show: false,
-                  },
-                },
-                plotOptions: {
-                  radialBar: {
-                    startAngle: -135,
-                    endAngle: 225,
-                    hollow: {
-                      margin: 0,
-                      size: "70%",
-                      background: "#fff",
-                      image: undefined,
-                      imageOffsetX: 0,
-                      imageOffsetY: 0,
-                      position: "front",
-                      dropShadow: {
-                        enabled: true,
-                        top: 3,
-                        left: 0,
-                        blur: 4,
-                        opacity: 0.24,
-                      },
-                    },
-                    track: {
-                      background: "#fff",
-                      strokeWidth: "67%",
-                      margin: 0, // margin is in pixels
-                      dropShadow: {
-                        enabled: true,
-                        top: -3,
-                        left: 0,
-                        blur: 4,
-                        opacity: 0.35,
-                      },
-                    },
-
-                    dataLabels: {
-                      show: true,
-                      name: {
-                        show: false,
-                        color: "#888",
-                        fontSize: "17px",
-                      },
-                      value: {
-                        offsetY: 5,
-                        color: "#111",
-                        fontSize: "13px",
-                        show: true,
-                      },
-                    },
-                  },
-                },
-                fill: {
-                  type: "gradient",
-                  gradient: {
-                    shade: "dark",
-                    type: "horizontal",
-                    shadeIntensity: 0.5,
-                    gradientToColors: ["#AC2DFE", "#35B8FA"],
-                    inverseColors: true,
-                    opacityFrom: 1,
-                    opacityTo: 1,
-                    stops: [0, 100],
-                  },
-                },
-                stroke: {
-                  lineCap: "round",
-                },
-                labels: [""],
-              }}
-              type="radialBar"
-              height={100}
-              width={66}
-            />
           </div>
+
+          <div className="flex flex-col gap-4">
+            <span className="text-xs text-center font-semibold">
+              Physical Resources
+            </span>
+            <div id="resources" className="grid grid-cols-2 gap-4">
+              <div className="col-span-1 flex items-center gap-2">
+                <BsFillCpuFill size={16} color="#666666" />
+                <span className="text-xs font-light">4 Core</span>
+              </div>
+              <div className="col-span-1 flex items-center gap-2">
+                <BsFillCpuFill size={16} color="#666666" />
+                <span className="text-xs font-light">4 Core</span>
+              </div>{" "}
+              <div className="col-span-1 flex items-center gap-2">
+                <FaMemory size={16} color="#666666" />
+                <span className="text-xs font-light">8 RAM</span>
+              </div>{" "}
+              <div className="col-span-1 flex items-center gap-2">
+                <MdOutlineStorage size={16} color="#666666" />
+                <span className="text-xs font-light">100 GB</span>
+              </div>
+            </div>
+          </div>
+
           <div className="text-xs font-medium text-layer-dark-400 flex gap-8">
             <div className="flex flex-col gap-2 items-center border border-layer-secondary-100 rounded-lg py-3 px-7 shadow">
               <span>Code Editor</span>
