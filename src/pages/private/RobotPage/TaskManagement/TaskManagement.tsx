@@ -11,6 +11,9 @@ import { AiOutlinePauseCircle } from "react-icons/ai";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
 import GridLines from "../../../../components/GridLines/GridLines";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useComponentSize } from "react-use-size";
+import PrismaZoom from "react-prismazoom";
 
 interface ITaskManagement {
   ros: any;
@@ -36,8 +39,8 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     y: 0,
   });
 
-  const ref = React.useRef<any>(null);
-  const mouse = useMouse(ref, {
+  const mouseRef = React.useRef<any>(null);
+  const mouse = useMouse(mouseRef, {
     enterDelay: 100,
     leaveDelay: 100,
   });
@@ -50,8 +53,8 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
           name: "Waypoint " + Number(temp[activeMission!].waypoints.length + 1),
           type: type,
           coordinates: {
-            x: Math.ceil(mouseCoordinates?.x),
-            y: Math.ceil(mouseCoordinates?.y),
+            x: mouseCoordinates?.x,
+            y: mouseCoordinates?.y,
           },
           icon: handleMissionIcon(type),
         });
@@ -113,6 +116,10 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     });
     map?.subscribe(function (message: any) {
       setRosMapDetails({
+        resolution: {
+          x: message.info.width,
+          y: message.info.height,
+        },
         x: message.info.origin.position.x * -2,
         y: message.info.origin.position.y * -2,
       });
@@ -124,8 +131,8 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   }, []);
 
   function handleSetWaypointsCoordinates(type: string) {
-    let x = (rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!;
-    let y = (rosMapDetails?.y / ref?.current?.clientHeight) * mouse?.y!;
+    let x = (rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x!;
+    let y = (rosMapDetails?.y / mouseRef?.current?.clientHeight) * mouse?.y!;
 
     handleWaypoints({
       x: x - rosMapDetails?.x / 2,
@@ -182,10 +189,9 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                             </div>
                             <div className="flex flex-col text-sm font-medium gap-1">
                               <span>{waypoint?.name}</span>
-                              <span className="text-xs font-light">
-                                {waypoint?.coordinates?.x +
-                                  " , " +
-                                  waypoint?.coordinates?.y}
+                              <span className="flex flex-col  text-xs font-light">
+                                <span>x: {waypoint?.coordinates?.x}</span>
+                                <span>y: {waypoint?.coordinates?.y}</span>
                               </span>
                             </div>
                           </div>
@@ -217,83 +223,97 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
               <BsPlusCircle size={24} />
             </button>
           </div>
-          <div className="flex flex-col gap-4">
-            <span>
-              img: {ref?.current?.clientWidth} x {ref?.current?.clientHeight}
-            </span>
-            <span>x: {mouse.x}</span>
-            <span>y: {mouse.y}</span>{" "}
-            <span>
-              GGX: {(rosMapDetails?.x / ref?.current?.clientWidth) * mouse?.x!}
-            </span>
-            <span>
-              GGX: {(rosMapDetails?.y / ref?.current?.clientHeight) * mouse?.y!}
-            </span>
-          </div>
+          <TransformWrapper>
+            <TransformComponent>
+              <div className="flex flex-col gap-4">
+                <span>
+                  img: {mouseRef?.current?.clientWidth} x{" "}
+                  {mouseRef?.current?.clientHeight}
+                </span>
+                <span>x: {mouse.x}</span>
+                <span>y: {mouse.y}</span>{" "}
+                <span>
+                  GGX:{" "}
+                  {(rosMapDetails?.x / mouseRef?.current?.clientWidth) *
+                    mouse?.x!}
+                </span>
+                <span>
+                  GGY:{" "}
+                  {(rosMapDetails?.y / mouseRef?.current?.clientHeight) *
+                    mouse?.y!}
+                </span>
+              </div>
+            </TransformComponent>
+          </TransformWrapper>
         </Fragment>
       </CardLayout>
-      <CardLayout className="col-span-9">
+      <CardLayout className="col-span-9 ">
         <div
-          onClick={() => handleSetWaypointsCoordinates("go")}
-          ref={ref}
-          className="relative w-full h-full"
+          className="w-full h-full flex items-center justify-center
+        bg-[#7f7f7f]
+        "
         >
           <ContextMenu
-            onOpen={() =>
-              setMouseCoordinates({
-                x:
-                  (ref?.current?.naturalWidth / ref?.current?.offsetWidth) *
-                  mouse.x!,
-                y:
-                  (ref?.current?.naturalHeight / ref?.current?.offsetHeight) *
-                  mouse.y!,
-              })
-            }
+            onOpen={() => {
+              if (activeMission === -1) {
+                toast.error(
+                  "if you want to add a waypoint, you need to open or create a mission"
+                );
+              } else {
+                setMouseCoordinates({
+                  x:
+                    (rosMapDetails?.x / mouseRef?.current?.clientWidth) *
+                    mouse?.x!,
+                  y:
+                    (rosMapDetails?.y / mouseRef?.current?.clientHeight) *
+                    mouse?.y!,
+                });
+              }
+            }}
             adaptive={true}
             items={activeMission !== -1 ? items : []}
           >
-            <div className="absolute inset-0 z-10">
-              {ros?.socket?.url && (
-                <iframe
-                  className="absolute inset-0"
-                  title="map"
-                  style={{
-                    minWidth: "100%",
-                    minHeight: "100%",
-                    pointerEvents: "none",
-                  }}
-                  src={"/html/rosMap.html?" + ros.socket.url}
-                />
-              )}
-              <GridLines
-                columns={Math.round(rosMapDetails?.x)}
-                rows={Math.round(rosMapDetails?.y)}
-              />
-            </div>
-
-            <div className="absolute inset-0 z-10"></div>
-          </ContextMenu>
-
-          {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
-            return (
-              <div
-                className="absolute"
+            <div
+              ref={mouseRef}
+              className="relative border border-layer-dark-400"
+              onClick={() => handleSetWaypointsCoordinates("go")}
+            >
+              <embed
+                title="map"
                 style={{
-                  top:
-                    waypoint?.coordinates?.y /
-                      (ref?.current?.naturalHeight /
-                        ref?.current?.offsetHeight) -
-                    10,
-                  left:
-                    waypoint?.coordinates?.x /
-                      (ref?.current?.naturalWidth / ref?.current?.offsetWidth) -
-                    10,
+                  width: rosMapDetails?.resolution?.x * 1.5 + "px",
+                  height: rosMapDetails?.resolution?.y * 1.5 + "px",
+                  maxHeight: "100%",
+                  maxWidth: "100%",
+                  pointerEvents: "none",
                 }}
-              >
-                {waypoint?.icon}
-              </div>
-            );
-          })}
+                src={"/html/rosMap.html?" + ros.socket.url}
+              />
+              {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
+                console.log(rosMapDetails?.x / mouseRef?.current?.clientWidth);
+
+                return (
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      top:
+                        waypoint?.coordinates?.y /
+                          (mouseRef?.current?.naturalHeight /
+                            mouseRef?.current?.offsetHeight) -
+                        10,
+                      left:
+                        waypoint?.coordinates?.x /
+                          (mouseRef?.current?.naturalWidth /
+                            mouseRef?.current?.offsetWidth) -
+                        10,
+                    }}
+                  >
+                    {waypoint?.icon}
+                  </div>
+                );
+              })}
+            </div>
+          </ContextMenu>
         </div>
       </CardLayout>
     </div>

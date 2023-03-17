@@ -8,7 +8,12 @@ body::-webkit-scrollbar {
 }
 
 .react-toggle {
-  @apply !scale-50;
+  @apply !scale-75;
+}
+
+.react-transform-wrapper,
+.react-transform-component {
+  @apply !w-full !h-full;
 }
 
 .ContextMenuWindow-module_menuRow__x2Jkz {

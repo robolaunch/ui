@@ -7,7 +7,7 @@ interface IGridLines {
 
 export default function GridLines({ columns, rows }: IGridLines): ReactElement {
   return (
-    <div className="w-full h-full relative">
+    <div className="absolute inset-0">
       <div className={`w-full h-full absolute inset-0 flex justify-between`}>
         {[...Array(columns)].map((_, i) => {
           return (

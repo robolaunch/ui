@@ -61,7 +61,6 @@
           });
 
           poseTopic.subscribe(function (pose) {
-            console.log(pose);
             robotMarker.x = pose.pose.position.x;
             robotMarker.y = -1 * pose.pose.position.y;
           });

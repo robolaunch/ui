@@ -75,7 +75,7 @@ export default function ActivitiesWidget(): ReactElement {
       <ul className="flex flex-col p-5 text-sm">
         {data.map((item: any, index: number) => {
           return (
-            <li className="grid grid-cols-12 gap-2">
+            <li key={index} className="grid grid-cols-12 gap-2">
               <span className="col-span-1 text-xs font-medium">
                 {item?.time}
               </span>
