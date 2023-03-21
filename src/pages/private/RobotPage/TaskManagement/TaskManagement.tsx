@@ -3,17 +3,19 @@ import CardLayout from "../../../../layouts/CardLayout";
 import Accordion from "../../../../components/Accordion/Accordion";
 import InputToggle from "../../../../components/InputToggle/InputToggle";
 import { RxDotsVertical } from "react-icons/rx";
-import { BsPinMap, BsCameraVideo, BsPlusCircle } from "react-icons/bs";
+import {
+  BsPinMap,
+  BsCameraVideo,
+  BsPlusCircle,
+  BsPlayCircle,
+} from "react-icons/bs";
 import { CgTrashEmpty } from "react-icons/cg";
 import useMouse from "@react-hook/mouse-position";
 import { ContextMenu } from "@ni7r0g3n/react-context-menu";
 import { AiOutlinePauseCircle } from "react-icons/ai";
+import { CiMapPin } from "react-icons/ci";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
-import GridLines from "../../../../components/GridLines/GridLines";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { useComponentSize } from "react-use-size";
-import PrismaZoom from "react-prismazoom";
 
 interface ITaskManagement {
   ros: any;
@@ -100,11 +102,11 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   function handleMissionIcon(type: string) {
     switch (type) {
       case "go":
-        return <BsPinMap size={24} />;
+        return <CiMapPin size={20} />;
       case "go_wait":
-        return <AiOutlinePauseCircle size={24} />;
+        return <AiOutlinePauseCircle size={20} />;
       case "go_takePicture":
-        return <BsCameraVideo size={24} />;
+        return <BsCameraVideo size={20} />;
     }
   }
 
@@ -131,12 +133,17 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   }, []);
 
   function handleSetWaypointsCoordinates(type: string) {
-    let x = (rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x!;
-    let y = (rosMapDetails?.y / mouseRef?.current?.clientHeight) * mouse?.y!;
+    let x =
+      (rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x! -
+      rosMapDetails?.x / 2;
+    let y =
+      ((rosMapDetails?.y / mouseRef?.current?.clientHeight) * mouse?.y! -
+        rosMapDetails?.y / 2) *
+      -1;
 
     handleWaypoints({
-      x: x - rosMapDetails?.x / 2,
-      y: (y - rosMapDetails?.y / 2) * -1,
+      x: x,
+      y: y,
     });
   }
 
@@ -147,9 +154,21 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       messageType: "std_msgs/msg/String",
     });
 
-    console.log("work");
+    console.log("work", coordinates);
     waypoints.publish({
       data: coordinates.x + `/` + coordinates.y,
+    });
+  }
+
+  function handleStartMission(paths: string) {
+    var waypoints = new ROSLIB.Topic({
+      ros: ros,
+      name: "/way_points_web",
+      messageType: "std_msgs/msg/String",
+    });
+
+    waypoints.publish({
+      data: paths,
     });
   }
 
@@ -169,6 +188,19 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                         {mission?.name}
                       </span>
                       <div className="flex items-center gap-3">
+                        <BsPlayCircle
+                          size={24}
+                          onClick={() => {
+                            const temp: any = mission?.waypoints.map(
+                              (waypoint: any) => {
+                                return `${waypoint?.coordinates?.x}/${waypoint?.coordinates?.y}`;
+                              }
+                            );
+                            handleStartMission(
+                              temp.toString().replace(/,/g, "/")
+                            );
+                          }}
+                        />
                         <InputToggle
                           icons={false}
                           checked={mission?.active}
@@ -184,18 +216,39 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                       return (
                         <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
                           <div className="flex items-center gap-3">
+                            <BsPlayCircle
+                              size={20}
+                              onClick={() =>
+                                handleWaypoints({
+                                  x: waypoint?.coordinates?.x,
+                                  y: waypoint?.coordinates?.y,
+                                })
+                              }
+                            />
                             <div className="flex items-center justify-center p-2">
                               {waypoint?.icon}
                             </div>
-                            <div className="flex flex-col text-sm font-medium gap-1">
-                              <span>{waypoint?.name}</span>
-                              <span className="flex flex-col  text-xs font-light">
-                                <span>x: {waypoint?.coordinates?.x}</span>
-                                <span>y: {waypoint?.coordinates?.y}</span>
+                            <div className="flex flex-col text-sm gap-1">
+                              <span className="text-xs font-semibold">
+                                {waypoint?.name}
+                              </span>
+                              <span className="flex gap-2 text-xs font-extralight">
+                                <span>
+                                  x:{" "}
+                                  {waypoint?.coordinates?.x
+                                    ?.toString()
+                                    .slice(0, 5)}
+                                </span>
+                                <span>
+                                  y:{" "}
+                                  {waypoint?.coordinates?.y
+                                    ?.toString()
+                                    .slice(0, 5)}
+                                </span>
                               </span>
                             </div>
                           </div>
-                          <CgTrashEmpty size={24} />
+                          <CgTrashEmpty size={20} />
                         </div>
                       );
                     })}
@@ -223,28 +276,22 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
               <BsPlusCircle size={24} />
             </button>
           </div>
-          <TransformWrapper>
-            <TransformComponent>
-              <div className="flex flex-col gap-4">
-                <span>
-                  img: {mouseRef?.current?.clientWidth} x{" "}
-                  {mouseRef?.current?.clientHeight}
-                </span>
-                <span>x: {mouse.x}</span>
-                <span>y: {mouse.y}</span>{" "}
-                <span>
-                  GGX:{" "}
-                  {(rosMapDetails?.x / mouseRef?.current?.clientWidth) *
-                    mouse?.x!}
-                </span>
-                <span>
-                  GGY:{" "}
-                  {(rosMapDetails?.y / mouseRef?.current?.clientHeight) *
-                    mouse?.y!}
-                </span>
-              </div>
-            </TransformComponent>
-          </TransformWrapper>
+          <div className="flex flex-col gap-4">
+            <span>
+              img: {mouseRef?.current?.clientWidth} x{" "}
+              {mouseRef?.current?.clientHeight}
+            </span>
+            <span>x: {mouse.x}</span>
+            <span>y: {mouse.y}</span>{" "}
+            <span>
+              GGX:{" "}
+              {(rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x!}
+            </span>
+            <span>
+              GGY:{" "}
+              {(rosMapDetails?.y / mouseRef?.current?.clientHeight) * mouse?.y!}
+            </span>
+          </div>
         </Fragment>
       </CardLayout>
       <CardLayout className="col-span-9 ">
@@ -263,10 +310,13 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                 setMouseCoordinates({
                   x:
                     (rosMapDetails?.x / mouseRef?.current?.clientWidth) *
-                    mouse?.x!,
+                      mouse?.x! -
+                    rosMapDetails?.x / 2,
                   y:
-                    (rosMapDetails?.y / mouseRef?.current?.clientHeight) *
-                    mouse?.y!,
+                    ((rosMapDetails?.y / mouseRef?.current?.clientHeight) *
+                      mouse?.y! -
+                      rosMapDetails?.y / 2) *
+                    -1,
                 });
               }
             }}
@@ -278,7 +328,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
               className="relative border border-layer-dark-400"
               onClick={() => handleSetWaypointsCoordinates("go")}
             >
-              <embed
+              <iframe
                 title="map"
                 style={{
                   width: rosMapDetails?.resolution?.x * 1.5 + "px",
@@ -290,25 +340,24 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                 src={"/html/rosMap.html?" + ros.socket.url}
               />
               {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
-                console.log(rosMapDetails?.x / mouseRef?.current?.clientWidth);
-
                 return (
                   <div
-                    className="absolute inset-0"
+                    className="absolute inset-0 flex flex-col"
                     style={{
                       top:
-                        waypoint?.coordinates?.y /
-                          (mouseRef?.current?.naturalHeight /
-                            mouseRef?.current?.offsetHeight) -
-                        10,
+                        (mouseRef?.current?.clientHeight / rosMapDetails?.y) *
+                          (rosMapDetails?.y / 2 - waypoint?.coordinates?.y) -
+                        18,
                       left:
-                        waypoint?.coordinates?.x /
-                          (mouseRef?.current?.naturalWidth /
-                            mouseRef?.current?.offsetWidth) -
-                        10,
+                        (mouseRef?.current?.clientWidth / rosMapDetails?.x) *
+                          (rosMapDetails?.x / 2 + waypoint?.coordinates?.x) -
+                        12,
                     }}
                   >
                     {waypoint?.icon}
+                    <span className="text-layer-dark-100 text-[0.64rem] -ml-4">
+                      {waypoint?.name}
+                    </span>
                   </div>
                 );
               })}

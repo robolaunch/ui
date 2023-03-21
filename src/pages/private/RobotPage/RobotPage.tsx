@@ -17,8 +17,8 @@ export default function RobotPage(): ReactElement {
   const [topicList, setTopicList] = useState<any>([]);
 
   const [connectionURLs, setConnectionURLs] = useState<any>({
-    rosURL: "ws://172.16.44.200:31010",
-    // rosURL: "ws://172.16.44.153:9090",
+    rosURL: "ws://localhost:9090",
+    // rosURL: "ws://172.16.44.200:31010",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
     ideURL: "http://172.16.44.200:31863",
   });

@@ -66,25 +66,25 @@
           });
 
           gridClient.rootObject.addChild(robotMarker);
+
+          pathView = new ROS2D.PathShape({
+            ros: ros,
+            strokeSize: 0.02,
+            strokeColor: "green",
+          });
+
+          gridClient.rootObject.addChild(pathView);
+
+          pathTopic = new ROSLIB.Topic({
+            ros: ros,
+            name: "/plan",
+            messageType: "nav_msgs/msg/Path",
+          });
+
+          pathTopic.subscribe(function (message) {
+            pathView.setPath(message);
+          });
         }
-
-        pathView = new ROS2D.PathShape({
-          ros: ros,
-          strokeSize: 0.02,
-          strokeColor: "green",
-        });
-
-        gridClient.rootObject.addChild(pathView);
-
-        pathTopic = new ROSLIB.Topic({
-          ros: ros,
-          name: "/plan",
-          messageType: "nav_msgs/msg/Path",
-        });
-
-        pathTopic.subscribe(function (message) {
-          pathView.setPath(message);
-        });
       }
     </script>
   </head>
