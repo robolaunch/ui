@@ -1,14 +1,14 @@
-# <img src="https://raw.githubusercontent.com/robolaunch/trademark/main/logos/svg/rocket.svg" width="40" height="40" align="top"> robolaunch Project Template
+# <img src="https://raw.githubusercontent.com/robolaunch/trademark/main/logos/svg/rocket.svg" width="40" height="40" align="top"> robolaunch UI
 
 [EDIT THIS: You can put badges to the README using [shields.io](https://shields.io/). Explain the repository's purpose shortly.]
 
 <div align="center">
   <p align="center">
     <a href="https://github.com/robolaunch/template/releases">
-      <img src="https://img.shields.io/badge/python-3.7-blue" alt="release">
+      <img src="https://img.shields.io/badge/nodejs-18.15.0-green" alt="release">
     </a>
     <a href="https://github.com/robolaunch/template/releases">
-      <img src="https://img.shields.io/badge/release-v2.0.7-green" alt="release">
+      <img src="https://img.shields.io/badge/release-v0.1.0-blue" alt="release">
     </a>
     <a href="https://github.com/robolaunch/template/blob/main/LICENSE">
       <img src="https://img.shields.io/github/license/robolaunch/template" alt="license">
@@ -33,7 +33,6 @@ robolaunch Template helps organization members to have a generic project templat
 - [Aims & Roadmap](#aims--roadmap)
 - [Contributing](#contributing)
 
-
 ## Overview
 
 [EDIT THIS: Give more insight about the project. Provide a feature list.]
@@ -53,6 +52,7 @@ The aim of this project is to maintain a generic template for robolaunch project
 [EDIT THIS: Explain how starters can try the project's functionality.]
 
 After [using this project as template](https://github.com/robolaunch/template/generate), you can:
+
 - Update generic fields at README, specialize it to the project
 - Create first release to stage new features
 - Add custom workflows for CI/CD

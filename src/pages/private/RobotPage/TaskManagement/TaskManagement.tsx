@@ -16,7 +16,12 @@ import { AiOutlinePauseCircle } from "react-icons/ai";
 import { CiMapPin } from "react-icons/ci";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
+import GridLines from "../../../../components/GridLines/GridLines";
+import { IoPauseCircleOutline } from "react-icons/io5";
 
+import { EditText, EditTextarea } from "react-edit-text";
+import "react-edit-text/dist/index.css";
+import { FiEdit3 } from "react-icons/fi";
 interface ITaskManagement {
   ros: any;
 }
@@ -81,7 +86,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     {
       label: (
         <div className="w-full h-full flex items-center gap-2 hover:scale-90 transition-all duration-500">
-          <AiOutlinePauseCircle size={20} />
+          <AiOutlinePauseCircle size={22} />
           <span>Go to waypoint and wait</span>
         </div>
       ),
@@ -104,7 +109,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       case "go":
         return <CiMapPin size={20} />;
       case "go_wait":
-        return <AiOutlinePauseCircle size={20} />;
+        return <IoPauseCircleOutline size={20} />;
       case "go_takePicture":
         return <BsCameraVideo size={20} />;
     }
@@ -177,15 +182,24 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       <CardLayout className="col-span-3 !p-4">
         <Fragment>
           <div className="flex flex-col gap-2">
-            {missions.map((mission: any, index: number) => {
+            {missions.map((mission: any, missionIndex: number) => {
               return (
                 <Accordion
                   setActiveMission={setActiveMission}
-                  id={index}
+                  id={missionIndex}
                   header={
                     <div className="w-full flex items-center justify-between">
                       <span className="text-sm font-medium text-layer-dark-500">
-                        {mission?.name}
+                        <EditText
+                          value={mission?.name}
+                          onChange={(e: any) => {
+                            setMissions((prev: any) => {
+                              let temp = [...prev];
+                              temp[missionIndex].name = e.target.value;
+                              return temp;
+                            });
+                          }}
+                        />
                       </span>
                       <div className="flex items-center gap-3">
                         <BsPlayCircle
@@ -204,7 +218,14 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                         <InputToggle
                           icons={false}
                           checked={mission?.active}
-                          onChange={() => {}}
+                          onChange={() => {
+                            setMissions((prev: any) => {
+                              let temp = [...prev];
+                              temp[missionIndex].active =
+                                !temp[missionIndex].active;
+                              return temp;
+                            });
+                          }}
                         />
                         <RxDotsVertical />
                       </div>
@@ -212,46 +233,60 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   }
                 >
                   <div className="relative flex flex-col gap-3">
-                    {mission?.waypoints?.map((waypoint: any) => {
-                      return (
-                        <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
-                          <div className="flex items-center gap-3">
-                            <BsPlayCircle
-                              size={20}
-                              onClick={() =>
-                                handleWaypoints({
-                                  x: waypoint?.coordinates?.x,
-                                  y: waypoint?.coordinates?.y,
-                                })
-                              }
-                            />
-                            <div className="flex items-center justify-center p-2">
-                              {waypoint?.icon}
+                    {mission?.waypoints?.map(
+                      (waypoint: any, waypointIndex: number) => {
+                        return (
+                          <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <BsPlayCircle
+                                size={20}
+                                onClick={() =>
+                                  handleWaypoints({
+                                    x: waypoint?.coordinates?.x,
+                                    y: waypoint?.coordinates?.y,
+                                  })
+                                }
+                              />
+                              <div className="flex">
+                                <div className="flex items-center justify-center p-2">
+                                  {waypoint?.icon}
+                                </div>
+                                <div className="text-sm flex items-center gap-2">
+                                  <EditText
+                                    className="!text-xs !font-semibold"
+                                    value={waypoint?.name}
+                                    onChange={(e) => {
+                                      setMissions((prev: any) => {
+                                        let temp = [...prev];
+                                        temp[missionIndex].waypoints[
+                                          waypointIndex
+                                        ].name = e.target.value;
+                                        return temp;
+                                      });
+                                    }}
+                                  />
+                                  <span className="flex gap-2 text-xs font-extralight">
+                                    <span>
+                                      x:{" "}
+                                      {waypoint?.coordinates?.x
+                                        ?.toString()
+                                        .slice(0, 5)}
+                                    </span>
+                                    <span>
+                                      y:{" "}
+                                      {waypoint?.coordinates?.y
+                                        ?.toString()
+                                        .slice(0, 5)}
+                                    </span>
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <div className="flex flex-col text-sm gap-1">
-                              <span className="text-xs font-semibold">
-                                {waypoint?.name}
-                              </span>
-                              <span className="flex gap-2 text-xs font-extralight">
-                                <span>
-                                  x:{" "}
-                                  {waypoint?.coordinates?.x
-                                    ?.toString()
-                                    .slice(0, 5)}
-                                </span>
-                                <span>
-                                  y:{" "}
-                                  {waypoint?.coordinates?.y
-                                    ?.toString()
-                                    .slice(0, 5)}
-                                </span>
-                              </span>
-                            </div>
+                            <CgTrashEmpty size={20} />
                           </div>
-                          <CgTrashEmpty size={20} />
-                        </div>
-                      );
-                    })}
+                        );
+                      }
+                    )}
                   </div>
                 </Accordion>
               );
@@ -331,8 +366,8 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
               <iframe
                 title="map"
                 style={{
-                  width: rosMapDetails?.resolution?.x * 1.5 + "px",
-                  height: rosMapDetails?.resolution?.y * 1.5 + "px",
+                  width: rosMapDetails?.resolution?.x + "px",
+                  height: rosMapDetails?.resolution?.y + "px",
                   maxHeight: "100%",
                   maxWidth: "100%",
                   pointerEvents: "none",
@@ -361,6 +396,12 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   </div>
                 );
               })}
+              <div className="absolute inset-0">
+                <GridLines
+                  columns={Math.round(rosMapDetails?.x || 0)}
+                  rows={Math.round(rosMapDetails?.y || 0)}
+                />
+              </div>
             </div>
           </ContextMenu>
         </div>

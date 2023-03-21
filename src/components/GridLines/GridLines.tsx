@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement } from "react";
 
 interface IGridLines {
-  columns: number;
-  rows: number;
+  columns: number | undefined;
+  rows: number | undefined;
 }
 
 export default function GridLines({ columns, rows }: IGridLines): ReactElement {
   return (
-    <div className="absolute inset-0">
+    <Fragment>
       <div className={`w-full h-full absolute inset-0 flex justify-between`}>
         {[...Array(columns)].map((_, i) => {
           return (
@@ -28,6 +28,6 @@ export default function GridLines({ columns, rows }: IGridLines): ReactElement {
           );
         })}
       </div>
-    </div>
+    </Fragment>
   );
 }
