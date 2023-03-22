@@ -22,6 +22,7 @@
     "npm": "^9.5.0",
     "primeicons": "^6.0.1",
     "primereact": "^9.1.1",
+    "randomstring": "^1.2.3",
     "rc-collapse": "^3.5.2",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
@@ -86,6 +87,7 @@
   },
   "devDependencies": {
     "@types/body-scroll-lock": "^3.1.0",
+    "@types/randomstring": "^1.1.8",
     "@types/react-edit-text": "^5.0.1",
     "@types/react-scroll-to-bottom": "^4.2.0",
     "@types/react-toggle": "^4.0.3",

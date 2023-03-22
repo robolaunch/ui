@@ -47,6 +47,40 @@
             );
           });
 
+          setInterval(function () {
+            var continuous = true;
+            document.getElementById("costmap").innerHTML = "";
+
+            // Create the main viewer.
+            var viewer2 = new ROS2D.Viewer({
+              divID: "costmap",
+              width: window.innerWidth - 3,
+              height: window.innerHeight - 3,
+            });
+
+            // Setup the costmap client.
+            var gridClient2 = new ROS2D.OccupancyGridClient({
+              ros: ros,
+              rootObject: viewer2.scene,
+              topic: "/global_costmap/costmap",
+              continuous: false,
+            });
+
+            // Scale the canvas to fit to the map
+            gridClient2.on("change", function () {
+              viewer2.scaleToDimensions(
+                gridClient2.currentGrid.width,
+                gridClient2.currentGrid.height
+              );
+              viewer2.shift(
+                gridClient2.currentGrid.pose.position.x,
+                gridClient2.currentGrid.pose.position.y
+              );
+              continuous = false;
+              gridClien2 = null;
+            });
+          }, 7000);
+
           var poseTopic = new ROSLIB.Topic({
             ros: ros,
             name: "/robot_position",
@@ -70,7 +104,7 @@
           pathView = new ROS2D.PathShape({
             ros: ros,
             strokeSize: 0.02,
-            strokeColor: "green",
+            strokeColor: "blue",
           });
 
           gridClient.rootObject.addChild(pathView);
@@ -88,8 +122,11 @@
       }
     </script>
   </head>
-  <body onresize="init()" onload="init()">
-    <div id="map"></div>
+  <body onresize="init()" onload="init()" style="position: relative">
+    <div id="costmap" style="position: absolute; inset: 0; opacity: 0.4"></div>
+
+    <div id="map" style="position: absolute; inset: 0"></div>
+
     <style>
       html,
       body,
@@ -214,6 +251,10 @@
       table {
         border-collapse: collapse;
         border-spacing: 0;
+      }
+
+      canvas {
+        mix-blend-mode: multiply;
       }
     </style>
   </body>

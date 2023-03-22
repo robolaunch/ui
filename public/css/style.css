@@ -734,10 +734,6 @@ video {
   display: block;
 }
 
-.inline{
-  display: inline;
-}
-
 .flex{
   display: flex;
 }
@@ -1529,12 +1525,12 @@ video {
   font-weight: 400;
 }
 
-.font-extralight{
-  font-weight: 200;
-}
-
 .\!font-semibold{
   font-weight: 600 !important;
+}
+
+.font-extralight{
+  font-weight: 200;
 }
 
 .uppercase{

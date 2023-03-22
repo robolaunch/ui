@@ -18,10 +18,10 @@ import { toast } from "sonner";
 import ROSLIB from "roslib";
 import GridLines from "../../../../components/GridLines/GridLines";
 import { IoPauseCircleOutline } from "react-icons/io5";
-
-import { EditText, EditTextarea } from "react-edit-text";
+import { EditText } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-import { FiEdit3 } from "react-icons/fi";
+import randomstring from "randomstring";
+
 interface ITaskManagement {
   ros: any;
 }
@@ -31,13 +31,9 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   const [activeMission, setActiveMission] = useState<number>();
   const [missions, setMissions] = useState<any>([
     {
+      id: randomstring.generate(8),
       name: "Mission 1",
       active: true,
-      waypoints: [],
-    },
-    {
-      name: "Mission 2",
-      active: false,
       waypoints: [],
     },
   ]);
@@ -52,18 +48,33 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     leaveDelay: 100,
   });
 
-  function handleaddWaypointToMission(type: string) {
+  function handleAddMission() {
+    setMissions((prev: any) => {
+      return [
+        ...prev,
+        {
+          id: randomstring.generate(8),
+          name: "Mission " + Number(prev?.length + 1),
+          active: true,
+          waypoints: [],
+        },
+      ];
+    });
+  }
+
+  function handleAddWaypointToMission(taskType: string) {
     if (activeMission !== -1) {
       setMissions((prev: any) => {
         let temp = [...prev];
         temp[activeMission!]?.waypoints?.push({
+          id: randomstring.generate(8),
           name: "Waypoint " + Number(temp[activeMission!].waypoints.length + 1),
-          type: type,
+          taskType: taskType,
           coordinates: {
             x: mouseCoordinates?.x,
             y: mouseCoordinates?.y,
           },
-          icon: handleMissionIcon(type),
+          icon: handleMissionIcon(taskType),
         });
 
         return temp;
@@ -78,10 +89,10 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       label: (
         <div className="w-full h-full flex items-center gap-2 hover:scale-90 transition-all duration-500">
           <BsPinMap size={20} />
-          <span>Go to waypoint </span>
+          <span>Go to waypoint</span>
         </div>
       ),
-      onClick: () => handleaddWaypointToMission("go"),
+      onClick: () => handleAddWaypointToMission("go"),
     },
     {
       label: (
@@ -91,16 +102,16 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
         </div>
       ),
 
-      onClick: () => handleaddWaypointToMission("go_wait"),
+      onClick: () => handleAddWaypointToMission("wait"),
     },
     {
       label: (
         <div className="w-full h-full flex items-center gap-2 hover:scale-90 transition-all duration-500">
           <BsCameraVideo size={20} />
-          <span>Go to waypoint </span>
+          <span>Go to waypoint and take picture</span>
         </div>
       ),
-      onClick: () => handleaddWaypointToMission("go_takePicture"),
+      onClick: () => handleAddWaypointToMission("picture"),
     },
   ];
 
@@ -108,9 +119,9 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     switch (type) {
       case "go":
         return <CiMapPin size={20} />;
-      case "go_wait":
+      case "wait":
         return <IoPauseCircleOutline size={20} />;
-      case "go_takePicture":
+      case "picture":
         return <BsCameraVideo size={20} />;
     }
   }
@@ -137,7 +148,23 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     };
   }, []);
 
-  function handleSetWaypointsCoordinates(type: string) {
+  const rosWaypointsWeb = new ROSLIB.Topic({
+    ros: ros,
+    name: "/way_points_web",
+    messageType: "std_msgs/msg/String",
+  });
+
+  useEffect(() => {
+    rosWaypointsWeb?.subscribe(function (message: any) {
+      console.log(message);
+    });
+
+    return () => {
+      rosWaypointsWeb.unsubscribe();
+    };
+  }, []);
+
+  function handleStartWaypoint(data: any) {
     let x =
       (rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x! -
       rosMapDetails?.x / 2;
@@ -146,36 +173,30 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
         rosMapDetails?.y / 2) *
       -1;
 
-    handleWaypoints({
-      x: x,
-      y: y,
+    console.log(
+      `${data.id}_${data.type}_${data.taskType}&${data.x ? data.x : x}/${
+        data.y ? data.y : y
+      }`
+    );
+
+    rosWaypointsWeb.publish({
+      data: `${data.id}_${data.type}_${data.taskType}&${data.x ? data.x : x}/${
+        data.y ? data.y : y
+      }`,
     });
   }
 
-  function handleWaypoints(coordinates: any) {
-    var waypoints = new ROSLIB.Topic({
-      ros: ros,
-      name: "/way_points_web",
-      messageType: "std_msgs/msg/String",
-    });
+  function handleStartMission(data: string) {
+    console.log(data);
 
-    console.log("work", coordinates);
-    waypoints.publish({
-      data: coordinates.x + `/` + coordinates.y,
+    rosWaypointsWeb.publish({
+      data: data,
     });
   }
 
-  function handleStartMission(paths: string) {
-    var waypoints = new ROSLIB.Topic({
-      ros: ros,
-      name: "/way_points_web",
-      messageType: "std_msgs/msg/String",
-    });
-
-    waypoints.publish({
-      data: paths,
-    });
-  }
+  useEffect(() => {
+    console.log(missions);
+  }, [missions]);
 
   return (
     <div className="grid grid-cols-12 gap-6 h-[42rem]">
@@ -205,13 +226,22 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                         <BsPlayCircle
                           size={24}
                           onClick={() => {
-                            const temp: any = mission?.waypoints.map(
-                              (waypoint: any) => {
-                                return `${waypoint?.coordinates?.x}/${waypoint?.coordinates?.y}`;
+                            let temp = mission?.waypoints?.map(
+                              (waypoint: any, waypointIndex: number) => {
+                                return `${waypoint?.taskType}&${
+                                  waypoint?.coordinates?.x
+                                }/${waypoint?.coordinates?.y}${
+                                  waypointIndex !==
+                                  mission?.waypoints?.length - 1
+                                    ? "|"
+                                    : ""
+                                }`;
                               }
                             );
                             handleStartMission(
-                              temp.toString().replace(/,/g, "/")
+                              `${mission.id}_mission_${temp
+                                .toString()
+                                .replace(/,/g, "")}`
                             );
                           }}
                         />
@@ -232,62 +262,61 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                     </div>
                   }
                 >
-                  <div className="relative flex flex-col gap-3">
-                    {mission?.waypoints?.map(
-                      (waypoint: any, waypointIndex: number) => {
-                        return (
-                          <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
-                            <div className="flex items-center gap-3">
-                              <BsPlayCircle
-                                size={20}
-                                onClick={() =>
-                                  handleWaypoints({
-                                    x: waypoint?.coordinates?.x,
-                                    y: waypoint?.coordinates?.y,
-                                  })
-                                }
+                  {mission?.waypoints?.map(
+                    (waypoint: any, waypointIndex: number) => {
+                      return (
+                        <div className="flex justify-between items-center p-2 border border-layer-light-200 rounded-lg">
+                          <div className="flex items-center ">
+                            <BsPlayCircle
+                              size={18}
+                              onClick={() =>
+                                handleStartWaypoint({
+                                  id: waypoint?.id,
+                                  type: "waypoint",
+                                  taskType: waypoint.taskType,
+                                  x: waypoint?.coordinates?.x,
+                                  y: waypoint?.coordinates?.y,
+                                })
+                              }
+                            />
+                            <div className="flex items-center justify-center p-2">
+                              {waypoint?.icon}
+                            </div>
+                            <div className="text-sm flex items-center gap-2">
+                              <EditText
+                                className="!text-xs !font-semibold"
+                                value={waypoint?.name}
+                                onChange={(e) => {
+                                  setMissions((prev: any) => {
+                                    let temp = [...prev];
+                                    temp[missionIndex].waypoints[
+                                      waypointIndex
+                                    ].name = e.target.value;
+                                    return temp;
+                                  });
+                                }}
                               />
-                              <div className="flex">
-                                <div className="flex items-center justify-center p-2">
-                                  {waypoint?.icon}
-                                </div>
-                                <div className="text-sm flex items-center gap-2">
-                                  <EditText
-                                    className="!text-xs !font-semibold"
-                                    value={waypoint?.name}
-                                    onChange={(e) => {
-                                      setMissions((prev: any) => {
-                                        let temp = [...prev];
-                                        temp[missionIndex].waypoints[
-                                          waypointIndex
-                                        ].name = e.target.value;
-                                        return temp;
-                                      });
-                                    }}
-                                  />
-                                  <span className="flex gap-2 text-xs font-extralight">
-                                    <span>
-                                      x:{" "}
-                                      {waypoint?.coordinates?.x
-                                        ?.toString()
-                                        .slice(0, 5)}
-                                    </span>
-                                    <span>
-                                      y:{" "}
-                                      {waypoint?.coordinates?.y
-                                        ?.toString()
-                                        .slice(0, 5)}
-                                    </span>
-                                  </span>
-                                </div>
+                              <div className="flex gap-2 text-xs font-extralight">
+                                <span>
+                                  x:{" "}
+                                  {waypoint?.coordinates?.x
+                                    ?.toString()
+                                    .slice(0, 5)}
+                                </span>
+                                <span>
+                                  y:{" "}
+                                  {waypoint?.coordinates?.y
+                                    ?.toString()
+                                    .slice(0, 5)}
+                                </span>
                               </div>
                             </div>
-                            <CgTrashEmpty size={20} />
                           </div>
-                        );
-                      }
-                    )}
-                  </div>
+                          <CgTrashEmpty size={20} />
+                        </div>
+                      );
+                    }
+                  )}
                 </Accordion>
               );
             })}
@@ -295,18 +324,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
           <div className="w-full flex items-center justify-center p-8">
             <button
               className="hover:scale-90 transition-all duration-500"
-              onClick={() => {
-                setMissions((prev: any) => {
-                  return [
-                    ...prev,
-                    {
-                      name: "Mission " + Number(prev?.length + 1),
-                      active: true,
-                      waypoints: [],
-                    },
-                  ];
-                });
-              }}
+              onClick={() => handleAddMission()}
             >
               <BsPlusCircle size={24} />
             </button>
@@ -361,7 +379,15 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
             <div
               ref={mouseRef}
               className="relative border border-layer-dark-400"
-              onClick={() => handleSetWaypointsCoordinates("go")}
+              onClick={() =>
+                handleStartWaypoint({
+                  id: randomstring.generate(7),
+                  type: "waypoint",
+                  taskType: "go",
+                  x: null,
+                  y: null,
+                })
+              }
             >
               <iframe
                 title="map"

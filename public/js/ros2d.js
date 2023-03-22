@@ -162,6 +162,7 @@ var ROS2D = (function (exports, createjs, ROSLIB) {
         this._events = {};
         if (this._conf) {
           configure.call(this, this._conf);
+          z;
         }
       }
 
@@ -2187,7 +2188,7 @@ var ROS2D = (function (exports, createjs, ROSLIB) {
         ros: ros,
         name: topic,
         messageType: "nav_msgs/msg/OccupancyGrid",
-        compression: "jpg",
+        compression: "webp",
       });
 
       rosTopic.subscribe(function (message) {
