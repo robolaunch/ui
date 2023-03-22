@@ -713,6 +713,10 @@ video {
   grid-column: span 7 / span 7;
 }
 
+.col-span-12{
+  grid-column: span 12 / span 12;
+}
+
 .row-span-2{
   grid-row: span 2 / span 2;
 }
@@ -1001,6 +1005,10 @@ video {
 
 .cursor-not-allowed{
   cursor: not-allowed;
+}
+
+.\!cursor-pointer{
+  cursor: pointer !important;
 }
 
 .resize{
@@ -1533,6 +1541,10 @@ video {
   font-weight: 200;
 }
 
+.\!font-medium{
+  font-weight: 500 !important;
+}
+
 .uppercase{
   text-transform: uppercase;
 }
@@ -1644,6 +1656,26 @@ video {
 .text-layer-dark-100{
   --tw-text-opacity: 1;
   color: rgb(163 163 163 / var(--tw-text-opacity));
+}
+
+.text-red-400{
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
+
+.text-red-300{
+  --tw-text-opacity: 1;
+  color: rgb(252 165 165 / var(--tw-text-opacity));
+}
+
+.text-red-900{
+  --tw-text-opacity: 1;
+  color: rgb(127 29 29 / var(--tw-text-opacity));
+}
+
+.text-red-800{
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 .accent-primary{
@@ -1883,6 +1915,13 @@ body::-webkit-scrollbar {
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:scale-95:hover{
+  --tw-scale-x: .95;
+  --tw-scale-y: .95;
+  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:cursor-pointer:hover{
   cursor: pointer;
 }
@@ -1973,6 +2012,18 @@ body::-webkit-scrollbar {
     grid-column: span 3 / span 3;
   }
 
+  .lg\:col-span-4{
+    grid-column: span 4 / span 4;
+  }
+
+  .lg\:col-span-5{
+    grid-column: span 5 / span 5;
+  }
+
+  .lg\:col-span-7{
+    grid-column: span 7 / span 7;
+  }
+
   .lg\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1986,6 +2037,16 @@ body::-webkit-scrollbar {
   }
 }
 
+@media (min-width: 1280px){
+  .xl\:col-span-4{
+    grid-column: span 4 / span 4;
+  }
+
+  .xl\:col-span-8{
+    grid-column: span 8 / span 8;
+  }
+}
+
 @media (min-width: 1536px){
   .\32xl\:col-span-10{
     grid-column: span 10 / span 10;
@@ -1993,5 +2054,13 @@ body::-webkit-scrollbar {
 
   .\32xl\:col-span-2{
     grid-column: span 2 / span 2;
+  }
+
+  .\32xl\:col-span-3{
+    grid-column: span 3 / span 3;
+  }
+
+  .\32xl\:col-span-9{
+    grid-column: span 9 / span 9;
   }
 }

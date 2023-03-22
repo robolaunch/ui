@@ -1,11 +1,13 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { SlArrowDown, SlArrowRight } from "react-icons/sl";
+import { toast } from "sonner";
 
 interface IAccordion {
   id: number;
   children: ReactElement;
   header?: ReactElement | string;
+  activeMission?: number;
   setActiveMission?: (id: number) => void;
 }
 
@@ -13,6 +15,7 @@ export default function Accordion({
   id,
   children,
   header,
+  activeMission,
   setActiveMission,
 }: IAccordion): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +35,13 @@ export default function Accordion({
           <div className="w-full text-sm text-layer-dark-700">{header}</div>
           <div
             className="px-3 hover:scale-110  transition-all duration-200"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => {
+              if (activeMission === -1 || activeMission === id) {
+                setIsOpen(!isOpen);
+              } else {
+                toast.error("Please close the active mission first");
+              }
+            }}
           >
             {isOpen ? <SlArrowDown size={12} /> : <SlArrowRight size={12} />}
           </div>
