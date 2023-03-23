@@ -2,7 +2,6 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../../../layouts/CardLayout";
 import Accordion from "../../../../components/Accordion/Accordion";
 import InputToggle from "../../../../components/InputToggle/InputToggle";
-import { RxDotsVertical } from "react-icons/rx";
 import {
   BsPinMap,
   BsCameraVideo,
@@ -29,6 +28,7 @@ interface ITaskManagement {
 export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
   const [mouseCoordinates, setMouseCoordinates] = useState<any>({ x: 0, y: 0 });
   const [activeMission, setActiveMission] = useState<number>();
+  const [isCostMap, setIsCostMap] = useState<boolean>(true);
   const [missions, setMissions] = useState<any>([
     {
       id: randomstring.generate(8),
@@ -197,6 +197,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       <CardLayout className="col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3 !p-4">
         <Fragment>
           <div className="flex flex-col gap-2">
+            <div onClick={() => setIsCostMap(!isCostMap)}>button</div>
             {missions.map((mission: any, missionIndex: number) => {
               return (
                 <Accordion
@@ -447,7 +448,10 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   maxWidth: "100%",
                   pointerEvents: "none",
                 }}
-                src={"/html/rosMap.html?" + ros.socket.url}
+                src={`/html/rosMap.html?ws=${ros.socket.url.slice(
+                  0,
+                  ros.socket.url.length - 1
+                )}&costmap=${isCostMap ? "true" : "false"}`}
               />
               {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
                 return (

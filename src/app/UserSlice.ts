@@ -84,12 +84,17 @@ export const UserSlice = createSlice({
   reducers: {},
   extraReducers: {
     [login.pending.type]: (state, action) => {
+      console.log("login pending", action.payload);
       return action.payload;
     },
     [login.fulfilled.type]: (state, action) => {
+      console.log("login fulfilled", action.payload);
+
       return action.payload.data;
     },
     [login.rejected.type]: (state, action) => {
+      console.log("login rejected", action.payload);
+
       return action.payload;
     },
     //

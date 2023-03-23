@@ -6,6 +6,10 @@
     <script src="/js/eventemitter2.js"></script>
     <script src="/js/roslib.js"></script>
     <script src="/js/ros2d.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
 
     <script>
       function init() {
@@ -15,10 +19,13 @@
             window.location.reload();
           }, 1000);
         } else {
-          var urlparam = window.location.href.split("?")[1];
+          const urlParams = new URLSearchParams(window.location.search);
+
+          const costmapState =
+            urlParams.get("costmap") === "true" ? true : false;
 
           var ros = new ROSLIB.Ros({
-            url: urlparam,
+            url: urlParams.get("ws"),
           });
 
           // Create the main viewer.
@@ -47,39 +54,50 @@
             );
           });
 
-          setInterval(function () {
-            var continuous = true;
-            document.getElementById("costmap").innerHTML = "";
+          if (costmapState) {
+            setInterval(function () {
+              var continuous = true;
 
-            // Create the main viewer.
-            var viewer2 = new ROS2D.Viewer({
-              divID: "costmap",
-              width: window.innerWidth - 3,
-              height: window.innerHeight - 3,
-            });
+              // Create the main viewer.
+              var viewer2 = new ROS2D.Viewer({
+                divID: "costmap",
+                width: window.innerWidth - 3,
+                height: window.innerHeight - 3,
+              });
 
-            // Setup the costmap client.
-            var gridClient2 = new ROS2D.OccupancyGridClient({
-              ros: ros,
-              rootObject: viewer2.scene,
-              topic: "/global_costmap/costmap",
-              continuous: false,
-            });
+              // Setup the costmap client.
+              var gridClient2 = new ROS2D.OccupancyGridClient({
+                ros: ros,
+                rootObject: viewer2.scene,
+                topic: "/global_costmap/costmap",
+                continuous: false,
+              });
 
-            // Scale the canvas to fit to the map
-            gridClient2.on("change", function () {
-              viewer2.scaleToDimensions(
-                gridClient2.currentGrid.width,
-                gridClient2.currentGrid.height
-              );
-              viewer2.shift(
-                gridClient2.currentGrid.pose.position.x,
-                gridClient2.currentGrid.pose.position.y
-              );
-              continuous = false;
-              gridClien2 = null;
-            });
-          }, 7000);
+              // Scale the canvas to fit to the map
+              gridClient2.on("change", function () {
+                viewer2.scaleToDimensions(
+                  gridClient2.currentGrid.width,
+                  gridClient2.currentGrid.height
+                );
+                viewer2.shift(
+                  gridClient2.currentGrid.pose.position.x,
+                  gridClient2.currentGrid.pose.position.y
+                );
+                continuous = false;
+                gridClien2 = null;
+              });
+
+              let temp = document.getElementById("costmap");
+
+              if (temp.children.length > 1) {
+                temp.removeChild(temp.children[0]);
+              }
+
+              // temp.children[0].classList.add("animate__animated");
+              // temp.children[0].classList.add("animate__fadeIn");
+              // temp.children[0].classList.add("animate__animate__slower");
+            }, 7000);
+          }
 
           var poseTopic = new ROSLIB.Topic({
             ros: ros,
@@ -122,10 +140,16 @@
       }
     </script>
   </head>
-  <body onresize="init()" onload="init()" style="position: relative">
-    <div id="costmap" style="position: absolute; inset: 0; opacity: 0.4"></div>
+  <body
+    onresize="init()"
+    onload="init()"
+    style="position: relative; background-color: white"
+  >
+    <div
+      id="costmap"
+      style="position: absolute; inset: 0; opacity: 0.2; z-index: 1"
+    ></div>
     <div id="map" style="position: absolute; inset: 0"></div>
-
     <style>
       html,
       body,
