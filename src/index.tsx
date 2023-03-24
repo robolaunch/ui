@@ -11,16 +11,16 @@ const root = ReactDOM.createRoot(
 );
 
 const loadingPage = (
-  <div className="absolute inset-0 flex flex-col items-center justify-center z-50">
+  <div className="absolute inset-0 flex flex-col items-center justify-center z-50 animate__animated animate__fadeIn">
     <img
       src="/images/ring.svg"
       alt="robolaunch"
-      className="w-24 animate-spin"
+      className="w-28 animate-spin"
     />
     <img
       src="/images/rocket.svg"
       alt="robolaunch"
-      className="fixed pb-1 w-16"
+      className="fixed pb-1 w-14"
     />
   </div>
 );
