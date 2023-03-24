@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
 import { BsPinMap } from "react-icons/bs";
-import { useComponentSize } from "react-use-size";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 
 interface IRosMapWidget {
@@ -28,7 +27,10 @@ export default function RosMapWidget({
             className="absolute inset-0"
             title="map"
             style={{ minWidth: "100%", minHeight: "100%" }}
-            src={"/html/rosMap.html?" + ros.socket.url}
+            src={`/html/rosMap.html?ws=${ros.socket.url.slice(
+              0,
+              ros.socket.url.length - 1
+            )}&costmap=true`}
           />
         )}
       </div>

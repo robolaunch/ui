@@ -22,10 +22,8 @@ export default function AppRoutes(): ReactElement {
     (state: RootState) => state.organization
   );
 
-  const { keycloak, initialized } = useKeycloak();
-  console.log(keycloak);
   const token = () => {
-    return initialized;
+    return true;
   };
 
   return (

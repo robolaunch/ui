@@ -685,6 +685,10 @@ video {
   z-index: -10;
 }
 
+.z-50{
+  z-index: 50;
+}
+
 .col-span-1{
   grid-column: span 1 / span 1;
 }
@@ -732,6 +736,18 @@ video {
 
 .-ml-4{
   margin-left: -1rem;
+}
+
+.mb-24{
+  margin-bottom: 6rem;
+}
+
+.mr-24{
+  margin-right: 6rem;
+}
+
+.-mb-24{
+  margin-bottom: -6rem;
 }
 
 .block{
@@ -946,6 +962,14 @@ video {
   width: 8px;
 }
 
+.w-24{
+  width: 6rem;
+}
+
+.w-16{
+  width: 4rem;
+}
+
 .min-w-max{
   min-width: -webkit-max-content;
   min-width: max-content;
@@ -997,6 +1021,25 @@ video {
 .transform{
   -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@-webkit-keyframes spin{
+  to{
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin{
+  to{
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.animate-spin{
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
 }
 
 .cursor-pointer{
@@ -1446,6 +1489,10 @@ video {
 
 .pt-3{
   padding-top: 0.75rem;
+}
+
+.pb-24{
+  padding-bottom: 6rem;
 }
 
 .text-center{

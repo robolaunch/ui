@@ -17,6 +17,7 @@ interface IGridLayout {
   topicList: any;
   localStoragePath: string;
   handleRemoveWidget: any;
+  connectionURLs: string[];
 }
 
 export function GridLayout({
@@ -25,6 +26,7 @@ export function GridLayout({
   topicList,
   localStoragePath,
   handleRemoveWidget,
+  connectionURLs,
 }: IGridLayout): ReactElement {
   return (
     <Fragment>
@@ -115,6 +117,7 @@ export function GridLayout({
                 <RosRemoteDesktopWidget
                   id={index}
                   handleRemoveWidget={handleRemoveWidget}
+                  connectionURLs={connectionURLs}
                 />
               )}
             </div>

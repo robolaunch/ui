@@ -6,11 +6,13 @@ import { useComponentSize } from "react-use-size";
 interface IRosRemoteDesktopWidget {
   id: number;
   handleRemoveWidget: (id: number) => void;
+  connectionURLs: any;
 }
 
 export default function RosRemoteDesktopWidget({
   id,
   handleRemoveWidget,
+  connectionURLs,
 }: IRosRemoteDesktopWidget): ReactElement {
   const client = useRef<any>(null);
   const peer = useRef<any>(null);
@@ -29,9 +31,7 @@ export default function RosRemoteDesktopWidget({
       }
     };
 
-    client.current = new WebSocket(
-      `ws://172.16.44.200:32682/vdi/ws?password=admin`
-    );
+    client.current = new WebSocket(connectionURLs?.remoteDesktopURL);
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);

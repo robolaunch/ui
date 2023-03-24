@@ -204,6 +204,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   activeMission={activeMission}
                   setActiveMission={setActiveMission}
                   id={missionIndex}
+                  key={missionIndex}
                   header={
                     <div className="w-full flex items-center justify-between">
                       <span className="text-xs font-bold text-layer-dark-500">

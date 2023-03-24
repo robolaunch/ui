@@ -11,12 +11,14 @@ import ROSLIB from "roslib";
 interface IVisualization {
   ros: any;
   topicList: string[];
+  connectionURLs: string[];
   handleForceUpdate: (page: string) => void;
 }
 
 export default function Visualization({
   ros,
   topicList,
+  connectionURLs,
   handleForceUpdate,
 }: IVisualization): ReactElement {
   const [grid, setGrid] = useState<any>();
@@ -118,6 +120,7 @@ export default function Visualization({
           topicList={topicList}
           localStoragePath={localStoragePath}
           handleRemoveWidget={handleRemoveWidget}
+          connectionURLs={connectionURLs}
         />
       </div>
       <div className="fixed block bottom-5 left-1/2 right-1/2 z-10">

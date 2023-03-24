@@ -25,14 +25,14 @@ export default function RosJoystickWidget({
 
     var twist = new ROSLIB.Message({
       linear: {
-        x: Number(String(event.y).slice(0, 4)) / 1,
+        x: Number(String(event.y).slice(0, 4)) / 1.5,
         y: 0.0,
         z: 0.0,
       },
       angular: {
         x: 0.0,
         y: 0.0,
-        z: Number(String(event.x).slice(0, 4)) / -1,
+        z: Number(String(event.x).slice(0, 4)) / -1.5,
       },
     });
 

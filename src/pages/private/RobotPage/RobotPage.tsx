@@ -17,10 +17,10 @@ export default function RobotPage(): ReactElement {
   const [topicList, setTopicList] = useState<any>([]);
 
   const [connectionURLs, setConnectionURLs] = useState<any>({
-    rosURL: "ws://localhost:9090",
-    // rosURL: "ws://172.16.44.200:31010",
+    // rosURL: "ws://localhost:9090",
+    rosURL: "ws://172.16.44.200:30402",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
-    ideURL: "http://172.16.44.200:31863",
+    ideURL: "http://172.16.44.200:31512",
   });
 
   useEffect(() => {
@@ -107,6 +107,7 @@ export default function RobotPage(): ReactElement {
                   <Visualization
                     ros={ros}
                     topicList={topicList}
+                    connectionURLs={connectionURLs}
                     handleForceUpdate={handleForceUpdate}
                   />
                 );

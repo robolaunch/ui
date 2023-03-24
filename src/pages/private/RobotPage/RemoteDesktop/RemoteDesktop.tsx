@@ -191,7 +191,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
       if (event === "control/clipboard") {
         const { text } = payload;
-        console.log(text);
         navigator.clipboard.writeText(text);
       }
     };
