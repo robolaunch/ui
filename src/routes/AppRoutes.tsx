@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import LoginPage from "../pages/public/LoginPage/LoginPage";
@@ -15,7 +15,6 @@ import RobotPage from "../pages/private/RobotPage/RobotPage";
 import TeamDashboardPage from "../pages/private/Dashboards/TeamDashboardPage/TeamDashboardPage";
 import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
-import { useKeycloak } from "@react-keycloak/web";
 
 export default function AppRoutes(): ReactElement {
   const { currentOrganization } = useAppSelector(

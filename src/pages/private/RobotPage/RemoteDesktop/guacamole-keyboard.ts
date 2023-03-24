@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import GuacamoleKeyboard from "./guacamole-keyboard.js";
 
 export interface GuacamoleKeyboardInterface {
@@ -66,7 +67,6 @@ export interface GuacamoleKeyboardInterface {
    */
   listenTo: (element: Element | Document) => void;
 }
-
 export default function (element?: Element): GuacamoleKeyboardInterface {
   const Keyboard = {};
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { BsPinMap } from "react-icons/bs";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 

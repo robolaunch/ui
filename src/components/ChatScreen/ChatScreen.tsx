@@ -1,6 +1,5 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import InputText from "../InputText/InputText";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
 
 interface IChatScreen {
@@ -31,19 +30,25 @@ export default function ChatScreen({
             return (
               <div className="flex gap-4" key={index}>
                 <div className="flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
-                  {members?.map((mem: any) => {
-                    if (mem.id === message.id) {
-                      return mem.displayname[0].toUpperCase();
-                    }
-                  })}
+                  {
+                    // eslint-disable-next-line array-callback-return
+                    members?.map((mem: any) => {
+                      if (mem.id === message.id) {
+                        return mem.displayname[0].toUpperCase();
+                      }
+                    })
+                  }
                 </div>
                 <div className="flex flex-col">
                   <div className="text-xs font-semibold">
-                    {members?.map((mem: any) => {
-                      if (mem.id === message.id) {
-                        return mem.displayname;
-                      }
-                    })}
+                    {
+                      // eslint-disable-next-line array-callback-return
+                      members?.map((mem: any) => {
+                        if (mem.id === message.id) {
+                          return mem.displayname;
+                        }
+                      })
+                    }
                   </div>
                   <div className="text-xs break-words w-[210px]">
                     {message.content}

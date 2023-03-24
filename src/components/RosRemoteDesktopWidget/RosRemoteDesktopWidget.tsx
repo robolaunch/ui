@@ -71,6 +71,7 @@ export default function RosRemoteDesktopWidget({
         client.current.close();
       };
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -22,6 +22,7 @@ export default function Accordion({
 
   useEffect(() => {
     setActiveMission?.(isOpen ? id : -1);
+    // eslint-disable-next-line
   }, [isOpen]);
 
   return (

@@ -33,18 +33,16 @@ export default function Stream({ connectionURLs }: IStream): ReactElement {
   const overlay = useRef<any>(null);
   const roomMembers = useRef<any>([]);
   const [controllerState, setControllerState] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [roomMembersState, setRoomMembersState] = useState<any>([]);
   const allResolutions = useRef<any>(null);
   const [isMuted, setIsMuted] = useState<boolean>(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [chatMessages, setChatMessages] = useState<any>([]);
-  const [message, setMessage] = useState<string>("");
   const { user } = useAppSelector((state: RootState) => state.user);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeTab, setActiveTab] = useState<string>("Chat");
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
-
-  function handleChangeActiveTab(tab: string) {
-    setActiveTab(tab);
-  }
 
   let currentResolution: any = null;
 
@@ -115,6 +113,7 @@ export default function Stream({ connectionURLs }: IStream): ReactElement {
         toast.success(`${payload?.displayname} has joined the room`);
 
         roomMembers.current = roomMembers?.current?.filter(
+          // eslint-disable-next-line array-callback-return
           (roomMember: any) => {
             if (roomMember.id !== payload?.id) {
               return roomMember;
@@ -214,7 +213,9 @@ export default function Stream({ connectionURLs }: IStream): ReactElement {
     const targetElement: any = document.querySelector("body");
 
     keyboard.current.onkeydown = (key: number) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       buffer = new ArrayBuffer(11);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       payload = new DataView(buffer);
       payload.setUint8(0, 0x03);
       payload.setUint16(1, 8, true);

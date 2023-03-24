@@ -33,6 +33,7 @@ export default function RosRosOutWidget({
         return [...prev, message.msg];
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { ref, height, width } = useComponentSize();

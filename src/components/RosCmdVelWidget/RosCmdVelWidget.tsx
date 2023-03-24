@@ -32,6 +32,7 @@ export default function RosCmdVelWidget({
         return [...prev, message];
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { ref, height, width } = useComponentSize();

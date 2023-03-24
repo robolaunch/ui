@@ -110,6 +110,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         toast.success(`${payload?.displayname} has joined the room`);
 
         roomMembers.current = roomMembers?.current?.filter(
+          // eslint-disable-next-line array-callback-return
           (roomMember: any) => {
             if (roomMember.id !== payload?.id) {
               return roomMember;
@@ -208,7 +209,9 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     const targetElement: any = document.querySelector("body");
 
     keyboard.current.onkeydown = (key: number) => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       buffer = new ArrayBuffer(11);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       payload = new DataView(buffer);
       payload.setUint8(0, 0x03);
       payload.setUint16(1, 8, true);

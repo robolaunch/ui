@@ -38,6 +38,7 @@ export default function DevelopmentSuite({
 
   const cn = (...args: any[]) => args.filter(Boolean).join(" ");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { ref, height, width } = useComponentSize();
 
   return (

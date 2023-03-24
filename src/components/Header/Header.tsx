@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
-import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
 export default function Header(): ReactElement {
   const breadcrumbs = useBreadcrumbs();

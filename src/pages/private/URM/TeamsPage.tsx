@@ -21,6 +21,7 @@ export default function TeamsPage(): ReactElement {
     (state: RootState) => state.organization
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mockResponseTeams, setMockResponseTeams] = useState<any>([
     {
       name: "Team-1",
@@ -38,6 +39,8 @@ export default function TeamsPage(): ReactElement {
   useEffect(() => {
     setLoading(true);
     setResponseTeams(mockResponseTeams);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrganization.name, dispatch, reload]);
 
   useEffect(() => {
@@ -110,6 +113,7 @@ export default function TeamsPage(): ReactElement {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

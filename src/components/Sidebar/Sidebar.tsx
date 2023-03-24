@@ -7,7 +7,7 @@ import { useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../app/store";
 
 export const Sidebar: FC = () => {
-  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
+  const { sidebarState }: any = useContext(SidebarContext);
   const { currentOrganization } = useAppSelector(
     (state: RootState) => state.organization
   );

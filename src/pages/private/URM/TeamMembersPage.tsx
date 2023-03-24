@@ -21,6 +21,7 @@ export default function TeamMembersPage(): ReactElement {
     (state: RootState) => state.organization
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mockResponseTeamMembers, setMockResponseTeamMembers] = useState<any>([
     {
       name: "user-1",
@@ -40,6 +41,7 @@ export default function TeamMembersPage(): ReactElement {
     setLoading(true);
 
     setResponseTeamMembers(mockResponseTeamMembers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrganization.name, dispatch, reload]);
 
   useEffect(() => {
@@ -112,6 +114,7 @@ export default function TeamMembersPage(): ReactElement {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

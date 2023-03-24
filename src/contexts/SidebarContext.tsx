@@ -5,6 +5,7 @@ export const SidebarContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  // eslint-disable-next-line
   const { currentOrganization } = useAppSelector((state) => state.organization);
 
   const [sidebarState, setSidebarState] = useState({

@@ -1,13 +1,9 @@
 import React, { ReactNode, useContext } from "react";
-
 import { OrganizationsList } from "../ItemLists/OrganizationsList";
-import { TeamsList } from "../ItemLists/TeamsList";
 import { RoboticsCloudList } from "../ItemLists/RoboticsCloudsList";
 import { FleetsList } from "../ItemLists/FleetsList";
 import { RobotsList } from "../ItemLists/RobotsList";
-
 import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
-import { CreateTeamForm } from "../CreateForms/CreateTeamForm";
 import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm";
 import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
@@ -36,7 +32,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
   };
 
   return (
-    <div className="fixed flex flex-col justify-between left-20 w-[33rem] h-screen bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[3]">
+    <div className="fixed flex flex-col justify-between left-20 w-[33rem] h-screen bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
       <div className="animate__animated animate__fadeInLeftBig">
         <div
           className={`flex gap-4 items-center ${
@@ -57,11 +53,6 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
                 return <CreateOrganizationForm />;
               }
               return <OrganizationsList />;
-            case "team":
-              if (sidebarState?.isCreateMode) {
-                return <CreateTeamForm />;
-              }
-              return <TeamsList />;
             case "roboticscloud":
               if (sidebarState?.isCreateMode) {
                 return <CreateRoboticsCloudForm />;

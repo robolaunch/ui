@@ -92,6 +92,7 @@ export default function Teleoperation({
       localStorage.getItem(localStoragePath)
     );
 
+    // eslint-disable-next-line array-callback-return
     let temp = localGrid.filter((item: any) => {
       if (
         Number(item?.content.split(`item-id="`)[1].split(`"`)[0]) !== Number(id)
@@ -206,6 +207,7 @@ export default function Teleoperation({
     return () => {
       client?.current?.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRemoteDesktopStream]);
   // webRTC Stream
 

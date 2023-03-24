@@ -4,7 +4,6 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./UserSlice";
 import organizationReducer from "./OrganizationSlice";
-import teamReducer from "./TeamSlice";
 import roboticsCloudReducer from "./RoboticsCloudSlice";
 import ProviderReducer from "./ProviderSlice";
 import RegionReducer from "./RegionSlice";
@@ -30,16 +29,6 @@ const persistConfigOrganization = {
 const persistedReducerOrganization = persistReducer<any, any>(
   persistConfigOrganization,
   organizationReducer
-);
-
-const persistConfigTeam = {
-  key: "team",
-  version: 1,
-  storage,
-};
-const persistedReducerTeam = persistReducer<any, any>(
-  persistConfigTeam,
-  teamReducer
 );
 
 const persistConfigRoboticsCloud = {
@@ -86,7 +75,6 @@ const store = configureStore({
   reducer: {
     user: persistedReducerUser,
     organization: persistedReducerOrganization,
-    team: persistedReducerTeam,
     roboticsCloud: persistedReducerRoboticsCloud,
     provider: persistedReducerProvider,
     region: persistedReducerRegion,

@@ -64,6 +64,7 @@ export default function Visualization({
       localStorage.getItem(localStoragePath)
     );
 
+    // eslint-disable-next-line array-callback-return
     let temp = localGrid.filter((item: any) => {
       if (
         Number(item?.content.split(`item-id="`)[1].split(`"`)[0]) !== Number(id)
@@ -94,6 +95,7 @@ export default function Visualization({
     return () => {
       map.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -109,6 +111,7 @@ export default function Visualization({
     return () => {
       poseTopic.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -15,7 +15,7 @@ const loadingPage = (
     <img
       src="/images/ring.svg"
       alt="robolaunch"
-      className="w-28 animate-spin"
+      className="w-28 animate-spin bg-layer-light-50 rounded-full shadow"
     />
     <img
       src="/images/rocket.svg"

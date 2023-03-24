@@ -12,6 +12,7 @@ import { getProviders } from "../../../app/ProviderSlice";
 import { getRegions } from "../../../app/RegionSlice";
 
 export const CreateRoboticsCloudForm = () => {
+  // eslint-disable-next-line
   const { currentOrganization } = useAppSelector((state) => state.organization);
   const [responseProviders, setResponseProviders] = useState<any>([]);
   const [responseRegions, setResponseRegions] = useState<any>([]);
@@ -68,6 +69,7 @@ export const CreateRoboticsCloudForm = () => {
     } else {
       setResponseRegions([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, formik.values.provider]);
 
   return (

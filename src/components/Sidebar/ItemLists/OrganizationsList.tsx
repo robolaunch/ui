@@ -16,6 +16,7 @@ export const OrganizationsList = () => {
       setResponseOrganizations(res?.payload?.data?.data || []);
     });
     setTimeout(() => setLoading(false), 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

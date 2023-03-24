@@ -141,6 +141,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
         y: message.info.origin.position.y * -2,
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const map = new ROSLIB.Topic({
@@ -160,6 +161,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
       rosWaypointsWeb.unsubscribe();
       map.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleStartWaypoint(data: any) {

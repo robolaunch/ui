@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { SidebarContext } from "../../contexts/SidebarContext";
 

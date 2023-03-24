@@ -22,12 +22,8 @@ export const SidebarListItem = ({
   selected,
   notSelectable,
 }: SidebarListItemProps) => {
-  const {
-    selectedState,
-    setSelectedState,
-    sidebarState,
-    setSidebarState,
-  }: any = useContext(SidebarContext);
+  const { selectedState, setSelectedState, setSidebarState }: any =
+    useContext(SidebarContext);
 
   const handleSelectItem = () => {
     switch (type) {

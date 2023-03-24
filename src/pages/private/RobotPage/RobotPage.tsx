@@ -16,6 +16,7 @@ export default function RobotPage(): ReactElement {
   const [ros, setRos] = useState<any>(null);
   const [topicList, setTopicList] = useState<any>([]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [connectionURLs, setConnectionURLs] = useState<any>({
     // rosURL: "ws://localhost:9090",
     rosURL: "ws://172.16.44.200:30402",
@@ -42,6 +43,7 @@ export default function RobotPage(): ReactElement {
     return () => {
       ros.close();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
