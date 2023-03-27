@@ -1,26 +1,30 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import { getOrganizations } from "../../../app/OrganizationSlice";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 
-export const OrganizationsList = () => {
+interface IOrganizationList {
+  reload: boolean;
+}
+
+export const OrganizationsList = ({ reload }: IOrganizationList) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseOrganizations, setResponseOrganizations] = useState<any>([]);
-  const dispatch = useAppDispatch();
+  const { selectedState }: any = useContext(SidebarContext);
 
-  const { currentOrganization } = useAppSelector((state) => state.organization);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setLoading(true);
     dispatch(getOrganizations()).then((res: any) => {
-      setResponseOrganizations(res?.payload?.data?.data || []);
+      setResponseOrganizations(res?.payload?.data);
     });
-    setTimeout(() => setLoading(false), 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setTimeout(() => setLoading(false), 2000);
+  }, [dispatch, reload]);
 
   return (
-    <div className="flex flex-col gap-4 animate__animated animate__fadeInUp max-h-[46rem] overflow-auto">
+    <div className="flex flex-col gap-4 animate__animated animate__fadeInUp h-full">
       {loading ? (
         <img
           className="w-12 mx-auto pt-10"
@@ -34,16 +38,14 @@ export const OrganizationsList = () => {
               <SidebarListItem
                 key={index}
                 type="organization"
-                name={organization?.name}
-                description={
-                  organization.name === currentOrganization?.name
-                    ? "Active Organization"
-                    : "Inactive Organization"
-                }
-                url={`/${organization?.name}`}
+                name={organization?.organizationName}
+                description={`Member Count: ${organization?.userCount}`}
+                url={`/${organization?.organizationName}`}
                 data={organization}
-                selected={organization.name === currentOrganization?.name}
-                notSelectable
+                selected={
+                  organization.organizationName ===
+                  selectedState?.organization?.organizationName
+                }
               />
             );
           })}

@@ -9,5 +9,10 @@ export const LoginOrganizationSchema = Yup.object().shape({
 });
 
 export const CreateOrganizationSchema = Yup.object().shape({
-  name: Yup.string().required("Organization name is required."),
+  name: Yup.string()
+    .required("Organization name is required.")
+    .matches(
+      /^[a-z0-9-]{8,24}$/,
+      "Minimum 8 to 24 characters, lowercase letters, numbers and hyphens only."
+    ),
 });

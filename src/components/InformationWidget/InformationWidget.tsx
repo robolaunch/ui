@@ -27,9 +27,9 @@ export default function InformationWidget({
         <span className="text-2xl font-semibold text-layer-dark-600 ">
           {title} Page
         </span>
-        <p className="text-xs text-layer-dark-500">{subtitle}</p>
+        <p className="text-xs text-layer-dark-500 !leading-6">{subtitle}</p>
       </div>
-      <div className="flex flex-col gap-6 text-xs text-layer-dark-500">
+      <div className="flex flex-col gap-6 text-xs text-layer-dark-500 ">
         <p>{actiontitle}</p>
         {component}
       </div>

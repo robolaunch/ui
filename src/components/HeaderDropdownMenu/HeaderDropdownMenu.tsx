@@ -4,6 +4,7 @@ import { RootState } from "../../app/store";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Link } from "react-router-dom";
 import InputSelect from "../InputSelect/InputSelect";
+import { useKeycloak } from "@react-keycloak/web";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -17,7 +18,7 @@ export default function HeaderDropdownMenu(): ReactElement {
     (state: RootState) => state.organization
   );
 
-  console.log(organizations);
+  const { keycloak } = useKeycloak();
 
   return (
     <Fragment>
@@ -65,7 +66,15 @@ export default function HeaderDropdownMenu(): ReactElement {
             </InputSelect>
           </li>
           <li>Account Settings</li>
-          <li>Signout</li>
+          <li
+            onClick={() => {
+              keycloak.logout({
+                redirectUri: window.location.origin + "/logout",
+              });
+            }}
+          >
+            Signout
+          </li>
         </ul>
       )}
     </Fragment>

@@ -18,6 +18,21 @@ export default function RobotHeader({
 }: IRobotHeader): ReactElement {
   const url = useParams();
 
+  const resources = {
+    virtual: {
+      cpu: "4 Core",
+      gpu: "Nvidia RTX 2080",
+      ram: "16 GB",
+      storage: "100 GB",
+    },
+    physical: {
+      cpu: "4 Core",
+      gpu: "None",
+      ram: "16 GB",
+      storage: "100 GB",
+    },
+  };
+
   const tabs = [
     {
       name: "Overview",
@@ -62,8 +77,8 @@ export default function RobotHeader({
           </div>
 
           <div className="text-xs font-medium text-layer-dark-400 flex gap-8">
-            <div className="flex flex-col items-end gap-4">
-              <div className="flex gap-2">
+            <div className="flex 2xl:flex-col items-end gap-8">
+              <div className="flex xl:flex-col 2xl:flex-row  gap-2">
                 <div className="flex  items-center rounded-lg p-2">
                   <span>Code Editor</span>
                   <InputToggle
@@ -89,47 +104,65 @@ export default function RobotHeader({
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-3 pt-6">
-                <span className="text-xs text-center font-semibold">
-                  Virtual Resources:
-                </span>
-                <div className="col-span-1 flex items-center gap-2">
-                  <BsFillCpuFill size={16} color="#666666" />
-                  <span className="text-xs font-light">4 Core</span>
-                </div>
-                <div className="col-span-1 flex items-center gap-2">
-                  <BsFillCpuFill size={16} color="#666666" />
-                  <span className="text-xs font-light">4 Core</span>
-                </div>{" "}
-                <div className="col-span-1 flex items-center gap-2">
-                  <FaMemory size={16} color="#666666" />
-                  <span className="text-xs font-light">8 RAM</span>
-                </div>{" "}
-                <div className="col-span-1 flex items-center gap-2">
-                  <MdOutlineStorage size={16} color="#666666" />
-                  <span className="text-xs font-light">100 GB</span>
-                </div>
-              </div>
 
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-center font-semibold">
-                  Physical Resources:
-                </span>
-                <div className="col-span-1 flex items-center gap-2">
-                  <BsFillCpuFill size={16} color="#666666" />
-                  <span className="text-xs font-light">4 Core</span>
+              <div className="flex flex-col items-end">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-center font-semibold">
+                    Physical Resources:
+                  </span>
+                  <div className="col-span-1 flex items-center gap-2">
+                    <BsFillCpuFill size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.physical?.cpu}
+                    </span>
+                  </div>
+                  <div className="col-span-1 flex items-center gap-2">
+                    <BsFillCpuFill size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.physical?.gpu}
+                    </span>
+                  </div>{" "}
+                  <div className="col-span-1 flex items-center gap-2">
+                    <FaMemory size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.physical?.ram}
+                    </span>
+                  </div>{" "}
+                  <div className="col-span-1 flex items-center gap-2">
+                    <MdOutlineStorage size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.physical?.storage}
+                    </span>
+                  </div>
                 </div>
-                <div className="col-span-1 flex items-center gap-2">
-                  <BsFillCpuFill size={16} color="#666666" />
-                  <span className="text-xs font-light">4 Core</span>
-                </div>{" "}
-                <div className="col-span-1 flex items-center gap-2">
-                  <FaMemory size={16} color="#666666" />
-                  <span className="text-xs font-light">8 RAM</span>
-                </div>{" "}
-                <div className="col-span-1 flex items-center gap-2">
-                  <MdOutlineStorage size={16} color="#666666" />
-                  <span className="text-xs font-light">100 GB</span>
+                <div className="flex items-center gap-3 pt-6">
+                  <span className="text-xs text-center font-semibold">
+                    Virtual Resources:
+                  </span>
+                  <div className="col-span-1 flex items-center gap-2">
+                    <BsFillCpuFill size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.virtual?.cpu}
+                    </span>
+                  </div>
+                  <div className="col-span-1 flex items-center gap-2">
+                    <BsFillCpuFill size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.virtual?.gpu}
+                    </span>
+                  </div>{" "}
+                  <div className="col-span-1 flex items-center gap-2">
+                    <FaMemory size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.virtual?.ram}
+                    </span>
+                  </div>{" "}
+                  <div className="col-span-1 flex items-center gap-2">
+                    <MdOutlineStorage size={16} color="#666666" />
+                    <span className="text-xs font-light">
+                      {resources?.virtual?.storage}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

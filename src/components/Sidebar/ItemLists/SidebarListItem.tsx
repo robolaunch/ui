@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { toast } from "react-toastify";
-import { toastifyProperties } from "../../../tools/Toastify";
 
 interface SidebarListItemProps {
   name: string;
@@ -22,98 +20,16 @@ export const SidebarListItem = ({
   selected,
   notSelectable,
 }: SidebarListItemProps) => {
-  const { selectedState, setSelectedState, setSidebarState }: any =
-    useContext(SidebarContext);
+  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
 
   const handleSelectItem = () => {
     switch (type) {
-      case "team":
-        if (selectedState?.team?.name === data?.name) {
-          setSelectedState({
-            ...selectedState,
-            team: null,
-          });
+      case "organization":
+        if (selectedState?.organization) {
+          setSelectedState({ ...selectedState, organization: null });
         } else {
-          setSelectedState({
-            ...selectedState,
-            team: data,
-          });
-          setSidebarState((sidebarState: any) => {
-            return {
-              ...sidebarState,
-              page: "roboticscloud",
-            };
-          });
+          setSelectedState({ ...selectedState, organization: data });
         }
-
-        break;
-      case "roboticscloud":
-        if (selectedState?.team) {
-          if (selectedState?.roboticscloud?.name === data?.name) {
-            setSelectedState({
-              ...selectedState,
-              roboticscloud: null,
-            });
-          } else {
-            setSelectedState({
-              ...selectedState,
-              roboticscloud: data,
-            });
-            setSidebarState((sidebarState: any) => {
-              return {
-                ...sidebarState,
-                page: "fleet",
-              };
-            });
-          }
-        } else {
-          toast.warning("Please select a team first.", toastifyProperties);
-          setSidebarState((sidebarState: any) => {
-            return {
-              ...sidebarState,
-              page: "team",
-            };
-          });
-        }
-
-        break;
-      case "fleet":
-        if (selectedState?.team) {
-          if (selectedState?.roboticscloud) {
-            if (selectedState.fleet === data) {
-              setSelectedState({
-                ...selectedState,
-                fleet: null,
-              });
-            } else {
-              setSelectedState({
-                ...selectedState,
-                fleet: data,
-              });
-            }
-          } else {
-            toast.warning(
-              "Please select a robotics cloud first.",
-              toastifyProperties
-            );
-            setSidebarState((sidebarState: any) => {
-              return {
-                ...sidebarState,
-                page: "roboticscloud",
-              };
-            });
-          }
-        } else {
-          toast.warning("Please select a team first.", toastifyProperties);
-          setSidebarState((sidebarState: any) => {
-            return {
-              ...sidebarState,
-              page: "team",
-            };
-          });
-        }
-
-        break;
     }
   };
 
@@ -121,7 +37,7 @@ export const SidebarListItem = ({
     <div key={name} className="flex animate__animated animate__fadeIn">
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg  ${
+        className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg transition-all duration-300  ${
           selected
             ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
             : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
@@ -135,8 +51,8 @@ export const SidebarListItem = ({
           alt=""
         />
         <div className="flex flex-col gap-1">
-          <span className="text-sm font-semibold">{name}</span>
-          <span className="text-xs">{description}</span>
+          <span className="text-sm font-medium">{name}</span>
+          <span className="text-xs font-light">{description}</span>
         </div>
       </div>
       <a

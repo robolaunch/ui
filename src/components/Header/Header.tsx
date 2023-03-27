@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
+import { FiHome } from "react-icons/fi";
 
 export default function Header(): ReactElement {
   const breadcrumbs = useBreadcrumbs();
@@ -10,8 +11,14 @@ export default function Header(): ReactElement {
       <ul className="flex gap-2 text-xs font-medium">
         {breadcrumbs?.map((item: any, index: number) => {
           return (
-            <li key={index}>
-              <a href={item?.key}>{item.breadcrumb.props?.children}</a>
+            <li className="flex gap-2" key={index}>
+              {(() => {
+                switch (item?.breadcrumb?.props?.children) {
+                  case "Home":
+                    return <FiHome size={24} />;
+                }
+              })()}
+              <a href={item?.key}>{item?.breadcrumb?.props?.children}</a>
             </li>
           );
         })}

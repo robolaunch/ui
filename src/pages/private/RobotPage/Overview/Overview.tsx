@@ -13,14 +13,13 @@ export default function Overview(): ReactElement {
       <div className="col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
-          subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-          actiontitle="If you need to create a new team or check the users in the team you
-            can proceed here."
+          subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software.
+          "
+          actiontitle="If you need to quickly control your robot, you can continue here."
           component={
             <Button
-              text="Manage RoboticsClouds"
-              className="!w-28 !h-10 !text-xs"
+              text="Teleoperation of Robot"
+              className="!w-44 !h-10 !text-xs"
             />
           }
         />
