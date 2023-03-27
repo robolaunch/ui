@@ -12,7 +12,7 @@ export default ({ children }: any) => {
 
   const [selectedState, setSelectedState] = useState({
     organization: null,
-    roboticscloud: null,
+    roboticsCloud: null,
     fleet: null,
   });
 

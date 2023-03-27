@@ -26,7 +26,11 @@ export const PrivateLayout: FC = () => {
         <Sidebar />
         <div
           className="flex flex-col"
-          style={{ width: "calc(100% - 5rem)", marginLeft: "5rem" }}
+          style={{
+            width: "calc(100% - 5rem)",
+            marginLeft: "5rem",
+            minHeight: "100vh",
+          }}
           onClick={() => handleCloseSidebar()}
         >
           <Header />

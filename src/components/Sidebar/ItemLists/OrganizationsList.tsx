@@ -6,9 +6,13 @@ import { SidebarContext } from "../../../contexts/SidebarContext";
 
 interface IOrganizationList {
   reload: boolean;
+  setItemCount: any;
 }
 
-export const OrganizationsList = ({ reload }: IOrganizationList) => {
+export const OrganizationsList = ({
+  reload,
+  setItemCount,
+}: IOrganizationList) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseOrganizations, setResponseOrganizations] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
@@ -19,12 +23,13 @@ export const OrganizationsList = ({ reload }: IOrganizationList) => {
     setLoading(true);
     dispatch(getOrganizations()).then((res: any) => {
       setResponseOrganizations(res?.payload?.data);
+      setItemCount(res?.payload?.data?.length);
     });
     setTimeout(() => setLoading(false), 2000);
-  }, [dispatch, reload]);
+  }, [dispatch, reload, setItemCount]);
 
   return (
-    <div className="flex flex-col gap-4 animate__animated animate__fadeInUp h-full">
+    <Fragment>
       {loading ? (
         <img
           className="w-12 mx-auto pt-10"
@@ -51,6 +56,6 @@ export const OrganizationsList = ({ reload }: IOrganizationList) => {
           })}
         </Fragment>
       )}
-    </div>
+    </Fragment>
   );
 };

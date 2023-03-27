@@ -1,6 +1,6 @@
-import React, { ReactNode, useContext, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { OrganizationsList } from "../ItemLists/OrganizationsList";
-import { RoboticsCloudList } from "../ItemLists/RoboticsCloudsList";
+import { RoboticsCloudsList } from "../ItemLists/RoboticsCloudsList";
 import { FleetsList } from "../ItemLists/FleetsList";
 import { RobotsList } from "../ItemLists/RobotsList";
 import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
@@ -19,6 +19,11 @@ interface ContentLayoutProps {
 export const ContentLayout = ({ children }: ContentLayoutProps) => {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
   const [reload, setReload] = useState<boolean>(false);
+  const [itemCount, setItemCount] = useState<number>(0);
+
+  useEffect(() => {
+    setItemCount(0);
+  }, [sidebarState]);
 
   const handleButtonText = () => {
     if (sidebarState?.isCreateMode) {
@@ -30,7 +35,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
 
   const handleButtonClassNames = () => {
     if (sidebarState?.isCreateMode) {
-      return `mt-3 bg-layer-light-50 text-layer-primary-700 border border-layer-primary-700 hover:text-layer-light-50`;
+      return `!bg-layer-primary-100 hover:!bg-layer-primary-200 mt-3 bg-layer-light-50 text-layer-primary-700 border border-layer-primary-700 transition-all duration-500`;
     }
   };
 
@@ -38,11 +43,13 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
     <div className="fixed flex flex-col justify-between left-20 w-[33rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
       <div
         className={`flex gap-4 items-center ${
-          sidebarState?.isCreateMode ? "pb-16" : " pb-4"
+          sidebarState?.isCreateMode ? "pb-8" : " pb-4"
         }`}
       >
         <h2 className="text-3xl font-semibold">{sidebarState?.page + "s"}</h2>
-        <span className="bg-layer-primary-300 px-3 py-1 rounded-lg">{0}</span>
+        <span className="bg-layer-primary-300 px-3 py-1 rounded-lg">
+          {itemCount}
+        </span>
         <i
           onClick={() => {
             setReload(!reload);
@@ -51,32 +58,52 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
           style={{ fontSize: "1rem" }}
         ></i>
       </div>
-      <FilteredTags />
-      <div className="h-full overflow-auto scrollbar-hide mb-4">
-        {(() => {
-          switch (sidebarState?.page) {
-            case "organization":
-              if (sidebarState?.isCreateMode) {
-                return <CreateOrganizationForm />;
-              }
-              return <OrganizationsList reload={reload} />;
-            case "roboticscloud":
-              if (sidebarState?.isCreateMode) {
-                return <CreateRoboticsCloudForm />;
-              }
-              return <RoboticsCloudList />;
-            case "fleet":
-              if (sidebarState?.isCreateMode) {
-                return <CreateFleetForm />;
-              }
-              return <FleetsList />;
-            case "robot":
-              if (sidebarState?.isCreateMode) {
-                return <CreateRobotForm />;
-              }
-              return <RobotsList />;
-          }
-        })()}
+      {!sidebarState?.isCreateMode && <FilteredTags />}
+      <div
+        className={`h-full overflow-auto scrollbar-hide mb-4 ${
+          sidebarState?.page && "py-6 px-2"
+        }`}
+      >
+        <div className="h-full flex flex-col gap-4">
+          {(() => {
+            switch (sidebarState?.page) {
+              case "organization":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateOrganizationForm />;
+                }
+                return (
+                  <OrganizationsList
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                );
+              case "roboticscloud":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateRoboticsCloudForm />;
+                }
+                return (
+                  <RoboticsCloudsList
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                );
+              case "fleet":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateFleetForm />;
+                }
+                return (
+                  <FleetsList reload={reload} setItemCount={setItemCount} />
+                );
+              case "robot":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateRobotForm />;
+                }
+                return (
+                  <RobotsList reload={reload} setItemCount={setItemCount} />
+                );
+            }
+          })()}
+        </div>
       </div>
       <Button
         className={handleButtonClassNames()}

@@ -11,11 +11,11 @@ export default function Header(): ReactElement {
       <ul className="flex gap-2 text-xs font-medium">
         {breadcrumbs?.map((item: any, index: number) => {
           return (
-            <li className="flex gap-2" key={index}>
+            <li className="flex gap-1" key={index}>
               {(() => {
                 switch (item?.breadcrumb?.props?.children) {
                   case "Home":
-                    return <FiHome size={24} />;
+                    return <FiHome size={14} />;
                 }
               })()}
               <a href={item?.key}>{item?.breadcrumb?.props?.children}</a>

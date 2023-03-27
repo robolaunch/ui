@@ -4,7 +4,7 @@ import { SidebarContext } from "../../../contexts/SidebarContext";
 interface SidebarListItemProps {
   name: string;
   description: string;
-  type: string;
+  type: "organization" | "roboticsCloud" | "fleet" | "robot";
   url: string;
   data?: any;
   selected?: boolean;

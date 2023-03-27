@@ -1,67 +1,28 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
+import { useAppDispatch } from "../../../hooks/redux";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import {
-  getRobots,
-  getRobotsByFleet,
-  getRobotsByRoboticsCloud,
-  getRobotsByTeam,
-} from "../../../app/RobotSlice";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { RootState } from "../../../app/store";
 
-export const RobotsList = () => {
+interface IRobotsList {
+  reload: boolean;
+  setItemCount: any;
+}
+
+export const RobotsList = ({ reload, setItemCount }: IRobotsList) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = React.useState<any>([]);
+  const [responseRobots, setResponseRobots] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
+
   const dispatch = useAppDispatch();
-  const { currentOrganization } = useAppSelector(
-    (state: RootState) => state.organization
-  );
 
   useEffect(() => {
     setLoading(true);
-
-    if (selectedState?.team) {
-      if (selectedState?.roboticscloud) {
-        if (selectedState?.fleet) {
-          dispatch(
-            getRobotsByFleet({
-              fleetName: selectedState?.fleet?.name,
-              roboticsCloudName: selectedState?.roboticscloud?.name,
-              teamName: selectedState?.team?.name,
-            })
-          ).then((res: any) => {
-            setResponseRobots(res?.payload?.data?.data || []);
-          });
-        } else {
-          dispatch(
-            getRobotsByRoboticsCloud({
-              roboticsCloudName: selectedState?.roboticscloud?.name,
-              teamName: selectedState?.team?.name,
-            })
-          );
-        }
-      } else {
-        dispatch(getRobotsByTeam({ teamName: selectedState?.team?.name })).then(
-          (res: any) => {
-            setResponseRobots(res?.payload?.data?.data || []);
-          }
-        );
-      }
-    } else {
-      dispatch(getRobots()).then((res: any) => {
-        setResponseRobots(res?.payload?.data?.data || []);
-      });
-    }
-
-    setTimeout(() => setLoading(false), 1000);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // dispatch
+    setTimeout(() => setLoading(false), 2000);
+  }, [dispatch, reload]);
 
   return (
-    <div className="flex flex-col gap-4 animate__animated animate__fadeInUp max-h-[46rem] overflow-auto">
+    <Fragment>
       {loading ? (
         <img
           className="w-12 mx-auto pt-10"
@@ -69,21 +30,22 @@ export const RobotsList = () => {
           alt="Loading..."
         />
       ) : (
-        <>
+        <Fragment>
           {responseRobots.map((robot: any, index: number) => {
             return (
               <SidebarListItem
-                type="robot"
-                name={robot?.name}
-                description={robot?.name}
                 key={index}
-                url={`/${currentOrganization.name}/${robot?.teamName}/${robot?.roboticsCloudName}/${robot?.fleetName}/${robot?.name}`}
-                notSelectable
+                type="robot"
+                name={robot?.robotName}
+                description={`Active Robot Count: ${robot?.activeRobotCount}`}
+                url={`/${robot?.robotName}`}
+                data={robot}
+                selected={robot.robotName === selectedState?.robot?.robotName}
               />
             );
           })}
-        </>
+        </Fragment>
       )}
-    </div>
+    </Fragment>
   );
 };
