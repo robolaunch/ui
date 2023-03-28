@@ -2040,6 +2040,11 @@ th{
   background-color: rgb(223 172 255 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-layer-light-200:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 214 214 / var(--tw-bg-opacity));
+}
+
 .hover\:text-layer-primary-400:hover{
   --tw-text-opacity: 1;
   color: rgb(203 119 255 / var(--tw-text-opacity));

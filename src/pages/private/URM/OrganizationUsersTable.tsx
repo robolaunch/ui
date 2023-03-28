@@ -8,7 +8,8 @@ import TeamActionCells from "../../../components/ActionCells/OrganizationActionC
 
 export default function OrganizationUsersTable() {
   const [reload, setReload] = useState(false);
-  const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
+  const [responseOrganizationsUsers, setResponseOrganizationsUsers] =
+    useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { currentOrganization } = useAppSelector(
@@ -19,15 +20,15 @@ export default function OrganizationUsersTable() {
     setLoading(true);
     dispatch(getOrganizations()).then((res: any) => {
       console.log(res?.payload?.data);
-      setResponseOrganizations(res?.payload?.data);
+      setResponseOrganizationsUsers(res?.payload?.data);
     });
   }, [currentOrganization.name, dispatch, reload]);
 
   useEffect(() => {
-    if (responseOrganizations?.length) {
+    if (responseOrganizationsUsers?.length) {
       setLoading(false);
     }
-  }, [responseOrganizations]);
+  }, [responseOrganizationsUsers]);
 
   const handleReload = () => {
     setReload(!reload);
@@ -35,7 +36,7 @@ export default function OrganizationUsersTable() {
 
   const data: any = useMemo(
     () =>
-      responseOrganizations?.map((organization: any) => {
+      responseOrganizationsUsers?.map((organization: any) => {
         return {
           key: organization?.organizationName,
           name: organization,
@@ -43,7 +44,7 @@ export default function OrganizationUsersTable() {
           // users: organization?.users,
         };
       }),
-    [currentOrganization.name, responseOrganizations]
+    [currentOrganization.name, responseOrganizationsUsers]
   );
 
   const columns: any = useMemo(
@@ -55,7 +56,6 @@ export default function OrganizationUsersTable() {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          console.log(rowData);
           return (
             <InfoCell
               title={rowData?.name?.organizationName}

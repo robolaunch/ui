@@ -20,6 +20,8 @@ export default function HeaderDropdownMenu(): ReactElement {
 
   const { keycloak } = useKeycloak();
 
+  console.log(keycloak?.tokenParsed);
+
   return (
     <Fragment>
       <div
@@ -28,7 +30,7 @@ export default function HeaderDropdownMenu(): ReactElement {
         }}
         className="flex items-center justify-center rounded h-10 w-10 font-semibold bg-layer-primary-100 border border-layer-primary-200 text-layer-primary-700 cursor-pointer uppercase"
       >
-        {user?.username[0]}
+        {keycloak?.tokenParsed?.given_name[0]}
       </div>
       {isOpen && (
         <ul
@@ -40,31 +42,19 @@ export default function HeaderDropdownMenu(): ReactElement {
             className="flex gap-3 hover:bg-layer-light-100 pl-2 pr-6 py-3 rounded transition-all duration-200"
           >
             <div className="flex items-center justify-center rounded h-10 w-10 font-semibold bg-layer-primary-100 border border-layer-primary-200 text-layer-primary-700 cursor-pointer uppercase">
-              {user?.username[0]}
+              {keycloak?.tokenParsed?.given_name[0]}
             </div>
             <div className="flex flex-col">
               <span className="text-layer-dark-700 font-semibold">
-                {user?.firstName + " " + user?.lastName}
+                {keycloak?.tokenParsed?.given_name +
+                  " " +
+                  keycloak?.tokenParsed?.family_name}
               </span>
               <span className="text-layer-dark-300 text-xs">
-                {user?.username}
+                {keycloak?.tokenParsed?.preferred_username}
               </span>
             </div>
           </Link>
-          <li className="flex flex-col gap-1">
-            <span className="text-xs text-layer-dark-500">
-              Active Organization
-            </span>
-            <InputSelect className="text-layer-dark-600">
-              {organizations?.map((organization: any, index: number) => {
-                return (
-                  <option key={index} value={organization.name}>
-                    {organization.name}
-                  </option>
-                );
-              })}
-            </InputSelect>
-          </li>
           <li>Account Settings</li>
           <li
             onClick={() => {
