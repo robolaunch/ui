@@ -6,7 +6,7 @@ import InputError from "../../InputError/InputError";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
-import { createOrganization } from "../../../app/OrganizationSlice";
+import { createOrganization } from "../../../resources/OrganizationSlice";
 
 export const CreateOrganizationForm = () => {
   const dispatch = useAppDispatch();

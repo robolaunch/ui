@@ -7,7 +7,7 @@ import InputText from "../../../components/InputText/InputText";
 import Button from "../../../components/Button/Button";
 import InputCheckbox from "../../../components/InputCheckbox/InputCheckbox";
 import { useAppDispatch } from "../../../hooks/redux";
-import { register } from "../../../app/UserSlice";
+import { register } from "../../../resources/UserSlice";
 
 export default function RegistrationPage(): ReactElement {
   const dispatch = useAppDispatch();

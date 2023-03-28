@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInterceptor from "../utils/axiosInterceptor";
 import { toast } from "sonner";
-// import { toastifyProperties } from "../tools/Toastify";
-// import { toast } from "react-toastify";
 
 export const createOrganization = createAsyncThunk(
   "organization/createOrganization",
@@ -45,9 +43,7 @@ export const getOrganizations = createAsyncThunk(
 
 export const OrganizationSlice = createSlice({
   name: "organization",
-  initialState: {
-    currentOrganization: { name: "Organization1" },
-  },
+  initialState: {},
   reducers: {},
   extraReducers: {
     [createOrganization.pending.type]: (state, action) => {

@@ -14,7 +14,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import VolumeControl from "../../../../components/VolumeControl/VolumeControl";
 import { toast } from "sonner";
 import { useAppSelector } from "../../../../hooks/redux";
-import { RootState } from "../../../../app/store";
+import { RootState } from "../../../../resources/store.ts";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { useComponentSize } from "react-use-size";
 

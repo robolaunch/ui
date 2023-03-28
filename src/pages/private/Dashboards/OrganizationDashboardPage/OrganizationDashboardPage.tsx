@@ -6,27 +6,28 @@ import React, {
   useState,
 } from "react";
 import { GeneralTable } from "../../../../components/Table/GeneralTable";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import { useAppDispatch } from "../../../../hooks/redux";
 import { UsersCell } from "../../../../components/Cells/UsersCell";
 import { InfoCell } from "../../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../../components/UtilizationWidget/UtilizationWidget";
 import CountWidget from "../../../../components/CountWidget/CountWidget";
 import Button from "../../../../components/Button/Button";
 import InformationWidget from "../../../../components/InformationWidget/InformationWidget";
+import { useParams } from "react-router";
 
 export default function OrganizationDashboardPage(): ReactElement {
-  const { currentOrganization } = useAppSelector((state) => state.organization);
   const [reload, setReload] = React.useState(false);
-
   const [responseTeams, setResponseTeams] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const url = useParams();
+  console.log(url);
 
   useEffect(() => {
     setLoading(true);
 
     setResponseTeams([]);
-  }, [currentOrganization.name, dispatch, reload]);
+  }, [url, dispatch, reload]);
 
   useEffect(() => {
     if (responseTeams?.length) {
@@ -40,11 +41,11 @@ export default function OrganizationDashboardPage(): ReactElement {
         return {
           key: team?.name,
           name: team,
-          organization: currentOrganization.name,
+          organization: url?.organizationName,
           users: team?.users,
         };
       }),
-    [currentOrganization.name, responseTeams]
+    [url, responseTeams]
   );
 
   const columns: any = useMemo(
@@ -113,7 +114,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
-            title={currentOrganization.name}
+            title={url?.organizationName || ""}
             subtitle="From this page, you can view, control or get information about all
             the details of the teams in your organization."
             actiontitle="If you need to create a new team or check the users in the team you

@@ -7,7 +7,7 @@ import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
 import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm";
 import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
-
+import stringCapitalization from "../../../helpers/stringCapitalization";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import Button from "../../Button/Button";
 import FilteredTags from "../FilteredTags";
@@ -46,8 +46,10 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
           sidebarState?.isCreateMode ? "pb-8" : " pb-4"
         }`}
       >
-        <h2 className="text-3xl font-semibold">{sidebarState?.page + "s"}</h2>
-        <span className="bg-layer-primary-300 px-3 py-1 rounded-lg">
+        <h2 className="text-2xl font-semibold">
+          {stringCapitalization(sidebarState?.page + "s")}
+        </h2>
+        <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
           {itemCount}
         </span>
         <i

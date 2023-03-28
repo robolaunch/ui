@@ -1,19 +1,17 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../../components/Table/GeneralTable";
 import { InfoCell } from "../../../components/Cells/InfoCell";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { RootState } from "../../../app/store";
-import { getOrganizations } from "../../../app/OrganizationSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
 import TeamActionCells from "../../../components/ActionCells/OrganizationActionCells";
+import { useParams } from "react-router";
 
 export default function OrganizationsTable() {
   const [reload, setReload] = useState(false);
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const { currentOrganization } = useAppSelector(
-    (state: RootState) => state.organization
-  );
+  const url = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +19,7 @@ export default function OrganizationsTable() {
       console.log(res?.payload?.data);
       setResponseOrganizations(res?.payload?.data);
     });
-  }, [currentOrganization.name, dispatch, reload]);
+  }, [url, dispatch, reload]);
 
   useEffect(() => {
     if (responseOrganizations?.length) {
@@ -39,11 +37,11 @@ export default function OrganizationsTable() {
         return {
           key: organization?.organizationName,
           name: organization,
-          organization: currentOrganization.name,
+          organization: url?.organizationName,
           // users: organization?.users,
         };
       }),
-    [currentOrganization.name, responseOrganizations]
+    [url, responseOrganizations]
   );
 
   const columns: any = useMemo(

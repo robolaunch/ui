@@ -1,19 +1,17 @@
 import { useFormik } from "formik";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import InputError from "../../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../../validations/RoboticsCloudsValidations";
 import InputSelect from "../../InputSelect/InputSelect";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
-import { createRoboticsCloud } from "../../../app/RoboticsCloudSlice";
+import { createRoboticsCloud } from "../../../resources/RoboticsCloudSlice";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { getProviders } from "../../../app/ProviderSlice";
-import { getRegions } from "../../../app/RegionSlice";
+import { getProviders } from "../../../resources/ProviderSlice";
+import { getRegions } from "../../../resources/RegionSlice";
 
 export const CreateRoboticsCloudForm = () => {
-  // eslint-disable-next-line
-  const { currentOrganization } = useAppSelector((state) => state.organization);
   const [responseProviders, setResponseProviders] = useState<any>([]);
   const [responseRegions, setResponseRegions] = useState<any>([]);
   const dispatch = useAppDispatch();

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import InputText from "../../../components/InputText/InputText";
 import { useAppDispatch } from "../../../hooks/redux";
-import { forgotPassword } from "../../../app/UserSlice";
+import { forgotPassword } from "../../../resources/UserSlice";
 
 export default function ForgotPasswordPage(): ReactElement {
   const dispatch = useAppDispatch();

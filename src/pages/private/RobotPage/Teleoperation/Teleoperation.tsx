@@ -8,7 +8,7 @@ import React, {
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
-import { RootState } from "../../../../app/store";
+import { RootState } from "../../../../resources/store";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import "gridstack/dist/gridstack.min.css";
@@ -34,11 +34,8 @@ export default function Teleoperation({
   handleForceUpdate,
 }: ITeleoperation): ReactElement {
   const [grid, setGrid] = useState<any>();
-  const { currentOrganization } = useAppSelector(
-    (state: RootState) => state.organization
-  );
   const url = useParams();
-  const localStoragePath = `teleoperation_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
+  const localStoragePath = `teleoperation_${url.organizationName}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
   // @ts-ignore
   const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
   const [cameraData, setCameraData] = useState<string>("");

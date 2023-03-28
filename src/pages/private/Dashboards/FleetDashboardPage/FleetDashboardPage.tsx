@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { GeneralTable } from "../../../../components/Table/GeneralTable";
-import { useAppDispatch, useAppSelector } from "../../../../hooks/redux";
+import { useAppDispatch } from "../../../../hooks/redux";
 import { UsersCell } from "../../../../components/Cells/UsersCell";
 import { InfoCell } from "../../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../../components/UtilizationWidget/UtilizationWidget";
@@ -16,18 +16,19 @@ import InformationWidget from "../../../../components/InformationWidget/Informat
 import { useParams } from "react-router-dom";
 
 export default function FleetDashboardPage(): ReactElement {
-  const { currentOrganization } = useAppSelector((state) => state.organization);
   const [reload, setReload] = React.useState(false);
   const [responseTeams, setResponseTeams] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const url = useParams();
 
+  console.log("url", url);
+
   useEffect(() => {
     setLoading(true);
 
     setResponseTeams([]);
-  }, [currentOrganization.name, dispatch, reload]);
+  }, [dispatch, reload]);
 
   useEffect(() => {
     if (responseTeams?.length) {
@@ -41,11 +42,11 @@ export default function FleetDashboardPage(): ReactElement {
         return {
           key: team?.name,
           name: team,
-          organization: currentOrganization.name,
+          organization: url?.organizationName,
           users: team?.users,
         };
       }),
-    [currentOrganization.name, responseTeams]
+    [responseTeams]
   );
 
   const columns: any = useMemo(

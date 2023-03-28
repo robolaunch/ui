@@ -7,7 +7,7 @@ import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
 import InputSelect from "../../InputSelect/InputSelect";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { createFleet } from "../../../app/FleetSlice";
+import { createFleet } from "../../../resources/FleetSlice";
 
 export const CreateFleetForm = () => {
   const dispatch = useAppDispatch();

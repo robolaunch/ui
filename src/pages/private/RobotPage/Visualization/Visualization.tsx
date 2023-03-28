@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks/redux";
-import { RootState } from "../../../../app/store";
+import { RootState } from "../../../../resources/store";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
 import { handleSaveLayout } from "../../../../helpers/gridStack";
@@ -22,12 +22,8 @@ export default function Visualization({
   handleForceUpdate,
 }: IVisualization): ReactElement {
   const [grid, setGrid] = useState<any>();
-  const { currentOrganization } = useAppSelector(
-    (state: RootState) => state.organization
-  );
-
   const url = useParams();
-  const localStoragePath = `visualization_${currentOrganization.name}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
+  const localStoragePath = `visualization_${url?.organizationName}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
   // @ts-ignore
   const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
 

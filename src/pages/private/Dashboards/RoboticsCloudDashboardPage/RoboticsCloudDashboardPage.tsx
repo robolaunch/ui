@@ -16,7 +16,6 @@ import InformationWidget from "../../../../components/InformationWidget/Informat
 import { useParams } from "react-router-dom";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
-  const { currentOrganization } = useAppSelector((state) => state.organization);
   const [reload, setReload] = React.useState(false);
   const [responseTeams, setResponseTeams] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,7 +26,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     setLoading(true);
 
     setResponseTeams([]);
-  }, [currentOrganization.name, dispatch, reload]);
+  }, [url, dispatch, reload]);
 
   useEffect(() => {
     if (responseTeams?.length) {
@@ -41,11 +40,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         return {
           key: team?.name,
           name: team,
-          organization: currentOrganization.name,
+          organization: url?.organizationName,
           users: team?.users,
         };
       }),
-    [currentOrganization.name, responseTeams]
+    [url, responseTeams]
   );
 
   const columns: any = useMemo(

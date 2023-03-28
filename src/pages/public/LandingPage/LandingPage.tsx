@@ -11,7 +11,7 @@ import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 
 import jwt_decode from "jwt-decode";
-import { RootState } from "../../../app/store";
+import { RootState } from "../../../resources/store";
 
 export const LandingPage = () => {
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
