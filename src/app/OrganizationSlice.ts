@@ -45,7 +45,9 @@ export const getOrganizations = createAsyncThunk(
 
 export const OrganizationSlice = createSlice({
   name: "organization",
-  initialState: {},
+  initialState: {
+    currentOrganization: { name: "Organization1" },
+  },
   reducers: {},
   extraReducers: {
     [createOrganization.pending.type]: (state, action) => {

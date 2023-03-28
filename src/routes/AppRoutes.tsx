@@ -9,12 +9,12 @@ import SidebarContext from "../contexts/SidebarContext";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
 import { useAppSelector } from "../hooks/redux";
 import { RootState } from "../app/store";
-import TeamsPage from "../pages/private/URM/TeamsPage";
 import TeamMembersPage from "../pages/private/URM/TeamMembersPage";
 import RobotPage from "../pages/private/RobotPage/RobotPage";
 import TeamDashboardPage from "../pages/private/Dashboards/TeamDashboardPage/TeamDashboardPage";
 import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
+import URMPage from "../pages/private/URM/URMPage";
 
 export default function AppRoutes(): ReactElement {
   const { currentOrganization } = useAppSelector(
@@ -67,10 +67,7 @@ export default function AppRoutes(): ReactElement {
           {/* Dashboard Pages */}
 
           {/* URM Pages */}
-          <Route
-            path={`/${currentOrganization.name}/teams`}
-            element={<TeamsPage />}
-          />
+          <Route path={`/user-role-management`} element={<URMPage />} />
           <Route
             path={`/${currentOrganization.name}/:teamName/members`}
             element={<TeamMembersPage />}

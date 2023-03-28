@@ -24,6 +24,14 @@ body::-webkit-scrollbar {
   animation-fill-mode: unset !important;
 }
 
+.p-column-title {
+  @apply !text-xs !text-layer-light-800 !font-semibold !uppercase;
+}
+
+th {
+  @apply !bg-transparent;
+}
+
 .react-toggle--checked .react-toggle-track {
   @apply !bg-primary;
 }

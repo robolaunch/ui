@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { RootState } from "../../../app/store";
 import { InfoCell } from "../../../components/Cells/InfoCell";
 import { UsersCell } from "../../../components/Cells/UsersCell";
-import TeamActionCells from "../../../components/ActionCells/TeamActionCells";
+import TeamActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import { GeneralTable } from "../../../components/Table/GeneralTable";
 
 export default function TeamMembersPage(): ReactElement {

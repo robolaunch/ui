@@ -18,8 +18,8 @@ export default function RobotPage(): ReactElement {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [connectionURLs, setConnectionURLs] = useState<any>({
-    rosURL: "ws://localhost:9090",
-    // rosURL: "ws://172.16.44.200:30402",
+    // rosURL: "ws://localhost:9090",
+    rosURL: "ws://172.16.44.200:31549",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
     ideURL: "http://172.16.44.200:31512",
   });

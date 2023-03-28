@@ -7,13 +7,13 @@ import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import { RenameTeamSchema } from "../../validations/TeamValidations";
 
-interface TeamActionCellsProps {
+interface IOrganizationActionCells {
   data: any;
 }
 
-export default function TeamActionCells({
+export default function OrganizationActionCells({
   data,
-}: TeamActionCellsProps): ReactElement {
+}: IOrganizationActionCells): ReactElement {
   const [visibleRename, setVisibleRename] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const buttonElRename: any = useRef(null);
@@ -108,7 +108,7 @@ export default function TeamActionCells({
         target={buttonElDelete.current}
         visible={visibleDelete}
         onHide={() => setVisibleDelete(false)}
-        message="Are you sure you want to delete the team?"
+        message="Are you sure you want to delete the organization?"
         icon="pi pi-exclamation-triangle"
         accept={acceptDelete}
       />
