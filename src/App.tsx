@@ -13,12 +13,15 @@ import "primeicons/primeicons.css";
 
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "sonner";
+import SidebarContext from "./contexts/SidebarContext";
 function App() {
   return (
     <ThemeContext>
-      <ToastContainer />
-      <Toaster position="top-center" />
-      <AppRoutes />
+      <SidebarContext>
+        <ToastContainer />
+        <Toaster position="top-center" />
+        <AppRoutes />
+      </SidebarContext>
     </ThemeContext>
   );
 }

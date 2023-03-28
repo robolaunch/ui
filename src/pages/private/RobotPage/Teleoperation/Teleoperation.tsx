@@ -18,6 +18,7 @@ import TeleoperationControlBar from "../../../../components/TeleoperationControl
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { handleSaveLayout } from "../../../../helpers/gridStack";
 import CardLayout from "../../../../layouts/CardLayout";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface ITeleoperation {
   ros: any;
@@ -45,14 +46,12 @@ export default function Teleoperation({
     useState<any>(undefined);
   const [selectableTopic, setSelectableTopic] = useState<any>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
-  const { user } = useAppSelector((state: RootState) => state.user);
-
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
   const client = useRef<any>(null);
   const candidate = useRef<any>(null);
   const channel = useRef<any>(null);
-
+  const { keycloak } = useKeycloak();
   const handleFullScreen = useFullScreenHandle();
 
   // GRID
@@ -194,7 +193,7 @@ export default function Teleoperation({
               JSON.stringify({
                 event: "signal/answer",
                 sdp: d.sdp,
-                displayname: user?.username,
+                displayname: keycloak?.tokenParsed?.preferred_username,
               })
             );
           });

@@ -1,26 +1,16 @@
 import React, { Fragment, ReactElement, useState } from "react";
-import { useAppSelector } from "../../hooks/redux";
-import { RootState } from "../../app/store";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Link } from "react-router-dom";
-import InputSelect from "../InputSelect/InputSelect";
 import { useKeycloak } from "@react-keycloak/web";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { user } = useAppSelector((state: RootState) => state.user);
 
   const ref = useOnclickOutside(() => {
     setIsOpen(false);
   });
 
-  const { organizations }: any = useAppSelector(
-    (state: RootState) => state.organization
-  );
-
   const { keycloak } = useKeycloak();
-
-  console.log(keycloak?.tokenParsed);
 
   return (
     <Fragment>

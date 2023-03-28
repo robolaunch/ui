@@ -7,20 +7,14 @@ import { PrivateLayout } from "../layouts/PrivateLayout";
 import OrganizationDashboardPage from "../pages/private/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
 import SidebarContext from "../contexts/SidebarContext";
 import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
-import { useAppSelector } from "../hooks/redux";
-import { RootState } from "../app/store";
-import TeamMembersPage from "../pages/private/URM/TeamMembersPage";
 import RobotPage from "../pages/private/RobotPage/RobotPage";
 import TeamDashboardPage from "../pages/private/Dashboards/TeamDashboardPage/TeamDashboardPage";
 import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import URMPage from "../pages/private/URM/URMPage";
+import MainDashboardPage from "../pages/private/Dashboards/MainDashboardPage/MainDashboardPage";
 
 export default function AppRoutes(): ReactElement {
-  const { currentOrganization } = useAppSelector(
-    (state: RootState) => state.organization
-  );
-
   const token = () => {
     return true;
   };
@@ -36,48 +30,36 @@ export default function AppRoutes(): ReactElement {
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
       ) : (
-        <Route
-          element={
-            <SidebarContext>
-              <PrivateLayout />
-            </SidebarContext>
-          }
-        >
+        <Route element={<PrivateLayout />}>
+          {/* URM Pages */}
+          <Route path={`/user-role-management`} element={<URMPage />} />
+          {/* URM Pages */}
+
           {/* Dashboard Pages */}
+          <Route path={`/`} element={<MainDashboardPage />} />
           <Route
-            path={`/${currentOrganization.name}`}
+            path={`/:organizationName`}
             element={<OrganizationDashboardPage />}
           />
           <Route
-            path={`/${currentOrganization.name}/:teamName`}
+            path={`/:organizationName/:teamName`}
             element={<TeamDashboardPage />}
           />
           <Route
-            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName`}
+            path={`/:organizationName/:teamName/:roboticsCloudName`}
             element={<RoboticsCloudDashboardPage />}
           />
           <Route
-            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName`}
+            path={`/:organizationName/:teamName/:roboticsCloudName/:fleetName`}
             element={<FleetDashboardPage />}
           />
           <Route
-            path={`/${currentOrganization.name}/:teamName/:roboticsCloudName/:fleetName/:robotName`}
+            path={`/:organizationName/:teamName/:roboticsCloudName/:fleetName/:robotName`}
             element={<RobotPage />}
           />
           {/* Dashboard Pages */}
 
-          {/* URM Pages */}
-          <Route path={`/user-role-management`} element={<URMPage />} />
-          <Route
-            path={`/${currentOrganization.name}/:teamName/members`}
-            element={<TeamMembersPage />}
-          />
-          {/* URM Pages */}
-
-          <Route
-            path="*"
-            element={<Navigate to={`/${currentOrganization.name}`} />}
-          />
+          <Route path="*" element={<Navigate to={`/`} />} />
         </Route>
       )}
     </Routes>

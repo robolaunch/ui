@@ -31,7 +31,7 @@ export default function URMPage(): ReactElement {
             component={
               <CardLayout className="pt-6">
                 <ul className="flex flex-col gap-2 text-sm ">
-                  {pages.map((page: any) => {
+                  {pages?.map((page: any) => {
                     return (
                       <li
                         key={page?.key}

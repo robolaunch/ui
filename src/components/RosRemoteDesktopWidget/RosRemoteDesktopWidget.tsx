@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useRef } from "react";
 import { MdOutlineScreenShare } from "react-icons/md";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { useComponentSize } from "react-use-size";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface IRosRemoteDesktopWidget {
   id: number;
@@ -20,7 +21,7 @@ export default function RosRemoteDesktopWidget({
   const channel = useRef<any>(null);
   const video = useRef<any>(null);
 
-  const { user } = JSON.parse(localStorage.getItem("persist:user") || "{}");
+  const { keycloak } = useKeycloak();
 
   const { ref, width, height } = useComponentSize();
 
@@ -61,7 +62,7 @@ export default function RosRemoteDesktopWidget({
             JSON.stringify({
               event: "signal/answer",
               sdp: d.sdp,
-              displayname: user?.username,
+              displayname: keycloak?.tokenParsed?.preferred_username,
             })
           );
         });

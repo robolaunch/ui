@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import React, { FC, Fragment, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
@@ -21,7 +21,7 @@ export const PrivateLayout: FC = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <div className="flex">
         <Sidebar />
         <div
@@ -39,6 +39,6 @@ export const PrivateLayout: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };

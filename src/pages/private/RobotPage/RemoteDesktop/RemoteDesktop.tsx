@@ -8,11 +8,10 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import ChatScreen from "../../../../components/ChatScreen/ChatScreen";
 import VolumeControl from "../../../../components/VolumeControl/VolumeControl";
 import { toast } from "sonner";
-import { useAppSelector } from "../../../../hooks/redux";
-import { RootState } from "../../../../app/store";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../../components/ChatViewers/ChatViewers";
 import CardLayout from "../../../../layouts/CardLayout";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface IRemoteDesktop {
   connectionURLs: any;
@@ -34,16 +33,15 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [chatMessages, setChatMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>("");
-  const { user } = useAppSelector((state: RootState) => state.user);
   const [activeTab, setActiveTab] = useState<string>("Chat");
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
+  const { keycloak } = useKeycloak();
 
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
   }
 
-  let currentResolution: any = null;
-
+  var currentResolution: any = null;
   useEffect(() => {
     const onTrack = (event: RTCTrackEvent) => {
       if (event.track.kind === "video") {
@@ -80,7 +78,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             JSON.stringify({
               event: "signal/answer",
               sdp: d.sdp,
-              displayname: user?.username,
+              displayname: keycloak?.tokenParsed?.preferred_username,
             })
           );
         });
@@ -242,7 +240,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     video.current?.addEventListener("mouseenter", () => {
       overlay.current!.focus();
 
-      if (controller.current?.displayname === user?.username) {
+      if (
+        controller.current?.displayname ===
+        keycloak?.tokenParsed?.preferred_username
+      ) {
         navigator.clipboard.readText().then((text) => {
           if (text.length > 0) {
             client.current!.send(
@@ -257,7 +258,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     });
 
     video.current?.addEventListener("mousemove", (key: any) => {
-      if (controller.current?.displayname === user?.username) {
+      if (
+        controller.current?.displayname ===
+        keycloak?.tokenParsed?.preferred_username
+      ) {
         // 0x01;
         disableBodyScroll(targetElement);
 
@@ -298,7 +302,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     video.current?.addEventListener("mousedown", (key: any) => {
       // 0x01;
       key.preventDefault();
-      if (controller.current?.displayname === user?.username) {
+      if (
+        controller.current?.displayname ===
+        keycloak?.tokenParsed?.preferred_username
+      ) {
         buffer = new ArrayBuffer(11);
         payload = new DataView(buffer);
         payload.setUint8(0, 0x03);
@@ -315,7 +322,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
     video.current?.addEventListener("mouseup", (key: any) => {
       // 0x01;
-      if (controller.current?.displayname === user?.username) {
+      if (
+        controller.current?.displayname ===
+        keycloak?.tokenParsed?.preferred_username
+      ) {
         buffer = new ArrayBuffer(11);
         payload = new DataView(buffer);
         payload.setUint8(0, 0x04);
@@ -332,7 +342,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
     video.current?.addEventListener("wheel", (key: any) => {
       // 0x01;
-      if (controller.current?.displayname === user?.username) {
+      if (
+        controller.current?.displayname ===
+        keycloak?.tokenParsed?.preferred_username
+      ) {
         buffer = new ArrayBuffer(7);
         payload = new DataView(buffer);
         payload.setUint8(0, 0x02);
@@ -367,7 +380,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   }
 
   function handleControl() {
-    if (controller?.current?.displayname === user?.username) {
+    if (
+      controller?.current?.displayname ===
+      keycloak?.tokenParsed?.preferred_username
+    ) {
       client.current.send(JSON.stringify({ event: "control/release" }));
       return;
     }
@@ -501,7 +517,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                 <div>
                   <Button
                     text={(() => {
-                      if (controllerState?.displayname === user?.username) {
+                      if (
+                        controllerState?.displayname ===
+                        keycloak?.tokenParsed?.preferred_username
+                      ) {
                         return "Release Control";
                       }
 
