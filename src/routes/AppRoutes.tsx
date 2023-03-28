@@ -20,7 +20,6 @@ export default function AppRoutes(): ReactElement {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="*" element={<Navigate to="/login" />} />
       </Route>
       {/* Public Pages */}
 
