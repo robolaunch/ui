@@ -28,6 +28,24 @@ export const getOrganizations = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInterceptor.get(
+        `${process.env.REACT_APP_BACKEND_URL}/getOrganizations`
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const getOrganizationsWithGroups = createAsyncThunk(
+  "organization/getOrganizationsWithGroups",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.get(
         `${process.env.REACT_APP_BACKEND_URL}/getOrganizationsWithGroups`
       );
       if (response.status === 200) {
@@ -77,6 +95,23 @@ export const OrganizationSlice = createSlice({
     },
     [getOrganizations.rejected.type]: (state, action) => {
       console.log("getOrganizations.rejected");
+      toast.error("Error is fetcing data.");
+    },
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    [getOrganizationsWithGroups.pending.type]: (state, action) => {
+      console.log("getOrganizationsWithGroups.pending");
+    },
+    [getOrganizationsWithGroups.fulfilled.type]: (state, action) => {
+      console.log("getOrganizationsWithGroups.fulfilled");
+    },
+    [getOrganizationsWithGroups.rejected.type]: (state, action) => {
+      console.log("getOrganizationsWithGroups.rejected");
       toast.error("Error is fetcing data.");
     },
     //
