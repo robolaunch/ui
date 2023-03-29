@@ -2,8 +2,8 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import {
+  getOrganizationUsers,
   getOrganizations,
-  getOrganizationsWithGroups,
 } from "../../../resources/OrganizationSlice";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 
@@ -25,9 +25,16 @@ export const OrganizationsList = ({
   useEffect(() => {
     dispatch(getOrganizations()).then((res: any) => {
       setResponseOrganizations(res?.payload?.data);
+      console.log(res);
       setItemCount(res?.payload?.data?.length);
     });
   }, [dispatch, reload, setItemCount]);
+
+  // useEffect(() => {
+  //   dispatch(getOrganizationUsers()).then((res: any) => {
+  //     console.log(res);
+  //   });
+  // }, [dispatch, reload, setItemCount]);
 
   return (
     <Fragment>

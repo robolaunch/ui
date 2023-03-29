@@ -23,6 +23,27 @@ export const createOrganization = createAsyncThunk(
   }
 );
 
+export const getOrganizationUsers = createAsyncThunk(
+  "organization/getOrganizationUsers",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.post(
+        `${process.env.REACT_APP_BACKEND_URL}/getOrganizationUsers`,
+        {
+          organizationId: "2bb28c45-cfe3-4571-8a8b-469eddc2a4c6",
+        }
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getOrganizations = createAsyncThunk(
   "organization/getOrganizations",
   async (_, thunkAPI) => {
