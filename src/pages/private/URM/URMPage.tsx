@@ -6,6 +6,7 @@ import InformationWidget from "../../../components/InformationWidget/Information
 
 export default function URMPage(): ReactElement {
   const [activePage, setActivePage] = useState<string>("organizations");
+  const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
 
   const pages: any = [
     {
@@ -19,8 +20,8 @@ export default function URMPage(): ReactElement {
   ];
 
   return (
-    <div className="grid grid-cols-5 gap-6">
-      <div className="col-span-1">
+    <div className="grid grid-cols-10 gap-6">
+      <div className="col-span-3">
         <div className="flex flex-col gap-6">
           <InformationWidget
             title="User and Role Management"
@@ -51,11 +52,16 @@ export default function URMPage(): ReactElement {
           />
         </div>
       </div>
-      <div className="col-span-4">
+      <div className="col-span-7">
         {(() => {
           switch (activePage) {
             case "organizations":
-              return <OrganizationsTable />;
+              return (
+                <OrganizationsTable
+                  responseOrganizations={responseOrganizations}
+                  setResponseOrganizations={setResponseOrganizations}
+                />
+              );
             case "organizationusers":
               return <OrganizationUsersTable />;
           }

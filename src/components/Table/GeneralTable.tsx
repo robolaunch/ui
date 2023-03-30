@@ -9,7 +9,7 @@ interface GeneralTableProps {
   loading: boolean;
   title: string;
   type: string;
-  handleReload: any;
+  handleReload?: any;
 }
 
 export const GeneralTable = ({
@@ -22,7 +22,7 @@ export const GeneralTable = ({
 }: GeneralTableProps) => {
   return (
     <div
-      className="flex flex-col p-8 rounded-lg shadow-lg bg-layer-light-50"
+      className="flex flex-col px-4 pt-4 pb-0 rounded-lg shadow-lg bg-layer-light-50"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex px-4 pt-1 pb-8 items-center gap-2">
@@ -40,15 +40,19 @@ export const GeneralTable = ({
         responsiveLayout="scroll"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-        rows={10}
+        rows={9}
         rowHover
-        rowsPerPageOptions={[10, 20, 50]}
+        // rowsPerPageOptions={[10, 20, 50]}
         paginatorLeft={
-          <Button
-            onClick={() => handleReload()}
-            type="button"
-            icon="pi pi-refresh"
-          />
+          handleReload ? (
+            <Button
+              onClick={() => handleReload()}
+              type="button"
+              icon="pi pi-refresh"
+            />
+          ) : (
+            false
+          )
         }
       >
         {columns.map((col: any, index: number) => {

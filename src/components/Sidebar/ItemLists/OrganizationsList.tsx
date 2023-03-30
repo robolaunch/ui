@@ -25,16 +25,9 @@ export const OrganizationsList = ({
   useEffect(() => {
     dispatch(getOrganizations()).then((res: any) => {
       setResponseOrganizations(res?.payload?.data);
-      console.log(res);
       setItemCount(res?.payload?.data?.length);
     });
   }, [dispatch, reload, setItemCount]);
-
-  // useEffect(() => {
-  //   dispatch(getOrganizationUsers()).then((res: any) => {
-  //     console.log(res);
-  //   });
-  // }, [dispatch, reload, setItemCount]);
 
   return (
     <Fragment>

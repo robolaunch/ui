@@ -25,7 +25,7 @@ export const createOrganization = createAsyncThunk(
 
 export const getOrganizationUsers = createAsyncThunk(
   "organization/getOrganizationUsers",
-  async (_, thunkAPI) => {
+  async (values: any, thunkAPI) => {
     try {
       const response = await axiosInterceptor.post(
         `${process.env.REACT_APP_BACKEND_URL}/getOrganizationUsers`,

@@ -32,6 +32,17 @@ th {
   @apply !bg-transparent;
 }
 
+td {
+  @apply !p-3;
+}
+.p-paginator-current {
+  @apply !text-xs;
+}
+
+.p-paginator-element {
+  @apply !text-xs !h-8 !min-w-[2rem];
+}
+
 .react-toggle--checked .react-toggle-track {
   @apply !bg-primary;
 }
@@ -117,4 +128,16 @@ th {
   height: 6px;
   width: 100%;
   cursor: row-resize;
+}
+
+.table-action-button {
+  @apply !h-8 !w-8;
+}
+
+.table-action-button span {
+  @apply !text-xs;
+}
+
+.p-dialog-title {
+  @apply !text-base !font-semibold;
 }

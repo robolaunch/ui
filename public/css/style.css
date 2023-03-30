@@ -786,10 +786,6 @@ video {
   height: 3rem;
 }
 
-.h-14{
-  height: 3.5rem;
-}
-
 .h-16{
   height: 4rem;
 }
@@ -856,6 +852,14 @@ video {
 
 .h-screen{
   height: 100vh;
+}
+
+.\!h-11{
+  height: 2.75rem !important;
+}
+
+.\!h-8{
+  height: 2rem !important;
 }
 
 .max-h-\[40rem\]{
@@ -956,6 +960,18 @@ video {
 
 .w-full{
   width: 100%;
+}
+
+.\!w-10{
+  width: 2.5rem !important;
+}
+
+.\!w-32{
+  width: 8rem !important;
+}
+
+.\!w-8{
+  width: 2rem !important;
 }
 
 .min-w-\[8rem\]{
@@ -1061,6 +1077,10 @@ video {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-10{
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
 .grid-cols-12{
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
@@ -1071,10 +1091,6 @@ video {
 
 .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-cols-5{
-  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .flex-col{
@@ -1280,6 +1296,11 @@ video {
   border-color: rgb(0 127 201 / var(--tw-border-opacity));
 }
 
+.\!border-layer-primary-500{
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(184 67 255 / var(--tw-border-opacity)) !important;
+}
+
 .\!bg-layer-primary-100{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(245 229 255 / var(--tw-bg-opacity)) !important;
@@ -1366,6 +1387,20 @@ video {
 
 .bg-transparent{
   background-color: transparent;
+}
+
+.\!bg-layer-light-200{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(214 214 214 / var(--tw-bg-opacity)) !important;
+}
+
+.\!bg-layer-light-400{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(173 173 173 / var(--tw-bg-opacity)) !important;
+}
+
+.\!bg-transparent{
+  background-color: transparent !important;
 }
 
 .\!p-4{
@@ -1496,6 +1531,10 @@ video {
   padding-bottom: 0px !important;
 }
 
+.pb-0{
+  padding-bottom: 0px;
+}
+
 .pb-1{
   padding-bottom: 0.25rem;
 }
@@ -1530,6 +1569,10 @@ video {
 
 .pt-3{
   padding-top: 0.75rem;
+}
+
+.pt-4{
+  padding-top: 1rem;
 }
 
 .pt-5{
@@ -1888,6 +1931,22 @@ th{
   background-color: transparent !important;
 }
 
+td{
+  padding: 0.75rem !important;
+}
+
+.p-paginator-current{
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.p-paginator-element{
+  height: 2rem !important;
+  min-width: 2rem !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
 .react-toggle--checked .react-toggle-track{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(172 45 254 / var(--tw-bg-opacity)) !important;
@@ -1980,6 +2039,22 @@ th{
   height: 6px;
   width: 100%;
   cursor: row-resize;
+}
+
+.table-action-button{
+  height: 2rem !important;
+  width: 2rem !important;
+}
+
+.table-action-button span{
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+.p-dialog-title{
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  font-weight: 600 !important;
 }
 
 .hover\:scale-110:hover{

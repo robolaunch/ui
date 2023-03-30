@@ -15,7 +15,7 @@ export const InfoCell: FC<InfoCellProps> = ({
   return (
     <div className="flex items-center gap-4">
       <Link to={titleURL ? titleURL : "#"}>
-        <div className="flex items-center justify-center font-bold h-14 w-14 text-base bg-layer-primary-200 text-layer-primary-600 rounded-full">
+        <div className="flex items-center justify-center font-bold h-12 w-12 text-base bg-layer-primary-200 text-layer-primary-600 rounded-full">
           {title[0].toUpperCase()}
         </div>
       </Link>

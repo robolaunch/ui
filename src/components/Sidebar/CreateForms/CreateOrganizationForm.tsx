@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import React, { useContext } from "react";
 import { useAppDispatch } from "../../../hooks/redux";
-import { CreateOrganizationSchema } from "../../../validations/OrganizationsValidations";
+import { createOrganizationSchema } from "../../../validations/OrganizationsValidations";
 import InputError from "../../InputError/InputError";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import InputText from "../../InputText/InputText";
@@ -16,7 +16,7 @@ export const CreateOrganizationForm = () => {
     initialValues: {
       name: "",
     },
-    validationSchema: CreateOrganizationSchema,
+    validationSchema: createOrganizationSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
       dispatch(

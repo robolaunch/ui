@@ -36,12 +36,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const [activeTab, setActiveTab] = useState<string>("Chat");
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
   const { keycloak } = useKeycloak();
+  const [currentResolution, setCurrentResolution] = useState<any>(null);
 
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
   }
 
-  var currentResolution: any = null;
   useEffect(() => {
     const onTrack = (event: RTCTrackEvent) => {
       if (event.track.kind === "video") {
@@ -85,17 +85,33 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       }
 
       if (event === "screen/resolution") {
+        console.log("screen", payload);
         if (
-          currentResolution?.width !== payload?.width &&
+          currentResolution?.width !== payload?.width ||
           currentResolution?.height !== payload?.height
         ) {
           // eslint-disable-next-line react-hooks/exhaustive-deps
-          currentResolution = payload;
+          setCurrentResolution(payload);
         }
       }
 
       if (event === "screen/configurations") {
         allResolutions.current = payload.configurations;
+        const temp: any = Object.values(allResolutions.current).filter(
+          (res: any) => {
+            if (res.width === 1920 && res.height === 1080) {
+              return res;
+            }
+          }
+        )[0];
+
+        setTimeout(() => {
+          handleChangeResolution({
+            width: temp?.width,
+            height: temp?.height,
+            rate: Object.values(temp?.rates)[0],
+          });
+        }, 3000);
       }
 
       if (event === "member/list") {
@@ -126,7 +142,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           `${
             roomMembers.current?.filter(
               (member: any) => member.id === payload?.id
-            )[0].displayname
+            )[0]?.displayname
           } has left the room`
         );
 
@@ -190,7 +206,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
       if (event === "control/clipboard") {
         const { text } = payload;
-        navigator.clipboard.writeText(text);
+        navigator?.clipboard?.writeText(text);
       }
     };
 
@@ -244,9 +260,9 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         controller.current?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
-        navigator.clipboard.readText().then((text) => {
-          if (text.length > 0) {
-            client.current!.send(
+        navigator?.clipboard?.readText().then((text) => {
+          if (text?.length > 0) {
+            client?.current!.send(
               JSON.stringify({
                 event: "control/clipboard",
                 text,
@@ -272,6 +288,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           payload = new DataView(buffer);
           payload.setUint8(0, 0x01);
           payload.setUint16(1, 4, true);
+
           payload.setUint16(
             3,
             Math.round(
@@ -288,10 +305,13 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             ),
             true
           );
-
           if (
             typeof buffer !== "undefined" &&
-            channel.current.readyState === "open"
+            channel.current.readyState === "open" &&
+            currentResolution?.width &&
+            rect?.width &&
+            key?.clientX &&
+            rect?.left
           ) {
             channel.current!.send(buffer);
           }
@@ -374,7 +394,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         event: "screen/set",
         width: e.width,
         height: e.height,
-        rate: 60,
+        rate: e.rate,
       })
     );
   }
@@ -425,6 +445,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     setIsControllerOpen(!isControllerOpen);
   }
 
+  useEffect(() => {
+    console.log(allResolutions);
+  }, [allResolutions]);
+
   return (
     <CardLayout>
       <div className="grid grid-cols-12">
@@ -472,10 +496,18 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                   <InputSelect
                     onChange={(e: any) => {
                       handleChangeResolution({
-                        width: Number(e.target.value.split("x")[0]),
-                        height: Number(e.target.value.split("x")[1]),
+                        width: Number(e?.target?.value?.split("x")[0]),
+                        height: Number(e?.target?.value?.split("x")[1]),
+                        rate: Number(e?.target?.value?.split("x")[2]),
                       });
                     }}
+                    value={
+                      currentResolution?.width +
+                      "x" +
+                      currentResolution?.height +
+                      "x" +
+                      currentResolution?.rate
+                    }
                   >
                     <Fragment>
                       {allResolutions.current &&
@@ -485,11 +517,13 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                               <option
                                 key={index}
                                 value={
-                                  allResolutions.current[
-                                    key.width +
-                                      "x" +
-                                      allResolutions.current[key].height
-                                  ]
+                                  allResolutions.current[key].width +
+                                  "x" +
+                                  allResolutions.current[key].height +
+                                  "x" +
+                                  Object.values(
+                                    allResolutions.current[key].rates
+                                  )[0]
                                 }
                                 defaultChecked={
                                   allResolutions.current[key].width ===
