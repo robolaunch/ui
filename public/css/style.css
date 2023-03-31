@@ -774,6 +774,14 @@ video {
   height: 2.5rem !important;
 }
 
+.\!h-11{
+  height: 2.75rem !important;
+}
+
+.\!h-8{
+  height: 2rem !important;
+}
+
 .h-10{
   height: 2.5rem;
 }
@@ -854,12 +862,8 @@ video {
   height: 100vh;
 }
 
-.\!h-11{
-  height: 2.75rem !important;
-}
-
-.\!h-8{
-  height: 2rem !important;
+.h-14{
+  height: 3.5rem;
 }
 
 .max-h-\[40rem\]{
@@ -884,6 +888,10 @@ video {
 
 .\!w-44{
   width: 11rem !important;
+}
+
+.\!w-8{
+  width: 2rem !important;
 }
 
 .w-1{
@@ -960,18 +968,6 @@ video {
 
 .w-full{
   width: 100%;
-}
-
-.\!w-10{
-  width: 2.5rem !important;
-}
-
-.\!w-32{
-  width: 8rem !important;
-}
-
-.\!w-8{
-  width: 2rem !important;
 }
 
 .min-w-\[8rem\]{
@@ -1247,6 +1243,16 @@ video {
   border-color: rgb(133 133 133 / var(--tw-border-opacity)) !important;
 }
 
+.\!border-layer-primary-500{
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(184 67 255 / var(--tw-border-opacity)) !important;
+}
+
+.\!border-red-600{
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(220 38 38 / var(--tw-border-opacity)) !important;
+}
+
 .border-\[\#dddddd35\]{
   border-color: #dddddd35;
 }
@@ -1296,14 +1302,13 @@ video {
   border-color: rgb(0 127 201 / var(--tw-border-opacity));
 }
 
-.\!border-layer-primary-500{
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(184 67 255 / var(--tw-border-opacity)) !important;
-}
-
 .\!bg-layer-primary-100{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(245 229 255 / var(--tw-bg-opacity)) !important;
+}
+
+.\!bg-transparent{
+  background-color: transparent !important;
 }
 
 .bg-\[\#00000090\]{
@@ -1387,20 +1392,6 @@ video {
 
 .bg-transparent{
   background-color: transparent;
-}
-
-.\!bg-layer-light-200{
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(214 214 214 / var(--tw-bg-opacity)) !important;
-}
-
-.\!bg-layer-light-400{
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(173 173 173 / var(--tw-bg-opacity)) !important;
-}
-
-.\!bg-transparent{
-  background-color: transparent !important;
 }
 
 .\!p-4{
@@ -2055,6 +2046,14 @@ td{
   font-size: 1rem !important;
   line-height: 1.5rem !important;
   font-weight: 600 !important;
+}
+
+.p-highlight{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(237 208 255 / var(--tw-bg-opacity)) !important;
+  font-weight: 600 !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(184 67 255 / var(--tw-text-opacity)) !important;
 }
 
 .hover\:scale-110:hover{

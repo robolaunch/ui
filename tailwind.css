@@ -141,3 +141,7 @@ td {
 .p-dialog-title {
   @apply !text-base !font-semibold;
 }
+
+.p-highlight {
+  @apply !bg-layer-primary-200 !text-layer-primary-500 !font-semibold;
+}

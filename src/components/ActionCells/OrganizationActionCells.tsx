@@ -57,8 +57,8 @@ export default function OrganizationActionCells({
           onClick={() => setVisibleRename(true)}
         />
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500"
-          text={<BiTrash className="text-layer-primary-500" />}
+          className="!w-8 !h-8 !bg-transparent !border !border-red-600"
+          text={<BiTrash className="text-red-600" />}
           onClick={() => setVisibleDelete(true)}
         />
       </div>

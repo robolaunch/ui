@@ -2,6 +2,7 @@ import React, { Fragment, ReactElement, useState } from "react";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Link } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
+import Gravatar from "react-gravatar";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -31,17 +32,22 @@ export default function HeaderDropdownMenu(): ReactElement {
             to={`#`}
             className="flex gap-3 hover:bg-layer-light-100 pl-2 pr-6 py-3 rounded transition-all duration-200"
           >
-            <div className="flex items-center justify-center rounded h-10 w-10 font-semibold bg-layer-primary-100 border border-layer-primary-200 text-layer-primary-700 cursor-pointer uppercase">
-              {keycloak?.tokenParsed?.given_name[0]}
-            </div>
+            <Gravatar
+              email={keycloak?.tokenParsed?.email}
+              className="h-14 w-14"
+              default="mp"
+            />
             <div className="flex flex-col">
               <span className="text-layer-dark-700 font-semibold">
                 {keycloak?.tokenParsed?.given_name +
                   " " +
                   keycloak?.tokenParsed?.family_name}
               </span>
-              <span className="text-layer-dark-300 text-xs">
+              <span className="text-layer-dark-300 text-xs font-medium">
                 {keycloak?.tokenParsed?.preferred_username}
+              </span>
+              <span className="text-layer-dark-300 text-xs font-light">
+                {keycloak?.tokenParsed?.email}
               </span>
             </div>
           </Link>
