@@ -21,7 +21,9 @@ export default function Header(): ReactElement {
                 }
               })()}
               <Link to={item?.key}>
-                {stringCapitalization(item?.breadcrumb?.props?.children)}
+                {stringCapitalization({
+                  str: item?.breadcrumb?.props?.children,
+                })}
               </Link>
             </li>
           );

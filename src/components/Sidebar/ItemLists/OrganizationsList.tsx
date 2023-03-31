@@ -1,10 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
-import {
-  getOrganizationUsers,
-  getOrganizations,
-} from "../../../resources/OrganizationSlice";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 
 interface IOrganizationList {

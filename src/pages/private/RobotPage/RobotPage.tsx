@@ -21,9 +21,9 @@ export default function RobotPage(): ReactElement {
     rosURL: "ws://localhost:9090",
     // rosURL: "ws://172.16.44.200:31549",
     // remoteDesktopURL: "ws://172.16.44.200:32580/vdi/ws?password=admin",
-    remoteDesktopURL: "ws://172.16.44.170:8080/vdi/ws?password=admin",
+    // remoteDesktopURL: "ws://172.16.44.170:8080/vdi/ws?password=admin",
 
-    // remoteDesktopURL: "ws://18.194.41.119:31100/vdi/ws?password=admin",
+    remoteDesktopURL: "ws://18.194.41.119:30176/ws?password=admin",
     // remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
 
     ideURL: "http://172.16.44.200:31512",

@@ -5,17 +5,20 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import { BiTrash, BiPencil } from "react-icons/bi";
+import { HiOutlineEye } from "react-icons/hi";
+
 import {
   deleteOrganizationSchema,
   renameOrganizationSchema,
 } from "../../validations/OrganizationsValidations";
-
 interface IOrganizationActionCells {
   data: any;
+  onClickSee: any;
 }
 
 export default function OrganizationActionCells({
   data,
+  onClickSee,
 }: IOrganizationActionCells): ReactElement {
   const [visibleRename, setVisibleRename] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
@@ -47,10 +50,19 @@ export default function OrganizationActionCells({
       deleteFormik.setSubmitting(false);
     },
   });
-
   return (
     <Fragment>
       <div className="card flex gap-4 float-right">
+        <Button
+          className="!w-8 !h-8 !bg-transparent !border !border-layer-secondary-500 !ring-layer-secondary-500"
+          text={<HiOutlineEye className="text-layer-secondary-500" />}
+          onClick={() =>
+            onClickSee({
+              page: "organizationUsers",
+              selectedOrganization: data,
+            })
+          }
+        />
         <Button
           className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500"
           text={<BiPencil className="text-layer-primary-500" />}

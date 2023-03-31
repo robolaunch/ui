@@ -10,8 +10,7 @@ import RobotPage from "../pages/private/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/private/Dashboards/MainDashboardPage/MainDashboardPage";
-import OrganizationUsersPage from "../pages/private/URM/OrganizationUsersPage";
-import OrganizationsPage from "../pages/private/URM/OrganizationsPage";
+import UserRoleManagement from "../pages/private/URM/UserRoleManagementLayout";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -26,10 +25,9 @@ export default function AppRoutes(): ReactElement {
 
       <Route element={<PrivateLayout />}>
         {/* URM Pages */}
-        <Route path={`/user-role-management`} element={<OrganizationsPage />} />
         <Route
-          path={`/user-role-management/:organizationName`}
-          element={<OrganizationUsersPage />}
+          path={`/user-role-management`}
+          element={<UserRoleManagement />}
         />
         {/* URM Pages */}
 

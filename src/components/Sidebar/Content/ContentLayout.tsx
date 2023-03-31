@@ -47,7 +47,9 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         }`}
       >
         <h2 className="text-2xl font-semibold">
-          {stringCapitalization(sidebarState?.page + "s")}
+          {stringCapitalization({
+            str: sidebarState?.page + "s",
+          })}
         </h2>
         <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
           {itemCount}

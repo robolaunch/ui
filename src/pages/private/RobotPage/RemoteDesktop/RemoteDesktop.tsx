@@ -104,14 +104,14 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             }
           }
         )[0];
-
-        setTimeout(() => {
-          handleChangeResolution({
-            width: temp?.width,
-            height: temp?.height,
-            rate: Object.values(temp?.rates)[0],
-          });
-        }, 3000);
+        console.log("a");
+        // setTimeout(() => {
+        //   handleChangeResolution({
+        //     width: temp?.width,
+        //     height: temp?.height,
+        //     rate: Object.values(temp?.rates)[0],
+        //   });
+        // }, 3000);
       }
 
       if (event === "member/list") {
