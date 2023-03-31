@@ -24,6 +24,7 @@ export const OrganizationsList = ({
 
   useEffect(() => {
     dispatch(getOrganizations()).then((res: any) => {
+      console.log(res);
       setResponseOrganizations(res?.payload?.data);
       setItemCount(res?.payload?.data?.length);
     });

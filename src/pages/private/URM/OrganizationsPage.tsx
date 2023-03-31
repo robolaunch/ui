@@ -1,20 +1,15 @@
-import React, { Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../../components/Table/GeneralTable";
 import { InfoCell } from "../../../components/Cells/InfoCell";
 import { useAppDispatch } from "../../../hooks/redux";
 import { getOrganizations } from "../../../resources/OrganizationSlice";
 import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import { useParams } from "react-router";
+import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import CardLayout from "../../../layouts/CardLayout";
 
-interface IOrganizationsTable {
-  responseOrganizations: any;
-  setResponseOrganizations: (value: any) => void;
-}
-
-export default function OrganizationsTable({
-  responseOrganizations,
-  setResponseOrganizations,
-}: IOrganizationsTable) {
+export default function OrganizationsPage() {
+  const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
   const dispatch = useAppDispatch();
   const url = useParams();
 
@@ -48,7 +43,7 @@ export default function OrganizationsTable({
           return (
             <InfoCell
               title={rowData?.name?.organizationName}
-              titleURL={`#`}
+              titleURL={`/user-role-management/${rowData?.name?.organizationName}`}
               subtitle={`Member Count: ${rowData?.name?.userCount}`}
             />
           );
@@ -81,12 +76,32 @@ export default function OrganizationsTable({
   );
 
   return (
-    <GeneralTable
-      type="organization"
-      title="Organizations"
-      data={data}
-      columns={columns}
-      loading={responseOrganizations?.length ? false : true}
-    />
+    <div className="grid grid-cols-10 gap-6 h-full">
+      <div className="col-span-3">
+        <div className="flex flex-col gap-6">
+          <InformationWidget
+            title="User and Role Management"
+            subtitle="From this page, you can view, control or get information about all
+            the details of the teams in your organization."
+            actiontitle="If you need to create a new team or check the users in the team you
+            can proceed here."
+            component={
+              <CardLayout className="pt-6">
+                <></>
+              </CardLayout>
+            }
+          />
+        </div>
+      </div>
+      <div className="col-span-7 h-full">
+        <GeneralTable
+          type="organization"
+          title="Organizations"
+          data={data}
+          columns={columns}
+          loading={responseOrganizations?.length ? false : true}
+        />
+      </div>
+    </div>
   );
 }

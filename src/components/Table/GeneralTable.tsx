@@ -34,6 +34,12 @@ export const GeneralTable = ({
         <h5 className="text-lg font-semibold">{title}</h5>
       </div>
       <DataTable
+        className={` ${
+          data &&
+          columns &&
+          !loading &&
+          "animate__animated animate__fadeIn transition-all duration-500"
+        }`}
         value={data}
         paginator
         loading={loading}

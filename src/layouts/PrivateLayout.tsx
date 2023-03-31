@@ -34,7 +34,7 @@ export const PrivateLayout: FC = () => {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="p-6 bg-layer-light-bg">
+          <div className="p-6 bg-layer-light-bg h-full">
             <Outlet />
           </div>
         </div>

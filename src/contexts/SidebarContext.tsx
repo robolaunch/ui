@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 
 export const SidebarContext: any = createContext<any>(null);
 
@@ -15,10 +15,6 @@ export default ({ children }: any) => {
     roboticsCloud: null,
     fleet: null,
   });
-
-  useEffect(() => {
-    console.log(selectedState);
-  }, [selectedState]);
 
   return (
     <SidebarContext.Provider

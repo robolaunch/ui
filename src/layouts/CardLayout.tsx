@@ -4,12 +4,14 @@ interface ICard {
   children: ReactElement;
   loading?: boolean;
   className?: string;
+  style?: any;
 }
 
 export default function CardLayout({
   children,
   loading,
   className,
+  style,
 }: ICard): ReactElement {
   return (
     <div
@@ -22,7 +24,7 @@ export default function CardLayout({
               backgroundPosition: "center",
               backgroundSize: "10%",
             }
-          : {}
+          : style
       }
     >
       {children}

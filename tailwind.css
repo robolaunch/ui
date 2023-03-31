@@ -142,6 +142,10 @@ td {
   @apply !text-base !font-semibold;
 }
 
-.p-highlight {
+.p-paginator-element.p-highlight {
   @apply !bg-layer-primary-200 !text-layer-primary-500 !font-semibold;
+}
+
+.p-sortable-column-icon {
+  @apply !text-layer-light-500;
 }

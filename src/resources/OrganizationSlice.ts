@@ -30,7 +30,7 @@ export const getOrganizationUsers = createAsyncThunk(
       const response = await axiosInterceptor.post(
         `${process.env.REACT_APP_BACKEND_URL}/getOrganizationUsers`,
         {
-          organizationId: "2bb28c45-cfe3-4571-8a8b-469eddc2a4c6",
+          organizationId: values?.organizationId,
         }
       );
       if (response.status === 200) {
@@ -117,6 +117,28 @@ export const OrganizationSlice = createSlice({
     [getOrganizations.rejected.type]: (state, action) => {
       console.log("getOrganizations.rejected");
       toast.error("Error is fetcing data.");
+    },
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    [getOrganizationUsers.pending.type]: (state, action) => {
+      console.log("getOrganizationUsers.pending");
+    },
+    [getOrganizationUsers.fulfilled.type]: (state, action) => {
+      console.log("getOrganizationUsers.fulfilled");
+    },
+    [getOrganizationUsers.rejected.type]: (state, action) => {
+      console.log("getOrganizationUsers.rejected");
+
+      if (action?.error) {
+        toast.error("Organization not found.");
+      } else {
+        toast.error("Error is fetcing data.");
+      }
     },
     //
     //

@@ -9,8 +9,10 @@ import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPasswor
 import RobotPage from "../pages/private/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
-import URMPage from "../pages/private/URM/URMPage";
+import UserRoleManagementLayout from "../pages/private/URM/UserRoleManagementLayout";
 import MainDashboardPage from "../pages/private/Dashboards/MainDashboardPage/MainDashboardPage";
+import OrganizationUsersPage from "../pages/private/URM/OrganizationUsersPage";
+import OrganizationsPage from "../pages/private/URM/OrganizationsPage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -25,7 +27,11 @@ export default function AppRoutes(): ReactElement {
 
       <Route element={<PrivateLayout />}>
         {/* URM Pages */}
-        <Route path={`/user-role-management`} element={<URMPage />} />
+        <Route path={`/user-role-management`} element={<OrganizationsPage />} />
+        <Route
+          path={`/user-role-management/:organizationName`}
+          element={<OrganizationUsersPage />}
+        />
         {/* URM Pages */}
 
         {/* Dashboard Pages */}

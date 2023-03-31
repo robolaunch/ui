@@ -3,6 +3,7 @@ import useBreadcrumbs from "use-react-router-breadcrumbs";
 import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
 import { FiHome } from "react-icons/fi";
 import stringCapitalization from "../../helpers/stringCapitalization";
+import { Link } from "react-router-dom";
 
 export default function Header(): ReactElement {
   const breadcrumbs = useBreadcrumbs();
@@ -19,9 +20,9 @@ export default function Header(): ReactElement {
                     return <FiHome size={14} />;
                 }
               })()}
-              <a href={item?.key}>
+              <Link to={item?.key}>
                 {stringCapitalization(item?.breadcrumb?.props?.children)}
-              </a>
+              </Link>
             </li>
           );
         })}
