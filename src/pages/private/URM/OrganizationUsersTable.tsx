@@ -22,6 +22,7 @@ export default function OrganizationUsersTable({
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
     ).then((responseOrganizationUsers: any) => {
+      console.log(responseOrganizationUsers?.payload?.data);
       setResponseOrganizationsUsers(responseOrganizationUsers?.payload?.data);
     });
   }, [dispatch, activePage]);

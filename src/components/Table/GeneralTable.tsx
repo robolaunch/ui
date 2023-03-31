@@ -46,7 +46,7 @@ export const GeneralTable = ({
         responsiveLayout="scroll"
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-        rows={9}
+        rows={20}
         rowHover
         // rowsPerPageOptions={[10, 20, 50]}
         paginatorLeft={

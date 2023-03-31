@@ -97,21 +97,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
       if (event === "screen/configurations") {
         allResolutions.current = payload.configurations;
-        const temp: any = Object.values(allResolutions.current).filter(
-          (res: any) => {
-            if (res.width === 1920 && res.height === 1080) {
-              return res;
-            }
-          }
-        )[0];
-        console.log("a");
-        // setTimeout(() => {
-        //   handleChangeResolution({
-        //     width: temp?.width,
-        //     height: temp?.height,
-        //     rate: Object.values(temp?.rates)[0],
-        //   });
-        // }, 3000);
       }
 
       if (event === "member/list") {
@@ -135,6 +120,32 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         roomMembers.current = [...roomMembers.current, payload];
 
         setRoomMembersState(roomMembers.current);
+
+        // console.log("AAAAAAAAAAAAAAAAAA");
+        // console.log(roomMembers.current?.displayname);
+        // console.log(keycloak?.tokenParsed?.preferred_username);
+
+        // if (
+        //   roomMembers.current?.displayname ===
+        //   keycloak?.tokenParsed?.preferred_username
+        // ) {
+        //   console.log(
+        //     "setpublish yapmadan önceki currentResolution",
+        //     currentResolution
+        //   );
+
+        //   console.log(
+        //     "setpublishleyen user",
+        //     keycloak?.tokenParsed?.preferred_username
+        //   );
+
+        //   handleChangeResolution({
+        //     width: currentResolution?.width,
+        //     height: currentResolution?.height,
+        //     rate: currentResolution?.rate,
+        //   });
+        //   console.log("work");
+        // }
       }
 
       if (event === "member/disconnected") {
@@ -213,7 +224,11 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     return () => {
       client.current.close();
     };
-  }, []);
+  }, [
+    connectionURLs.remoteDesktopURL,
+    currentResolution,
+    keycloak?.tokenParsed?.preferred_username,
+  ]);
 
   // Control Events
   var buffer: ArrayBuffer;
@@ -427,6 +442,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       setMessage("");
     }
   }
+
+  useEffect(() => {
+    console.log("roomMembers", roomMembersState);
+  }, [roomMembersState]);
 
   function handleOnChangeMessage(message: any) {
     setMessage(message);
