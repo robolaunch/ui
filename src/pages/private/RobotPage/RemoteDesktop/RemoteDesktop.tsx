@@ -120,32 +120,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         roomMembers.current = [...roomMembers.current, payload];
 
         setRoomMembersState(roomMembers.current);
-
-        // console.log("AAAAAAAAAAAAAAAAAA");
-        // console.log(roomMembers.current?.displayname);
-        // console.log(keycloak?.tokenParsed?.preferred_username);
-
-        // if (
-        //   roomMembers.current?.displayname ===
-        //   keycloak?.tokenParsed?.preferred_username
-        // ) {
-        //   console.log(
-        //     "setpublish yapmadan önceki currentResolution",
-        //     currentResolution
-        //   );
-
-        //   console.log(
-        //     "setpublishleyen user",
-        //     keycloak?.tokenParsed?.preferred_username
-        //   );
-
-        //   handleChangeResolution({
-        //     width: currentResolution?.width,
-        //     height: currentResolution?.height,
-        //     rate: currentResolution?.rate,
-        //   });
-        //   console.log("work");
-        // }
       }
 
       if (event === "member/disconnected") {
@@ -226,7 +200,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     };
   }, [
     connectionURLs.remoteDesktopURL,
-    currentResolution,
     keycloak?.tokenParsed?.preferred_username,
   ]);
 
@@ -324,9 +297,11 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             typeof buffer !== "undefined" &&
             channel.current.readyState === "open" &&
             currentResolution?.width &&
-            rect?.width &&
+            currentResolution?.height &&
+            rect?.top &&
+            rect?.left &&
             key?.clientX &&
-            rect?.left
+            key?.clientY
           ) {
             channel.current!.send(buffer);
           }
@@ -443,12 +418,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     }
   }
 
-  useEffect(() => {
-    console.log("roomMembers", roomMembersState);
-  }, [roomMembersState]);
-
   function handleOnChangeMessage(message: any) {
     setMessage(message);
+  }
+
+  function handleIsControllerOpen() {
+    setIsControllerOpen(!isControllerOpen);
   }
 
   const tabs = [
@@ -459,14 +434,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       name: "Viewers",
     },
   ];
-
-  function handleIsControllerOpen() {
-    setIsControllerOpen(!isControllerOpen);
-  }
-
-  useEffect(() => {
-    console.log(allResolutions);
-  }, [allResolutions]);
 
   return (
     <CardLayout>
