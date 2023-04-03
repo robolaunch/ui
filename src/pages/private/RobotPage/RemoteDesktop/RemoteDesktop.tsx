@@ -1,18 +1,16 @@
-import React, { useRef, useEffect, useState, Fragment } from "react";
-import InputSelect from "../../../../components/InputSelect/InputSelect";
-// @ts-ignore
-import GuacamoleKeyboard from "./guacamole-keyboard.ts";
+import React, { useRef, useEffect, useState, useReducer } from "react";
 import Button from "../../../../components/Button/Button";
-import { GiSpeaker } from "react-icons/gi";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import ChatScreen from "../../../../components/ChatScreen/ChatScreen";
 import VolumeControl from "../../../../components/VolumeControl/VolumeControl";
-import { toast } from "sonner";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../../components/ChatViewers/ChatViewers";
 import CardLayout from "../../../../layouts/CardLayout";
 import { useKeycloak } from "@react-keycloak/web";
+import { GiSpeaker } from "react-icons/gi";
+import { toast } from "sonner";
 
+import GuacamoleKeyboard from "./guacamole-keyboard.ts";
 interface IRemoteDesktop {
   connectionURLs: any;
 }
@@ -20,23 +18,111 @@ interface IRemoteDesktop {
 const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
-  const controller = useRef<any>(null);
   const candidate = useRef<any>(null);
   const client = useRef<any>(null);
   const channel = useRef<any>(null);
   const keyboard = useRef<any>(null);
   const overlay = useRef<any>(null);
-  const roomMembers = useRef<any>([]);
-  const [controllerState, setControllerState] = useState<any>(null);
-  const [roomMembersState, setRoomMembersState] = useState<any>([]);
-  const allResolutions = useRef<any>(null);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
   const [chatMessages, setChatMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("Chat");
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
   const { keycloak } = useKeycloak();
-  const [currentResolution, setCurrentResolution] = useState<any>(null);
+
+  const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
+    members: [],
+    controller: null,
+    currentResolution: null,
+    isMuted: true,
+  });
+
+  function handleReducer(state: any, action: any) {
+    switch (action.type) {
+      case "change/isMuted":
+        return {
+          ...state,
+          isMuted: action.payload,
+        };
+
+      case "member/list":
+        return {
+          ...state,
+          members: action.payload,
+        };
+      case "member/connected":
+        toast.success(`${action.payload?.displayname} has joined the room`);
+        return {
+          ...state,
+          members: [...state.members, action.payload],
+        };
+      case "member/disconnected":
+        toast.error(
+          `${
+            state.members.filter(
+              (member: any) => member.id === action.payload?.id
+            )[0]?.displayname
+          } has left the room`
+        );
+
+        return {
+          ...state,
+          members: state.members.filter(
+            (member: any) => member.id !== action.payload.id
+          ),
+        };
+
+      case "control/request":
+        if (state?.controller?.id !== action.payload?.id) {
+          toast.error(`
+          ${state?.controller?.displayname} has controls. However, we have sent him a notification that you want to take control
+          `);
+        }
+        break;
+
+      case "control/requesting":
+        if (state?.controller?.id !== action.payload?.id) {
+          toast.error(`
+          ${state?.controller?.displayname} has controls. However, we have sent him a notification that you want to take control
+          `);
+        }
+        break;
+
+      case "control/release":
+        toast.success(`
+          ${state.controller?.displayname} has released the controls
+          `);
+        return {
+          ...state,
+          controller: null,
+        };
+
+      case "control/locked":
+        toast.success(
+          `${
+            state.members.filter(
+              (member: any) => member.id === action.payload.id
+            )[0]?.displayname
+          } has taken control`
+        );
+
+        return {
+          ...state,
+          controller: state.members.filter(
+            (member: any) => member.id === action.payload.id
+          )[0],
+        };
+
+      case "screen/resolution":
+        return {
+          ...state,
+          currentResolution: action.payload,
+        };
+    }
+  }
+
+  useEffect(() => {
+    console.log(remoteDesktopReducer);
+  }, [remoteDesktopReducer]);
 
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
@@ -85,57 +171,36 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       }
 
       if (event === "screen/resolution") {
-        console.log("screen", payload);
-        if (
-          currentResolution?.width !== payload?.width ||
-          currentResolution?.height !== payload?.height
-        ) {
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-          setCurrentResolution(payload);
-        }
-      }
-
-      if (event === "screen/configurations") {
-        allResolutions.current = payload.configurations;
+        console.log(payload);
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
 
       if (event === "member/list") {
-        const { members } = payload;
-        roomMembers.current = members;
-        setRoomMembersState(members);
+        dispatcher({
+          type: event,
+          payload: payload.members,
+        });
       }
 
       if (event === "member/connected") {
-        toast.success(`${payload?.displayname} has joined the room`);
-
-        roomMembers.current = roomMembers?.current?.filter(
-          // eslint-disable-next-line array-callback-return
-          (roomMember: any) => {
-            if (roomMember.id !== payload?.id) {
-              return roomMember;
-            }
-          }
-        );
-
-        roomMembers.current = [...roomMembers.current, payload];
-
-        setRoomMembersState(roomMembers.current);
+        if (
+          keycloak?.tokenParsed?.preferred_username !== payload?.displayname
+        ) {
+          dispatcher({
+            type: event,
+            payload: payload,
+          });
+        }
       }
 
       if (event === "member/disconnected") {
-        toast.error(
-          `${
-            roomMembers.current?.filter(
-              (member: any) => member.id === payload?.id
-            )[0]?.displayname
-          } has left the room`
-        );
-
-        roomMembers.current = roomMembers.current?.filter(
-          (member: any) => member.id !== payload?.id
-        );
-
-        setRoomMembersState(roomMembers.current);
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
 
       if (event === "chat/message") {
@@ -143,49 +208,29 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       }
 
       if (event === "control/request") {
-        const { id } = payload;
-
-        if (controller.current?.id === id) {
-          toast.error(`
-          ${controller.current?.displayname} has controls. However, we have sent him a notification that you want to take control
-          `);
-        }
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
 
       if (event === "control/requesting") {
-        const { id } = payload;
-        if (controller.current?.id !== id) {
-          toast.success(
-            `${
-              roomMembers.current?.filter((member: any) => member.id === id)[0]
-                .displayname
-            }
-            is requesting control`
-          );
-        }
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
 
       if (event === "control/release") {
-        toast.success(
-          `${controller.current?.displayname} has released control`
-        );
-        controller.current = null;
-        setControllerState(controller.current);
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
-
       if (event === "control/locked") {
-        const { id } = payload;
-
-        roomMembers?.current?.map((roomMember: any) => {
-          if (roomMember.id === id) {
-            toast.success(`${roomMember?.displayname} has taken control`);
-
-            controller.current = roomMember;
-            setControllerState(controller.current);
-          }
-
-          // eslint-disable-next-line array-callback-return
-          return;
+        dispatcher({
+          type: event,
+          payload: payload,
         });
       }
 
@@ -198,10 +243,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     return () => {
       client.current.close();
     };
-  }, [
-    connectionURLs.remoteDesktopURL,
-    keycloak?.tokenParsed?.preferred_username,
-  ]);
+  }, []);
 
   // Control Events
   var buffer: ArrayBuffer;
@@ -245,7 +287,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       overlay.current!.focus();
 
       if (
-        controller.current?.displayname ===
+        remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
         navigator?.clipboard?.readText().then((text) => {
@@ -263,7 +305,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
     video.current?.addEventListener("mousemove", (key: any) => {
       if (
-        controller.current?.displayname ===
+        remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
         // 0x01;
@@ -280,7 +322,8 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           payload.setUint16(
             3,
             Math.round(
-              (Number(currentResolution?.width) / rect.width) *
+              (Number(remoteDesktopReducer?.currentResolution?.width) /
+                rect.width) *
                 (key.clientX - rect.left)
             ),
             true
@@ -288,7 +331,8 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           payload.setUint16(
             5,
             Math.round(
-              (Number(currentResolution?.height) / rect.height) *
+              (Number(remoteDesktopReducer?.currentResolution?.height) /
+                rect.height) *
                 (key.clientY - rect.top)
             ),
             true
@@ -296,8 +340,8 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           if (
             typeof buffer !== "undefined" &&
             channel.current.readyState === "open" &&
-            currentResolution?.width &&
-            currentResolution?.height &&
+            remoteDesktopReducer?.currentResolution?.width &&
+            remoteDesktopReducer?.currentResolution?.height &&
             rect?.top &&
             rect?.left &&
             key?.clientX &&
@@ -313,7 +357,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       // 0x01;
       key.preventDefault();
       if (
-        controller.current?.displayname ===
+        remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
         buffer = new ArrayBuffer(11);
@@ -333,7 +377,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     video.current?.addEventListener("mouseup", (key: any) => {
       // 0x01;
       if (
-        controller.current?.displayname ===
+        remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
         buffer = new ArrayBuffer(11);
@@ -353,7 +397,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     video.current?.addEventListener("wheel", (key: any) => {
       // 0x01;
       if (
-        controller.current?.displayname ===
+        remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
         buffer = new ArrayBuffer(7);
@@ -375,23 +419,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     video.current?.addEventListener("mouseleave", () => {
       enableBodyScroll(targetElement);
     });
-  }, [currentResolution]);
+  }, [remoteDesktopReducer]);
   // Control Events
-
-  function handleChangeResolution(e: any) {
-    client.current.send(
-      JSON.stringify({
-        event: "screen/set",
-        width: e.width,
-        height: e.height,
-        rate: e.rate,
-      })
-    );
-  }
 
   function handleControl() {
     if (
-      controller?.current?.displayname ===
+      remoteDesktopReducer?.controller?.displayname ===
       keycloak?.tokenParsed?.preferred_username
     ) {
       client.current.send(JSON.stringify({ event: "control/release" }));
@@ -406,7 +439,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   }
 
   function handleMute() {
-    setIsMuted(!isMuted);
+    dispatcher({
+      type: "change/isMuted",
+      payload: !remoteDesktopReducer?.isMuted,
+    });
   }
 
   function handleSendMessage() {
@@ -450,13 +486,13 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
               playsInline
               ref={video}
               autoPlay
-              muted={isMuted}
+              muted={remoteDesktopReducer?.isMuted}
               style={{
                 position: "relative",
                 backgroundColor: "#000",
               }}
             />
-            {isMuted && (
+            {remoteDesktopReducer?.isMuted && (
               <div
                 onClick={() => handleMute()}
                 className="absolute z-10 w-full h-full flex items-center justify-center top-0 bg-[#00000090] text-layer-light-50 cursor-pointer animate__animated animate__fadeIn"
@@ -478,58 +514,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             </button>
             {isControllerOpen && (
               <div className="w-full flex items-center justify-center rounded-t-lg gap-10 p-2 bg-layer-light-50">
-                <div>
-                  <InputSelect
-                    onChange={(e: any) => {
-                      handleChangeResolution({
-                        width: Number(e?.target?.value?.split("x")[0]),
-                        height: Number(e?.target?.value?.split("x")[1]),
-                        rate: Number(e?.target?.value?.split("x")[2]),
-                      });
-                    }}
-                    value={
-                      currentResolution?.width +
-                      "x" +
-                      currentResolution?.height +
-                      "x" +
-                      currentResolution?.rate
-                    }
-                  >
-                    <Fragment>
-                      {allResolutions.current &&
-                        Object.keys(allResolutions.current).map(
-                          (key: any, index: number) => {
-                            return (
-                              <option
-                                key={index}
-                                value={
-                                  allResolutions.current[key].width +
-                                  "x" +
-                                  allResolutions.current[key].height +
-                                  "x" +
-                                  Object.values(
-                                    allResolutions.current[key].rates
-                                  )[0]
-                                }
-                                defaultChecked={
-                                  allResolutions.current[key].width ===
-                                    currentResolution?.width &&
-                                  allResolutions.current[key].height ===
-                                    currentResolution?.height
-                                }
-                              >
-                                {allResolutions.current[key].width}x
-                                {allResolutions.current[key].height}
-                              </option>
-                            );
-                          }
-                        )}
-                    </Fragment>
-                  </InputSelect>
-                </div>
+                <div>1920x1080</div>
                 <div>
                   <VolumeControl
-                    isMuted={isMuted}
+                    isMuted={remoteDesktopReducer?.isMuted}
                     handleVolumeControl={handleVolumeControl}
                     handleMute={handleMute}
                   />
@@ -538,20 +526,20 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                   <Button
                     text={(() => {
                       if (
-                        controllerState?.displayname ===
+                        remoteDesktopReducer?.controller?.displayname ===
                         keycloak?.tokenParsed?.preferred_username
                       ) {
                         return "Release Control";
                       }
 
-                      if (controllerState?.displayname) {
+                      if (remoteDesktopReducer?.controller?.displayname) {
                         return "Request Control";
                       }
 
                       return "Took Control";
                     })()}
                     onClick={() => handleControl()}
-                    className="text-xs h-10 w-28"
+                    className="text-xs h-10 w-36"
                   />
                 </div>
               </div>
@@ -560,12 +548,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           <div className="absolute left-4 bottom-4 flex items-center gap-2 text-xs text-layer-light-100">
             <div
               className={`h-[8px] w-[8px] rounded ${
-                controllerState?.displayname
+                remoteDesktopReducer?.controller?.displayname
                   ? "bg-layer-primary-500"
                   : "bg-layer-secondary-400"
               }`}
             ></div>
-            <div>{controllerState?.displayname || "none"}</div>
+            <div>{remoteDesktopReducer?.controller?.displayname || "none"}</div>
           </div>
         </div>
         <div className="col-span-5 md:col-span-4 lg:col-span-3 2xl:col-span-2 flex flex-col">
@@ -606,13 +594,24 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                     handleOnChangeMessage={handleOnChangeMessage}
                     handleSendMessage={handleSendMessage}
                     chatMessages={chatMessages}
-                    members={roomMembersState}
+                    members={remoteDesktopReducer?.members}
                   />
                 );
               case "Viewers":
-                return <ChatViewers roomMembersState={roomMembersState} />;
+                return (
+                  <ChatViewers
+                    roomMembersState={remoteDesktopReducer?.members}
+                  />
+                );
             }
           })()}
+        </div>
+        <div
+          onClick={() => {
+            console.log(remoteDesktopReducer);
+          }}
+        >
+          aaaaaaaaaaaa
         </div>
       </div>
     </CardLayout>
