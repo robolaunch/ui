@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import InputText from "../InputText/InputText";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import { StreamContext } from "../../contexts/StreamContext";
@@ -26,10 +26,6 @@ export default function RemoteDesktopTabs(): ReactElement {
       name: "Viewers",
     },
   ];
-
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
 
   return (
     <div className="h-full flex flex-col justify-between">
@@ -104,20 +100,28 @@ export default function RemoteDesktopTabs(): ReactElement {
               {remoteDesktopReducer?.messages?.map(
                 (message: any, index: number) => {
                   return (
-                    <div className="grid grid-cols-6 gap-2 pb-2 animate__animated animate__fadeIn">
+                    <div
+                      key={index}
+                      className="grid grid-cols-6 gap-2 pb-2 animate__animated animate__fadeIn"
+                    >
                       <div className="col-span-1 flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
                         {remoteDesktopReducer?.members
                           ?.filter((member: any) => member.id === message.id)[0]
                           ?.displayname[0]?.toUpperCase()}
                       </div>
                       <div className="col-span-5 flex flex-col">
-                        <span className="text-sm font-semibold">
-                          {
-                            remoteDesktopReducer?.members?.filter(
-                              (member: any) => member.id === message.id
-                            )[0]?.displayname
-                          }
-                        </span>
+                        <div className="flex gap-3 items-center">
+                          <span className="text-sm font-semibold">
+                            {
+                              remoteDesktopReducer?.members?.filter(
+                                (member: any) => member.id === message.id
+                              )[0]?.displayname
+                            }
+                          </span>
+                          <span className="text-xs font-light">
+                            {message?.time}
+                          </span>
+                        </div>
                         <p className="text-xs break-words">
                           {message?.content}
                         </p>

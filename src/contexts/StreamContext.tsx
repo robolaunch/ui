@@ -3,7 +3,6 @@ import React, { useEffect, createContext, useRef, useReducer } from "react";
 import { toast } from "sonner";
 import GuacamoleKeyboard from "../tools/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import { useParams } from "react-router-dom";
 
 export const StreamContext: any = createContext<any>(null);
 
@@ -116,7 +115,19 @@ export default ({ connectionURLs, children }: IStreamContext) => {
       case "chat/message":
         return {
           ...state,
-          messages: [...state.messages, action.payload],
+          messages: [
+            ...state.messages,
+            {
+              id: action.payload.id,
+              content: action.payload.content,
+              time:
+                new Date().getHours() +
+                ":" +
+                new Date().getMinutes() +
+                ":" +
+                new Date().getSeconds(),
+            },
+          ],
         };
     }
   }
@@ -396,7 +407,6 @@ export default ({ connectionURLs, children }: IStreamContext) => {
           channel.current.readyState === "open"
         ) {
           channel.current!.send(buffer);
-          console.log("cancelled!");
         }
       }
     });
