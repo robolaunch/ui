@@ -1,16 +1,13 @@
 import React, { useRef, useEffect, useState, useReducer } from "react";
-import Button from "../../../../components/Button/Button";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import ChatScreen from "../../../../components/ChatScreen/ChatScreen";
-import VolumeControl from "../../../../components/VolumeControl/VolumeControl";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import ChatViewers from "../../../../components/ChatViewers/ChatViewers";
+import GuacamoleKeyboard from "./guacamole-keyboard.ts";
+import RemoteDesktopController from "../../../../components/RemoteDesktopController/RemoteDesktopController.tsx";
 import CardLayout from "../../../../layouts/CardLayout";
 import { useKeycloak } from "@react-keycloak/web";
 import { GiSpeaker } from "react-icons/gi";
 import { toast } from "sonner";
-
-import GuacamoleKeyboard from "./guacamole-keyboard.ts";
 interface IRemoteDesktop {
   connectionURLs: any;
 }
@@ -25,7 +22,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const overlay = useRef<any>(null);
   const [message, setMessage] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("Chat");
-  const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
   const { keycloak } = useKeycloak();
 
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
@@ -421,22 +417,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   }, [remoteDesktopReducer]);
   // Control Events
 
-  function handleControl() {
-    if (
-      remoteDesktopReducer?.controller?.displayname ===
-      keycloak?.tokenParsed?.preferred_username
-    ) {
-      client.current.send(JSON.stringify({ event: "control/release" }));
-      return;
-    }
-
-    client.current.send(JSON.stringify({ event: "control/request" }));
-  }
-
-  function handleVolumeControl(volume: number) {
-    video.current.volume = volume;
-  }
-
   function handleMute() {
     dispatcher({
       type: "change/isMuted",
@@ -457,10 +437,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
     setMessage(message);
   }
 
-  function handleIsControllerOpen() {
-    setIsControllerOpen(!isControllerOpen);
-  }
-
   const tabs = [
     {
       name: "Chat",
@@ -473,7 +449,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   return (
     <CardLayout>
       <div className="grid grid-cols-12">
-        <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900 min-h-[40rem]">
+        <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 relative flex justify-center  bg-layer-dark-900 min-h-[52rem]">
           <span
             className="relative outline-none appearance-none"
             ref={overlay}
@@ -500,53 +476,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
               </div>
             )}
           </span>
-          <div className="absolute flex flex-col items-center bottom-0 ">
-            <button
-              className="bg-layer-light-50 rounded-t-lg px-1"
-              onClick={() => handleIsControllerOpen()}
-            >
-              {isControllerOpen ? (
-                <IoIosArrowDown size={20} />
-              ) : (
-                <IoIosArrowUp size={20} />
-              )}
-            </button>
-            {isControllerOpen && (
-              <div className="w-full flex items-center justify-center rounded-t-lg gap-10 p-2 bg-layer-light-50">
-                <div>
-                  {remoteDesktopReducer?.currentResolution?.width}x
-                  {remoteDesktopReducer?.currentResolution?.height}
-                </div>
-                <div>
-                  <VolumeControl
-                    isMuted={remoteDesktopReducer?.isMuted}
-                    handleVolumeControl={handleVolumeControl}
-                    handleMute={handleMute}
-                  />
-                </div>
-                <div>
-                  <Button
-                    text={(() => {
-                      if (
-                        remoteDesktopReducer?.controller?.displayname ===
-                        keycloak?.tokenParsed?.preferred_username
-                      ) {
-                        return "Release Control";
-                      }
-
-                      if (remoteDesktopReducer?.controller?.displayname) {
-                        return "Request Control";
-                      }
-
-                      return "Took Control";
-                    })()}
-                    onClick={() => handleControl()}
-                    className="text-xs h-10 w-36"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+          <RemoteDesktopController
+            remoteDesktopReducer={remoteDesktopReducer}
+            client={client}
+            video={video}
+            handleMute={handleMute}
+          />
           <div className="absolute left-4 bottom-4 flex items-center gap-2 text-xs text-layer-light-100">
             <div
               className={`h-[8px] w-[8px] rounded ${
