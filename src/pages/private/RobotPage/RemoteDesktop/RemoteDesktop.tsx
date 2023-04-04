@@ -23,7 +23,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   const channel = useRef<any>(null);
   const keyboard = useRef<any>(null);
   const overlay = useRef<any>(null);
-  const [chatMessages, setChatMessages] = useState<any>([]);
   const [message, setMessage] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("Chat");
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
@@ -31,6 +30,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
 
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
     members: [],
+    messages: [],
     controller: null,
     currentResolution: null,
     isMuted: true,
@@ -43,7 +43,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           ...state,
           isMuted: action.payload,
         };
-
       case "member/list":
         return {
           ...state,
@@ -117,6 +116,12 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           ...state,
           currentResolution: action.payload,
         };
+
+      case "chat/message":
+        return {
+          ...state,
+          messages: [...state.messages, action.payload],
+        };
     }
   }
 
@@ -171,7 +176,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       }
 
       if (event === "screen/resolution") {
-        console.log(payload);
         dispatcher({
           type: event,
           payload: payload,
@@ -204,7 +208,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
       }
 
       if (event === "chat/message") {
-        setChatMessages((prev: any) => [...prev, payload]);
+        dispatcher({
+          type: event,
+          payload: payload,
+        });
       }
 
       if (event === "control/request") {
@@ -246,9 +253,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
   }, []);
 
   // Control Events
-  var buffer: ArrayBuffer;
-  var payload: DataView;
+
   useEffect(() => {
+    var buffer: ArrayBuffer;
+    var payload: DataView;
     keyboard.current = GuacamoleKeyboard();
     const targetElement: any = document.querySelector("body");
 
@@ -339,13 +347,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
           );
           if (
             typeof buffer !== "undefined" &&
-            channel.current.readyState === "open" &&
-            remoteDesktopReducer?.currentResolution?.width &&
-            remoteDesktopReducer?.currentResolution?.height &&
-            rect?.top &&
-            rect?.left &&
-            key?.clientX &&
-            key?.clientY
+            channel.current.readyState === "open"
           ) {
             channel.current!.send(buffer);
           }
@@ -365,10 +367,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
         payload.setUint8(0, 0x03);
         payload.setUint16(1, 8, true);
         payload.setBigUint64(3, BigInt(key.button + 1), true);
-        if (
-          typeof buffer !== "undefined" &&
-          channel.current.readyState === "open"
-        ) {
+        if (channel.current.readyState === "open") {
           channel.current!.send(buffer);
         }
       }
@@ -514,7 +513,10 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
             </button>
             {isControllerOpen && (
               <div className="w-full flex items-center justify-center rounded-t-lg gap-10 p-2 bg-layer-light-50">
-                <div>1920x1080</div>
+                <div>
+                  {remoteDesktopReducer?.currentResolution?.width}x
+                  {remoteDesktopReducer?.currentResolution?.height}
+                </div>
                 <div>
                   <VolumeControl
                     isMuted={remoteDesktopReducer?.isMuted}
@@ -593,7 +595,7 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                     inputValue={message}
                     handleOnChangeMessage={handleOnChangeMessage}
                     handleSendMessage={handleSendMessage}
-                    chatMessages={chatMessages}
+                    chatMessages={remoteDesktopReducer?.messages}
                     members={remoteDesktopReducer?.members}
                   />
                 );
@@ -605,13 +607,6 @@ const RemoteDesktop = ({ connectionURLs }: IRemoteDesktop) => {
                 );
             }
           })()}
-        </div>
-        <div
-          onClick={() => {
-            console.log(remoteDesktopReducer);
-          }}
-        >
-          aaaaaaaaaaaa
         </div>
       </div>
     </CardLayout>

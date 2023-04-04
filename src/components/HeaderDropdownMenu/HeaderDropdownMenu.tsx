@@ -19,13 +19,17 @@ export default function HeaderDropdownMenu(): ReactElement {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className="flex items-center justify-center rounded h-10 w-10 font-semibold bg-layer-primary-100 border border-layer-primary-200 text-layer-primary-700 cursor-pointer uppercase"
+        className="flex items-center justify-center cursor-pointer"
       >
-        {keycloak?.tokenParsed?.given_name[0]}
+        <Gravatar
+          email={keycloak?.tokenParsed?.email}
+          className="h-11 w-11 rounded"
+          default="mp"
+        />
       </div>
       {isOpen && (
         <ul
-          className="flex flex-col gap-7 w-60 absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
+          className="flex flex-col gap-7 w-72 absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
           ref={ref}
         >
           <Link
@@ -34,7 +38,7 @@ export default function HeaderDropdownMenu(): ReactElement {
           >
             <Gravatar
               email={keycloak?.tokenParsed?.email}
-              className="h-14 w-14"
+              className="h-14 w-14 rounded"
               default="mp"
             />
             <div className="flex flex-col">

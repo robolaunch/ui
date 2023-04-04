@@ -942,6 +942,10 @@ video {
   width: 8rem;
 }
 
+.w-36{
+  width: 9rem;
+}
+
 .w-4{
   width: 1rem;
 }
@@ -982,8 +986,16 @@ video {
   width: 100%;
 }
 
-.w-36{
-  width: 9rem;
+.w-11{
+  width: 2.75rem;
+}
+
+.w-72{
+  width: 18rem;
+}
+
+.w-44{
+  width: 11rem;
 }
 
 .min-w-\[8rem\]{
