@@ -9,7 +9,6 @@ import RosResourceUsageWidget from "../components/RosResourceUsageWidget/RosReso
 import RosEmergencyControlWidget from "../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
 import RosBatteryWidget from "../components/RosBatteryWidget/RosBatteryWidget";
 import RosJoystickWidget from "../components/RosJoystickWidget/RosJoystickWidget";
-import RosRemoteDesktopWidget from "../components/RosRemoteDesktopWidget/RosRemoteDesktopWidget";
 
 interface IGridLayout {
   gridLayout: any;
@@ -111,13 +110,6 @@ export function GridLayout({
                   id={index}
                   ros={ros}
                   handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosRemoteDesktopWidget") > 0 && (
-                <RosRemoteDesktopWidget
-                  id={index}
-                  handleRemoveWidget={handleRemoveWidget}
-                  connectionURLs={connectionURLs}
                 />
               )}
             </div>

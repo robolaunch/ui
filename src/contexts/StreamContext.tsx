@@ -3,6 +3,7 @@ import React, { useEffect, createContext, useRef, useReducer } from "react";
 import { toast } from "sonner";
 import GuacamoleKeyboard from "../tools/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { useParams } from "react-router-dom";
 
 export const StreamContext: any = createContext<any>(null);
 
@@ -20,6 +21,9 @@ export default ({ connectionURLs, children }: IStreamContext) => {
   const channel = useRef<any>(null);
   const keyboard = useRef<any>(null);
   const overlay = useRef<any>(null);
+
+  const url = useParams();
+  console.log(url);
 
   const { keycloak } = useKeycloak();
 

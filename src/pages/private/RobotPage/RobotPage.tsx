@@ -128,15 +128,16 @@ export default function RobotPage(): ReactElement {
                   />
                 );
               case "Remote Desktop":
-                return (
-                  <StreamContext connectionURLs={connectionURLs}>
-                    <RemoteDesktop />
-                  </StreamContext>
-                );
+                return <RemoteDesktop connectionURLs={connectionURLs} />;
               case "Settings":
                 return <div>Settings</div>;
               case "Development Suite":
-                return <DevelopmentSuite connectionURLs={connectionURLs} />;
+                return (
+                  <StreamContext connectionURLs={connectionURLs}>
+                    <DevelopmentSuite connectionURLs={connectionURLs} />
+                  </StreamContext>
+                );
+
               case "Loading":
                 return (
                   <div>

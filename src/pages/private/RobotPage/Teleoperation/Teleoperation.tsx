@@ -1,14 +1,6 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { GridStack } from "gridstack";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../../../hooks/redux";
-import { RootState } from "../../../../resources/store";
 import { FloatMenu } from "../../../../components/FloatMenu/FloatMenu";
 import { GridLayout } from "../../../../layouts/GridLayout";
 import "gridstack/dist/gridstack.min.css";
@@ -18,7 +10,8 @@ import TeleoperationControlBar from "../../../../components/TeleoperationControl
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { handleSaveLayout } from "../../../../helpers/gridStack";
 import CardLayout from "../../../../layouts/CardLayout";
-import { useKeycloak } from "@react-keycloak/web";
+import RemoteDesktopScene from "../../../../components/RemoteDesktopScene/RemoteDesktopScene";
+import StreamContext from "../../../../contexts/StreamContext";
 
 interface ITeleoperation {
   ros: any;
@@ -43,12 +36,6 @@ export default function Teleoperation({
     useState<any>(undefined);
   const [selectableTopic, setSelectableTopic] = useState<any>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
-  const video = useRef<any>(null);
-  const peer = useRef<any>(null);
-  const client = useRef<any>(null);
-  const candidate = useRef<any>(null);
-  const channel = useRef<any>(null);
-  const { keycloak } = useKeycloak();
   const handleFullScreen = useFullScreenHandle();
 
   // GRID
@@ -136,77 +123,6 @@ export default function Teleoperation({
     };
   }, [isRemoteDesktopStream, selectedTopic, ros]);
 
-  // webRTC Stream
-  useEffect(() => {
-    function handleChangeResolution(e: any) {
-      client.current.send(
-        JSON.stringify({
-          event: "screen/set",
-          width: e.width,
-          height: e.height,
-          rate: 60,
-        })
-      );
-    }
-
-    if (isRemoteDesktopStream) {
-      const onTrack = (event: RTCTrackEvent) => {
-        if (event.track.kind === "video") {
-          video.current.srcObject = event.streams[0];
-        }
-        handleChangeResolution({
-          width: 1920,
-          height: 1080,
-        });
-      };
-
-      client.current = new WebSocket(connectionURLs.remoteDesktopURL);
-
-      client.current.onmessage = (e: any) => {
-        const { event, ...payload } = JSON.parse(e.data);
-
-        if (event === "signal/candidate") {
-          const newPayload = JSON.parse(payload.data);
-          if (peer.current) {
-            peer.current.addIceCandidate(newPayload);
-          } else {
-            candidate.current = newPayload;
-          }
-        }
-
-        if (event === "signal/provide") {
-          const { sdp } = payload;
-          peer.current = new RTCPeerConnection();
-          // @ts-ignore
-          peer.current.ontrack = onTrack.bind(this);
-
-          channel.current = peer.current.createDataChannel("data");
-          peer.current.addIceCandidate(candidate.current);
-          peer.current.setRemoteDescription({ type: "offer", sdp });
-
-          peer.current.createAnswer().then((d: any) => {
-            peer.current!.setLocalDescription(d);
-            client.current!.send(
-              JSON.stringify({
-                event: "signal/answer",
-                sdp: d.sdp,
-                displayname: keycloak?.tokenParsed?.preferred_username,
-              })
-            );
-          });
-        }
-      };
-    } else {
-      client?.current?.close();
-    }
-
-    return () => {
-      client?.current?.close();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRemoteDesktopStream]);
-  // webRTC Stream
-
   useEffect(() => {
     if (localStorage.getItem("layout_" + localStoragePath)) {
       const { selectedTopic, isRemoteDesktopStream } = JSON.parse(
@@ -251,22 +167,11 @@ export default function Teleoperation({
               connectionURLs={connectionURLs}
             />
             {isRemoteDesktopStream && (
-              <div className="absolute inset-0 -z-10">
-                <video
-                  onContextMenu={(e) => e.preventDefault()}
-                  className="absolute top-0 bottom-0"
-                  playsInline
-                  ref={video}
-                  autoPlay
-                  muted={true}
-                  style={{
-                    position: "relative",
-                    backgroundColor: "#000",
-                    width: "100%",
-                    height: "100%",
-                  }}
-                />
-              </div>
+              <StreamContext connectionURLs={connectionURLs}>
+                <div className="absolute inset-0 -z-10">
+                  <RemoteDesktopScene isControllerActive={false} />
+                </div>
+              </StreamContext>
             )}
           </div>
 

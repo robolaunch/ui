@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import SampleSplitter from "./Splitter";
 import { useResizable } from "react-resizable-layout";
-import Stream from "./Stream";
 import { useComponentSize } from "react-use-size";
 import Button from "../../../../components/Button/Button";
 import { Joystick } from "react-joystick-component";
 import CardLayout from "../../../../layouts/CardLayout";
+import RemoteDesktopScene from "../../../../components/RemoteDesktopScene/RemoteDesktopScene";
 
 interface IDevelopmentSuiteProps {
   connectionURLs: any;
@@ -71,8 +71,8 @@ export default function DevelopmentSuite({
             style={{ width: "100%" }}
           >
             <div className={"flex grow"}>
-              <div className={"grow bg-darker contents text-layer-dark-600"}>
-                <Stream connectionURLs={connectionURLs} />
+              <div className={"grow bg-darker text-layer-dark-600"}>
+                <RemoteDesktopScene isControllerActive={true} />
               </div>
             </div>
             <SampleSplitter

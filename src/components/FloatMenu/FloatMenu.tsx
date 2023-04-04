@@ -12,8 +12,6 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoMdCodeWorking } from "react-icons/io";
 import { GoGraph } from "react-icons/go";
 import { BiErrorCircle } from "react-icons/bi";
-import { MdOutlineScreenShare } from "react-icons/md";
-import { toast } from "sonner";
 
 interface IFloatMenu {
   grid: any;
@@ -246,31 +244,6 @@ export function FloatMenu({
           }
         >
           <BsJoystick size={22} className="text-layer-light-800" />
-        </CircleMenuItem>
-
-        <CircleMenuItem
-          tooltip="Remote Desktop"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
-          onClick={() => {
-            if (type !== "Teleoperation") {
-              handleAddWidget({
-                grid,
-                widget: "RosRemoteDesktopWidget",
-                type,
-                ros,
-                topicList,
-                localStoragePath,
-                handleRemoveWidget,
-                handleForceUpdate,
-              });
-            } else {
-              toast.error(
-                "Remote Desktop is not available in Teleoperation mode"
-              );
-            }
-          }}
-        >
-          <MdOutlineScreenShare size={22} className="text-layer-light-800" />
         </CircleMenuItem>
       </CircleMenu>
     </div>

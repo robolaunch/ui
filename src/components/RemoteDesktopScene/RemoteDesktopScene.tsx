@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { GiSpeaker } from "react-icons/gi";
 import RemoteDesktopController from "../RemoteDesktopController/RemoteDesktopController";
 import { StreamContext } from "../../contexts/StreamContext";
@@ -14,7 +14,7 @@ export default function RemoteDesktopScene({
     useContext(StreamContext);
 
   return (
-    <Fragment>
+    <div className="relative w-full h-full flex justify-center">
       <span
         className="relative outline-none appearance-none"
         ref={overlay}
@@ -59,6 +59,6 @@ export default function RemoteDesktopScene({
           handleMute={handleMute}
         />
       )}
-    </Fragment>
+    </div>
   );
 }
