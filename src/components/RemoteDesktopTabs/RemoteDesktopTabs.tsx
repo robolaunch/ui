@@ -4,6 +4,8 @@ import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import { StreamContext } from "../../contexts/StreamContext";
 import Button from "../Button/Button";
 import { MdStopScreenShare } from "react-icons/md";
+import { css } from "@emotion/css";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 export default function RemoteDesktopTabs(): ReactElement {
   const [message, setMessage] = useState<string>("");
@@ -26,6 +28,10 @@ export default function RemoteDesktopTabs(): ReactElement {
       name: "Viewers",
     },
   ];
+
+  const cssScrollBottom = css({
+    height: height - 88,
+  });
 
   return (
     <div className="h-full flex flex-col justify-between">
@@ -92,44 +98,48 @@ export default function RemoteDesktopTabs(): ReactElement {
         ) : (
           <div className="h-full flex flex-col justify-between p-2">
             <div
-              className="overflow-y-auto"
+              className="overflow-y-hidden"
               style={{
                 height: `${height - 88}px`,
               }}
             >
-              {remoteDesktopReducer?.messages?.map(
-                (message: any, index: number) => {
-                  return (
-                    <div
-                      key={index}
-                      className="grid grid-cols-6 gap-2 pb-2 animate__animated animate__fadeIn"
-                    >
-                      <div className="col-span-1 flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
-                        {remoteDesktopReducer?.members
-                          ?.filter((member: any) => member.id === message.id)[0]
-                          ?.displayname[0]?.toUpperCase()}
-                      </div>
-                      <div className="col-span-5 flex flex-col">
-                        <div className="flex gap-3 items-center">
-                          <span className="text-sm font-semibold">
-                            {
-                              remoteDesktopReducer?.members?.filter(
-                                (member: any) => member.id === message.id
-                              )[0]?.displayname
-                            }
-                          </span>
-                          <span className="text-xs font-light">
-                            {message?.time}
-                          </span>
+              <ScrollToBottom className={cssScrollBottom}>
+                {remoteDesktopReducer?.messages?.map(
+                  (message: any, index: number) => {
+                    return (
+                      <div
+                        key={index}
+                        className="grid grid-cols-6 gap-2 pb-2 animate__animated animate__fadeIn"
+                      >
+                        <div className="col-span-1 flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
+                          {remoteDesktopReducer?.members
+                            ?.filter(
+                              (member: any) => member.id === message.id
+                            )[0]
+                            ?.displayname[0]?.toUpperCase()}
                         </div>
-                        <p className="text-xs break-words">
-                          {message?.content}
-                        </p>
+                        <div className="col-span-5 flex flex-col">
+                          <div className="flex gap-3 items-center">
+                            <span className="text-sm font-semibold">
+                              {
+                                remoteDesktopReducer?.members?.filter(
+                                  (member: any) => member.id === message.id
+                                )[0]?.displayname
+                              }
+                            </span>
+                            <span className="text-xs font-light">
+                              {message?.time}
+                            </span>
+                          </div>
+                          <p className="text-xs break-words">
+                            {message?.content}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  );
-                }
-              )}
+                    );
+                  }
+                )}
+              </ScrollToBottom>
             </div>
 
             <InputText
