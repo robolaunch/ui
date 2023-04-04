@@ -68,7 +68,9 @@ export default function RobotHeader({
             <span className="text-lg font-medium">{url?.robotName}</span>
             <span className="flex gap-2 items-center">
               <AiOutlineTeam size={16} />
-              <span className="text-xs font-light">{url?.teamName}</span>
+              <span className="text-xs font-light">
+                {url?.organizationName} Organization
+              </span>
             </span>
             <span className="flex gap-2 items-center">
               <IoLocationOutline size={16} />

@@ -1,28 +1,16 @@
 import React, { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import PublicLayout from "../layouts/PublicLayout";
-import LoginPage from "../pages/public/LoginPage/LoginPage";
-import RegistrationPage from "../pages/public/RegistrationPage/RegistrationPage";
 import { PrivateLayout } from "../layouts/PrivateLayout";
-import OrganizationDashboardPage from "../pages/private/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
-import ForgotPasswordPage from "../pages/public/ForgotPasswordPage/ForgotPassword";
-import RobotPage from "../pages/private/RobotPage/RobotPage";
-import RoboticsCloudDashboardPage from "../pages/private/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
-import FleetDashboardPage from "../pages/private/Dashboards/FleetDashboardPage/FleetDashboardPage";
-import MainDashboardPage from "../pages/private/Dashboards/MainDashboardPage/MainDashboardPage";
-import UserRoleManagement from "../pages/private/URM/UserRoleManagementLayout";
+import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
+import RobotPage from "../pages/RobotPage/RobotPage";
+import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
+import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
+import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
+import UserRoleManagement from "../pages/URM/UserRoleManagementLayout";
 
 export default function AppRoutes(): ReactElement {
   return (
     <Routes>
-      {/* Public Pages */}
-      <Route element={<PublicLayout />}>
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      </Route>
-      {/* Public Pages */}
-
       <Route element={<PrivateLayout />}>
         {/* URM Pages */}
         <Route

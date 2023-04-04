@@ -22,9 +22,6 @@ export default ({ connectionURLs, children }: IStreamContext) => {
   const keyboard = useRef<any>(null);
   const overlay = useRef<any>(null);
 
-  const url = useParams();
-  console.log(url);
-
   const { keycloak } = useKeycloak();
 
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
@@ -407,7 +404,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
     video.current?.addEventListener("mouseleave", () => {
       enableBodyScroll(targetElement);
     });
-  }, [remoteDesktopReducer]);
+  }, [remoteDesktopReducer?.controller]);
 
   function handleMute() {
     dispatcher({
