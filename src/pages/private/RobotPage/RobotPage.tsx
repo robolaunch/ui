@@ -10,6 +10,7 @@ import Overview from "./Overview/Overview";
 import TaskManagement from "./TaskManagement/TaskManagement";
 import Workspaces from "./Workspaces/Workspaces";
 import K8SResources from "./K8SResources/K8SResources";
+import StreamContext from "../../../contexts/StreamContext";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -22,7 +23,7 @@ export default function RobotPage(): ReactElement {
     // rosURL: "ws://172.16.44.200:31549",
     // remoteDesktopURL: "ws://172.16.44.200:32580/vdi/ws?password=admin",
     // remoteDesktopURL: "ws://172.16.44.170:8080/vdi/ws?password=admin",
-    // remoteDesktopURL: "ws://18.194.41.119:32731/vdi/ws?password=admin",
+    // remoteDesktopURL: "ws://18.194.41.119:30229/vdi/ws?password=admin",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
 
     ideURL: "http://172.16.44.200:31512",
@@ -127,7 +128,11 @@ export default function RobotPage(): ReactElement {
                   />
                 );
               case "Remote Desktop":
-                return <RemoteDesktop connectionURLs={connectionURLs} />;
+                return (
+                  <StreamContext connectionURLs={connectionURLs}>
+                    <RemoteDesktop />
+                  </StreamContext>
+                );
               case "Settings":
                 return <div>Settings</div>;
               case "Development Suite":

@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import InputSelect from "../../../../components/InputSelect/InputSelect";
 // @ts-ignore
-import GuacamoleKeyboard from "../RemoteDesktop/guacamole-keyboard.ts";
+import GuacamoleKeyboard from "../../../../tools/GuacamoleKeyboard/guacamole-keyboard.ts";
 import Button from "../../../../components/Button/Button";
 import { GiSpeaker } from "react-icons/gi";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
