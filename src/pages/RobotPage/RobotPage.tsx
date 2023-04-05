@@ -134,7 +134,10 @@ export default function RobotPage(): ReactElement {
               case "Development Suite":
                 return (
                   <StreamContext connectionURLs={connectionURLs}>
-                    <DevelopmentSuite connectionURLs={connectionURLs} />
+                    <DevelopmentSuite
+                      ros={ros}
+                      connectionURLs={connectionURLs}
+                    />
                   </StreamContext>
                 );
 

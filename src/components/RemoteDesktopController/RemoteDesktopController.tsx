@@ -3,12 +3,14 @@ import React, { ReactElement, useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import Button from "../Button/Button";
+import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
   client: any;
   video: any;
   handleMute: any;
+  handleFullScreen: any;
 }
 
 export default function RemoteDesktopController({
@@ -16,6 +18,7 @@ export default function RemoteDesktopController({
   client,
   video,
   handleMute,
+  handleFullScreen,
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
 
@@ -54,11 +57,22 @@ export default function RemoteDesktopController({
         )}
       </button>
       {isControllerOpen && (
-        <div className="w-full flex items-center justify-center rounded-t-lg gap-10 p-2 bg-layer-light-50">
-          <div>
-            {remoteDesktopReducer?.currentResolution?.width}x
-            {remoteDesktopReducer?.currentResolution?.height}
-          </div>
+        <div className="w-full flex items-center justify-center rounded-t-lg gap-6 px-4 py-2 bg-layer-light-50">
+          {handleFullScreen.active ? (
+            <button onClick={handleFullScreen.exit}>
+              <BsFullscreenExit
+                size={24}
+                className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+              />
+            </button>
+          ) : (
+            <button onClick={handleFullScreen.enter}>
+              <BsFullscreen
+                size={24}
+                className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+              />
+            </button>
+          )}
           <div>
             <VolumeControl
               isMuted={remoteDesktopReducer?.isMuted}
@@ -83,7 +97,7 @@ export default function RemoteDesktopController({
                 return "Took Control";
               })()}
               onClick={() => handleControl()}
-              className="text-xs h-10 w-36"
+              className="text-xs h-10 !w-40"
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
 import { BsBatteryFull } from "react-icons/bs";
 import ReactApexChart from "react-apexcharts";
@@ -17,6 +17,10 @@ export default function RosBatteryWidget({
 }: IRosBatteryWidget): ReactElement {
   const { ref, height, width } = useComponentSize();
 
+  useEffect(() => {
+    console.log(height, width);
+  }, [height, width]);
+
   return (
     <RosWidgetLayout
       handleRemoveWidget={handleRemoveWidget}
@@ -25,10 +29,10 @@ export default function RosBatteryWidget({
       icon={<BsBatteryFull size={22} className="text-layer-light-400" />}
       title="Battery"
     >
-      <div className="relative h-full w-full">
+      <div ref={ref} className="relative h-full w-full">
         <div className="absolute inset-0">
-          <div className="grid grid-cols-2 h-full">
-            <div ref={ref} className="col-span-1">
+          <div className="grid grid-cols-2 ">
+            <div className="col-span-1">
               <ReactApexChart
                 series={[75]}
                 options={{
@@ -107,23 +111,23 @@ export default function RosBatteryWidget({
                   labels: [""],
                 }}
                 type="radialBar"
-                height={height}
+                height={height + 20}
               />
             </div>
-            <div className="col-span-1 flex flex-col items-center justify-center gap-4 pb-8 font-medium">
+            <div className="col-span-1 flex flex-col items-center justify-center gap-4  font-medium">
               <div
                 className="flex flex-col text-center bg-layer-light-100 py-2 rounded-lg gap-1"
-                style={{ width: width / 1.5 }}
+                style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">37.2 V</span>
-                <span className="text-xs ">Voltage</span>
+                {height > 100 && <span className="text-xs ">Voltage</span>}
               </div>
               <div
                 className="flex flex-col text-center bg-layer-light-100 py-2 rounded-lg gap-1 "
-                style={{ width: width / 1.5 }}
+                style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">5.2 V</span>
-                <span className="text-xs ">Ampere</span>
+                {height > 100 && <span className="text-xs ">Ampere</span>}
               </div>
             </div>
           </div>

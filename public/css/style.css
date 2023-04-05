@@ -729,6 +729,10 @@ video {
   float: right;
 }
 
+.m-2{
+  margin: 0.5rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -892,6 +896,10 @@ video {
   width: 7rem !important;
 }
 
+.\!w-40{
+  width: 10rem !important;
+}
+
 .\!w-44{
   width: 11rem !important;
 }
@@ -948,10 +956,6 @@ video {
 
 .w-32{
   width: 8rem;
-}
-
-.w-36{
-  width: 9rem;
 }
 
 .w-4{
@@ -1412,6 +1416,11 @@ video {
 
 .bg-transparent{
   background-color: transparent;
+}
+
+.bg-slate-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
 .\!p-4{
@@ -2230,6 +2239,18 @@ td{
     grid-column: span 9 / span 9;
   }
 
+  .lg\:col-span-4{
+    grid-column: span 4 / span 4;
+  }
+
+  .lg\:col-span-8{
+    grid-column: span 8 / span 8;
+  }
+
+  .lg\:flex{
+    display: flex;
+  }
+
   .lg\:grid-cols-12{
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
@@ -2252,6 +2273,18 @@ td{
     grid-column: span 8 / span 8;
   }
 
+  .xl\:col-span-3{
+    grid-column: span 3 / span 3;
+  }
+
+  .xl\:col-span-9{
+    grid-column: span 9 / span 9;
+  }
+
+  .xl\:flex{
+    display: flex;
+  }
+
   .xl\:flex-col{
     flex-direction: column;
   }
@@ -2272,6 +2305,10 @@ td{
 
   .\32xl\:col-span-9{
     grid-column: span 9 / span 9;
+  }
+
+  .\32xl\:flex{
+    display: flex;
   }
 
   .\32xl\:flex-row{

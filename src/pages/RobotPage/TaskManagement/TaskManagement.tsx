@@ -20,7 +20,8 @@ import { IoPauseCircleOutline } from "react-icons/io5";
 import { EditText } from "react-edit-text";
 import randomstring from "randomstring";
 import "react-edit-text/dist/index.css";
-
+import { saveAs } from "file-saver";
+import Moveable from "react-moveable";
 interface ITaskManagement {
   ros: any;
 }
@@ -74,7 +75,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
             x: mouseCoordinates?.x,
             y: mouseCoordinates?.y,
           },
-          icon: handleMissionIcon(taskType),
+          // icon: handleMissionIcon(taskType),
         });
 
         return temp;
@@ -115,7 +116,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     },
   ];
 
-  function handleMissionIcon(type: string) {
+  function handleWaypointIcon(type: string) {
     switch (type) {
       case "go":
         return <CiMapPin size={20} />;
@@ -164,6 +165,10 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    console.log(missions);
+  }, [missions]);
+
   function handleStartWaypoint(data: any) {
     let x =
       (rosMapDetails?.x / mouseRef?.current?.clientWidth) * mouse?.x! -
@@ -194,12 +199,32 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
     });
   }
 
+  function handleExportJSON() {
+    var blob = new Blob([JSON.stringify(missions)], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob, `missions.json`);
+  }
+
+  function handleImportJSON(e: any) {
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    fileReader.onload = (e) => {
+      setMissions(JSON.parse(e.target?.result as string));
+    };
+  }
+
   return (
     <div className="grid grid-cols-12 gap-6 h-[42rem]">
       <CardLayout className="col-span-12 lg:col-span-5 xl:col-span-4 2xl:col-span-3 !p-4">
         <Fragment>
           <div className="flex flex-col gap-2">
-            <div onClick={() => setIsCostMap(!isCostMap)}>button</div>
+            <div className="flex gap-2">
+              <div onClick={() => setIsCostMap(!isCostMap)}>cosmap</div>
+              <div onClick={() => handleExportJSON()}>export</div>
+              <input type="file" onChange={(e: any) => handleImportJSON(e)} />
+            </div>
+
             {missions.map((mission: any, missionIndex: number) => {
               return (
                 <Accordion
@@ -281,7 +306,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                           <div className="flex justify-between items-center p-2 border border-layer-light-100 rounded-lg">
                             <div className="flex items-center ">
                               <div className="flex items-center justify-center p-2">
-                                {waypoint?.icon}
+                                {handleWaypointIcon(waypoint?.taskType)}
                               </div>
                               <div className="text-sm flex items-center gap-2">
                                 <EditText
@@ -459,7 +484,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
               {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
                 return (
                   <div
-                    className="absolute inset-0 flex flex-col"
+                    className="absolute inset-0 flex flex-col z-40"
                     style={{
                       top:
                         (mouseRef?.current?.clientHeight / rosMapDetails?.y) *
@@ -471,7 +496,7 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                         12,
                     }}
                   >
-                    {waypoint?.icon}
+                    {handleWaypointIcon(waypoint?.taskType)}
                     <span className="text-layer-dark-100 text-[0.64rem] -ml-4">
                       {waypoint?.name}
                     </span>

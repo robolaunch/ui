@@ -14,10 +14,10 @@ export default function RemoteDesktop({
     <CardLayout>
       <StreamContext connectionURLs={connectionURLs}>
         <div className="grid grid-cols-12">
-          <div className="col-span-7 md:col-span-8 lg:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
+          <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
             <RemoteDesktopScene isControllerActive={true} />
           </div>
-          <div className="col-span-5 md:col-span-4 lg:col-span-3 2xl:col-span-2 flex flex-col">
+          <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
             <RemoteDesktopTabs />
           </div>
         </div>

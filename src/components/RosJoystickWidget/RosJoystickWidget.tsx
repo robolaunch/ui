@@ -70,7 +70,7 @@ export default function RosJoystickWidget({
           }}
           baseColor="#e0f1fe"
           stickColor="#0ca0eb"
-        ></Joystick>
+        />
       </div>
     </RosWidgetLayout>
   );
