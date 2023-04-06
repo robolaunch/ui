@@ -11,6 +11,7 @@ import TaskManagement from "./TaskManagement/TaskManagement";
 import Workspaces from "./Workspaces/Workspaces";
 import K8SResources from "./K8SResources/K8SResources";
 import StreamContext from "../../contexts/StreamContext";
+import Task from "./Task/Task";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -140,6 +141,9 @@ export default function RobotPage(): ReactElement {
                     />
                   </StreamContext>
                 );
+
+              case "Task":
+                return <Task ros={ros} />;
 
               case "Loading":
                 return (

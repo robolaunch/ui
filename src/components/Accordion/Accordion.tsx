@@ -1,34 +1,26 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import Collapsible from "react-collapsible";
 import { SlArrowDown, SlArrowRight } from "react-icons/sl";
-import { toast } from "sonner";
 
 interface IAccordion {
   id: number;
   children: ReactElement;
   header?: ReactElement | string;
-  activeMission?: number;
-  setActiveMission?: (id: number) => void;
+  isOpen?: number;
+  setIsOpen?: (id: number) => void;
 }
 
 export default function Accordion({
   id,
   children,
   header,
-  activeMission,
-  setActiveMission,
+  isOpen,
+  setIsOpen,
 }: IAccordion): ReactElement {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setActiveMission?.(isOpen ? id : -1);
-    // eslint-disable-next-line
-  }, [isOpen]);
-
   return (
     <Collapsible
       triggerDisabled
-      open={isOpen}
+      open={isOpen === id ? true : false}
       className="bg-layer-light-50 border border-layer-light-100 rounded shadow"
       openedClassName="bg-layer-light-50 rounded shadow"
       trigger={
@@ -36,15 +28,13 @@ export default function Accordion({
           <div className="w-full text-sm text-layer-dark-700">{header}</div>
           <div
             className="px-3 hover:scale-110  transition-all duration-200"
-            onClick={() => {
-              if (activeMission === -1 || activeMission === id) {
-                setIsOpen(!isOpen);
-              } else {
-                toast.error("Please close the active mission first");
-              }
-            }}
+            onClick={() => setIsOpen && setIsOpen(isOpen === id ? -1 : id)}
           >
-            {isOpen ? <SlArrowDown size={12} /> : <SlArrowRight size={12} />}
+            {isOpen === id ? (
+              <SlArrowDown size={12} />
+            ) : (
+              <SlArrowRight size={12} />
+            )}
           </div>
         </div>
       }

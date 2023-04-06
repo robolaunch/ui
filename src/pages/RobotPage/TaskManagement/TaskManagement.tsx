@@ -21,7 +21,8 @@ import { EditText } from "react-edit-text";
 import randomstring from "randomstring";
 import "react-edit-text/dist/index.css";
 import { saveAs } from "file-saver";
-import Moveable from "react-moveable";
+import { Rnd } from "react-rnd";
+
 interface ITaskManagement {
   ros: any;
 }
@@ -481,28 +482,67 @@ export default function TaskManagement({ ros }: ITaskManagement): ReactElement {
                   ros.socket.url.length - 1
                 )}&costmap=${isCostMap ? "true" : "false"}`}
               />
-              {missions[activeMission!]?.waypoints?.map((waypoint: any) => {
-                return (
-                  <div
-                    className="absolute inset-0 flex flex-col z-40"
-                    style={{
-                      top:
-                        (mouseRef?.current?.clientHeight / rosMapDetails?.y) *
-                          (rosMapDetails?.y / 2 - waypoint?.coordinates?.y) -
-                        18,
-                      left:
-                        (mouseRef?.current?.clientWidth / rosMapDetails?.x) *
-                          (rosMapDetails?.x / 2 + waypoint?.coordinates?.x) -
-                        12,
-                    }}
-                  >
-                    {handleWaypointIcon(waypoint?.taskType)}
-                    <span className="text-layer-dark-100 text-[0.64rem] -ml-4">
-                      {waypoint?.name}
-                    </span>
-                  </div>
-                );
-              })}
+              {missions[activeMission!]?.waypoints?.map(
+                (waypoint: any, waypointIndex: number) => {
+                  return (
+                    <Rnd
+                      maxHeight={"100%"}
+                      maxWidth={"100%"}
+                      className="!relative z-50 bg-slate-800"
+                      enableResizing={false}
+                      onDragStop={(e: any, d: any) => {
+                        setMouseCoordinates({
+                          x:
+                            (rosMapDetails?.x /
+                              mouseRef?.current?.clientWidth) *
+                              mouse?.x! -
+                            rosMapDetails?.x / 2,
+                          y:
+                            ((rosMapDetails?.y /
+                              mouseRef?.current?.clientHeight) *
+                              mouse?.y! -
+                              rosMapDetails?.y / 2) *
+                            -1,
+                        });
+
+                        setMissions((prev: any) => {
+                          let temp = [...prev];
+                          temp[activeMission!].waypoints[
+                            waypointIndex
+                          ].coordinates = {
+                            x: mouseCoordinates?.x,
+                            y: mouseCoordinates?.y,
+                          };
+                          return temp;
+                        });
+                      }}
+                    >
+                      <div
+                        className="absolute inset-0 flex flex-col z-40"
+                        style={{
+                          top:
+                            (mouseRef?.current?.clientHeight /
+                              rosMapDetails?.y) *
+                              (rosMapDetails?.y / 2 -
+                                waypoint?.coordinates?.y) -
+                            18,
+                          left:
+                            (mouseRef?.current?.clientWidth /
+                              rosMapDetails?.x) *
+                              (rosMapDetails?.x / 2 +
+                                waypoint?.coordinates?.x) -
+                            12,
+                        }}
+                      >
+                        {handleWaypointIcon(waypoint?.taskType)}
+                        <span className="text-layer-dark-100 text-[0.64rem] -ml-4">
+                          {waypoint?.name}
+                        </span>
+                      </div>
+                    </Rnd>
+                  );
+                }
+              )}
               <div className="absolute inset-0">
                 <GridLines
                   columns={Math.round(rosMapDetails?.x || 0)}

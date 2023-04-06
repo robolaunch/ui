@@ -58,6 +58,9 @@ export default function RobotHeader({
     {
       name: "Remote Desktop",
     },
+    {
+      name: "Task",
+    },
   ];
 
   return (
