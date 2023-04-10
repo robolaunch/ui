@@ -89,76 +89,71 @@ export default function RobotPage(): ReactElement {
   }
 
   return (
-    <Fragment>
-      <div className="grid grid-cols-1 gap-6">
-        <div className="col-span-1">
-          <RobotHeader
-            activeTab={activeTab}
-            handleChangeActiveTab={handleChangeActiveTab}
-          />
-        </div>
-        <div className="col-span-1">
-          {(() => {
-            switch (activeTab) {
-              case "Overview":
-                return <Overview />;
-              case "Task Management":
-                return <TaskManagement ros={ros} />;
-              case "ROS Workspaces":
-                return <Workspaces />;
-              case "K8S Resources":
-                return <K8SResources />;
-              case "Code Editor":
-                return <CodeEditor connectionURLs={connectionURLs} />;
-              case "Visualization":
-                return (
-                  <Visualization
-                    ros={ros}
-                    topicList={topicList}
-                    connectionURLs={connectionURLs}
-                    handleForceUpdate={handleForceUpdate}
-                  />
-                );
-              case "Teleoperation":
-                return (
-                  <Teleoperation
-                    ros={ros}
-                    topicList={topicList}
-                    connectionURLs={connectionURLs}
-                    handleForceUpdate={handleForceUpdate}
-                  />
-                );
-              case "Remote Desktop":
-                return <RemoteDesktop connectionURLs={connectionURLs} />;
-              case "Settings":
-                return <div>Settings</div>;
-              case "Development Suite":
-                return (
-                  <StreamContext connectionURLs={connectionURLs}>
-                    <DevelopmentSuite
-                      ros={ros}
-                      connectionURLs={connectionURLs}
-                    />
-                  </StreamContext>
-                );
-
-              case "Task":
-                return <Task ros={ros} />;
-
-              case "Loading":
-                return (
-                  <div>
-                    <img
-                      className="mx-auto scale-75"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  </div>
-                );
-            }
-          })()}
-        </div>
+    <div className="grid grid-cols-1 gap-6">
+      <div className="col-span-1">
+        <RobotHeader
+          activeTab={activeTab}
+          handleChangeActiveTab={handleChangeActiveTab}
+        />
       </div>
-    </Fragment>
+      <div className="col-span-1">
+        {(() => {
+          switch (activeTab) {
+            case "Overview":
+              return <Overview />;
+            case "Task Management":
+              return <TaskManagement ros={ros} />;
+            case "ROS Workspaces":
+              return <Workspaces />;
+            case "K8S Resources":
+              return <K8SResources />;
+            case "Code Editor":
+              return <CodeEditor connectionURLs={connectionURLs} />;
+            case "Visualization":
+              return (
+                <Visualization
+                  ros={ros}
+                  topicList={topicList}
+                  connectionURLs={connectionURLs}
+                  handleForceUpdate={handleForceUpdate}
+                />
+              );
+            case "Teleoperation":
+              return (
+                <Teleoperation
+                  ros={ros}
+                  topicList={topicList}
+                  connectionURLs={connectionURLs}
+                  handleForceUpdate={handleForceUpdate}
+                />
+              );
+            case "Remote Desktop":
+              return <RemoteDesktop connectionURLs={connectionURLs} />;
+            case "Settings":
+              return <div>Settings</div>;
+            case "Development Suite":
+              return (
+                <StreamContext connectionURLs={connectionURLs}>
+                  <DevelopmentSuite ros={ros} connectionURLs={connectionURLs} />
+                </StreamContext>
+              );
+
+            case "Task":
+              return <Task ros={ros} />;
+
+            case "Loading":
+              return (
+                <div>
+                  <img
+                    className="mx-auto scale-75"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
+                  />
+                </div>
+              );
+          }
+        })()}
+      </div>
+    </div>
   );
 }

@@ -99,30 +99,30 @@
             }, 7000);
           }
 
-          var poseTopic = new ROSLIB.Topic({
-            ros: ros,
-            name: "/robot_position",
-            messageType: "geometry_msgs/msg/PoseStamped",
-          });
+          // var poseTopic = new ROSLIB.Topic({
+          //   ros: ros,
+          //   name: "/robot_position",
+          //   messageType: "geometry_msgs/msg/PoseStamped",
+          // });
 
-          var robotMarker = new ROS2D.NavigationArrow({
-            size: 0.1,
-            strokeColor: "green",
-            strokeSize: 0.25,
-            pulse: true,
-          });
+          // var robotMarker = new ROS2D.NavigationArrow({
+          //   size: 0.1,
+          //   strokeColor: "green",
+          //   strokeSize: 0.25,
+          //   pulse: true,
+          // });
 
-          poseTopic.subscribe(function (pose) {
-            robotMarker.x = pose.pose.position.x;
-            robotMarker.y = -1 * pose.pose.position.y;
-          });
+          // poseTopic.subscribe(function (pose) {
+          //   robotMarker.x = pose.pose.position.x;
+          //   robotMarker.y = -1 * pose.pose.position.y;
+          // });
 
-          gridClient.rootObject.addChild(robotMarker);
+          // gridClient.rootObject.addChild(robotMarker);
 
           pathView = new ROS2D.PathShape({
             ros: ros,
             strokeSize: 0.02,
-            strokeColor: "blue",
+            strokeColor: "green",
           });
 
           gridClient.rootObject.addChild(pathView);
