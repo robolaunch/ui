@@ -44,12 +44,77 @@ export const getOrganizationUsers = createAsyncThunk(
   }
 );
 
+export const getOrganizationGuests = createAsyncThunk(
+  "organization/getOrganizationGuests",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.post(
+        `${process.env.REACT_APP_BACKEND_URL}/getOrganizationGuests`,
+        {
+          organizationId: values?.organizationId,
+        }
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getOrganizations = createAsyncThunk(
   "organization/getOrganizations",
   async (_, thunkAPI) => {
     try {
       const response = await axiosInterceptor.get(
         `${process.env.REACT_APP_BACKEND_URL}/getOrganizations`
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const MoveAsAdmin = createAsyncThunk(
+  "organization/MoveAsAdmin",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.post(
+        `${process.env.REACT_APP_BACKEND_URL}/moveAsAdmin`,
+        {
+          organizationId: values?.organizationId,
+          intivedUserId: values?.userId,
+        }
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
+export const MoveAsUser = createAsyncThunk(
+  "organization/MoveAsUser",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.post(
+        `${process.env.REACT_APP_BACKEND_URL}/MoveAsUser`,
+        {
+          organizationId: values?.organizationId,
+          intivedUserId: values?.userId,
+        }
       );
       if (response.status === 200) {
         return response;
@@ -139,6 +204,45 @@ export const OrganizationSlice = createSlice({
       } else {
         toast.error("Error is fetcing data.");
       }
+    },
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    [getOrganizationGuests.pending.type]: (state, action) => {
+      console.log("getOrganizationGuests.pending");
+    },
+    [getOrganizationGuests.fulfilled.type]: (state, action) => {
+      console.log("getOrganizationGuests.fulfilled");
+    },
+    [getOrganizationGuests.rejected.type]: (state, action) => {
+      console.log("getOrganizationGuests.rejected");
+
+      if (action?.error) {
+        toast.error("Organization not found.");
+      } else {
+        toast.error("Error is fetcing data.");
+      }
+    },
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    [MoveAsAdmin.pending.type]: (state, action) => {
+      console.log("MoveAsAdmin.pending");
+    },
+    [MoveAsAdmin.fulfilled.type]: (state, action) => {
+      console.log("MoveAsAdmin.fulfilled");
+    },
+    [MoveAsAdmin.rejected.type]: (state, action) => {
+      console.log("MoveAsAdmin.rejected");
+      toast.error("Error is fetcing data.");
     },
     //
     //

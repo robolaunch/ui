@@ -16,3 +16,10 @@ export const LoginSchema = Yup.object().shape({
 export const ForgotPasswordSchema = Yup.object().shape({
   username: Yup.string().required("Username is required."),
 });
+
+export const deleteUserFromOrganizationSchema = (username: any) =>
+  Yup.object().shape({
+    username: Yup.string()
+      .required("Username is required")
+      .matches(username, `Username must match "${username}" to delete.`),
+  });

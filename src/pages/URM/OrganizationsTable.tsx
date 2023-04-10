@@ -3,6 +3,7 @@ import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
 import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import BasicCell from "../../components/Cells/BasicCell";
 
 interface IOrganizationsPage {
   responseOrganizations: any;
@@ -60,11 +61,7 @@ export default function OrganizationsPage({
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <span>{Number(rowData?.users)}</span>
-            </Fragment>
-          );
+          return <BasicCell text={Number(rowData?.users)} />;
         },
       },
       {
@@ -95,7 +92,7 @@ export default function OrganizationsPage({
       title="Organizations"
       data={data}
       columns={columns}
-      loading={responseOrganizations?.length ? false : true}
+      loading={responseOrganizations ? false : true}
     />
   );
 }

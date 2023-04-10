@@ -15,8 +15,8 @@ export const InfoCell: FC<InfoCellProps> = ({
   onClick,
 }: InfoCellProps) => {
   const iconComponent = (
-    <div className="flex items-center justify-center font-bold h-12 w-12 text-base bg-layer-primary-200 text-layer-primary-600 rounded-full">
-      {/* {title[0].toUpperCase()} */}
+    <div className="flex items-center justify-center font-bold h-12 w-12 text-base bg-layer-primary-200 text-layer-primary-600 rounded-full uppercase">
+      {title ? title[0] : ""}
     </div>
   );
 

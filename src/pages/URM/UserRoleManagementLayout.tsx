@@ -18,7 +18,7 @@ export default function UserRoleManagementLayout(): ReactElement {
 
   useEffect(() => {
     dispatch(getOrganizations()).then((res: any) => {
-      setResponseOrganizations(res?.payload?.data);
+      setResponseOrganizations(res?.payload?.data || []);
     });
   }, [dispatch]);
 

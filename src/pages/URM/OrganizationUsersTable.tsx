@@ -3,7 +3,8 @@ import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
 import { useAppDispatch } from "../../hooks/redux";
 import { getOrganizationUsers } from "../../resources/OrganizationSlice";
-import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
+import UserActionCells from "../../components/ActionCells/UserActionCells";
+import BasicCell from "../../components/Cells/BasicCell";
 
 interface IOrganizationUsersPage {
   activePage: any;
@@ -23,7 +24,9 @@ export default function OrganizationUsersTable({
       })
     ).then((responseOrganizationUsers: any) => {
       console.log(responseOrganizationUsers?.payload?.data);
-      setResponseOrganizationsUsers(responseOrganizationUsers?.payload?.data);
+      setResponseOrganizationsUsers(
+        responseOrganizationUsers?.payload?.data || []
+      );
     });
   }, [dispatch, activePage]);
 
@@ -67,11 +70,11 @@ export default function OrganizationUsersTable({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: () => {
           return (
-            <Fragment>
-              <span>{rowData?.organizationName}</span>
-            </Fragment>
+            <BasicCell
+              text={activePage?.selectedOrganization?.organizationName}
+            />
           );
         },
       },
@@ -82,10 +85,20 @@ export default function OrganizationUsersTable({
         filter: true,
         align: "left",
         body: (rowData: any) => {
+          return <BasicCell text={rowData?.username} />;
+        },
+      },
+      {
+        key: "OrganizationRole",
+        header: "Organization Role",
+        sortable: true,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
           return (
-            <Fragment>
-              <span>{rowData?.username}</span>
-            </Fragment>
+            <BasicCell
+              text={rowData?.name?.isCurrentMemberAdmin ? "Admin " : "User"}
+            />
           );
         },
       },
@@ -95,9 +108,10 @@ export default function OrganizationUsersTable({
         align: "right",
         body: (rowData: any) => {
           return (
-            <OrganizationActionCells
+            <UserActionCells
               onClickSee={() => {}}
               data={rowData?.name}
+              activePage={activePage}
             />
           );
         },
@@ -112,7 +126,7 @@ export default function OrganizationUsersTable({
       title={`Organization Users and Admins`}
       data={data}
       columns={columns}
-      loading={responseOrganizationsUsers?.length ? false : true}
+      loading={responseOrganizationsUsers ? false : true}
     />
   );
 }

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
 import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationUsers } from "../../resources/OrganizationSlice";
+import { getOrganizationGuests } from "../../resources/OrganizationSlice";
 import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
 
 interface IOrganizationGuestsPage {
@@ -18,11 +18,14 @@ export default function OrganizationGuestsTable({
 
   useEffect(() => {
     dispatch(
-      getOrganizationUsers({
+      getOrganizationGuests({
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
-    ).then((responseOrganizationUsers: any) => {
-      setResponseOrganizationsGuests(responseOrganizationUsers?.payload?.data);
+    ).then((responseOrganizationGuests: any) => {
+      console.log("responseOrganizationGuests", responseOrganizationGuests);
+      setResponseOrganizationsGuests(
+        responseOrganizationGuests?.payload?.data || []
+      );
     });
   }, [dispatch, activePage]);
 
@@ -110,7 +113,7 @@ export default function OrganizationGuestsTable({
       title={`Invited Users`}
       data={data}
       columns={columns}
-      loading={responseOrganizationsGuests?.length ? false : true}
+      loading={responseOrganizationsGuests ? false : true}
     />
   );
 }

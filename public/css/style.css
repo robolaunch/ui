@@ -605,6 +605,10 @@ video {
   inset: 0px;
 }
 
+.\!-top-5{
+  top: -1.25rem !important;
+}
+
 .-top-6{
   top: -1.5rem;
 }
@@ -663,14 +667,6 @@ video {
 
 .top-2\.5{
   top: 0.625rem;
-}
-
-.-top-5{
-  top: -1.25rem;
-}
-
-.\!-top-5{
-  top: -1.25rem !important;
 }
 
 .-z-10{
@@ -764,10 +760,6 @@ video {
 
 .block{
   display: block;
-}
-
-.inline-block{
-  display: inline-block;
 }
 
 .flex{
@@ -888,30 +880,6 @@ video {
   height: 100vh;
 }
 
-.h-5{
-  height: 1.25rem;
-}
-
-.h-\[52rem\]{
-  height: 52rem;
-}
-
-.h-\[50rem\]{
-  height: 50rem;
-}
-
-.h-\[46rem\]{
-  height: 46rem;
-}
-
-.h-\[43rem\]{
-  height: 43rem;
-}
-
-.h-\[44rem\]{
-  height: 44rem;
-}
-
 .max-h-\[40rem\]{
   max-height: 40rem;
 }
@@ -1014,10 +982,6 @@ video {
   width: 100%;
 }
 
-.w-5{
-  width: 1.25rem;
-}
-
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
@@ -1077,6 +1041,23 @@ video {
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+@-webkit-keyframes pulse{
+  50%{
+    opacity: .5;
+  }
+}
+
+@keyframes pulse{
+  50%{
+    opacity: .5;
+  }
+}
+
+.animate-\[pulse_0\.5s_ease-in-out_infinite\]{
+  -webkit-animation: pulse 0.5s ease-in-out infinite;
+          animation: pulse 0.5s ease-in-out infinite;
+}
+
 @-webkit-keyframes spin{
   to{
     -webkit-transform: rotate(360deg);
@@ -1094,66 +1075,6 @@ video {
 .animate-spin{
   -webkit-animation: spin 1s linear infinite;
           animation: spin 1s linear infinite;
-}
-
-@-webkit-keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-@keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-.animate-pulse{
-  -webkit-animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@-webkit-keyframes ping{
-  75%, 100%{
-    -webkit-transform: scale(2);
-            transform: scale(2);
-    opacity: 0;
-  }
-}
-
-@keyframes ping{
-  75%, 100%{
-    -webkit-transform: scale(2);
-            transform: scale(2);
-    opacity: 0;
-  }
-}
-
-.animate-ping{
-  -webkit-animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-          animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-@keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-.animate-\[pulse_\.05s_ease-in-out_infinite\]{
-  -webkit-animation: pulse .05s ease-in-out infinite;
-          animation: pulse .05s ease-in-out infinite;
-}
-
-@keyframes pulse{
-  50%{
-    opacity: .5;
-  }
-}
-
-.animate-\[pulse_0\.5s_ease-in-out_infinite\]{
-  -webkit-animation: pulse 0.5s ease-in-out infinite;
-          animation: pulse 0.5s ease-in-out infinite;
 }
 
 .cursor-default{
@@ -1396,6 +1317,11 @@ video {
   border-color: rgb(102 102 102 / var(--tw-border-opacity));
 }
 
+.border-layer-dark-600{
+  --tw-border-opacity: 1;
+  border-color: rgb(61 61 61 / var(--tw-border-opacity));
+}
+
 .border-layer-light-100{
   --tw-border-opacity: 1;
   border-color: rgb(235 235 235 / var(--tw-border-opacity));
@@ -1431,21 +1357,6 @@ video {
   border-color: rgb(0 127 201 / var(--tw-border-opacity));
 }
 
-.border-layer-dark-700{
-  --tw-border-opacity: 1;
-  border-color: rgb(41 41 41 / var(--tw-border-opacity));
-}
-
-.border-layer-dark-500{
-  --tw-border-opacity: 1;
-  border-color: rgb(82 82 82 / var(--tw-border-opacity));
-}
-
-.border-layer-dark-600{
-  --tw-border-opacity: 1;
-  border-color: rgb(61 61 61 / var(--tw-border-opacity));
-}
-
 .\!bg-layer-primary-100{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(245 229 255 / var(--tw-bg-opacity)) !important;
@@ -1477,11 +1388,6 @@ video {
 .bg-layer-light-50{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-layer-light-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(153 153 153 / var(--tw-bg-opacity));
 }
 
 .bg-layer-light-bg{
@@ -1789,6 +1695,10 @@ video {
 
 .font-semibold{
   font-weight: 600;
+}
+
+.uppercase{
+  text-transform: uppercase;
 }
 
 .lowercase{
@@ -2201,6 +2111,15 @@ td{
 }
 
 .p-sortable-column-icon{
+  --tw-text-opacity: 1 !important;
+  color: rgb(153 153 153 / var(--tw-text-opacity)) !important;
+}
+
+.p-datatable-emptymessage td{
+  text-align: center !important;
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+  font-weight: 600 !important;
   --tw-text-opacity: 1 !important;
   color: rgb(153 153 153 / var(--tw-text-opacity)) !important;
 }
