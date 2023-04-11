@@ -44,6 +44,27 @@ export const getOrganizationUsers = createAsyncThunk(
   }
 );
 
+export const getOrganizationAdmins = createAsyncThunk(
+  "organization/getOrganizationAdmins",
+  async (values: any, thunkAPI) => {
+    try {
+      const response = await axiosInterceptor.post(
+        `${process.env.REACT_APP_BACKEND_URL}/getOrganizationAdmins`,
+        {
+          organizationId: values?.organizationId,
+        }
+      );
+      if (response.status === 200) {
+        return response;
+      } else {
+        return thunkAPI.rejectWithValue(response);
+      }
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.response.data);
+    }
+  }
+);
+
 export const getOrganizationGuests = createAsyncThunk(
   "organization/getOrganizationGuests",
   async (values: any, thunkAPI) => {
@@ -91,7 +112,7 @@ export const MoveAsAdmin = createAsyncThunk(
         `${process.env.REACT_APP_BACKEND_URL}/moveAsAdmin`,
         {
           organizationId: values?.organizationId,
-          intivedUserId: values?.userId,
+          invitedUserId: values?.invitedUserId,
         }
       );
       if (response.status === 200) {
@@ -105,12 +126,12 @@ export const MoveAsAdmin = createAsyncThunk(
   }
 );
 
-export const MoveAsUser = createAsyncThunk(
-  "organization/MoveAsUser",
+export const MoveToUser = createAsyncThunk(
+  "organization/MoveToUser",
   async (values: any, thunkAPI) => {
     try {
       const response = await axiosInterceptor.post(
-        `${process.env.REACT_APP_BACKEND_URL}/MoveAsUser`,
+        `${process.env.REACT_APP_BACKEND_URL}/MoveToUser`,
         {
           organizationId: values?.organizationId,
           intivedUserId: values?.userId,
@@ -145,6 +166,14 @@ export const getOrganizationsWithGroups = createAsyncThunk(
   }
 );
 
+function toastNotification({ action }: any) {
+  if (action.payload.data.success) {
+    toast.success(action?.payload?.data?.message);
+  } else {
+    toast.error(action?.payload?.data?.message);
+  }
+}
+
 export const OrganizationSlice = createSlice({
   name: "organization",
   initialState: {},
@@ -153,17 +182,11 @@ export const OrganizationSlice = createSlice({
     [createOrganization.pending.type]: (state, action) => {
       console.log("createOrganization.pending");
     },
-    //
     [createOrganization.fulfilled.type]: (state, action) => {
-      if (action.payload.data.success) {
-        toast.success(action?.payload?.data?.message);
-      } else {
-        toast.error(action?.payload?.data?.message);
-      }
+      toastNotification({ action });
     },
-    //
+
     [createOrganization.rejected.type]: (state, action) => {
-      console.log("createOrganization.rejected");
       toast.error("Error is fetcing data.");
     },
     //
@@ -180,7 +203,6 @@ export const OrganizationSlice = createSlice({
       console.log("getOrganizations.fulfilled");
     },
     [getOrganizations.rejected.type]: (state, action) => {
-      console.log("getOrganizations.rejected");
       toast.error("Error is fetcing data.");
     },
     //
@@ -197,13 +219,9 @@ export const OrganizationSlice = createSlice({
       console.log("getOrganizationUsers.fulfilled");
     },
     [getOrganizationUsers.rejected.type]: (state, action) => {
-      console.log("getOrganizationUsers.rejected");
-
-      if (action?.error) {
-        toast.error("Organization not found.");
-      } else {
-        toast.error("Error is fetcing data.");
-      }
+      toast.error(
+        action?.error ? "Organization not found." : "Error is fetcing data."
+      );
     },
     //
     //
@@ -219,13 +237,9 @@ export const OrganizationSlice = createSlice({
       console.log("getOrganizationGuests.fulfilled");
     },
     [getOrganizationGuests.rejected.type]: (state, action) => {
-      console.log("getOrganizationGuests.rejected");
-
-      if (action?.error) {
-        toast.error("Organization not found.");
-      } else {
-        toast.error("Error is fetcing data.");
-      }
+      toast.error(
+        action?.error ? "Organization not found." : "Error is fetcing data."
+      );
     },
     //
     //
@@ -238,10 +252,26 @@ export const OrganizationSlice = createSlice({
       console.log("MoveAsAdmin.pending");
     },
     [MoveAsAdmin.fulfilled.type]: (state, action) => {
-      console.log("MoveAsAdmin.fulfilled");
+      console.log("MoveAsAdmin.fulfilled", action.payload);
+      toastNotification({ action });
     },
     [MoveAsAdmin.rejected.type]: (state, action) => {
-      console.log("MoveAsAdmin.rejected");
+      toast.error("Error is fetcing data.");
+    },
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    [MoveToUser.pending.type]: (state, action) => {
+      console.log("MoveToUser.pending");
+    },
+    [MoveToUser.fulfilled.type]: (state, action) => {
+      console.log("MoveToUser.fulfilled", action.payload);
+    },
+    [MoveToUser.rejected.type]: (state, action) => {
       toast.error("Error is fetcing data.");
     },
     //
@@ -258,16 +288,8 @@ export const OrganizationSlice = createSlice({
       console.log("getOrganizationsWithGroups.fulfilled");
     },
     [getOrganizationsWithGroups.rejected.type]: (state, action) => {
-      console.log("getOrganizationsWithGroups.rejected");
       toast.error("Error is fetcing data.");
     },
-    //
-    //
-    //
-    //
-    //
-    //
-    //
   },
 });
 

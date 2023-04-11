@@ -7,6 +7,7 @@ import OrganizationsTable from "./OrganizationsTable";
 import OrganizationUsersTable from "./OrganizationUsersTable";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import OrganizationGuestsTable from "./OrganizationGuestsTable";
+import OrganizationAdminsTable from "./OrganizationAdminsTable";
 
 export default function UserRoleManagementLayout(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
@@ -18,7 +19,8 @@ export default function UserRoleManagementLayout(): ReactElement {
 
   useEffect(() => {
     dispatch(getOrganizations()).then((res: any) => {
-      setResponseOrganizations(res?.payload?.data || []);
+      console.log(res?.payload);
+      setResponseOrganizations(res?.payload?.data?.data || []);
     });
   }, [dispatch]);
 
@@ -29,8 +31,14 @@ export default function UserRoleManagementLayout(): ReactElement {
     },
     activePage?.page !== "organizations"
       ? {
+          key: "organizationAdmins",
+          name: `Organization Admins`,
+        }
+      : null,
+    activePage?.page !== "organizations"
+      ? {
           key: "organizationUsers",
-          name: `Organization Users and Admins`,
+          name: `Organization Users`,
         }
       : null,
     activePage?.page !== "organizations"
@@ -112,6 +120,9 @@ export default function UserRoleManagementLayout(): ReactElement {
                     handleChangeActiveTab={handleChangeActiveTab}
                   />
                 );
+
+              case "organizationAdmins":
+                return <OrganizationAdminsTable activePage={activePage} />;
               case "organizationUsers":
                 return <OrganizationUsersTable activePage={activePage} />;
               case "invitedUsers":

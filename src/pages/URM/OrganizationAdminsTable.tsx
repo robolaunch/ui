@@ -2,37 +2,37 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
 import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationUsers } from "../../resources/OrganizationSlice";
+import { getOrganizationAdmins } from "../../resources/OrganizationSlice";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
 
-interface IOrganizationUsersPage {
+interface IOrganizationAdminsPage {
   activePage: any;
 }
 
-export default function OrganizationUsersTable({
+export default function OrganizationAdminsTable({
   activePage,
-}: IOrganizationUsersPage) {
-  const [responseOrganizationsUsers, setResponseOrganizationsUsers] =
+}: IOrganizationAdminsPage) {
+  const [responseOrganizationsAdmins, setResponseOrganizationsAdmins] =
     useState<any>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(
-      getOrganizationUsers({
+      getOrganizationAdmins({
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
-    ).then((responseOrganizationUsers: any) => {
-      console.log(responseOrganizationUsers?.payload);
-      setResponseOrganizationsUsers(
-        responseOrganizationUsers?.payload?.data || []
+    ).then((responseOrganizationAdmins: any) => {
+      console.log(responseOrganizationAdmins?.payload?.data);
+      setResponseOrganizationsAdmins(
+        responseOrganizationAdmins?.payload?.data || []
       );
     });
   }, [dispatch, activePage]);
 
   const data: any = useMemo(
     () =>
-      responseOrganizationsUsers?.map((user: any) => {
+      responseOrganizationsAdmins?.map((user: any) => {
         return {
           key: user?.organizationName,
           name: user,
@@ -43,7 +43,7 @@ export default function OrganizationUsersTable({
       }),
     [
       activePage?.selectedOrganization?.organizationName,
-      responseOrganizationsUsers,
+      responseOrganizationsAdmins,
     ]
   );
 
@@ -123,10 +123,10 @@ export default function OrganizationUsersTable({
   return (
     <GeneralTable
       type="users"
-      title={`Organization Users and Admins`}
+      title={`Organization Admins`}
       data={data}
       columns={columns}
-      loading={responseOrganizationsUsers ? false : true}
+      loading={responseOrganizationsAdmins ? false : true}
     />
   );
 }

@@ -5,7 +5,7 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import { BiTrash, BiPencil } from "react-icons/bi";
-import { MoveAsAdmin, MoveAsUser } from "../../resources/OrganizationSlice";
+import { MoveAsAdmin, MoveToUser } from "../../resources/OrganizationSlice";
 import { useAppDispatch } from "../../hooks/redux";
 import { deleteUserFromOrganizationSchema } from "../../validations/UsersValidations";
 interface IUserActionCells {
@@ -23,14 +23,12 @@ export default function UserActionCells({
   const dispatch = useAppDispatch();
 
   const changeRoleFormik = useFormik({
-    initialValues: {
-      currentRoleType: data.isCurrentMemberAdmin,
-    },
+    initialValues: {},
     onSubmit: (values) => {
       changeRoleFormik.setSubmitting(true);
-      if (values?.currentRoleType) {
+      if (activePage?.page === "organizationAdmins") {
         dispatch(
-          MoveAsUser({
+          MoveToUser({
             organizationId: activePage?.selectedOrganization?.organizationId,
             invitedUserId: data?.userId,
           })
@@ -90,11 +88,11 @@ export default function UserActionCells({
           <p className="text-sm">
             This user now is{" "}
             <span className="font-semibold">
-              "{data?.isCurrentMemberAdmin ? "Admin" : "Member"}"
+              "{activePage?.page === "organizationAdmins" ? "Admin" : "Member"}"
             </span>
             . Are you sure you want to change role to{" "}
             <span className="font-semibold">
-              {data?.isCurrentMemberAdmin ? "Member" : "Admin"}
+              {activePage?.page === "organizationAdmins" ? "Member" : "Admin"}
             </span>
             ?
           </p>
@@ -103,7 +101,7 @@ export default function UserActionCells({
               className="!w-44 !h-11"
               type="submit"
               text={`Change Role to ${
-                data?.isCurrentMemberAdmin ? "Member" : "Admin"
+                activePage?.page === "organizationAdmins" ? "Member" : "Admin"
               }`}
               disabled={
                 changeRoleFormik.isSubmitting || !changeRoleFormik.isValid

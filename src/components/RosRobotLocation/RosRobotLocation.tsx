@@ -73,7 +73,7 @@ export default function RosRobotLocation({
                   rosMapHeight,
                   waypointX: rosRobotPosition?.x,
                   waypointY: rosRobotPosition?.y,
-                })?.y - 12,
+                })?.y - 24,
             }}
           >
             <FaLocationArrow
