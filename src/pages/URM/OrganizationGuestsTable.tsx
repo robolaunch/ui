@@ -1,9 +1,15 @@
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
-import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationGuests } from "../../resources/OrganizationSlice";
-import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
+import { IApiInterface } from "../../types/ApiInterface";
+import { ApiContext } from "../../contexts/ApiContext";
+import UserActionCells from "../../components/ActionCells/UserActionCells";
 
 interface IOrganizationGuestsPage {
   activePage: any;
@@ -12,22 +18,24 @@ interface IOrganizationGuestsPage {
 export default function OrganizationGuestsTable({
   activePage,
 }: IOrganizationGuestsPage) {
+  const [refresh, setRefresh] = useState<boolean>(false);
   const [responseOrganizationsGuests, setResponseOrganizationsGuests] =
     useState<any>(null);
-  const dispatch = useAppDispatch();
+
+  const { api }: IApiInterface = useContext(ApiContext);
 
   useEffect(() => {
-    dispatch(
-      getOrganizationGuests({
+    api
+      .getOrganizationGuests({
+        name: activePage?.selectedOrganization?.organizationName,
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
-    ).then((responseOrganizationGuests: any) => {
-      console.log("responseOrganizationGuests", responseOrganizationGuests);
-      setResponseOrganizationsGuests(
-        responseOrganizationGuests?.payload?.data || []
-      );
-    });
-  }, [dispatch, activePage]);
+      .then((responseOrganizationsAdmins: any) => {
+        setResponseOrganizationsGuests(
+          responseOrganizationsAdmins?.data?.data[0]?.users || []
+        );
+      });
+  }, [activePage, api]);
 
   const data: any = useMemo(
     () =>
@@ -96,9 +104,11 @@ export default function OrganizationGuestsTable({
         align: "right",
         body: (rowData: any) => {
           return (
-            <OrganizationActionCells
+            <UserActionCells
+              activePage={activePage}
               onClickSee={() => {}}
               data={rowData?.name}
+              handleRefresh={() => setRefresh(!refresh)}
             />
           );
         },

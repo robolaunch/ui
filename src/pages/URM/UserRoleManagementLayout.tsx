@@ -1,6 +1,10 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizations } from "../../resources/OrganizationSlice";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import CardLayout from "../../layouts/CardLayout";
 import InformationWidget from "../../components/InformationWidget/InformationWidget";
 import OrganizationsTable from "./OrganizationsTable";
@@ -8,23 +12,29 @@ import OrganizationUsersTable from "./OrganizationUsersTable";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import OrganizationGuestsTable from "./OrganizationGuestsTable";
 import OrganizationAdminsTable from "./OrganizationAdminsTable";
+import { ApiContext } from "../../contexts/ApiContext";
+import { IApiInterface } from "../../types/ApiInterface";
+import Button from "../../components/Button/Button";
+import InviteUserToOrganizationModal from "../../modals/IntiveUserToOrganizationModal";
 
 export default function UserRoleManagementLayout(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
-  const dispatch = useAppDispatch();
   const [activePage, setActivePage] = useState<any>({
     page: "organizations",
     selectedOrganization: null,
   });
+  const [visibleInviteUserModal, setVisibleInviteUserModal] =
+    useState<boolean>(false);
+
+  const { api }: IApiInterface = useContext(ApiContext);
 
   useEffect(() => {
-    dispatch(getOrganizations()).then((res: any) => {
-      console.log(res?.payload);
-      setResponseOrganizations(res?.payload?.data?.data || []);
+    api.getOrganizations().then((responseOrganizations: any) => {
+      setResponseOrganizations(responseOrganizations?.data?.data || []);
     });
-  }, [dispatch]);
+  }, []);
 
-  const pages: any = [
+  const pages = [
     {
       key: "organizations",
       name: `Organizations`,
@@ -43,8 +53,8 @@ export default function UserRoleManagementLayout(): ReactElement {
       : null,
     activePage?.page !== "organizations"
       ? {
-          key: "invitedUsers",
-          name: `Invited Users`,
+          key: "organizationGuests",
+          name: `Organization Guests`,
         }
       : null,
   ];
@@ -65,11 +75,11 @@ export default function UserRoleManagementLayout(): ReactElement {
                 ? `${organizationNameViewer({
                     organizationName:
                       activePage?.selectedOrganization?.organizationName,
-                  })} Users and Admins`
+                  })} Users`
                 : `${organizationNameViewer({
                     organizationName:
                       activePage?.selectedOrganization?.organizationName,
-                  })} Invited Users`
+                  })} Guests`
             }
             subtitle="From this page, you can view, control or get information about all
             the details of the teams in your organization."
@@ -77,33 +87,42 @@ export default function UserRoleManagementLayout(): ReactElement {
             can proceed here."
             component={
               <CardLayout className="pt-6">
-                <ul className="flex flex-col gap-2 text-sm ">
-                  {pages?.map((page: any) => {
-                    if (page === null) {
-                      return null;
+                <Fragment>
+                  <Button
+                    text="Invite User"
+                    onClick={() =>
+                      setVisibleInviteUserModal(!visibleInviteUserModal)
                     }
-                    return (
-                      <li
-                        key={page?.key}
-                        className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
-                          page?.key === activePage?.page &&
-                          "bg-layer-light-100 font-medium"
-                        }`}
-                        onClick={() =>
-                          setActivePage({
-                            page: page?.key,
-                            selectedOrganization:
-                              page === "organizations"
-                                ? null
-                                : activePage?.selectedOrganization,
-                          })
-                        }
-                      >
-                        {page?.name}
-                      </li>
-                    );
-                  })}
-                </ul>
+                  />
+
+                  <ul className="flex flex-col gap-2 text-sm ">
+                    {pages?.map((page: any) => {
+                      if (page === null) {
+                        return null;
+                      }
+                      return (
+                        <li
+                          key={page?.key}
+                          className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
+                            page?.key === activePage?.page &&
+                            "bg-layer-light-100 font-medium"
+                          } ${page?.key !== "organizations" && "ml-4"} `}
+                          onClick={() =>
+                            setActivePage({
+                              page: page?.key,
+                              selectedOrganization:
+                                page === "organizations"
+                                  ? null
+                                  : activePage?.selectedOrganization,
+                            })
+                          }
+                        >
+                          {page?.name}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </Fragment>
               </CardLayout>
             }
           />
@@ -125,12 +144,19 @@ export default function UserRoleManagementLayout(): ReactElement {
                 return <OrganizationAdminsTable activePage={activePage} />;
               case "organizationUsers":
                 return <OrganizationUsersTable activePage={activePage} />;
-              case "invitedUsers":
+              case "organizationGuests":
                 return <OrganizationGuestsTable activePage={activePage} />;
             }
           })()}
         </Fragment>
       </div>
+      {visibleInviteUserModal && (
+        <InviteUserToOrganizationModal
+          visibleModal={visibleInviteUserModal}
+          handleCloseModal={() => setVisibleInviteUserModal(false)}
+          organizations={responseOrganizations}
+        />
+      )}
     </div>
   );
 }

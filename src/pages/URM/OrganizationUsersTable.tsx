@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
-import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationUsers } from "../../resources/OrganizationSlice";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
+import { IApiInterface } from "../../types/ApiInterface";
+import { ApiContext } from "../../contexts/ApiContext";
 
 interface IOrganizationUsersPage {
   activePage: any;
@@ -13,22 +13,24 @@ interface IOrganizationUsersPage {
 export default function OrganizationUsersTable({
   activePage,
 }: IOrganizationUsersPage) {
+  const [refresh, setRefresh] = useState<boolean>(false);
   const [responseOrganizationsUsers, setResponseOrganizationsUsers] =
     useState<any>(null);
-  const dispatch = useAppDispatch();
+
+  const { api }: IApiInterface = useContext(ApiContext);
 
   useEffect(() => {
-    dispatch(
-      getOrganizationUsers({
+    api
+      .getOrganizationUsers({
+        name: activePage?.selectedOrganization?.organizationName,
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
-    ).then((responseOrganizationUsers: any) => {
-      console.log(responseOrganizationUsers?.payload);
-      setResponseOrganizationsUsers(
-        responseOrganizationUsers?.payload?.data || []
-      );
-    });
-  }, [dispatch, activePage]);
+      .then((responseOrganizationsUsers: any) => {
+        setResponseOrganizationsUsers(
+          responseOrganizationsUsers?.data?.data[0]?.users || []
+        );
+      });
+  }, [activePage, api]);
 
   const data: any = useMemo(
     () =>
@@ -95,11 +97,7 @@ export default function OrganizationUsersTable({
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return (
-            <BasicCell
-              text={rowData?.name?.isCurrentMemberAdmin ? "Admin " : "User"}
-            />
-          );
+          return <BasicCell text={"User"} />;
         },
       },
       {
@@ -112,6 +110,7 @@ export default function OrganizationUsersTable({
               onClickSee={() => {}}
               data={rowData?.name}
               activePage={activePage}
+              handleRefresh={() => setRefresh(!refresh)}
             />
           );
         },
@@ -123,7 +122,7 @@ export default function OrganizationUsersTable({
   return (
     <GeneralTable
       type="users"
-      title={`Organization Users and Admins`}
+      title={`Organization Users`}
       data={data}
       columns={columns}
       loading={responseOrganizationsUsers ? false : true}

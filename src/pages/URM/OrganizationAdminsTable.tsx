@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
-import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationAdmins } from "../../resources/OrganizationSlice";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
+import { IApiInterface } from "../../types/ApiInterface";
+import { ApiContext } from "../../contexts/ApiContext";
 
 interface IOrganizationAdminsPage {
   activePage: any;
@@ -15,20 +15,22 @@ export default function OrganizationAdminsTable({
 }: IOrganizationAdminsPage) {
   const [responseOrganizationsAdmins, setResponseOrganizationsAdmins] =
     useState<any>(null);
-  const dispatch = useAppDispatch();
+  const [refresh, setRefresh] = useState<boolean>(false);
+
+  const { api }: IApiInterface = useContext(ApiContext);
 
   useEffect(() => {
-    dispatch(
-      getOrganizationAdmins({
+    api
+      .getOrganizationAdmins({
+        name: activePage?.selectedOrganization?.organizationName,
         organizationId: activePage?.selectedOrganization?.organizationId,
       })
-    ).then((responseOrganizationAdmins: any) => {
-      console.log(responseOrganizationAdmins?.payload?.data);
-      setResponseOrganizationsAdmins(
-        responseOrganizationAdmins?.payload?.data || []
-      );
-    });
-  }, [dispatch, activePage]);
+      .then((responseOrganizationsAdmins: any) => {
+        setResponseOrganizationsAdmins(
+          responseOrganizationsAdmins?.data?.data[0]?.users || []
+        );
+      });
+  }, [activePage, api]);
 
   const data: any = useMemo(
     () =>
@@ -95,11 +97,7 @@ export default function OrganizationAdminsTable({
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return (
-            <BasicCell
-              text={rowData?.name?.isCurrentMemberAdmin ? "Admin " : "User"}
-            />
-          );
+          return <BasicCell text={"Admin "} />;
         },
       },
       {
@@ -112,6 +110,7 @@ export default function OrganizationAdminsTable({
               onClickSee={() => {}}
               data={rowData?.name}
               activePage={activePage}
+              handleRefresh={() => setRefresh(!refresh)}
             />
           );
         },
