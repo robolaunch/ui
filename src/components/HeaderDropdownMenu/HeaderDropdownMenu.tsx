@@ -26,7 +26,7 @@ export default function HeaderDropdownMenu(): ReactElement {
       >
         <Gravatar
           email={keycloak?.tokenParsed?.email}
-          className="h-11 w-11 rounded"
+          className="h-9 w-9 rounded"
           default="mp"
         />
       </div>
@@ -39,7 +39,7 @@ export default function HeaderDropdownMenu(): ReactElement {
             <Link to={`#`} className="flex gap-3">
               <Gravatar
                 email={keycloak?.tokenParsed?.email}
-                className="h-14 w-14 rounded"
+                className="h-13 w-13 rounded"
                 default="mp"
               />
               <div className="flex flex-col">

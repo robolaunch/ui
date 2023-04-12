@@ -1,16 +1,17 @@
 import { useFormik } from "formik";
 import React, { useContext } from "react";
-import { useAppDispatch } from "../../../hooks/redux";
 import { createOrganizationSchema } from "../../../validations/OrganizationsValidations";
 import InputError from "../../InputError/InputError";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
-import { createOrganization } from "../../../resources/OrganizationSlice";
+import { IApiInterface } from "../../../types/ApiInterface";
+import { ApiContext } from "../../../contexts/ApiContext";
 
 export const CreateOrganizationForm = () => {
-  const dispatch = useAppDispatch();
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
+
+  const { api }: IApiInterface = useContext(ApiContext);
 
   const formik = useFormik({
     initialValues: {
@@ -19,11 +20,10 @@ export const CreateOrganizationForm = () => {
     validationSchema: createOrganizationSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-      dispatch(
-        createOrganization({
-          name: values.name,
-        })
-      );
+
+      api.createOrganization({
+        name: values.name,
+      });
 
       setTimeout(() => {
         formik.setSubmitting(false);

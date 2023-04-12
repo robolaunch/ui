@@ -28,17 +28,11 @@ export default function RosRobotLocation({
 
   useEffect(() => {
     robotPosition?.subscribe(function (message: any) {
-      if (
-        message?.pose?.position?.x !== rosRobotPosition?.x &&
-        message?.pose?.position?.y !== rosRobotPosition?.y &&
-        message?.pose?.position?.z !== rosRobotPosition?.z
-      ) {
-        setRosRobotPosition({
-          x: message?.pose?.position?.x,
-          y: message?.pose?.position?.y,
-          z: message?.pose?.position?.z,
-        });
-      }
+      setRosRobotPosition({
+        x: message?.pose?.position?.x,
+        y: message?.pose?.position?.y,
+        z: message?.pose?.position?.z,
+      });
     });
 
     return () => {

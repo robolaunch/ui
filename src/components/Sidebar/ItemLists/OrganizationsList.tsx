@@ -1,8 +1,8 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch } from "../../../hooks/redux";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
 import { SidebarContext } from "../../../contexts/SidebarContext";
+import { ApiContext } from "../../../contexts/ApiContext";
+import { IApiInterface } from "../../../types/ApiInterface";
 
 interface IOrganizationList {
   reload: boolean;
@@ -17,15 +17,14 @@ export const OrganizationsList = ({
     useState<any>(undefined);
   const { selectedState }: any = useContext(SidebarContext);
 
-  const dispatch = useAppDispatch();
+  const { api }: IApiInterface = useContext(ApiContext);
 
   useEffect(() => {
-    dispatch(getOrganizations()).then((res: any) => {
-      console.log(res);
-      setResponseOrganizations(res?.payload?.data);
-      setItemCount(res?.payload?.data?.length);
+    api.getOrganizations().then((responseOrganizations: any) => {
+      setResponseOrganizations(responseOrganizations?.data?.data || []);
+      setItemCount(responseOrganizations?.data?.data?.length);
     });
-  }, [dispatch, reload, setItemCount]);
+  }, []);
 
   return (
     <Fragment>
