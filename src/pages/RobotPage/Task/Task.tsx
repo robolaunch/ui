@@ -17,8 +17,8 @@ import getWaypointIcon from "../../../helpers/GetWaypointIcon";
 import { TbMapPinFilled } from "react-icons/tb";
 import saveAs from "file-saver";
 import handleRostoDomMouseCoordinatesConverter from "../../../helpers/handleRostoDomMouseCoordinatesConverter";
-import { FaLocationArrow } from "react-icons/fa";
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
+import RosDraggableWaypoint from "../../../components/RosDraggableWaypoint/RosDraggableWaypoint";
 interface ITask {
   ros: any;
 }
@@ -61,21 +61,11 @@ export default function Task({ ros }: ITask): ReactElement {
     leaveDelay: 100,
   });
 
-  const map = new ROSLIB.Topic({
-    ros: ros,
-    name: "/map",
-    messageType: "nav_msgs/msg/OccupancyGrid",
-  });
-
-  const rosWaypointsWeb = new ROSLIB.Topic({
-    ros: ros,
-    name: "/way_points_web",
-    messageType: "std_msgs/msg/String",
-  });
-
   useEffect(() => {
-    rosWaypointsWeb?.subscribe(function (message: any) {
-      console.log(message);
+    const map = new ROSLIB.Topic({
+      ros: ros,
+      name: "/map",
+      messageType: "nav_msgs/msg/OccupancyGrid",
     });
 
     map?.subscribe(function (message: any) {
@@ -91,7 +81,6 @@ export default function Task({ ros }: ITask): ReactElement {
 
     return () => {
       map?.unsubscribe();
-      rosWaypointsWeb?.unsubscribe();
     };
   }, []);
 
@@ -234,138 +223,106 @@ export default function Task({ ros }: ITask): ReactElement {
       </div>
 
       <div className="h-full col-span-8">
-        <CardLayout
-          className="!relative h-full"
-          style={{
-            backgroundImage: `url(/images/bg-transparent.png)`,
-          }}
-        >
-          <TransformWrapper
-            disabled={isDragging}
-            onWheel={(e: any) => {
-              setSceneScale(e.state.scale);
-            }}
-          >
-            <TransformComponent>
-              <div className="w-full flex items-center justify-center">
+        <CardLayout className="!relative h-full">
+          <Fragment>
+            <TransformWrapper
+              disabled={isDragging}
+              onWheel={(e: any) => {
+                setSceneScale(e.state.scale);
+              }}
+            >
+              <TransformComponent>
                 <div
-                  className="relative border-4 border-layer-dark-600"
                   style={{
-                    width: rosMapDetails?.resolution?.x + "px",
-                    height: rosMapDetails?.resolution?.y + "px",
+                    backgroundImage: `url(/images/bg-transparent.png)`,
                   }}
+                  className="w-full flex items-center justify-center"
                 >
-                  <iframe
-                    title="map"
-                    style={{
-                      width: rosMapDetails?.resolution?.x + "px",
-                      height: rosMapDetails?.resolution?.y + "px",
-                      maxHeight: "100%",
-                      maxWidth: "100%",
-                      pointerEvents: "none",
-                    }}
-                    src={`/html/rosMap.html?ws=${ros.socket.url.slice(
-                      0,
-                      ros.socket.url.length - 1
-                    )}&costmap=${isCostMapActive ? "true" : "false"}`}
-                  />
-
                   <div
-                    ref={mouseRef}
-                    onContextMenu={(e) => {
-                      setRightClickRosMapCoordinates(
-                        handleDomRosMouseCoordinatesConverter({
-                          domMapMouseX: mouse?.x,
-                          domMapMouseY: mouse?.y,
-                          sceneScale: sceneScale,
-                          rosMapWebsocketWidth: rosMapDetails?.resolution?.x,
-                          rosMapWebsocketHeight: rosMapDetails?.resolution?.y,
-                          rosMapWidth: rosMapDetails?.x,
-                          rosMapHeight: rosMapDetails?.y,
-                        })
-                      );
-
-                      e.preventDefault();
-                      displayMenu(e);
+                    className="relative border-4 border-layer-dark-600"
+                    style={{
+                      width: `${rosMapDetails?.resolution?.x}px`,
+                      height: `${rosMapDetails?.resolution?.y}px`,
                     }}
-                    className="absolute inset-0"
                   >
-                    {activeMission !== -1 &&
-                      missions[activeMission]?.waypoints?.map(
-                        (waypoint: any, waypointIndex: number) => {
-                          return (
-                            <Draggable
-                              key={waypointIndex}
-                              scale={sceneScale}
-                              defaultPosition={handleRostoDomMouseCoordinatesConverter(
-                                {
-                                  rosMapWebsocketWidth:
-                                    rosMapDetails?.resolution?.x,
-                                  rosMapWebsocketHeight:
-                                    rosMapDetails?.resolution?.y,
-                                  rosMapWidth: rosMapDetails?.x,
-                                  rosMapHeight: rosMapDetails?.y,
-                                  waypointX: waypoint?.coordinates?.x,
-                                  waypointY: waypoint?.coordinates?.y,
-                                }
-                              )}
-                              onStart={() => setIsDragging(true)}
-                              onStop={(e, data) => {
-                                setIsDragging(false);
-                                console.log(e, data);
-
-                                const waypointCoordinates =
-                                  handleDomRosMouseCoordinatesConverter({
-                                    domMapMouseX: data.x,
-                                    domMapMouseY: data.y,
-                                    sceneScale: sceneScale,
-                                    rosMapWebsocketWidth:
-                                      rosMapDetails?.resolution?.x,
-                                    rosMapWebsocketHeight:
-                                      rosMapDetails?.resolution?.y,
-                                    rosMapWidth: rosMapDetails?.x,
-                                    rosMapHeight: rosMapDetails?.y,
-                                  });
-
-                                setMissions((prev: any) => {
-                                  let temp = [...prev];
-
-                                  temp[activeMission].waypoints[
-                                    waypointIndex
-                                  ].coordinates = {
-                                    x: waypointCoordinates?.x,
-                                    y: waypointCoordinates?.y,
-                                  };
-                                  return temp;
-                                });
-                              }}
-                              axis="both"
-                              disabled={activeMission === -1 ? true : false}
-                              bounds="parent"
-                              defaultClassNameDragging="cursor-move"
-                            >
-                              <div className="absolute !-top-5 ">
-                                <TbMapPinFilled
-                                  className="text-layer-secondary-500"
-                                  size={24}
-                                />
-                              </div>
-                            </Draggable>
-                          );
-                        }
-                      )}
-                    <RosRobotLocation
-                      ros={ros}
-                      rosMapWebsocketWidth={rosMapDetails?.resolution?.x}
-                      rosMapWebsocketHeight={rosMapDetails?.resolution?.y}
-                      rosMapWidth={rosMapDetails?.x}
-                      rosMapHeight={rosMapDetails?.y}
+                    <iframe
+                      title="map"
+                      style={{
+                        width: `${rosMapDetails?.resolution?.x}px`,
+                        height: `${rosMapDetails?.resolution?.y}px`,
+                        maxHeight: "100%",
+                        maxWidth: "100%",
+                        pointerEvents: "none",
+                      }}
+                      src={`/html/rosMap.html?ws=${ros.socket.url.slice(
+                        0,
+                        ros.socket.url.length - 1
+                      )}&costmap=${isCostMapActive ? "true" : "false"}`}
                     />
+
+                    <div
+                      ref={mouseRef}
+                      onContextMenu={(e) => {
+                        setRightClickRosMapCoordinates(
+                          handleDomRosMouseCoordinatesConverter({
+                            domMapMouseX: mouse?.x,
+                            domMapMouseY: mouse?.y,
+                            sceneScale: sceneScale,
+                            rosMapWebsocketWidth: rosMapDetails?.resolution?.x,
+                            rosMapWebsocketHeight: rosMapDetails?.resolution?.y,
+                            rosMapWidth: rosMapDetails?.x,
+                            rosMapHeight: rosMapDetails?.y,
+                          })
+                        );
+
+                        e.preventDefault();
+                        displayMenu(e);
+                      }}
+                      className="absolute inset-0"
+                    >
+                      {activeMission !== -1 &&
+                        missions[activeMission]?.waypoints?.map(
+                          (waypoint: any, waypointIndex: number) => {
+                            return (
+                              <RosDraggableWaypoint
+                                key={waypointIndex}
+                                waypoint={waypoint}
+                                waypointIndex={waypointIndex}
+                                setMissions={setMissions}
+                                rosMapDetails={rosMapDetails}
+                                sceneScale={sceneScale}
+                                activeMission={activeMission}
+                                setIsDragging={setIsDragging}
+                              />
+                            );
+                          }
+                        )}
+                      <RosRobotLocation
+                        ros={ros}
+                        rosMapWebsocketWidth={rosMapDetails?.resolution?.x}
+                        rosMapWebsocketHeight={rosMapDetails?.resolution?.y}
+                        rosMapWidth={rosMapDetails?.x}
+                        rosMapHeight={rosMapDetails?.y}
+                      />
+                    </div>
                   </div>
                 </div>
+              </TransformComponent>
+            </TransformWrapper>
+            <div className="absolute bottom-5 w-full flex items-center justify-center">
+              <div className="flex rounded-lg border border-layer-light-200 bg-layer-light-50">
+                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
+                  controlbar
+                </span>
+                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
+                  controlbar
+                </span>{" "}
+                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
+                  controlbar
+                </span>
               </div>
-            </TransformComponent>
-          </TransformWrapper>
+            </div>
+          </Fragment>
         </CardLayout>
       </div>
       <TaskManagementContextMenu
