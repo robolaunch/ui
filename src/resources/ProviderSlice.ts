@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInterceptor from "../utils/axiosInterceptor";
-import { toastifyProperties } from "../tools/Toastify";
+import axiosInterceptor from "../utils/axios.interceptor";
 import { toast } from "react-toastify";
 
 export const getProviders = createAsyncThunk(
@@ -34,7 +33,7 @@ export const providerSlice = createSlice({
     },
     [getProviders.rejected.type]: (state, action) => {
       console.log("getProviders.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
   },
 });

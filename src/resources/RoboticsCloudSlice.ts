@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInterceptor from "../utils/axiosInterceptor";
-import { toastifyProperties } from "../tools/Toastify";
+import axiosInterceptor from "../utils/axios.interceptor";
 import { toast } from "react-toastify";
 
 export const createRoboticsCloud = createAsyncThunk(
@@ -76,14 +75,14 @@ export const roboticsCloudSlice = createSlice({
     [createRoboticsCloud.fulfilled.type]: (state, action) => {
       console.log("createRoboticsCloud.fulfilled");
       if (action.payload.status) {
-        toast.success(action?.payload?.data?.message, toastifyProperties);
+        toast.success(action?.payload?.data?.message);
       } else {
-        toast.error(action?.payload?.data?.message, toastifyProperties);
+        toast.error(action?.payload?.data?.message);
       }
     },
     [createRoboticsCloud.rejected.type]: (state, action) => {
       console.log("createRoboticsCloud.rejected");
-      toast.error("Error is creating data.", toastifyProperties);
+      toast.error("Error is creating data.");
     },
     //
     //
@@ -96,7 +95,7 @@ export const roboticsCloudSlice = createSlice({
     },
     [getRoboticsClouds.rejected.type]: (state, action) => {
       console.log("getRoboticsClouds.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
     //
     //
@@ -109,7 +108,7 @@ export const roboticsCloudSlice = createSlice({
     },
     [getRoboticsCloudsByTeam.rejected.type]: (state, action) => {
       console.log("getRoboticsCloudsByTeamName.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
   },
 });

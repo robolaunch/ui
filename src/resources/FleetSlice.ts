@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInterceptor from "../utils/axiosInterceptor";
+import axiosInterceptor from "../utils/axios.interceptor";
 import { toast } from "react-toastify";
-import { toastifyProperties } from "../tools/Toastify";
 
 export const createFleet = createAsyncThunk(
   "fleet/createFleets",
@@ -92,14 +91,14 @@ export const fleetSlice = createSlice({
     [createFleet.fulfilled.type]: (state, action) => {
       console.log("createFleet.fulfilled");
       if (action.payload.status) {
-        toast.success(action?.payload?.data?.message, toastifyProperties);
+        toast.success(action?.payload?.data?.message);
       } else {
-        toast.error(action?.payload?.data?.message, toastifyProperties);
+        toast.error(action?.payload?.data?.message);
       }
     },
     [createFleet.rejected.type]: (state, action) => {
       console.log("createFleet.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
     //
     //
@@ -112,7 +111,7 @@ export const fleetSlice = createSlice({
     },
     [getFleets.rejected.type]: (state, action) => {
       console.log("getFleets.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
     //
     //
@@ -125,7 +124,7 @@ export const fleetSlice = createSlice({
     },
     [getFleetsByTeam.rejected.type]: (state, action) => {
       console.log("getFleetsByTeamName.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
     //
     //
@@ -138,7 +137,7 @@ export const fleetSlice = createSlice({
     },
     [getFleetsByRoboticsCloud.rejected.type]: (state, action) => {
       console.log("getFleetsByRoboticsCloudName.rejected");
-      toast.error("Error is fetcing data.", toastifyProperties);
+      toast.error("Error is fetcing data.");
     },
   },
 });

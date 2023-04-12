@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInstanceOrganization from "../utils/axiosInterceptor";
+import axiosInstanceOrganization from "../utils/axios.interceptor";
 
 export const getRobots = createAsyncThunk(
   "robot/getRobots",

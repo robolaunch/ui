@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosInterceptor from "../utils/axiosInterceptor";
+import axiosInterceptor from "../utils/axios.interceptor";
 import { toast } from "sonner";
 
 export const createOrganization = createAsyncThunk(
