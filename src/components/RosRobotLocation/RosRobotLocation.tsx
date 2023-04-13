@@ -59,19 +59,18 @@ export default function RosRobotLocation({
                 waypointX: rosRobotPosition?.x,
                 waypointY: rosRobotPosition?.y,
               })?.x,
-              top:
-                handleRostoDomMouseCoordinatesConverter({
-                  rosMapWebsocketWidth,
-                  rosMapWebsocketHeight,
-                  rosMapWidth,
-                  rosMapHeight,
-                  waypointX: rosRobotPosition?.x,
-                  waypointY: rosRobotPosition?.y,
-                })?.y - 24,
+              top: handleRostoDomMouseCoordinatesConverter({
+                rosMapWebsocketWidth,
+                rosMapWebsocketHeight,
+                rosMapWidth,
+                rosMapHeight,
+                waypointX: rosRobotPosition?.x,
+                waypointY: rosRobotPosition?.y,
+              })?.y,
             }}
           >
             <FaLocationArrow
-              className="text-layer-secondary-500"
+              className={`text-layer-secondary-500 transition-all duration-300`}
               style={{
                 rotate: `${rosRobotPosition?.z}deg`,
               }}
