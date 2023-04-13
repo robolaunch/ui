@@ -12,6 +12,7 @@ interface IRosDraggableWaypoint {
   rosMapDetails: any;
   sceneScale: number;
   setIsDragging: (value: boolean) => void;
+  hoverWaypoint?: number;
 }
 
 export default function RosDraggableWaypoint({
@@ -22,6 +23,7 @@ export default function RosDraggableWaypoint({
   rosMapDetails,
   sceneScale,
   setIsDragging,
+  hoverWaypoint,
 }: IRosDraggableWaypoint): ReactElement {
   return (
     <Draggable
@@ -63,9 +65,22 @@ export default function RosDraggableWaypoint({
       disabled={activeMission === -1 ? true : false}
       bounds="parent"
       defaultClassNameDragging="cursor-move"
+      defaultClassName="animate__animated animate__fadeIn"
     >
-      <div className="absolute !-top-5 ">
-        <TbMapPinFilled className="text-layer-secondary-500" size={24} />
+      <div className="absolute !-top-5">
+        <span
+          className={`flex items-center justify-center text-xs rounded-full transition-all duration-300 `}
+        >
+          {waypoint?.id}
+        </span>
+        <TbMapPinFilled
+          className={`${
+            waypointIndex === hoverWaypoint
+              ? "text-layer-primary-500 scale-150"
+              : "text-layer-secondary-500"
+          } transition-all duration-300`}
+          size={24}
+        />
       </div>
     </Draggable>
   );
