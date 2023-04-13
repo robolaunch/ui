@@ -9,7 +9,7 @@ export default function GridLines({ columns, rows }: IGridLines): ReactElement {
   return (
     <Fragment>
       <div className={`w-full h-full absolute inset-0 flex justify-between`}>
-        {[...Array(columns)].map((_, i) => {
+        {[...Array(Math.round(columns!))].map((_, i) => {
           return (
             <div
               key={i}
@@ -19,7 +19,7 @@ export default function GridLines({ columns, rows }: IGridLines): ReactElement {
         })}
       </div>
       <div className={`w-full h-full absolute inset-0 flex flex-col`}>
-        {[...Array(rows)].map((_, i) => {
+        {[...Array(Math.round(rows!))].map((_, i) => {
           return (
             <div
               key={i}
