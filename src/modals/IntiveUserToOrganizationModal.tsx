@@ -33,16 +33,28 @@ export default function InviteUserToOrganizationModal({
     <Dialog
       header="Invite User"
       visible={visibleModal}
-      className="w-[40vw]"
+      className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full flex flex-col gap-8"
+        className="w-full flex flex-col gap-6"
       >
         <p className="text-sm">
           Are you sure you want to invite this user to an organization?
         </p>
+        <div className="w-full">
+          <InputText
+            {...formik.getFieldProps("email")}
+            placeholder="Email"
+            disabled={formik.isSubmitting}
+            type="email"
+          />
+          <InputError
+            touched={formik.touched.email}
+            error={formik.errors.email}
+          />
+        </div>
         <div className="w-full">
           <InputText
             {...formik.getFieldProps("username")}
@@ -52,6 +64,28 @@ export default function InviteUserToOrganizationModal({
           <InputError
             touched={formik.touched.username}
             error={formik.errors.username}
+          />
+        </div>
+        <div className="w-full">
+          <InputText
+            {...formik.getFieldProps("firstName")}
+            placeholder="First Name"
+            disabled={formik.isSubmitting}
+          />
+          <InputError
+            touched={formik.touched.firstName}
+            error={formik.errors.firstName}
+          />
+        </div>
+        <div className="w-full">
+          <InputText
+            {...formik.getFieldProps("lastName")}
+            placeholder="Last Name"
+            disabled={formik.isSubmitting}
+          />
+          <InputError
+            touched={formik.touched.lastName}
+            error={formik.errors.lastName}
           />
         </div>
         <div className="w-full">
@@ -80,7 +114,7 @@ export default function InviteUserToOrganizationModal({
           <Button
             className="!w-56 !h-11"
             type="submit"
-            text="Delete User to Organization"
+            text="Invite User to Organization"
             disabled={formik.isSubmitting || !formik.isValid}
           />
         </div>

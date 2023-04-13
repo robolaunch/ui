@@ -5,7 +5,15 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 interface ITaskManagementContextMenu {
-  handleAddWaypointToMission: (type: string) => void;
+  handleAddWaypointToMission: ({
+    type,
+    x,
+    y,
+  }: {
+    type: string;
+    x?: number;
+    y?: number;
+  }) => void;
   MENU_ID: string;
   activeMission: number;
   handleCostMap: () => void;
@@ -23,7 +31,7 @@ export default function TaskManagementContextMenu({
     <Menu className="flex flex-col gap-2" id={MENU_ID}>
       <Item
         className="hover:!bg-layer-light-100"
-        onClick={() => handleAddWaypointToMission("go")}
+        onClick={() => handleAddWaypointToMission({ type: "go" })}
       >
         <div className="flex items-center gap-2 text-layer-dark-500">
           {getWaypointIcon({
@@ -35,7 +43,7 @@ export default function TaskManagementContextMenu({
       </Item>
       <Item
         disabled={activeMission === -1 ? true : false}
-        onClick={() => handleAddWaypointToMission("wait")}
+        onClick={() => handleAddWaypointToMission({ type: "wait" })}
       >
         <div className="flex items-center gap-2 text-layer-dark-500">
           {getWaypointIcon({
@@ -47,7 +55,11 @@ export default function TaskManagementContextMenu({
       </Item>
       <Item
         disabled={activeMission === -1 ? true : false}
-        onClick={() => handleAddWaypointToMission("move")}
+        onClick={() =>
+          handleAddWaypointToMission({
+            type: "move",
+          })
+        }
       >
         <div className="flex items-center gap-2 text-layer-dark-500">
           {getWaypointIcon({
@@ -59,7 +71,11 @@ export default function TaskManagementContextMenu({
       </Item>
       <Item
         disabled={activeMission === -1 ? true : false}
-        onClick={() => handleAddWaypointToMission("picture")}
+        onClick={() =>
+          handleAddWaypointToMission({
+            type: "picture",
+          })
+        }
       >
         <div className="flex items-center gap-2 text-layer-dark-500">
           {getWaypointIcon({

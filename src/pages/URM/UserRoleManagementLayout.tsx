@@ -87,12 +87,13 @@ export default function UserRoleManagementLayout(): ReactElement {
             can proceed here."
             component={
               <CardLayout className="pt-6">
-                <Fragment>
+                <div className="flex flex-col gap-4">
                   <Button
                     text="Invite User"
                     onClick={() =>
                       setVisibleInviteUserModal(!visibleInviteUserModal)
                     }
+                    className="!h-10"
                   />
 
                   <ul className="flex flex-col gap-2 text-sm ">
@@ -122,7 +123,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                       );
                     })}
                   </ul>
-                </Fragment>
+                </div>
               </CardLayout>
             }
           />

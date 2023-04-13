@@ -4,7 +4,6 @@ import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
 import { FiHome } from "react-icons/fi";
 import stringCapitalization from "../../helpers/stringCapitalization";
 import { Link } from "react-router-dom";
-import { MdOutlineNotificationsNone } from "react-icons/md";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 import NotificationDropdownMenu from "../NotificationDropdownMenu/NotificationDropdownMenu";
 

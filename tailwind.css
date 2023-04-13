@@ -171,3 +171,21 @@ td {
 ::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
+
+#test {
+  position: relative;
+  width: 80%; /* Set the initial width of the div */
+  height: 1px; /* Set the height to 1px to create a horizontal line */
+  background-color: black; /* Set the background color to black to hide the dots */
+}
+
+#test::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, transparent 50%, black 50%);
+  background-size: calc((100% - 8px) / 2) 1px; /* Calculate the width of the dots */
+}
