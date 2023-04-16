@@ -15,12 +15,16 @@ import TaskManagementContextMenu from "../../../components/TaskManagementContext
 import getWaypointIcon from "../../../helpers/GetWaypointIcon";
 import saveAs from "file-saver";
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
-import RosDraggableWaypoint from "../../../components/RosDraggableWaypoint/RosDraggableWaypoint";
+
 import GridLines from "../../../components/GridLines/GridLines";
-import { FaFlagCheckered, FaLocationArrow } from "react-icons/fa";
+import { FaLocationArrow } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
 import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
+import handleRostoDomMouseCoordinatesConverter from "../../../helpers/handleRostoDomMouseCoordinatesConverter";
+import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
+import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
+import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 
 interface ITask {
   ros: any;
@@ -29,7 +33,7 @@ interface ITask {
 export default function Task({ ros }: ITask): ReactElement {
   const [activeMission, setActiveMission] = useState<number>(-1);
   const [hoverWaypoint, setHoverWaypoint] = useState<number>(-1);
-  const [isCostMapActive, setIsCostMapActive] = useState<boolean>(true);
+  const [isCostMapActive, setIsCostMapActive] = useState<boolean>(false);
   const [sceneScale, setSceneScale] = useState<number>(1);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [rightClickRosMapCoordinates, setRightClickRosMapCoordinates] =
@@ -137,15 +141,15 @@ export default function Task({ ros }: ITask): ReactElement {
     };
   }
 
+  useEffect(() => {
+    console.log(activeMission !== -1 && missions[activeMission]?.waypoints);
+  }, [missions]);
+
   return (
     <div className="w-full h-[42rem] grid grid-cols-10 gap-6">
       <div className="h-full col-span-2">
         <CardLayout>
           <Fragment>
-            <div className="h-full flex gap-2">
-              <div onClick={() => handleExportJSON()}>export</div>
-              <input type="file" onChange={(e: any) => handleImportJSON(e)} />
-            </div>
             <div className="flex flex-col gap-1">
               {missions?.map((mission: any, missionIndex: number) => {
                 return (
@@ -200,6 +204,11 @@ export default function Task({ ros }: ITask): ReactElement {
               })}
             </div>
             <div className="flex flex-col text-xs pt-14">
+              <div className="h-full flex gap-2">
+                <div onClick={() => handleExportJSON()}>export</div>
+                <input type="file" onChange={(e: any) => handleImportJSON(e)} />
+              </div>
+              <span>Map Scale: {sceneScale}</span>
               <span>
                 Mouse Map Location on DOM: {mouse?.x} X {mouse?.y}
                 {rosMapDetails?.resolution?.y}
@@ -282,6 +291,11 @@ export default function Task({ ros }: ITask): ReactElement {
                         columns={rosMapDetails?.x}
                         rows={rosMapDetails?.y}
                       />
+                      <RosWaypointLine
+                        activeMission={activeMission}
+                        missions={missions}
+                        rosMapDetails={rosMapDetails}
+                      />
                       <RosMapWaypointLayout
                         activeMission={activeMission}
                         missions={missions}
@@ -303,83 +317,12 @@ export default function Task({ ros }: ITask): ReactElement {
                 </div>
               </TransformComponent>
             </TransformWrapper>
-            {activeMission !== -1 &&
-              missions[activeMission]?.waypoints.length && (
-                <div className="absolute top-4 w-full flex items-center justify-center animate__animated animate__fadeIn overflow-auto">
-                  <div className="w-[96%] flex p-1 justify-around rounded-lg border border-layer-light-200 bg-layer-light-50">
-                    <div className="flex items-center justify-center">
-                      <FaLocationArrow
-                        className="text-layer-secondary-500"
-                        size={12}
-                      />
-                    </div>
-                    <div className="flex items-center justify-center animate__animated animate__fadeIn">
-                      <BsArrowRight />
-                    </div>
-                    {missions[activeMission]?.waypoints?.map(
-                      (waypoint: any, waypointIndex: number) => {
-                        return (
-                          <Fragment>
-                            <div
-                              key={waypointIndex}
-                              onMouseEnter={() =>
-                                setHoverWaypoint(waypointIndex)
-                              }
-                              onMouseLeave={() => setHoverWaypoint(-1)}
-                              className="flex gap-2 px-3 py-1 rounded-md items-center justify-center hover:bg-layer-light-100 transition-all duration-300 animate__animated animate__fadeIn"
-                            >
-                              <span className="text-xs text-layer-light-50 flex items-center justify-center w-5 h-5 rounded-full bg-layer-secondary-500 ">
-                                {waypointIndex + 1}
-                              </span>
-
-                              {getWaypointIcon({
-                                type: waypoint?.taskType,
-                              })}
-
-                              <div className="flex flex-col items-center text-xs">
-                                <span>{waypoint?.name}</span>
-                                <span>
-                                  {String(waypoint?.coordinates?.x).slice(0, 5)}{" "}
-                                  x{" "}
-                                  {String(waypoint?.coordinates?.y).slice(0, 5)}
-                                </span>
-                              </div>
-                            </div>
-                            {waypointIndex !==
-                              missions[activeMission]?.waypoints.length - 1 && (
-                              <div className="flex items-center justify-center animate__animated animate__fadeIn">
-                                <div id="test"></div>
-                              </div>
-                            )}
-                          </Fragment>
-                        );
-                      }
-                    )}
-                    <div className="flex items-center justify-center animate__animated animate__fadeIn">
-                      <BsArrowRight />
-                    </div>
-                    <div className="flex items-center justify-center animate__animated animate__fadeIn">
-                      <FaFlagCheckered
-                        className="text-layer-secondary-500"
-                        size={16}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            <div className="absolute bottom-4 w-full flex items-center justify-center">
-              <div className="flex rounded-lg border border-layer-light-200 bg-layer-light-50">
-                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
-                  controlbar
-                </span>
-                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
-                  controlbar
-                </span>{" "}
-                <span className="py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
-                  controlbar
-                </span>
-              </div>
-            </div>
+            <RosNavigationBar
+              activeMission={activeMission}
+              missions={missions}
+              setHoverWaypoint={setHoverWaypoint}
+            />
+            <RosControlBar />
           </Fragment>
         </CardLayout>
       </div>
