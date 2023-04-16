@@ -96,7 +96,7 @@ export default function TaskManagementContextMenu({
       >
         <Item onClick={() => handleCostMap()}>
           <div className="flex items-center gap-2 text-layer-dark-500">
-            {isCostMapActive ? (
+            {!isCostMapActive ? (
               <AiOutlineEye size={20} />
             ) : (
               <AiOutlineEyeInvisible size={20} />

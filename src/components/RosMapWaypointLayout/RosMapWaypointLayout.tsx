@@ -31,6 +31,7 @@ export default function RosMapWaypointLayout({
                 waypoint={waypoint}
                 waypointIndex={waypointIndex}
                 setMissions={setMissions}
+                missions={missions}
                 rosMapDetails={rosMapDetails}
                 sceneScale={sceneScale}
                 activeMission={activeMission}

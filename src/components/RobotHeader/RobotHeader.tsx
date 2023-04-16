@@ -66,7 +66,7 @@ export default function RobotHeader({
   return (
     <CardLayout className="!pb-0">
       <Fragment>
-        <div className="h-28 flex justify-between p-4">
+        <div className="h-28 flex items-center justify-between p-4">
           <div className="flex flex-col gap-3">
             <span className="text-lg font-medium">{url?.robotName}</span>
             <span className="flex gap-2 items-center">

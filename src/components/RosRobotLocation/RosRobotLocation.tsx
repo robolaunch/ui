@@ -51,22 +51,24 @@ export default function RosRobotLocation({
           <div
             className="absolute animate-[pulse_0.5s_ease-in-out_infinite]"
             style={{
-              left: handleRostoDomMouseCoordinatesConverter({
-                rosMapWebsocketWidth,
-                rosMapWebsocketHeight,
-                rosMapWidth,
-                rosMapHeight,
-                waypointX: rosRobotPosition?.x,
-                waypointY: rosRobotPosition?.y,
-              })?.x,
-              top: handleRostoDomMouseCoordinatesConverter({
-                rosMapWebsocketWidth,
-                rosMapWebsocketHeight,
-                rosMapWidth,
-                rosMapHeight,
-                waypointX: rosRobotPosition?.x,
-                waypointY: rosRobotPosition?.y,
-              })?.y,
+              left:
+                handleRostoDomMouseCoordinatesConverter({
+                  rosMapWebsocketWidth,
+                  rosMapWebsocketHeight,
+                  rosMapWidth,
+                  rosMapHeight,
+                  waypointX: rosRobotPosition?.x,
+                  waypointY: rosRobotPosition?.y,
+                })?.x - 12,
+              top:
+                handleRostoDomMouseCoordinatesConverter({
+                  rosMapWebsocketWidth,
+                  rosMapWebsocketHeight,
+                  rosMapWidth,
+                  rosMapHeight,
+                  waypointX: rosRobotPosition?.x,
+                  waypointY: rosRobotPosition?.y,
+                })?.y - 12,
             }}
           >
             <FaLocationArrow
