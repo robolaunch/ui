@@ -3,6 +3,7 @@ import getWaypointIcon from "../../helpers/GetWaypointIcon";
 
 interface IWaypointList {
   waypoint: {
+    id: string;
     name: string;
     taskType: string;
     coordinates: {

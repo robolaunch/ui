@@ -18,12 +18,17 @@ export default function RosWaypointList({
   return (
     <DragDropContext
       onDragEnd={(result) => {
-        const items = Array.from(missions[activeMission].waypoints);
-        const [reorderedItem] = items.splice(result.source.index, 1);
-        items.splice(result!.destination!.index, 0, reorderedItem);
         setMissions((prev: any) => {
-          let temp = [...prev];
-          temp[activeMission].waypoints = items;
+          const temp = [...prev];
+          const [removed] = temp[activeMission].waypoints.splice(
+            result.source.index,
+            1
+          );
+          temp[activeMission].waypoints.splice(
+            result!.destination!.index,
+            0,
+            removed
+          );
           return temp;
         });
       }}
@@ -47,6 +52,7 @@ export default function RosWaypointList({
                 >
                   {(provided, snapshot) => (
                     <div
+                      key={waypointIndex}
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
@@ -60,7 +66,7 @@ export default function RosWaypointList({
                 </Draggable>
               );
             })}
-            {provided.placeholder} {/* Bu elemanı ekleyin */}
+            {provided.placeholder}
           </div>
         )}
       </Droppable>
