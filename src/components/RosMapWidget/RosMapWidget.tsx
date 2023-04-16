@@ -1,6 +1,8 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { BsPinMap } from "react-icons/bs";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
+import RosRobotLocation from "../RosRobotLocation/RosRobotLocation";
+import ROSLIB from "roslib";
 
 interface IRosMapWidget {
   ros: any;
@@ -30,7 +32,7 @@ export default function RosMapWidget({
             src={`/html/rosMap.html?ws=${ros.socket.url.slice(
               0,
               ros.socket.url.length - 1
-            )}&costmap=true`}
+            )}&robotLocation=true`}
           />
         )}
       </div>
