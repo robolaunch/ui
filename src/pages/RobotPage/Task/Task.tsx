@@ -12,16 +12,12 @@ import "react-contexify/dist/ReactContexify.css";
 import useMouse from "@react-hook/mouse-position";
 import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
 import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
-import getWaypointIcon from "../../../helpers/GetWaypointIcon";
 import saveAs from "file-saver";
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
 
 import GridLines from "../../../components/GridLines/GridLines";
-import { FaLocationArrow } from "react-icons/fa";
-import { BsArrowRight } from "react-icons/bs";
 import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
 import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
-import handleRostoDomMouseCoordinatesConverter from "../../../helpers/handleRostoDomMouseCoordinatesConverter";
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
@@ -292,6 +288,7 @@ export default function Task({ ros }: ITask): ReactElement {
                         rows={rosMapDetails?.y}
                       />
                       <RosWaypointLine
+                        ros={ros}
                         activeMission={activeMission}
                         missions={missions}
                         rosMapDetails={rosMapDetails}
@@ -302,6 +299,7 @@ export default function Task({ ros }: ITask): ReactElement {
                         setMissions={setMissions}
                         rosMapDetails={rosMapDetails}
                         sceneScale={sceneScale}
+                        isDragging={isDragging}
                         setIsDragging={setIsDragging}
                         hoverWaypoint={hoverWaypoint}
                       />

@@ -14,6 +14,7 @@ interface IRosDraggableWaypoint {
   missions: any;
   rosMapDetails: any;
   sceneScale: number;
+  isDragging: boolean;
   setIsDragging: (value: boolean) => void;
   hoverWaypoint?: number;
 }
@@ -26,6 +27,7 @@ export default function RosDraggableWaypoint({
   missions,
   rosMapDetails,
   sceneScale,
+  isDragging,
   setIsDragging,
   hoverWaypoint,
 }: IRosDraggableWaypoint): ReactElement {
@@ -96,9 +98,8 @@ export default function RosDraggableWaypoint({
           return temp;
         });
       }}
-      onStop={(e, data) => setIsDragging(false)}
+      onStop={() => setIsDragging(false)}
       axis="both"
-      disabled={activeMission === -1 ? true : false}
       bounds="parent"
       defaultClassNameDragging="cursor-move"
       defaultClassName="animate__animated animate__fadeIn"
