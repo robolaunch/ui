@@ -24,8 +24,8 @@ export default function RosEmergencyControlWidget({
     >
       <div className="flex flex-col items-center justify-center gap-6 h-full">
         <div className="flex gap-2">
-          <Button className="w-28" text="Start" disabled />
-          <Button className="w-28" text="Stop" />
+          <Button className="!w-24" text="Start" disabled />
+          <Button className="!w-24" text="Stop" />
         </div>
         <div className="flex items-center justify-center bg-layer-light-100 p-2 rounded-lg gap-2 text-sm">
           <span>State:</span>
