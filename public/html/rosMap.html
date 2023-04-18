@@ -96,7 +96,6 @@
             }, 7000);
           }
 
-          console.log(urlParams.get("robotLocation"));
           if (urlParams.get("robotLocation")) {
             var poseTopic = new ROSLIB.Topic({
               ros: ros,
@@ -108,7 +107,7 @@
               size: 0.1,
               strokeColor: "blue",
               strokeSize: 0.25,
-              pulse: true,
+              pulse: false,
             });
 
             poseTopic.subscribe(function (pose) {
