@@ -510,7 +510,7 @@ export default function Stream({ connectionURLs }: IStream): ReactElement {
                     return "Request Control";
                   }
 
-                  return "Took Control";
+                  return "Take Control";
                 })()}
                 onClick={() => handleControl()}
                 className="text-xs h-10 w-28"
