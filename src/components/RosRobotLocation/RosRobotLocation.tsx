@@ -49,7 +49,7 @@ export default function RosRobotLocation({
         rosRobotPosition?.x &&
         rosRobotPosition?.y && (
           <div
-            className="absolute animate-[pulse_0.5s_ease-in-out_infinite]"
+            className="absolute"
             style={{
               left:
                 handleRostoDomMouseCoordinatesConverter({

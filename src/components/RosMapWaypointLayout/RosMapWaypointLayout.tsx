@@ -1,29 +1,19 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useContext } from "react";
 import RosDraggableWaypoint from "../RosDraggableWaypoint/RosDraggableWaypoint";
+import { TaskManagementContext } from "../../contexts/TaskManagementContext";
 
-interface IRosMapWaypointLayout {
-  activeMission: number;
-  missions: any;
-  setMissions: any;
-  rosMapDetails: any;
-  sceneScale: number;
-  isDragging: boolean;
-  setIsDragging: (value: boolean) => void;
-  isRotating: boolean;
-  setIsRotating: (value: boolean) => void;
-  hoverWaypoint?: number;
-}
+export default function RosMapWaypointLayout(): ReactElement {
+  const {
+    activeMission,
+    missions,
+    setMissions,
+    rosMapDetails,
+    sceneScale,
+    isDragging,
+    setIsDragging,
+    hoverWaypoint,
+  }: any = useContext(TaskManagementContext);
 
-export default function RosMapWaypointLayout({
-  activeMission,
-  missions,
-  setMissions,
-  rosMapDetails,
-  sceneScale,
-  isDragging,
-  setIsDragging,
-  hoverWaypoint,
-}: IRosMapWaypointLayout): ReactElement {
   return (
     <Fragment>
       {activeMission !== -1 &&

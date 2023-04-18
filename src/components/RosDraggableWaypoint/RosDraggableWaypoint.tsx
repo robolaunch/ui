@@ -1,10 +1,11 @@
 import React, { ReactElement } from "react";
 import Draggable from "react-draggable";
 import handleRostoDomMouseCoordinatesConverter from "../../helpers/handleRostoDomMouseCoordinatesConverter";
-import { TbMapPinFilled } from "react-icons/tb";
+import { TbArrowBigUpLinesFilled, TbMapPinFilled } from "react-icons/tb";
 import handleDomRosMouseCoordinatesConverter from "../../helpers/handleDomtoRosMouseCoordinatesConverter";
 import { FaFlagCheckered } from "react-icons/fa";
 import { CgFlagAlt } from "react-icons/cg";
+import { TfiArrowUp } from "react-icons/tfi";
 
 interface IRosDraggableWaypoint {
   waypoint: any;
@@ -94,6 +95,7 @@ export default function RosDraggableWaypoint({
           temp[activeMission].waypoints[waypointIndex].coordinates = {
             x: waypointCoordinates?.x,
             y: waypointCoordinates?.y,
+            z: temp[activeMission].waypoints[waypointIndex].coordinates.z,
           };
           return temp;
         });
@@ -111,7 +113,7 @@ export default function RosDraggableWaypoint({
             className={`${
               waypointIndex === hoverWaypoint
                 ? "text-layer-primary-900 scale-150"
-                : "text-layer-secondary-900"
+                : "text-layer-secondary-500"
             } transition-all duration-300 ml-2 mt-1`}
             size={20}
           />
@@ -135,6 +137,19 @@ export default function RosDraggableWaypoint({
             size={24}
           />
         )}
+        <div
+          style={{
+            transform: `rotate(${waypoint?.coordinates?.z}deg)`,
+          }}
+          className="absolute top-3 left-1"
+        >
+          <TbArrowBigUpLinesFilled className="mb-2 text-layer-secondary-800 " />
+          {/* <img
+            src="/images/rosMapRotate.png"
+            className="scale-150"
+            alt="rosMapRotate"
+          /> */}
+        </div>
       </div>
     </Draggable>
   );

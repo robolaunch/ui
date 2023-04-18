@@ -7,6 +7,7 @@ interface IRosWaypointList {
   missions: any;
   activeMission: number;
   mission: any;
+  missionIndex: number;
 }
 
 export default function RosWaypointList({
@@ -14,6 +15,7 @@ export default function RosWaypointList({
   missions,
   activeMission,
   mission,
+  missionIndex,
 }: IRosWaypointList) {
   return (
     <DragDropContext
@@ -38,7 +40,7 @@ export default function RosWaypointList({
           <div
             className="flex flex-col gap-3"
             style={{
-              minHeight: `${mission?.waypoints?.length * 3.75}rem`,
+              minHeight: `${mission?.waypoints?.length * 7.5}rem`,
             }}
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -60,6 +62,7 @@ export default function RosWaypointList({
                       <RosWaypointListItem
                         waypoint={waypoint}
                         waypointIndex={waypointIndex}
+                        missionIndex={missionIndex}
                       />
                     </div>
                   )}
@@ -70,6 +73,23 @@ export default function RosWaypointList({
           </div>
         )}
       </Droppable>
+      <div className="flex items-center justify-center">
+        <button
+          onClick={() => {
+            setMissions((prev: any) => {
+              const temp = [...prev];
+              temp.splice(activeMission, 1);
+              return temp;
+            });
+          }}
+          className="text-xs text-red-700"
+          style={{
+            fontSize: "0.65rem",
+          }}
+        >
+          Delete Mission
+        </button>
+      </div>
     </DragDropContext>
   );
 }

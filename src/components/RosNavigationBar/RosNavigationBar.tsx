@@ -1,20 +1,15 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useContext } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { FaFlagCheckered, FaLocationArrow } from "react-icons/fa";
 import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { CgFlagAlt } from "react-icons/cg";
+import { TaskManagementContext } from "../../contexts/TaskManagementContext";
 
-interface IRosNavigationBar {
-  activeMission: number;
-  missions: any;
-  setHoverWaypoint: (value: number) => void;
-}
+export default function RosNavigationBar(): ReactElement {
+  const { activeMission, missions, setHoverWaypoint }: any = useContext(
+    TaskManagementContext
+  );
 
-export default function RosNavigationBar({
-  activeMission,
-  missions,
-  setHoverWaypoint,
-}: IRosNavigationBar): ReactElement {
   return (
     <Fragment>
       {activeMission !== -1 && missions[activeMission]?.waypoints.length ? (
@@ -61,7 +56,8 @@ export default function RosNavigationBar({
                         <span>{waypoint?.name}</span>
                         <span>
                           {String(waypoint?.coordinates?.x).slice(0, 5)} x{" "}
-                          {String(waypoint?.coordinates?.y).slice(0, 5)}
+                          {String(waypoint?.coordinates?.y).slice(0, 5)}x{" "}
+                          {String(waypoint?.coordinates?.z).slice(0, 5)}
                         </span>
                       </div>
                     </div>

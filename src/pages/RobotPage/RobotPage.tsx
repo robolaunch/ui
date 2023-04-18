@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
@@ -12,6 +12,7 @@ import Workspaces from "./Workspaces/Workspaces";
 import K8SResources from "./K8SResources/K8SResources";
 import StreamContext from "../../contexts/StreamContext";
 import Task from "./Task/Task";
+import TaskManagementContext from "../../contexts/TaskManagementContext";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -20,14 +21,10 @@ export default function RobotPage(): ReactElement {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [connectionURLs, setConnectionURLs] = useState<any>({
-    // rosURL: "ws://localhost:9090",
-    rosURL: "ws://172.16.44.200:31090",
-    // remoteDesktopURL: "ws://172.16.44.200:32580/vdi/ws?password=admin",
-    // remoteDesktopURL: "ws://172.16.44.170:8080/vdi/ws?password=admin",
-    // remoteDesktopURL: "ws://18.194.41.119:30229/vdi/ws?password=admin",
-    remoteDesktopURL: "ws://172.16.44.200:30613/vdi/ws?password=admin",
-
-    ideURL: "http://172.16.44.200:31241",
+    rosURL: "ws://localhost:9090",
+    // rosURL: "ws://172.16.44.200:32462",
+    remoteDesktopURL: "ws://localhost:8080/ws?password=admin",
+    ideURL: "http://172.16.44.200:31212",
   });
 
   useEffect(() => {
@@ -139,7 +136,11 @@ export default function RobotPage(): ReactElement {
               );
 
             case "Task":
-              return <Task ros={ros} />;
+              return (
+                <TaskManagementContext>
+                  <Task ros={ros} />
+                </TaskManagementContext>
+              );
 
             case "Loading":
               return (

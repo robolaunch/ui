@@ -1,10 +1,11 @@
 import { useKeycloak } from "@react-keycloak/web";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import Button from "../Button/Button";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
-
+import { StreamContext } from "../../contexts/StreamContext";
+import { TfiReload } from "react-icons/tfi";
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
   client: any;
@@ -21,6 +22,8 @@ export default function RemoteDesktopController({
   handleFullScreen,
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
+
+  const { setScreenResolution }: any = useContext(StreamContext);
 
   const { keycloak } = useKeycloak();
 
@@ -73,33 +76,32 @@ export default function RemoteDesktopController({
               />
             </button>
           )}
-          <div>
-            <VolumeControl
-              isMuted={remoteDesktopReducer?.isMuted}
-              handleVolumeControl={handleVolumeControl}
-              handleMute={handleMute}
-            />
-          </div>
-          <div>
-            <Button
-              text={(() => {
-                if (
-                  remoteDesktopReducer?.controller?.displayname ===
-                  keycloak?.tokenParsed?.preferred_username
-                ) {
-                  return "Release Control";
-                }
+          <TfiReload size={20} onClick={() => setScreenResolution()} />
 
-                if (remoteDesktopReducer?.controller?.displayname) {
-                  return "Request Control";
-                }
+          <VolumeControl
+            isMuted={remoteDesktopReducer?.isMuted}
+            handleVolumeControl={handleVolumeControl}
+            handleMute={handleMute}
+          />
 
-                return "Took Control";
-              })()}
-              onClick={() => handleControl()}
-              className="text-xs h-10 !w-40"
-            />
-          </div>
+          <Button
+            text={(() => {
+              if (
+                remoteDesktopReducer?.controller?.displayname ===
+                keycloak?.tokenParsed?.preferred_username
+              ) {
+                return "Release Control";
+              }
+
+              if (remoteDesktopReducer?.controller?.displayname) {
+                return "Request Control";
+              }
+
+              return "Take Control";
+            })()}
+            onClick={() => handleControl()}
+            className="text-xs h-10 !w-40"
+          />
         </div>
       )}
     </div>
