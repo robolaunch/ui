@@ -245,6 +245,25 @@ export function FloatMenu({
         >
           <BsJoystick size={22} className="text-layer-light-800" />
         </CircleMenuItem>
+
+        <CircleMenuItem
+          tooltip="Remote Deskop"
+          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          onClick={() =>
+            handleAddWidget({
+              grid,
+              widget: "RosRemoteDesktopWidget",
+              type,
+              ros,
+              topicList,
+              localStoragePath,
+              handleRemoveWidget,
+              handleForceUpdate,
+            })
+          }
+        >
+          <BsJoystick size={22} className="text-layer-light-800" />
+        </CircleMenuItem>
       </CircleMenu>
     </div>
   );
