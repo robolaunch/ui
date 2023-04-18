@@ -1251,7 +1251,7 @@ Guacamole.Keyboard = function Keyboard(element) {
    */
   this.listenTo = function listenTo(element) {
     // When key pressed
-    element.addEventListener(
+    element?.addEventListener(
       "keydown",
       function (e) {
         // Only intercept if handler set
@@ -1287,7 +1287,7 @@ Guacamole.Keyboard = function Keyboard(element) {
     );
 
     // When key pressed
-    element.addEventListener(
+    element?.addEventListener(
       "keypress",
       function (e) {
         // Only intercept if handler set
@@ -1314,7 +1314,7 @@ Guacamole.Keyboard = function Keyboard(element) {
     );
 
     // When key released
-    element.addEventListener(
+    element?.addEventListener(
       "keyup",
       function (e) {
         // Only intercept if handler set
@@ -1393,8 +1393,8 @@ Guacamole.Keyboard = function Keyboard(element) {
     };
 
     // Automatically type text entered into the wrapped field
-    element.addEventListener("input", handleInput, false);
-    element.addEventListener("compositionend", handleComposition, false);
+    element?.addEventListener("input", handleInput, false);
+    element?.addEventListener("compositionend", handleComposition, false);
   };
 
   // Listen to given element, if any
