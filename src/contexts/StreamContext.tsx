@@ -32,35 +32,35 @@ export default ({ connectionURLs, children }: IStreamContext) => {
   });
 
   function handleReducer(state: any, action: any) {
-    switch (action.type) {
+    switch (action?.type) {
       case "change/isMuted":
         return {
           ...state,
-          isMuted: action.payload,
+          isMuted: action?.payload,
         };
       case "member/list":
         return {
           ...state,
-          members: action.payload,
+          members: action?.payload,
         };
       case "member/connected":
-        toast.success(`${action.payload?.displayname} has joined the room`);
+        toast.success(`${action?.payload?.displayname} has joined the room`);
         return {
           ...state,
-          members: [...state.members, action.payload],
+          members: [...state?.members, action?.payload],
         };
       case "member/disconnected":
         toast.error(
           `${
-            state.members.filter(
-              (member: any) => member.id === action.payload?.id
+            state?.members?.filter(
+              (member: any) => member?.id === action?.payload?.id
             )[0]?.displayname
           } has left the room`
         );
 
         return {
           ...state,
-          members: state.members.filter(
+          members: state?.members?.filter(
             (member: any) => member.id !== action.payload.id
           ),
         };
@@ -83,7 +83,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
 
       case "control/release":
         toast.success(`
-          ${state.controller?.displayname} has released the controls
+          ${state?.controller?.displayname} has released the controls
           `);
         return {
           ...state,
@@ -93,15 +93,15 @@ export default ({ connectionURLs, children }: IStreamContext) => {
       case "control/locked":
         toast.success(
           `${
-            state.members.filter(
-              (member: any) => member.id === action.payload.id
+            state?.members?.filter(
+              (member: any) => member?.id === action?.payload.id
             )[0]?.displayname
           } has taken control`
         );
 
         return {
           ...state,
-          controller: state.members.filter(
+          controller: state?.members?.filter(
             (member: any) => member.id === action.payload.id
           )[0],
         };
@@ -109,17 +109,17 @@ export default ({ connectionURLs, children }: IStreamContext) => {
       case "screen/resolution":
         return {
           ...state,
-          currentResolution: action.payload,
+          currentResolution: action?.payload,
         };
 
       case "chat/message":
         return {
           ...state,
           messages: [
-            ...state.messages,
+            ...state?.messages,
             {
-              id: action.payload.id,
-              content: action.payload.content,
+              id: action?.payload?.id,
+              content: action?.payload?.content,
               time:
                 new Date().getHours() +
                 ":" +
@@ -130,6 +130,17 @@ export default ({ connectionURLs, children }: IStreamContext) => {
           ],
         };
     }
+  }
+
+  function setScreenResolution() {
+    client.current.send(
+      JSON.stringify({
+        event: "screen/set",
+        width: 2048,
+        height: 1152,
+        rate: 50,
+      })
+    );
   }
 
   useEffect(() => {
@@ -440,6 +451,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
         video,
         handleMute,
         handleSendMessage,
+        setScreenResolution,
       }}
     >
       {children}
