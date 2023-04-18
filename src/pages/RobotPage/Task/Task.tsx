@@ -1,8 +1,7 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useContext, useEffect } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import ROSLIB from "roslib";
-import randomstring from "randomstring";
 import { CgTrashEmpty } from "react-icons/cg";
 import { BsPlayCircle } from "react-icons/bs";
 import InputToggle from "../../../components/InputToggle/InputToggle";
@@ -12,7 +11,6 @@ import "react-contexify/dist/ReactContexify.css";
 import useMouse from "@react-hook/mouse-position";
 import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
 import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
-import saveAs from "file-saver";
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
 
 import GridLines from "../../../components/GridLines/GridLines";
@@ -21,43 +19,30 @@ import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMa
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
+import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
 
 interface ITask {
   ros: any;
 }
 
 export default function Task({ ros }: ITask): ReactElement {
-  const [activeMission, setActiveMission] = useState<number>(-1);
-  const [hoverWaypoint, setHoverWaypoint] = useState<number>(-1);
-  const [isCostMapActive, setIsCostMapActive] = useState<boolean>(false);
-  const [sceneScale, setSceneScale] = useState<number>(1);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [rightClickRosMapCoordinates, setRightClickRosMapCoordinates] =
-    useState<any>();
-  const [rosMapDetails, setRosMapDetails] = useState<any>({
-    x: 0,
-    y: 0,
-  });
-  const [missions, setMissions] = useState<any>([
-    {
-      id: randomstring.generate(8),
-      name: "Mission 1",
-      active: true,
-      waypoints: [],
-    },
-    {
-      id: randomstring.generate(8),
-      name: "Mission 2",
-      active: true,
-      waypoints: [],
-    },
-    {
-      id: randomstring.generate(8),
-      name: "Mission 3",
-      active: true,
-      waypoints: [],
-    },
-  ]);
+  const {
+    missions,
+    setMissions,
+    activeMission,
+    setActiveMission,
+    isCostMapActive,
+    setIsCostMapActive,
+    isDragging,
+    sceneScale,
+    setSceneScale,
+    rosMapDetails,
+    setRosMapDetails,
+    setRightClickRosMapCoordinates,
+    handleExportJSON,
+    handleImportJSON,
+    handleAddWaypointToMission,
+  }: any = useContext(TaskManagementContext);
 
   const mouseRef = React.useRef<any>(null);
   const mouse = useMouse(mouseRef, {
@@ -88,30 +73,6 @@ export default function Task({ ros }: ITask): ReactElement {
     };
   }, []);
 
-  interface IhandleAddWaypointToMission {
-    type: string;
-    x?: number;
-    y?: number;
-  }
-
-  function handleAddWaypointToMission({
-    type,
-    x,
-    y,
-  }: IhandleAddWaypointToMission) {
-    let temp = [...missions];
-    temp[activeMission].waypoints.push({
-      id: randomstring.generate(8),
-      name: "Waypoint",
-      taskType: type,
-      coordinates: {
-        x: x || rightClickRosMapCoordinates?.x,
-        y: y || rightClickRosMapCoordinates?.y,
-      },
-    });
-    setMissions(temp);
-  }
-
   const MENU_ID = "context-menu";
   const { show } = useContextMenu({
     id: MENU_ID,
@@ -122,28 +83,9 @@ export default function Task({ ros }: ITask): ReactElement {
     });
   }
 
-  function handleExportJSON() {
-    var blob = new Blob([JSON.stringify(missions)], {
-      type: "text/plain;charset=utf-8",
-    });
-    saveAs(blob, `missions.json`);
-  }
-
-  function handleImportJSON(e: any) {
-    const fileReader = new FileReader();
-    fileReader.readAsText(e.target.files[0], "UTF-8");
-    fileReader.onload = (e) => {
-      setMissions(JSON.parse(e.target?.result as string));
-    };
-  }
-
-  useEffect(() => {
-    console.log(activeMission !== -1 && missions[activeMission]?.waypoints);
-  }, [missions]);
-
   return (
     <div className="w-full h-[42rem] grid grid-cols-10 gap-6">
-      <div className="h-full col-span-2">
+      <div className="h-full col-span-10 md:col-span-5 lg:col-span-4 xl:col-span-3 2xl:col-span-2">
         <CardLayout>
           <Fragment>
             <div className="flex flex-col gap-1">
@@ -158,16 +100,9 @@ export default function Task({ ros }: ITask): ReactElement {
                       <div className="flex items-center justify-between">
                         <span>{mission?.name}</span>
                         <div className="flex gap-2">
-                          <CgTrashEmpty
-                            className="cursor-pointer hover:scale-90 transition-all duration-300 text-red-800"
+                          <BsPlayCircle
+                            className="cursor-pointer hover:scale-90 transition-all duration-300"
                             size={20}
-                            onClick={() => {
-                              setMissions((prev: any) => {
-                                let temp = [...prev];
-                                temp.splice(missionIndex, 1);
-                                return temp;
-                              });
-                            }}
                           />
                           <InputToggle
                             icons={false}
@@ -181,10 +116,6 @@ export default function Task({ ros }: ITask): ReactElement {
                               });
                             }}
                           />
-                          <BsPlayCircle
-                            className="cursor-pointer hover:scale-90 transition-all duration-300"
-                            size={20}
-                          />
                         </div>
                       </div>
                     }
@@ -193,6 +124,7 @@ export default function Task({ ros }: ITask): ReactElement {
                       setMissions={setMissions}
                       missions={missions}
                       mission={mission}
+                      missionIndex={missionIndex}
                       activeMission={activeMission}
                     />
                   </Accordion>
@@ -204,28 +136,12 @@ export default function Task({ ros }: ITask): ReactElement {
                 <div onClick={() => handleExportJSON()}>export</div>
                 <input type="file" onChange={(e: any) => handleImportJSON(e)} />
               </div>
-              <span>Map Scale: {sceneScale}</span>
-              <span>
-                Mouse Map Location on DOM: {mouse?.x} X {mouse?.y}
-                {rosMapDetails?.resolution?.y}
-              </span>
-              <span>
-                Map Resolution on DOM: {mouse?.elementWidth} X{" "}
-                {mouse?.elementHeight}
-              </span>
-              <span>
-                Map Resolution on Websocket: {rosMapDetails?.resolution?.x} X{" "}
-                {rosMapDetails?.resolution?.y}
-              </span>
-              <span>
-                Map Resolution on ROS: {rosMapDetails?.x} X {rosMapDetails?.y}
-              </span>
             </div>
           </Fragment>
         </CardLayout>
       </div>
 
-      <div className="h-full col-span-8">
+      <div className="h-full col-span-10 md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">
         <CardLayout className="!relative h-full">
           <Fragment>
             <TransformWrapper
@@ -287,22 +203,8 @@ export default function Task({ ros }: ITask): ReactElement {
                         columns={rosMapDetails?.x}
                         rows={rosMapDetails?.y}
                       />
-                      <RosWaypointLine
-                        ros={ros}
-                        activeMission={activeMission}
-                        missions={missions}
-                        rosMapDetails={rosMapDetails}
-                      />
-                      <RosMapWaypointLayout
-                        activeMission={activeMission}
-                        missions={missions}
-                        setMissions={setMissions}
-                        rosMapDetails={rosMapDetails}
-                        sceneScale={sceneScale}
-                        isDragging={isDragging}
-                        setIsDragging={setIsDragging}
-                        hoverWaypoint={hoverWaypoint}
-                      />
+                      <RosWaypointLine ros={ros} />
+                      <RosMapWaypointLayout />
                       <RosRobotLocation
                         ros={ros}
                         rosMapWebsocketWidth={rosMapDetails?.resolution?.x}
@@ -315,11 +217,7 @@ export default function Task({ ros }: ITask): ReactElement {
                 </div>
               </TransformComponent>
             </TransformWrapper>
-            <RosNavigationBar
-              activeMission={activeMission}
-              missions={missions}
-              setHoverWaypoint={setHoverWaypoint}
-            />
+            <RosNavigationBar />
             <RosControlBar />
           </Fragment>
         </CardLayout>
@@ -329,7 +227,7 @@ export default function Task({ ros }: ITask): ReactElement {
         handleAddWaypointToMission={handleAddWaypointToMission}
         activeMission={activeMission}
         handleCostMap={() => {
-          setIsCostMapActive((prev) => !prev);
+          setIsCostMapActive((prev: any) => !prev);
         }}
         isCostMapActive={isCostMapActive}
       />
