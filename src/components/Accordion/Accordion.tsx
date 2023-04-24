@@ -27,19 +27,17 @@ export default function Accordion({
         <div className="w-full flex items-center justify-between p-2 h-11">
           <div className="w-full text-sm text-layer-dark-700">{header}</div>
           <div
-            className="px-3 hover:scale-110  transition-all duration-200"
+            className={`px-3 hover:scale-110  transition-all duration-200 ${
+              !isOpen ? "rotate-90" : "rotate-0"
+            }`}
             onClick={() => setIsOpen && setIsOpen(isOpen === id ? -1 : id)}
           >
-            {isOpen === id ? (
-              <SlArrowDown size={12} />
-            ) : (
-              <SlArrowRight size={12} />
-            )}
+            <SlArrowRight size={12} />
           </div>
         </div>
       }
     >
-      <div className="p-2">{children}</div>
+      <div className="p-2 relative">{children}</div>
     </Collapsible>
   );
 }

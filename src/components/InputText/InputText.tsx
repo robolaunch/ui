@@ -25,7 +25,9 @@ export default function InputText({
   onChange,
   onBlur,
 }: InputTextProps): ReactElement {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(
+    value && value.length > 0 ? true : false
+  );
 
   return (
     <div className="relative">
