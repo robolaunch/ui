@@ -1,5 +1,5 @@
 import randomstring from "randomstring";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import saveAs from "file-saver";
 import { toast } from "sonner";
 export const TaskManagementContext: any = createContext<any>(null);
@@ -45,6 +45,10 @@ export default ({ children }: any) => {
     saveAs(blob, `missions.json`);
   }
 
+  useEffect(() => {
+    console.log(isDragging);
+  }, [isDragging]);
+
   function handleImportJSON(file: any) {
     if (file.type === "application/json") {
       const fileReader = new FileReader();
@@ -61,7 +65,7 @@ export default ({ children }: any) => {
     let temp = [...missions];
     temp.push({
       id: randomstring.generate(8),
-      name: "Mission",
+      name: `Mission ${missions.length + 1}`,
       active: true,
       waypoints: [],
     });
