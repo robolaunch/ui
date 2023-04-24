@@ -24,9 +24,11 @@ export default function RosWaypointListItem({
   waypointIndex,
   missionIndex,
 }: IWaypointListItem) {
-  const { setMissions }: any = useContext(TaskManagementContext);
+  const { setMissions, activeMission }: any = useContext(TaskManagementContext);
 
   const joystickRef = useRef(null);
+
+  console.log(activeMission, missionIndex);
 
   return (
     <div
@@ -78,7 +80,16 @@ export default function RosWaypointListItem({
             <span>z: {String(waypoint?.coordinates?.z).slice(0, 5)}</span>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div
+          style={
+            activeMission !== missionIndex
+              ? {
+                  display: "none",
+                }
+              : {}
+          }
+          className="flex flex-col items-center justify-center"
+        >
           <Joystick
             ref={joystickRef}
             size={32}
