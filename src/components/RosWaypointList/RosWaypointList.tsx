@@ -45,30 +45,39 @@ export default function RosWaypointList({
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {mission?.waypoints?.map((waypoint: any, waypointIndex: number) => {
-              return (
-                <Draggable
-                  key={waypointIndex}
-                  draggableId={`${waypointIndex}`}
-                  index={waypointIndex}
-                >
-                  {(provided, snapshot) => (
-                    <div
+            {mission?.waypoints?.length !== 0 ? (
+              mission?.waypoints?.map(
+                (waypoint: any, waypointIndex: number) => {
+                  return (
+                    <Draggable
                       key={waypointIndex}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
+                      draggableId={`${waypointIndex}`}
+                      index={waypointIndex}
                     >
-                      <RosWaypointListItem
-                        waypoint={waypoint}
-                        waypointIndex={waypointIndex}
-                        missionIndex={missionIndex}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              );
-            })}
+                      {(provided, snapshot) => (
+                        <div
+                          key={waypointIndex}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <RosWaypointListItem
+                            waypoint={waypoint}
+                            waypointIndex={waypointIndex}
+                            missionIndex={missionIndex}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                }
+              )
+            ) : (
+              <div className="flex items-center justify-center text-center text-xs text-gray-500 pb-4">
+                No Waypoints. If you want to add a waypoint, right click on the
+                map.
+              </div>
+            )}
             {provided.placeholder}
           </div>
         )}
