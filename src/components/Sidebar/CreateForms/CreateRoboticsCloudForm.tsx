@@ -1,20 +1,15 @@
 import { useFormik } from "formik";
-import React, { Fragment, useContext, useEffect, useState } from "react";
-import { useAppDispatch } from "../../../hooks/redux";
+import React, { Fragment, useContext, useState } from "react";
 import InputError from "../../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../../validations/RoboticsCloudsValidations";
 import InputSelect from "../../InputSelect/InputSelect";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
-import { createRoboticsCloud } from "../../../resources/RoboticsCloudSlice";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { getProviders } from "../../../resources/ProviderSlice";
-import { getRegions } from "../../../resources/RegionSlice";
 
 export const CreateRoboticsCloudForm = () => {
   const [responseProviders, setResponseProviders] = useState<any>([]);
   const [responseRegions, setResponseRegions] = useState<any>([]);
-  const dispatch = useAppDispatch();
 
   const { selectedState, sidebarState, setSidebarState }: any =
     useContext(SidebarContext);
@@ -31,16 +26,7 @@ export const CreateRoboticsCloudForm = () => {
     onSubmit: (values, { setSubmitting }) => {
       formik.setSubmitting(true);
 
-      dispatch(
-        createRoboticsCloud({
-          teamName: selectedState?.team?.name,
-          provider: values.provider,
-          region: values.region,
-          name: values.name,
-          instanceType: values.instanceType,
-          connectionHub: values.connectionHub === "active" ? true : false,
-        })
-      );
+      // api create robotics cloud
 
       setTimeout(() => {
         formik.setSubmitting(false);
@@ -48,27 +34,6 @@ export const CreateRoboticsCloudForm = () => {
       }, 2000);
     },
   });
-
-  useEffect(() => {
-    dispatch(getProviders()).then((res: any) => {
-      setResponseProviders(res?.payload?.data?.data);
-    });
-  }, [dispatch]);
-
-  useEffect(() => {
-    formik.setFieldValue("region", "");
-
-    if (formik.values.provider) {
-      dispatch(getRegions({ provider: formik.values.provider })).then(
-        (res: any) => {
-          setResponseRegions(res?.payload?.data?.data);
-        }
-      );
-    } else {
-      setResponseRegions([]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, formik.values.provider]);
 
   return (
     <form

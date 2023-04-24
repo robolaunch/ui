@@ -11,16 +11,28 @@ export const MainSidebar: FC = () => {
         <SideBarMenuItem type="fleet" />
         <SideBarMenuItem type="robot" />
       </div>
-      <Link
-        to="/user-role-management"
-        className="transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90"
-      >
-        <img
-          className="w-10"
-          src={`/svg/sidebar/docs/docs-gray.svg`}
-          alt="Robolaunch"
-        />
-      </Link>
+      <div className="flex flex-col gap-2">
+        <Link
+          to="/marketplace"
+          className="transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90"
+        >
+          <img
+            className="w-10"
+            src={`/svg/sidebar/marketplace/marketplace-gray.svg`}
+            alt="Robolaunch"
+          />
+        </Link>
+        <Link
+          to="/user-role-management"
+          className="transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90"
+        >
+          <img
+            className="w-10"
+            src={`/svg/sidebar/docs/docs-gray.svg`}
+            alt="Robolaunch"
+          />
+        </Link>
+      </div>
     </div>
   );
 };

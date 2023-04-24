@@ -7,10 +7,8 @@ import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
 import InputSelect from "../../InputSelect/InputSelect";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { createFleet } from "../../../resources/FleetSlice";
 
 export const CreateFleetForm = () => {
-  const dispatch = useAppDispatch();
   const { selectedState, sidebarState, setSidebarState }: any =
     useContext(SidebarContext);
 
@@ -23,14 +21,7 @@ export const CreateFleetForm = () => {
     onSubmit: (values, { setSubmitting }) => {
       formik.setSubmitting(true);
 
-      dispatch(
-        createFleet({
-          teamName: selectedState?.team?.name,
-          roboticsCloudName: selectedState?.roboticscloud?.name,
-          name: values.name,
-          isFederated: values.isFederated === "active" ? true : false,
-        })
-      );
+      // api handler
 
       setTimeout(() => {
         formik.setSubmitting(false);
