@@ -11,7 +11,6 @@ import TaskManagement from "./TaskManagement/TaskManagement";
 import Workspaces from "./Workspaces/Workspaces";
 import K8SResources from "./K8SResources/K8SResources";
 import StreamContext from "../../contexts/StreamContext";
-import Task from "./Task/Task";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
 
 export default function RobotPage(): ReactElement {
@@ -99,7 +98,11 @@ export default function RobotPage(): ReactElement {
             case "Overview":
               return <Overview />;
             case "Task Management":
-              return <TaskManagement ros={ros} />;
+              return (
+                <TaskManagementContext>
+                  <TaskManagement ros={ros} />
+                </TaskManagementContext>
+              );
             case "ROS Workspaces":
               return <Workspaces />;
             case "K8S Resources":
@@ -134,14 +137,6 @@ export default function RobotPage(): ReactElement {
                   <DevelopmentSuite ros={ros} connectionURLs={connectionURLs} />
                 </StreamContext>
               );
-
-            case "Task":
-              return (
-                <TaskManagementContext>
-                  <Task ros={ros} />
-                </TaskManagementContext>
-              );
-
             case "Loading":
               return (
                 <div>
