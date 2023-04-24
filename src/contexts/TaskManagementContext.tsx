@@ -1,6 +1,7 @@
 import randomstring from "randomstring";
 import React, { createContext, useState } from "react";
 import saveAs from "file-saver";
+import { toast } from "sonner";
 export const TaskManagementContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
@@ -44,12 +45,27 @@ export default ({ children }: any) => {
     saveAs(blob, `missions.json`);
   }
 
-  function handleImportJSON(e: any) {
-    const fileReader = new FileReader();
-    fileReader.readAsText(e.target.files[0], "UTF-8");
-    fileReader.onload = (e) => {
-      setMissions(JSON.parse(e.target?.result as string));
-    };
+  function handleImportJSON(file: any) {
+    if (file.type === "application/json") {
+      const fileReader = new FileReader();
+      fileReader.readAsText(file, "UTF-8");
+      fileReader.onload = (e) => {
+        setMissions(JSON.parse(e.target?.result as string));
+      };
+    } else {
+      toast.error("Invalid file type. Please upload a JSON file.");
+    }
+  }
+
+  function handleAddMissions() {
+    let temp = [...missions];
+    temp.push({
+      id: randomstring.generate(8),
+      name: "Mission",
+      active: true,
+      waypoints: [],
+    });
+    setMissions(temp);
   }
 
   function handleAddWaypointToMission({
@@ -96,6 +112,7 @@ export default ({ children }: any) => {
         setRightClickRosMapCoordinates,
         handleExportJSON,
         handleImportJSON,
+        handleAddMissions,
         handleAddWaypointToMission,
       }}
     >

@@ -29,7 +29,7 @@ export default function RosNavigationBar(): ReactElement {
                       key={waypointIndex}
                       onMouseEnter={() => setHoverWaypoint(waypointIndex)}
                       onMouseLeave={() => setHoverWaypoint(-1)}
-                      className="flex gap-2 px-3 py-1 rounded-md items-center justify-center hover:bg-layer-light-100 transition-all duration-300 animate__animated animate__fadeIn"
+                      className="flex gap-2 px-3 py-1 rounded-md items-center justify-center hover:bg-layer-light-100 transition-all duration-300 animate__animated animate__fadeIn cursor-pointer"
                     >
                       <span className="text-xs text-layer-light-50 flex items-center justify-center w-7 h-7 rounded-full bg-layer-secondary-500 ">
                         {waypointIndex === 0 ? (

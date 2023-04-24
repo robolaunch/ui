@@ -2,8 +2,7 @@ import React, { Fragment, ReactElement, useContext, useEffect } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import ROSLIB from "roslib";
-import { CgTrashEmpty } from "react-icons/cg";
-import { BsPlayCircle } from "react-icons/bs";
+import { BsPlayCircle, BsPlusCircle } from "react-icons/bs";
 import InputToggle from "../../../components/InputToggle/InputToggle";
 import Accordion from "../../../components/Accordion/Accordion";
 import { useContextMenu } from "react-contexify";
@@ -20,7 +19,12 @@ import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
-
+import { EditText } from "react-edit-text";
+import Button from "../../../components/Button/Button";
+import { FileUploader } from "react-drag-drop-files";
+import { RiArrowGoBackFill } from "react-icons/ri";
+import { FaStopCircle } from "react-icons/fa";
+import { CiExport, CiImport } from "react-icons/ci";
 interface ITask {
   ros: any;
 }
@@ -41,6 +45,7 @@ export default function Task({ ros }: ITask): ReactElement {
     setRightClickRosMapCoordinates,
     handleExportJSON,
     handleImportJSON,
+    handleAddMissions,
     handleAddWaypointToMission,
   }: any = useContext(TaskManagementContext);
 
@@ -85,62 +90,80 @@ export default function Task({ ros }: ITask): ReactElement {
 
   return (
     <div className="w-full h-[42rem] grid grid-cols-10 gap-6">
-      <div className="h-full col-span-10 md:col-span-5 lg:col-span-4 xl:col-span-3 2xl:col-span-2">
+      <div className="h-full col-span-10 md:col-span-5 lg:col-span-4 xl:col-span-3 2xl:col-span-2  overflow-auto">
         <CardLayout>
           <Fragment>
-            <div className="flex flex-col gap-1">
-              {missions?.map((mission: any, missionIndex: number) => {
-                return (
-                  <Accordion
-                    key={missionIndex}
-                    isOpen={activeMission}
-                    setIsOpen={setActiveMission}
-                    id={missionIndex}
-                    header={
-                      <div className="flex items-center justify-between">
-                        <span>{mission?.name}</span>
-                        <div className="flex gap-2">
-                          <BsPlayCircle
-                            className="cursor-pointer hover:scale-90 transition-all duration-300"
-                            size={20}
-                          />
-                          <InputToggle
-                            icons={false}
-                            checked={mission?.active}
-                            onChange={() => {
+            <div className="h-full flex flex-col gap-1 py-2">
+              <div className="mx-auto font-medium pb-1">Missions</div>
+              {missions.length ? (
+                missions?.map((mission: any, missionIndex: number) => {
+                  return (
+                    <Accordion
+                      key={missionIndex}
+                      isOpen={activeMission}
+                      setIsOpen={setActiveMission}
+                      id={missionIndex}
+                      header={
+                        <div className="flex items-center justify-between">
+                          <EditText
+                            style={{
+                              maxWidth: "8rem",
+                            }}
+                            className="flex flex-col gap-1 !text-xs"
+                            type="text"
+                            value={mission?.name}
+                            onChange={(e: any) => {
                               setMissions((prev: any) => {
                                 let temp = [...prev];
-                                temp[missionIndex].active =
-                                  !temp[missionIndex].active;
+                                temp[missionIndex].name = e?.target?.value;
                                 return temp;
                               });
                             }}
                           />
+                          <div className="flex gap-2">
+                            <BsPlayCircle
+                              className="cursor-pointer hover:scale-90 transition-all duration-300"
+                              size={20}
+                            />
+                            <InputToggle
+                              icons={false}
+                              checked={mission?.active}
+                              onChange={() => {
+                                setMissions((prev: any) => {
+                                  let temp = [...prev];
+                                  temp[missionIndex].active =
+                                    !temp[missionIndex].active;
+                                  return temp;
+                                });
+                              }}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    }
-                  >
-                    <RosWaypointList
-                      setMissions={setMissions}
-                      missions={missions}
-                      mission={mission}
-                      missionIndex={missionIndex}
-                      activeMission={activeMission}
-                    />
-                  </Accordion>
-                );
-              })}
-            </div>
-            <div className="flex flex-col text-xs pt-14">
-              <div className="h-full flex gap-2">
-                <div onClick={() => handleExportJSON()}>export</div>
-                <input type="file" onChange={(e: any) => handleImportJSON(e)} />
-              </div>
+                      }
+                    >
+                      <RosWaypointList
+                        setMissions={setMissions}
+                        missions={missions}
+                        mission={mission}
+                        missionIndex={missionIndex}
+                        activeMission={activeMission}
+                      />
+                    </Accordion>
+                  );
+                })
+              ) : (
+                <div className="mx-auto pt-3 text-xs">No missions yet</div>
+              )}
+
+              <BsPlusCircle
+                onClick={() => handleAddMissions()}
+                className="mx-auto mt-4 hover:scale-90 cursor-pointer transition-all duration-300"
+                size={20}
+              />
             </div>
           </Fragment>
         </CardLayout>
       </div>
-
       <div className="h-full col-span-10 md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">
         <CardLayout className="!relative h-full">
           <Fragment>
@@ -218,6 +241,32 @@ export default function Task({ ros }: ITask): ReactElement {
               </TransformComponent>
             </TransformWrapper>
             <RosNavigationBar />
+            <div className="absolute left-4 bottom-4 cursor-pointer z-10">
+              <div className="flex flex-col rounded-lg border border-layer-light-200 bg-layer-light-50 text-xs">
+                <div
+                  className="flex gap-2 py-2 px-4 hover:bg-layer-light-100 transition-all duration-300"
+                  onClick={() => handleExportJSON()}
+                >
+                  <CiExport size={16} />
+                  <span>Export</span>
+                </div>
+                <FileUploader
+                  label="text"
+                  multiple={false}
+                  handleChange={(e: any) => {
+                    console.log(e);
+                    handleImportJSON(e);
+                  }}
+                  name="file"
+                  types={["json"]}
+                >
+                  <div className="flex gap-2 py-2 px-4 hover:bg-layer-light-100 transition-all duration-300">
+                    <CiImport size={16} />
+                    <span>Import</span>
+                  </div>
+                </FileUploader>
+              </div>
+            </div>
             <RosControlBar />
           </Fragment>
         </CardLayout>
