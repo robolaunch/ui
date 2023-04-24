@@ -6,18 +6,18 @@ import RobotPage from "../pages/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
-import UserRoleManagement from "../pages/URM/UserRoleManagementLayout";
+import UserRoleManagementLayout from "../pages/URM/UserRoleManagementLayout";
+import MarketplacePage from "../pages/Marketplace/MarketplacePage";
 
 export default function AppRoutes(): ReactElement {
   return (
     <Routes>
       <Route element={<PrivateLayout />}>
-        {/* URM Pages */}
         <Route
           path={`/user-role-management`}
-          element={<UserRoleManagement />}
+          element={<UserRoleManagementLayout />}
         />
-        {/* URM Pages */}
+        <Route path={`/marketplace`} element={<MarketplacePage />} />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />

@@ -59,7 +59,6 @@ export default ({ children, ros }: any) => {
       data: `stringdata`,
     });
   }
-
   function handleStartMission() {
     rosWaypointsWeb.publish({
       data: `stringdata`,
