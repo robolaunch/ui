@@ -5,7 +5,6 @@ import { TbArrowBigUpLinesFilled, TbMapPinFilled } from "react-icons/tb";
 import handleDomRosMouseCoordinatesConverter from "../../helpers/handleDomtoRosMouseCoordinatesConverter";
 import { FaFlagCheckered } from "react-icons/fa";
 import { CgFlagAlt } from "react-icons/cg";
-import { TfiArrowUp } from "react-icons/tfi";
 
 interface IRosDraggableWaypoint {
   waypoint: any;
@@ -104,7 +103,7 @@ export default function RosDraggableWaypoint({
       axis="both"
       bounds="parent"
       defaultClassNameDragging="cursor-move"
-      defaultClassName="animate__animated animate__fadeIn"
+      defaultClassName="animate__animated animate__fadeIn cursor-move"
     >
       <div className="absolute">
         {missions[activeMission]?.waypoints?.length > 1 &&

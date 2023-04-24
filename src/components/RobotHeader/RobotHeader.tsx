@@ -58,16 +58,13 @@ export default function RobotHeader({
     {
       name: "Remote Desktop",
     },
-    {
-      name: "Task",
-    },
   ];
 
   return (
-    <CardLayout className="!pb-0">
+    <CardLayout className="pt-6 px-8 !pb-0">
       <Fragment>
-        <div className="h-28 flex items-center justify-between p-4">
-          <div className="flex flex-col gap-3">
+        <div className="h-28 flex items-center justify-between">
+          <div className="h-full flex flex-col justify-around">
             <span className="text-lg font-medium">{url?.robotName}</span>
             <span className="flex gap-2 items-center">
               <AiOutlineTeam size={16} />
@@ -81,9 +78,9 @@ export default function RobotHeader({
             </span>
           </div>
 
-          <div className="text-xs font-medium text-layer-dark-400 flex gap-8">
-            <div className="flex 2xl:flex-col items-end gap-8">
-              <div className="flex xl:flex-col 2xl:flex-row  gap-2">
+          <div className="hidden md:flex text-xs font-medium text-layer-dark-400  gap-8">
+            <div className="h-full flex flex-col items-end gap-4">
+              <div className="flex gap-2">
                 <div className="flex  items-center rounded-lg p-2">
                   <span>Code Editor</span>
                   <InputToggle

@@ -29,10 +29,7 @@ export default function TaskManagementContextMenu({
 }: ITaskManagementContextMenu) {
   return (
     <Menu className="flex flex-col gap-2" id={MENU_ID}>
-      <Item
-        className="hover:!bg-layer-light-100"
-        onClick={() => handleAddWaypointToMission({ type: "go" })}
-      >
+      <Item className="hover:!bg-layer-light-100" onClick={() => {}}>
         <div className="flex items-center gap-2 text-layer-dark-500">
           {getWaypointIcon({
             type: "go",
@@ -96,10 +93,10 @@ export default function TaskManagementContextMenu({
       >
         <Item onClick={() => handleCostMap()}>
           <div className="flex items-center gap-2 text-layer-dark-500">
-            {!isCostMapActive ? (
-              <AiOutlineEye size={20} />
-            ) : (
+            {isCostMapActive ? (
               <AiOutlineEyeInvisible size={20} />
+            ) : (
+              <AiOutlineEye size={20} />
             )}
             <span className="text-sm">
               {isCostMapActive ? "Hide Cost Map" : "Show Cost Map"}

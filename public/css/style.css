@@ -1050,6 +1050,10 @@ video {
   width: 100%;
 }
 
+.w-6{
+  width: 1.5rem;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
@@ -1079,6 +1083,18 @@ video {
 
 .rotate-45{
   --tw-rotate: 45deg;
+  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-90{
+  --tw-rotate: 90deg;
+  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-0{
+  --tw-rotate: 0deg;
   -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
@@ -1637,6 +1653,11 @@ video {
   padding-bottom: 1rem;
 }
 
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .\!pb-0{
   padding-bottom: 0px !important;
 }
@@ -1695,6 +1716,10 @@ video {
 
 .pt-6{
   padding-top: 1.5rem;
+}
+
+.pt-2{
+  padding-top: 0.5rem;
 }
 
 .text-center{
@@ -1926,6 +1951,11 @@ video {
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .accent-primary{
@@ -2387,9 +2417,23 @@ td{
   background-color: rgb(203 119 255 / var(--tw-bg-opacity));
 }
 
+@media (min-width: 640px){
+  .sm\:hidden{
+    display: none;
+  }
+}
+
 @media (min-width: 768px){
   .md\:col-span-5{
     grid-column: span 5 / span 5;
+  }
+
+  .md\:flex{
+    display: flex;
+  }
+
+  .md\:hidden{
+    display: none;
   }
 }
 

@@ -47,7 +47,7 @@
     "react-gravatar": "^2.6.3",
     "react-icons": "^4.7.1",
     "react-image-size": "^2.0.0",
-    "react-joystick-component": "^6.0.0",
+    "react-joystick-component": "^6.2.0",
     "react-moveable": "^0.48.0",
     "react-particle-image": "^1.0.2",
     "react-redux": "^8.0.5",
