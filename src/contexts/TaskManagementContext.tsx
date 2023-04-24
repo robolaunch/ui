@@ -2,10 +2,11 @@ import randomstring from "randomstring";
 import React, { createContext, useEffect, useState } from "react";
 import saveAs from "file-saver";
 import { toast } from "sonner";
+import ROSLIB from "roslib";
 export const TaskManagementContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
-export default ({ children }: any) => {
+export default ({ children, ros }: any) => {
   const [missions, setMissions] = useState<any>([
     {
       id: randomstring.generate(8),
@@ -38,27 +39,31 @@ export default ({ children }: any) => {
   const [rightClickRosMapCoordinates, setRightClickRosMapCoordinates] =
     useState<any>();
 
-  function handleExportJSON() {
-    var blob = new Blob([JSON.stringify(missions)], {
-      type: "text/plain;charset=utf-8",
-    });
-    saveAs(blob, `missions.json`);
-  }
+  const rosWaypointsWeb = new ROSLIB.Topic({
+    ros: ros,
+    name: "/way_points_web",
+    messageType: "std_msgs/msg/String",
+  });
 
   useEffect(() => {
-    console.log(isDragging);
-  }, [isDragging]);
+    rosWaypointsWeb.subscribe(function (message: any) {});
 
-  function handleImportJSON(file: any) {
-    if (file.type === "application/json") {
-      const fileReader = new FileReader();
-      fileReader.readAsText(file, "UTF-8");
-      fileReader.onload = (e) => {
-        setMissions(JSON.parse(e.target?.result as string));
-      };
-    } else {
-      toast.error("Invalid file type. Please upload a JSON file.");
-    }
+    return () => {
+      rosWaypointsWeb.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleStartWaypoint() {
+    rosWaypointsWeb.publish({
+      data: `stringdata`,
+    });
+  }
+
+  function handleStartMission() {
+    rosWaypointsWeb.publish({
+      data: `stringdata`,
+    });
   }
 
   function handleAddMissions() {
@@ -71,7 +76,6 @@ export default ({ children }: any) => {
     });
     setMissions(temp);
   }
-
   function handleAddWaypointToMission({
     type,
     x,
@@ -94,7 +98,23 @@ export default ({ children }: any) => {
     });
     setMissions(temp);
   }
-
+  function handleExportJSON() {
+    var blob = new Blob([JSON.stringify(missions)], {
+      type: "text/plain;charset=utf-8",
+    });
+    saveAs(blob, `missions.json`);
+  }
+  function handleImportJSON(file: any) {
+    if (file.type === "application/json") {
+      const fileReader = new FileReader();
+      fileReader.readAsText(file, "UTF-8");
+      fileReader.onload = (e) => {
+        setMissions(JSON.parse(e.target?.result as string));
+      };
+    } else {
+      toast.error("Invalid file type. Please upload a JSON file.");
+    }
+  }
   return (
     <TaskManagementContext.Provider
       value={{
@@ -118,6 +138,8 @@ export default ({ children }: any) => {
         handleImportJSON,
         handleAddMissions,
         handleAddWaypointToMission,
+        handleStartWaypoint,
+        handleStartMission,
       }}
     >
       {children}

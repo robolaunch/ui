@@ -99,7 +99,7 @@ export default function RobotPage(): ReactElement {
               return <Overview />;
             case "Task Management":
               return (
-                <TaskManagementContext>
+                <TaskManagementContext ros={ros}>
                   <TaskManagement ros={ros} />
                 </TaskManagementContext>
               );

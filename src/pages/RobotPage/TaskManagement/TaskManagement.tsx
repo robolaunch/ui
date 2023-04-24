@@ -27,8 +27,6 @@ import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigation
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
 import { EditText } from "react-edit-text";
-import { FileUploader } from "react-drag-drop-files";
-import { CiExport, CiImport } from "react-icons/ci";
 import RosMapImportExport from "../../../components/RosMapImportExport/RosMapImportExport";
 interface ITask {
   ros: any;
