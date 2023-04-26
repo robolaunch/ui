@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 interface ICard {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
   loading?: boolean;
   className?: string;
   style?: any;
