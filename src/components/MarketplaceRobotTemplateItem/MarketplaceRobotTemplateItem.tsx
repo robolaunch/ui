@@ -121,6 +121,7 @@ export default function MarketplaceRobotTemplateItem({
             <li>ROS Version: ROS2</li>
             <li>ROS Distro: Humble</li>
             <li>Created Date: 04.09.2024</li>
+            <li>Deploy Count: 146</li>
           </ul>
           <img
             className="w-28"
