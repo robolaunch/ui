@@ -46,7 +46,7 @@ export default function MarketplacePage(): ReactElement {
       rosDistro: "galactic",
       star: true,
       starCount: 512,
-      access: undefined,
+      access: "private",
       ownership: true,
     },
     {
@@ -86,7 +86,7 @@ export default function MarketplacePage(): ReactElement {
       rosDistro: "galactic",
       star: false,
       starCount: 512,
-      access: undefined,
+      access: "private",
       ownership: false,
     },
     {
@@ -116,7 +116,7 @@ export default function MarketplacePage(): ReactElement {
       rosDistro: "galactic",
       star: false,
       starCount: 512,
-      access: undefined,
+      access: "private",
       ownership: false,
     },
     {

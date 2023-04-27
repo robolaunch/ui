@@ -3,7 +3,6 @@ import CardLayout from "../../layouts/CardLayout";
 import { BsShieldLockFill } from "react-icons/bs";
 import { MdPublic } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
-import InputSelect from "../InputSelect/InputSelect";
 import { Link } from "react-router-dom";
 import stringSlugify from "../../helpers/stringSlugify";
 interface IMarketplaceRobotTemplateItem {
@@ -48,72 +47,40 @@ export default function MarketplaceRobotTemplateItem({
             </span>
           </div>
           <div className="flex items-center gap-1 text-[0.60rem] font-medium text-layer-secondary-500 px-1.5 rounded-lg capitalize -ml-1.5">
-            {!template?.ownership ? (
-              <Fragment>
-                <span>Public Template</span>
-                <MdPublic size={16} className="text-layer-secondary-500" />{" "}
-              </Fragment>
-            ) : (
-              <Fragment>
-                <InputSelect className="!p-0 !w-fit !h-8 !border-none text-right">
-                  <Fragment>
-                    <option value={template?.access}>
-                      <span>
-                        {template?.access === "public"
-                          ? "Public"
-                          : template?.access === "organization"
-                          ? template?.organization
-                          : "Private"}{" "}
-                        Template
-                      </span>
-                    </option>
-
-                    {(() => {
-                      switch (template?.access) {
-                        case "public":
-                          return (
-                            <Fragment>
-                              <option value="organization">
-                                {template?.organization} Template
-                              </option>
-                              <option value="private">Private Template</option>
-                            </Fragment>
-                          );
-                        case "organization":
-                          return (
-                            <Fragment>
-                              <option value="public">Public Template</option>
-                              <option value="private">Private Template</option>
-                            </Fragment>
-                          );
-                        case undefined:
-                          return (
-                            <Fragment>
-                              <option value="public">Public Template</option>
-                              <option value="organization">
-                                {template?.organization} Template
-                              </option>
-                            </Fragment>
-                          );
-                      }
-                    })()}
-                  </Fragment>
-                </InputSelect>
-                {template?.access === "public" ? (
-                  <MdPublic size={16} className="text-layer-secondary-500" />
-                ) : template?.access === "organization" ? (
-                  <RiOrganizationChart
-                    size={16}
-                    className="text-layer-secondary-500"
-                  />
-                ) : (
-                  <BsShieldLockFill
-                    size={16}
-                    className="text-layer-secondary-500"
-                  />
-                )}
-              </Fragment>
-            )}
+            {(() => {
+              switch (template?.access) {
+                case "public":
+                  return (
+                    <Fragment>
+                      <span>Public Template</span>
+                      <MdPublic
+                        size={16}
+                        className="text-layer-secondary-500"
+                      />
+                    </Fragment>
+                  );
+                case "organization":
+                  return (
+                    <Fragment>
+                      <span>{template?.organization} Template</span>
+                      <RiOrganizationChart
+                        size={16}
+                        className="text-layer-secondary-500"
+                      />
+                    </Fragment>
+                  );
+                case "private":
+                  return (
+                    <Fragment>
+                      <span>Private Template</span>
+                      <BsShieldLockFill
+                        size={16}
+                        className="text-layer-secondary-500"
+                      />
+                    </Fragment>
+                  );
+              }
+            })()}
           </div>
         </div>
         <div className="flex items-center justify-between">

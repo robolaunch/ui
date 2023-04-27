@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 import { Editor } from "@monaco-editor/react";
 import { MdPublic } from "react-icons/md";
@@ -29,7 +29,6 @@ url:
 `,
     deployCount: 67,
   });
-  const [editedItem, setEditedItem] = useState(templateItem);
 
   return (
     <div className="grid grid-cols-12 gap-6">
@@ -133,7 +132,7 @@ url:
           <Editor
             height="40rem"
             defaultLanguage="yaml"
-            defaultValue={editedItem?.yaml}
+            defaultValue={templateItem?.yaml}
             options={{
               minimap: {
                 enabled: false,
@@ -151,8 +150,8 @@ url:
             }}
             theme="vs-dark"
             onChange={(value: any) =>
-              setEditedItem({
-                ...editedItem,
+              setTemplateItem({
+                ...templateItem,
                 yaml: value,
               })
             }
