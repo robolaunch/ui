@@ -6,7 +6,7 @@ import { RobotsList } from "../ItemLists/RobotsList";
 import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
 import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm";
 import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
-import { CreateRobotForm } from "../CreateForms/CreateRobotForm";
+import CreateRobotLayout from "../../../layouts/CreateRobotLayout";
 import stringCapitalization from "../../../helpers/stringCapitalization";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import Button from "../../Button/Button";
@@ -30,12 +30,6 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       return `Cancel`;
     } else {
       return `Create ${sidebarState?.page}`;
-    }
-  };
-
-  const handleButtonClassNames = () => {
-    if (sidebarState?.isCreateMode) {
-      return `!bg-layer-primary-100 hover:!bg-layer-primary-200 mt-3 bg-layer-light-50 text-layer-primary-700 border border-layer-primary-700 transition-all duration-500`;
     }
   };
 
@@ -100,7 +94,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
                 );
               case "robot":
                 if (sidebarState?.isCreateMode) {
-                  return <CreateRobotForm />;
+                  return <CreateRobotLayout />;
                 }
                 return (
                   <RobotsList reload={reload} setItemCount={setItemCount} />
@@ -110,7 +104,10 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         </div>
       </div>
       <Button
-        className={handleButtonClassNames()}
+        className={`${
+          sidebarState?.isCreateMode &&
+          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border-2 border-layer-primary-700 mt-3 transition-all duration-500"
+        }`}
         text={handleButtonText()}
         onClick={() => {
           if (sidebarState?.isCreateMode) {

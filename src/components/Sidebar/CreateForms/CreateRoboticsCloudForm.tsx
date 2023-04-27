@@ -84,7 +84,7 @@ export const CreateRoboticsCloudForm = () => {
         <InputText
           {...formik.getFieldProps("name")}
           placeholder="Robotics Cloud Name"
-          type="name"
+          type="text"
           disabled={formik.isSubmitting}
         />
         <InputError error={formik.errors.name} touched={formik.touched.name} />

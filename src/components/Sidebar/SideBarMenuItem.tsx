@@ -2,25 +2,28 @@ import React, { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { SidebarContext } from "../../contexts/SidebarContext";
 
-interface SideBarMenuItemProps {
+interface ISideBarMenuItem {
   type: string;
 }
 
-export const SideBarMenuItem = ({ type }: SideBarMenuItemProps) => {
+export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
   const { theme }: any = useContext(ThemeContext);
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
-  const colorSwitcher = () => {
+  function colorSwitcher() {
     if (theme === "light") {
+      // if (sidebarState?.page === type) {
+      //   return "purple";
+      // }
       return "gray";
     } else {
       return "white";
     }
-  };
+  }
 
   const activeSwitcher = () => {
     if (sidebarState?.page === type) {
-      return "bg-lightLayer-300";
+      return "bg-layer-light-100";
     }
   };
 

@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { ReactElement } from "react";
 import { SideBarMenuItem } from "./SideBarMenuItem";
 import { Link } from "react-router-dom";
 
-export const MainSidebar: FC = () => {
+export default function MainSidebar(): ReactElement {
   return (
     <div className="h-full flex flex-col justify-between">
       <div className="flex flex-col gap-4">
@@ -35,4 +35,4 @@ export const MainSidebar: FC = () => {
       </div>
     </div>
   );
-};
+}
