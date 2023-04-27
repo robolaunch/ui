@@ -7,7 +7,8 @@ import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboa
 import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
 import UserRoleManagementLayout from "../pages/URM/UserRoleManagementLayout";
-import MarketplacePage from "../pages/Marketplace/MarketplacePage";
+import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
+import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -18,6 +19,10 @@ export default function AppRoutes(): ReactElement {
           element={<UserRoleManagementLayout />}
         />
         <Route path={`/marketplace`} element={<MarketplacePage />} />
+        <Route
+          path={`/marketplace/:name`}
+          element={<MarketplaceSingleItemPage />}
+        />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />
