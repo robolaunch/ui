@@ -41,7 +41,7 @@ export default function MarketplacePage(): ReactElement {
     },
     {
       title: "Robolaunch Robot",
-      organization: "Robolaunch",
+      organization: "Robolaunch Organization",
       type: "Virtual Robot",
       rosDistro: "galactic",
       star: true,
@@ -144,13 +144,13 @@ export default function MarketplacePage(): ReactElement {
             emulateTouch={true}
           >
             <div>
-              <img src="svg/mock/mock768.svg" />
+              <img src="svg/mock/mock768.svg" alt="" />
             </div>
             <div>
-              <img src="svg/mock/mock768.svg" />
+              <img src="svg/mock/mock768.svg" alt="" />
             </div>
             <div>
-              <img src="svg/mock/mock768.svg" />
+              <img src="svg/mock/mock768.svg" alt="" />
             </div>
           </Carousel>
         </CardLayout>
