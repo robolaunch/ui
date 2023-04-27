@@ -1,11 +1,14 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 interface InterfaceInputError {
   touched: any;
   error: any;
 }
 
-const InputError = ({ touched, error }: InterfaceInputError) => {
+export default function InputError({
+  touched,
+  error,
+}: InterfaceInputError): ReactElement {
   return (
     <div className="w-full font-light text-xs text-center pt-1 h-2 text-red">
       {touched && error && (
@@ -13,6 +16,4 @@ const InputError = ({ touched, error }: InterfaceInputError) => {
       )}
     </div>
   );
-};
-
-export default InputError;
+}

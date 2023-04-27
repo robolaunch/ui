@@ -6,6 +6,8 @@ import MarketplaceSortableBar from "../../../components/MarketplaceSortableBar/M
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import CardLayout from "../../../layouts/CardLayout";
 import { Carousel } from "react-responsive-carousel";
+import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import Button from "../../../components/Button/Button";
 
 export default function MarketplacePage(): ReactElement {
   const [mockMarketplace, setMockMarketplace] = useState([
@@ -134,7 +136,19 @@ export default function MarketplacePage(): ReactElement {
   return (
     <Fragment>
       <div className="grid grid-cols-12 gap-8">
-        <CardLayout className="col-span-12">
+        <div className="col-span-3">
+          <InformationWidget
+            title={`Main Dashboard`}
+            subtitle="From this page, you can view, control or get information about all
+            the details of the teams in your organization."
+            actiontitle="If you need to create a new team or check the users in the team you
+            can proceed here."
+            component={
+              <Button text="Manage Teams" className="!w-28 !h-10 !text-xs" />
+            }
+          />
+        </div>
+        <CardLayout className="col-span-9">
           <Carousel
             className="cursor-pointer"
             showThumbs={false}
@@ -144,13 +158,13 @@ export default function MarketplacePage(): ReactElement {
             emulateTouch={true}
           >
             <div>
-              <img src="svg/mock/mock768.svg" alt="" />
+              <img src="svg/mock/mock384.svg" alt="" />
             </div>
             <div>
-              <img src="svg/mock/mock768.svg" alt="" />
+              <img src="svg/mock/mock384.svg" alt="" />
             </div>
             <div>
-              <img src="svg/mock/mock768.svg" alt="" />
+              <img src="svg/mock/mock384.svg" alt="" />
             </div>
           </Carousel>
         </CardLayout>

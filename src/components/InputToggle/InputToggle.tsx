@@ -10,6 +10,7 @@ interface IInputToggle {
   rightLabel?: string;
   icons?: any;
   color?: string;
+  className?: string;
 }
 
 export default function InputToggle({
@@ -20,18 +21,19 @@ export default function InputToggle({
   rightLabel,
   icons,
   color,
+  className,
 }: IInputToggle): ReactElement {
   return (
     <div
       className={`flex flex-col text-xs text-layer-light-700 ${
         placeholder && "gap-1"
-      } `}
+      } ${className} `}
     >
       <label>{placeholder}</label>
       <div className="flex items-center gap-2">
         {leftLabel && <span>{leftLabel}</span>}
         <Toggle
-          className="toggle-color"
+          className={`toggle-color `}
           icons={icons}
           onChange={(e) => onChange(e.target.checked)}
           checked={checked || false}

@@ -2,6 +2,12 @@ import React from "react";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+//core
+import "primereact/resources/primereact.min.css";
+//icons
+import "primeicons/primeicons.css";
 
 interface GeneralTableProps {
   data: any;

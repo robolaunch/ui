@@ -5,9 +5,10 @@ export const SidebarContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const [sidebarState, setSidebarState] = useState({
-    isOpen: false,
-    isCreateMode: false,
-    page: "",
+    isOpen: true,
+    isCreateMode: true,
+    page: "robot",
+    currentCreateRobotStep: 2,
   });
 
   const [selectedState, setSelectedState] = useState({

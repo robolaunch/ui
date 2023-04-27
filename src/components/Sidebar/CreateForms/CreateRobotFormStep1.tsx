@@ -5,6 +5,7 @@ import InputSelect from "../../InputSelect/InputSelect";
 import InputError from "../../InputError/InputError";
 import InputText from "../../InputText/InputText";
 import { CreateRobotStep1 } from "../../../validations/RobotsValidations";
+import InputToggle from "../../InputToggle/InputToggle";
 
 export default function CreateRobotFormStep1(): ReactElement {
   const { robotData, setRobotData }: any = useContext(CreateRobotContext);
@@ -69,12 +70,13 @@ export default function CreateRobotFormStep1(): ReactElement {
       </div>
       <div>
         <InputText
-          {...formik.getFieldProps("name")}
+          {...formik.getFieldProps("fleet")}
           placeholder="Robot Name"
-          type="text"
-          disabled={formik.isSubmitting}
         />
-        <InputError error={formik.errors.name} touched={formik.touched.name} />
+        <InputError
+          error={formik.errors.fleet}
+          touched={formik.touched.fleet}
+        />
       </div>
     </form>
   );
