@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import { BiTrash, BiPencil } from "react-icons/bi";
 import { deleteUserFromOrganizationSchema } from "../../validations/UsersValidations";
 import { ApiContext } from "../../contexts/ApiContext";
-import { IApiInterface } from "../../types/ApiInterface";
+import { Api } from "../../types/types";
 import toastApiNotifaction from "../../tools/toastApiNotifaction";
 interface IUserActionCells {
   data: any;
@@ -24,7 +24,7 @@ export default function UserActionCells({
   const [visibleChangeRoleModal, setVisibleChangeRoleModal] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [changeRoleSubmitting, setChangeRoleSubmitting] = useState(false);
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   function handleChangeRole() {
     setChangeRoleSubmitting(true);

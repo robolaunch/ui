@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useContext, useState } from "react";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { TbNotification } from "react-icons/tb";
 import { ApiContext } from "../../contexts/ApiContext";
-import { IApiInterface } from "../../types/ApiInterface";
+import { Api } from "../../types/types";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 
 export default function NotificationDropdownMenu(): ReactElement {
@@ -12,7 +12,7 @@ export default function NotificationDropdownMenu(): ReactElement {
     setIsOpen(false);
   });
 
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   // useEffect(() => {
   //   api.getInvitedOrganizations().then((res: any) => {

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Collapsible from "react-collapsible";
-import { SlArrowDown, SlArrowRight } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 
 interface IAccordion {
   id: number;
@@ -8,6 +8,7 @@ interface IAccordion {
   header?: ReactElement | string;
   isOpen: boolean;
   handleOpen: () => void;
+  className?: string;
 }
 
 export default function Accordion({
@@ -16,13 +17,14 @@ export default function Accordion({
   header,
   isOpen,
   handleOpen,
+  className,
 }: IAccordion): ReactElement {
   return (
     <Collapsible
       triggerDisabled
       open={isOpen}
-      className="bg-layer-light-50 border border-layer-light-100 rounded shadow"
-      openedClassName="bg-layer-light-50 rounded shadow"
+      className={`bg-layer-light-50 border border-layer-primary-100 rounded shadow animate__animated animate__fadeIn transition-all duration-500 ${className}`}
+      openedClassName={`bg-layer-light-50 rounded-md border border-layer-primary-200 !shadow ${className}`}
       trigger={
         <div className="w-full flex items-center justify-between p-2 h-11">
           <div className="w-full text-sm text-layer-dark-700">{header}</div>

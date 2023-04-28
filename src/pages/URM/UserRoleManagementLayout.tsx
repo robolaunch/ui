@@ -13,7 +13,7 @@ import organizationNameViewer from "../../helpers/organizationNameViewer";
 import OrganizationGuestsTable from "./OrganizationGuestsTable";
 import OrganizationAdminsTable from "./OrganizationAdminsTable";
 import { ApiContext } from "../../contexts/ApiContext";
-import { IApiInterface } from "../../types/ApiInterface";
+import { Api } from "../../types/types";
 import Button from "../../components/Button/Button";
 import InviteUserToOrganizationModal from "../../modals/IntiveUserToOrganizationModal";
 
@@ -26,7 +26,7 @@ export default function UserRoleManagementLayout(): ReactElement {
   const [visibleInviteUserModal, setVisibleInviteUserModal] =
     useState<boolean>(false);
 
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   useEffect(() => {
     api.getOrganizations().then((responseOrganizations: any) => {

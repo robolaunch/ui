@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { SidebarContext } from "./SidebarContext";
+import { IRobotData } from "../interfaces/robotInterfaces";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const { selectedState }: any = useContext(SidebarContext);
+  const { setSidebarState, selectedState }: any = useContext(SidebarContext);
 
-  const [robotData, setRobotData] = useState<any>({
+  const [robotData, setRobotData] = useState<IRobotData>({
     step1: {
       name: "",
       organization: selectedState?.organization,
@@ -28,27 +29,6 @@ export default ({ children }: any) => {
           name: "",
           distro: "",
           repositories: [
-            {
-              name: "",
-              url: "",
-              branch: "",
-            },
-            {
-              name: "",
-              url: "",
-              branch: "",
-            },
-          ],
-        },
-        {
-          name: "",
-          distro: "",
-          repositories: [
-            {
-              name: "",
-              url: "",
-              branch: "",
-            },
             {
               name: "",
               url: "",

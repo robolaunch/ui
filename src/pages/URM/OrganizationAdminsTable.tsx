@@ -3,7 +3,7 @@ import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
-import { IApiInterface } from "../../types/ApiInterface";
+import { Api } from "../../types/types";
 import { ApiContext } from "../../contexts/ApiContext";
 
 interface IOrganizationAdminsPage {
@@ -17,7 +17,7 @@ export default function OrganizationAdminsTable({
     useState<any>(null);
   const [refresh, setRefresh] = useState<boolean>(false);
 
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   useEffect(() => {
     api

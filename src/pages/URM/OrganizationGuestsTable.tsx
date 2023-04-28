@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import { InfoCell } from "../../components/Cells/InfoCell";
-import { IApiInterface } from "../../types/ApiInterface";
+import { Api } from "../../types/types";
 import { ApiContext } from "../../contexts/ApiContext";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 
@@ -22,7 +22,7 @@ export default function OrganizationGuestsTable({
   const [responseOrganizationsGuests, setResponseOrganizationsGuests] =
     useState<any>(null);
 
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   useEffect(() => {
     api
