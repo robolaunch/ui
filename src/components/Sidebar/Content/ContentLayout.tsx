@@ -34,7 +34,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
   };
 
   return (
-    <div className="fixed flex flex-col justify-between left-20 w-[33rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
+    <div className="fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
       <div
         className={`flex gap-4 items-center ${
           sidebarState?.isCreateMode ? "pb-8" : " pb-4"

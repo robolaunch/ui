@@ -5,10 +5,17 @@ import InputSelect from "../../InputSelect/InputSelect";
 import InputError from "../../InputError/InputError";
 import InputText from "../../InputText/InputText";
 import { CreateRobotStep1 } from "../../../validations/RobotsValidations";
-import InputToggle from "../../InputToggle/InputToggle";
+import Button from "../../Button/Button";
+import { SidebarContext } from "../../../contexts/SidebarContext";
 
 export default function CreateRobotFormStep1(): ReactElement {
   const { robotData, setRobotData }: any = useContext(CreateRobotContext);
+
+  const {
+    handleCreateRobotNextStep,
+  }: {
+    handleCreateRobotNextStep: () => void;
+  } = useContext(SidebarContext);
 
   const formik = useFormik({
     validationSchema: CreateRobotStep1,
@@ -76,6 +83,15 @@ export default function CreateRobotFormStep1(): ReactElement {
         <InputError
           error={formik.errors.fleet}
           touched={formik.touched.fleet}
+        />
+      </div>
+      <div className="flex gap-4">
+        <Button
+          onClick={handleCreateRobotNextStep}
+          disabled={!formik.isValid || formik.isSubmitting}
+          type="submit"
+          className="!h-11"
+          text={`Next Step`}
         />
       </div>
     </form>

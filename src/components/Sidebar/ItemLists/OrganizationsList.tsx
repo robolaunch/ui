@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import { ApiContext } from "../../../contexts/ApiContext";
-import { IApiInterface } from "../../../types/ApiInterface";
+import { Api } from "../../../types/types";
 
 interface IOrganizationList {
   reload: boolean;
@@ -17,7 +17,7 @@ export const OrganizationsList = ({
     useState<any>(undefined);
   const { selectedState }: any = useContext(SidebarContext);
 
-  const { api }: IApiInterface = useContext(ApiContext);
+  const { api }: Api = useContext(ApiContext);
 
   useEffect(() => {
     api.getOrganizations().then((responseOrganizations: any) => {
