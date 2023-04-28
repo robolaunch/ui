@@ -10,7 +10,7 @@ export default function InputError({
   error,
 }: InterfaceInputError): ReactElement {
   return (
-    <div className="w-full font-light text-xs text-center pt-1 h-2 text-red">
+    <div className="w-full font-light text-xs text-center pt-1 h-2 ">
       {touched && error && (
         <span className="text-[0.7rem] font-normal text-red-600">{error}</span>
       )}
