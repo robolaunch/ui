@@ -6,6 +6,7 @@ import {
 } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
+import InputError from "../InputError/InputError";
 
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -53,7 +54,7 @@ export default function CreateRobotFormRepositoryItem({
         </span>
       }
     >
-      <div className="flex flex-col gap-8 px-3 py-6">
+      <div className="flex flex-col gap-7 px-3 py-6">
         <div>
           <InputText
             {...formik.getFieldProps(
@@ -61,6 +62,19 @@ export default function CreateRobotFormRepositoryItem({
             )}
             placeholder="Repository Name"
             disabled={formik?.isSubmitting}
+          />
+          <InputError
+            error={
+              // @ts-ignore
+              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.name
+            }
+            touched={
+              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.name
+            }
           />
         </div>
         <div>
@@ -71,6 +85,19 @@ export default function CreateRobotFormRepositoryItem({
             placeholder="Repository URL"
             disabled={formik?.isSubmitting}
           />
+          <InputError
+            error={
+              // @ts-ignore
+              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.url
+            }
+            touched={
+              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.url
+            }
+          />
         </div>
         <div>
           <InputText
@@ -79,6 +106,19 @@ export default function CreateRobotFormRepositoryItem({
             )}
             placeholder="Repository Branch"
             disabled={formik?.isSubmitting}
+          />
+          <InputError
+            error={
+              // @ts-ignore
+              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.branch
+            }
+            touched={
+              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.branch
+            }
           />
         </div>
         <span

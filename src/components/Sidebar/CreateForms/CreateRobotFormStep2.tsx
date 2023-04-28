@@ -77,14 +77,10 @@ export default function CreateRobotFormStep2(): ReactElement {
     formik.setFieldValue("workspaces", temp);
   }
 
-  useEffect(() => {
-    console.log(formik?.values);
-  }, [formik?.values]);
-
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn pr-1 overflow-auto"
     >
       <div className="flex flex-col gap-2">
         {robotData?.step2?.workspaces?.map(
@@ -105,18 +101,18 @@ export default function CreateRobotFormStep2(): ReactElement {
         size={22}
         className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
       />
-      <div className="flex gap-4">
+      <div className="flex gap-6">
         <Button
           onClick={handleCreateRobotPreviousStep}
           type="reset"
-          className="!h-11 !bg-layer-light-50 text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 "
+          className="!h-11 !bg-layer-light-50 text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
           text={`Previous Step`}
         />
         <Button
           type="submit"
           disabled={!formik?.isValid || formik.isSubmitting}
           onClick={handleCreateRobotNextStep}
-          className="!h-11"
+          className="!h-11 text-xs"
           text={`Next Step`}
         />
       </div>

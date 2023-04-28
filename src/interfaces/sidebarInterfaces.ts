@@ -1,7 +1,7 @@
 export interface ISidebarState {
   isOpen: boolean;
   isCreateMode: boolean;
-  page: "organization" | "roboticsCloud" | "robot";
+  page: "organization" | "roboticsCloud" | "robot" | undefined;
   currentCreateRobotStep: number;
 }
 

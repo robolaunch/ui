@@ -106,7 +106,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       <Button
         className={`${
           sidebarState?.isCreateMode &&
-          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border-2 border-layer-primary-700 mt-3 transition-all duration-500"
+          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 transition-all duration-500"
         }`}
         text={handleButtonText()}
         onClick={() => {

@@ -90,7 +90,7 @@ export default function CreateRobotFormStep1(): ReactElement {
           onClick={handleCreateRobotNextStep}
           disabled={!formik.isValid || formik.isSubmitting}
           type="submit"
-          className="!h-11"
+          className="!h-11 text-xs"
           text={`Next Step`}
         />
       </div>

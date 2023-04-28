@@ -26,7 +26,7 @@ export default function Accordion({
       className={`bg-layer-light-50 border border-layer-primary-100 rounded shadow animate__animated animate__fadeIn transition-all duration-500 ${className}`}
       openedClassName={`bg-layer-light-50 rounded-md border border-layer-primary-200 !shadow ${className}`}
       trigger={
-        <div className="w-full flex items-center justify-between p-2 h-11">
+        <div className="w-full flex items-center justify-between p-4 h-13">
           <div className="w-full text-sm text-layer-dark-700">{header}</div>
           <div
             className={`px-3 hover:scale-110  transition-all duration-200 ${

@@ -954,6 +954,10 @@ video {
   height: 0.25rem;
 }
 
+.h-14{
+  height: 3.5rem;
+}
+
 .max-h-\[40rem\]{
   max-height: 40rem;
 }
@@ -1872,6 +1876,18 @@ video {
 
 .pt-6{
   padding-top: 1.5rem;
+}
+
+.pb-10{
+  padding-bottom: 2.5rem;
+}
+
+.pr-2{
+  padding-right: 0.5rem;
+}
+
+.pr-1{
+  padding-right: 0.25rem;
 }
 
 .text-center{

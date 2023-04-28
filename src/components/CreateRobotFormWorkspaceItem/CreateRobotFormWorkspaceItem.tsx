@@ -89,13 +89,17 @@ export default function CreateRobotFormWorkspaceItem({
               <option value="galactic">Galactic</option>
             </Fragment>
           </InputSelect>
+          <InputError
+            // @ts-ignore
+            error={formik?.errors?.workspaces?.[workspaceIndex]?.distro}
+            touched={formik?.touched?.workspaces?.[workspaceIndex]?.distro}
+          />
         </div>
-        <div className="flex flex-col gap-3 border border-layer-light-100 p-5 rounded !shadow">
+        <div className="flex flex-col gap-3 border border-layer-light-100 p-5 pb-10 rounded !shadow">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
           </span>
           <span className="w-full h-[2px] bg-primary" />
-
           {formik.values.workspaces[workspaceIndex]?.repositories?.map(
             (repository: any, repositoryIndex: number) => (
               <CreateRobotFormRepositoryItem
