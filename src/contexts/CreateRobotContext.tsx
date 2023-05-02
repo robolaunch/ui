@@ -17,7 +17,7 @@ export default ({ children }: any) => {
       storage: 0,
       isEnabledIDE: false,
       isEnabledROS2Bridge: false,
-      VDI: {
+      remoteDesktop: {
         isEnabled: false,
         sessionCount: 1,
       },
@@ -38,7 +38,16 @@ export default ({ children }: any) => {
         },
       ],
     },
-    step3: {},
+    step3: {
+      steps: [
+        {
+          name: "",
+          workspace: "",
+          isScriptCode: false,
+          code: "",
+        },
+      ],
+    },
   });
 
   return (
