@@ -10,15 +10,16 @@ export default ({ children }: any) => {
 
   const [robotData, setRobotData] = useState<IRobotData>({
     step1: {
-      name: "",
       organization: selectedState?.organization,
       roboticsCloud: selectedState?.roboticsCloud,
       fleet: selectedState?.fleet,
-      storage: 0,
-      isEnabledIDE: false,
-      isEnabledROS2Bridge: false,
+      name: "",
+      storage: 40,
+      isVirtualRobot: true,
+      isEnabledIDE: true,
+      isEnabledROS2Bridge: true,
       remoteDesktop: {
-        isEnabled: false,
+        isEnabled: true,
         sessionCount: 1,
       },
       rosDistros: [],

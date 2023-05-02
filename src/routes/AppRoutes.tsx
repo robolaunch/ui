@@ -6,7 +6,7 @@ import RobotPage from "../pages/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
-import UserRoleManagementLayout from "../pages/URM/UserRoleManagementLayout";
+import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
 

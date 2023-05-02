@@ -1,8 +1,14 @@
 export interface ISidebarState {
   isOpen: boolean;
   isCreateMode: boolean;
-  page: "organization" | "roboticsCloud" | "robot" | undefined;
-  currentCreateRobotStep: number;
+  page:
+    | "organization"
+    | "roboticsCloud"
+    | "fleet"
+    | "robot"
+    | "workspacesmanager"
+    | "buildsmanager"
+    | undefined;
 }
 
 export interface ISelectedState {

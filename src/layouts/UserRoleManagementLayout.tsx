@@ -5,17 +5,17 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import CardLayout from "../../layouts/CardLayout";
-import InformationWidget from "../../components/InformationWidget/InformationWidget";
-import OrganizationsTable from "./OrganizationsTable";
-import OrganizationUsersTable from "./OrganizationUsersTable";
-import organizationNameViewer from "../../helpers/organizationNameViewer";
-import OrganizationGuestsTable from "./OrganizationGuestsTable";
-import OrganizationAdminsTable from "./OrganizationAdminsTable";
-import { ApiContext } from "../../contexts/ApiContext";
-import { Api } from "../../types/types";
-import Button from "../../components/Button/Button";
-import InviteUserToOrganizationModal from "../../modals/IntiveUserToOrganizationModal";
+import CardLayout from "./CardLayout";
+import InformationWidget from "../components/InformationWidget/InformationWidget";
+import OrganizationsTable from "../pages/URM/OrganizationsTable";
+import OrganizationUsersTable from "../pages/URM/OrganizationUsersTable";
+import organizationNameViewer from "../helpers/organizationNameViewer";
+import OrganizationGuestsTable from "../pages/URM/OrganizationGuestsTable";
+import OrganizationAdminsTable from "../pages/URM/OrganizationAdminsTable";
+import { ApiContext } from "../contexts/ApiContext";
+import { Api } from "../types/types";
+import Button from "../components/Button/Button";
+import InviteUserToOrganizationModal from "../modals/IntiveUserToOrganizationModal";
 
 export default function UserRoleManagementLayout(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
@@ -140,7 +140,6 @@ export default function UserRoleManagementLayout(): ReactElement {
                     handleChangeActiveTab={handleChangeActiveTab}
                   />
                 );
-
               case "organizationAdmins":
                 return <OrganizationAdminsTable activePage={activePage} />;
               case "organizationUsers":

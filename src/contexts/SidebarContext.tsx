@@ -9,7 +9,6 @@ export default ({ children }: any) => {
     isOpen: false,
     isCreateMode: false,
     page: undefined,
-    currentCreateRobotStep: 1,
   });
 
   const [selectedState, setSelectedState] = useState<ISelectedState>({
@@ -19,21 +18,47 @@ export default ({ children }: any) => {
   });
 
   function handleCreateRobotPreviousStep() {
-    setSidebarState((prev: ISidebarState) => {
-      return {
-        ...prev,
-        currentCreateRobotStep: prev.currentCreateRobotStep - 1,
-      };
-    });
+    switch (sidebarState?.page) {
+      case "workspacesmanager":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "robot",
+          })
+        );
+        break;
+      case "buildsmanager":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "workspacesmanager",
+          })
+        );
+    }
   }
 
   function handleCreateRobotNextStep() {
-    setSidebarState((prev: ISidebarState) => {
-      return {
-        ...prev,
-        currentCreateRobotStep: prev.currentCreateRobotStep + 1,
-      };
-    });
+    switch (sidebarState?.page) {
+      case "robot":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "workspacesmanager",
+          })
+        );
+        break;
+      case "workspacesmanager":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "buildsmanager",
+          })
+        );
+        break;
+      case "buildsmanager":
+        console.log("createrobot");
+        break;
+    }
   }
 
   return (

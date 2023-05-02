@@ -6,6 +6,7 @@ interface InputCheckboxProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   className?: string;
+  disabled?: boolean;
 }
 
 export default function InputCheckbox({
@@ -14,9 +15,11 @@ export default function InputCheckbox({
   onChange,
   onBlur,
   className,
+  disabled,
 }: InputCheckboxProps): ReactElement {
   return (
     <input
+      disabled={disabled}
       className={`scale-150 outline-none accent-primary ${className}`}
       onChange={onChange}
       onBlur={onBlur}
