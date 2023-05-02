@@ -25,13 +25,42 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
     setItemCount(0);
   }, [sidebarState]);
 
-  const handleButtonText = () => {
-    if (sidebarState?.isCreateMode) {
-      return `Cancel`;
-    } else {
-      return `Create ${sidebarState?.page}`;
+  function buttonTextGenerator() {
+    switch (sidebarState?.isCreateMode) {
+      case true:
+        return `Cancel ${sidebarState?.page} creation`;
+      case false:
+        return `Create ${(() => {
+          if (sidebarState?.page === "roboticscloud") {
+            return "Robotics Cloud";
+          }
+          return stringCapitalization({
+            str: sidebarState?.page,
+          });
+        })()}`;
     }
-  };
+  }
+
+  function titleGenerator() {
+    if (sidebarState?.page === "roboticscloud") {
+      return "Robotics Clouds";
+    }
+
+    if (sidebarState?.page === "robot" && sidebarState?.isCreateMode) {
+      switch (sidebarState?.currentCreateRobotStep) {
+        case 1:
+          return "Robot Details";
+        case 2:
+          return "Robot Workspace Configuration";
+        case 3:
+          return "Robot Build Configuration";
+      }
+    }
+
+    return stringCapitalization({
+      str: sidebarState?.page + "s",
+    });
+  }
 
   return (
     <div className="fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
@@ -40,11 +69,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
           sidebarState?.isCreateMode ? "pb-8" : " pb-4"
         }`}
       >
-        <h2 className="text-2xl font-semibold">
-          {stringCapitalization({
-            str: sidebarState?.page + "s",
-          })}
-        </h2>
+        <h2 className="text-2xl font-semibold">{titleGenerator()}</h2>
         <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
           {itemCount}
         </span>
@@ -106,9 +131,9 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       <Button
         className={`${
           sidebarState?.isCreateMode &&
-          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 transition-all duration-500"
+          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
         }`}
-        text={handleButtonText()}
+        text={buttonTextGenerator()}
         onClick={() => {
           if (sidebarState?.isCreateMode) {
             setSidebarState((prev: any) => ({ ...prev, isCreateMode: false }));

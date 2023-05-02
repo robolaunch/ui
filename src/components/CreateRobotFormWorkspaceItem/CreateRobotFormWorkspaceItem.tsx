@@ -22,8 +22,7 @@ export default function CreateRobotFormWorkspaceItem({
   workspace,
   workspaceIndex,
 }: ICreateRobotFormWorkspaceItem): ReactElement {
-  const [activeWorkspace, setActiveWorkspace] = useState<number>(-1);
-  const [activeRepository, setActiveRepository] = useState<number>(-1);
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
   function handleAddRepository(workspaceIndex: number): void {
     const temp: any = [...formik.values.workspaces];
@@ -45,14 +44,9 @@ export default function CreateRobotFormWorkspaceItem({
     <Accordion
       key={workspaceIndex}
       id={workspaceIndex}
-      isOpen={activeWorkspace === workspaceIndex}
+      isOpen={isShowAccordion}
       handleOpen={() => {
-        if (activeWorkspace === workspaceIndex) {
-          setActiveWorkspace(-1);
-          setActiveRepository(-1);
-        } else {
-          setActiveWorkspace(workspaceIndex);
-        }
+        setIsShowAccordion(!isShowAccordion);
       }}
       header={
         <span className="font-medium">
@@ -95,7 +89,7 @@ export default function CreateRobotFormWorkspaceItem({
             touched={formik?.touched?.workspaces?.[workspaceIndex]?.distro}
           />
         </div>
-        <div className="flex flex-col gap-3 border border-layer-light-100 p-5 pb-10 rounded !shadow">
+        <div className="flex flex-col gap-3 border-[3px] border-layer-light-100 p-5 pb-10 rounded !shadow">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
           </span>
@@ -104,8 +98,6 @@ export default function CreateRobotFormWorkspaceItem({
             (repository: any, repositoryIndex: number) => (
               <CreateRobotFormRepositoryItem
                 key={repositoryIndex}
-                activeRepository={activeRepository}
-                setActiveRepository={setActiveRepository}
                 formik={formik}
                 workspaceIndex={workspaceIndex}
                 repositoryIndex={repositoryIndex}
@@ -121,7 +113,6 @@ export default function CreateRobotFormWorkspaceItem({
         </div>
         <span
           onClick={() => {
-            setActiveWorkspace(-1);
             handleRemoveWorkspace(workspaceIndex);
           }}
           className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"

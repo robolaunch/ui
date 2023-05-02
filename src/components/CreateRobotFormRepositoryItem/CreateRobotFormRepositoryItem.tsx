@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotWorkspace,
@@ -12,8 +12,6 @@ interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
   repositoryIndex: number;
-  activeRepository: number;
-  setActiveRepository: React.Dispatch<React.SetStateAction<number>>;
   workspaceIndex: number;
 }
 
@@ -21,8 +19,6 @@ export default function CreateRobotFormRepositoryItem({
   formik,
   repository,
   repositoryIndex,
-  activeRepository,
-  setActiveRepository,
   workspaceIndex,
 }: ICreateRobotFormRepositoryItem): ReactElement {
   function handleRemoveRepository(
@@ -34,18 +30,14 @@ export default function CreateRobotFormRepositoryItem({
     formik.setFieldValue("workspaces", temp);
   }
 
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
+
   return (
     <Accordion
       key={repositoryIndex}
       id={repositoryIndex}
-      isOpen={activeRepository === repositoryIndex}
-      handleOpen={() => {
-        if (activeRepository === repositoryIndex) {
-          setActiveRepository(-1);
-        } else {
-          setActiveRepository(repositoryIndex);
-        }
-      }}
+      isOpen={isShowAccordion}
+      handleOpen={() => setIsShowAccordion(!isShowAccordion)}
       header={
         <span className="font-medium">
           {repository.name

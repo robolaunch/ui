@@ -29,7 +29,6 @@ export default function CreateRobotFormStep2(): ReactElement {
   } = useContext(SidebarContext);
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
-    isInitialValid: false,
     validationSchema: Yup.object().shape({
       workspaces: Yup.array().of(
         Yup.object().shape({
@@ -50,6 +49,7 @@ export default function CreateRobotFormStep2(): ReactElement {
       formik.setSubmitting(true);
       //
       formik.setSubmitting(false);
+      handleCreateRobotNextStep();
     },
   });
 
@@ -80,7 +80,7 @@ export default function CreateRobotFormStep2(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn pr-1 overflow-auto"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn"
     >
       <div className="flex flex-col gap-2">
         {robotData?.step2?.workspaces?.map(
@@ -105,13 +105,12 @@ export default function CreateRobotFormStep2(): ReactElement {
         <Button
           onClick={handleCreateRobotPreviousStep}
           type="reset"
-          className="!h-11 !bg-layer-light-50 text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
+          className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
           text={`Previous Step`}
         />
         <Button
           type="submit"
           disabled={!formik?.isValid || formik.isSubmitting}
-          onClick={handleCreateRobotNextStep}
           className="!h-11 text-xs"
           text={`Next Step`}
         />

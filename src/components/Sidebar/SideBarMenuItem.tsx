@@ -12,9 +12,6 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
 
   function colorSwitcher() {
     if (theme === "light") {
-      // if (sidebarState?.page === type) {
-      //   return "purple";
-      // }
       return "gray";
     } else {
       return "white";
@@ -42,7 +39,7 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
   return (
     <div
       onClick={() => handleClick()}
-      className={`${activeSwitcher()} transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90`}
+      className={`${activeSwitcher()} transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
     >
       <img
         className="w-10"

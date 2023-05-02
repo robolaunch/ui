@@ -1,15 +1,30 @@
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement, useContext } from "react";
 import { SideBarMenuItem } from "./SideBarMenuItem";
 import { Link } from "react-router-dom";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
 export default function MainSidebar(): ReactElement {
+  const { sidebarState }: any = useContext(SidebarContext);
+
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="flex flex-col gap-4">
-        <SideBarMenuItem type="organization" />
-        <SideBarMenuItem type="roboticscloud" />
-        <SideBarMenuItem type="fleet" />
-        <SideBarMenuItem type="robot" />
+    <Fragment>
+      <div className="h-full flex flex-col justify-between">
+        <div className="flex flex-col gap-4 ">
+          {sidebarState?.page === "robot" && sidebarState?.isCreateMode ? (
+            <Fragment>
+              <SideBarMenuItem type="robot" />
+              <SideBarMenuItem type="workspacesmanager" />
+              <SideBarMenuItem type="buildsmanager" />
+            </Fragment>
+          ) : (
+            <Fragment>
+              <SideBarMenuItem type="organization" />
+              <SideBarMenuItem type="roboticscloud" />
+              <SideBarMenuItem type="fleet" />
+              <SideBarMenuItem type="robot" />
+            </Fragment>
+          )}
+        </div>
       </div>
       <div className="flex flex-col gap-2">
         <Link
@@ -33,6 +48,6 @@ export default function MainSidebar(): ReactElement {
           />
         </Link>
       </div>
-    </div>
+    </Fragment>
   );
 }
