@@ -10,7 +10,10 @@ export default function MainSidebar(): ReactElement {
     <Fragment>
       <div className="h-full flex flex-col justify-between">
         <div className="flex flex-col gap-4 ">
-          {sidebarState?.page === "robot" && sidebarState?.isCreateMode ? (
+          {sidebarState?.isCreateMode &&
+          ["robot", "workspacesmanager", "buildsmanager"].includes(
+            sidebarState?.page
+          ) ? (
             <Fragment>
               <SideBarMenuItem type="robot" />
               <SideBarMenuItem type="workspacesmanager" />

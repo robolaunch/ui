@@ -28,7 +28,14 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
   function buttonTextGenerator() {
     switch (sidebarState?.isCreateMode) {
       case true:
-        return `Cancel ${sidebarState?.page} creation`;
+        return `Cancel ${(() => {
+          if (sidebarState?.page === "roboticscloud") {
+            return "Robotics Cloud";
+          }
+          return stringCapitalization({
+            str: sidebarState?.page,
+          });
+        })()} creation`;
       case false:
         return `Create ${(() => {
           if (sidebarState?.page === "roboticscloud") {
@@ -46,15 +53,13 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
       return "Robotics Clouds";
     }
 
-    if (sidebarState?.page === "robot" && sidebarState?.isCreateMode) {
-      switch (sidebarState?.currentCreateRobotStep) {
-        case 1:
-          return "Robot Details";
-        case 2:
-          return "Robot Workspace Configuration";
-        case 3:
-          return "Robot Build Configuration";
-      }
+    switch (sidebarState?.page) {
+      case "robot":
+        return sidebarState?.isCreateMode ? "Robot Details" : "Robots";
+      case "workspacesmanager":
+        return "Robot Workspace Configuration";
+      case "buildsmanager":
+        return "Robot Build Configuration";
     }
 
     return stringCapitalization({
@@ -118,6 +123,8 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
                   <FleetsList reload={reload} setItemCount={setItemCount} />
                 );
               case "robot":
+              case "workspacesmanager":
+              case "buildsmanager":
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
@@ -136,7 +143,10 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
         text={buttonTextGenerator()}
         onClick={() => {
           if (sidebarState?.isCreateMode) {
-            setSidebarState((prev: any) => ({ ...prev, isCreateMode: false }));
+            setSidebarState((prev: any) => ({
+              ...prev,
+              isCreateMode: false,
+            }));
           } else {
             setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
           }
