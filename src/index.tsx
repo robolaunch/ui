@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./auth/keycloak";
 import ApiContext from "./contexts/ApiContext";
+import GithubContext from "./contexts/GithubContext";
 
 const loadingPage = (
   <div className="absolute inset-0 flex flex-col items-center justify-center z-50 animate__animated animate__fadeIn">
@@ -45,7 +46,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ApiContext>
-          <App />
+          <GithubContext>
+            <App />
+          </GithubContext>
         </ApiContext>
       </BrowserRouter>
     </Provider>
