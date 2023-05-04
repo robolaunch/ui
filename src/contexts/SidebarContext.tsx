@@ -6,9 +6,9 @@ export const SidebarContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
-    isOpen: false,
-    isCreateMode: false,
-    page: undefined,
+    isOpen: true,
+    isCreateMode: true,
+    page: "workspacesmanager",
   });
 
   const [selectedState, setSelectedState] = useState<ISelectedState>({
