@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable consistent-return */
 import { useEffect, useState } from "react";
 
 const useWindowDimensions = () => {
