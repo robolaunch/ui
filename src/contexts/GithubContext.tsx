@@ -1,22 +1,52 @@
 import React, { createContext, useEffect, useState } from "react";
 import queryString from "query-string";
 import axios from "axios";
-
+import { IGithubToken } from "../interfaces/githubInterfaces";
+import axiosInterceptorGithub from "../utils/axios.interceptor.github";
 export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const [githubToken, setGithubToken] = useState<IGithubToken | null>(
+    JSON.parse(localStorage.getItem("githubTokens") as any)?.exp <=
+      Math.floor(Date.now() / 1000) - 600
+      ? null
+      : JSON.parse(localStorage.getItem("githubTokens") as any)
+  );
   const queryParams = queryString.parse(window.location.search);
 
-  function handleGetGithubAccessToken() {
+  useEffect(() => {
+    if (!githubToken) {
+      if (queryParams?.code) {
+        getGithubAccessTokenwithCode();
+      } else {
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+      }
+    } else {
+      window.history.pushState({}, "", "/");
+    }
+  }, []);
+
+  useEffect(() => {
+    const tokenExpriationTimer =
+      githubToken &&
+      setTimeout(() => {
+        getGithubAccessTokenwithRefreshToken();
+      }, (githubToken?.exp - Math.floor(Date.now() / 1000) - 900) * 1000);
+    return () => clearTimeout(tokenExpriationTimer || 0);
+  }, [githubToken]);
+
+  useEffect(() => {
+    console.log(githubToken);
+    localStorage.setItem("githubTokens", JSON.stringify(githubToken));
+  }, [githubToken]);
+
+  function getGithubAccessTokenwithCode() {
     axios
       .post(
-        "https://github.com/login/oauth/access_token",
+        "http://localhost:8081/getGithubAccessTokenwithCode",
         {
-          client_id: process.env.REACT_APP_GITHUB_APP_CLIENT_ID,
-          client_secret: process.env.REACT_APP_GITHUB_APP_CLIENT_SECRET,
           code: queryParams.code,
-          redirect_uri: process.env.REACT_APP_GITHUB_APP_REDIRECT_URI,
         },
         {
           headers: {
@@ -26,19 +56,59 @@ export default ({ children }: any) => {
         }
       )
       .then((response) => {
-        console.log(response.data);
+        if (!response?.data?.error) {
+          setGithubToken({
+            exp: response.data.expires_in + Math.floor(Date.now() / 1000),
+            ...response.data,
+          });
+          console.log("githubTokenReceived");
+        } else {
+          window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+        }
       })
       .catch((error) => {
-        console.log(error);
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
       });
   }
 
-  useEffect(() => {
-    console.log(queryParams?.code ? true : false, queryParams?.code);
-    if (queryParams?.code) {
-      handleGetGithubAccessToken();
-    }
-  }, [queryParams]);
+  function getGithubAccessTokenwithRefreshToken() {
+    axios
+      .post(
+        "http://localhost:8081/getGithubAccessTokenwithRefreshToken",
+        {
+          refresh_token: githubToken?.refresh_token,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        if (!response?.data?.error) {
+          setGithubToken({
+            exp: response.data.expires_in + Math.floor(Date.now() / 1000),
+            ...response.data,
+          });
 
-  return <GithubContext.Provider value={{}}>{children}</GithubContext.Provider>;
+          console.log("githubTokenRenewed");
+        } else {
+          window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+        }
+      })
+      .catch((error) => {
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+      });
+  }
+
+  return (
+    <GithubContext.Provider
+      value={{
+        githubToken,
+      }}
+    >
+      {children}
+    </GithubContext.Provider>
+  );
 };

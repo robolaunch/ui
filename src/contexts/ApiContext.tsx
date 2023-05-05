@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { Configuration, OrganizationRepositoryImplApi } from "../api";
+import { Configuration, OrganizationRepositoryImplApi } from "../api/keycloak";
 import axiosInterceptor from "../utils/axios.interceptor";
 export const ApiContext: any = createContext<any>(null);
 
