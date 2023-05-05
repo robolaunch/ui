@@ -13,7 +13,7 @@ import UtilizationWidget from "../../../components/UtilizationWidget/Utilization
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = React.useState(false);
