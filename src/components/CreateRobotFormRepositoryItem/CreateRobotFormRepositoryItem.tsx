@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotWorkspace,
@@ -7,7 +7,11 @@ import {
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-
+import {
+  getGithubUserRepositories,
+  getGithubRepositoryBranches,
+} from "../../api/github/githubApi";
+import InputSelect from "../InputSelect/InputSelect";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -21,6 +25,59 @@ export default function CreateRobotFormRepositoryItem({
   repositoryIndex,
   workspaceIndex,
 }: ICreateRobotFormRepositoryItem): ReactElement {
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
+  const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
+  const [responseBranches, setResponseBranches] = useState<any[]>([]);
+
+  useEffect(() => {
+    getGithubUserRepositories().then((res: any[]) => {
+      console.log(res);
+      setResponseRepositories(res || []);
+    });
+  }, []);
+
+  useEffect(() => {
+    formik.setFieldValue(
+      `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`,
+      ""
+    );
+    if (
+      formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+        repositoryIndex
+      ]?.url
+    ) {
+      getGithubRepositoryBranches({
+        owner: responseRepositories?.filter((repo: any) => {
+          if (
+            repo?.html_url ===
+            formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+              repositoryIndex
+            ]?.url
+          ) {
+            return repo;
+          }
+        })[0]?.owner?.login,
+        repo: responseRepositories?.filter((repo: any) => {
+          if (
+            repo?.html_url ===
+            formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+              repositoryIndex
+            ]?.url
+          ) {
+            return repo;
+          }
+        })[0]?.name,
+      }).then((res: any[]) => {
+        setResponseBranches(res || []);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    formik.values?.workspaces?.[workspaceIndex]?.repositories?.[repositoryIndex]
+      .url,
+  ]);
+
   function handleRemoveRepository(
     workspaceIndex: number,
     repositoryIndex: number
@@ -29,8 +86,6 @@ export default function CreateRobotFormRepositoryItem({
     temp[workspaceIndex].repositories.splice(repositoryIndex, 1);
     formik.setFieldValue("workspaces", temp);
   }
-
-  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
   return (
     <Accordion
@@ -70,13 +125,23 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          <InputText
+          <InputSelect
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.url`
             )}
-            placeholder="Repository URL"
-            disabled={formik?.isSubmitting}
-          />
+            placeholder="Repository"
+          >
+            <Fragment>
+              {!formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.url && <option value=""></option>}
+              {responseRepositories?.map((repo: any, index: number) => (
+                <option key={index} value={repo?.html_url}>
+                  {repo?.owner?.login} - {repo?.name}
+                </option>
+              ))}
+            </Fragment>
+          </InputSelect>
           <InputError
             error={
               // @ts-ignore
@@ -92,13 +157,23 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          <InputText
+          <InputSelect
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`
             )}
             placeholder="Repository Branch"
-            disabled={formik?.isSubmitting}
-          />
+          >
+            <Fragment>
+              {!formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+                repositoryIndex
+              ]?.branch && <option value=""></option>}
+              {responseBranches?.map((branch: any, index: number) => (
+                <option key={index} value={branch?.name}>
+                  {branch?.name}
+                </option>
+              ))}
+            </Fragment>
+          </InputSelect>
           <InputError
             error={
               // @ts-ignore
