@@ -34,7 +34,7 @@ export default function ProfileDeactive({
             </div>
           </div>
           <Button
-            className="!h-11 w-40 bg-red-600 hover:!bg-red-800 !ring-red-400 transition-all duration-300 text-xs"
+            className="!h-10 w-40 bg-red-600 hover:!bg-red-800 !ring-red-400 transition-all duration-300 text-xs"
             text={`Deactive Account`}
           />
         </div>

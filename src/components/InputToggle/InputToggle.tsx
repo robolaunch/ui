@@ -33,7 +33,7 @@ export default function InputToggle({
       <div className="flex items-center gap-2">
         {leftLabel && <span>{leftLabel}</span>}
         <Toggle
-          className={`toggle-color `}
+          className={`toggle-color`}
           icons={icons}
           onChange={(e) => onChange(e.target.checked)}
           checked={checked || false}

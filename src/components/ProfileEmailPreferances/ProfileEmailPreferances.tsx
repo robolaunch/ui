@@ -4,6 +4,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
+import Button from "../Button/Button";
 
 interface IProfileEmailPreferances {
   className?: string;
@@ -25,14 +26,14 @@ export default function ProfileEmailPreferances({
   });
 
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 ${className}`}>
+    <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">
           Email Preferances
         </p>
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col gap-8 px-2"
+          className="flex flex-col gap-5 px-2"
         >
           <div>
             <div className="flex items-center gap-5">
@@ -40,7 +41,7 @@ export default function ProfileEmailPreferances({
                 {...formik.getFieldProps("creation")}
                 className="!scale-[1.7]"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Creation
                 </div>
@@ -60,7 +61,7 @@ export default function ProfileEmailPreferances({
                 {...formik.getFieldProps("payout")}
                 className="!scale-[1.7]"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Payout
                 </div>
@@ -80,7 +81,7 @@ export default function ProfileEmailPreferances({
                 {...formik.getFieldProps("refund")}
                 className="!scale-[1.7]"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Refund
                 </div>
@@ -100,7 +101,7 @@ export default function ProfileEmailPreferances({
                 {...formik.getFieldProps("refund")}
                 className="!scale-[1.7]"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Refund
                 </div>
@@ -120,7 +121,7 @@ export default function ProfileEmailPreferances({
                 {...formik.getFieldProps("refund")}
                 className="!scale-[1.7]"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Refund
                 </div>
@@ -133,6 +134,15 @@ export default function ProfileEmailPreferances({
               error={formik.errors.refund}
               touched={formik.errors.refund}
             />
+          </div>
+          <div className="flex items-center justify-end gap-6">
+            <span
+              className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
+              onClick={() => formik.resetForm()}
+            >
+              Discard
+            </span>
+            <Button className="!h-10 !w-36 text-xs" text={"Save Changes"} />
           </div>
         </form>
       </Fragment>

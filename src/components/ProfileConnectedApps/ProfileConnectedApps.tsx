@@ -41,7 +41,7 @@ export default function ProfileConnectedApps({
   ]);
 
   return (
-    <CardLayout className={`flex flex-col gap-5 p-6 ${className}`}>
+    <CardLayout className={`flex flex-col gap-5 p-6 h-fit ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">Connected Apps</p>
         {mockData?.map((app: any, index: number) => {

@@ -25,9 +25,12 @@ export default function ProfileHeader({
           default="mp"
           size={200}
         />
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col justify-between py-2">
           <p className="font-medium text-layer-dark-700">
             {keycloak?.tokenParsed?.name}
+          </p>
+          <p className="text-sm text-layer-dark-500">
+            {keycloak?.tokenParsed?.preferred_username}
           </p>
           <p className="text-sm text-layer-dark-500">
             {keycloak?.tokenParsed?.email}
@@ -35,7 +38,14 @@ export default function ProfileHeader({
         </div>
       </div>
       <ul className="flex gap-8 px-6 pt-5 -mb-1.5 overflow-x-auto">
-        {["Overview", "Connected Apps"].map((tab: any, index: number) => {
+        {[
+          "Overview",
+          "Connected Apps",
+          "Email Preferances",
+          "Notifications",
+          "Change Password",
+          "Deactive Account",
+        ].map((tab: any, index: number) => {
           return (
             <div
               className="flex flex-col gap-3 cursor-pointer "

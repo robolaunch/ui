@@ -52,31 +52,31 @@ export default function MarketplaceRobotTemplateItem({
                 case "public":
                   return (
                     <Fragment>
-                      <span>Public Template</span>
                       <MdPublic
                         size={16}
                         className="text-layer-secondary-500"
                       />
+                      <span>Public Template</span>
                     </Fragment>
                   );
                 case "organization":
                   return (
                     <Fragment>
-                      <span>{template?.organization} Template</span>
                       <RiOrganizationChart
                         size={16}
                         className="text-layer-secondary-500"
                       />
+                      <span>{template?.organization} Template</span>
                     </Fragment>
                   );
                 case "private":
                   return (
                     <Fragment>
-                      <span>Private Template</span>
                       <BsShieldLockFill
                         size={16}
                         className="text-layer-secondary-500"
                       />
+                      <span>Private Template</span>
                     </Fragment>
                   );
               }
