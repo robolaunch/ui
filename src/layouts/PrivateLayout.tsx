@@ -1,10 +1,10 @@
-import React, { FC, Fragment, useContext } from "react";
+import React, { Fragment, ReactElement, useContext } from "react";
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
 import { SidebarContext } from "../contexts/SidebarContext";
+import Sidebar from "../components/Sidebar/Sidebar";
 
-export const PrivateLayout: FC = () => {
+export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
   const handleCloseSidebar = () => {
@@ -41,4 +41,4 @@ export const PrivateLayout: FC = () => {
       </div>
     </Fragment>
   );
-};
+}

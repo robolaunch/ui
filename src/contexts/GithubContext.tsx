@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from "react";
 import queryString from "query-string";
 import axios from "axios";
 import { IGithubToken } from "../interfaces/githubInterfaces";
-import axiosInterceptorGithub from "../utils/axios.interceptor.github";
 export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
@@ -23,7 +22,7 @@ export default ({ children }: any) => {
         window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
       }
     } else {
-      window.history.pushState({}, "", "/");
+      // window.history.pushState({}, "", "/");
     }
   }, []);
 

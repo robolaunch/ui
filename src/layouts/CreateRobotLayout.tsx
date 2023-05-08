@@ -1,4 +1,10 @@
-import React, { ReactElement, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SidebarContext } from "../contexts/SidebarContext";
 import CreateRobotFormStep1 from "../components/Sidebar/CreateForms/CreateRobotFormStep1";
 import CreateRobotFormStep2 from "../components/Sidebar/CreateForms/CreateRobotFormStep2";
@@ -27,7 +33,7 @@ export default function CreateRobotLayout(): ReactElement {
   }, [sidebarState]);
 
   return (
-    <div>
+    <Fragment>
       <ul className="h-10 w-full flex items-center pb-14">
         {[
           `Create Form (${(() => {
@@ -99,6 +105,6 @@ export default function CreateRobotLayout(): ReactElement {
           }
         }
       })()}
-    </div>
+    </Fragment>
   );
 }

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PrivateLayout } from "../layouts/PrivateLayout";
+import PrivateLayout from "../layouts/PrivateLayout";
 import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
@@ -9,6 +9,7 @@ import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboa
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
+import ProfilePage from "../pages/Profile/ProfilePage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -23,6 +24,7 @@ export default function AppRoutes(): ReactElement {
           path={`/marketplace/:name`}
           element={<MarketplaceSingleItemPage />}
         />
+        <Route path={`/profile`} element={<ProfilePage />} />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />
