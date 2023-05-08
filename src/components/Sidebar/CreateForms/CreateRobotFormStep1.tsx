@@ -8,7 +8,6 @@ import Button from "../../Button/Button";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import * as Yup from "yup";
 import InputToggle from "../../InputToggle/InputToggle";
-import InputCheckbox from "../../InputCheckbox/InputCheckbox";
 import stringSlugify from "../../../helpers/stringSlugify";
 import { toast } from "sonner";
 import { MdVerified } from "react-icons/md";
@@ -106,9 +105,7 @@ export default function CreateRobotFormStep1(): ReactElement {
           />
           : ({formik?.values?.storage}GB)
         </div>
-
         <input
-          defaultValue={formik?.values?.storage}
           min="20"
           max="100"
           type="range"
@@ -189,7 +186,6 @@ export default function CreateRobotFormStep1(): ReactElement {
             : ({formik?.values?.remoteDesktop?.sessionCount} User)
           </div>
           <input
-            defaultValue={formik?.values?.remoteDesktop.sessionCount}
             min="1"
             max="10"
             type="range"
@@ -284,7 +280,6 @@ export default function CreateRobotFormStep1(): ReactElement {
           <InputError error={formik?.errors?.rosDistros} touched={true} />
         </div>
       </div>
-
       <div className="flex gap-4">
         <Button
           disabled={!formik.isValid || formik.isSubmitting}

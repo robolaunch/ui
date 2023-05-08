@@ -1,9 +1,9 @@
 import React, { ReactNode, useContext, useEffect, useState } from "react";
-import { OrganizationsList } from "../ItemLists/OrganizationsList";
-import { RoboticsCloudsList } from "../ItemLists/RoboticsCloudsList";
-import { FleetsList } from "../ItemLists/FleetsList";
-import { RobotsList } from "../ItemLists/RobotsList";
-import { CreateOrganizationForm } from "../CreateForms/CreateOrganizationForm";
+import OrganizationsList from "../ItemLists/OrganizationsList";
+import RoboticsCloudsList from "../ItemLists/RoboticsCloudsList";
+import FleetsList from "../ItemLists/FleetsList";
+import RobotsList from "../ItemLists/RobotsList";
+import CreateOrganizationForm from "../CreateForms/CreateOrganizationForm";
 import { CreateRoboticsCloudForm } from "../CreateForms/CreateRoboticsCloudForm";
 import { CreateFleetForm } from "../CreateForms/CreateFleetForm";
 import CreateRobotLayout from "../../../layouts/CreateRobotLayout";
@@ -84,7 +84,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
           }}
           className="pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 "
           style={{ fontSize: "1rem" }}
-        ></i>
+        />
       </div>
       {!sidebarState?.isCreateMode && <FilteredTags />}
       <div

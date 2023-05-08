@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import { SidebarContext } from "../../../contexts/SidebarContext";
@@ -8,10 +14,10 @@ interface IRoboticsCloudsList {
   setItemCount: any;
 }
 
-export const RoboticsCloudsList = ({
+export default function RoboticsCloudsList({
   reload,
   setItemCount,
-}: IRoboticsCloudsList) => {
+}: IRoboticsCloudsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
@@ -54,4 +60,4 @@ export const RoboticsCloudsList = ({
       )}
     </Fragment>
   );
-};
+}

@@ -1,7 +1,6 @@
 import { useFormik } from "formik";
 import React, { Fragment, useContext } from "react";
 import InputError from "../../InputError/InputError";
-import { useAppDispatch } from "../../../hooks/redux";
 import { createFleetSchema } from "../../../validations/FleetsValidations";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
@@ -68,6 +67,7 @@ export const CreateFleetForm = () => {
           text="Create a new fleet"
           disabled={formik.isSubmitting || !formik.isValid}
           loading={formik.isSubmitting}
+          className="!h-11"
         />
       </div>
     </form>

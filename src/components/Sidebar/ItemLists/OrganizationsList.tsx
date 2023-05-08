@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import { ApiContext } from "../../../contexts/ApiContext";
@@ -9,10 +15,10 @@ interface IOrganizationList {
   setItemCount: any;
 }
 
-export const OrganizationsList = ({
+export default function OrganizationsList({
   reload,
   setItemCount,
-}: IOrganizationList) => {
+}: IOrganizationList): ReactElement {
   const [responseOrganizations, setResponseOrganizations] =
     useState<any>(undefined);
   const { selectedState }: any = useContext(SidebarContext);
@@ -56,4 +62,4 @@ export const OrganizationsList = ({
       )}
     </Fragment>
   );
-};
+}

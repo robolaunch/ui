@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import { SidebarContext } from "../../../contexts/SidebarContext";
@@ -8,7 +14,10 @@ interface IRobotsList {
   setItemCount: any;
 }
 
-export const RobotsList = ({ reload, setItemCount }: IRobotsList) => {
+export default function RobotsList({
+  reload,
+  setItemCount,
+}: IRobotsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseRobots, setResponseRobots] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
@@ -48,4 +57,4 @@ export const RobotsList = ({ reload, setItemCount }: IRobotsList) => {
       )}
     </Fragment>
   );
-};
+}

@@ -131,6 +131,7 @@ export const CreateRoboticsCloudForm = () => {
           text="Create a new Robotics Cloud"
           disabled={formik.isSubmitting || !formik.isValid}
           loading={formik.isSubmitting}
+          className="!h-11"
         />
       </div>
     </form>

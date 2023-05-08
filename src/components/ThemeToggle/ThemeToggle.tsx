@@ -1,8 +1,8 @@
-import React, { FC, useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { TbMoon, TbSun } from "react-icons/tb";
 
-export const ThemeToggle: FC = () => {
+export default function ThemeToggle(): ReactElement {
   const { theme, setTheme }: any = useContext(ThemeContext);
 
   return (
@@ -17,4 +17,4 @@ export const ThemeToggle: FC = () => {
       )}
     </button>
   );
-};
+}

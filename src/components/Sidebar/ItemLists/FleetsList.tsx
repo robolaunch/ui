@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../../hooks/redux";
 import { SidebarContext } from "../../../contexts/SidebarContext";
@@ -8,7 +14,10 @@ interface IFleetsList {
   setItemCount: any;
 }
 
-export const FleetsList = ({ reload, setItemCount }: IFleetsList) => {
+export default function FleetsList({
+  reload,
+  setItemCount,
+}: IFleetsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [responseFleets, setResponseFleets] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
@@ -48,4 +57,4 @@ export const FleetsList = ({ reload, setItemCount }: IFleetsList) => {
       )}
     </Fragment>
   );
-};
+}

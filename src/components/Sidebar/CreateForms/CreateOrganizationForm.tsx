@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React, { useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { createOrganizationSchema } from "../../../validations/OrganizationsValidations";
 import InputError from "../../InputError/InputError";
 import { SidebarContext } from "../../../contexts/SidebarContext";
@@ -8,7 +8,7 @@ import Button from "../../Button/Button";
 import { Api } from "../../../types/types";
 import { ApiContext } from "../../../contexts/ApiContext";
 
-export const CreateOrganizationForm = () => {
+export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
   const { api }: Api = useContext(ApiContext);
@@ -50,7 +50,8 @@ export const CreateOrganizationForm = () => {
         text="Create a new organization"
         disabled={formik.isSubmitting || !formik.isValid}
         loading={formik.isSubmitting}
+        className="!h-11"
       />
     </form>
   );
-};
+}

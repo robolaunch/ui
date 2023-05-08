@@ -1,10 +1,10 @@
-import React, { FC, useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import MainSidebar from "./MainSidebar";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import { ContentLayout } from "./Content/ContentLayout";
 import { Link } from "react-router-dom";
 
-export const Sidebar: FC = () => {
+export default function Sidebar(): ReactElement {
   const { sidebarState }: any = useContext(SidebarContext);
 
   return (
@@ -22,4 +22,4 @@ export const Sidebar: FC = () => {
       {sidebarState?.isOpen && <ContentLayout />}
     </>
   );
-};
+}
