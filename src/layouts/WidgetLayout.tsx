@@ -25,10 +25,10 @@ export default function WidgetLayout({
         backgroundSize: "cover",
       }}
     >
-      <div className="flex justify-between items-center p-5 border-b border-layer-light-100">
+      <div className="flex justify-between items-center p-4 border-b border-layer-light-100">
         {icon}
         <div className="flex flex-col gap-1 items-center">
-          <span className="font-semibold text-sm text-layer-dark-600 ">
+          <span className="font-medium text-sm text-layer-dark-600 ">
             {title}
           </span>
           <span className=" text-[0.68rem] text-layer-dark-300">
