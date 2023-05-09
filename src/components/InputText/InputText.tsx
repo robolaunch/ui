@@ -40,9 +40,10 @@ export default function InputText({
         {placeholder}
       </label>
       <input
+        disabled={disabled}
         className={`w-full p-3 h-10 outline-none transition-all duration-500
       border border-layer-light-300 rounded-md
-       focus:ring-2 focus:ring-primary ${className}`}
+       focus:ring-2 focus:ring-primary disabled:cursor-not-allowed ${className}`}
         type={type || "text"}
         name={name}
         value={value}
