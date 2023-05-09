@@ -35,7 +35,7 @@ export default function HeaderDropdownMenu(): ReactElement {
           className="flex flex-col gap-1 w-72 absolute right-4 top-[3.6rem] p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
           ref={ref}
         >
-          <Link to={`/profile`}>
+          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
             <li className={`${liClassName} flex gap-3`}>
               <Gravatar
                 email={keycloak?.tokenParsed?.email}
@@ -57,13 +57,13 @@ export default function HeaderDropdownMenu(): ReactElement {
               </div>
             </li>
           </Link>
-          <Link to={`/profile`}>
+          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
             <li className={liClassName}>Account Settings</li>
           </Link>
-
           <li
             className={liClassName}
             onClick={() => {
+              setIsOpen(false);
               keycloak.logout({
                 redirectUri: window.location.origin,
               });
