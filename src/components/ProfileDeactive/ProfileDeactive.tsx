@@ -1,7 +1,8 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import Button from "../Button/Button";
 import { RiErrorWarningFill } from "react-icons/ri";
+import DeactiveAccountModal from "../../modals/DeactiveAccountModal";
 
 interface IProfileDeactive {
   className?: string;
@@ -10,6 +11,9 @@ interface IProfileDeactive {
 export default function ProfileDeactive({
   className,
 }: IProfileDeactive): ReactElement {
+  const [isShowDeactiveModal, setIsShowDeactiveModal] =
+    useState<boolean>(false);
+
   return (
     <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
       <Fragment>
@@ -34,10 +38,17 @@ export default function ProfileDeactive({
             </div>
           </div>
           <Button
+            onClick={() => setIsShowDeactiveModal(true)}
             className="!h-10 w-40 bg-red-600 hover:!bg-red-800 !ring-red-400 transition-all duration-300 text-xs"
             text={`Deactive Account`}
           />
         </div>
+        {isShowDeactiveModal && (
+          <DeactiveAccountModal
+            handleCloseModal={() => setIsShowDeactiveModal(false)}
+            visibleModal={isShowDeactiveModal}
+          />
+        )}
       </Fragment>
     </CardLayout>
   );
