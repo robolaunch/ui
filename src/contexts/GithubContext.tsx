@@ -25,6 +25,7 @@ export default ({ children }: any) => {
       // window.history.pushState({}, "", "/");
       window.history.replaceState({}, document.title, window.location.pathname);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default ({ children }: any) => {
         getGithubAccessTokenwithRefreshToken();
       }, (githubToken?.exp - Math.floor(Date.now() / 1000) - 900) * 1000);
     return () => clearTimeout(tokenExpriationTimer || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [githubToken]);
 
   useEffect(() => {

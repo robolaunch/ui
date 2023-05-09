@@ -1,8 +1,6 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { BsPinMap } from "react-icons/bs";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
-import RosRobotLocation from "../RosRobotLocation/RosRobotLocation";
-import ROSLIB from "roslib";
 
 interface IRosMapWidget {
   ros: any;

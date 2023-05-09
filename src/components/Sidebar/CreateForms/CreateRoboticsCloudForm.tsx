@@ -8,11 +8,12 @@ import Button from "../../Button/Button";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 
 export const CreateRoboticsCloudForm = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseProviders, setResponseProviders] = useState<any>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRegions, setResponseRegions] = useState<any>([]);
 
-  const { selectedState, sidebarState, setSidebarState }: any =
-    useContext(SidebarContext);
+  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
   const formik: any = useFormik({
     initialValues: {

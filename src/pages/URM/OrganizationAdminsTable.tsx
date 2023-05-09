@@ -116,7 +116,7 @@ export default function OrganizationAdminsTable({
         },
       },
     ],
-    []
+    [activePage, refresh]
   );
 
   return (

@@ -9,7 +9,6 @@ import RosResourceUsageWidget from "../components/RosResourceUsageWidget/RosReso
 import RosEmergencyControlWidget from "../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
 import RosBatteryWidget from "../components/RosBatteryWidget/RosBatteryWidget";
 import RosJoystickWidget from "../components/RosJoystickWidget/RosJoystickWidget";
-import RosRemoteDesktopWidget from "../components/RosRemoteDesktopWidget/RosRemoteDesktopWidget";
 
 interface IhandleAddWidget {
   grid: any;
@@ -113,17 +112,9 @@ export function handleAddWidget({
               handleRemoveWidget={handleRemoveWidget}
             />
           )
-        : widget === "RosJoystickWidget"
-        ? ReactDOMServer.renderToString(
-            <RosJoystickWidget
-              id={grid.save(true, true).children.length}
-              ros={ros}
-              handleRemoveWidget={handleRemoveWidget}
-            />
-          )
-        : widget === "RosRemoteDesktopWidget" &&
+        : widget === "RosJoystickWidget" &&
           ReactDOMServer.renderToString(
-            <RosRemoteDesktopWidget
+            <RosJoystickWidget
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}

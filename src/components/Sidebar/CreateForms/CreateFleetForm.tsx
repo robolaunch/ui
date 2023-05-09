@@ -8,8 +8,7 @@ import InputSelect from "../../InputSelect/InputSelect";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 
 export const CreateFleetForm = () => {
-  const { selectedState, sidebarState, setSidebarState }: any =
-    useContext(SidebarContext);
+  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
   const formik = useFormik({
     initialValues: {

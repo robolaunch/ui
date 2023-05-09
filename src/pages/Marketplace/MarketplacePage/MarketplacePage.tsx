@@ -10,7 +10,8 @@ import InformationWidget from "../../../components/InformationWidget/Information
 import Button from "../../../components/Button/Button";
 
 export default function MarketplacePage(): ReactElement {
-  const [mockMarketplace, setMockMarketplace] = useState([
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [mockMarketplace, setMockMarketplace] = useState<any>([
     {
       title: "Robolaunch Robot",
       organization: "KAE Organization",

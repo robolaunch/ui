@@ -19,6 +19,7 @@ export default function RobotsList({
   setItemCount,
 }: IRobotsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobots, setResponseRobots] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
 

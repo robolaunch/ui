@@ -22,8 +22,6 @@ export default function FleetDashboardPage(): ReactElement {
   const dispatch = useAppDispatch();
   const url = useParams();
 
-  console.log("url", url);
-
   useEffect(() => {
     setLoading(true);
 
@@ -46,7 +44,7 @@ export default function FleetDashboardPage(): ReactElement {
           users: team?.users,
         };
       }),
-    [responseTeams]
+    [responseTeams, url?.organizationName]
   );
 
   const columns: any = useMemo(

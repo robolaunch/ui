@@ -13,6 +13,7 @@ export default function Paginate({
   className,
   style,
 }: IPaginate): ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageCount, setPageCount] = useState<number>(9);
   const [currentPage, setCurrentPage] = useState<number>(9);
 

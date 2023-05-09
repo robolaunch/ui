@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Collapsible from "react-collapsible";
-import { SlArrowDown, SlArrowRight } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 
 interface IAccordion {
   id: number;

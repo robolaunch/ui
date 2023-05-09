@@ -114,7 +114,7 @@ export default function OrganizationGuestsTable({
         },
       },
     ],
-    []
+    [activePage, refresh]
   );
 
   return (

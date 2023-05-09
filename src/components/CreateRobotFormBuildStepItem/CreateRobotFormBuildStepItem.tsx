@@ -28,6 +28,7 @@ export default function CreateRobotFormBuildStepItem({
 
   const {
     robotData,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setRobotData,
   }: {
     robotData: IRobotData;

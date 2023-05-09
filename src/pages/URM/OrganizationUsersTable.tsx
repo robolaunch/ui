@@ -116,7 +116,7 @@ export default function OrganizationUsersTable({
         },
       },
     ],
-    []
+    [activePage, refresh]
   );
 
   return (

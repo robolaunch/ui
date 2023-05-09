@@ -77,6 +77,7 @@ export default function Task({ ros }: ITask): ReactElement {
     return () => {
       map?.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const MENU_ID = "context-menu";

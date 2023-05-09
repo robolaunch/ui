@@ -19,6 +19,7 @@ export default function RoboticsCloudsList({
   setItemCount,
 }: IRoboticsCloudsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
 

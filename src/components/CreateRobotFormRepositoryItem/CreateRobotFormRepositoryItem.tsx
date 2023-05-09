@@ -37,6 +37,7 @@ export default function CreateRobotFormRepositoryItem({
         console.log(res);
         setResponseRepositories(res || []);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function CreateRobotFormRepositoryItem({
         ]?.url
       ) {
         getGithubRepositoryBranches({
+          // eslint-disable-next-line array-callback-return
           owner: responseRepositories?.filter((repo: any) => {
             if (
               repo?.html_url ===
@@ -61,6 +63,7 @@ export default function CreateRobotFormRepositoryItem({
               return repo;
             }
           })[0]?.owner?.login,
+          // eslint-disable-next-line array-callback-return
           repo: responseRepositories?.filter((repo: any) => {
             if (
               repo?.html_url ===

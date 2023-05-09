@@ -32,7 +32,7 @@ export default function UserRoleManagementLayout(): ReactElement {
     api.getOrganizations().then((responseOrganizations: any) => {
       setResponseOrganizations(responseOrganizations?.data?.data || []);
     });
-  }, []);
+  }, [api]);
 
   const pages = [
     {

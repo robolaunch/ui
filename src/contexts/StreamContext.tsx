@@ -260,7 +260,10 @@ export default ({ connectionURLs, children }: IStreamContext) => {
     return () => {
       client.current.close();
     };
-  }, []);
+  }, [
+    connectionURLs.remoteDesktopURL,
+    keycloak?.tokenParsed?.preferred_username,
+  ]);
 
   useEffect(() => {
     var buffer: ArrayBuffer;
@@ -425,6 +428,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
     video.current?.addEventListener("mouseleave", () => {
       enableBodyScroll(targetElement);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remoteDesktopReducer?.controller]);
 
   function handleMute() {
