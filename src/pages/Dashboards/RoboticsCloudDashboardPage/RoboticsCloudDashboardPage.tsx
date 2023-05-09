@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { GeneralTable } from "../../../components/Table/GeneralTable";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch } from "../../../hooks/redux";
 import { UsersCell } from "../../../components/Cells/UsersCell";
 import { InfoCell } from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
@@ -110,7 +110,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
+      <div className="grid gap-8 grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
             title={url?.roboticsCloudName || ""}
@@ -123,11 +123,10 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             }
           />
         </div>
-        <div className="col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <UtilizationWidget title="Robotics Cloud" />
         </div>
-
-        <div className="col-span-3">
+        <div className="col-span-12 lg:col-span-3">
           <CountWidget data={[5, 2, 4, 3]} title="Robotics Cloud" />
         </div>
       </div>

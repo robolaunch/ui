@@ -112,7 +112,7 @@ export default function FleetDashboardPage(): ReactElement {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
+      <div className="grid gap-8 grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
             title={url?.fleetName || ""}
@@ -128,11 +128,10 @@ export default function FleetDashboardPage(): ReactElement {
             }
           />
         </div>
-        <div className="col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <UtilizationWidget title="Robot" />
         </div>
-
-        <div className="col-span-3">
+        <div className="col-span-12 lg:col-span-3">
           <CountWidget data={[5, 2, 4, 3]} title="Robot" />
         </div>
       </div>

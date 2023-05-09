@@ -111,8 +111,8 @@ export default function OrganizationDashboardPage(): ReactElement {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-1 lg:grid-cols-12">
-        <div className="col-span-4">
+      <div className="grid gap-8 grid-cols-12">
+        <div className="col-span-12 lg:col-span-4">
           <InformationWidget
             title={url?.organizationName || ""}
             subtitle="From this page, you can view, control or get information about all
@@ -124,11 +124,10 @@ export default function OrganizationDashboardPage(): ReactElement {
             }
           />
         </div>
-        <div className="col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <UtilizationWidget title="Organization" />
         </div>
-
-        <div className="col-span-3">
+        <div className="col-span-12 lg:col-span-3">
           <CountWidget data={[5, 2, 4, 3]} title="Organization" />
         </div>
       </div>
