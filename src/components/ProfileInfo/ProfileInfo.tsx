@@ -6,14 +6,17 @@ import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import Gravatar from "react-gravatar";
 import Button from "../Button/Button";
+import { TbEdit } from "react-icons/tb";
+import { MdOutlineCancel } from "react-icons/md";
 
 interface IProfileInfo {
   className?: string;
 }
 
 export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
+  const [isEditModeActive, setIsEditModeActive] =
+    React.useState<boolean>(false);
   const { keycloak } = useKeycloak();
-  console.log(keycloak?.tokenParsed);
 
   const formik = useFormik({
     initialValues: {
@@ -23,18 +26,41 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
       email: keycloak?.tokenParsed?.email,
       company: "",
     },
-    onSubmit: (values: any) => {},
+    onSubmit: (values: any) => {
+      // action
+      setIsEditModeActive(false);
+    },
   });
 
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 ${className}`}>
+    <CardLayout
+      className={`flex flex-col gap-8 p-6 ${className} transition-all duration-500`}
+    >
       <Fragment>
-        <p className="text-lg font-bold text-layer-dark-600">Profile Info</p>
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-bold text-layer-dark-600">Profile Info</p>
+          {isEditModeActive ? (
+            <MdOutlineCancel
+              className="cursor-pointer"
+              onClick={() => {
+                formik.resetForm();
+                setIsEditModeActive(false);
+              }}
+              size={22}
+            />
+          ) : (
+            <TbEdit
+              className="cursor-pointer"
+              onClick={() => setIsEditModeActive(true)}
+              size={22}
+            />
+          )}
+        </div>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-9">
           <div className="flex gap-3 pb-6">
             <Gravatar
               email={keycloak?.tokenParsed?.email}
-              className="h-28 w-28 rounded"
+              className="h-32 w-32 rounded"
               default="mp"
               size={144}
             />
@@ -58,6 +84,8 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
             <InputText
               {...formik.getFieldProps("username")}
               placeholder="Username"
+              disabled={!isEditModeActive || formik.isSubmitting}
+              className="!text-sm"
             />
             <InputError
               error={formik.errors.username}
@@ -69,6 +97,8 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
               <InputText
                 {...formik.getFieldProps("firstName")}
                 placeholder="First Name"
+                disabled={!isEditModeActive || formik.isSubmitting}
+                className="!text-sm"
               />
               <InputError
                 error={formik.errors.firstName}
@@ -79,6 +109,8 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
               <InputText
                 {...formik.getFieldProps("lastName")}
                 placeholder="Last Name"
+                disabled={!isEditModeActive || formik.isSubmitting}
+                className="!text-sm"
               />
               <InputError
                 error={formik.errors.lastName}
@@ -87,7 +119,12 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
             </div>
           </div>
           <div>
-            <InputText {...formik.getFieldProps("email")} placeholder="Email" />
+            <InputText
+              {...formik.getFieldProps("email")}
+              placeholder="Email"
+              disabled={!isEditModeActive || formik.isSubmitting}
+              className="!text-sm"
+            />
             <InputError
               error={formik.errors.email}
               touched={formik.errors.email}
@@ -97,21 +134,30 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
             <InputText
               {...formik.getFieldProps("company")}
               placeholder="Company"
+              disabled={!isEditModeActive || formik.isSubmitting}
+              className="!text-sm"
             />
             <InputError
               error={formik.errors.company}
               touched={formik.errors.company}
             />
           </div>
-          <div className="flex items-center justify-end gap-6">
-            <span
-              className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
-              onClick={() => formik.resetForm()}
-            >
-              Discard
-            </span>
-            <Button className="!h-10 !w-36 text-xs" text={"Save Changes"} />
-          </div>
+          {isEditModeActive && (
+            <div className="flex items-center justify-end gap-6">
+              <span
+                className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
+                onClick={() => formik.resetForm()}
+              >
+                Discard
+              </span>
+              <Button
+                type="submit"
+                disabled={formik.isSubmitting || !formik.isValid}
+                className="!h-10 !w-36 text-xs"
+                text={"Save Changes"}
+              />
+            </div>
+          )}
         </form>
       </Fragment>
     </CardLayout>
