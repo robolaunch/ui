@@ -1,6 +1,7 @@
 import React, { Fragment, ReactElement, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import InputToggle from "../InputToggle/InputToggle";
+import { useKeycloak } from "@react-keycloak/web";
 
 interface IProfileConnectedApps {
   className?: string;
@@ -9,13 +10,15 @@ interface IProfileConnectedApps {
 export default function ProfileConnectedApps({
   className,
 }: IProfileConnectedApps): ReactElement {
+  const { keycloak } = useKeycloak();
+
   const [mockData, setMockData] = useState<any[]>([
     {
       name: "Github",
       icon: "/svg/apps/github.svg",
       description:
         "If you have a Github account, you can connect it to your account to automatically import your repositories.",
-      connected: true,
+      connected: keycloak?.tokenParsed?.githubApp,
     },
     {
       name: "Gitlab",

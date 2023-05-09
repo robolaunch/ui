@@ -32,7 +32,7 @@ export default function CreateRobotFormRepositoryItem({
   const { keycloak } = useKeycloak();
   console.log(keycloak);
   useEffect(() => {
-    Boolean(Number(keycloak?.tokenParsed?.githubApp)) &&
+    keycloak?.tokenParsed?.githubApp &&
       getGithubUserRepositories().then((res: any[]) => {
         console.log(res);
         setResponseRepositories(res || []);
@@ -40,7 +40,7 @@ export default function CreateRobotFormRepositoryItem({
   }, []);
 
   useEffect(() => {
-    if (Boolean(Number(keycloak?.tokenParsed?.githubApp))) {
+    if (keycloak?.tokenParsed?.githubApp) {
       formik.setFieldValue(
         `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`,
         ""
@@ -130,7 +130,7 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          {Boolean(Number(keycloak?.tokenParsed?.githubApp)) ? (
+          {keycloak?.tokenParsed?.githubApp ? (
             <InputSelect
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.url`
@@ -172,7 +172,7 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          {Boolean(Number(keycloak?.tokenParsed?.githubApp)) ? (
+          {keycloak?.tokenParsed?.githubApp ? (
             <InputSelect
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`

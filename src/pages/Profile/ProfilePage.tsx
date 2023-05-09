@@ -5,7 +5,7 @@ import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
 import ProfileEmailPreferances from "../../components/ProfileEmailPreferances/ProfileEmailPreferances";
 import ProfileDeactive from "../../components/ProfileDeactive/ProfileDeactive";
 import ProfileNotifications from "../../components/ProfileNotifications/ProfileNotifications";
-import ProfileResetPassword from "../../components/ProfileResetPassword/ProfileResetPassword";
+import ProfileChangePassword from "../../components/ProfileChangePassword/ProfileChangePassword";
 
 export default function Profile(): ReactElement {
   const [activeTab, setActiveTab] = useState("Overview");
@@ -24,7 +24,7 @@ export default function Profile(): ReactElement {
               <Fragment>
                 <div className="col-span-1 flex flex-col gap-6">
                   <ProfileInfo className="col-span-1" />
-                  <ProfileResetPassword className="col-span-1" />
+                  <ProfileChangePassword className="col-span-1" />
                   <ProfileEmailPreferances className="col-span-1" />
                 </div>
                 <div className="col-span-1 flex flex-col gap-6">
@@ -34,6 +34,8 @@ export default function Profile(): ReactElement {
                 </div>
               </Fragment>
             );
+          case "Profile Info":
+            return <ProfileInfo className="col-span-2" />;
           case "Connected Apps":
             return <ProfileConnectedApps className="col-span-2" />;
           case "Email Preferances":
@@ -41,7 +43,7 @@ export default function Profile(): ReactElement {
           case "Notifications":
             return <ProfileNotifications className="col-span-2" />;
           case "Change Password":
-            return <ProfileResetPassword className="col-span-2" />;
+            return <ProfileChangePassword className="col-span-2" />;
           case "Deactive Account":
             return <ProfileDeactive className="col-span-2" />;
         }

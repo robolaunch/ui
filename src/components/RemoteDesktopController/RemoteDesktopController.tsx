@@ -54,9 +54,9 @@ export default function RemoteDesktopController({
         onClick={() => handleIsControllerOpen()}
       >
         {isControllerOpen ? (
-          <IoIosArrowDown size={20} />
+          <IoIosArrowDown size={20} className="text-layer-dark-700" />
         ) : (
-          <IoIosArrowUp size={20} />
+          <IoIosArrowUp size={20} className="text-layer-dark-700" />
         )}
       </button>
       {isControllerOpen && (

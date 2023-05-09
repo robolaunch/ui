@@ -23,6 +23,7 @@ export default ({ children }: any) => {
       }
     } else {
       // window.history.pushState({}, "", "/");
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
 

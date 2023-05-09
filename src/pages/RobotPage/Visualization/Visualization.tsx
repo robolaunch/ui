@@ -21,7 +21,7 @@ export default function Visualization({
 }: IVisualization): ReactElement {
   const [grid, setGrid] = useState<any>();
   const url = useParams();
-  const localStoragePath = `visualization_${url?.organizationName}_${url.teamName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
+  const localStoragePath = `visualization_${url?.organizationName}_${url.roboticsCloudName}_${url.fleetName}_${url.robotName}`;
   // @ts-ignore
   const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
 

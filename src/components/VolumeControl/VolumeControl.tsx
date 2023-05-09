@@ -16,13 +16,13 @@ export default function VolumeControl({
     <div className="flex items-center gap-2 transition-all duration-500">
       <button onClick={() => handleMute()}>
         {isMuted ? (
-          <BsVolumeMuteFill size={24} />
+          <BsVolumeMuteFill size={24} className="text-layer-dark-700" />
         ) : (
-          <BsFillVolumeUpFill size={24} />
+          <BsFillVolumeUpFill size={24} className="text-layer-dark-700" />
         )}
       </button>
       <input
-        className="h-[3px]"
+        className="h-[3px] w-full"
         onChange={(e) => handleVolumeControl(Number(e.target.value) / 100)}
         type="range"
         min="1"

@@ -40,6 +40,7 @@ export default function ProfileHeader({
       <ul className="flex gap-8 px-6 pt-5 -mb-1.5 overflow-x-auto">
         {[
           "Overview",
+          "Profile Info",
           "Connected Apps",
           "Email Preferances",
           "Notifications",
