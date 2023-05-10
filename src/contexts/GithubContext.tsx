@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import queryString from "query-string";
 import axios from "axios";
 import { IGithubToken } from "../interfaces/githubInterfaces";
+import { useKeycloak } from "@react-keycloak/web";
 export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
@@ -13,9 +14,10 @@ export default ({ children }: any) => {
       : JSON.parse(localStorage.getItem("githubTokens") as any)
   );
   const queryParams = queryString.parse(window.location.search);
+  const { keycloak } = useKeycloak();
 
   useEffect(() => {
-    if (!githubToken) {
+    if (!githubToken && keycloak?.tokenParsed?.githubApp) {
       if (queryParams?.code) {
         getGithubAccessTokenwithCode();
       } else {
@@ -31,6 +33,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     const tokenExpriationTimer =
       githubToken &&
+      keycloak?.tokenParsed?.githubApp &&
       setTimeout(() => {
         getGithubAccessTokenwithRefreshToken();
       }, (githubToken?.exp - Math.floor(Date.now() / 1000) - 900) * 1000);

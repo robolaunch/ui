@@ -119,6 +119,14 @@ export default function Visualization({
           handleRemoveWidget={handleRemoveWidget}
           connectionURLs={connectionURLs}
         />
+        {gridLayout.length === 0 && (
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="text-lg font-bold text-gray-400">
+              No widgets added, if you want to add widgets, please click the
+              button below.
+            </div>
+          </div>
+        )}
       </div>
       <div className="fixed block bottom-5 left-1/2 right-1/2 z-10">
         <FloatMenu
