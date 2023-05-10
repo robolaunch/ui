@@ -3,29 +3,29 @@ import { GeneralTable } from "../../components/Table/GeneralTable";
 import BasicCell from "../../components/Cells/BasicCell";
 import ColorCell from "../../components/Cells/ColorCell";
 import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";
-import InvoiceUtilizationWidget from "../../components/InvoiceUtilizationWidget/InvoiceUtilizationWidget";
 import InvoiceStatusWidget from "../../components/InvoiceStatusWidget/InvoiceStatusWidget";
+import InvoiceOrganizationsUtilizationWidget from "../../components/InvoiceOrganizationsUtilizationWidget/InvoiceOrganizationsUtilizationWidget";
 
 export default function BillingPage(): ReactElement {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseInvoices, setResponseInvoices] = useState<any>([
     {
-      invoiceNumber: 12345678,
+      invoiceNumber: 1235,
+      organization: "Organization #2",
+      invoicePeriod: "September 2023",
+      invoiceDate: "2023-09-01",
+      dueDate: "2023-09-30",
+      price: 1200,
+      status: false,
+    },
+    {
+      invoiceNumber: 1234,
       organization: "Organization #1",
       invoicePeriod: "September 2023",
       invoiceDate: "2023-09-01",
       dueDate: "2023-09-30",
       price: 1000,
       status: true,
-    },
-    {
-      invoiceNumber: 12345679,
-      organization: "Organization #2",
-      invoicePeriod: "September 2023",
-      invoiceDate: "2023-09-01",
-      dueDate: "2023-09-30",
-      price: 1000,
-      status: false,
     },
   ]);
 
@@ -139,19 +139,18 @@ export default function BillingPage(): ReactElement {
 
   return (
     <div className="grid grid-cols-12 gap-6">
+      <div className="col-span-9">
+        <InvoiceOrganizationsUtilizationWidget />
+      </div>
       <div className="col-span-3">
         <InvoiceStatusWidget />
       </div>
-      <div className="col-span-6">
-        <InvoiceUtilizationWidget />
-      </div>
-      <div className="col-span-3">x</div>
       <div className="col-span-12">
         <GeneralTable
           columns={columns}
           data={data}
           loading={false}
-          title="Invoices"
+          title="All Invoices"
           type="invoices"
         />
       </div>

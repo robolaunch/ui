@@ -9,13 +9,10 @@ export default function InvoiceUtilizationWidget(): ReactElement {
     <WidgetLayout
       title={`Invoice Utilization Widget`}
       subtitle={
-        <div className="flex flex-col gap-1">
-          <span>Monthly Invoice Utilization</span>
-          <InputSelect className="text-xs !p-0.5 !h-fit">
-            <option value="1">Organization #1</option>
-            <option value="2">Organization #2</option>
-          </InputSelect>
-        </div>
+        <InputSelect className="text-xs !p-0.5 !h-fit mt-1">
+          <option value="1">Organization #1</option>
+          <option value="2">Organization #2</option>
+        </InputSelect>
       }
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
