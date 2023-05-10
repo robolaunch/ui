@@ -1,14 +1,13 @@
 import React, { Fragment, ReactElement, useMemo, useState } from "react";
-import CardLayout from "../../layouts/CardLayout";
-import Accordion from "../../components/Accordion/AccordionV2";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import BasicCell from "../../components/Cells/BasicCell";
 import ColorCell from "../../components/Cells/ColorCell";
 import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";
+import CardLayout from "../../layouts/CardLayout";
+import InvoiceUtilizationWidget from "../../components/InvoiceUtilizationWidget/InvoiceUtilizationWidget";
+import InvoiceStatusWidget from "../../components/InvoiceStatusWidget/InvoiceStatusWidget";
 
 export default function BillingPage(): ReactElement {
-  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseInvoices, setResponseInvoices] = useState<any>([
     {
@@ -139,31 +138,67 @@ export default function BillingPage(): ReactElement {
     []
   );
 
+  const [currentTab, setCurrentTab] = useState<string>("Overview");
+  const tabs = ["Overview", "Old Invoices"];
+
   return (
     <div className="grid grid-cols-12 gap-6">
       <div className="col-span-12">
-        <GeneralTable
-          columns={columns}
-          data={data}
-          loading={false}
-          title="Invoices"
-          type="invoices"
-        />
+        <CardLayout>
+          <ul className="flex gap-1 px-6 pt-3 -mb-1.5 overflow-x-auto">
+            {tabs.map((tab: any, index: number) => {
+              return (
+                <div
+                  onClick={() => setCurrentTab(tab)}
+                  className="w-full flex flex-col gap-3 cursor-pointer transition-all duration-500"
+                >
+                  <li
+                    className={`text-xs text-center font-medium px-2 transition-all duration-500 min-w-max hover:scale-90  ${
+                      currentTab === tab
+                        ? "text-layer-primary-500"
+                        : "text-layer-light-500"
+                    }`}
+                  >
+                    {tab}
+                  </li>
+                  {currentTab === tab && (
+                    <div className="w-full h-[2px] transition-all duration-500 bg-layer-primary-500" />
+                  )}
+                </div>
+              );
+            })}
+          </ul>
+        </CardLayout>
       </div>
-      <CardLayout className="flex flex-col gap-5 p-6 h-fit col-span-3">
-        <p className="text-lg font-bold text-layer-dark-600">Old Invoices</p>
 
-        <div>
-          <Accordion
-            handleOpen={() => setIsShowAccordion(!isShowAccordion)}
-            isOpen={isShowAccordion}
-            id={1}
-            header={<div></div>}
-          >
-            <></>
-          </Accordion>
-        </div>
-      </CardLayout>
+      {(() => {
+        switch (currentTab) {
+          case "Overview":
+            return (
+              <Fragment>
+                <div className="col-span-3">
+                  <InvoiceStatusWidget />
+                </div>
+                <div className="col-span-6">
+                  <InvoiceUtilizationWidget />
+                </div>
+                <div className="col-span-3">x</div>
+              </Fragment>
+            );
+          case "Old Invoices":
+            return (
+              <div className="col-span-12">
+                <GeneralTable
+                  columns={columns}
+                  data={data}
+                  loading={false}
+                  title="Invoices"
+                  type="invoices"
+                />
+              </div>
+            );
+        }
+      })()}
     </div>
   );
 }

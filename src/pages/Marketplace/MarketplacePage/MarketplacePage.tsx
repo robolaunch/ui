@@ -174,7 +174,7 @@ export default function MarketplacePage(): ReactElement {
         <div className="col-span-9">
           <div className="grid grid-cols-3 lg:grid-cols-6 2xl:grid-cols-9 gap-8 transition-all duration-500">
             <MarketplaceSortableBar />
-            {mockMarketplace.map((template, index) => {
+            {mockMarketplace.map((template: any, index: number) => {
               return (
                 <MarketplaceRobotTemplateItem key={index} template={template} />
               );
