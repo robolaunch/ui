@@ -4,15 +4,12 @@ import Accordion from "../../components/Accordion/AccordionV2";
 import { GeneralTable } from "../../components/Table/GeneralTable";
 import BasicCell from "../../components/Cells/BasicCell";
 import ColorCell from "../../components/Cells/ColorCell";
-import Button from "../../components/Button/Button";
-import { TbCloudDownload } from "react-icons/tb";
-import { MdPayment } from "react-icons/md";
-import { AiOutlineEye } from "react-icons/ai";
 import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";
 
 export default function BillingPage(): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseInvoices, setResponseInvoices] = useState<any>([
     {
       invoiceNumber: 12345678,

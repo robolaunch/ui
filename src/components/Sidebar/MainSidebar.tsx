@@ -31,6 +31,16 @@ export default function MainSidebar(): ReactElement {
       </div>
       <div className="flex flex-col gap-2">
         <Link
+          to="/billing"
+          className="transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90"
+        >
+          <img
+            className="w-10"
+            src={`/svg/sidebar/marketplace/marketplace-gray.svg`}
+            alt="Robolaunch"
+          />
+        </Link>
+        <Link
           to="/marketplace"
           className="transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90"
         >

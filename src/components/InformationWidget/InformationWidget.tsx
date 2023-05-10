@@ -15,7 +15,7 @@ export default function InformationWidget({
 }: IInformationWidget): ReactElement {
   return (
     <div
-      className="w-full h-full flex flex-col justify-around rounded-lg bg-layer-light-50 shadow-lg p-8"
+      className="w-full h-full flex flex-col justify-around rounded-lg bg-layer-light-50 shadow-lg p-8 animate__animated animate__fadeIn"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",
