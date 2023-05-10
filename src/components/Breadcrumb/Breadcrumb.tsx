@@ -3,6 +3,7 @@ import stringCapitalization from "../../helpers/stringCapitalization";
 import { Link } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import {
+  RiBillFill,
   RiDashboardFill,
   RiStore2Fill,
   RiUser3Fill,
@@ -31,6 +32,8 @@ export default function Breadcrumb(): ReactElement {
                     return <RiStore2Fill className="mt-0.5" size={13} />;
                   case "User role management":
                     return <RiUserSettingsFill className="mt-0.5" size={13} />;
+                  case "Billing":
+                    return <RiBillFill className="mt-0.5" size={13} />;
                 }
               })()}
               <span className="mt-0.5">
