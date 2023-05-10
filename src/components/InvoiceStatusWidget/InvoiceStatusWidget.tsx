@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import { MdPayment } from "react-icons/md";
 
 export default function InvoiceStatusWidget(): ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errorCount, setErrorCount] = useState<number>(1);
 
   return (

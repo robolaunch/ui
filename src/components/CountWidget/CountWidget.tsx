@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Widget from "../../layouts/WidgetLayout";
 import { GoGraph } from "react-icons/go";
 import ReactApexChart from "react-apexcharts";
@@ -11,7 +11,7 @@ interface ICountWidget {
 export default function CountWidget({
   title,
   data,
-}: ICountWidget): React.ReactElement {
+}: ICountWidget): ReactElement {
   return (
     <Widget
       title={`Count Widget`}

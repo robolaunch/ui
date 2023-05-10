@@ -56,7 +56,7 @@ export default function MainSidebar(): ReactElement {
         >
           <img
             className="w-10"
-            src={`/svg/sidebar/docs/docs-gray.svg`}
+            src={`/svg/sidebar/users/users-gray.svg`}
             alt="Robolaunch"
           />
         </Link>

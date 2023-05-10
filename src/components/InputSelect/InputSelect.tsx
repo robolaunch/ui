@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 
 interface InputSelectProps {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
   placeholder?: string;
   name?: string;
   value?: string;
