@@ -5,5 +5,5 @@ interface IBasicCell {
 }
 
 export default function BasicCell({ text }: IBasicCell) {
-  return <div className="text-xs">{text}</div>;
+  return <div className="text-xs px-2">{text}</div>;
 }
