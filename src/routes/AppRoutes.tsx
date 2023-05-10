@@ -10,6 +10,7 @@ import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
+import BillingPage from "../pages/BillingPage/BillingPage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -19,6 +20,7 @@ export default function AppRoutes(): ReactElement {
           path={`/user-role-management`}
           element={<UserRoleManagementLayout />}
         />
+        <Route path={`/billing`} element={<BillingPage />} />
         <Route path={`/marketplace`} element={<MarketplacePage />} />
         <Route
           path={`/marketplace/:name`}
