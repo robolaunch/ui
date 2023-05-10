@@ -1,13 +1,20 @@
-import React, { Fragment, ReactElement, useContext } from "react";
-import { Outlet } from "react-router-dom";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/Header/Header";
 import { SidebarContext } from "../contexts/SidebarContext";
 import Sidebar from "../components/Sidebar/Sidebar";
+import LoadingBar from "react-top-loading-bar";
 
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
-  const handleCloseSidebar = () => {
+  function handleCloseSidebar() {
     if (sidebarState?.isOpen) {
       setSidebarState((previousState: any) => {
         return {
@@ -18,7 +25,15 @@ export default function PrivateLayout(): ReactElement {
         };
       });
     }
-  };
+  }
+
+  const url = useLocation();
+  const [progress, setProgress] = useState<number>(0);
+  useEffect(() => {
+    setProgress(50);
+    setTimeout(() => setProgress(100), 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
 
   return (
     <Fragment>
@@ -39,6 +54,14 @@ export default function PrivateLayout(): ReactElement {
           </div>
         </div>
       </div>
+      <LoadingBar
+        height={3}
+        color={`#AC2DFE`}
+        progress={progress}
+        shadow={true}
+        transitionTime={500}
+        onLoaderFinished={() => setProgress(0)}
+      />
     </Fragment>
   );
 }
