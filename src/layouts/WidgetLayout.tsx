@@ -3,7 +3,7 @@ import { ReactElement } from "react";
 interface WidgetLayoutProps {
   icon?: ReactElement;
   title: string;
-  subtitle?: string;
+  subtitle?: string | ReactElement | ReactElement[];
   children?: ReactElement | ReactElement[];
   options?: ReactElement;
 }
@@ -37,7 +37,7 @@ export default function WidgetLayout({
         </div>
         <div>{options}</div>
       </div>
-      <div id="widgetBody" className=" px-2 pb-1 ">
+      <div id="widgetBody" className="h-full px-2 pb-1 ">
         {children}
       </div>
     </div>
