@@ -1566,6 +1566,10 @@ video {
   border-right-width: 1px;
 }
 
+.border-none{
+  border-style: none;
+}
+
 .\!border-layer-light-600{
   --tw-border-opacity: 1 !important;
   border-color: rgb(133 133 133 / var(--tw-border-opacity)) !important;
@@ -1965,6 +1969,31 @@ video {
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.\!py-0{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.\!py-0\.5{
+  padding-top: 0.125rem !important;
+  padding-bottom: 0.125rem !important;
+}
+
+.\!px-0{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.\!px-0\.5{
+  padding-left: 0.125rem !important;
+  padding-right: 0.125rem !important;
+}
+
+.\!px-1{
+  padding-left: 0.25rem !important;
+  padding-right: 0.25rem !important;
 }
 
 .\!pb-0{
