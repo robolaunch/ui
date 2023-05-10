@@ -35,12 +35,12 @@ export default function InvoiceOrganizationsUtilizationWidget(): ReactElement {
               show: false,
             },
           },
-          colors: ["#AC2DFE", "#35B8FA", "#c77bfc", "#5492fc"],
+          colors: ["#AC2DFE"],
           dataLabels: {
             enabled: false,
           },
           stroke: {
-            curve: "smooth",
+            curve: "stepline",
           },
 
           xaxis: {
@@ -104,31 +104,10 @@ export default function InvoiceOrganizationsUtilizationWidget(): ReactElement {
         }}
         series={[
           {
-            name: `Organization #1 Utilization`,
+            name: `Utilization`,
             data: [
               21, 20, 24, 22, 19, 20, 24, 21, 20, 24, 22, 19, 20, 24, 21, 20,
               24, 22, 19, 20, 24, 21, 20, 24, 22, 19, 20, 24, 21, 20,
-            ],
-          },
-          {
-            name: `Organization #2 Utilization`,
-            data: [
-              31, 30, 28, 32, 31, 30, 34, 31, 30, 28, 32, 31, 30, 34, 31, 30,
-              28, 32, 31, 30, 34, 31, 30, 28, 32, 31, 30, 34, 31, 30,
-            ],
-          },
-          {
-            name: `Organization #3 Utilization`,
-            data: [
-              36, 40, 38, 42, 36, 40, 44, 36, 40, 38, 42, 36, 40, 44, 36, 40,
-              38, 42, 36, 40, 44, 36, 40, 38, 42, 36, 40, 44, 36, 40,
-            ],
-          },
-          {
-            name: `Organization #4 Utilization`,
-            data: [
-              11, 10, 18, 12, 11, 10, 14, 11, 10, 18, 12, 11, 10, 14, 11, 10,
-              18, 12, 11, 10, 14, 11, 10, 18, 12, 11, 10, 14, 11, 10,
             ],
           },
         ]}

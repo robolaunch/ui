@@ -31,7 +31,7 @@ export default function PrivateLayout(): ReactElement {
   const [progress, setProgress] = useState<number>(0);
   useEffect(() => {
     setProgress(50);
-    setTimeout(() => setProgress(100), 300);
+    setTimeout(() => setProgress(100), 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
