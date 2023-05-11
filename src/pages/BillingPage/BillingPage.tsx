@@ -138,7 +138,7 @@ export default function BillingPage(): ReactElement {
   );
 
   return (
-    <div className="grid grid-cols-12 gap-6">
+    <div className="grid grid-cols-12 gap-6 animate__animated animate__fadeIn">
       <div className="col-span-9">
         <InvoiceOrganizationsUtilizationWidget />
       </div>
