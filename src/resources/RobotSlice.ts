@@ -6,5 +6,4 @@ export const robotSlice = createSlice({
     robots: [],
   },
   reducers: {},
-  extraReducers: {},
 });

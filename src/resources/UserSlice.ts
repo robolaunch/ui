@@ -11,7 +11,6 @@ export const UserSlice = createSlice({
     },
   },
   reducers: {},
-  extraReducers: {},
 });
 
 export default UserSlice.reducer;

@@ -4,7 +4,6 @@ export const fleetSlice = createSlice({
   name: "fleet",
   initialState: {},
   reducers: {},
-  extraReducers: {},
 });
 
 export default fleetSlice.reducer;

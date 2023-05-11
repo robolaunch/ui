@@ -4,7 +4,6 @@ export const providerSlice = createSlice({
   name: "provider",
   initialState: {},
   reducers: {},
-  extraReducers: {},
 });
 
 export default providerSlice.reducer;
