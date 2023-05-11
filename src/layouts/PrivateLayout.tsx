@@ -28,6 +28,7 @@ export default function PrivateLayout(): ReactElement {
   }
 
   const url = useLocation();
+
   const [progress, setProgress] = useState<number>(0);
   useEffect(() => {
     setProgress(50);
@@ -55,12 +56,14 @@ export default function PrivateLayout(): ReactElement {
         </div>
       </div>
       <LoadingBar
-        height={3}
-        color={`#AC2DFE`}
+        height={4}
         progress={progress}
         shadow={true}
         transitionTime={500}
         onLoaderFinished={() => setProgress(0)}
+        style={{
+          background: "linear-gradient(to right, #AC2DFE, #35B8FA)",
+        }}
       />
     </Fragment>
   );

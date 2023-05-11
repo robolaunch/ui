@@ -6,7 +6,6 @@ import store from "./resources/store";
 import { Provider } from "react-redux";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./auth/keycloak";
-import ApiContext from "./contexts/ApiContext";
 import GithubContext from "./contexts/GithubContext";
 
 const loadingPage = (
@@ -45,11 +44,9 @@ root.render(
   >
     <Provider store={store}>
       <BrowserRouter>
-        <ApiContext>
-          <GithubContext>
-            <App />
-          </GithubContext>
-        </ApiContext>
+        <GithubContext>
+          <App />
+        </GithubContext>
       </BrowserRouter>
     </Provider>
   </ReactKeycloakProvider>

@@ -1,24 +1,20 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CardLayout from "./CardLayout";
 import InformationWidget from "../components/InformationWidget/InformationWidget";
-import OrganizationsTable from "../pages/URM/OrganizationsTable";
-import OrganizationUsersTable from "../pages/URM/OrganizationUsersTable";
+import OrganizationsTable from "../pages/UserRoleManagement/OrganizationsPage";
+import OrganizationUsersPage from "../pages/UserRoleManagement/OrganizationUsersPage";
 import organizationNameViewer from "../helpers/organizationNameViewer";
-import OrganizationGuestsTable from "../pages/URM/OrganizationGuestsTable";
-import OrganizationAdminsTable from "../pages/URM/OrganizationAdminsTable";
-import { ApiContext } from "../contexts/ApiContext";
-import { Api } from "../types/types";
+import OrganizationGuestsPage from "../pages/UserRoleManagement/OrganizationGuestsPage";
+import OrganizationAdminsPage from "../pages/UserRoleManagement/OrganizationAdminsPage";
 import Button from "../components/Button/Button";
 import InviteUserToOrganizationModal from "../modals/IntiveUserToOrganizationModal";
+import { useAppDispatch } from "../hooks/redux";
+import { getOrganizations } from "../resources/OrganizationSlice";
 
 export default function UserRoleManagementLayout(): ReactElement {
-  const [responseOrganizations, setResponseOrganizations] = useState<any>(null);
+  const [responseOrganizations, setResponseOrganizations] = useState<
+    string[] | null
+  >(null);
   const [activePage, setActivePage] = useState<any>({
     page: "organizations",
     selectedOrganization: null,
@@ -26,13 +22,13 @@ export default function UserRoleManagementLayout(): ReactElement {
   const [visibleInviteUserModal, setVisibleInviteUserModal] =
     useState<boolean>(false);
 
-  const { api }: Api = useContext(ApiContext);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    api.getOrganizations().then((responseOrganizations: any) => {
-      setResponseOrganizations(responseOrganizations?.data?.data || []);
+    dispatch(getOrganizations()).then((responseOrganizations: any) => {
+      setResponseOrganizations(responseOrganizations?.payload?.data || []);
     });
-  }, [api]);
+  }, [dispatch]);
 
   const pages = [
     {
@@ -141,11 +137,11 @@ export default function UserRoleManagementLayout(): ReactElement {
                   />
                 );
               case "organizationAdmins":
-                return <OrganizationAdminsTable activePage={activePage} />;
+                return <OrganizationAdminsPage activePage={activePage} />;
               case "organizationUsers":
-                return <OrganizationUsersTable activePage={activePage} />;
+                return <OrganizationUsersPage activePage={activePage} />;
               case "organizationGuests":
-                return <OrganizationGuestsTable activePage={activePage} />;
+                return <OrganizationGuestsPage activePage={activePage} />;
             }
           })()}
         </Fragment>
