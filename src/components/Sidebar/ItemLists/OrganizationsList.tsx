@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../../contexts/SidebarContext";
-import { ApiContext } from "../../../contexts/ApiContext";
-import { Api } from "../../../types/types";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
+import { useAppDispatch } from "../../../hooks/redux";
 
 interface IOrganizationList {
   reload: boolean;
@@ -23,15 +23,14 @@ export default function OrganizationsList({
     useState<any>(undefined);
   const { selectedState }: any = useContext(SidebarContext);
 
-  const { api }: Api = useContext(ApiContext);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    api.getOrganizations().then((responseOrganizations: any) => {
-      setResponseOrganizations(responseOrganizations?.data?.data || []);
-      setItemCount(responseOrganizations?.data?.data?.length);
+    dispatch(getOrganizations()).then((responseOrganizations: any) => {
+      setResponseOrganizations(responseOrganizations?.payload?.data || []);
+      setItemCount(responseOrganizations?.payload?.data?.length || 0);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, setItemCount]);
 
   return (
     <Fragment>

@@ -5,13 +5,13 @@ import InputError from "../../InputError/InputError";
 import { SidebarContext } from "../../../contexts/SidebarContext";
 import InputText from "../../InputText/InputText";
 import Button from "../../Button/Button";
-import { Api } from "../../../types/types";
-import { ApiContext } from "../../../contexts/ApiContext";
+import { useAppDispatch } from "../../../hooks/redux";
+import { createOrganization } from "../../../resources/OrganizationSlice";
 
 export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
 
-  const { api }: Api = useContext(ApiContext);
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -21,9 +21,11 @@ export default function CreateOrganizationForm(): ReactElement {
     onSubmit: (values) => {
       formik.setSubmitting(true);
 
-      api.createOrganization({
-        name: values.name,
-      });
+      dispatch(
+        createOrganization({
+          name: values.name,
+        })
+      );
 
       setTimeout(() => {
         formik.setSubmitting(false);

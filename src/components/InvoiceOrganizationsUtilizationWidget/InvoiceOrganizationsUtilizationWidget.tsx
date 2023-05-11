@@ -26,7 +26,6 @@ export default function InvoiceOrganizationsUtilizationWidget(): ReactElement {
       }
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <div className="flex items-center justify-center py-2 px-4 "></div>
       <ReactApexChart
         options={{
           chart: {
