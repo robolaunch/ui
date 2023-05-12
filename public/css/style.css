@@ -1183,6 +1183,14 @@ video {
   width: 100%;
 }
 
+.w-5{
+  width: 1.25rem;
+}
+
+.w-3\.5{
+  width: 0.875rem;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
@@ -2109,6 +2117,14 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[2rem\]{
+  font-size: 2rem;
+}
+
+.text-\[1\.75rem\]{
+  font-size: 1.75rem;
 }
 
 .\!font-semibold{

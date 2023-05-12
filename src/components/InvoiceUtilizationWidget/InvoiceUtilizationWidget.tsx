@@ -9,14 +9,23 @@ export default function InvoiceUtilizationWidget(): ReactElement {
     <WidgetLayout
       title={`Invoice Utilization Widget`}
       subtitle={
-        <InputSelect className="text-xs !p-0.5 !h-fit mt-1">
-          <option value="1">Organization #1</option>
-          <option value="2">Organization #2</option>
-        </InputSelect>
+        <div className="flex gap-4">
+          <InputSelect className="!px-1 !m-0 !h-fit border-none">
+            <option value="organizations">Organizations</option>
+            <option value="roboticsClouds">Robotics Clouds</option>
+            <option value="fleets">Fleets</option>
+            <option value="robots">Robots</option>
+          </InputSelect>
+          <InputSelect className="!px-0.5 !m-0 !h-fit border-none">
+            <option value="all">All Organizations</option>
+            <option value="1">Organization #1</option>
+            <option value="2">Organization #2</option>
+            <option value="3">Organization #3</option>
+          </InputSelect>
+        </div>
       }
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <div className="flex items-center justify-center py-2 px-4 "></div>
       <ReactApexChart
         options={{
           chart: {
@@ -30,7 +39,8 @@ export default function InvoiceUtilizationWidget(): ReactElement {
             enabled: false,
           },
           stroke: {
-            curve: "smooth",
+            curve: "stepline",
+            width: 3,
           },
 
           xaxis: {
@@ -41,6 +51,15 @@ export default function InvoiceUtilizationWidget(): ReactElement {
               },
             },
             categories: [
+              "2023-09-01",
+              "2023-09-02",
+              "2023-09-03",
+              "2023-09-04",
+              "2023-09-05",
+              "2023-09-06",
+              "2023-09-07",
+              "2023-09-08",
+              "2023-09-09",
               "2023-09-10",
               "2023-09-11",
               "2023-09-12",
@@ -48,6 +67,20 @@ export default function InvoiceUtilizationWidget(): ReactElement {
               "2023-09-14",
               "2023-09-15",
               "2023-09-16",
+              "2023-09-17",
+              "2023-09-18",
+              "2023-09-19",
+              "2023-09-20",
+              "2023-09-21",
+              "2023-09-22",
+              "2023-09-23",
+              "2023-09-24",
+              "2023-09-25",
+              "2023-09-26",
+              "2023-09-27",
+              "2023-09-28",
+              "2023-09-29",
+              "2023-09-30",
             ],
           },
           yaxis: {
@@ -55,11 +88,14 @@ export default function InvoiceUtilizationWidget(): ReactElement {
               style: {
                 colors: "#00000075",
               },
+              formatter: function (val) {
+                return val + "$";
+              },
             },
           },
           tooltip: {
             x: {
-              format: "dd/MM/yy HH:mm",
+              format: "dd/MM/yy",
             },
           },
           legend: {
@@ -68,12 +104,15 @@ export default function InvoiceUtilizationWidget(): ReactElement {
         }}
         series={[
           {
-            name: ` Base Utilization`,
-            data: [31, 30, 28, 32, 31, 30, 34],
+            name: `Utilization`,
+            data: [
+              21, 20, 24, 22, 19, 20, 24, 21, 20, 24, 22, 19, 20, 24, 21, 20,
+              24, 22, 19, 20, 24, 21, 20, 24, 22, 19, 20, 24, 21, 20,
+            ],
           },
         ]}
         type="area"
-        height={250}
+        height={300}
       />
     </WidgetLayout>
   );

@@ -4,7 +4,7 @@ import BasicCell from "../../components/Cells/BasicCell";
 import ColorCell from "../../components/Cells/ColorCell";
 import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";
 import InvoiceStatusWidget from "../../components/InvoiceStatusWidget/InvoiceStatusWidget";
-import InvoiceOrganizationsUtilizationWidget from "../../components/InvoiceOrganizationsUtilizationWidget/InvoiceOrganizationsUtilizationWidget";
+import InvoiceUtilizationWidget from "../../components/InvoiceUtilizationWidget/InvoiceUtilizationWidget";
 
 export default function BillingPage(): ReactElement {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -140,7 +140,7 @@ export default function BillingPage(): ReactElement {
   return (
     <div className="grid grid-cols-12 gap-6 animate__animated animate__fadeIn">
       <div className="col-span-9">
-        <InvoiceOrganizationsUtilizationWidget />
+        <InvoiceUtilizationWidget />
       </div>
       <div className="col-span-3">
         <InvoiceStatusWidget />
