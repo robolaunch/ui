@@ -29,6 +29,8 @@ export default function InviteUserToOrganizationModal({
     onSubmit: (values: any) => {},
   });
 
+  console.log(organizations);
+
   return (
     <Dialog
       header="Invite User"
@@ -38,7 +40,7 @@ export default function InviteUserToOrganizationModal({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full flex flex-col gap-6"
+        className="w-full flex flex-col gap-7"
       >
         <p className="text-sm">
           Are you sure you want to invite this user to an organization?
@@ -99,8 +101,11 @@ export default function InviteUserToOrganizationModal({
                 <option value=""></option>
               )}
               {organizations?.map((organization: any) => (
-                <option key={organization.id} value={organization.id}>
-                  {organization.name}
+                <option
+                  key={organization.organizationId}
+                  value={organization.organizationId}
+                >
+                  {organization.organizationName}
                 </option>
               ))}
             </Fragment>

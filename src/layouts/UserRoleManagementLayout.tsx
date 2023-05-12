@@ -82,45 +82,46 @@ export default function UserRoleManagementLayout(): ReactElement {
             actiontitle="If you need to create a new team or check the users in the team you
             can proceed here."
             component={
-              <CardLayout className="pt-6">
-                <div className="flex flex-col gap-4">
-                  <Button
-                    text="Invite User"
-                    onClick={() =>
-                      setVisibleInviteUserModal(!visibleInviteUserModal)
-                    }
-                    className="!h-10"
-                  />
-
-                  <ul className="flex flex-col gap-2 text-sm ">
-                    {pages?.map((page: any) => {
-                      if (page === null) {
-                        return null;
-                      }
-                      return (
-                        <li
-                          key={page?.key}
-                          className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
-                            page?.key === activePage?.page &&
-                            "bg-layer-light-100 font-medium"
-                          } ${page?.key !== "organizations" && "ml-4"} `}
-                          onClick={() =>
-                            setActivePage({
-                              page: page?.key,
-                              selectedOrganization:
-                                page === "organizations"
-                                  ? null
-                                  : activePage?.selectedOrganization,
-                            })
-                          }
-                        >
-                          {page?.name}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </CardLayout>
+              <div className="flex flex-col gap-6">
+                <Button
+                  text="Invite User"
+                  onClick={() =>
+                    setVisibleInviteUserModal(!visibleInviteUserModal)
+                  }
+                  className="!h-10 text-xs !w-36 "
+                />
+                <CardLayout className="border border-layer-light-100">
+                  <div className="flex flex-col gap-4">
+                    <ul className="flex flex-col gap-2 text-sm ">
+                      {pages?.map((page: any) => {
+                        if (page === null) {
+                          return null;
+                        }
+                        return (
+                          <li
+                            key={page?.key}
+                            className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
+                              page?.key === activePage?.page &&
+                              "bg-layer-light-100 font-medium"
+                            } ${page?.key !== "organizations" && "ml-4"} `}
+                            onClick={() =>
+                              setActivePage({
+                                page: page?.key,
+                                selectedOrganization:
+                                  page === "organizations"
+                                    ? null
+                                    : activePage?.selectedOrganization,
+                              })
+                            }
+                          >
+                            {page?.name}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </CardLayout>
+              </div>
             }
           />
         </div>
