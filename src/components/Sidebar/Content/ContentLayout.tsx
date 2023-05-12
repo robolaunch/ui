@@ -74,7 +74,7 @@ export const ContentLayout = ({ children }: ContentLayoutProps) => {
           sidebarState?.isCreateMode ? "pb-8" : " pb-4"
         }`}
       >
-        <h2 className="text-2xl font-semibold">{titleGenerator()}</h2>
+        <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
         <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
           {itemCount}
         </span>
