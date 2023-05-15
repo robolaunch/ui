@@ -30,7 +30,7 @@ export default function OrganizationAdminsTable({
         responseOrganizationsAdmins?.payload?.data[0]?.users || []
       );
     });
-  }, [activePage, dispatch]);
+  }, [activePage, dispatch, refresh]);
 
   const data: any = useMemo(
     () =>

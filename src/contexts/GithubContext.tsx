@@ -10,8 +10,6 @@ export default ({ children }: any) => {
   const { keycloak } = useKeycloak();
 
   const [githubToken, setGithubToken] = useState<IGithubToken | null>(() => {
-    console.log();
-
     if (
       JSON.parse(localStorage.getItem("githubTokens") as any) &&
       JSON.parse(localStorage.getItem("githubTokens") as any)?.exp <=
@@ -24,6 +22,7 @@ export default ({ children }: any) => {
       return JSON.parse(localStorage.getItem("githubTokens") as any);
     }
   });
+
   const queryParams = queryString.parse(window.location.search);
 
   useEffect(() => {
@@ -120,6 +119,7 @@ export default ({ children }: any) => {
   return (
     <GithubContext.Provider
       value={{
+        githubToken,
         githubAuth: githubToken?.access_token ? true : false,
       }}
     >

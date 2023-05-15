@@ -7,3 +7,8 @@ export interface IGithubToken {
   scope: string;
   token_type: string;
 }
+
+export interface IGithubContext {
+  githubToken: IGithubToken | null;
+  githubAuth: boolean;
+}

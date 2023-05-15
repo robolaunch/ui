@@ -29,7 +29,7 @@ export default function OrganizationGuestsTable({
         responseOrganizationsGuests?.payload?.data[0]?.users || []
       );
     });
-  }, [activePage, dispatch]);
+  }, [activePage, dispatch, refresh]);
 
   const data: any = useMemo(
     () =>

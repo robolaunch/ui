@@ -19,6 +19,7 @@ import {
 } from "../../api/github/githubApi";
 import InputSelect from "../InputSelect/InputSelect";
 import { GithubContext } from "../../contexts/GithubContext";
+import { IGithubContext } from "../../interfaces/githubInterfaces";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -36,7 +37,7 @@ export default function CreateRobotFormRepositoryItem({
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
   const [responseBranches, setResponseBranches] = useState<any[]>([]);
 
-  const { githubAuth }: any = useContext(GithubContext);
+  const { githubAuth }: IGithubContext = useContext(GithubContext);
 
   useEffect(() => {
     githubAuth &&

@@ -25,7 +25,6 @@ export default function ChangeRoleModal({
   const dispatch = useAppDispatch();
 
   function handleChangeRole() {
-    console.log(activePage);
     if (activePage?.page === "organizationAdmins") {
       dispatch(
         moveAdminAsUserFromOrganization({
@@ -43,7 +42,6 @@ export default function ChangeRoleModal({
         })
       );
     }
-    console.log(handleRefresh);
     handleRefresh && handleRefresh();
     handleCloseModal();
   }
