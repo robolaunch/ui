@@ -52,6 +52,7 @@ export default ({ children }: any) => {
         "http://localhost:8081/getGithubAccessTokenwithCode",
         {
           code: queryParams.code,
+          githubUserId: keycloak?.tokenParsed?.githubApp,
         },
         {
           headers: {
