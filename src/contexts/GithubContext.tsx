@@ -7,14 +7,24 @@ export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const [githubToken, setGithubToken] = useState<IGithubToken | null>(
-    JSON.parse(localStorage.getItem("githubTokens") as any)?.exp <=
-      Math.floor(Date.now() / 1000) - 600
-      ? null
-      : JSON.parse(localStorage.getItem("githubTokens") as any)
-  );
-  const queryParams = queryString.parse(window.location.search);
   const { keycloak } = useKeycloak();
+
+  const [githubToken, setGithubToken] = useState<IGithubToken | null>(() => {
+    console.log();
+
+    if (
+      JSON.parse(localStorage.getItem("githubTokens") as any) &&
+      JSON.parse(localStorage.getItem("githubTokens") as any)?.exp <=
+        Math.floor(Date.now() / 1000) - 600 &&
+      JSON.parse(localStorage.getItem("githubTokens") as any)?.userId !==
+        keycloak?.tokenParsed?.githubApp
+    ) {
+      return null;
+    } else {
+      return JSON.parse(localStorage.getItem("githubTokens") as any);
+    }
+  });
+  const queryParams = queryString.parse(window.location.search);
 
   useEffect(() => {
     if (!githubToken && keycloak?.tokenParsed?.githubApp) {
@@ -63,17 +73,16 @@ export default ({ children }: any) => {
       )
       .then((response) => {
         if (!response?.data?.error) {
+          console.log("gettoken", response);
           setGithubToken({
             exp: response.data.expires_in + Math.floor(Date.now() / 1000),
             ...response.data,
           });
           console.log("githubTokenReceived");
-        } else {
-          window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
         }
       })
       .catch((error) => {
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+        setGithubToken(null);
       });
   }
 
@@ -111,7 +120,7 @@ export default ({ children }: any) => {
   return (
     <GithubContext.Provider
       value={{
-        githubToken,
+        githubAuth: githubToken?.access_token ? true : false,
       }}
     >
       {children}

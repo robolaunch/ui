@@ -1,4 +1,10 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotWorkspace,
@@ -12,7 +18,7 @@ import {
   getGithubRepositoryBranches,
 } from "../../api/github/githubApi";
 import InputSelect from "../InputSelect/InputSelect";
-import { useKeycloak } from "@react-keycloak/web";
+import { GithubContext } from "../../contexts/GithubContext";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -29,10 +35,11 @@ export default function CreateRobotFormRepositoryItem({
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
   const [responseBranches, setResponseBranches] = useState<any[]>([]);
-  const { keycloak } = useKeycloak();
-  console.log(keycloak);
+
+  const { githubAuth }: any = useContext(GithubContext);
+
   useEffect(() => {
-    keycloak?.tokenParsed?.githubApp &&
+    githubAuth &&
       getGithubUserRepositories().then((res: any[]) => {
         console.log(res);
         setResponseRepositories(res || []);
@@ -41,7 +48,7 @@ export default function CreateRobotFormRepositoryItem({
   }, []);
 
   useEffect(() => {
-    if (keycloak?.tokenParsed?.githubApp) {
+    if (githubAuth) {
       formik.setFieldValue(
         `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`,
         ""
@@ -133,7 +140,7 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          {keycloak?.tokenParsed?.githubApp ? (
+          {githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.url`
@@ -175,7 +182,7 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
-          {keycloak?.tokenParsed?.githubApp ? (
+          {githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`
