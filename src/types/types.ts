@@ -1,5 +1,5 @@
-import { OrganizationRepositoryImplApi } from "../api/keycloak";
+import { OrganizationRepositoryImplApi } from "../api/openapi";
 
-export interface Api {
-  api: OrganizationRepositoryImplApi;
+export interface IOrganizationApi {
+  organizationApi: OrganizationRepositoryImplApi;
 }

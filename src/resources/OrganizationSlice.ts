@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { api } from "../api/api";
+import { organizationApi } from "../api/api";
 import { toast } from "sonner";
 
 export const createOrganization = createAsyncThunk(
   "organizations/createOrganization",
   async (values: any) => {
-    const response = await api.createOrganization({ name: values.name });
+    const response = await organizationApi.createOrganization({
+      name: values.name,
+    });
     return response.data;
   }
 );
@@ -13,7 +15,7 @@ export const createOrganization = createAsyncThunk(
 export const getOrganizations = createAsyncThunk(
   "organizations/getOrganizations",
   async () => {
-    const response = await api.getOrganizations();
+    const response = await organizationApi.getOrganizations();
     return response.data;
   }
 );
@@ -21,7 +23,7 @@ export const getOrganizations = createAsyncThunk(
 export const getOrganizationUsers = createAsyncThunk(
   "organizations/getOrganizationUsers",
   async (values: any) => {
-    const response = await api.getOrganizationUsers({
+    const response = await organizationApi.getOrganizationUsers({
       name: values.name,
       organizationId: values.organizationId,
     });
@@ -32,7 +34,7 @@ export const getOrganizationUsers = createAsyncThunk(
 export const getOrganizationAdmins = createAsyncThunk(
   "organizations/getOrganizationAdmins",
   async (values: any) => {
-    const response = await api.getOrganizationAdmins({
+    const response = await organizationApi.getOrganizationAdmins({
       name: values.name,
       organizationId: values.organizationId,
     });
@@ -43,7 +45,7 @@ export const getOrganizationAdmins = createAsyncThunk(
 export const getOrganizationGuests = createAsyncThunk(
   "organizations/getOrganizationGuests",
   async (values: any) => {
-    const response = await api.getOrganizationGuests({
+    const response = await organizationApi.getOrganizationGuests({
       name: values.name,
       organizationId: values.organizationId,
     });
@@ -54,7 +56,7 @@ export const getOrganizationGuests = createAsyncThunk(
 export const moveAdminAsUserFromOrganization = createAsyncThunk(
   "organizations/moveAdminAsUserFromOrganization",
   async (values: any) => {
-    const response = await api.moveAdminAsUserFromOrganization({
+    const response = await organizationApi.moveAdminAsUserFromOrganization({
       name: values.name,
       organizationId: values.organizationId,
       invitedUserId: values.userId,
@@ -66,7 +68,7 @@ export const moveAdminAsUserFromOrganization = createAsyncThunk(
 export const moveUserAsAdminToOrganization = createAsyncThunk(
   "organizations/moveUserAsAdminToOrganization",
   async (values: any) => {
-    const response = await api.moveUserAsAdminToOrganization({
+    const response = await organizationApi.moveUserAsAdminToOrganization({
       name: values.name,
       organizationId: values.organizationId,
       invitedUserId: values.userId,
@@ -78,7 +80,7 @@ export const moveUserAsAdminToOrganization = createAsyncThunk(
 export const deleteUserFromOrganization = createAsyncThunk(
   "organizations/deleteUserFromOrganization",
   async (values: any) => {
-    const response = await api.deleteUserFromOrganization({
+    const response = await organizationApi.deleteUserFromOrganization({
       name: values.name,
       organizationId: values.organizationId,
       invitedUserId: values.invitedUserId,
@@ -90,7 +92,7 @@ export const deleteUserFromOrganization = createAsyncThunk(
 export const deleteAdminFromOrganization = createAsyncThunk(
   "organizations/deleteAdminFromOrganization",
   async (values: any) => {
-    const response = await api.deleteAdminFromOrganization({
+    const response = await organizationApi.deleteAdminFromOrganization({
       name: values.name,
       organizationId: values.organizationId,
       invitedUserId: values.invitedUserId,
@@ -102,7 +104,7 @@ export const deleteAdminFromOrganization = createAsyncThunk(
 export const deleteGuestFromOrganization = createAsyncThunk(
   "organizations/deleteGuestFromOrganization",
   async (values: any) => {
-    const response = await api.deleteGuestFromOrganization({
+    const response = await organizationApi.deleteGuestFromOrganization({
       name: values.name,
       organizationId: values.organizationId,
       invitedUserId: values.invitedUserId,
