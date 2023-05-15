@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer from "./UserSlice";
-import organizationReducer from "./OrganizationSlice";
-import roboticsCloudReducer from "./RoboticsCloudSlice";
+import UserReducer from "./UserSlice";
+import OrganizationReducer from "./OrganizationSlice";
+import RoboticsCloudReducer from "./RoboticsCloudSlice";
 import ProviderReducer from "./ProviderSlice";
 import RegionReducer from "./RegionSlice";
 import FleetReducer from "./FleetSlice";
+import GithubReducer from "./GithubSlice";
 /* Data must be persisted in order not to lose them on page refresh. */
 /* Redux-persist basically saves the data into localStorage so the data is not lost on refresh. */
 
@@ -18,7 +19,17 @@ const persistConfigUser = {
 };
 const persistedReducerUser = persistReducer<any, any>(
   persistConfigUser,
-  userReducer
+  UserReducer
+);
+
+const persistConfigGithub = {
+  key: "github",
+  version: 1,
+  storage,
+};
+const persistedReducerGithub = persistReducer<any, any>(
+  persistConfigGithub,
+  GithubReducer
 );
 
 const persistConfigOrganization = {
@@ -28,7 +39,7 @@ const persistConfigOrganization = {
 };
 const persistedReducerOrganization = persistReducer<any, any>(
   persistConfigOrganization,
-  organizationReducer
+  OrganizationReducer
 );
 
 const persistConfigRoboticsCloud = {
@@ -38,7 +49,7 @@ const persistConfigRoboticsCloud = {
 };
 const persistedReducerRoboticsCloud = persistReducer<any, any>(
   persistConfigRoboticsCloud,
-  roboticsCloudReducer
+  RoboticsCloudReducer
 );
 
 const persistConfigProvider = {
@@ -74,6 +85,7 @@ const persistedReducerFleet = persistReducer<any, any>(
 const store = configureStore({
   reducer: {
     user: persistedReducerUser,
+    github: persistedReducerGithub,
     organization: persistedReducerOrganization,
     roboticsCloud: persistedReducerRoboticsCloud,
     provider: persistedReducerProvider,
