@@ -13,13 +13,15 @@ import {
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-import {
-  getGithubUserRepositories,
-  getGithubRepositoryBranches,
-} from "../../api/github/githubApi";
+
 import InputSelect from "../InputSelect/InputSelect";
 import { GithubContext } from "../../contexts/GithubContext";
 import { IGithubContext } from "../../interfaces/githubInterfaces";
+import { useAppDispatch } from "../../hooks/redux";
+import {
+  getGithubRepositoryBranches,
+  getGithubUserRepositories,
+} from "../../resources/GithubSlice";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -37,13 +39,14 @@ export default function CreateRobotFormRepositoryItem({
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
   const [responseBranches, setResponseBranches] = useState<any[]>([]);
 
+  const dispatch = useAppDispatch();
+
   const { githubAuth }: IGithubContext = useContext(GithubContext);
 
   useEffect(() => {
     githubAuth &&
-      getGithubUserRepositories().then((res: any[]) => {
-        console.log(res);
-        setResponseRepositories(res || []);
+      dispatch(getGithubUserRepositories()).then((res: any) => {
+        setResponseRepositories(res.payload.data || []);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -59,31 +62,33 @@ export default function CreateRobotFormRepositoryItem({
           repositoryIndex
         ]?.url
       ) {
-        getGithubRepositoryBranches({
-          // eslint-disable-next-line array-callback-return
-          owner: responseRepositories?.filter((repo: any) => {
-            if (
-              repo?.html_url ===
-              formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                repositoryIndex
-              ]?.url
-            ) {
-              return repo;
-            }
-          })[0]?.owner?.login,
-          // eslint-disable-next-line array-callback-return
-          repo: responseRepositories?.filter((repo: any) => {
-            if (
-              repo?.html_url ===
-              formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                repositoryIndex
-              ]?.url
-            ) {
-              return repo;
-            }
-          })[0]?.name,
-        }).then((res: any[]) => {
-          setResponseBranches(res || []);
+        dispatch(
+          getGithubRepositoryBranches({
+            // eslint-disable-next-line array-callback-return
+            owner: responseRepositories?.filter((repo: any) => {
+              if (
+                repo?.html_url ===
+                formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+                  repositoryIndex
+                ]?.url
+              ) {
+                return repo;
+              }
+            })[0]?.owner?.login,
+            // eslint-disable-next-line array-callback-return
+            repo: responseRepositories?.filter((repo: any) => {
+              if (
+                repo?.html_url ===
+                formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
+                  repositoryIndex
+                ]?.url
+              ) {
+                return repo;
+              }
+            })[0]?.name,
+          })
+        ).then((res: any) => {
+          setResponseBranches(res.payload.data || []);
         });
       }
     }
