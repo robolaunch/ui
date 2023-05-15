@@ -59,7 +59,7 @@ export const moveAdminAsUserFromOrganization = createAsyncThunk(
     const response = await organizationApi.moveAdminAsUserFromOrganization({
       name: values.name,
       organizationId: values.organizationId,
-      invitedUserId: values.userId,
+      invitedUserId: values.invitedUserId,
     });
     return response.data;
   }
@@ -71,7 +71,7 @@ export const moveUserAsAdminToOrganization = createAsyncThunk(
     const response = await organizationApi.moveUserAsAdminToOrganization({
       name: values.name,
       organizationId: values.organizationId,
-      invitedUserId: values.userId,
+      invitedUserId: values.invitedUserId,
     });
     return response.data;
   }
