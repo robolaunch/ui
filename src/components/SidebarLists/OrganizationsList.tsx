@@ -9,6 +9,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import { getOrganizations } from "../../resources/OrganizationSlice";
 import { useAppDispatch } from "../../hooks/redux";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 interface IOrganizationList {
   reload: boolean;
@@ -47,9 +48,15 @@ export default function OrganizationsList({
               <SidebarListItem
                 key={index}
                 type="organization"
-                name={organization?.organizationName}
+                name={organizationNameViewer({
+                  organizationName: organization?.organizationName,
+                  capitalization: false,
+                })}
                 description={`Member Count: ${organization?.userCount}`}
-                url={`/${organization?.organizationName}`}
+                url={`/${organizationNameViewer({
+                  organizationName: organization?.organizationName,
+                  capitalization: false,
+                })}`}
                 data={organization}
                 selected={
                   organization.organizationName ===
