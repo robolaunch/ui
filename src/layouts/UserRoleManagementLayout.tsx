@@ -37,16 +37,17 @@ export default function UserRoleManagementLayout(): ReactElement {
     },
     activePage?.page !== "organizations"
       ? {
-          key: "organizationAdmins",
-          name: `Organization Admins`,
-        }
-      : null,
-    activePage?.page !== "organizations"
-      ? {
           key: "organizationUsers",
           name: `Organization Users`,
         }
       : null,
+    activePage?.page !== "organizations"
+      ? {
+          key: "organizationAdmins",
+          name: `Organization Admins`,
+        }
+      : null,
+
     activePage?.page !== "organizations"
       ? {
           key: "organizationGuests",
@@ -88,7 +89,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                   onClick={() =>
                     setVisibleInviteUserModal(!visibleInviteUserModal)
                   }
-                  className="!h-10 text-xs !w-36 "
+                  className="!h-10 !bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 transition-all duration-500 hover:scale-95"
                 />
                 <CardLayout className="border border-layer-light-100">
                   <div className="flex flex-col gap-4">
@@ -97,13 +98,17 @@ export default function UserRoleManagementLayout(): ReactElement {
                         if (page === null) {
                           return null;
                         }
+
                         return (
                           <li
                             key={page?.key}
                             className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
                               page?.key === activePage?.page &&
                               "bg-layer-light-100 font-medium"
-                            } ${page?.key !== "organizations" && "ml-4"} `}
+                            } ${
+                              page?.key !== "organizations" &&
+                              "flex items-center gap-4"
+                            }`}
                             onClick={() =>
                               setActivePage({
                                 page: page?.key,
@@ -114,7 +119,12 @@ export default function UserRoleManagementLayout(): ReactElement {
                               })
                             }
                           >
-                            {page?.name}
+                            {page?.key !== "organizations" && (
+                              <span className="bg-primary w-2 h-2 rounded-full" />
+                            )}
+                            {page?.key === "organizations"
+                              ? "All Organizations"
+                              : page?.name}
                           </li>
                         );
                       })}
