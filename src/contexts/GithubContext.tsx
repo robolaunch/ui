@@ -24,9 +24,8 @@ export default ({ children }: any) => {
         keycloak?.tokenParsed?.githubApp
     ) {
       return null;
-    } else {
-      return JSON.parse(localStorage.getItem("githubTokens") as any);
     }
+    return JSON.parse(localStorage.getItem("githubTokens") as any);
   });
 
   useEffect(() => {
@@ -62,19 +61,21 @@ export default ({ children }: any) => {
         githubUserId: keycloak?.tokenParsed?.githubApp,
       })
     ).then((response: any) => {
-      console.log(response);
-      if (!response.payload?.data?.error) {
-        setGithubToken({
-          exp: response.payload.data.expires_in + Math.floor(Date.now() / 1000),
-          ...response.payload.data,
-        });
-        console.log("githubTokenReceived");
-      } else {
-        toast.error(
-          "Github App Auth failed. Please sign in your's github account."
-        );
-        setGithubToken(null);
-      }
+      setGithubToken(
+        !response?.payload?.data?.error
+          ? {
+              exp:
+                response.payload.data.expires_in +
+                Math.floor(Date.now() / 1000),
+              ...response.payload.data,
+            }
+          : null
+      );
+      toast.message(
+        !response?.payload?.data?.error
+          ? "Github App Auth successfull."
+          : "Github App Auth failed. Please sign in your's github account."
+      );
     });
   }
 
