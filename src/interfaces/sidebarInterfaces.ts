@@ -3,7 +3,7 @@ export interface ISidebarState {
   isCreateMode: boolean;
   page:
     | "organization"
-    | "roboticsCloud"
+    | "roboticscloud"
     | "fleet"
     | "robot"
     | "workspacesmanager"
@@ -12,7 +12,16 @@ export interface ISidebarState {
 }
 
 export interface ISelectedState {
-  organization: string | null;
-  roboticsCloud: string | null;
-  fleet: string | null;
+  organization: any;
+  roboticsCloud: any;
+  fleet: any;
+}
+
+export interface IuseSidebar {
+  sidebarState: ISidebarState;
+  setSidebarState: React.Dispatch<React.SetStateAction<ISidebarState>>;
+  selectedState: ISelectedState;
+  setSelectedState: React.Dispatch<React.SetStateAction<ISelectedState>>;
+  handleCreateRobotPreviousStep: () => void;
+  handleCreateRobotNextStep: () => void;
 }
