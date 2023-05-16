@@ -6,21 +6,21 @@ import React, {
   useState,
 } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch } from "../../../hooks/redux";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { useAppDispatch } from "../../hooks/redux";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
-interface IRobotsList {
+interface IFleetsList {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function RobotsList({
+export default function FleetsList({
   reload,
   setItemCount,
-}: IRobotsList): ReactElement {
+}: IFleetsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseRobots, setResponseRobots] = useState<any>([]);
+  const [responseFleets, setResponseFleets] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
 
   const dispatch = useAppDispatch();
@@ -41,16 +41,16 @@ export default function RobotsList({
         />
       ) : (
         <Fragment>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseFleets.map((fleet: any, index: number) => {
             return (
               <SidebarListItem
                 key={index}
-                type="robot"
-                name={robot?.robotName}
-                description={`Active Robot Count: ${robot?.activeRobotCount}`}
-                url={`/${robot?.robotName}`}
-                data={robot}
-                selected={robot.robotName === selectedState?.robot?.robotName}
+                type="fleet"
+                name={fleet?.fleetName}
+                description={`Robot Count: ${fleet?.robotCount}`}
+                url={`/${fleet?.fleetName}`}
+                data={fleet}
+                selected={fleet.fleetName === selectedState?.fleet?.fleetName}
               />
             );
           })}

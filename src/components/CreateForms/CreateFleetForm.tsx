@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import React, { Fragment, useContext } from "react";
-import InputError from "../../InputError/InputError";
-import { createFleetSchema } from "../../../validations/FleetsValidations";
-import InputText from "../../InputText/InputText";
-import Button from "../../Button/Button";
-import InputSelect from "../../InputSelect/InputSelect";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import InputError from "../InputError/InputError";
+import { createFleetSchema } from "../../validations/FleetsValidations";
+import InputText from "../InputText/InputText";
+import Button from "../Button/Button";
+import InputSelect from "../InputSelect/InputSelect";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
 export const CreateFleetForm = () => {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);

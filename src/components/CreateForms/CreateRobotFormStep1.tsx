@@ -1,17 +1,17 @@
 import React, { Fragment, ReactElement, useContext, useEffect } from "react";
-import { CreateRobotContext } from "../../../contexts/CreateRobotContext";
+import { CreateRobotContext } from "../../contexts/CreateRobotContext";
 import { useFormik } from "formik";
-import InputSelect from "../../InputSelect/InputSelect";
-import InputError from "../../InputError/InputError";
-import InputText from "../../InputText/InputText";
-import Button from "../../Button/Button";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import InputSelect from "../InputSelect/InputSelect";
+import InputError from "../InputError/InputError";
+import InputText from "../InputText/InputText";
+import Button from "../Button/Button";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import * as Yup from "yup";
-import InputToggle from "../../InputToggle/InputToggle";
-import stringSlugify from "../../../helpers/stringSlugify";
+import InputToggle from "../InputToggle/InputToggle";
+import stringSlugify from "../../helpers/stringSlugify";
 import { toast } from "sonner";
 import { MdVerified } from "react-icons/md";
-import InfoTip from "../../InfoTip/InfoTip";
+import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateRobotFormStep1(): ReactElement {
   const { robotData, setRobotData }: any = useContext(CreateRobotContext);

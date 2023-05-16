@@ -6,9 +6,9 @@ import React, {
   useState,
 } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { SidebarContext } from "../../../contexts/SidebarContext";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
-import { useAppDispatch } from "../../../hooks/redux";
+import { SidebarContext } from "../../contexts/SidebarContext";
+import { getOrganizations } from "../../resources/OrganizationSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 interface IOrganizationList {
   reload: boolean;

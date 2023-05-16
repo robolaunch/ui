@@ -1,15 +1,12 @@
 import React, { ReactElement, useContext, useEffect } from "react";
-import { CreateRobotContext } from "../../../contexts/CreateRobotContext";
+import { CreateRobotContext } from "../../contexts/CreateRobotContext";
 import { FormikProps, useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  IRobotBuildSteps,
-  IRobotData,
-} from "../../../interfaces/robotInterfaces";
-import Button from "../../Button/Button";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { IRobotBuildSteps, IRobotData } from "../../interfaces/robotInterfaces";
+import Button from "../Button/Button";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import { BsPlusCircle } from "react-icons/bs";
-import CreateRobotFormBuildStepItem from "../../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
+import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 
 export default function CreateRobotFormStep3(): ReactElement {
   const {

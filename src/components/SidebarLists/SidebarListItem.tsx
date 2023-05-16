@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
 interface SidebarListItemProps {
   name: string;

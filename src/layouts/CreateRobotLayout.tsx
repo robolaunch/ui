@@ -6,9 +6,9 @@ import React, {
   useState,
 } from "react";
 import { SidebarContext } from "../contexts/SidebarContext";
-import CreateRobotFormStep1 from "../components/Sidebar/CreateForms/CreateRobotFormStep1";
-import CreateRobotFormStep2 from "../components/Sidebar/CreateForms/CreateRobotFormStep2";
-import CreateRobotFormStep3 from "../components/Sidebar/CreateForms/CreateRobotFormStep3";
+import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1";
+import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
+import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
 import { JSONTree } from "react-json-tree";
 import { IRobotData } from "../interfaces/robotInterfaces";
 import { CreateRobotContext } from "../contexts/CreateRobotContext";

@@ -6,21 +6,21 @@ import React, {
   useState,
 } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch } from "../../../hooks/redux";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { useAppDispatch } from "../../hooks/redux";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
-interface IRoboticsCloudsList {
+interface IRobotsList {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function RoboticsCloudsList({
+export default function RobotsList({
   reload,
   setItemCount,
-}: IRoboticsCloudsList): ReactElement {
+}: IRobotsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
+  const [responseRobots, setResponseRobots] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
 
   const dispatch = useAppDispatch();
@@ -41,19 +41,16 @@ export default function RoboticsCloudsList({
         />
       ) : (
         <Fragment>
-          {responseRoboticsClouds.map((rc: any, index: number) => {
+          {responseRobots.map((robot: any, index: number) => {
             return (
               <SidebarListItem
                 key={index}
-                type="roboticsCloud"
-                name={rc?.roboticsCloudName}
-                description={`Fleet Count: ${rc?.fleetCount}`}
-                url={`/${rc?.roboticsCloudName}`}
-                data={rc}
-                selected={
-                  rc.roboticsCloudName ===
-                  selectedState?.roboticsCloud?.roboticsCloudName
-                }
+                type="robot"
+                name={robot?.robotName}
+                description={`Active Robot Count: ${robot?.activeRobotCount}`}
+                url={`/${robot?.robotName}`}
+                data={robot}
+                selected={robot.robotName === selectedState?.robot?.robotName}
               />
             );
           })}

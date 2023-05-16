@@ -1,12 +1,12 @@
 import { useFormik } from "formik";
 import React, { ReactElement, useContext } from "react";
-import { createOrganizationSchema } from "../../../validations/OrganizationsValidations";
-import InputError from "../../InputError/InputError";
-import { SidebarContext } from "../../../contexts/SidebarContext";
-import InputText from "../../InputText/InputText";
-import Button from "../../Button/Button";
-import { useAppDispatch } from "../../../hooks/redux";
-import { createOrganization } from "../../../resources/OrganizationSlice";
+import { createOrganizationSchema } from "../../validations/OrganizationsValidations";
+import InputError from "../InputError/InputError";
+import { SidebarContext } from "../../contexts/SidebarContext";
+import InputText from "../InputText/InputText";
+import Button from "../Button/Button";
+import { useAppDispatch } from "../../hooks/redux";
+import { createOrganization } from "../../resources/OrganizationSlice";
 
 export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useContext(SidebarContext);

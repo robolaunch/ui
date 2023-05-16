@@ -6,21 +6,21 @@ import React, {
   useState,
 } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { useAppDispatch } from "../../../hooks/redux";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { useAppDispatch } from "../../hooks/redux";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
-interface IFleetsList {
+interface IRoboticsCloudsList {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function FleetsList({
+export default function RoboticsCloudsList({
   reload,
   setItemCount,
-}: IFleetsList): ReactElement {
+}: IRoboticsCloudsList): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseFleets, setResponseFleets] = useState<any>([]);
+  const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
   const { selectedState }: any = useContext(SidebarContext);
 
   const dispatch = useAppDispatch();
@@ -41,16 +41,19 @@ export default function FleetsList({
         />
       ) : (
         <Fragment>
-          {responseFleets.map((fleet: any, index: number) => {
+          {responseRoboticsClouds.map((rc: any, index: number) => {
             return (
               <SidebarListItem
                 key={index}
-                type="fleet"
-                name={fleet?.fleetName}
-                description={`Robot Count: ${fleet?.robotCount}`}
-                url={`/${fleet?.fleetName}`}
-                data={fleet}
-                selected={fleet.fleetName === selectedState?.fleet?.fleetName}
+                type="roboticsCloud"
+                name={rc?.roboticsCloudName}
+                description={`Fleet Count: ${rc?.fleetCount}`}
+                url={`/${rc?.roboticsCloudName}`}
+                data={rc}
+                selected={
+                  rc.roboticsCloudName ===
+                  selectedState?.roboticsCloud?.roboticsCloudName
+                }
               />
             );
           })}
