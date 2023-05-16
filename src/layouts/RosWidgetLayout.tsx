@@ -32,7 +32,7 @@ export default function WidgetLayout({
       <div className="flex justify-between items-center gap-4 p-2">
         <div className={`${isVisible && "invisible"}`}>{icon}</div>
         <span
-          className={`text-sm font-medium text-layer-dark-700 cursor-pointer ${
+          className={`text-sm font-medium text-layer-dark-300 cursor-pointer ${
             isVisible && "hidden"
           }`}
         >

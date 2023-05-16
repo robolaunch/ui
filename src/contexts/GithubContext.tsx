@@ -8,11 +8,13 @@ import {
   getGithubAccessTokenwithCode,
   getGithubAccessTokenwithRefreshToken,
 } from "../resources/GithubSlice";
+import { useNavigate } from "react-router-dom";
 export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { keycloak } = useKeycloak();
   const queryParams = queryString.parse(window.location.search);
   const [githubToken, setGithubToken] = useState<IGithubToken | null>(() => {
@@ -31,7 +33,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     if (keycloak?.tokenParsed?.githubApp && !githubToken && queryParams?.code) {
       getGithubAppToken();
-      window.history.replaceState({}, document.title, window.location.pathname);
+      navigate(queryParams?.state as string);
     } else if (keycloak?.tokenParsed?.githubApp && !githubToken) {
       getGithubAppCode();
     }
@@ -51,7 +53,7 @@ export default ({ children }: any) => {
   }, [githubToken]);
 
   function getGithubAppCode() {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}&state=${window.location.pathname}`;
   }
 
   function getGithubAppToken() {
@@ -61,21 +63,18 @@ export default ({ children }: any) => {
         githubUserId: keycloak?.tokenParsed?.githubApp,
       })
     ).then((response: any) => {
-      setGithubToken(
-        !response?.payload?.data?.error
-          ? {
-              exp:
-                response.payload.data.expires_in +
-                Math.floor(Date.now() / 1000),
-              ...response.payload.data,
-            }
-          : null
-      );
-      toast.message(
-        !response?.payload?.data?.error
-          ? "Github App Auth successfull."
-          : "Github App Auth failed. Please sign in your's github account."
-      );
+      if (!response?.payload?.data?.error) {
+        setGithubToken({
+          exp: response.payload.data.expires_in + Math.floor(Date.now() / 1000),
+          ...response.payload.data,
+        });
+        toast.success("Github App Auth successfull.");
+      } else {
+        setGithubToken(null);
+        toast.error(
+          "Github App Auth failed. Please sign in your's github account."
+        );
+      }
     });
   }
 

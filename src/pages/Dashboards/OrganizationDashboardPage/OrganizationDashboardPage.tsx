@@ -21,7 +21,6 @@ export default function OrganizationDashboardPage(): ReactElement {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const url = useParams();
-  console.log(url);
 
   useEffect(() => {
     setLoading(true);

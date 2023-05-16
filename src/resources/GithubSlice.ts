@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import axiosInterceptorGithub from "../utils/axios.interceptor.github";
-import { toast } from "sonner";
 
 export const getGithubAccessTokenwithCode = createAsyncThunk(
   "github/getGithubAccessTokenwithCode",
@@ -60,55 +59,7 @@ export const githubSlice = createSlice({
   name: "github",
   initialState: {},
   reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(
-        getGithubAccessTokenwithCode.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(getGithubAccessTokenwithCode.rejected, (action: any) => {
-        toast.error("Something went wrong");
-      })
-      .addCase(
-        getGithubAccessTokenwithRefreshToken.fulfilled,
-        (state: any, action: any) => {
-          if (!action?.payload?.success) {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(getGithubAccessTokenwithRefreshToken.rejected, (action: any) => {
-        toast.error("Something went wrong");
-      })
-      .addCase(
-        getGithubUserRepositories.fulfilled,
-        (state: any, action: any) => {
-          if (!action?.payload?.success) {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(getGithubUserRepositories.rejected, (action: any) => {
-        toast.error("Something went wrong");
-      })
-      .addCase(
-        getGithubRepositoryBranches.fulfilled,
-        (state: any, action: any) => {
-          if (!action?.payload?.success) {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(getGithubRepositoryBranches.rejected, (action: any) => {
-        toast.error("Something went wrong");
-      });
-  },
+  extraReducers: (builder) => {},
 });
 
 export default githubSlice.reducer;
