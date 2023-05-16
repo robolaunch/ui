@@ -6,9 +6,9 @@ export interface IGithubToken {
   refresh_token_expires_in: number;
   scope: string;
   token_type: string;
+  userId: number;
 }
-
-export interface IGithubContext {
+export interface IuseGithub {
   githubToken: IGithubToken | null;
   githubAuth: boolean;
 }
