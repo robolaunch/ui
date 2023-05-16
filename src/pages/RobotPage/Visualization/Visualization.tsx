@@ -9,7 +9,11 @@ import ROSLIB from "roslib";
 interface IVisualization {
   ros: any;
   topicList: string[];
-  connectionURLs: string[];
+  connectionURLs: {
+    rosURL: string;
+    remoteDesktopURL: string;
+    ideURL: string;
+  };
   handleForceUpdate: (page: string) => void;
 }
 

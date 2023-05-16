@@ -1,9 +1,9 @@
-import React, { ReactElement, useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import React, { ReactElement } from "react";
 import { TbMoon, TbSun } from "react-icons/tb";
+import useTheme from "../../hooks/useTheme";
 
 export default function ThemeToggle(): ReactElement {
-  const { theme, setTheme }: any = useContext(ThemeContext);
+  const { theme, setTheme } = useTheme();
 
   return (
     <button

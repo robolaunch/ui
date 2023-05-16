@@ -1,12 +1,12 @@
-import React, { Fragment, ReactElement, useContext } from "react";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import React, { Fragment, ReactElement } from "react";
 import { ContentLayout } from "../../layouts/ContentLayout";
 import { Link } from "react-router-dom";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import { SideBarMenuItem } from "../SidebarMenuItem/SideBarMenuItem";
+import useSidebar from "../../hooks/useSidebar";
 
 export default function Sidebar(): ReactElement {
-  const { sidebarState }: any = useContext(SidebarContext);
+  const { sidebarState } = useSidebar();
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function Sidebar(): ReactElement {
           <div className="flex flex-col gap-4 ">
             {sidebarState?.isCreateMode &&
             ["robot", "workspacesmanager", "buildsmanager"].includes(
-              sidebarState?.page
+              sidebarState?.page as string
             ) ? (
               <Fragment>
                 <SideBarMenuItem type="robot" />

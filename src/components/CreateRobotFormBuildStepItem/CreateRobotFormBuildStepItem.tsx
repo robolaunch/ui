@@ -1,17 +1,16 @@
-import React, { Fragment, ReactElement, useContext, useState } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotBuildStep,
   IRobotBuildSteps,
-  IRobotData,
   IRobotWorkspace,
 } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
-import { CreateRobotContext } from "../../contexts/CreateRobotContext";
 import { Editor } from "@monaco-editor/react";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -26,14 +25,7 @@ export default function CreateRobotFormBuildStepItem({
 }: ICreateRobotFormBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
-  const {
-    robotData,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    setRobotData,
-  }: {
-    robotData: IRobotData;
-    setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
-  } = useContext(CreateRobotContext);
+  const { robotData } = useCreateRobot();
 
   return (
     <Accordion

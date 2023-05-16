@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState } from "react";
-import { SidebarContext } from "./SidebarContext";
+import React, { createContext, useState } from "react";
 import { IRobotData } from "../interfaces/robotInterfaces";
+import useSidebar from "../hooks/useSidebar";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const { selectedState }: any = useContext(SidebarContext);
+  const { selectedState } = useSidebar();
 
   const [robotData, setRobotData] = useState<IRobotData>({
     step1: {

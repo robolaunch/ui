@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import { Dialog } from "primereact/dialog";
-import React, { Fragment, ReactElement, useContext } from "react";
+import React, { Fragment, ReactElement } from "react";
 import InputError from "../components/InputError/InputError";
 import Button from "../components/Button/Button";
 import InputSelect from "../components/InputSelect/InputSelect";
-import { SidebarContext } from "../contexts/SidebarContext";
 import { ImportRobotSetSidebarState } from "../validations/RobotsValidations";
+import useSidebar from "../hooks/useSidebar";
 
 interface IImportRobotModal {
   visibleModal: boolean;
@@ -18,7 +18,7 @@ export default function ImportRobotModal({
   handleCloseModal,
   template,
 }: IImportRobotModal): ReactElement {
-  const { setSelectedState, setSidebarState }: any = useContext(SidebarContext);
+  const { setSelectedState, setSidebarState } = useSidebar();
 
   const formik = useFormik({
     validationSchema: ImportRobotSetSidebarState,

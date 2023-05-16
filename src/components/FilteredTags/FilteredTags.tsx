@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { MdOutlineCancel } from "react-icons/md";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
 
 export default function FilteredTags() {
-  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
+  const { selectedState, setSelectedState } = useSidebar();
 
   return (
     <div className="grid grid-cols-3 justify-items-center pb-2 animate__animated animate__fadeIn">

@@ -1,16 +1,15 @@
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import InputText from "../InputText/InputText";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
-import { StreamContext } from "../../contexts/StreamContext";
 import Button from "../Button/Button";
 import { MdStopScreenShare } from "react-icons/md";
 import { css } from "@emotion/css";
 import ScrollToBottom from "react-scroll-to-bottom";
+import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
 
 export default function RemoteDesktopTabs(): ReactElement {
   const [message, setMessage] = useState<string>("");
-  const { handleSendMessage, remoteDesktopReducer }: any =
-    useContext(StreamContext);
+  const { handleSendMessage, remoteDesktopReducer } = useRemoteDesktopStream();
 
   const { ref, height } = useComponentSize();
 

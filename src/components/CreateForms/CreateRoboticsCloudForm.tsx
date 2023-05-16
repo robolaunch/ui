@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useState } from "react";
 import InputError from "../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../validations/RoboticsCloudsValidations";
 import InputSelect from "../InputSelect/InputSelect";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
 
 export const CreateRoboticsCloudForm = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,7 +13,7 @@ export const CreateRoboticsCloudForm = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRegions, setResponseRegions] = useState<any>([]);
 
-  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
+  const { sidebarState, setSidebarState } = useSidebar();
 
   const formik: any = useFormik({
     initialValues: {

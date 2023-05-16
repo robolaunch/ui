@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
@@ -8,16 +8,16 @@ import { CreateRoboticsCloudForm } from "../components/CreateForms/CreateRobotic
 import { CreateFleetForm } from "../components/CreateForms/CreateFleetForm";
 import CreateRobotLayout from "./CreateRobotLayout";
 import stringCapitalization from "../helpers/stringCapitalization";
-import { SidebarContext } from "../contexts/SidebarContext";
 import Button from "../components/Button/Button";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
+import useSidebar from "../hooks/useSidebar";
 
 interface IContentLayout {
   children?: ReactNode;
 }
 
 export const ContentLayout = ({ children }: IContentLayout) => {
-  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
+  const { sidebarState, setSidebarState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
 
@@ -33,7 +33,7 @@ export const ContentLayout = ({ children }: IContentLayout) => {
             return "Robotics Cloud";
           }
           return stringCapitalization({
-            str: sidebarState?.page,
+            str: sidebarState?.page as string,
           });
         })()} creation`;
       case false:
@@ -42,7 +42,7 @@ export const ContentLayout = ({ children }: IContentLayout) => {
             return "Robotics Cloud";
           }
           return stringCapitalization({
-            str: sidebarState?.page,
+            str: sidebarState?.page as string,
           });
         })()}`;
     }

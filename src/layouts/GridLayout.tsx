@@ -16,7 +16,11 @@ interface IGridLayout {
   topicList: any;
   localStoragePath: string;
   handleRemoveWidget: any;
-  connectionURLs: string[];
+  connectionURLs: {
+    rosURL: string;
+    remoteDesktopURL: string;
+    ideURL: string;
+  };
 }
 
 export function GridLayout({

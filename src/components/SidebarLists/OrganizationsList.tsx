@@ -1,15 +1,9 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
-import { SidebarContext } from "../../contexts/SidebarContext";
 import { getOrganizations } from "../../resources/OrganizationSlice";
 import { useAppDispatch } from "../../hooks/redux";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import useSidebar from "../../hooks/useSidebar";
 
 interface IOrganizationList {
   reload: boolean;
@@ -22,7 +16,7 @@ export default function OrganizationsList({
 }: IOrganizationList): ReactElement {
   const [responseOrganizations, setResponseOrganizations] =
     useState<any>(undefined);
-  const { selectedState }: any = useContext(SidebarContext);
+  const { selectedState } = useSidebar();
 
   const dispatch = useAppDispatch();
 

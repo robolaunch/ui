@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { organizationApi } from "../api/api";
+import { organizationApi } from "../apis/api";
 import { toast } from "sonner";
 
 export const createOrganization = createAsyncThunk(

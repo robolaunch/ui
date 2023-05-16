@@ -1,11 +1,11 @@
 import { useKeycloak } from "@react-keycloak/web";
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import Button from "../Button/Button";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
-import { StreamContext } from "../../contexts/StreamContext";
 import { TfiReload } from "react-icons/tfi";
+import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
   client: any;
@@ -23,7 +23,7 @@ export default function RemoteDesktopController({
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
 
-  const { setScreenResolution }: any = useContext(StreamContext);
+  const { setScreenResolution } = useRemoteDesktopStream();
 
   const { keycloak } = useKeycloak();
 

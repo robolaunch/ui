@@ -1,29 +1,18 @@
-import React, { ReactElement, useContext, useEffect } from "react";
-import { CreateRobotContext } from "../../contexts/CreateRobotContext";
+import React, { ReactElement, useEffect } from "react";
 import { FormikProps, useFormik } from "formik";
 import * as Yup from "yup";
-import { IRobotBuildSteps, IRobotData } from "../../interfaces/robotInterfaces";
+import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import Button from "../Button/Button";
-import { SidebarContext } from "../../contexts/SidebarContext";
 import { BsPlusCircle } from "react-icons/bs";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
+import useSidebar from "../../hooks/useSidebar";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 export default function CreateRobotFormStep3(): ReactElement {
-  const {
-    robotData,
-    setRobotData,
-  }: {
-    robotData: IRobotData;
-    setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
-  } = useContext(CreateRobotContext);
+  const { robotData, setRobotData } = useCreateRobot();
 
-  const {
-    handleCreateRobotPreviousStep,
-    handleCreateRobotNextStep,
-  }: {
-    handleCreateRobotPreviousStep: () => void;
-    handleCreateRobotNextStep: () => void;
-  } = useContext(SidebarContext);
+  const { handleCreateRobotPreviousStep, handleCreateRobotNextStep } =
+    useSidebar();
 
   const formik: FormikProps<IRobotBuildSteps> = useFormik<IRobotBuildSteps>({
     validationSchema: Yup.object().shape({

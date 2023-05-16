@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import PrivateLayout from "../layouts/PrivateLayout";
 import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
@@ -11,11 +10,12 @@ import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePag
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import BillingPage from "../pages/BillingPage/BillingPage";
+import PrivateProvider from "../auth/PrivateProvider";
 
 export default function AppRoutes(): ReactElement {
   return (
     <Routes>
-      <Route element={<PrivateLayout />}>
+      <Route element={<PrivateProvider />}>
         <Route
           path={`/user-role-management`}
           element={<UserRoleManagementLayout />}

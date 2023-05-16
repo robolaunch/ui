@@ -1,36 +1,15 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { SidebarContext } from "../contexts/SidebarContext";
+import React, { Fragment, ReactElement, useState } from "react";
 import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1";
 import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
 import { JSONTree } from "react-json-tree";
-import { IRobotData } from "../interfaces/robotInterfaces";
-import { CreateRobotContext } from "../contexts/CreateRobotContext";
-import { ISidebarState } from "../interfaces/sidebarInterfaces";
+import useSidebar from "../hooks/useSidebar";
+import useCreateRobot from "../hooks/useCreateRobot";
 
 export default function CreateRobotLayout(): ReactElement {
-  const {
-    sidebarState,
-  }: {
-    sidebarState: ISidebarState;
-  } = useContext(SidebarContext);
-  const {
-    robotData,
-  }: {
-    robotData: IRobotData;
-  } = useContext(CreateRobotContext);
-
+  const { sidebarState } = useSidebar();
+  const { robotData } = useCreateRobot();
   const [isShowPreview, setIsShowPreview] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(sidebarState);
-  }, [sidebarState]);
 
   return (
     <Fragment>

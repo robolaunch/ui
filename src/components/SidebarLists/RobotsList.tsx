@@ -1,13 +1,6 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
-import { SidebarContext } from "../../contexts/SidebarContext";
 
 interface IRobotsList {
   reload: boolean;
@@ -21,7 +14,6 @@ export default function RobotsList({
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobots, setResponseRobots] = useState<any>([]);
-  const { selectedState }: any = useContext(SidebarContext);
 
   const dispatch = useAppDispatch();
 
@@ -50,7 +42,6 @@ export default function RobotsList({
                 description={`Active Robot Count: ${robot?.activeRobotCount}`}
                 url={`/${robot?.robotName}`}
                 data={robot}
-                selected={robot.robotName === selectedState?.robot?.robotName}
               />
             );
           })}

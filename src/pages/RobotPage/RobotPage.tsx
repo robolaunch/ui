@@ -19,7 +19,11 @@ export default function RobotPage(): ReactElement {
   const [topicList, setTopicList] = useState<any>([]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [connectionURLs, setConnectionURLs] = useState<any>({
+  const [connectionURLs, setConnectionURLs] = useState<{
+    rosURL: string;
+    remoteDesktopURL: string;
+    ideURL: string;
+  }>({
     rosURL: "ws://localhost:9090",
     // rosURL: "ws://172.16.44.200:32462",
     remoteDesktopURL: "ws://localhost:8080/ws?password=admin",

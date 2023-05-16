@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import React from "react";
+import useSidebar from "../../hooks/useSidebar";
 
 interface SidebarListItemProps {
   name: string;
@@ -20,7 +20,7 @@ export const SidebarListItem = ({
   selected,
   notSelectable,
 }: SidebarListItemProps) => {
-  const { selectedState, setSelectedState }: any = useContext(SidebarContext);
+  const { selectedState, setSelectedState } = useSidebar();
 
   const handleSelectItem = () => {
     switch (type) {

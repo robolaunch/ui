@@ -133,8 +133,8 @@ export default function OrganizationDashboardPage(): ReactElement {
       </div>
       <div className="grid grid-cols-1">
         <GeneralTable
-          type="team"
-          title="Teams"
+          type="roboticscloud"
+          title="Robotics Cloud"
           data={data}
           columns={columns}
           loading={loading}

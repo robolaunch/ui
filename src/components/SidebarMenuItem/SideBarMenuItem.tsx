@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
+import useTheme from "../../hooks/useTheme";
 
 interface ISideBarMenuItem {
   type: string;
 }
 
 export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
-  const { theme }: any = useContext(ThemeContext);
-  const { sidebarState, setSidebarState }: any = useContext(SidebarContext);
+  const { theme } = useTheme();
+  const { sidebarState, setSidebarState } = useSidebar();
 
   function colorSwitcher() {
     if (theme === "light") {

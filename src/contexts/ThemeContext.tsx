@@ -1,10 +1,10 @@
-import React, { useEffect, createContext } from "react";
+import React, { useEffect, createContext, useState } from "react";
 
 export const ThemeContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const [theme, setTheme] = React.useState<string>(
+  const [theme, setTheme] = useState<"dark" | "light">(
     localStorage.theme || "light"
   );
 

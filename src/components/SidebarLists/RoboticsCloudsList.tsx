@@ -1,13 +1,7 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -21,7 +15,7 @@ export default function RoboticsCloudsList({
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<any>([]);
-  const { selectedState }: any = useContext(SidebarContext);
+  const { selectedState } = useSidebar();
 
   const dispatch = useAppDispatch();
 

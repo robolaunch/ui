@@ -1,8 +1,8 @@
-import React, { ReactElement, useContext } from "react";
+import React, { ReactElement } from "react";
 import { GiSpeaker } from "react-icons/gi";
 import RemoteDesktopController from "../RemoteDesktopController/RemoteDesktopController";
-import { StreamContext } from "../../contexts/StreamContext";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
 
 interface IRemoteDesktopScene {
   isControllerActive: boolean;
@@ -11,8 +11,8 @@ interface IRemoteDesktopScene {
 export default function RemoteDesktopScene({
   isControllerActive,
 }: IRemoteDesktopScene): ReactElement {
-  const { remoteDesktopReducer, client, overlay, video, handleMute }: any =
-    useContext(StreamContext);
+  const { remoteDesktopReducer, client, overlay, video, handleMute } =
+    useRemoteDesktopStream();
 
   const handleFullScreen = useFullScreenHandle();
 

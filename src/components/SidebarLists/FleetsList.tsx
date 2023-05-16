@@ -1,13 +1,7 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
 
 interface IFleetsList {
   reload: boolean;
@@ -21,7 +15,7 @@ export default function FleetsList({
   const [loading, setLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseFleets, setResponseFleets] = useState<any>([]);
-  const { selectedState }: any = useContext(SidebarContext);
+  const { selectedState }: any = useSidebar();
 
   const dispatch = useAppDispatch();
 
