@@ -29,3 +29,8 @@ export interface IRobotBuildStep {
   isScriptCode: boolean;
   code: string;
 }
+
+export interface IuseCreateRobot {
+  robotData: IRobotData;
+  setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
+}
