@@ -1,9 +1,53 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createInstanceApi } from "../apis/api";
+import { toast } from "sonner";
+
+export const createRoboticsCloud = createAsyncThunk(
+  "roboticsCloud/createRoboticsCloud",
+  async (values: any) => {
+    const response = await createInstanceApi.createRoboticsCloud({
+      name: values.name,
+      organizationId: values.organizationId,
+      roboticsClouds: [{ name: values.roboticsCloudName }],
+    });
+    return response.data;
+  }
+);
+
+export const getRoboticsCloudsOfOrganization = createAsyncThunk(
+  "roboticsCloud/getRoboticsCloudsOfOrganization",
+  async (values: any) => {
+    const response = await createInstanceApi.getRoboticsClouds({
+      name: values.name,
+      organizationId: values.organizationId,
+    });
+    return response.data;
+  }
+);
 
 export const roboticsCloudSlice = createSlice({
   name: "roboticsCloud",
   initialState: {},
   reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createRoboticsCloud.fulfilled, (state, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(createRoboticsCloud.rejected, (state, action: any) => {
+        toast.error("Something went wrong");
+      })
+      .addCase(
+        getRoboticsCloudsOfOrganization.rejected,
+        (state, action: any) => {
+          toast.error("Something went wrong");
+        }
+      );
+  },
 });
 
 export default roboticsCloudSlice.reducer;
