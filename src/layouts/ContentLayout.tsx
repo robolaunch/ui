@@ -4,20 +4,23 @@ import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
-import { CreateRoboticsCloudForm } from "../components/CreateForms/CreateRoboticsCloudForm";
-import { CreateFleetForm } from "../components/CreateForms/CreateFleetForm";
+import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
+import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import CreateRobotLayout from "./CreateRobotLayout";
 import stringCapitalization from "../helpers/stringCapitalization";
 import Button from "../components/Button/Button";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import useSidebar from "../hooks/useSidebar";
+import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
+import InstancesList from "../components/SidebarLists/InstancesList";
+import { toast } from "sonner";
 
 interface IContentLayout {
   children?: ReactNode;
 }
 
 export const ContentLayout = ({ children }: IContentLayout) => {
-  const { sidebarState, setSidebarState } = useSidebar();
+  const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
 
@@ -32,6 +35,9 @@ export const ContentLayout = ({ children }: IContentLayout) => {
           if (sidebarState?.page === "roboticscloud") {
             return "Robotics Cloud";
           }
+          if (sidebarState?.page === "instance") {
+            return "Cloud Instance";
+          }
           return stringCapitalization({
             str: sidebarState?.page as string,
           });
@@ -40,6 +46,9 @@ export const ContentLayout = ({ children }: IContentLayout) => {
         return `Create ${(() => {
           if (sidebarState?.page === "roboticscloud") {
             return "Robotics Cloud";
+          }
+          if (sidebarState?.page === "instance") {
+            return "Cloud Instance";
           }
           return stringCapitalization({
             str: sidebarState?.page as string,
@@ -51,6 +60,9 @@ export const ContentLayout = ({ children }: IContentLayout) => {
   function titleGenerator() {
     if (sidebarState?.page === "roboticscloud") {
       return "Robotics Clouds";
+    }
+    if (sidebarState?.page === "instance") {
+      return "Instances";
     }
 
     switch (sidebarState?.page) {
@@ -65,6 +77,27 @@ export const ContentLayout = ({ children }: IContentLayout) => {
     return stringCapitalization({
       str: sidebarState?.page + "s",
     });
+  }
+
+  function handleCreateButton() {
+    if (sidebarState?.isCreateMode) {
+      setSidebarState((prev: any) => ({
+        ...prev,
+        isCreateMode: false,
+      }));
+    } else {
+      switch (sidebarState?.page) {
+        case "roboticscloud":
+          if (!selectedState?.organization) {
+            setSidebarState((prev: any) => ({ ...prev, page: "organization" }));
+            return toast.error(
+              "If you want to create a robotics cloud, you need to select an organization first."
+            );
+          }
+      }
+
+      setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
+    }
   }
 
   return (
@@ -115,6 +148,15 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                     setItemCount={setItemCount}
                   />
                 );
+
+              case "instance":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateCloudInstancesForm />;
+                }
+                return (
+                  <InstancesList reload={reload} setItemCount={setItemCount} />
+                );
+
               case "fleet":
                 if (sidebarState?.isCreateMode) {
                   return <CreateFleetForm />;
@@ -141,16 +183,7 @@ export const ContentLayout = ({ children }: IContentLayout) => {
           "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
         }`}
         text={buttonTextGenerator()}
-        onClick={() => {
-          if (sidebarState?.isCreateMode) {
-            setSidebarState((prev: any) => ({
-              ...prev,
-              isCreateMode: false,
-            }));
-          } else {
-            setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
-          }
-        }}
+        onClick={() => handleCreateButton()}
       />
     </div>
   );
