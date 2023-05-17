@@ -4,6 +4,7 @@ export interface ISidebarState {
   page:
     | "organization"
     | "roboticscloud"
+    | "instance"
     | "fleet"
     | "robot"
     | "workspacesmanager"
