@@ -360,6 +360,18 @@ export interface CloudInstance {
      * @type {string}
      * @memberof CloudInstance
      */
+    'instanceState'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudInstance
+     */
+    'instanceCloudState'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudInstance
+     */
     'organizationName'?: string;
 }
 /**
@@ -773,6 +785,12 @@ export interface Organization {
     'gatekeeperClient'?: ClientRepresentation;
     /**
      * 
+     * @type {Array<RoboticsCloud>}
+     * @memberof Organization
+     */
+    'roboticsClouds'?: Array<RoboticsCloud>;
+    /**
+     * 
      * @type {Array<Member>}
      * @memberof Organization
      */
@@ -814,6 +832,18 @@ export interface PlainResponse {
      * @memberof PlainResponse
      */
     'data'?: Array<Organization>;
+    /**
+     * 
+     * @type {Array<RoboticsCloud>}
+     * @memberof PlainResponse
+     */
+    'roboticsCloudData'?: Array<RoboticsCloud>;
+    /**
+     * 
+     * @type {Array<RoboticsCloud>}
+     * @memberof PlainResponse
+     */
+    'roboticsClouddata'?: Array<RoboticsCloud>;
 }
 /**
  * 
@@ -1464,6 +1494,25 @@ export interface RobotWorkspace {
 /**
  * 
  * @export
+ * @interface RoboticsCloud
+ */
+export interface RoboticsCloud {
+    /**
+     * 
+     * @type {string}
+     * @memberof RoboticsCloud
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {Array<CloudInstance>}
+     * @memberof RoboticsCloud
+     */
+    'cloudInstances'?: Array<CloudInstance>;
+}
+/**
+ * 
+ * @export
  * @interface ScopeRepresentation
  */
 export interface ScopeRepresentation {
@@ -1567,107 +1616,6 @@ export interface Team {
 }
 
 /**
- * AwsApi - axios parameter creator
- * @export
- */
-export const AwsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {CloudInstance} [cloudInstance] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllInstances: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/aws/getAllInstances`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * AwsApi - functional programming interface
- * @export
- */
-export const AwsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AwsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {CloudInstance} [cloudInstance] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getAllInstances(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllInstances(cloudInstance, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * AwsApi - factory interface
- * @export
- */
-export const AwsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AwsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {CloudInstance} [cloudInstance] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllInstances(cloudInstance?: CloudInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.getAllInstances(cloudInstance, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * AwsApi - object-oriented interface
- * @export
- * @class AwsApi
- * @extends {BaseAPI}
- */
-export class AwsApi extends BaseAPI {
-    /**
-     * 
-     * @param {CloudInstance} [cloudInstance] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AwsApi
-     */
-    public getAllInstances(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return AwsApiFp(this.configuration).getAllInstances(cloudInstance, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * CreateInstanceApi - axios parameter creator
  * @export
  */
@@ -1675,11 +1623,11 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createInstance: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/createInstance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1699,7 +1647,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1708,11 +1656,110 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInstanceState: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createRoboticsCloud: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/cloud/createRoboticsCloud`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllInstancesOfRoboticsCloud: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/cloud/getAllInstancesOfRoboticsCloud`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCloudState: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/cloud/getCloudState`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInstanceState: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/getInstanceState`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1732,7 +1779,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1741,12 +1788,12 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRoboticsCloudState: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/cloud/getRoboticsCloudState`;
+        getRoboticsClouds: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/cloud/getRoboticsClouds`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1765,7 +1812,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1774,11 +1821,11 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startInstance: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        startInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/startInstance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1798,7 +1845,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1807,11 +1854,11 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopInstance: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        stopInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/stopInstance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1831,7 +1878,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1840,11 +1887,11 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        terminateInstance: async (cloudInstance?: CloudInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        terminateInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/terminateInstance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1864,7 +1911,7 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cloudInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1883,62 +1930,92 @@ export const CreateInstanceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createInstance(cloudInstance, options);
+        async createInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createInstance(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getInstanceState(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getInstanceState(cloudInstance, options);
+        async createRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRoboticsCloud(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRoboticsCloudState(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRoboticsCloudState(cloudInstance, options);
+        async getAllInstancesOfRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllInstancesOfRoboticsCloud(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async startInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.startInstance(cloudInstance, options);
+        async getCloudState(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCloudState(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async stopInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.stopInstance(cloudInstance, options);
+        async getInstanceState(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInstanceState(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async terminateInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.terminateInstance(cloudInstance, options);
+        async getRoboticsClouds(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRoboticsClouds(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startInstance(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopInstance(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async terminateInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.terminateInstance(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1953,57 +2030,84 @@ export const CreateInstanceApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createInstance(cloudInstance?: CloudInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.createInstance(cloudInstance, options).then((request) => request(axios, basePath));
+        createInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createInstance(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getInstanceState(cloudInstance?: CloudInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.getInstanceState(cloudInstance, options).then((request) => request(axios, basePath));
+        createRoboticsCloud(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createRoboticsCloud(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRoboticsCloudState(cloudInstance?: CloudInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.getRoboticsCloudState(cloudInstance, options).then((request) => request(axios, basePath));
+        getAllInstancesOfRoboticsCloud(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getAllInstancesOfRoboticsCloud(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startInstance(cloudInstance?: CloudInstance, options?: any): AxiosPromise<void> {
-            return localVarFp.startInstance(cloudInstance, options).then((request) => request(axios, basePath));
+        getCloudState(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getCloudState(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopInstance(cloudInstance?: CloudInstance, options?: any): AxiosPromise<void> {
-            return localVarFp.stopInstance(cloudInstance, options).then((request) => request(axios, basePath));
+        getInstanceState(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getInstanceState(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CloudInstance} [cloudInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        terminateInstance(cloudInstance?: CloudInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.terminateInstance(cloudInstance, options).then((request) => request(axios, basePath));
+        getRoboticsClouds(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getRoboticsClouds(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.startInstance(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.stopInstance(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        terminateInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.terminateInstance(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2017,68 +2121,101 @@ export const CreateInstanceApiFactory = function (configuration?: Configuration,
 export class CreateInstanceApi extends BaseAPI {
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public createInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).createInstance(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public createInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).createInstance(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public getInstanceState(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).getInstanceState(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public createRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).createRoboticsCloud(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public getRoboticsCloudState(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).getRoboticsCloudState(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public getAllInstancesOfRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).getAllInstancesOfRoboticsCloud(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public startInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).startInstance(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public getCloudState(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).getCloudState(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public stopInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).stopInstance(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public getInstanceState(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).getInstanceState(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {CloudInstance} [cloudInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
-    public terminateInstance(cloudInstance?: CloudInstance, options?: AxiosRequestConfig) {
-        return CreateInstanceApiFp(this.configuration).terminateInstance(cloudInstance, options).then((request) => request(this.axios, this.basePath));
+    public getRoboticsClouds(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).getRoboticsClouds(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreateInstanceApi
+     */
+    public startInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).startInstance(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreateInstanceApi
+     */
+    public stopInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).stopInstance(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreateInstanceApi
+     */
+    public terminateInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).terminateInstance(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

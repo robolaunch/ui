@@ -2,7 +2,6 @@ import axiosInterceptorOpenApi from "../utils/axios.interceptor.openapi";
 import {
   Configuration,
   OrganizationRepositoryImplApi,
-  AwsApi,
   RobotApi,
   KubernetesApi,
   RobotBuildManagerApi,
@@ -19,12 +18,6 @@ export const organizationApi: OrganizationRepositoryImplApi =
     process.env.REACT_APP_BACKEND_URL,
     axiosInterceptorOpenApi
   );
-
-export const awsApi: AwsApi = new AwsApi(
-  apiConfig,
-  process.env.REACT_APP_BACKEND_URL,
-  axiosInterceptorOpenApi
-);
 
 export const robotApi: RobotApi = new RobotApi(
   apiConfig,
