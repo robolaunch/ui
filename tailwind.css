@@ -154,6 +154,14 @@ td {
   @apply !text-center !text-xs !text-layer-light-500 !font-semibold;
 }
 
+.p-paginator-left-content button {
+  @apply !w-9 !h-9 !bg-layer-light-50 !border !border-primary;
+}
+
+.p-paginator-left-content button span:first-child {
+  @apply !scale-[0.8] !text-primary;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
