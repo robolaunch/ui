@@ -5,10 +5,9 @@ import storage from "redux-persist/lib/storage";
 import UserReducer from "./UserSlice";
 import OrganizationReducer from "./OrganizationSlice";
 import RoboticsCloudReducer from "./RoboticsCloudSlice";
-import ProviderReducer from "./ProviderSlice";
-import RegionReducer from "./RegionSlice";
 import FleetReducer from "./FleetSlice";
 import GithubReducer from "./GithubSlice";
+import instanceReducer from "./InstanceSlice";
 /* Data must be persisted in order not to lose them on page refresh. */
 /* Redux-persist basically saves the data into localStorage so the data is not lost on refresh. */
 
@@ -52,24 +51,14 @@ const persistedReducerRoboticsCloud = persistReducer<any, any>(
   RoboticsCloudReducer
 );
 
-const persistConfigProvider = {
-  key: "provider",
+const persistConfigCloudInstance = {
+  key: "instance",
   version: 1,
   storage,
 };
-const persistedReducerProvider = persistReducer<any, any>(
-  persistConfigProvider,
-  ProviderReducer
-);
-
-const persistConfigRegion = {
-  key: "region",
-  version: 1,
-  storage,
-};
-const persistedReducerRegion = persistReducer<any, any>(
-  persistConfigRegion,
-  RegionReducer
+const persistedReducerInstance = persistReducer<any, any>(
+  persistConfigCloudInstance,
+  instanceReducer
 );
 
 const persistConfigFleet = {
@@ -88,8 +77,7 @@ const store = configureStore({
     github: persistedReducerGithub,
     organization: persistedReducerOrganization,
     roboticsCloud: persistedReducerRoboticsCloud,
-    provider: persistedReducerProvider,
-    region: persistedReducerRegion,
+    instance: persistedReducerInstance,
     fleet: persistedReducerFleet,
   },
   middleware: (getDefaultMiddleware) =>
