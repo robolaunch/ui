@@ -1,50 +1,86 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { GeneralTable } from "../../../components/Table/GeneralTable";
 import { useAppDispatch } from "../../../hooks/redux";
-import { UsersCell } from "../../../components/Cells/UsersCell";
 import { InfoCell } from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { useParams } from "react-router-dom";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
+import { getInstances } from "../../../resources/InstanceSlice";
+import BasicCell from "../../../components/Cells/BasicCell";
+import StateCell from "../../../components/Cells/StateCell";
+import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
-  const [reload, setReload] = React.useState(false);
-  const [responseTeams, setResponseTeams] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [reload, setReload] = useState(false);
+  const [currentOrganization, setCurrentOrganization] =
+    useState<any>(undefined);
+  const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
+    undefined
+  );
   const dispatch = useAppDispatch();
   const url = useParams();
 
   useEffect(() => {
-    setLoading(true);
-
-    setResponseTeams([]);
-  }, [url, dispatch, reload]);
+    if (!currentOrganization) {
+      handleGetOrganization();
+    }
+  }, []);
 
   useEffect(() => {
-    if (responseTeams?.length) {
-      setLoading(false);
+    if (currentOrganization) {
+      handleGetInstances();
     }
-  }, [responseTeams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOrganization, dispatch, reload]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleGetInstances();
+    }, 10000);
+
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOrganization, dispatch]);
+
+  function handleGetOrganization() {
+    dispatch(getOrganizations()).then((organizationsResponse: any) => {
+      setCurrentOrganization(
+        organizationsResponse?.payload?.data?.find(
+          (organization: any) =>
+            organization?.organizationName === `org_${url?.organizationName}`
+        )
+      );
+    });
+  }
+
+  function handleGetInstances() {
+    dispatch(
+      getInstances({
+        organizationId: currentOrganization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName,
+      })
+    ).then((responseInstances: any) => {
+      setResponseInstances(
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances || []
+      );
+    });
+  }
 
   const data: any = useMemo(
     () =>
-      responseTeams?.map((team: any) => {
+      responseInstances?.map((instance: any) => {
         return {
-          key: team?.name,
-          name: team,
+          key: instance?.name,
+          name: instance,
           organization: url?.organizationName,
-          users: team?.users,
+          state: instance?.instanceState,
         };
       }),
-    [url, responseTeams]
+    [url, responseInstances]
   );
 
   const columns: any = useMemo(
@@ -59,7 +95,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={rowData?.users?.length + " Members"}
+              subtitle={rowData?.name?.instanceType}
             />
           );
         },
@@ -71,21 +107,17 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         filter: true,
         align: "left",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <span>{rowData.organization}</span>
-            </Fragment>
-          );
+          return <BasicCell text={rowData?.organization} />;
         },
       },
       {
-        key: "users",
-        header: "Total Users",
+        key: "state",
+        header: "State",
         sortable: false,
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <UsersCell users={rowData?.users} />;
+          return <StateCell state={rowData?.state} />;
         },
       },
       {
@@ -94,19 +126,21 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         align: "right",
         body: (rowData: any) => {
           return (
-            <Fragment>
-              <button>{"Actions"}</button>
-            </Fragment>
+            <InstanceActionCells
+              data={{
+                state: rowData?.state,
+                organizationId: currentOrganization?.organizationId,
+                roboticsCloudName: url?.roboticsCloudName,
+                instanceId: rowData?.name?.instanceId,
+              }}
+              reload={() => setReload(!reload)}
+            />
           );
         },
       },
     ],
-    []
+    [currentOrganization, reload, url]
   );
-
-  const handleReload = () => {
-    setReload(!reload);
-  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -132,12 +166,15 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       </div>
       <div className="grid grid-cols-1">
         <GeneralTable
-          type="fleet"
-          title="Fleets"
+          type="instance"
+          title="Instances"
           data={data}
           columns={columns}
-          loading={loading}
-          handleReload={() => handleReload()}
+          loading={Array.isArray(responseInstances) ? false : true}
+          handleReload={() => {
+            setResponseInstances(undefined);
+            setReload(!reload);
+          }}
         />
       </div>
     </div>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import useSidebar from "../../hooks/useSidebar";
 
 interface SidebarListItemProps {
   name: string;
-  description: string;
-  type: "organization" | "roboticsCloud" | "fleet" | "robot";
+  description: string | ReactElement | ReactElement[];
+  type: "organization" | "roboticscloud" | "instance" | "fleet" | "robot";
   url: string;
   data?: any;
   selected?: boolean;
@@ -29,6 +29,13 @@ export const SidebarListItem = ({
           setSelectedState({ ...selectedState, organization: null });
         } else {
           setSelectedState({ ...selectedState, organization: data });
+        }
+        break;
+      case "roboticscloud":
+        if (selectedState?.roboticsCloud) {
+          setSelectedState({ ...selectedState, roboticsCloud: null });
+        } else {
+          setSelectedState({ ...selectedState, roboticsCloud: data });
         }
     }
   };

@@ -14,8 +14,9 @@ export default function OrganizationsList({
   reload,
   setItemCount,
 }: IOrganizationList): ReactElement {
-  const [responseOrganizations, setResponseOrganizations] =
-    useState<any>(undefined);
+  const [responseOrganizations, setResponseOrganizations] = useState<
+    any[] | undefined
+  >(undefined);
   const { selectedState } = useSidebar();
 
   const dispatch = useAppDispatch();
