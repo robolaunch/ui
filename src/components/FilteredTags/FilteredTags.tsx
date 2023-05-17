@@ -30,11 +30,11 @@ export default function FilteredTags() {
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
             className="w-4 h-4"
-            src="/svg/sidebar/organization/organization-blue.svg"
+            src="/svg/sidebar/roboticscloud/roboticscloud-blue.svg"
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
-            {selectedState?.roboticsCloud?.roboticsCloudName}
+            {selectedState?.roboticsCloud?.name}
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
@@ -49,7 +49,7 @@ export default function FilteredTags() {
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
             className="w-4 h-4"
-            src="/svg/sidebar/organization/organization-blue.svg"
+            src="/svg/sidebar/fleet/fleet-blue.svg"
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
