@@ -12,11 +12,14 @@ import { getInstances } from "../../../resources/InstanceSlice";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
 import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
+import useSidebar from "../../../hooks/useSidebar";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [reload, setReload] = useState(false);
-  const [currentOrganization, setCurrentOrganization] =
-    useState<any>(undefined);
+  const { selectedState } = useSidebar();
+  const [currentOrganization, setCurrentOrganization] = useState<any>(
+    selectedState?.organization || undefined
+  );
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
@@ -27,14 +30,14 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     if (!currentOrganization) {
       handleGetOrganization();
     }
-  }, []);
+  }, [url]);
 
   useEffect(() => {
     if (currentOrganization) {
       handleGetInstances();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization, dispatch, reload]);
+  }, [currentOrganization, dispatch, reload, url]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,7 +46,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization, dispatch]);
+  }, [currentOrganization, dispatch, url]);
 
   function handleGetOrganization() {
     dispatch(getOrganizations()).then((organizationsResponse: any) => {
@@ -64,8 +67,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       })
     ).then((responseInstances: any) => {
       setResponseInstances(
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances || []
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
+          (instance: any) => instance?.instanceState !== "terminated"
+        ) || []
       );
     });
   }
@@ -105,7 +109,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         header: "Organization",
         sortable: true,
         filter: true,
-        align: "left",
+        align: "lehrefft",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.organization} />;
         },
