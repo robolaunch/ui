@@ -119,7 +119,7 @@ export const instanceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getInstances.fulfilled, (action: any) => {
+      .addCase(getInstances.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
@@ -127,7 +127,7 @@ export const instanceSlice = createSlice({
       .addCase(getInstances.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(createCloudInstance.fulfilled, (action: any) => {
+      .addCase(createCloudInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
@@ -137,7 +137,7 @@ export const instanceSlice = createSlice({
       .addCase(createCloudInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(stopInstance.fulfilled, (action: any) => {
+      .addCase(stopInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
@@ -147,7 +147,7 @@ export const instanceSlice = createSlice({
       .addCase(stopInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(startInstance.fulfilled, (action: any) => {
+      .addCase(startInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
@@ -157,7 +157,7 @@ export const instanceSlice = createSlice({
       .addCase(startInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(terminateInstance.fulfilled, (action: any) => {
+      .addCase(terminateInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
@@ -167,7 +167,7 @@ export const instanceSlice = createSlice({
       .addCase(terminateInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(getInstanceState.fulfilled, (action: any) => {
+      .addCase(getInstanceState.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
