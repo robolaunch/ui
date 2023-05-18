@@ -303,7 +303,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
     overlay.current.liste;
 
     video.current?.addEventListener("mouseenter", () => {
-      overlay.current!.focus();
+      overlay.current?.focus();
 
       if (
         remoteDesktopReducer?.controller?.displayname ===

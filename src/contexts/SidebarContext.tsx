@@ -14,6 +14,7 @@ export default ({ children }: any) => {
   const [selectedState, setSelectedState] = useState<ISelectedState>({
     organization: null,
     roboticsCloud: null,
+    instance: null,
     fleet: null,
   });
 
