@@ -24,12 +24,12 @@ export default function CreateInstancesForm(): ReactElement {
           roboticsCloudName: selectedState.roboticsCloud.name,
           cloudInstanceName: values.cloudInstanceName,
         })
-      );
-
-      setTimeout(() => {
-        formik.setSubmitting(false);
-        setSidebarState({ ...sidebarState, isCreateMode: false });
-      }, 2000);
+      ).then((response: any) => {
+        if (response) {
+          formik.setSubmitting(false);
+          setSidebarState({ ...sidebarState, isCreateMode: false });
+        }
+      });
     },
   });
 
