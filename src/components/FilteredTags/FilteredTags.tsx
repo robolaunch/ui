@@ -6,12 +6,12 @@ export default function FilteredTags() {
   const { selectedState, setSelectedState } = useSidebar();
 
   return (
-    <div className="grid grid-cols-3 justify-items-center pb-2 animate__animated animate__fadeIn">
+    <div className="flex flex-wrap gap-2 animate__animated animate__fadeIn">
       {selectedState?.organization && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
             className="w-4 h-4"
-            src="/svg/sidebar/organization/organization-blue.svg"
+            src="/svg/general/organization/organization-blue.svg"
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
@@ -20,7 +20,12 @@ export default function FilteredTags() {
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
             onClick={() =>
-              setSelectedState({ ...selectedState, organization: null })
+              setSelectedState({
+                ...selectedState,
+                organization: null,
+                roboticsCloud: null,
+                instance: null,
+              })
             }
             size={14}
           />
@@ -30,7 +35,7 @@ export default function FilteredTags() {
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
             className="w-4 h-4"
-            src="/svg/sidebar/roboticscloud/roboticscloud-blue.svg"
+            src="/svg/general/roboticscloud/roboticscloud-blue.svg"
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
@@ -39,7 +44,35 @@ export default function FilteredTags() {
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
             onClick={() =>
-              setSelectedState({ ...selectedState, roboticsCloud: null })
+              setSelectedState({
+                ...selectedState,
+                roboticsCloud: null,
+                instance: null,
+                fleet: null,
+              })
+            }
+            size={14}
+          />
+        </div>
+      )}
+      {selectedState?.instance && (
+        <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
+          <img
+            className="w-4 h-4"
+            src="/svg/general/instance/instance-blue.svg"
+            alt="robolaunch"
+          />
+          <span className="text-xs text-layer-secondary-900 cursor-default">
+            {selectedState?.instance?.name}
+          </span>
+          <MdOutlineCancel
+            className="text-layer-secondary-900 cursor-pointer"
+            onClick={() =>
+              setSelectedState({
+                ...selectedState,
+                instance: null,
+                fleet: null,
+              })
             }
             size={14}
           />
@@ -49,7 +82,7 @@ export default function FilteredTags() {
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
             className="w-4 h-4"
-            src="/svg/sidebar/fleet/fleet-blue.svg"
+            src="/svg/general/fleet/fleet-blue.svg"
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
