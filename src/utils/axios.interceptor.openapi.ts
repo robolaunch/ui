@@ -13,7 +13,7 @@ axiosInterceptorOpenApi.interceptors.request.use(async (req: any) => {
 });
 
 axiosInterceptorOpenApi.interceptors.response.use(async (res: any) => {
-  console.log("axiosInterceptor", res);
+  console.log("axiosInterceptorOpenApi.interceptors", res);
   return res;
 });
 

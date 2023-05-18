@@ -3,6 +3,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getInstances } from "../../resources/InstanceSlice";
+import StateCell from "../Cells/StateCell";
 
 interface IInstancesList {
   reload: boolean;
@@ -29,7 +30,9 @@ export default function InstancesList({
         })
       ).then((response: any) => {
         setResponseInstances(
-          response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances || []
+          response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
+            (instance: any) => instance?.instanceState !== "terminated"
+          ) || []
         );
       });
       setItemCount(
@@ -67,16 +70,16 @@ export default function InstancesList({
               alt="Loading..."
             />
           ) : (
-            responseInstances?.map((rc: any, index: number) => {
+            responseInstances?.map((instance: any, index: number) => {
               return (
                 <SidebarListItem
                   key={index}
                   type="instance"
-                  name={rc?.name}
-                  description={`Description`}
-                  url={`/${rc?.name}`}
-                  data={rc}
-                  selected={rc?.name === selectedState?.roboticsCloud?.name}
+                  name={instance?.name}
+                  description={<StateCell state={instance?.instanceState} />}
+                  url={`/${instance?.name}`}
+                  data={instance}
+                  selected={instance?.name === selectedState?.instance?.name}
                 />
               );
             })

@@ -3,6 +3,7 @@ import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getRoboticsCloudsOfOrganization } from "../../resources/RoboticsCloudSlice";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -68,7 +69,11 @@ export default function RoboticsCloudsList({
                   type="roboticscloud"
                   name={rc?.name}
                   description={`Description`}
-                  url={`/${rc?.name}`}
+                  url={`/${organizationNameViewer({
+                    organizationName:
+                      selectedState?.organization?.organizationName,
+                    capitalization: false,
+                  })}/${rc?.name}`}
                   data={rc}
                   selected={rc?.name === selectedState?.roboticsCloud?.name}
                 />
