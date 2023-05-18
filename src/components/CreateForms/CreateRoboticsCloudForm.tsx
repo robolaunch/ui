@@ -25,12 +25,12 @@ export default function CreateRoboticsCloudForm(): ReactElement {
           organizationId: selectedState.organization.organizationId,
           roboticsCloudName: values.roboticsCloudName,
         })
-      );
-
-      setTimeout(() => {
-        formik.setSubmitting(false);
-        setSidebarState({ ...sidebarState, isCreateMode: false });
-      }, 2000);
+      ).then((response: any) => {
+        if (response) {
+          formik.setSubmitting(false);
+          setSidebarState({ ...sidebarState, isCreateMode: false });
+        }
+      });
     },
   });
 
