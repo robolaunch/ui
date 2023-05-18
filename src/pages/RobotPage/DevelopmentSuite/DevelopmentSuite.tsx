@@ -40,6 +40,13 @@ export default function DevelopmentSuite({
                 className={`h-full w-full animate__animated animate__fadeIn`}
                 src={connectionURLs?.ideURL}
                 title="Code Editor"
+                style={
+                  isIDEDragging
+                    ? {
+                        pointerEvents: "none",
+                      }
+                    : {}
+                }
               />
             </div>
             <SampleSplitter isDragging={isIDEDragging} {...ideDragBarProps} />
