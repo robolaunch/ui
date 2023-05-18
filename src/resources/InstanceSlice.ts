@@ -37,6 +37,25 @@ export const getInstances = createAsyncThunk(
   }
 );
 
+export const getInstanceState = createAsyncThunk(
+  "instance/getInstancestate",
+  async (values: any) => {
+    const response = await createInstanceApi.getCloudState({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            { instanceId: values?.instanceId, region: "eu-central-1" },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
 export const stopInstance = createAsyncThunk(
   "instance/stopInstance",
   async (values: any) => {
@@ -100,52 +119,60 @@ export const instanceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getInstances.fulfilled, (state, action: any) => {
+      .addCase(getInstances.fulfilled, (action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getInstances.rejected, (state, action: any) => {
+      .addCase(getInstances.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(createCloudInstance.fulfilled, (state, action: any) => {
+      .addCase(createCloudInstance.fulfilled, (action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(createCloudInstance.rejected, (state, action: any) => {
+      .addCase(createCloudInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(stopInstance.fulfilled, (state, action: any) => {
+      .addCase(stopInstance.fulfilled, (action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(stopInstance.rejected, (state, action: any) => {
+      .addCase(stopInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(startInstance.fulfilled, (state, action: any) => {
+      .addCase(startInstance.fulfilled, (action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(startInstance.rejected, (state, action: any) => {
+      .addCase(startInstance.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(terminateInstance.fulfilled, (state, action: any) => {
+      .addCase(terminateInstance.fulfilled, (action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(terminateInstance.rejected, (state, action: any) => {
+      .addCase(terminateInstance.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(getInstanceState.fulfilled, (action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getInstanceState.rejected, () => {
         toast.error("Something went wrong");
       });
   },
