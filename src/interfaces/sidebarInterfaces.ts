@@ -15,6 +15,7 @@ export interface ISidebarState {
 export interface ISelectedState {
   organization: any;
   roboticsCloud: any;
+  instance: any;
   fleet: any;
 }
 
