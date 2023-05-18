@@ -37,7 +37,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/sidebar/organization/organization-gray.svg"
+                        src="/svg/general/organization/organization-gray.svg"
                         alt="rc"
                       />
                     );
@@ -46,7 +46,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-4"
-                        src="/svg/sidebar/roboticscloud/roboticscloud-gray.svg"
+                        src="/svg/general/roboticscloud/roboticscloud-gray.svg"
                         alt="rc"
                       />
                     );
@@ -55,7 +55,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/sidebar/fleet/fleet-gray.svg"
+                        src="/svg/general/fleet/fleet-gray.svg"
                         alt="rc"
                       />
                     );
@@ -64,7 +64,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/sidebar/robot/robot-gray.svg"
+                        src="/svg/general/robot/robot-gray.svg"
                         alt="rc"
                       />
                     );
