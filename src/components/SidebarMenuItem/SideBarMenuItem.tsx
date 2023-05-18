@@ -42,7 +42,7 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
     >
       <img
         className="w-10"
-        src={`/svg/sidebar/${type}/${type}-${colorSwitcher()}.svg`}
+        src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
         alt="Robolaunch"
       />
     </div>

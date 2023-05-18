@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import useSidebar from "../../hooks/useSidebar";
+import { Link } from "react-router-dom";
 
 interface SidebarListItemProps {
   name: string;
@@ -20,23 +21,35 @@ export const SidebarListItem = ({
   selected,
   notSelectable,
 }: SidebarListItemProps) => {
-  const { selectedState, setSelectedState } = useSidebar();
+  const { selectedState, setSelectedState, sidebarState, setSidebarState } =
+    useSidebar();
 
   const handleSelectItem = () => {
     switch (type) {
       case "organization":
-        if (selectedState?.organization) {
+        if (
+          selectedState?.organization?.organizationName ===
+          data?.organizationName
+        ) {
           setSelectedState({ ...selectedState, organization: null });
         } else {
           setSelectedState({ ...selectedState, organization: data });
         }
         break;
       case "roboticscloud":
-        if (selectedState?.roboticsCloud) {
+        if (selectedState?.roboticsCloud?.name === data?.name) {
           setSelectedState({ ...selectedState, roboticsCloud: null });
         } else {
           setSelectedState({ ...selectedState, roboticsCloud: data });
         }
+        break;
+      case "instance":
+        if (selectedState?.instance?.name === data?.name) {
+          setSelectedState({ ...selectedState, instance: null });
+        } else {
+          setSelectedState({ ...selectedState, instance: data });
+        }
+        break;
     }
   };
 
@@ -52,7 +65,7 @@ export const SidebarListItem = ({
       >
         <img
           className="w-8"
-          src={`/svg/sidebar/${type}/${type}-${
+          src={`/svg/general/${type}/${type}-${
             selected ? "blue" : "purple"
           }.svg`}
           alt=""
@@ -62,21 +75,22 @@ export const SidebarListItem = ({
           <span className="text-xs font-light">{description}</span>
         </div>
       </div>
-      <a
-        href={url}
-        className={`flex items-center justify-center px-4 rounded-r-lg ${
+      <Link
+        onClick={() => setSidebarState({ ...sidebarState, isOpen: false })}
+        to={url}
+        className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
           selected
             ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
             : "bg-layer-primary-200 hover:bg-layer-primary-300"
         } `}
       >
         <i
-          className={`pi pi-angle-right ${
+          className={`pi pi-angle-right transition-all duration-300 ${
             selected ? "text-layer-secondary-700" : "text-layer-primary-700"
           }`}
           style={{ fontSize: "1.25rem" }}
         ></i>
-      </a>
+      </Link>
     </div>
   );
 };

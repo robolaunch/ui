@@ -34,7 +34,7 @@ export const GeneralTable = ({
       <div className="flex px-4 pt-1 pb-8 items-center gap-2">
         <img
           className="w-8"
-          src={`/svg/sidebar/${type}/${type}-gray.svg`}
+          src={`/svg/general/${type}/${type}-gray.svg`}
           alt=""
         />
         <h5 className="text-lg font-semibold">{title}</h5>
