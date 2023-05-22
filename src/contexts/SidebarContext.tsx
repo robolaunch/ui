@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { ISelectedState, ISidebarState } from "../interfaces/sidebarInterfaces";
+import { useLocation } from "react-router-dom";
 
 export const SidebarContext: any = createContext<any>(null);
 
@@ -17,6 +18,19 @@ export default ({ children }: any) => {
     instance: null,
     fleet: null,
   });
+
+  const url = useLocation();
+
+  useEffect(() => {
+    setSidebarState(
+      (prevState: ISidebarState): ISidebarState => ({
+        ...prevState,
+        isOpen: false,
+        isCreateMode: false,
+        page: undefined,
+      })
+    );
+  }, [url]);
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {
