@@ -13,9 +13,9 @@ export const createCloudInstance = createAsyncThunk(
           name: values.roboticsCloudName,
           cloudInstances: [
             {
-              instanceType: "g4dn.xlarge",
+              instanceType: values.instanceType,
               name: values.cloudInstanceName,
-              region: "eu-central-1",
+              region: values.region,
             },
           ],
         },
