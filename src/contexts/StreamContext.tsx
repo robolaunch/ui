@@ -300,25 +300,28 @@ export default ({ connectionURLs, children }: IStreamContext) => {
 
     keyboard.current.listenTo(overlay.current);
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    overlay.current.liste;
+    overlay?.current?.liste;
 
-    video.current?.addEventListener("mouseenter", () => {
-      overlay.current?.focus();
-
+    video.current?.addEventListener("mouseenter", async () => {
       if (
         remoteDesktopReducer?.controller?.displayname ===
         keycloak?.tokenParsed?.preferred_username
       ) {
-        navigator?.clipboard?.readText().then((text) => {
+        try {
+          await overlay?.current?.focus();
+
+          const text = await navigator?.clipboard?.readText();
           if (text?.length > 0) {
-            client?.current!.send(
+            client?.current?.send(
               JSON.stringify({
                 event: "control/clipboard",
                 text,
               })
             );
           }
-        });
+        } catch (error) {
+          console.error("Clipboard readText error:", error);
+        }
       }
     });
 
