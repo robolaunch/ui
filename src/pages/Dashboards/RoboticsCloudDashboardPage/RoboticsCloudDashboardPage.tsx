@@ -30,6 +30,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     if (!currentOrganization) {
       handleGetOrganization();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   useEffect(() => {
@@ -44,9 +45,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       handleGetInstances();
     }, 10000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization, dispatch, url]);
+  }, [currentOrganization]);
 
   function handleGetOrganization() {
     dispatch(getOrganizations()).then((organizationsResponse: any) => {
@@ -81,7 +84,8 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             key: instance?.name,
             name: instance,
             organization: url?.organizationName,
-            state: instance?.instanceState,
+            providerState: instance?.instanceState,
+            robolaunchState: instance?.instanceCloudState,
           };
         }),
     [url, responseInstances]
@@ -115,15 +119,28 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         },
       },
       {
-        key: "state",
-        header: "State",
+        key: "robolaunchState",
+        header: "Robolaunch State",
         sortable: false,
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <StateCell state={rowData?.state} />;
+          return (
+            <StateCell state={rowData?.robolaunchState} isRobolaunchState />
+          );
         },
       },
+      {
+        key: "providerState",
+        header: "Provider State",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <StateCell state={rowData?.providerState} />;
+        },
+      },
+
       {
         key: "actions",
         header: "Actions",
@@ -132,7 +149,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           return (
             <InstanceActionCells
               data={{
-                state: rowData?.state,
+                state: rowData?.providerState,
                 organizationId: currentOrganization?.organizationId,
                 roboticsCloudName: url?.roboticsCloudName,
                 instanceId: rowData?.name?.instanceId,
@@ -147,7 +164,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   );
 
   useEffect(() => {
-    console.log("responseInstances", responseInstances);
+    console.log(responseInstances);
   }, [responseInstances]);
 
   return (
