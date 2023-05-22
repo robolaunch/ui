@@ -21,35 +21,32 @@ export default function InstancesList({
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (selectedState?.organization && selectedState?.roboticsCloud) {
-      dispatch(
-        getInstances({
-          organizationId: selectedState?.organization?.organizationId,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
-        })
-      ).then((response: any) => {
-        setResponseInstances(
-          response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
-            (instance: any) => instance?.instanceState !== "terminated"
-          ) || []
+  useEffect(
+    () => {
+      if (selectedState?.organization && selectedState?.roboticsCloud) {
+        dispatch(
+          getInstances({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+          })
+        ).then((response: any) => {
+          setResponseInstances(
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
+              (instance: any) => instance?.instanceState !== "terminated"
+            ) || []
+          );
+        });
+        setItemCount(
+          selectedState?.organization && selectedState?.roboticsCloud
+            ? responseInstances?.length
+            : 0
         );
-      });
-      setItemCount(
-        selectedState?.organization && selectedState?.roboticsCloud
-          ? responseInstances?.length
-          : 0
-      );
-    }
-    setItemCount(selectedState.organization ? responseInstances?.length : 0);
-  }, [
-    dispatch,
-    reload,
-    responseInstances?.length,
-    selectedState.organization,
-    selectedState?.roboticsCloud,
-    setItemCount,
-  ]);
+      }
+      setItemCount(selectedState.organization ? responseInstances?.length : 0);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, reload, selectedState.organization, selectedState?.roboticsCloud]
+  );
 
   return (
     <Fragment>

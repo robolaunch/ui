@@ -21,29 +21,26 @@ export default function RoboticsCloudsList({
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (selectedState?.organization) {
-      dispatch(
-        getRoboticsCloudsOfOrganization({
-          organizationId: selectedState?.organization?.organizationId,
-        })
-      ).then((response: any) => {
-        console.log("!", response);
-        setResponseRoboticsClouds(
-          response?.payload?.data[0]?.roboticsClouds || []
-        );
-      });
-    }
-    setItemCount(
-      selectedState.organization ? responseRoboticsClouds?.length : 0
-    );
-  }, [
-    dispatch,
-    reload,
-    responseRoboticsClouds?.length,
-    selectedState.organization,
-    setItemCount,
-  ]);
+  useEffect(
+    () => {
+      if (selectedState?.organization) {
+        dispatch(
+          getRoboticsCloudsOfOrganization({
+            organizationId: selectedState?.organization?.organizationId,
+          })
+        ).then((response: any) => {
+          setResponseRoboticsClouds(
+            response?.payload?.data[0]?.roboticsClouds || []
+          );
+        });
+      }
+      setItemCount(
+        selectedState.organization ? responseRoboticsClouds?.length : 0
+      );
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, reload, selectedState.organization, setItemCount]
+  );
 
   return (
     <Fragment>

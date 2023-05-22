@@ -26,6 +26,7 @@ export default function OrganizationsList({
       setResponseOrganizations(responseOrganizations?.payload?.data || []);
       setItemCount(responseOrganizations?.payload?.data?.length || 0);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, setItemCount]);
 
   return (

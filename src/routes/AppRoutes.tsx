@@ -39,11 +39,15 @@ export default function AppRoutes(): ReactElement {
           element={<RoboticsCloudDashboardPage />}
         />
         <Route
-          path={`/:organizationName/:roboticsCloudName/:fleetName`}
+          path={`/:organizationName/:roboticsCloudName/:instanceName`}
+          element={<RoboticsCloudDashboardPage />}
+        />
+        <Route
+          path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName`}
           element={<FleetDashboardPage />}
         />
         <Route
-          path={`/:organizationName/:roboticsCloudName/:fleetName/:robotName`}
+          path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName/:robotName`}
           element={<RobotPage />}
         />
         {/* Dashboard Pages */}

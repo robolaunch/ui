@@ -67,23 +67,23 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       })
     ).then((responseInstances: any) => {
       setResponseInstances(
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
-          (instance: any) => instance?.instanceState !== "terminated"
-        ) || []
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
       );
     });
   }
 
   const data: any = useMemo(
     () =>
-      responseInstances?.map((instance: any) => {
-        return {
-          key: instance?.name,
-          name: instance,
-          organization: url?.organizationName,
-          state: instance?.instanceState,
-        };
-      }),
+      responseInstances
+        ?.filter((instance: any) => instance?.instanceState !== "terminated")
+        ?.map((instance: any) => {
+          return {
+            key: instance?.name,
+            name: instance,
+            organization: url?.organizationName,
+            state: instance?.instanceState,
+          };
+        }),
     [url, responseInstances]
   );
 
@@ -146,6 +146,10 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     [currentOrganization, reload, url]
   );
 
+  useEffect(() => {
+    console.log("responseInstances", responseInstances);
+  }, [responseInstances]);
+
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
@@ -165,7 +169,18 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           <UtilizationWidget title="Robotics Cloud" />
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <CountWidget data={[5, 2, 4, 3]} title="Robotics Cloud" />
+          <CountWidget
+            data={{
+              series: [5, 2, 4, responseInstances?.length || 0],
+              categories: [
+                ["Pending"],
+                ["Running"],
+                ["Stopped"],
+                ["Terminated"],
+              ],
+            }}
+            title="Robotics Cloud"
+          />
         </div>
       </div>
       <div className="grid grid-cols-1">
