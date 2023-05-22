@@ -5,7 +5,7 @@ import ReactApexChart from "react-apexcharts";
 
 interface ICountWidget {
   title: string;
-  data: number[];
+  data: any;
 }
 
 export default function CountWidget({
@@ -21,7 +21,7 @@ export default function CountWidget({
       <ReactApexChart
         series={[
           {
-            data: data,
+            data: data.series || [],
             name: "Count",
           },
         ]}
@@ -52,12 +52,7 @@ export default function CountWidget({
             show: false,
           },
           xaxis: {
-            categories: [
-              ["Robots"],
-              ["Fleets"],
-              ["Robotics Clouds"],
-              ["Teams"],
-            ],
+            categories: data.categories || [],
             labels: {
               style: {
                 colors: "#00000075",
