@@ -50,7 +50,7 @@ export default function RemoteDesktopController({
   return (
     <div className="absolute flex flex-col items-center bottom-0 ">
       <button
-        className="bg-layer-light-50 rounded-t-lg px-1"
+        className="bg-layer-light-50 rounded-t-lg px-1 border-t-2 border-x-2 border-layer-light-200"
         onClick={() => handleIsControllerOpen()}
       >
         {isControllerOpen ? (
@@ -60,7 +60,7 @@ export default function RemoteDesktopController({
         )}
       </button>
       {isControllerOpen && (
-        <div className="w-full flex items-center justify-center rounded-t-lg gap-6 px-4 py-2 bg-layer-light-50">
+        <div className="w-full flex items-center justify-center rounded-t-lg gap-6 px-4 py-2 bg-layer-light-50 ">
           {handleFullScreen.active ? (
             <button onClick={handleFullScreen.exit}>
               <BsFullscreenExit
