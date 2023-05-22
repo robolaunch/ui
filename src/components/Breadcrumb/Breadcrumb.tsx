@@ -51,7 +51,16 @@ export default function Breadcrumb(): ReactElement {
                       />
                     );
                   }
-                  if (params?.fleetName && index === 3) {
+                  if (params?.instanceName && index === 3) {
+                    return (
+                      <img
+                        className="w-3"
+                        src="/svg/general/instance/instance-gray.svg"
+                        alt="rc"
+                      />
+                    );
+                  }
+                  if (params?.fleetName && index === 4) {
                     return (
                       <img
                         className="w-3"
@@ -60,7 +69,7 @@ export default function Breadcrumb(): ReactElement {
                       />
                     );
                   }
-                  if (params?.robotName && index === 4) {
+                  if (params?.robotName && index === 5) {
                     return (
                       <img
                         className="w-3"
