@@ -73,7 +73,15 @@ export default function InstancesList({
                   key={index}
                   type="instance"
                   name={instance?.name}
-                  description={<StateCell state={instance?.instanceState} />}
+                  description={
+                    <div className="flex gap-4">
+                      <StateCell state={instance?.instanceState} />
+                      <StateCell
+                        state={instance?.instanceCloudState}
+                        isRobolaunchState
+                      />
+                    </div>
+                  }
                   url={`/${instance?.name}`}
                   data={instance}
                   selected={instance?.name === selectedState?.instance?.name}
