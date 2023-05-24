@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { Fragment, ReactNode, useEffect, useState } from "react";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
@@ -94,6 +94,48 @@ export const ContentLayout = ({ children }: IContentLayout) => {
               "If you want to create a robotics cloud, you need to select an organization first."
             );
           }
+          break;
+        case "instance":
+          if (!selectedState?.organization || !selectedState?.roboticsCloud) {
+            setSidebarState((prev: any) => ({
+              ...prev,
+              page: !selectedState?.organization
+                ? "organization"
+                : "robotics cloud",
+            }));
+            return toast.error(
+              `If you want to create a cloud instance, you need to select a ${
+                !selectedState?.organization ? "organization" : "robotics cloud"
+              } first.`
+            );
+          }
+          break;
+        case "fleet":
+          if (
+            !selectedState?.organization ||
+            !selectedState?.roboticsCloud ||
+            !selectedState?.instance
+          ) {
+            setSidebarState((prev: any) => ({
+              ...prev,
+              page: !selectedState?.organization
+                ? "organization"
+                : !selectedState?.roboticsCloud
+                ? "robotics cloud"
+                : "instance",
+            }));
+            return toast.error(
+              `
+              If you want to create a fleet, you need to select a ${
+                !selectedState?.organization
+                  ? "organization"
+                  : !selectedState?.roboticsCloud
+                  ? "robotics cloud"
+                  : "instance"
+              } first.
+              `
+            );
+          }
       }
 
       setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
@@ -108,16 +150,20 @@ export const ContentLayout = ({ children }: IContentLayout) => {
         }`}
       >
         <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
-        <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
-          {itemCount}
-        </span>
-        <i
-          onClick={() => {
-            setReload(!reload);
-          }}
-          className="pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 "
-          style={{ fontSize: "1rem" }}
-        />
+        {!sidebarState?.isCreateMode && (
+          <Fragment>
+            <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
+              {itemCount}
+            </span>
+            <i
+              onClick={() => {
+                setReload(!reload);
+              }}
+              className="pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 "
+              style={{ fontSize: "1rem" }}
+            />
+          </Fragment>
+        )}
       </div>
       {!sidebarState?.isCreateMode && <FilteredTags />}
       <div
