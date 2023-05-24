@@ -55,9 +55,13 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
 
   return (
     <div className="flex items-center gap-2">
-      {state === "running" ? (
+      {state === "running" || state === "Ready" ? (
         <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
-      ) : state === "stopping" || state === "pending" ? (
+      ) : state === "stopping" ||
+        state === "pending" ||
+        state === "CreatingNamespace" ||
+        state === "CheckingRemoteNamespace" ||
+        state === "CreatingDiscoveryServer" ? (
         <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
       ) : (
         <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
