@@ -34,7 +34,6 @@ export default function Sidebar(): ReactElement {
                 <SideBarMenuItem type="organization" />
                 <SideBarMenuItem type="roboticscloud" />
                 <SideBarMenuItem type="instance" />
-
                 <SideBarMenuItem type="fleet" />
                 <SideBarMenuItem type="robot" />
               </Fragment>

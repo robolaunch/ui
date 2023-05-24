@@ -2,6 +2,9 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { SidebarListItem } from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
+import { getFederatedFleets } from "../../resources/FleetSlice";
+import StateCell from "../Cells/StateCell";
+import SidebarSelectInfo from "../SidebarSelectInfo/SidebarSelectInfo";
 
 interface IFleetsList {
   reload: boolean;
@@ -12,42 +15,89 @@ export default function FleetsList({
   reload,
   setItemCount,
 }: IFleetsList): ReactElement {
-  const [loading, setLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseFleets, setResponseFleets] = useState<any>([]);
-  const { selectedState }: any = useSidebar();
-
+  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const { selectedState } = useSidebar();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    setLoading(true);
-    // dispatch
-    setTimeout(() => setLoading(false), 2000);
-  }, [dispatch, reload]);
+  useEffect(
+    () => {
+      if (
+        selectedState?.organization &&
+        selectedState?.roboticsCloud &&
+        selectedState?.instance
+      ) {
+        dispatch(
+          getFederatedFleets({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.instance?.region,
+          })
+        ).then((response: any) => {
+          setResponseFleets(
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+              ?.robolaunchFederatedFleets || []
+          );
+          setItemCount(
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+              ?.robolaunchFederatedFleets?.length || 0
+          );
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      dispatch,
+      reload,
+      selectedState?.instance,
+      selectedState?.organization,
+      selectedState?.roboticsCloud,
+    ]
+  );
 
   return (
     <Fragment>
-      {loading ? (
-        <img
-          className="w-12 mx-auto pt-10"
-          src="/svg/general/loading.svg"
-          alt="Loading..."
+      {!selectedState?.organization ||
+      !selectedState?.roboticsCloud ||
+      !selectedState?.instance ? (
+        <SidebarSelectInfo
+          type={
+            selectedState?.organization
+              ? selectedState?.roboticsCloud
+                ? selectedState?.instance
+                  ? undefined
+                  : "Instance"
+                : "Robotics Cloud"
+              : "Organization"
+          }
         />
       ) : (
         <Fragment>
-          {responseFleets.map((fleet: any, index: number) => {
-            return (
-              <SidebarListItem
-                key={index}
-                type="fleet"
-                name={fleet?.fleetName}
-                description={`Robot Count: ${fleet?.robotCount}`}
-                url={`/${fleet?.fleetName}`}
-                data={fleet}
-                selected={fleet.fleetName === selectedState?.fleet?.fleetName}
-              />
-            );
-          })}
+          {!Array.isArray(responseFleets) ? (
+            <img
+              className="w-12 mx-auto pt-10"
+              src="/svg/general/loading.svg"
+              alt="Loading..."
+            />
+          ) : (
+            responseFleets?.map((fleet: any, index: number) => {
+              return (
+                <SidebarListItem
+                  key={index}
+                  type="fleet"
+                  name={fleet?.name}
+                  description={<StateCell state={fleet?.fleetStatus} />}
+                  url={`${
+                    selectedState?.organization?.organizationName?.split("_")[1]
+                  }/${selectedState?.roboticsCloud?.name}/${
+                    selectedState?.instance?.name
+                  }/${fleet?.name}`}
+                  data={fleet}
+                  selected={fleet.name === selectedState?.fleet?.name}
+                />
+              );
+            })
+          )}
         </Fragment>
       )}
     </Fragment>

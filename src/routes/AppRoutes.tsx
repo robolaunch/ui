@@ -11,6 +11,7 @@ import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleIte
 import ProfilePage from "../pages/Profile/ProfilePage";
 import BillingPage from "../pages/BillingPage/BillingPage";
 import PrivateProvider from "../auth/PrivateProvider";
+import InstanceDashboardPage from "../pages/Dashboards/InstancesPage/InstanceDashboardPage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -40,7 +41,7 @@ export default function AppRoutes(): ReactElement {
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName`}
-          element={<RoboticsCloudDashboardPage />}
+          element={<InstanceDashboardPage />}
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName`}

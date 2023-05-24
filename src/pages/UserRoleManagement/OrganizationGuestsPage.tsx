@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import { GeneralTable } from "../../components/Table/GeneralTable";
-import { InfoCell } from "../../components/Cells/InfoCell";
+import GeneralTable from "../../components/Table/GeneralTable";
+import InfoCell from "../../components/Cells/InfoCell";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import { useAppDispatch } from "../../hooks/redux";
 import { getOrganizationGuests } from "../../resources/OrganizationSlice";

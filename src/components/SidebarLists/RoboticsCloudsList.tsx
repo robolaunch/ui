@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getRoboticsCloudsOfOrganization } from "../../resources/RoboticsCloudSlice";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import SidebarSelectInfo from "../SidebarSelectInfo/SidebarSelectInfo";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -32,11 +33,9 @@ export default function RoboticsCloudsList({
           setResponseRoboticsClouds(
             response?.payload?.data[0]?.roboticsClouds || []
           );
+          setItemCount(response?.payload?.data[0]?.roboticsClouds?.length || 0);
         });
       }
-      setItemCount(
-        selectedState.organization ? responseRoboticsClouds?.length : 0
-      );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, reload, selectedState.organization, setItemCount]
@@ -45,11 +44,7 @@ export default function RoboticsCloudsList({
   return (
     <Fragment>
       {!selectedState?.organization ? (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="text-lg font-bold text-layer-dark-100">
-            Please select an organization first.
-          </div>
-        </div>
+        <SidebarSelectInfo type={`Organization`} />
       ) : (
         <Fragment>
           {!Array.isArray(responseRoboticsClouds) ? (

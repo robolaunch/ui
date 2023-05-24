@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
@@ -18,14 +18,14 @@ interface GeneralTableProps {
   handleReload?: any;
 }
 
-export const GeneralTable = ({
+export default function GeneralTable({
   data,
   columns,
   loading,
   title,
   type,
   handleReload,
-}: GeneralTableProps) => {
+}: GeneralTableProps): ReactElement {
   return (
     <div
       className="flex flex-col px-4 pt-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn"
@@ -85,4 +85,4 @@ export const GeneralTable = ({
       </DataTable>
     </div>
   );
-};
+}

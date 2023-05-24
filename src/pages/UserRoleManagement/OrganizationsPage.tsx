@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import { GeneralTable } from "../../components/Table/GeneralTable";
-import { InfoCell } from "../../components/Cells/InfoCell";
+import GeneralTable from "../../components/Table/GeneralTable";
+import InfoCell from "../../components/Cells/InfoCell";
 import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import BasicCell from "../../components/Cells/BasicCell";

@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getInstances } from "../../resources/InstanceSlice";
 import StateCell from "../Cells/StateCell";
+import SidebarSelectInfo from "../SidebarSelectInfo/SidebarSelectInfo";
 
 interface IInstancesList {
   reload: boolean;
@@ -17,8 +18,7 @@ export default function InstancesList({
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
-  const { selectedState }: any = useSidebar();
-
+  const { selectedState } = useSidebar();
   const dispatch = useAppDispatch();
 
   useEffect(
@@ -31,18 +31,14 @@ export default function InstancesList({
           })
         ).then((response: any) => {
           setResponseInstances(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances.filter(
-              (instance: any) => instance?.instanceState !== "terminated"
-            ) || []
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances || []
+          );
+          setItemCount(
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+              ?.length || 0
           );
         });
-        setItemCount(
-          selectedState?.organization && selectedState?.roboticsCloud
-            ? responseInstances?.length
-            : 0
-        );
       }
-      setItemCount(selectedState.organization ? responseInstances?.length : 0);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, reload, selectedState.organization, selectedState?.roboticsCloud]
@@ -51,13 +47,15 @@ export default function InstancesList({
   return (
     <Fragment>
       {!selectedState?.organization || !selectedState?.roboticsCloud ? (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="text-lg font-bold text-layer-dark-100">
-            Please select an{" "}
-            {selectedState?.organization ? "robotics cloud" : "organization"}{" "}
-            first.
-          </div>
-        </div>
+        <SidebarSelectInfo
+          type={
+            selectedState?.organization
+              ? selectedState?.roboticsCloud
+                ? undefined
+                : "Robotics Cloud"
+              : "Organization"
+          }
+        />
       ) : (
         <Fragment>
           {!Array.isArray(responseInstances) ? (
@@ -82,7 +80,9 @@ export default function InstancesList({
                       />
                     </div>
                   }
-                  url={`/${instance?.name}`}
+                  url={`${
+                    selectedState?.organization?.organizationName?.split("_")[1]
+                  }/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                   data={instance}
                   selected={instance?.name === selectedState?.instance?.name}
                 />

@@ -86,7 +86,7 @@ export default function FilteredTags() {
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
-            {selectedState?.fleet?.fleetName}
+            {selectedState?.fleet?.name}
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"

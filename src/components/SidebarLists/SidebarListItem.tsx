@@ -50,11 +50,17 @@ export const SidebarListItem = ({
           setSelectedState({ ...selectedState, instance: data });
         }
         break;
+      case "fleet":
+        if (selectedState?.fleet?.name === data?.name) {
+          setSelectedState({ ...selectedState, fleet: null });
+        } else {
+          setSelectedState({ ...selectedState, fleet: data });
+        }
     }
   };
 
   return (
-    <div key={name} className="flex animate__animated animate__fadeIn">
+    <div key={name} className={`flex animate__animated animate__fadeIn`}>
       <div
         onClick={() => handleSelectItem()}
         className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg transition-all duration-300  ${

@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo, useState } from "react";
-import { GeneralTable } from "../../components/Table/GeneralTable";
+import GeneralTable from "../../components/Table/GeneralTable";
 import BasicCell from "../../components/Cells/BasicCell";
 import ColorCell from "../../components/Cells/ColorCell";
 import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";

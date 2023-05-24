@@ -1,4 +1,4 @@
-import { OrganizationRepositoryImplApi } from "../apis/openapi";
+import { OrganizationRepositoryImplApi } from "../api/openapi";
 
 export interface IOrganizationApi {
   organizationApi: OrganizationRepositoryImplApi;

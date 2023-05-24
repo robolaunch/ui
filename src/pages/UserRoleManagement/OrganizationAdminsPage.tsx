@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { GeneralTable } from "../../components/Table/GeneralTable";
-import { InfoCell } from "../../components/Cells/InfoCell";
+import GeneralTable from "../../components/Table/GeneralTable";
+import InfoCell from "../../components/Cells/InfoCell";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
 import { useAppDispatch } from "../../hooks/redux";

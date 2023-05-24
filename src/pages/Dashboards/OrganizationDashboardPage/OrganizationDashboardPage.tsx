@@ -5,38 +5,53 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { GeneralTable } from "../../../components/Table/GeneralTable";
+import GeneralTable from "../../../components/Table/GeneralTable";
 import { useAppDispatch } from "../../../hooks/redux";
-import { UsersCell } from "../../../components/Cells/UsersCell";
-import { InfoCell } from "../../../components/Cells/InfoCell";
+import InfoCell from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { useParams } from "react-router-dom";
+import { getRoboticsCloudsOfOrganization } from "../../../resources/RoboticsCloudSlice";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
+import BasicCell from "../../../components/Cells/BasicCell";
 
 export default function OrganizationDashboardPage(): ReactElement {
-  const [reload, setReload] = React.useState(false);
-  const [responseTeams, setResponseTeams] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [currentOrganization, setCurrentOrganization] =
+    useState<any>(undefined);
+  const [responseRoboticsClouds, setResponseRoboticsClouds] =
+    useState<any>(undefined);
+  const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const url = useParams();
 
   useEffect(() => {
-    setLoading(true);
-
-    setResponseTeams([]);
-  }, [url, dispatch, reload]);
-
-  useEffect(() => {
-    if (responseTeams?.length) {
-      setLoading(false);
+    if (!currentOrganization) {
+      dispatch(getOrganizations()).then((responseOrganizations: any) => {
+        setCurrentOrganization(
+          responseOrganizations?.payload?.data?.filter(
+            (organization: any) =>
+              organization?.organizationName === `org_${url?.organizationName}`
+          )[0] || undefined
+        );
+      });
+    } else {
+      dispatch(
+        getRoboticsCloudsOfOrganization({
+          organizationId: currentOrganization?.organizationId,
+        })
+      ).then((response: any) => {
+        setResponseRoboticsClouds(
+          response?.payload?.data[0]?.roboticsClouds || []
+        );
+      });
     }
-  }, [responseTeams]);
+  }, [currentOrganization, dispatch, url?.organizationName, reload]);
 
   const data: any = useMemo(
     () =>
-      responseTeams?.map((team: any) => {
+      responseRoboticsClouds?.map((team: any) => {
         return {
           key: team?.name,
           name: team,
@@ -44,7 +59,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           users: team?.users,
         };
       }),
-    [url, responseTeams]
+    [url, responseRoboticsClouds]
   );
 
   const columns: any = useMemo(
@@ -59,7 +74,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={rowData?.users?.length + " Members"}
+              subtitle={`${url?.organizationName as string} Organization`}
             />
           );
         },
@@ -67,25 +82,11 @@ export default function OrganizationDashboardPage(): ReactElement {
       {
         key: "organization",
         header: "Organization",
-        sortable: true,
-        filter: true,
-        align: "left",
-        body: (rowData: any) => {
-          return (
-            <Fragment>
-              <span>{rowData.organization}</span>
-            </Fragment>
-          );
-        },
-      },
-      {
-        key: "users",
-        header: "Total Users",
         sortable: false,
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <UsersCell users={rowData?.users} />;
+          return <BasicCell text={rowData?.organization} />;
         },
       },
       {
@@ -101,12 +102,9 @@ export default function OrganizationDashboardPage(): ReactElement {
         },
       },
     ],
-    []
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [url, responseRoboticsClouds]
   );
-
-  const handleReload = () => {
-    setReload(!reload);
-  };
 
   return (
     <div className="flex flex-col gap-8">
@@ -127,7 +125,13 @@ export default function OrganizationDashboardPage(): ReactElement {
           <UtilizationWidget title="Organization" />
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <CountWidget data={[5, 2, 4, 3]} title="Organization" />
+          <CountWidget
+            data={{
+              series: [responseRoboticsClouds?.length || 0, 0, 0, 0],
+              categories: ["Robotics Clouds", "-", "-", "-"],
+            }}
+            title="Organization"
+          />
         </div>
       </div>
       <div className="grid grid-cols-1">
@@ -136,8 +140,11 @@ export default function OrganizationDashboardPage(): ReactElement {
           title="Robotics Cloud"
           data={data}
           columns={columns}
-          loading={loading}
-          handleReload={() => handleReload()}
+          loading={responseRoboticsClouds?.length ? false : true}
+          handleReload={() => {
+            setResponseRoboticsClouds(undefined);
+            setReload(!reload);
+          }}
         />
       </div>
     </div>

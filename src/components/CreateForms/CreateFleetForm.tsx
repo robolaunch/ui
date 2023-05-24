@@ -1,30 +1,36 @@
 import { useFormik } from "formik";
-import React, { Fragment, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import InputError from "../InputError/InputError";
 import { createFleetSchema } from "../../validations/FleetsValidations";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import InputSelect from "../InputSelect/InputSelect";
 import useSidebar from "../../hooks/useSidebar";
+import { useAppDispatch } from "../../hooks/redux";
+import { createFederatedFleet } from "../../resources/FleetSlice";
 
 export default function CreateFleetForm(): ReactElement {
-  const { sidebarState, setSidebarState } = useSidebar();
+  const { sidebarState, setSidebarState, selectedState } = useSidebar();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
       name: "",
-      isFederated: "",
     },
     validationSchema: createFleetSchema,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (values) => {
       formik.setSubmitting(true);
-
-      // api handler
-
-      setTimeout(() => {
+      dispatch(
+        createFederatedFleet({
+          robolaunchFederatedFleetsName: values.name,
+          organizationId: selectedState?.organization?.organizationId,
+          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          instanceId: selectedState?.instance?.instanceId,
+          region: selectedState?.instance?.region,
+        })
+      ).then(() => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
-      }, 1000);
+      });
     },
   });
 
@@ -41,25 +47,6 @@ export default function CreateFleetForm(): ReactElement {
         />
         <InputError error={formik.errors.name} touched={formik.touched.name} />
       </div>
-
-      <div>
-        <InputSelect
-          {...formik.getFieldProps("isFederated")}
-          placeholder="Fleet Type"
-          disabled={formik.isSubmitting}
-        >
-          <Fragment>
-            {!formik.values.isFederated && <option value=""></option>}
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </Fragment>
-        </InputSelect>
-        <InputError
-          error={formik.errors.isFederated}
-          touched={formik.touched.isFederated}
-        />
-      </div>
-
       <div>
         <Button
           type="submit"
