@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createInstanceApi } from "../apis/api";
+import { createInstanceApi } from "../api/api";
 import { toast } from "sonner";
 
 export const createRoboticsCloud = createAsyncThunk(

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createInstanceApi } from "../apis/api";
+import { createInstanceApi, kubernetesApi } from "../api/api";
 import { toast } from "sonner";
 
 export const createCloudInstance = createAsyncThunk(
@@ -29,9 +29,9 @@ export const getInstances = createAsyncThunk(
   "instance/getInstances",
   async (values: any) => {
     const response = await createInstanceApi.getAllInstancesOfRoboticsCloud({
-      name: values.name,
-      organizationId: values.organizationId,
-      roboticsClouds: [{ name: values.roboticsCloudName }],
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [{ name: values?.roboticsCloudName }],
     });
     return response.data;
   }
@@ -105,6 +105,61 @@ export const terminateInstance = createAsyncThunk(
           name: values?.roboticsCloudName,
           cloudInstances: [
             { instanceId: values?.instanceId, region: "eu-central-1" },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
+export const addPhysicalInstance = createAsyncThunk(
+  "instance/addPhysicalInstance",
+  async (values: any) => {
+    const response = await kubernetesApi.addPhysicalInstance({
+      name: values?.name,
+      organizationId: "b3c47588-0fc1-4753-9faa-8fda72503b5d",
+      roboticsClouds: [
+        {
+          name: "robotics-cloud-04",
+          cloudInstances: [
+            {
+              instanceId: "i-045fbc86880c38054",
+              region: "eu-central-1",
+              robolaunchPhysicalInstances: [{ name: "physical-instance" }],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
+export const getPhysicalInstances = createAsyncThunk(
+  "instance/getPhysicalInstances",
+  async (values: any) => {
+    const response = await kubernetesApi.getPhysicalInstances();
+    return response.data;
+  }
+);
+
+export const addPhysicalInstanceToFleet = createAsyncThunk(
+  "instance/addPhysicalInstanceToFleet",
+  async (values: any) => {
+    const response = await kubernetesApi.addPhysicalInstanceToFleet({
+      name: values?.name,
+      organizationId: "b3c47588-0fc1-4753-9faa-8fda72503b5d",
+      roboticsClouds: [
+        {
+          name: "robotics-cloud-04",
+          cloudInstances: [
+            {
+              instanceId: "i-045fbc86880c38054",
+              region: "eu-central-1",
+              robolaunchPhysicalInstances: [{ name: "physical-instance" }],
+              robolaunchFederatedFleets: [{ name: "test-fleet" }],
+            },
           ],
         },
       ],
