@@ -1,19 +1,19 @@
-import React, { FC } from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 
-interface InfoCellProps {
+interface IInfoCell {
   title: string;
   titleURL?: string;
   subtitle: string;
   onClick?: () => void;
 }
 
-export const InfoCell: FC<InfoCellProps> = ({
+export default function InfoCell({
   title,
   titleURL,
   subtitle,
   onClick,
-}: InfoCellProps) => {
+}: IInfoCell): ReactElement {
   const iconComponent = (
     <div className="flex items-center justify-center font-bold h-12 w-12 text-base bg-layer-primary-200 text-layer-primary-600 rounded-full uppercase">
       {title ? title[0] : ""}
@@ -47,4 +47,4 @@ export const InfoCell: FC<InfoCellProps> = ({
       </div>
     </div>
   );
-};
+}
