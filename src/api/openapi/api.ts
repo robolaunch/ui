@@ -373,6 +373,24 @@ export interface CloudInstance {
      * @memberof CloudInstance
      */
     'organizationName'?: string;
+    /**
+     * 
+     * @type {Array<RobolaunchFederatedFleet>}
+     * @memberof CloudInstance
+     */
+    'robolaunchFederatedFleets'?: Array<RobolaunchFederatedFleet>;
+    /**
+     * 
+     * @type {Array<RobolaunchPhysicalInstance>}
+     * @memberof CloudInstance
+     */
+    'robolaunchPhysicalInstances'?: Array<RobolaunchPhysicalInstance>;
+    /**
+     * 
+     * @type {Array<RobolaunchFederatedRobot>}
+     * @memberof CloudInstance
+     */
+    'robolaunchFederatedRobots'?: Array<RobolaunchFederatedRobot>;
 }
 /**
  * 
@@ -1196,19 +1214,13 @@ export interface RobolaunchFederatedFleet {
      * @type {string}
      * @memberof RobolaunchFederatedFleet
      */
-    'region'?: string;
+    'fleetStatus'?: string;
     /**
      * 
      * @type {string}
      * @memberof RobolaunchFederatedFleet
      */
-    'instanceId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RobolaunchFederatedFleet
-     */
-    'organizationName'?: string;
+    'fleetstatus'?: string;
 }
 /**
  * 
@@ -1372,7 +1384,37 @@ export interface RobolaunchPhysicalInstance {
      * @type {string}
      * @memberof RobolaunchPhysicalInstance
      */
+    'script'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPhysicalInstance
+     */
+    'phase'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPhysicalInstance
+     */
+    'federationPhase'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPhysicalInstance
+     */
+    'multicastPhase'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPhysicalInstance
+     */
     'fleetName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPhysicalInstance
+     */
+    'fleetStatus'?: string;
     /**
      * 
      * @type {string}
@@ -2228,11 +2270,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPhysicalInstance: async (robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addPhysicalInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/addPhysicalInstance`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2252,7 +2294,7 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchPhysicalInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2261,11 +2303,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPhysicalInstanceToFleet: async (robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addPhysicalInstanceToFleet: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/addPhysicalInstanceToFleet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2285,7 +2327,7 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchPhysicalInstance, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2294,11 +2336,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFederatedFleet: async (robolaunchFederatedFleet?: RobolaunchFederatedFleet, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createFederatedFleet: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/createFederatedFleet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2318,7 +2360,7 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedFleet, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2327,11 +2369,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFederatedFleet: async (robolaunchFederatedFleet?: RobolaunchFederatedFleet, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFederatedFleet: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/deleteFederatedFleet`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2351,7 +2393,7 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedFleet, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2360,11 +2402,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedFleetStatus: async (robolaunchFederatedFleet?: RobolaunchFederatedFleet, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFederatedFleetStatus: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/getFederatedFleetStatus`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2384,7 +2426,7 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedFleet, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2393,44 +2435,11 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedFleetStatusOfPhysicalInstance: async (robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/kubernetes/getFederatedFleetStatusOfPhysicalInstance`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchPhysicalInstance, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getFederatedFleets: async (robolaunchFederatedFleet?: RobolaunchFederatedFleet, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFederatedFleets: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/getFederatedFleets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2450,7 +2459,40 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedFleet, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPhysicalInstances: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/getPhysicalInstances`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2469,72 +2511,72 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addPhysicalInstance(robolaunchPhysicalInstance, options);
+        async addPhysicalInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addPhysicalInstance(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addPhysicalInstanceToFleet(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addPhysicalInstanceToFleet(robolaunchPhysicalInstance, options);
+        async addPhysicalInstanceToFleet(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addPhysicalInstanceToFleet(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createFederatedFleet(robolaunchFederatedFleet, options);
+        async createFederatedFleet(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFederatedFleet(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedFleet(robolaunchFederatedFleet, options);
+        async deleteFederatedFleet(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedFleet(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFederatedFleetStatus(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedFleetStatus(robolaunchFederatedFleet, options);
+        async getFederatedFleetStatus(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedFleetStatus(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance, options);
+        async getFederatedFleets(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedFleets(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFederatedFleets(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedFleets(robolaunchFederatedFleet, options);
+        async getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPhysicalInstances(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2549,66 +2591,66 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.addPhysicalInstance(robolaunchPhysicalInstance, options).then((request) => request(axios, basePath));
+        addPhysicalInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.addPhysicalInstance(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPhysicalInstanceToFleet(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.addPhysicalInstanceToFleet(robolaunchPhysicalInstance, options).then((request) => request(axios, basePath));
+        addPhysicalInstanceToFleet(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.addPhysicalInstanceToFleet(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: any): AxiosPromise<string> {
-            return localVarFp.createFederatedFleet(robolaunchFederatedFleet, options).then((request) => request(axios, basePath));
+        createFederatedFleet(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createFederatedFleet(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: any): AxiosPromise<string> {
-            return localVarFp.deleteFederatedFleet(robolaunchFederatedFleet, options).then((request) => request(axios, basePath));
+        deleteFederatedFleet(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteFederatedFleet(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedFleetStatus(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: any): AxiosPromise<string> {
-            return localVarFp.getFederatedFleetStatus(robolaunchFederatedFleet, options).then((request) => request(axios, basePath));
+        getFederatedFleetStatus(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFederatedFleetStatus(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: any): AxiosPromise<string> {
-            return localVarFp.getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance, options).then((request) => request(axios, basePath));
+        getFederatedFleets(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFederatedFleets(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedFleets(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: any): AxiosPromise<string> {
-            return localVarFp.getFederatedFleets(robolaunchFederatedFleet, options).then((request) => request(axios, basePath));
+        getPhysicalInstances(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getPhysicalInstances(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2622,79 +2664,79 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
 export class KubernetesApi extends BaseAPI {
     /**
      * 
-     * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public addPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).addPhysicalInstance(robolaunchPhysicalInstance, options).then((request) => request(this.axios, this.basePath));
+    public addPhysicalInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).addPhysicalInstance(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public addPhysicalInstanceToFleet(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).addPhysicalInstanceToFleet(robolaunchPhysicalInstance, options).then((request) => request(this.axios, this.basePath));
+    public addPhysicalInstanceToFleet(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).addPhysicalInstanceToFleet(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public createFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).createFederatedFleet(robolaunchFederatedFleet, options).then((request) => request(this.axios, this.basePath));
+    public createFederatedFleet(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).createFederatedFleet(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public deleteFederatedFleet(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).deleteFederatedFleet(robolaunchFederatedFleet, options).then((request) => request(this.axios, this.basePath));
+    public deleteFederatedFleet(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).deleteFederatedFleet(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public getFederatedFleetStatus(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).getFederatedFleetStatus(robolaunchFederatedFleet, options).then((request) => request(this.axios, this.basePath));
+    public getFederatedFleetStatus(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getFederatedFleetStatus(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchPhysicalInstance} [robolaunchPhysicalInstance] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance?: RobolaunchPhysicalInstance, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).getFederatedFleetStatusOfPhysicalInstance(robolaunchPhysicalInstance, options).then((request) => request(this.axios, this.basePath));
+    public getFederatedFleets(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getFederatedFleets(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchFederatedFleet} [robolaunchFederatedFleet] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public getFederatedFleets(robolaunchFederatedFleet?: RobolaunchFederatedFleet, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).getFederatedFleets(robolaunchFederatedFleet, options).then((request) => request(this.axios, this.basePath));
+    public getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getPhysicalInstances(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3858,11 +3900,11 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFederatedRobot: async (robolaunchFederatedRobot?: RobolaunchFederatedRobot, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createFederatedRobot: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/createFederatedRobot`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3882,7 +3924,7 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedRobot, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3891,11 +3933,11 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFederatedRobot: async (robolaunchFederatedRobot?: RobolaunchFederatedRobot, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deleteFederatedRobot: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/deleteFederatedRobot`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3915,7 +3957,7 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedRobot, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4054,6 +4096,39 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRobots: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robot/getFederatedRobots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4066,22 +4141,22 @@ export const RobotApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createFederatedRobot(robolaunchFederatedRobot, options);
+        async createFederatedRobot(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFederatedRobot(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedRobot(robolaunchFederatedRobot, options);
+        async deleteFederatedRobot(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedRobot(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4124,6 +4199,16 @@ export const RobotApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobotWorkspaces(robolaunchFederatedRobot, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFederatedRobots(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobots(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4136,21 +4221,21 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: any): AxiosPromise<string> {
-            return localVarFp.createFederatedRobot(robolaunchFederatedRobot, options).then((request) => request(axios, basePath));
+        createFederatedRobot(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createFederatedRobot(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: any): AxiosPromise<string> {
-            return localVarFp.deleteFederatedRobot(robolaunchFederatedRobot, options).then((request) => request(axios, basePath));
+        deleteFederatedRobot(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteFederatedRobot(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4188,6 +4273,15 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
         getFederatedRobotWorkspaces(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: any): AxiosPromise<string> {
             return localVarFp.getFederatedRobotWorkspaces(robolaunchFederatedRobot, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRobots(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFederatedRobots(organization, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -4200,24 +4294,24 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
 export class RobotApi extends BaseAPI {
     /**
      * 
-     * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RobotApi
      */
-    public createFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig) {
-        return RobotApiFp(this.configuration).createFederatedRobot(robolaunchFederatedRobot, options).then((request) => request(this.axios, this.basePath));
+    public createFederatedRobot(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).createFederatedRobot(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RobotApi
      */
-    public deleteFederatedRobot(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig) {
-        return RobotApiFp(this.configuration).deleteFederatedRobot(robolaunchFederatedRobot, options).then((request) => request(this.axios, this.basePath));
+    public deleteFederatedRobot(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).deleteFederatedRobot(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4262,6 +4356,17 @@ export class RobotApi extends BaseAPI {
      */
     public getFederatedRobotWorkspaces(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig) {
         return RobotApiFp(this.configuration).getFederatedRobotWorkspaces(robolaunchFederatedRobot, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotApi
+     */
+    public getFederatedRobots(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).getFederatedRobots(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
