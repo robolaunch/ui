@@ -2,7 +2,7 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import React, { ReactElement } from "react";
 import GithubContext from "../contexts/GithubContext";
 import CreateRobotContext from "../contexts/CreateRobotContext";
-import keycloak from "../apis/keycloak";
+import keycloak from "../api/keycloak";
 import PrivateLayout from "../layouts/PrivateLayout";
 import SidebarContext from "../contexts/SidebarContext";
 
