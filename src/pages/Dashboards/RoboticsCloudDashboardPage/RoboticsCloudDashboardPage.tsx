@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import { GeneralTable } from "../../../components/Table/GeneralTable";
+import GeneralTable from "../../../components/Table/GeneralTable";
 import { useAppDispatch } from "../../../hooks/redux";
-import { InfoCell } from "../../../components/Cells/InfoCell";
+import InfoCell from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import Button from "../../../components/Button/Button";
@@ -28,30 +28,25 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
   useEffect(() => {
     if (!currentOrganization) {
-      handleGetOrganization();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
-
-  useEffect(() => {
-    if (currentOrganization) {
+      handleGetOrganizations();
+    } else {
       handleGetInstances();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization, dispatch, reload, url]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      handleGetInstances();
-    }, 10000);
+    const timer =
+      currentOrganization &&
+      setInterval(() => {
+        handleGetInstances();
+      }, 10000);
 
     return () => {
       clearInterval(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization]);
 
-  function handleGetOrganization() {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentOrganization, url, reload]);
+
+  function handleGetOrganizations() {
     dispatch(getOrganizations()).then((organizationsResponse: any) => {
       setCurrentOrganization(
         organizationsResponse?.payload?.data?.find(
@@ -77,17 +72,15 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
   const data: any = useMemo(
     () =>
-      responseInstances
-        ?.filter((instance: any) => instance?.instanceState !== "terminated")
-        ?.map((instance: any) => {
-          return {
-            key: instance?.name,
-            name: instance,
-            organization: url?.organizationName,
-            providerState: instance?.instanceState,
-            robolaunchState: instance?.instanceCloudState,
-          };
-        }),
+      responseInstances?.map((instance: any) => {
+        return {
+          key: instance?.name,
+          name: instance,
+          organization: url?.organizationName,
+          providerState: instance?.instanceState,
+          robolaunchState: instance?.instanceCloudState,
+        };
+      }),
     [url, responseInstances]
   );
 
@@ -150,9 +143,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             <InstanceActionCells
               data={{
                 state: rowData?.providerState,
-                organizationId: currentOrganization?.organizationId,
-                roboticsCloudName: url?.roboticsCloudName,
-                instanceId: rowData?.name?.instanceId,
+                organization: currentOrganization,
+                roboticsCloud: url?.roboticsCloudName,
+                instance: rowData?.name?.instanceId,
               }}
               reload={() => setReload(!reload)}
             />
@@ -162,10 +155,6 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     ],
     [currentOrganization, reload, url]
   );
-
-  useEffect(() => {
-    console.log(responseInstances);
-  }, [responseInstances]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -188,13 +177,17 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         <div className="col-span-12 lg:col-span-3">
           <CountWidget
             data={{
-              series: [5, 2, 4, responseInstances?.length || 0],
-              categories: [
-                ["Pending"],
-                ["Running"],
-                ["Stopped"],
-                ["Terminated"],
+              series: [
+                responseInstances?.filter(
+                  (instance: any) => instance?.instanceState === "pending"
+                )?.length || 0,
+                responseInstances?.filter(
+                  (instance: any) => instance?.instanceState === "running"
+                )?.length || 0,
+                0,
+                0,
               ],
+              categories: [["Pending"], ["Running"], ["-"], ["-"]],
             }}
             title="Robotics Cloud"
           />
