@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getRoboticsCloudsOfOrganization } from "../../resources/RoboticsCloudSlice";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
-import SidebarSelectInfo from "../SidebarSelectInfo/SidebarSelectInfo";
+import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -44,7 +44,7 @@ export default function RoboticsCloudsList({
   return (
     <Fragment>
       {!selectedState?.organization ? (
-        <SidebarSelectInfo type={`Organization`} />
+        <SidebarSelectInfo text={`Select an Organization to view instances.`} />
       ) : (
         <Fragment>
           {!Array.isArray(responseRoboticsClouds) ? (

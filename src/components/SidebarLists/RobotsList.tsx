@@ -42,6 +42,7 @@ export default function RobotsList({
                 description={`Active Robot Count: ${robot?.activeRobotCount}`}
                 url={`/${robot?.robotName}`}
                 data={robot}
+                notSelectable
               />
             );
           })}

@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getFederatedFleets } from "../../resources/FleetSlice";
 import StateCell from "../Cells/StateCell";
-import SidebarSelectInfo from "../SidebarSelectInfo/SidebarSelectInfo";
+import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 
 interface IFleetsList {
   reload: boolean;

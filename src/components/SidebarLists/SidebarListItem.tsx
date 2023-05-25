@@ -31,21 +31,34 @@ export const SidebarListItem = ({
           selectedState?.organization?.organizationName ===
           data?.organizationName
         ) {
-          setSelectedState({ ...selectedState, organization: null });
+          setSelectedState({
+            ...selectedState,
+            organization: null,
+            roboticsCloud: null,
+            instance: null,
+            fleet: null,
+          });
         } else {
           setSelectedState({ ...selectedState, organization: data });
+          setSidebarState({ ...sidebarState, page: "roboticscloud" });
         }
         break;
       case "roboticscloud":
         if (selectedState?.roboticsCloud?.name === data?.name) {
-          setSelectedState({ ...selectedState, roboticsCloud: null });
+          setSelectedState({
+            ...selectedState,
+            roboticsCloud: null,
+            instance: null,
+            fleet: null,
+          });
         } else {
           setSelectedState({ ...selectedState, roboticsCloud: data });
+          setSidebarState({ ...sidebarState, page: "instance" });
         }
         break;
       case "instance":
         if (selectedState?.instance?.name === data?.name) {
-          setSelectedState({ ...selectedState, instance: null });
+          setSelectedState({ ...selectedState, instance: null, fleet: null });
         } else {
           setSelectedState({ ...selectedState, instance: data });
         }
@@ -55,6 +68,7 @@ export const SidebarListItem = ({
           setSelectedState({ ...selectedState, fleet: null });
         } else {
           setSelectedState({ ...selectedState, fleet: data });
+          setSidebarState({ ...sidebarState, page: "robot" });
         }
     }
   };

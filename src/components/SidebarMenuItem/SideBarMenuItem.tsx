@@ -7,10 +7,33 @@ interface ISideBarMenuItem {
 
 export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
   const { theme } = useTheme();
-  const { sidebarState, setSidebarState } = useSidebar();
+  const { sidebarState, setSidebarState, selectedState } = useSidebar();
 
   function colorSwitcher() {
     if (theme === "light") {
+      switch (type) {
+        case "organization":
+          if (selectedState?.organization) {
+            return "blue";
+          }
+          break;
+        case "roboticscloud":
+          if (selectedState?.roboticsCloud) {
+            return "blue";
+          }
+          break;
+        case "instance":
+          if (selectedState?.instance) {
+            return "blue";
+          }
+          break;
+        case "fleet":
+          if (selectedState?.fleet) {
+            return "blue";
+          }
+          break;
+      }
+
       return "gray";
     } else {
       return "white";

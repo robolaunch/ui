@@ -12,7 +12,9 @@ import Button from "../components/Button/Button";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import useSidebar from "../hooks/useSidebar";
 import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
-import InstancesList from "../components/SidebarLists/InstancesList";
+import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
+import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
+import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
 import { toast } from "sonner";
 
 interface IContentLayout {
@@ -36,19 +38,29 @@ export const ContentLayout = ({ children }: IContentLayout) => {
             return "Robotics Cloud";
           }
           if (sidebarState?.page === "instance") {
-            return "Cloud Instance";
+            if (sidebarState?.instanceTab === "Cloud Instances") {
+              return "Cloud Instance";
+            } else {
+              return "Physical Instance";
+            }
           }
           return stringCapitalization({
             str: sidebarState?.page as string,
           });
         })()} creation`;
       case false:
-        return `Create ${(() => {
+        return `${
+          sidebarState?.instanceTab === "Physical Instances" ? "Add" : "Create"
+        } ${(() => {
           if (sidebarState?.page === "roboticscloud") {
             return "Robotics Cloud";
           }
           if (sidebarState?.page === "instance") {
-            return "Cloud Instance";
+            if (sidebarState?.instanceTab === "Cloud Instances") {
+              return "Cloud Instance";
+            } else {
+              return "Physical Instance";
+            }
           }
           return stringCapitalization({
             str: sidebarState?.page as string,
@@ -62,9 +74,11 @@ export const ContentLayout = ({ children }: IContentLayout) => {
       return "Robotics Clouds";
     }
     if (sidebarState?.page === "instance") {
-      return "Instances";
+      if (sidebarState?.instanceTab === "Cloud Instances") {
+        return "Cloud Instances";
+      }
+      return "Physical Instances";
     }
-
     switch (sidebarState?.page) {
       case "robot":
         return sidebarState?.isCreateMode ? "Robot Details" : "Robots";
@@ -194,14 +208,30 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                     setItemCount={setItemCount}
                   />
                 );
-
               case "instance":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateCloudInstancesForm />;
+                if (sidebarState?.instanceTab === "Cloud Instances") {
+                  if (sidebarState?.isCreateMode) {
+                    return <CreateCloudInstancesForm />;
+                  }
+
+                  return (
+                    <CloudInstancesList
+                      reload={reload}
+                      setItemCount={setItemCount}
+                    />
+                  );
+                } else {
+                  if (sidebarState?.isCreateMode) {
+                    return <ConnectPhysicalInstanceForm />;
+                  }
+
+                  return (
+                    <PhysicalInstancesList
+                      reload={reload}
+                      setItemCount={setItemCount}
+                    />
+                  );
                 }
-                return (
-                  <InstancesList reload={reload} setItemCount={setItemCount} />
-                );
 
               case "fleet":
                 if (sidebarState?.isCreateMode) {

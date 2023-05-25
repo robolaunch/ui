@@ -27,7 +27,7 @@ export default function CreateFleetForm(): ReactElement {
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
         })
-      ).then(() => {
+      ).then((response) => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
       });
