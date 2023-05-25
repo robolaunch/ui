@@ -55,13 +55,19 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
 
   return (
     <div className="flex items-center gap-2">
-      {state === "running" || state === "Ready" ? (
+      {state === "running" || state === "Ready" || state === "Connected" ? (
         <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
       ) : state === "stopping" ||
         state === "pending" ||
         state === "CreatingNamespace" ||
         state === "CheckingRemoteNamespace" ||
-        state === "CreatingDiscoveryServer" ? (
+        state === "CreatingDiscoveryServer" ||
+        state === "LookingForDeployer" ||
+        state === "Waiting Connection" ||
+        state === "Registered" ||
+        state === "Connecting" ||
+        state === "WaitingForMulticast" ||
+        state === "WaitingForCredentials" ? (
         <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
       ) : (
         <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
