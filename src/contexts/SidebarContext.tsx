@@ -10,6 +10,7 @@ export default ({ children }: any) => {
     isOpen: false,
     isCreateMode: false,
     page: undefined,
+    instanceTab: "Cloud Instances",
   });
 
   const [selectedState, setSelectedState] = useState<ISelectedState>({
