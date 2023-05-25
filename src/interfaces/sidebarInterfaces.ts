@@ -10,6 +10,7 @@ export interface ISidebarState {
     | "workspacesmanager"
     | "buildsmanager"
     | undefined;
+  instanceTab: "Cloud Instances" | "Physical Instances";
 }
 
 export interface ISelectedState {
