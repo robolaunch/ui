@@ -6,7 +6,7 @@ export default function FilteredTags() {
   const { selectedState, setSelectedState } = useSidebar();
 
   return (
-    <div className="flex flex-wrap gap-2 animate__animated animate__fadeIn">
+    <div className="flex flex-wrap gap-2 pb-4 animate__animated animate__fadeIn">
       {selectedState?.organization && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
