@@ -94,78 +94,6 @@ export const deleteFederatedFleet = createAsyncThunk(
   }
 );
 
-export const addPhysicalInstance = createAsyncThunk(
-  "instance/addPhysicalInstance",
-  async (values: any) => {
-    const response = await kubernetesApi.addPhysicalInstance({
-      name: values?.name,
-      organizationId: values?.organizationId,
-      roboticsClouds: [
-        {
-          name: values?.roboticsCloudName,
-          cloudInstances: [
-            {
-              instanceId: values?.instanceId,
-              region: values?.region,
-              robolaunchPhysicalInstances: [
-                { name: values?.robolaunchPhysicalInstancesName },
-              ],
-            },
-          ],
-        },
-      ],
-    });
-    return response.data;
-  }
-);
-
-export const getPhysicalInstances = createAsyncThunk(
-  "instance/getPhysicalInstances",
-  async (values: any) => {
-    const response = await kubernetesApi.getPhysicalInstances({
-      name: values?.name,
-      organizationId: values?.organizationId,
-      roboticsClouds: [
-        {
-          name: values?.roboticsCloudName,
-          cloudInstances: [
-            { instanceId: values?.instanceId, region: values?.region },
-          ],
-        },
-      ],
-    });
-    return response.data;
-  }
-);
-
-export const addPhysicalInstanceToFleet = createAsyncThunk(
-  "instance/addPhysicalInstanceToFleet",
-  async (values: any) => {
-    const response = await kubernetesApi.addPhysicalInstanceToFleet({
-      name: values?.name,
-      organizationId: values?.organizationId,
-      roboticsClouds: [
-        {
-          name: values?.roboticsCloudName,
-          cloudInstances: [
-            {
-              instanceId: values?.instanceId,
-              region: values?.region,
-              robolaunchPhysicalInstances: [
-                { name: values?.robolaunchPhysicalInstancesName },
-              ],
-              robolaunchFederatedFleets: [
-                { name: values?.robolaunchFederatedFleetsName },
-              ],
-            },
-          ],
-        },
-      ],
-    });
-    return response.data;
-  }
-);
-
 export const fleetSlice = createSlice({
   name: "fleet",
   initialState: {},
@@ -190,26 +118,6 @@ export const fleetSlice = createSlice({
         }
       })
       .addCase(deleteFederatedFleet.rejected, (_) => {
-        toast.error("Something went wrong");
-      })
-      .addCase(addPhysicalInstance.fulfilled, (_, action: any) => {
-        if (!action?.payload?.success) {
-          toast.error(action?.payload?.message);
-        } else {
-          toast.success(action?.payload?.message);
-        }
-      })
-      .addCase(addPhysicalInstance.rejected, (_) => {
-        toast.error("Something went wrong");
-      })
-      .addCase(addPhysicalInstanceToFleet.fulfilled, (_, action: any) => {
-        if (!action?.payload?.success) {
-          toast.error(action?.payload?.message);
-        } else {
-          toast.success(action?.payload?.message);
-        }
-      })
-      .addCase(addPhysicalInstanceToFleet.rejected, (_) => {
         toast.error("Something went wrong");
       });
   },

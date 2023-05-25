@@ -118,15 +118,17 @@ export const addPhysicalInstance = createAsyncThunk(
   async (values: any) => {
     const response = await kubernetesApi.addPhysicalInstance({
       name: values?.name,
-      organizationId: "b3c47588-0fc1-4753-9faa-8fda72503b5d",
+      organizationId: values?.organizationId,
       roboticsClouds: [
         {
-          name: "robotics-cloud-04",
+          name: values?.roboticsCloudName,
           cloudInstances: [
             {
-              instanceId: "i-045fbc86880c38054",
-              region: "eu-central-1",
-              robolaunchPhysicalInstances: [{ name: "physical-instance" }],
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchPhysicalInstances: [
+                { name: values?.robolaunchPhysicalInstancesName },
+              ],
             },
           ],
         },
@@ -139,7 +141,18 @@ export const addPhysicalInstance = createAsyncThunk(
 export const getPhysicalInstances = createAsyncThunk(
   "instance/getPhysicalInstances",
   async (values: any) => {
-    const response = await kubernetesApi.getPhysicalInstances();
+    const response = await kubernetesApi.getPhysicalInstances({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            { instanceId: values?.instanceId, region: values?.region },
+          ],
+        },
+      ],
+    });
     return response.data;
   }
 );
@@ -149,16 +162,20 @@ export const addPhysicalInstanceToFleet = createAsyncThunk(
   async (values: any) => {
     const response = await kubernetesApi.addPhysicalInstanceToFleet({
       name: values?.name,
-      organizationId: "b3c47588-0fc1-4753-9faa-8fda72503b5d",
+      organizationId: values?.organizationId,
       roboticsClouds: [
         {
-          name: "robotics-cloud-04",
+          name: values?.roboticsCloudName,
           cloudInstances: [
             {
-              instanceId: "i-045fbc86880c38054",
-              region: "eu-central-1",
-              robolaunchPhysicalInstances: [{ name: "physical-instance" }],
-              robolaunchFederatedFleets: [{ name: "test-fleet" }],
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchPhysicalInstances: [
+                { name: values?.robolaunchPhysicalInstancesName },
+              ],
+              robolaunchFederatedFleets: [
+                { name: values?.robolaunchFederatedFleetsName },
+              ],
             },
           ],
         },
@@ -228,6 +245,22 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(getInstanceState.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(addPhysicalInstance.fulfilled, (_, action: any) => {
+        toast.success("Physical instance added successfully");
+      })
+      .addCase(addPhysicalInstance.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(addPhysicalInstanceToFleet.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(addPhysicalInstanceToFleet.rejected, () => {
         toast.error("Something went wrong");
       });
   },
