@@ -148,8 +148,7 @@ export default function OrganizationDashboardPage(): ReactElement {
             subtitle="
              From this page you get information or you can manage the Robotics Clouds of your organization.
             "
-            actiontitle="If you need to create a new team or check the users in the team you
-            can proceed here."
+            actiontitle="If you need to create organization you can proceed here."
             component={
               <Button
                 text="Create a new Robotics Cloud"

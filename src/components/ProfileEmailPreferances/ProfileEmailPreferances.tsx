@@ -1,6 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
-import { useKeycloak } from "@react-keycloak/web";
 import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
@@ -13,9 +12,6 @@ interface IProfileEmailPreferances {
 export default function ProfileEmailPreferances({
   className,
 }: IProfileEmailPreferances): ReactElement {
-  const { keycloak } = useKeycloak();
-  console.log(keycloak?.tokenParsed);
-
   const formik = useFormik({
     initialValues: {
       creation: true,

@@ -1,6 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
-import { useKeycloak } from "@react-keycloak/web";
 import { useFormik } from "formik";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import Button from "../Button/Button";
@@ -12,9 +11,6 @@ interface IProfileNotifications {
 export default function ProfileNotifications({
   className,
 }: IProfileNotifications): ReactElement {
-  const { keycloak } = useKeycloak();
-  console.log(keycloak?.tokenParsed);
-
   const formik = useFormik({
     initialValues: {
       creation: true,

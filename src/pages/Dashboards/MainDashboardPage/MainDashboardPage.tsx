@@ -1,10 +1,76 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import organizationNameViewer from "../../../helpers/organizationNameViewer";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import InfoCell from "../../../components/Cells/InfoCell";
+import Button from "../../../components/Button/Button";
+import useSidebar from "../../../hooks/useSidebar";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
+import { useAppDispatch } from "../../../hooks/redux";
 
 export default function MainDashboardPage(): ReactElement {
+  const [responseOrganizations, setResponseOrganizations] = useState<any[]>();
+  const [reload, setReload] = useState<boolean>(false);
+  const { setSidebarState } = useSidebar();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getOrganizations()).then((response: any) => {
+      setResponseOrganizations(response?.payload?.data || []);
+    });
+  }, [dispatch, reload]);
+
+  const data: any = useMemo(
+    () =>
+      responseOrganizations?.map((organization: any) => {
+        return {
+          key: organization?.organizationName,
+          name: organization,
+          actions: organization,
+        };
+      }),
+    [responseOrganizations]
+  );
+
+  const columns: any = useMemo(
+    () => [
+      {
+        key: "name",
+        header: "Name",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return (
+            <InfoCell
+              title={organizationNameViewer({
+                organizationName: rowData?.name?.organizationName,
+              })}
+              subtitle={`${organizationNameViewer({
+                organizationName: rowData?.name?.organizationName,
+              })}`}
+              titleURL={`/${organizationNameViewer({
+                organizationName: rowData?.name?.organizationName,
+                capitalization: false,
+              })}`}
+            />
+          );
+        },
+      },
+      {
+        key: "actions",
+        header: "Actions",
+        align: "right",
+        body: (rowData: any) => {
+          return <></>;
+        },
+      },
+    ],
+    []
+  );
+
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
@@ -12,21 +78,49 @@ export default function MainDashboardPage(): ReactElement {
           <InformationWidget
             title={`Main Dashboard`}
             subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-            actiontitle="If you need to create a new team or check the users in the team you
-            can proceed here."
+            the details of your organization."
+            actiontitle="If you need to create a new organization you can proceed here."
             component={
-              <Button text="Manage Teams" className="!w-28 !h-10 !text-xs" />
+              <Button
+                text="Create a new Organization"
+                className="!w-48 !h-10 !text-xs"
+                onClick={() => {
+                  setSidebarState((prevState: any): any => ({
+                    ...prevState,
+                    isOpen: true,
+                    isCreateMode: false,
+                    page: "organization",
+                  }));
+                }}
+              />
             }
           />
         </div>
         <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Organization" />
+          <UtilizationWidget title="Account" />
         </div>
-
-        <div className="col-span-12 lg:col-span-3">
-          <CountWidget data={[5, 2, 4, 3]} title="Organization" />
+        <div className="hidden lg:block lg:col-span-3">
+          <CountWidget
+            data={{
+              series: [responseOrganizations?.length || 0],
+              categories: [["Organizations"]],
+            }}
+            title="Account"
+          />
         </div>
+      </div>
+      <div className="grid grid-cols-1">
+        <GeneralTable
+          type="organization"
+          title="Organizations"
+          data={data}
+          columns={columns}
+          loading={responseOrganizations?.length ? false : true}
+          handleReload={() => {
+            setResponseOrganizations(undefined);
+            setReload(!reload);
+          }}
+        />
       </div>
     </div>
   );
