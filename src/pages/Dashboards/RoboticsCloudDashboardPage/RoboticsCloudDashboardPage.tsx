@@ -1,22 +1,23 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import { useAppDispatch } from "../../../hooks/redux";
-import InfoCell from "../../../components/Cells/InfoCell";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { useParams } from "react-router-dom";
+import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
+import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
 import { getOrganizations } from "../../../resources/OrganizationSlice";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
 import { getInstances } from "../../../resources/InstanceSlice";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
-import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
+import InfoCell from "../../../components/Cells/InfoCell";
+import { useNavigate, useParams } from "react-router-dom";
+import Button from "../../../components/Button/Button";
+import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
+import { toast } from "sonner";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
-  const { selectedState } = useSidebar();
+  const { setSidebarState, selectedState } = useSidebar();
   const [currentOrganization, setCurrentOrganization] = useState<any>(
     selectedState?.organization || undefined
   );
@@ -25,6 +26,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   );
   const dispatch = useAppDispatch();
   const url = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!currentOrganization) {
@@ -48,12 +50,24 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
   function handleGetOrganizations() {
     dispatch(getOrganizations()).then((organizationsResponse: any) => {
-      setCurrentOrganization(
+      if (
         organizationsResponse?.payload?.data?.find(
           (organization: any) =>
             organization?.organizationName === `org_${url?.organizationName}`
         )
-      );
+      ) {
+        setCurrentOrganization(
+          organizationsResponse?.payload?.data?.find(
+            (organization: any) =>
+              organization?.organizationName === `org_${url?.organizationName}`
+          )
+        );
+      } else {
+        toast.error(
+          "The current page does not exist or is not available to you."
+        );
+        navigate("/404");
+      }
     });
   }
 
@@ -64,12 +78,20 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         roboticsCloudName: url?.roboticsCloudName,
       })
     ).then((responseInstances: any) => {
-      setResponseInstances(
+      if (
+        Array.isArray(responseInstances?.payload?.data) &&
+        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
         responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-      );
-      console.log(
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-      );
+      ) {
+        setResponseInstances(
+          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+        );
+      } else {
+        toast.error(
+          "The current page does not exist or is not available to you."
+        );
+        navigate("/404");
+      }
     });
   }
 
@@ -82,6 +104,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           organization: url?.organizationName,
           providerState: instance?.instanceState,
           robolaunchState: instance?.instanceCloudState,
+          actions: instance,
         };
       }),
     [url, responseInstances]
@@ -100,6 +123,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={rowData?.name?.instanceType}
+              titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
             />
           );
         },
@@ -136,7 +160,6 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           return <StateCell state={rowData?.providerState} />;
         },
       },
-
       {
         key: "actions",
         header: "Actions",
@@ -159,19 +182,28 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     ],
     [currentOrganization, reload, url]
   );
-
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
             title={url?.roboticsCloudName || ""}
-            subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-            actiontitle="If you need to create a new team or check the users in the team you
-            can proceed here."
+            subtitle="From this page, you can manage the instances of your robotics cloud."
+            actiontitle="If you need to create a new instance, you can do it from here."
             component={
-              <Button text="Manage Fleets" className="!w-28 !h-10 !text-xs" />
+              <Button
+                text="Create a new Cloud Instance"
+                className="!w-52 !h-10 !text-xs"
+                onClick={() => {
+                  setSidebarState((prevState: any): any => ({
+                    ...prevState,
+                    isOpen: true,
+                    isCreateMode: false,
+                    page: "instance",
+                    instanceTab: "Cloud Instances",
+                  }));
+                }}
+              />
             }
           />
         </div>
@@ -188,10 +220,14 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                 responseInstances?.filter(
                   (instance: any) => instance?.instanceState === "running"
                 )?.length || 0,
-                0,
-                0,
+                responseInstances?.filter(
+                  (instance: any) => instance?.instanceState === "stopping"
+                )?.length || 0,
+                responseInstances?.filter(
+                  (instance: any) => instance?.instanceState === "stopped"
+                )?.length || 0,
               ],
-              categories: [["Pending"], ["Running"], ["-"], ["-"]],
+              categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
             }}
             title="Robotics Cloud"
           />
@@ -200,7 +236,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       <div className="grid grid-cols-1">
         <GeneralTable
           type="instance"
-          title="Instances"
+          title="Cloud Instances"
           data={data}
           columns={columns}
           loading={Array.isArray(responseInstances) ? false : true}

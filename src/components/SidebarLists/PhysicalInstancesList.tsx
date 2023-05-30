@@ -6,6 +6,7 @@ import { getPhysicalInstances } from "../../resources/InstanceSlice";
 import StateCell from "../Cells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -42,6 +43,10 @@ export default function PhysicalInstancesList({
           setResponsePhysicalInstances(
             response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
               ?.robolaunchPhysicalInstances || []
+          );
+          setItemCount(
+            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+              ?.robolaunchPhysicalInstances?.length || 0
           );
         });
       }
@@ -93,10 +98,15 @@ export default function PhysicalInstancesList({
                     <StateCell state={instance?.phase} />
                   </div>
                 }
-                url={`${
-                  selectedState?.organization?.organizationName?.split("_")[1]
-                }/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
+                url={`/${organizationNameViewer({
+                  organizationName:
+                    selectedState?.organization?.organizationName,
+                  capitalization: false,
+                })}/${selectedState?.roboticsCloud?.name}/${
+                  instance?.name
+                }/physical-instances`}
                 data={instance}
+                notSelectable
               />
             );
           })}

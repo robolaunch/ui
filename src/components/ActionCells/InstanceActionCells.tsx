@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, useState } from "react";
 import Button from "../Button/Button";
 import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
-import ChangeStateInstaceModal from "../../modals/ChangeStateInstaceModal";
+import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 
 interface IInstanceActionCells {
@@ -64,7 +64,7 @@ export default function InstanceActionCells({
         />
       </div>
       {isChangeStateModalVisible && (
-        <ChangeStateInstaceModal
+        <ChangeStateInstanceModal
           data={data}
           reload={reload}
           handleCloseModal={() => setIsChangeStateModalVisible(false)}

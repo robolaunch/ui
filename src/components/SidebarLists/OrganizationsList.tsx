@@ -6,8 +6,8 @@ import organizationNameViewer from "../../helpers/organizationNameViewer";
 import useSidebar from "../../hooks/useSidebar";
 
 interface IOrganizationList {
-  reload: boolean;
   setItemCount: any;
+  reload: boolean;
 }
 
 export default function OrganizationsList({
@@ -18,16 +18,15 @@ export default function OrganizationsList({
     any[] | undefined
   >(undefined);
   const { selectedState } = useSidebar();
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    setResponseOrganizations(undefined);
     dispatch(getOrganizations()).then((responseOrganizations: any) => {
       setResponseOrganizations(responseOrganizations?.payload?.data || []);
       setItemCount(responseOrganizations?.payload?.data?.length || 0);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, setItemCount]);
+  }, [dispatch, setItemCount, reload]);
 
   return (
     <Fragment>

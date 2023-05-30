@@ -1,34 +1,43 @@
-import React, { Fragment, ReactNode, useEffect, useState } from "react";
-import OrganizationsList from "../components/SidebarLists/OrganizationsList";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
+import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
+import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
+import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
+import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
+import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
+import OrganizationsList from "../components/SidebarLists/OrganizationsList";
+import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
+import stringCapitalization from "../helpers/stringCapitalization";
+import FilteredTags from "../components/FilteredTags/FilteredTags";
 import FleetsList from "../components/SidebarLists/FleetsList";
 import RobotsList from "../components/SidebarLists/RobotsList";
-import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
-import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
-import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import CreateRobotLayout from "./CreateRobotLayout";
-import stringCapitalization from "../helpers/stringCapitalization";
 import Button from "../components/Button/Button";
-import FilteredTags from "../components/FilteredTags/FilteredTags";
 import useSidebar from "../hooks/useSidebar";
-import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
-import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
-import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
-import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
 import { toast } from "sonner";
 
-interface IContentLayout {
-  children?: ReactNode;
-}
-
-export const ContentLayout = ({ children }: IContentLayout) => {
+export default function ContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setItemCount(0);
   }, [sidebarState]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => {
+      setLoading(false);
+    };
+  }, [reload]);
 
   function buttonTextGenerator() {
     switch (sidebarState?.isCreateMode) {
@@ -208,7 +217,9 @@ export const ContentLayout = ({ children }: IContentLayout) => {
               onClick={() => {
                 setReload(!reload);
               }}
-              className="pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 "
+              className={`pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 ${
+                loading && "animate-spin"
+              }`}
               style={{ fontSize: "1rem" }}
             />
           </Fragment>
@@ -248,7 +259,6 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                   if (sidebarState?.isCreateMode) {
                     return <CreateCloudInstancesForm />;
                   }
-
                   return (
                     <CloudInstancesList
                       reload={reload}
@@ -259,7 +269,6 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                   if (sidebarState?.isCreateMode) {
                     return <ConnectPhysicalInstanceForm />;
                   }
-
                   return (
                     <PhysicalInstancesList
                       reload={reload}
@@ -267,7 +276,6 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                     />
                   );
                 }
-
               case "fleet":
                 if (sidebarState?.isCreateMode) {
                   return <CreateFleetForm />;
@@ -298,4 +306,4 @@ export const ContentLayout = ({ children }: IContentLayout) => {
       />
     </div>
   );
-};
+}

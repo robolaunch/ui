@@ -6,6 +6,7 @@ import { getInstances } from "../../resources/InstanceSlice";
 import StateCell from "../Cells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -19,7 +20,6 @@ export default function CloudInstancesList({
   const [responseCloudInstances, setResponseCloudInstances] = useState<
     any[] | undefined
   >(undefined);
-
   const { sidebarState, selectedState } = useSidebar();
   const dispatch = useAppDispatch();
 
@@ -87,9 +87,11 @@ export default function CloudInstancesList({
                     />
                   </div>
                 }
-                url={`${
-                  selectedState?.organization?.organizationName?.split("_")[1]
-                }/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
+                url={`/${organizationNameViewer({
+                  organizationName:
+                    selectedState?.organization?.organizationName,
+                  capitalization: false,
+                })}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}
                 selected={instance?.name === selectedState?.instance?.name}
               />

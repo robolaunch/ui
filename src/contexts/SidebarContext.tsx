@@ -6,6 +6,8 @@ export const SidebarContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const url = useLocation();
+
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
     isOpen: false,
     isCreateMode: false,
@@ -19,8 +21,6 @@ export default ({ children }: any) => {
     instance: null,
     fleet: null,
   });
-
-  const url = useLocation();
 
   useEffect(() => {
     setSidebarState(

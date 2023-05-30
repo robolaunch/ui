@@ -5,18 +5,18 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import { useAppDispatch } from "../../../hooks/redux";
-import InfoCell from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { useNavigate, useParams } from "react-router-dom";
 import { getRoboticsCloudsOfOrganization } from "../../../resources/RoboticsCloudSlice";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
-import BasicCell from "../../../components/Cells/BasicCell";
 import stringCapitalization from "../../../helpers/stringCapitalization";
+import { getOrganizations } from "../../../resources/OrganizationSlice";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import BasicCell from "../../../components/Cells/BasicCell";
+import { useNavigate, useParams } from "react-router-dom";
+import InfoCell from "../../../components/Cells/InfoCell";
+import Button from "../../../components/Button/Button";
+import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
 import { toast } from "sonner";
 
@@ -103,6 +103,7 @@ export default function OrganizationDashboardPage(): ReactElement {
               subtitle={`${stringCapitalization({
                 str: url?.organizationName as string,
               })} Organization`}
+              titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
             />
           );
         },
@@ -187,7 +188,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       <div className="grid grid-cols-1">
         <GeneralTable
           type="roboticscloud"
-          title="Robotics Cloud"
+          title="Robotics Clouds"
           data={data}
           columns={columns}
           loading={responseRoboticsClouds?.length ? false : true}
