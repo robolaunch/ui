@@ -15,7 +15,7 @@ import InstanceActionCells from "../../../components/ActionCells/InstanceActionC
 import useSidebar from "../../../hooks/useSidebar";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState<boolean>(false);
   const { selectedState } = useSidebar();
   const [currentOrganization, setCurrentOrganization] = useState<any>(
     selectedState?.organization || undefined

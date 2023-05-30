@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { SidebarListItem } from "./SidebarListItem";
+import SidebarListItem from "./SidebarListItem";
 import { getOrganizations } from "../../resources/OrganizationSlice";
 import { useAppDispatch } from "../../hooks/redux";
 import organizationNameViewer from "../../helpers/organizationNameViewer";

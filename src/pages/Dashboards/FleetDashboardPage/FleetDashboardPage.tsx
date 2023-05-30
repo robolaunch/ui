@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import { useAppDispatch } from "../../../hooks/redux";
-import { UsersCell } from "../../../components/Cells/UsersCell";
+import UsersCell from "../../../components/Cells/UsersCell";
 import InfoCell from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";

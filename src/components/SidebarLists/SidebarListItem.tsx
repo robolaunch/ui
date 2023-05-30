@@ -12,7 +12,7 @@ interface SidebarListItemProps {
   notSelectable?: boolean;
 }
 
-export const SidebarListItem = ({
+export default function SidebarListItem({
   name,
   description,
   type,
@@ -20,7 +20,7 @@ export const SidebarListItem = ({
   data,
   selected,
   notSelectable,
-}: SidebarListItemProps) => {
+}: SidebarListItemProps): ReactElement {
   const { selectedState, setSelectedState, sidebarState, setSidebarState } =
     useSidebar();
 
@@ -113,4 +113,4 @@ export const SidebarListItem = ({
       </Link>
     </div>
   );
-};
+}

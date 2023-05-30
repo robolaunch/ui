@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { SidebarListItem } from "./SidebarListItem";
+import SidebarListItem from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getFederatedFleets } from "../../resources/FleetSlice";

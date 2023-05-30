@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React, { ReactElement } from "react";
 
-interface UsersCellProps {
+interface IUsersCell {
   users?: any;
 }
 
-export const UsersCell: FC<UsersCellProps> = ({ users }: UsersCellProps) => {
+export default function UsersCell({ users }: IUsersCell): ReactElement {
   return (
     <div className="flex flex-col gap-3 text-sm">
       <div className="flex gap-2 items-center">
@@ -31,4 +31,4 @@ export const UsersCell: FC<UsersCellProps> = ({ users }: UsersCellProps) => {
       </div>
     </div>
   );
-};
+}
