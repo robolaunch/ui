@@ -123,7 +123,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={rowData?.name?.instanceType}
-              titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
+              titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${rowData?.name?.name}`}
             />
           );
         },

@@ -19,6 +19,7 @@ export default ({ children }: any) => {
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,
+      isDevelopmentMode: true,
     },
     step2: {
       workspaces: [

@@ -76,10 +76,27 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         region: currentInstance?.region,
       })
     ).then((responseFederatedFleets: any) => {
-      setResponseFleets(
+      if (
+        Array.isArray(responseFederatedFleets?.payload?.data) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
         responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets || []
-      );
+          ?.cloudInstances[0]?.robolaunchFederatedFleets
+      ) {
+        setResponseFleets(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedFleets || []
+        );
+      } else {
+        toast.error(
+          "You are not have this content or not authorized to view this page."
+        );
+      }
     });
   }
 

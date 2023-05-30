@@ -379,9 +379,9 @@ export default function CreateRobotFormStep1(): ReactElement {
               :
             </div>
             <InputToggle
-              checked={formik?.values?.isEnabled}
+              checked={formik?.values?.isEnabledIde}
               onChange={(e: any) => {
-                formik.setFieldValue("isEnabled", e);
+                formik.setFieldValue("isEnabledIde", e);
               }}
             />
           </div>
@@ -476,6 +476,29 @@ export default function CreateRobotFormStep1(): ReactElement {
           />
         </div>
         {/* GPU Resource */}
+
+        {/* Seperator */}
+        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+        {/* Seperator */}
+
+        {/* Development Mode */}
+        <div className="flex items-center gap-1">
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+            Development Mode
+            <InfoTip
+              content="
+            Development Mode"
+            />
+            :
+          </div>
+          <InputToggle
+            checked={formik?.values?.isDevelopmentMode}
+            onChange={(e: any) => {
+              formik.setFieldValue("isDevelopmentMode", e);
+            }}
+          />
+        </div>
+        {/* Development Mode */}
 
         {/* Seperator */}
         <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />

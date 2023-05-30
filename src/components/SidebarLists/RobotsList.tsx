@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getFederatedRobots } from "../../resources/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import StateCell from "../Cells/StateCell";
 
 interface IRobotsList {
   reload: boolean;
@@ -26,6 +27,7 @@ export default function RobotsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
+        setResponseRobots(undefined);
         dispatch(
           getFederatedRobots({
             organizationId: selectedState?.organization?.organizationId,
@@ -35,15 +37,24 @@ export default function RobotsList({
             fleetName: selectedState?.fleet?.name,
           })
         ).then((response: any) => {
-          console.log(response);
-          setResponseRobots(
+          if (
+            Array.isArray(response?.payload?.data) &&
+            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
+            Array.isArray(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+            ) &&
             response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedRobots || []
-          );
-          setItemCount(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedRobots?.length || 0
-          );
+              ?.robolaunchFederatedRobots
+          ) {
+            setResponseRobots(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchFederatedRobots || []
+            );
+            setItemCount(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchFederatedRobots?.length || 0
+            );
+          }
         });
       }
     },
@@ -90,8 +101,29 @@ export default function RobotsList({
               <SidebarListItem
                 key={index}
                 type="robot"
-                name={robot?.robotName}
-                description={`Active Robot Count: ${robot?.activeRobotCount}`}
+                name={robot?.name}
+                description={
+                  <div className="flex gap-4">
+                    <StateCell
+                      state={
+                        Array.isArray(robot?.robotClusters) &&
+                        robot?.robotClusters[0]?.robotStatus ===
+                          "EnvironmentReady"
+                          ? "Ready"
+                          : robot?.robotClusters[0]?.robotStatus
+                      }
+                    />
+                    <StateCell
+                      state={
+                        Array.isArray(robot?.robotClusters) &&
+                        robot?.robotClusters[1]?.robotStatus ===
+                          "EnvironmentReady"
+                          ? "Ready"
+                          : robot?.robotClusters[1]?.robotStatus
+                      }
+                    />
+                  </div>
+                }
                 url={`/${robot?.robotName}`}
                 data={robot}
                 notSelectable

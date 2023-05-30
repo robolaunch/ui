@@ -2,12 +2,10 @@ import React, { ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 
 interface ICodeEditorProps {
-  connectionURLs: any;
+  ideURL: any;
 }
 
-export default function CodeEditor({
-  connectionURLs,
-}: ICodeEditorProps): ReactElement {
+export default function CodeEditor({ ideURL }: ICodeEditorProps): ReactElement {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +16,7 @@ export default function CodeEditor({
     <CardLayout loading={loading}>
       <iframe
         className={`h-[55rem] w-full animate__animated animate__fadeIn`}
-        src={connectionURLs?.ideURL}
+        src={ideURL}
         title="Code Editor"
       />
     </CardLayout>

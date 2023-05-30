@@ -10,6 +10,8 @@ interface IRemoteDesktop {
 export default function RemoteDesktop({
   connectionURLs,
 }: IRemoteDesktop): ReactElement {
+  console.log("!", connectionURLs);
+
   return (
     <CardLayout>
       <StreamContext connectionURLs={connectionURLs}>

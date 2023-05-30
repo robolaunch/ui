@@ -9,6 +9,7 @@ import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedRobot } from "../../resources/RobotSlice";
+import { toast } from "sonner";
 
 export default function CreateRobotFormStep2(): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
@@ -16,6 +17,7 @@ export default function CreateRobotFormStep2(): ReactElement {
     selectedState,
     handleCreateRobotPreviousStep,
     handleCreateRobotNextStep,
+    setSidebarState,
   } = useSidebar();
 
   const dispatch = useAppDispatch();
@@ -39,12 +41,9 @@ export default function CreateRobotFormStep2(): ReactElement {
       ),
     }),
     initialValues: robotData?.step2,
-    onSubmit: (values: any) => {
-      formik.setSubmitting(true);
-
-      console.log(robotData?.step1?.robotName);
-
-      dispatch(
+    onSubmit: async (values: any) => {
+      await formik.setSubmitting(true);
+      await dispatch(
         createFederatedRobot({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
@@ -64,9 +63,19 @@ export default function CreateRobotFormStep2(): ReactElement {
           workspaces: values?.workspaces,
         })
       );
+      await formik.setSubmitting(false);
 
-      formik.setSubmitting(false);
-      handleCreateRobotNextStep();
+      if (robotData?.step1?.isDevelopmentMode) {
+        setSidebarState((prevState: any) => {
+          return {
+            ...prevState,
+            isCreateMode: false,
+            page: "robot",
+          };
+        });
+      } else {
+        handleCreateRobotNextStep();
+      }
     },
   });
 
@@ -129,7 +138,19 @@ export default function CreateRobotFormStep2(): ReactElement {
           type="submit"
           disabled={!formik?.isValid || formik.isSubmitting}
           className="!h-11 text-xs"
-          text={`Next Step`}
+          text={
+            formik.isSubmitting ? (
+              <img
+                className="w-10 h-10"
+                src="/svg/general/loading.svg"
+                alt="loading"
+              />
+            ) : robotData?.step1?.isDevelopmentMode ? (
+              `Create Robot`
+            ) : (
+              `Next Step`
+            )
+          }
         />
       </div>
     </form>

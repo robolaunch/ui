@@ -62,6 +62,31 @@ export const getFederatedRobots = createAsyncThunk(
   }
 );
 
+export const getFederatedRobot = createAsyncThunk(
+  "robot/getFederatedRobot",
+  async (values: any) => {
+    const response = await robotApi.getFederatedRobot({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedRobots: [
+                { fleetName: values?.fleetName, name: values?.robotName },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
 export const robotSlice = createSlice({
   name: "robot",
   initialState: {

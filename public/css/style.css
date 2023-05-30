@@ -1525,6 +1525,10 @@ video {
   border-radius: 0.375rem;
 }
 
+.\!rounded-lg{
+  border-radius: 0.5rem !important;
+}
+
 .rounded-l-lg{
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
@@ -1567,6 +1571,14 @@ video {
 
 .border-\[3px\]{
   border-width: 3px;
+}
+
+.border-0{
+  border-width: 0px;
+}
+
+.\!border-0{
+  border-width: 0px !important;
 }
 
 .border-x-2{

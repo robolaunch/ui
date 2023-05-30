@@ -26,6 +26,7 @@ export default function FleetsList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
+        setResponseFleets(undefined);
         dispatch(
           getFederatedFleets({
             organizationId: selectedState?.organization?.organizationId,
@@ -34,14 +35,24 @@ export default function FleetsList({
             region: selectedState?.instance?.region,
           })
         ).then((response: any) => {
-          setResponseFleets(
+          if (
+            Array.isArray(response?.payload?.data) &&
+            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
+            Array.isArray(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+            ) &&
             response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedFleets || []
-          );
-          setItemCount(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedFleets?.length || 0
-          );
+              ?.robolaunchFederatedFleets
+          ) {
+            setResponseFleets(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchFederatedFleets || []
+            );
+            setItemCount(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchFederatedFleets?.length || 0
+            );
+          }
         });
       }
     },

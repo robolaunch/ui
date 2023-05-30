@@ -1,37 +1,62 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import TaskManagementContext from "../../contexts/TaskManagementContext";
+import { getOrganizations } from "../../resources/OrganizationSlice";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
+import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
+import { getFederatedRobot } from "../../resources/RobotSlice";
+import { getInstances } from "../../resources/InstanceSlice";
+import TaskManagement from "./TaskManagement/TaskManagement";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
-import ROSLIB from "roslib";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
-import CodeEditor from "./CodeEditor/CodeEditor";
-import Overview from "./Overview/Overview";
-import TaskManagement from "./TaskManagement/TaskManagement";
-import Workspaces from "./Workspaces/Workspaces";
-import K8SResources from "./K8SResources/K8SResources";
+import { useNavigate, useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
-import TaskManagementContext from "../../contexts/TaskManagementContext";
+import K8SResources from "./K8SResources/K8SResources";
+import { useAppDispatch } from "../../hooks/redux";
+import CodeEditor from "./CodeEditor/CodeEditor";
+import Workspaces from "./Workspaces/Workspaces";
+import useSidebar from "../../hooks/useSidebar";
+import Overview from "./Overview/Overview";
+import { toast } from "sonner";
+import ROSLIB from "roslib";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const [ros, setRos] = useState<any>(null);
   const [topicList, setTopicList] = useState<any>([]);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const url = useParams();
+  const { selectedState } = useSidebar();
+  const [currentOrganization, setCurrentOrganization] = useState<any>(
+    selectedState?.organization || undefined
+  );
+  const [currentInstance, setCurrentInstance] = useState<any>(
+    selectedState?.instance || undefined
+  );
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [connectionURLs, setConnectionURLs] = useState<{
-    rosURL: string;
-    remoteDesktopURL: string;
-    ideURL: string;
-  }>({
-    rosURL: "ws://localhost:9090",
-    remoteDesktopURL: "ws://3.120.228.144:30115/vdi/ws?password=admin",
-    ideURL: "http://3.120.228.144:30901",
-  });
+  useEffect(() => {
+    if (!currentOrganization) {
+      handleGetOrganization();
+    } else if (!currentInstance) {
+      handleGetInstances();
+    } else {
+      handleGetRobot();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    currentInstance,
+    currentOrganization,
+    dispatch,
+    url?.fleetName,
+    url?.robotName,
+    url?.roboticsCloudName,
+  ]);
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({
-      url: connectionURLs.rosURL,
+      url: responseRobot?.bridgeIngressEndpoint,
     });
     setRos(ros);
 
@@ -48,8 +73,7 @@ export default function RobotPage(): ReactElement {
     return () => {
       ros.close();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [responseRobot]);
 
   useEffect(() => {
     if (ros) {
@@ -71,6 +95,84 @@ export default function RobotPage(): ReactElement {
     }
   }, [ros]);
 
+  function handleGetOrganization() {
+    dispatch(getOrganizations()).then((organizationsResponse: any) => {
+      if (organizationsResponse?.payload?.success) {
+        setCurrentOrganization(
+          organizationsResponse?.payload?.data?.find(
+            (organization: any) =>
+              organization?.organizationName === `org_${url?.organizationName}`
+          ) || undefined
+        );
+      } else {
+        toast.error(
+          "You are not have this content or not authorized to view this page."
+        );
+        navigate("/404");
+      }
+    });
+  }
+
+  function handleGetInstances() {
+    dispatch(
+      getInstances({
+        organizationId: currentOrganization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName,
+      })
+    ).then((responseInstances: any) => {
+      if (
+        Array.isArray(responseInstances?.payload?.data) &&
+        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
+        Array.isArray(
+          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+        ) &&
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+      ) {
+        setCurrentInstance(
+          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
+            (instance: any) => instance?.name === url?.instanceName
+          ) || undefined
+        );
+      } else {
+        toast.error(
+          "You are not have this content or not authorized to view this page."
+        );
+        navigate("/404");
+      }
+    });
+  }
+
+  function handleGetRobot() {
+    dispatch(
+      getFederatedRobot({
+        organizationId: currentOrganization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName,
+        instanceId: currentInstance?.instanceId,
+        region: currentInstance?.region,
+        fleetName: url?.fleetName,
+        robotName: url?.robotName,
+      })
+    ).then((responseRobot: any) => {
+      if (
+        Array.isArray(responseRobot?.payload?.data) &&
+        Array.isArray(responseRobot?.payload?.data[0]?.roboticsClouds) &&
+        Array.isArray(
+          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+        ) &&
+        Array.isArray(
+          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+            ?.robolaunchFederatedRobots
+        ) &&
+        responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+          ?.robolaunchFederatedRobots[0]
+      )
+        setResponseRobot(
+          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+            ?.robolaunchFederatedRobots[0]
+        );
+    });
+  }
+
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
   }
@@ -78,13 +180,9 @@ export default function RobotPage(): ReactElement {
   function handleForceUpdate(page: string) {
     setActiveTab("Loading");
 
-    setTimeout(
-      () => {
-        setActiveTab(page);
-      },
-
-      500
-    );
+    setTimeout(() => {
+      setActiveTab(page);
+    }, 500);
   }
 
   return (
@@ -111,13 +209,17 @@ export default function RobotPage(): ReactElement {
             case "K8S Resources":
               return <K8SResources />;
             case "Code Editor":
-              return <CodeEditor connectionURLs={connectionURLs} />;
+              return <CodeEditor ideURL={responseRobot?.ideIngressEndpoint} />;
             case "Visualization":
               return (
                 <Visualization
                   ros={ros}
                   topicList={topicList}
-                  connectionURLs={connectionURLs}
+                  connectionURLs={{
+                    rosURL: responseRobot?.bridgeIngressEndpoint,
+                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                    ideURL: responseRobot?.ideIngressEndpoint,
+                  }}
                   handleForceUpdate={handleForceUpdate}
                 />
               );
@@ -126,18 +228,43 @@ export default function RobotPage(): ReactElement {
                 <Teleoperation
                   ros={ros}
                   topicList={topicList}
-                  connectionURLs={connectionURLs}
+                  connectionURLs={{
+                    rosURL: responseRobot?.bridgeIngressEndpoint,
+                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                    ideURL: responseRobot?.ideIngressEndpoint,
+                  }}
                   handleForceUpdate={handleForceUpdate}
                 />
               );
             case "Remote Desktop":
-              return <RemoteDesktop connectionURLs={connectionURLs} />;
+              return (
+                <RemoteDesktop
+                  connectionURLs={{
+                    rosURL: responseRobot?.bridgeIngressEndpoint,
+                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                    ideURL: responseRobot?.ideIngressEndpoint,
+                  }}
+                />
+              );
             case "Settings":
               return <div>Settings</div>;
             case "Development Suite":
               return (
-                <StreamContext connectionURLs={connectionURLs}>
-                  <DevelopmentSuite ros={ros} connectionURLs={connectionURLs} />
+                <StreamContext
+                  connectionURLs={{
+                    rosURL: responseRobot?.bridgeIngressEndpoint,
+                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                    ideURL: responseRobot?.ideIngressEndpoint,
+                  }}
+                >
+                  <DevelopmentSuite
+                    ros={ros}
+                    connectionURLs={{
+                      rosURL: responseRobot?.bridgeIngressEndpoint,
+                      remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                      ideURL: responseRobot?.ideIngressEndpoint,
+                    }}
+                  />
                 </StreamContext>
               );
             case "Loading":

@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import useSidebar from "../../hooks/useSidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 interface SidebarListItemProps {
   name: string;
@@ -23,6 +24,7 @@ export default function SidebarListItem({
 }: SidebarListItemProps): ReactElement {
   const { selectedState, setSelectedState, sidebarState, setSidebarState } =
     useSidebar();
+  const navigate = useNavigate();
 
   const handleSelectItem = () => {
     switch (type) {
@@ -70,6 +72,16 @@ export default function SidebarListItem({
           setSelectedState({ ...selectedState, fleet: data });
           setSidebarState({ ...sidebarState, page: "robot" });
         }
+        break;
+      case "robot":
+        navigate(
+          `/${organizationNameViewer({
+            organizationName: selectedState?.organization?.organizationName,
+            capitalization: false,
+          })}/${selectedState?.roboticsCloud?.name}/${
+            selectedState?.instance?.name
+          }/${selectedState?.fleet?.name}/${data?.name}`
+        );
     }
   };
 
@@ -81,7 +93,7 @@ export default function SidebarListItem({
           selected
             ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
             : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
-        }`}
+        } ${notSelectable && "!border-0 !rounded-lg"}`}
       >
         <img
           className="w-8"
@@ -95,22 +107,24 @@ export default function SidebarListItem({
           <span className="text-xs font-light">{description}</span>
         </div>
       </div>
-      <Link
-        onClick={() => setSidebarState({ ...sidebarState, isOpen: false })}
-        to={url}
-        className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
-          selected
-            ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
-            : "bg-layer-primary-200 hover:bg-layer-primary-300"
-        } `}
-      >
-        <i
-          className={`pi pi-angle-right transition-all duration-300 ${
-            selected ? "text-layer-secondary-700" : "text-layer-primary-700"
-          }`}
-          style={{ fontSize: "1.25rem" }}
-        />
-      </Link>
+      {!notSelectable && (
+        <Link
+          onClick={() => setSidebarState({ ...sidebarState, isOpen: false })}
+          to={url}
+          className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
+            selected
+              ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
+              : "bg-layer-primary-200 hover:bg-layer-primary-300"
+          } `}
+        >
+          <i
+            className={`pi pi-angle-right transition-all duration-300 ${
+              selected ? "text-layer-secondary-700" : "text-layer-primary-700"
+            }`}
+            style={{ fontSize: "1.25rem" }}
+          />
+        </Link>
+      )}
     </div>
   );
 }
