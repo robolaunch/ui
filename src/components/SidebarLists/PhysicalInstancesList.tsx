@@ -89,6 +89,7 @@ export default function PhysicalInstancesList({
                 name={instance?.name}
                 description={
                   <div className="flex gap-4">
+                    <span>({selectedState?.instance?.name})</span>
                     <StateCell state={instance?.phase} />
                   </div>
                 }
@@ -96,7 +97,6 @@ export default function PhysicalInstancesList({
                   selectedState?.organization?.organizationName?.split("_")[1]
                 }/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}
-                selected={instance?.name === selectedState?.instance?.name}
               />
             );
           })}

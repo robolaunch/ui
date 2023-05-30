@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getFederatedFleets } from "../../resources/FleetSlice";
 import StateCell from "../Cells/StateCell";
-import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 
 interface IFleetsList {
   reload: boolean;
@@ -60,16 +60,14 @@ export default function FleetsList({
       {!selectedState?.organization ||
       !selectedState?.roboticsCloud ||
       !selectedState?.instance ? (
-        <SidebarSelectInfo
-          type={
-            selectedState?.organization
-              ? selectedState?.roboticsCloud
-                ? selectedState?.instance
-                  ? undefined
-                  : "Instance"
-                : "Robotics Cloud"
-              : "Organization"
-          }
+        <SidebarInfo
+          text={`Select an ${
+            !selectedState?.organization
+              ? "Organization"
+              : !selectedState?.roboticsCloud
+              ? "Robotics Cloud"
+              : "Instance"
+          } to view robots.`}
         />
       ) : (
         <Fragment>

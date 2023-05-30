@@ -109,7 +109,7 @@ export const SidebarListItem = ({
             selected ? "text-layer-secondary-700" : "text-layer-primary-700"
           }`}
           style={{ fontSize: "1.25rem" }}
-        ></i>
+        />
       </Link>
     </div>
   );
