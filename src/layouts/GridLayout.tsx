@@ -1,14 +1,15 @@
 import React, { Fragment, ReactElement } from "react";
-import RosCameraWidget from "../components/RosCameraWidget/RosCameraWidget";
+import RosEmergencyControlWidget from "../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
+import RosResourceUsageWidget from "../components/RosResourceUsageWidget/RosResourceUsageWidget";
 import RosTopicListWidget from "../components/RosTopicListWidget/RosTopicListWidget";
+import RosJoystickWidget from "../components/RosJoystickWidget/RosJoystickWidget";
+import RosNetworkWidget from "../components/RosNetworkWidget/RosNetworkWidget";
+import RosBatteryWidget from "../components/RosBatteryWidget/RosBatteryWidget";
+import RosCameraWidget from "../components/RosCameraWidget/RosCameraWidget";
 import RosCmdVelWidget from "../components/RosCmdVelWidget/RosCmdVelWidget";
 import RosRosOutWidget from "../components/RosRosOutWidget/RosRosOutWidget";
 import RosMapWidget from "../components/RosMapWidget/RosMapWidget";
-import RosNetworkWidget from "../components/RosNetworkWidget/RosNetworkWidget";
-import RosResourceUsageWidget from "../components/RosResourceUsageWidget/RosResourceUsageWidget";
-import RosEmergencyControlWidget from "../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
-import RosBatteryWidget from "../components/RosBatteryWidget/RosBatteryWidget";
-import RosJoystickWidget from "../components/RosJoystickWidget/RosJoystickWidget";
+import { toast } from "sonner";
 
 interface IGridLayout {
   gridLayout: any;
@@ -44,78 +45,103 @@ export function GridLayout({
             gs-y={item.y}
           >
             <div className="grid-stack-item-content">
-              {item?.content?.search("RosCameraWidget") > 0 && (
-                <RosCameraWidget
-                  id={index}
-                  ros={ros}
-                  topicList={topicList}
-                  localStoragePath={localStoragePath}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosTopicListWidget") > 0 && (
-                <RosTopicListWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosCmdVelWidget") > 0 && (
-                <RosCmdVelWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosRosOutWidget") > 0 && (
-                <RosRosOutWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosMapWidget") > 0 && (
-                <RosMapWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosNetworkWidget") > 0 && (
-                <RosNetworkWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosResourceUsageWidget") > 0 && (
-                <RosResourceUsageWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosEmergencyControlWidget") > 0 && (
-                <RosEmergencyControlWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosBatteryWidget") > 0 && (
-                <RosBatteryWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
-              {item.content.search("RosJoystickWidget") > 0 && (
-                <RosJoystickWidget
-                  id={index}
-                  ros={ros}
-                  handleRemoveWidget={handleRemoveWidget}
-                />
-              )}
+              {(() => {
+                try {
+                  if (item?.content?.search("RosCameraWidget") > 0) {
+                    return (
+                      <RosCameraWidget
+                        id={index}
+                        ros={ros}
+                        topicList={topicList}
+                        localStoragePath={localStoragePath}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosTopicListWidget") > 0) {
+                    return (
+                      <RosTopicListWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosCmdVelWidget") > 0) {
+                    return (
+                      <RosCmdVelWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosRosOutWidget") > 0) {
+                    return (
+                      <RosRosOutWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosMapWidget") > 0) {
+                    return (
+                      <RosMapWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosNetworkWidget") > 0) {
+                    return (
+                      <RosNetworkWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (
+                    item.content.search("RosResourceUsageWidget") > 0
+                  ) {
+                    return (
+                      <RosResourceUsageWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (
+                    item.content.search("RosEmergencyControlWidget") > 0
+                  ) {
+                    return (
+                      <RosEmergencyControlWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosBatteryWidget") > 0) {
+                    return (
+                      <RosBatteryWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else if (item.content.search("RosJoystickWidget") > 0) {
+                    return (
+                      <RosJoystickWidget
+                        id={index}
+                        ros={ros}
+                        handleRemoveWidget={handleRemoveWidget}
+                      />
+                    );
+                  } else {
+                    throw new Error();
+                  }
+                } catch (error) {
+                  localStorage.setItem(localStoragePath, JSON.stringify([]));
+                  toast.error(`Error loading widgets, reloading page.`);
+                  window.location.reload();
+                }
+              })()}
             </div>
           </div>
         );

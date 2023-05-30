@@ -1,17 +1,17 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { GridStack } from "gridstack";
-import { useParams } from "react-router-dom";
-import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
-import { GridLayout } from "../../../layouts/GridLayout";
-import "gridstack/dist/gridstack.min.css";
-import "gridstack/dist/gridstack-extra.css";
-import ROSLIB from "roslib";
 import TeleoperationControlBar from "../../../components/TeleoperationControlBar/TeleoperationControlBar";
+import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
+import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { handleSaveLayout } from "../../../helpers/gridStack";
-import CardLayout from "../../../layouts/CardLayout";
-import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import StreamContext from "../../../contexts/StreamContext";
+import { GridLayout } from "../../../layouts/GridLayout";
+import CardLayout from "../../../layouts/CardLayout";
+import { useParams } from "react-router-dom";
+import "gridstack/dist/gridstack-extra.css";
+import "gridstack/dist/gridstack.min.css";
+import { GridStack } from "gridstack";
+import ROSLIB from "roslib";
 
 interface ITeleoperation {
   ros: any;
@@ -29,8 +29,9 @@ export default function Teleoperation({
   const [grid, setGrid] = useState<any>();
   const url = useParams();
   const localStoragePath = `visualization_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
-  // @ts-ignore
-  const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
+  const gridLayout =
+    JSON.parse(localStorage.getItem(localStoragePath) || JSON.stringify([])) ||
+    [];
   const [cameraData, setCameraData] = useState<string>("");
   const [isRemoteDesktopStream, setIsRemoteDesktopStream] =
     useState<any>(undefined);

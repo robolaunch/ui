@@ -185,7 +185,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-4">
+        <div className="col-span-12 lg:col-span-4">
           <InformationWidget
             title={url?.roboticsCloudName || ""}
             subtitle="From this page, you can manage the instances of your robotics cloud."

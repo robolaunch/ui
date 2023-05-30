@@ -1,9 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { GridStack } from "gridstack";
-import { useParams } from "react-router-dom";
-import { GridLayout } from "../../../layouts/GridLayout";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { handleSaveLayout } from "../../../helpers/gridStack";
+import { GridLayout } from "../../../layouts/GridLayout";
+import { useParams } from "react-router-dom";
+import { GridStack } from "gridstack";
 import ROSLIB from "roslib";
 
 interface IVisualization {
@@ -26,8 +26,9 @@ export default function Visualization({
   const [grid, setGrid] = useState<any>();
   const url = useParams();
   const localStoragePath = `visualization_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
-  // @ts-ignore
-  const gridLayout = JSON.parse(localStorage.getItem(localStoragePath)) || [];
+  const gridLayout =
+    JSON.parse(localStorage.getItem(localStoragePath) || JSON.stringify([])) ||
+    [];
 
   useEffect(() => {
     const grid: any = GridStack.init({

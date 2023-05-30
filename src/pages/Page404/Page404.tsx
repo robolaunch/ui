@@ -15,6 +15,7 @@ export default function Page404(): ReactElement {
       }}
     >
       <Fragment>
+        <img className="w-24" src="/images/rocket.svg" alt="robolaunch" />
         <p className="font-semibold text-layer-dark-600">
           This page could not be found.
         </p>
