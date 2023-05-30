@@ -20,13 +20,15 @@ export default function TerminateInstanceModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
+  console.log(data);
+
   function handleTerminateInstance() {
     dispatch(
       terminateInstance({
-        name: data?.name,
         organizationId: data?.organizationId,
         roboticsCloudName: data?.roboticsCloudName,
         instanceId: data?.instanceId,
+        region: data?.region,
       })
     );
 

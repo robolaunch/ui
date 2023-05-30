@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import { ContentLayout } from "../../layouts/ContentLayout";
 import { Link } from "react-router-dom";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
-import { SideBarMenuItem } from "../SidebarMenuItem/SideBarMenuItem";
+import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useSidebar from "../../hooks/useSidebar";
 
 export default function Sidebar(): ReactElement {

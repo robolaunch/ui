@@ -50,7 +50,10 @@ export const ContentLayout = ({ children }: IContentLayout) => {
         })()} creation`;
       case false:
         return `${
-          sidebarState?.instanceTab === "Physical Instances" ? "Add" : "Create"
+          sidebarState?.instanceTab === "Physical Instances" &&
+          sidebarState?.page === "instance"
+            ? "Add"
+            : "Create"
         } ${(() => {
           if (sidebarState?.page === "roboticscloud") {
             return "Robotics Cloud";
@@ -146,6 +149,38 @@ export const ContentLayout = ({ children }: IContentLayout) => {
                   : !selectedState?.roboticsCloud
                   ? "robotics cloud"
                   : "instance"
+              } first.
+              `
+            );
+          }
+          break;
+        case "robot":
+          if (
+            !selectedState?.organization ||
+            !selectedState?.roboticsCloud ||
+            !selectedState?.instance ||
+            !selectedState?.fleet
+          ) {
+            setSidebarState((prev: any) => ({
+              ...prev,
+              page: !selectedState?.organization
+                ? "organization"
+                : !selectedState?.roboticsCloud
+                ? "robotics cloud"
+                : !selectedState?.instance
+                ? "instance"
+                : "fleet",
+            }));
+            return toast.error(
+              `
+              If you want to create a robot, you need to select a ${
+                !selectedState?.organization
+                  ? "organization"
+                  : !selectedState?.roboticsCloud
+                  ? "robotics cloud"
+                  : !selectedState?.instance
+                  ? "instance"
+                  : "fleet"
               } first.
               `
             );

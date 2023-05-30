@@ -1,35 +1,31 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { IRobotData } from "../interfaces/robotInterfaces";
-import useSidebar from "../hooks/useSidebar";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const { selectedState } = useSidebar();
-
   const [robotData, setRobotData] = useState<IRobotData>({
     step1: {
-      organization: selectedState?.organization,
-      roboticsCloud: selectedState?.roboticsCloud,
-      fleet: selectedState?.fleet,
-      name: "",
-      storage: 40,
+      robotName: "",
       isVirtualRobot: true,
-      isEnabledIDE: true,
+      physicalInstanceName: "",
+      robotStorage: 40,
+      isEnabledIde: true,
       isEnabledROS2Bridge: true,
       remoteDesktop: {
         isEnabled: true,
         sessionCount: 1,
       },
       rosDistros: [],
+      gpuEnabledForCloudInstance: true,
     },
     step2: {
       workspaces: [
         {
           name: "",
-          distro: "",
-          repositories: [
+          workspaceDistro: "",
+          robotRepositories: [
             {
               name: "",
               url: "",
@@ -50,6 +46,10 @@ export default ({ children }: any) => {
       ],
     },
   });
+
+  useEffect(() => {
+    console.log(robotData);
+  }, [robotData]);
 
   return (
     <CreateRobotContext.Provider

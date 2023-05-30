@@ -67,6 +67,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       setResponseInstances(
         responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
       );
+      console.log(
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+      );
     });
   }
 
@@ -143,9 +146,10 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             <InstanceActionCells
               data={{
                 state: rowData?.providerState,
-                organization: currentOrganization,
-                roboticsCloud: url?.roboticsCloudName,
-                instance: rowData?.name?.instanceId,
+                organizationId: currentOrganization?.organizationId,
+                roboticsCloudName: url?.roboticsCloudName,
+                instanceId: rowData?.name?.instanceId,
+                region: rowData?.name?.region,
               }}
               reload={() => setReload(!reload)}
             />

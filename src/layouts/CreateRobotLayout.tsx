@@ -13,7 +13,7 @@ export default function CreateRobotLayout(): ReactElement {
 
   return (
     <Fragment>
-      <ul className="h-10 w-full flex items-center pb-14">
+      <ul className="h-10 w-full flex items-center ">
         {[
           `Create Form (${(() => {
             switch (sidebarState?.page) {

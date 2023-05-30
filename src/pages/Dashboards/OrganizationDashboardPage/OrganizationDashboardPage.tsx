@@ -12,29 +12,48 @@ import UtilizationWidget from "../../../components/UtilizationWidget/Utilization
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getRoboticsCloudsOfOrganization } from "../../../resources/RoboticsCloudSlice";
 import { getOrganizations } from "../../../resources/OrganizationSlice";
 import BasicCell from "../../../components/Cells/BasicCell";
+import stringCapitalization from "../../../helpers/stringCapitalization";
+import useSidebar from "../../../hooks/useSidebar";
+import { toast } from "sonner";
 
 export default function OrganizationDashboardPage(): ReactElement {
-  const [currentOrganization, setCurrentOrganization] =
-    useState<any>(undefined);
+  const { selectedState, setSidebarState } = useSidebar();
+  const [currentOrganization, setCurrentOrganization] = useState<any>(
+    selectedState?.organization || undefined
+  );
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const url = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!currentOrganization) {
       dispatch(getOrganizations()).then((responseOrganizations: any) => {
-        setCurrentOrganization(
+        if (
           responseOrganizations?.payload?.data?.filter(
             (organization: any) =>
               organization?.organizationName === `org_${url?.organizationName}`
-          )[0] || undefined
-        );
+          )[0]
+        ) {
+          setCurrentOrganization(
+            responseOrganizations?.payload?.data?.filter(
+              (organization: any) =>
+                organization?.organizationName ===
+                `org_${url?.organizationName}`
+            )[0] || undefined
+          );
+        } else {
+          toast.error(
+            "The current page does not exist or is not available to you."
+          );
+          navigate("/404");
+        }
       });
     } else {
       dispatch(
@@ -42,12 +61,19 @@ export default function OrganizationDashboardPage(): ReactElement {
           organizationId: currentOrganization?.organizationId,
         })
       ).then((response: any) => {
-        setResponseRoboticsClouds(
-          response?.payload?.data[0]?.roboticsClouds || []
-        );
+        if (response?.payload?.data[0]?.roboticsClouds) {
+          setResponseRoboticsClouds(
+            response?.payload?.data[0]?.roboticsClouds || []
+          );
+        } else {
+          toast.error(
+            "The current page does not exist or is not available to you."
+          );
+          navigate("/404");
+        }
       });
     }
-  }, [currentOrganization, dispatch, url?.organizationName, reload]);
+  }, [currentOrganization, dispatch, url?.organizationName, reload, navigate]);
 
   const data: any = useMemo(
     () =>
@@ -74,7 +100,9 @@ export default function OrganizationDashboardPage(): ReactElement {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={`${url?.organizationName as string} Organization`}
+              subtitle={`${stringCapitalization({
+                str: url?.organizationName as string,
+              })} Organization`}
             />
           );
         },
@@ -86,7 +114,13 @@ export default function OrganizationDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <BasicCell text={rowData?.organization} />;
+          return (
+            <BasicCell
+              text={stringCapitalization({
+                str: url?.organizationName as string,
+              })}
+            />
+          );
         },
       },
       {
@@ -94,16 +128,11 @@ export default function OrganizationDashboardPage(): ReactElement {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <button>{"Actions"}</button>
-            </Fragment>
-          );
+          return <></>;
         },
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [url, responseRoboticsClouds]
+    [url]
   );
 
   return (
@@ -111,26 +140,48 @@ export default function OrganizationDashboardPage(): ReactElement {
       <div className="grid gap-8 grid-cols-12">
         <div className="col-span-12 lg:col-span-4">
           <InformationWidget
-            title={url?.organizationName || ""}
-            subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
+            title={
+              stringCapitalization({
+                str: url?.organizationName as string,
+              }) || ""
+            }
+            subtitle="
+             From this page you get information or you can manage the Robotics Clouds of your organization.
+            "
             actiontitle="If you need to create a new team or check the users in the team you
             can proceed here."
             component={
-              <Button text="Manage Teams" className="!w-28 !h-10 !text-xs" />
+              <Button
+                text="Create a new Robotics Cloud"
+                className="!w-56 !h-10 !text-xs"
+                onClick={() => {
+                  setSidebarState((prevState: any): any => ({
+                    ...prevState,
+                    isOpen: true,
+                    isCreateMode: false,
+                    page: "roboticscloud",
+                  }));
+                }}
+              />
             }
           />
         </div>
         <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Organization" />
+          <UtilizationWidget
+            title={`${stringCapitalization({
+              str: url?.organizationName as string,
+            })} Organization`}
+          />
         </div>
-        <div className="col-span-12 lg:col-span-3">
+        <div className="hidden lg:block lg:col-span-3">
           <CountWidget
             data={{
-              series: [responseRoboticsClouds?.length || 0, 0, 0, 0],
-              categories: ["Robotics Clouds", "-", "-", "-"],
+              series: [responseRoboticsClouds?.length || 0],
+              categories: ["Robotics Clouds"],
             }}
-            title="Organization"
+            title={`${stringCapitalization({
+              str: url?.organizationName as string,
+            })} Organization`}
           />
         </div>
       </div>

@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotWorkspace,
@@ -13,15 +7,13 @@ import {
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-
 import InputSelect from "../InputSelect/InputSelect";
-import { GithubContext } from "../../contexts/GithubContext";
-import { IGithubContext } from "../../interfaces/githubInterfaces";
 import { useAppDispatch } from "../../hooks/redux";
 import {
   getGithubRepositoryBranches,
   getGithubUserRepositories,
 } from "../../resources/GithubSlice";
+import useGithub from "../../hooks/useGithub";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -41,63 +33,65 @@ export default function CreateRobotFormRepositoryItem({
 
   const dispatch = useAppDispatch();
 
-  const { githubAuth }: IGithubContext = useContext(GithubContext);
+  const github = useGithub();
 
   useEffect(() => {
-    githubAuth &&
+    github?.githubAuth &&
       dispatch(getGithubUserRepositories()).then((res: any) => {
         setResponseRepositories(res.payload.data || []);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (githubAuth) {
-      formik.setFieldValue(
-        `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`,
-        ""
-      );
-      if (
-        formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-          repositoryIndex
-        ]?.url
-      ) {
-        dispatch(
-          getGithubRepositoryBranches({
-            // eslint-disable-next-line array-callback-return
-            owner: responseRepositories?.filter((repo: any) => {
-              if (
-                repo?.html_url ===
-                formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                  repositoryIndex
-                ]?.url
-              ) {
-                return repo;
-              }
-            })[0]?.owner?.login,
-            // eslint-disable-next-line array-callback-return
-            repo: responseRepositories?.filter((repo: any) => {
-              if (
-                repo?.html_url ===
-                formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                  repositoryIndex
-                ]?.url
-              ) {
-                return repo;
-              }
-            })[0]?.name,
-          })
-        ).then((res: any) => {
-          setResponseBranches(res.payload.data || []);
-        });
+  useEffect(
+    () => {
+      if (github?.githubAuth) {
+        formik.setFieldValue(
+          `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
+          ""
+        );
+        if (
+          formik?.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
+            repositoryIndex
+          ]?.url
+        ) {
+          dispatch(
+            getGithubRepositoryBranches({
+              // eslint-disable-next-line array-callback-return
+              owner: responseRepositories?.filter((repo: any) => {
+                if (
+                  repo?.html_url ===
+                  formik?.values?.workspaces?.[workspaceIndex]
+                    ?.robotRepositories?.[repositoryIndex]?.url
+                ) {
+                  return repo;
+                }
+              })[0]?.owner?.login,
+              // eslint-disable-next-line array-callback-return
+              repo: responseRepositories?.filter((repo: any) => {
+                if (
+                  repo?.html_url ===
+                  formik?.values?.workspaces?.[workspaceIndex]
+                    ?.robotRepositories?.[repositoryIndex]?.url
+                ) {
+                  return repo;
+                }
+              })[0]?.name,
+            })
+          ).then((res: any) => {
+            setResponseBranches(res?.payload?.data || []);
+          });
+        }
       }
-    }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    formik.values?.workspaces?.[workspaceIndex]?.repositories?.[repositoryIndex]
-      .url,
-  ]);
+    [
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      formik.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
+        repositoryIndex
+      ].url,
+    ]
+  );
 
   function handleRemoveRepository(
     workspaceIndex: number,
@@ -126,7 +120,7 @@ export default function CreateRobotFormRepositoryItem({
         <div>
           <InputText
             {...formik.getFieldProps(
-              `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.name`
+              `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`
             )}
             placeholder="Repository Name"
             disabled={formik?.isSubmitting}
@@ -134,29 +128,29 @@ export default function CreateRobotFormRepositoryItem({
           <InputError
             error={
               // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+              formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[
                 repositoryIndex
               ]?.name
             }
             touched={
-              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
-                repositoryIndex
-              ]?.name
+              formik?.touched?.workspaces?.[workspaceIndex]
+                ?.robotRepositories?.[repositoryIndex]?.name
             }
           />
         </div>
         <div>
-          {githubAuth ? (
+          {github?.githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.url`
+                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
               placeholder="Repository"
             >
               <Fragment>
-                {!formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                  repositoryIndex
-                ]?.url && <option value=""></option>}
+                {!formik?.values?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.url && (
+                  <option value=""></option>
+                )}
                 {responseRepositories?.map((repo: any, index: number) => (
                   <option key={index} value={repo?.html_url}>
                     {repo?.owner?.login} - {repo?.name}
@@ -167,7 +161,7 @@ export default function CreateRobotFormRepositoryItem({
           ) : (
             <InputText
               {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.url`
+                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
               placeholder="Repository URL"
               disabled={formik?.isSubmitting}
@@ -176,29 +170,29 @@ export default function CreateRobotFormRepositoryItem({
           <InputError
             error={
               // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+              formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[
                 repositoryIndex
               ]?.url
             }
             touched={
-              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
-                repositoryIndex
-              ]?.url
+              formik?.touched?.workspaces?.[workspaceIndex]
+                ?.robotRepositories?.[repositoryIndex]?.url
             }
           />
         </div>
         <div>
-          {githubAuth ? (
+          {github?.githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`
+                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
               placeholder="Repository Branch"
             >
               <Fragment>
-                {!formik?.values?.workspaces?.[workspaceIndex]?.repositories?.[
-                  repositoryIndex
-                ]?.branch && <option value=""></option>}
+                {!formik?.values?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.branch && (
+                  <option value=""></option>
+                )}
                 {responseBranches?.map((branch: any, index: number) => (
                   <option key={index} value={branch?.name}>
                     {branch?.name}
@@ -209,7 +203,7 @@ export default function CreateRobotFormRepositoryItem({
           ) : (
             <InputText
               {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.repositories.${repositoryIndex}.branch`
+                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
               placeholder="Repository URL"
               disabled={formik?.isSubmitting}
@@ -218,14 +212,13 @@ export default function CreateRobotFormRepositoryItem({
           <InputError
             error={
               // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.repositories?.[
+              formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[
                 repositoryIndex
               ]?.branch
             }
             touched={
-              formik?.touched?.workspaces?.[workspaceIndex]?.repositories?.[
-                repositoryIndex
-              ]?.branch
+              formik?.touched?.workspaces?.[workspaceIndex]
+                ?.robotRepositories?.[repositoryIndex]?.branch
             }
           />
         </div>

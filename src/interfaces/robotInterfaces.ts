@@ -10,8 +10,8 @@ export interface IRobotWorkspaces {
 
 export interface IRobotWorkspace {
   name: string;
-  distro: "humble" | "galactic" | "foxy" | "";
-  repositories: IRobotWorkspaceRepository[];
+  workspaceDistro: "HUMBLE" | "GALACTIC" | "FOXY" | "";
+  robotRepositories: IRobotWorkspaceRepository[];
 }
 
 interface IRobotWorkspaceRepository {

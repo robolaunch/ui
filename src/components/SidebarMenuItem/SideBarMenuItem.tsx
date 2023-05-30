@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useSidebar from "../../hooks/useSidebar";
 import useTheme from "../../hooks/useTheme";
 
@@ -5,9 +6,14 @@ interface ISideBarMenuItem {
   type: string;
 }
 
-export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
+export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   const { theme } = useTheme();
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
+
+  useEffect(() => {
+    activeSwitcher();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarState.page]);
 
   function colorSwitcher() {
     if (theme === "light") {
@@ -40,13 +46,13 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
     }
   }
 
-  const activeSwitcher = () => {
+  function activeSwitcher() {
     if (sidebarState?.page === type) {
       return "bg-layer-light-100";
     }
-  };
+  }
 
-  const handleClick = () => {
+  function handleClick() {
     if (sidebarState?.page !== type) {
       setSidebarState((prevState: any) => {
         return { ...prevState, page: type, isOpen: true };
@@ -56,7 +62,7 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
         return { ...prevState, page: undefined, isOpen: false };
       });
     }
-  };
+  }
 
   return (
     <div
@@ -70,4 +76,4 @@ export const SideBarMenuItem = ({ type }: ISideBarMenuItem) => {
       />
     </div>
   );
-};
+}
