@@ -51,10 +51,10 @@ export const getFederatedFleetStatus = createAsyncThunk(
   async (values: any) => {
     const response = await kubernetesApi.getFederatedFleetStatus({
       name: values.name,
-      organizationId: "b3c47588-0fc1-4753-9faa-8fda72503b5d",
+      organizationId: values?.organizationId,
       roboticsClouds: [
         {
-          name: "robotics-cloud-04",
+          name: values?.roboticsCloudName,
           cloudInstances: [
             {
               instanceId: "i-045fbc86880c38054",

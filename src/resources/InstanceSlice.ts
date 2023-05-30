@@ -104,7 +104,7 @@ export const terminateInstance = createAsyncThunk(
         {
           name: values?.roboticsCloudName,
           cloudInstances: [
-            { instanceId: values?.instanceId, region: "eu-central-1" },
+            { instanceId: values?.instanceId, region: values?.region },
           ],
         },
       ],
