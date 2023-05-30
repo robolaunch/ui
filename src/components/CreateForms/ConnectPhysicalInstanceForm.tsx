@@ -14,9 +14,7 @@ import { useKeycloak } from "@react-keycloak/web";
 export default function ConnectPhysicalInstanceForm(): ReactElement {
   const [code, setCode] = React.useState<string>("");
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
-
   const dispatch = useAppDispatch();
-
   const { keycloak } = useKeycloak();
 
   const formik = useFormik({

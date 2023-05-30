@@ -7,19 +7,28 @@ import Button from "../Button/Button";
 import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { useAppDispatch } from "../../hooks/redux";
+import { createFederatedRobot } from "../../resources/RobotSlice";
 
 export default function CreateRobotFormStep2(): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
-  const { handleCreateRobotPreviousStep, handleCreateRobotNextStep } =
-    useSidebar();
+  const {
+    selectedState,
+    handleCreateRobotPreviousStep,
+    handleCreateRobotNextStep,
+  } = useSidebar();
+
+  const dispatch = useAppDispatch();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
     validationSchema: Yup.object().shape({
       workspaces: Yup.array().of(
         Yup.object().shape({
           name: Yup.string().required("Workspace Name is required"),
-          distro: Yup.string().required("Workspace Distro is required"),
-          repositories: Yup.array().of(
+          workspaceDistro: Yup.string().required(
+            "Workspace Distro is required"
+          ),
+          robotRepositories: Yup.array().of(
             Yup.object().shape({
               name: Yup.string().required("Repository Name is required"),
               url: Yup.string().required("Repository URL is required"),
@@ -32,7 +41,30 @@ export default function CreateRobotFormStep2(): ReactElement {
     initialValues: robotData?.step2,
     onSubmit: (values: any) => {
       formik.setSubmitting(true);
-      //
+
+      console.log(robotData?.step1?.robotName);
+
+      dispatch(
+        createFederatedRobot({
+          organizationId: selectedState?.organization?.organizationId,
+          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          instanceId: selectedState?.instance?.instanceId,
+          region: selectedState?.instance?.region,
+          robotName: robotData?.step1?.robotName,
+          fleetName: selectedState?.fleet?.name,
+          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          distributions: robotData?.step1?.rosDistros,
+          bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
+          vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
+          vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+          ideEnabled: robotData?.step1?.isEnabledIde,
+          storageAmount: robotData?.step1?.robotStorage,
+          gpuEnabledForCloudInstance:
+            robotData?.step1?.gpuEnabledForCloudInstance,
+          workspaces: values?.workspaces,
+        })
+      );
+
       formik.setSubmitting(false);
       handleCreateRobotNextStep();
     },
@@ -50,8 +82,8 @@ export default function CreateRobotFormStep2(): ReactElement {
     const temp: any = [...formik.values.workspaces];
     temp.push({
       name: "",
-      distro: "",
-      repositories: [
+      workspaceDistro: "",
+      robotRepositories: [
         {
           name: "",
           url: "",
