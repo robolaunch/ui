@@ -13,6 +13,7 @@ import BillingPage from "../pages/BillingPage/BillingPage";
 import PrivateProvider from "../auth/PrivateProvider";
 import CloudInstanceDashboardPage from "../pages/Dashboards/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
 import PhysicalInstancesDashboardPage from "../pages/Dashboards/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
+import Page404 from "../pages/Page404/Page404";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -57,6 +58,8 @@ export default function AppRoutes(): ReactElement {
           element={<RobotPage />}
         />
         {/* Dashboard Pages */}
+
+        <Route path="/404" element={<Page404 />} />
 
         <Route path="*" element={<Navigate to={`/`} />} />
       </Route>
