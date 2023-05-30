@@ -1739,25 +1739,13 @@ export interface RobotWorkspace {
      * @type {string}
      * @memberof RobotWorkspace
      */
-    'distro'?: string;
-    /**
-     * 
-     * @type {Array<RobotRepository>}
-     * @memberof RobotWorkspace
-     */
-    'repositories'?: Array<RobotRepository>;
+    'workspaceDistro'?: string;
     /**
      * 
      * @type {Array<RobotRepository>}
      * @memberof RobotWorkspace
      */
     'robotRepositories'?: Array<RobotRepository>;
-    /**
-     * 
-     * @type {string}
-     * @memberof RobotWorkspace
-     */
-    'workspaceDistro'?: string;
 }
 /**
  * 
@@ -1882,6 +1870,170 @@ export interface Team {
      */
     'userCount'?: number;
 }
+
+/**
+ * AwsApi - axios parameter creator
+ * @export
+ */
+export const AwsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDnsRecord: async (body?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/aws/createDnsRecord`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDnsRecord: async (body?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/aws/deleteDnsRecord`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AwsApi - functional programming interface
+ * @export
+ */
+export const AwsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AwsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDnsRecord(body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDnsRecord(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDnsRecord(body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDnsRecord(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AwsApi - factory interface
+ * @export
+ */
+export const AwsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AwsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDnsRecord(body?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.createDnsRecord(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [body] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDnsRecord(body?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteDnsRecord(body, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AwsApi - object-oriented interface
+ * @export
+ * @class AwsApi
+ * @extends {BaseAPI}
+ */
+export class AwsApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AwsApi
+     */
+    public createDnsRecord(body?: string, options?: AxiosRequestConfig) {
+        return AwsApiFp(this.configuration).createDnsRecord(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [body] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AwsApi
+     */
+    public deleteDnsRecord(body?: string, options?: AxiosRequestConfig) {
+        return AwsApiFp(this.configuration).deleteDnsRecord(body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * CreateInstanceApi - axios parameter creator
@@ -2484,107 +2636,6 @@ export class CreateInstanceApi extends BaseAPI {
      */
     public terminateInstance(organization?: Organization, options?: AxiosRequestConfig) {
         return CreateInstanceApiFp(this.configuration).terminateInstance(organization, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * IPAAdminLoginApi - axios parameter creator
- * @export
- */
-export const IPAAdminLoginApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {Organization} [organization] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addDNSRecord: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/ipa/addDNSRecord`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * IPAAdminLoginApi - functional programming interface
- * @export
- */
-export const IPAAdminLoginApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = IPAAdminLoginApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {Organization} [organization] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addDNSRecord(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addDNSRecord(organization, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * IPAAdminLoginApi - factory interface
- * @export
- */
-export const IPAAdminLoginApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = IPAAdminLoginApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {Organization} [organization] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addDNSRecord(organization?: Organization, options?: any): AxiosPromise<void> {
-            return localVarFp.addDNSRecord(organization, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * IPAAdminLoginApi - object-oriented interface
- * @export
- * @class IPAAdminLoginApi
- * @extends {BaseAPI}
- */
-export class IPAAdminLoginApi extends BaseAPI {
-    /**
-     * 
-     * @param {Organization} [organization] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IPAAdminLoginApi
-     */
-    public addDNSRecord(organization?: Organization, options?: AxiosRequestConfig) {
-        return IPAAdminLoginApiFp(this.configuration).addDNSRecord(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5090,6 +5141,39 @@ export const RobotLaunchManagerApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRobotLaunchManager: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robotLaunchManager/deleteRobotLaunchManager`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5108,6 +5192,16 @@ export const RobotLaunchManagerApiFp = function(configuration?: Configuration) {
          */
         async createRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createRobotLaunchManager(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRobotLaunchManager(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -5129,6 +5223,15 @@ export const RobotLaunchManagerApiFactory = function (configuration?: Configurat
         createRobotLaunchManager(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.createRobotLaunchManager(organization, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteRobotLaunchManager(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteRobotLaunchManager(organization, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -5148,6 +5251,17 @@ export class RobotLaunchManagerApi extends BaseAPI {
      */
     public createRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotLaunchManagerApiFp(this.configuration).createRobotLaunchManager(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotLaunchManagerApi
+     */
+    public deleteRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotLaunchManagerApiFp(this.configuration).deleteRobotLaunchManager(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
