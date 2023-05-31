@@ -13,8 +13,6 @@ import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useAppDispatch } from "../../../hooks/redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { getFederatedRobots } from "../../../resources/RobotSlice";
 import useSidebar from "../../../hooks/useSidebar";
 import BasicCell from "../../../components/Cells/BasicCell";
 import {
@@ -82,8 +80,7 @@ export default function FleetDashboardPage(): ReactElement {
     return () => {
       clearInterval(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, reload, currentOrganization, currentInstance]);
+  }, [url, reload, currentOrganization, currentInstance, dispatch, navigate]);
 
   const data: any = useMemo(
     () =>

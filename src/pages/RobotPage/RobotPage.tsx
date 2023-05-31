@@ -154,7 +154,13 @@ export default function RobotPage(): ReactElement {
             case "K8S Resources":
               return <K8SResources />;
             case "Code Editor":
-              return <CodeEditor ideURL={responseRobot?.ideIngressEndpoint} />;
+              return (
+                <CodeEditor
+                  ideURL={
+                    "https://org-robolaunch-001-i-07e8742cf454fa770.robolaunch.cloud//org_robolaunch-001/eu-central-1/test-cloud-003/test-fleet/test-robot/vdi/"
+                  }
+                />
+              );
             case "Visualization":
               return (
                 <Visualization

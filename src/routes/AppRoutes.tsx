@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
-import PhysicalInstancesDashboardPage from "../pages/Dashboards/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
-import CloudInstanceDashboardPage from "../pages/Dashboards/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
-import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
+import PhysicalInstancesDashboardPage from "../pages/DashboardsPage/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
+import CloudInstanceDashboardPage from "../pages/DashboardsPage/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
+import RoboticsCloudDashboardPage from "../pages/DashboardsPage/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
-import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
-import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
-import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
+import OrganizationDashboardPage from "../pages/DashboardsPage/OrganizationDashboardPage/OrganizationDashboardPage";
+import FleetDashboardPage from "../pages/DashboardsPage/FleetDashboardPage/FleetDashboardPage";
+import MainDashboardPage from "../pages/DashboardsPage/MainDashboardPage/MainDashboardPage";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import BillingPage from "../pages/BillingPage/BillingPage";

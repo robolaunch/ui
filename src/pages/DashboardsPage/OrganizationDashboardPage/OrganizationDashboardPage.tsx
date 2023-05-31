@@ -51,6 +51,11 @@ export default function OrganizationDashboardPage(): ReactElement {
     }
   }, [currentOrganization, dispatch, reload, navigate, url]);
 
+  useEffect(() => {
+    setCurrentOrganization(selectedState?.organization || undefined);
+    setResponseRoboticsClouds(undefined);
+  }, [selectedState?.organization, url]);
+
   const data: any = useMemo(
     () =>
       responseRoboticsClouds?.map((team: any) => {

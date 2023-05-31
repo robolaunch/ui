@@ -1943,6 +1943,35 @@ export const AwsApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDnsRecordExt: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/aws/deleteDnsRecordExt`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1973,6 +2002,15 @@ export const AwsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDnsRecord(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDnsRecordExt(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDnsRecordExt(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2000,6 +2038,14 @@ export const AwsApiFactory = function (configuration?: Configuration, basePath?:
          */
         deleteDnsRecord(body?: string, options?: any): AxiosPromise<void> {
             return localVarFp.deleteDnsRecord(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDnsRecordExt(options?: any): AxiosPromise<void> {
+            return localVarFp.deleteDnsRecordExt(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2031,6 +2077,16 @@ export class AwsApi extends BaseAPI {
      */
     public deleteDnsRecord(body?: string, options?: AxiosRequestConfig) {
         return AwsApiFp(this.configuration).deleteDnsRecord(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AwsApi
+     */
+    public deleteDnsRecordExt(options?: AxiosRequestConfig) {
+        return AwsApiFp(this.configuration).deleteDnsRecordExt(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

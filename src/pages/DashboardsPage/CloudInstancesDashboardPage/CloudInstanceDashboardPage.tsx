@@ -18,10 +18,16 @@ import {
 } from "../../../helpers/dashboardDispatcherFunctions";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
-  const [currentOrganization, setCurrentOrganization] =
-    useState<any>(undefined);
-  const [currentInstance, setCurrentInstance] = useState<any>(undefined);
-  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const { setSidebarState, selectedState } = useSidebar();
+  const [currentOrganization, setCurrentOrganization] = useState<any>(
+    selectedState?.organization || undefined
+  );
+  const [currentInstance, setCurrentInstance] = useState<any>(
+    selectedState?.instance || undefined
+  );
+  const [responseFleets, setResponseFleets] = useState<any>(
+    selectedState?.fleet || undefined
+  );
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -71,8 +77,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     return () => {
       clearInterval(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, reload, currentOrganization, currentInstance]);
+  }, [url, reload, currentOrganization, currentInstance, dispatch, navigate]);
 
   useEffect(() => {
     setResponseFleets(undefined);
@@ -152,8 +157,6 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     ],
     [url, currentInstance, currentOrganization, reload]
   );
-
-  const { setSidebarState } = useSidebar();
 
   return (
     <div className="flex flex-col gap-8">

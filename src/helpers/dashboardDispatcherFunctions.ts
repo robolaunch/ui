@@ -5,6 +5,11 @@ import { toast } from "sonner";
 import { getFederatedRobot, getFederatedRobots } from "../resources/RobotSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
 
+function navigateTo404(navigate: any) {
+  toast.error("The current page does not exist or is not available to you.");
+  navigate("/404");
+}
+
 export function handleSetterCurrentOrganization({
   dispatch,
   url,
@@ -20,10 +25,7 @@ export function handleSetterCurrentOrganization({
         ) || undefined
       );
     } else {
-      toast.error(
-        "You are not have this content or not authorized to view this page."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -52,10 +54,7 @@ export function handleSetterCurrentInstances({
         ) || undefined
       );
     } else {
-      toast.error(
-        "You are not have this content or not authorized to view this page."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -76,10 +75,7 @@ export function handleSetterResponseRoboticsCloud({
         response?.payload?.data[0]?.roboticsClouds || []
       );
     } else {
-      toast.error(
-        "The current page does not exist or is not available to you."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -106,10 +102,7 @@ export function handleSetterResponseInstances({
         responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
       );
     } else {
-      toast.error(
-        "The current page does not exist or is not available to you."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -147,10 +140,7 @@ export function handleSetterResponseFleets({
           ?.cloudInstances[0]?.robolaunchFederatedFleets || []
       );
     } else {
-      toast.error(
-        "You are not have this content or not authorized to view this page."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -186,10 +176,7 @@ export function handleSetterResponseRobots({
           ?.robolaunchFederatedRobots
       );
     } else {
-      toast.error(
-        "You are not have this content or not authorized to view this page."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
@@ -230,10 +217,7 @@ export function handleSetterResponseRobot({
           ?.robolaunchFederatedRobots[0]
       );
     } else {
-      toast.error(
-        "You are not have this content or not authorized to view this page."
-      );
-      navigate("/404");
+      navigateTo404(navigate);
     }
   });
 }
