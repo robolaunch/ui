@@ -134,6 +134,7 @@ export default function FleetDashboardPage(): ReactElement {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
