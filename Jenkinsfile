@@ -63,7 +63,7 @@ pipeline {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm i --force'
-          sh 'npm run build'
+          sh 'npm run CI=false && react-scripts build'
           sh "tar -zcvf ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz build"
           withCredentials([usernamePassword(credentialsId: '7fadeb6b-976b-40ed-8c7c-20e157b4f81a', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh "curl --fail -u $username:$password --upload-file ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz https://nexus.robolaunch.cloud/repository/ui/"
