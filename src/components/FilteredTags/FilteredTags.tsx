@@ -25,6 +25,7 @@ export default function FilteredTags() {
                 organization: null,
                 roboticsCloud: null,
                 instance: null,
+                fleet: null,
               })
             }
             size={14}

@@ -1,11 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 
-interface ICodeEditorProps {
+interface ICodeEditor {
   ideURL: any;
 }
 
-export default function CodeEditor({ ideURL }: ICodeEditorProps): ReactElement {
+export default function CodeEditor({ ideURL }: ICodeEditor): ReactElement {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import {
+  handleSetterCurrentOrganization,
+  handleSetterCurrentInstances,
+  handleSetterResponseRobot,
+} from "../../helpers/dashboardDispatcherFunctions";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
-import { getOrganizations } from "../../resources/OrganizationSlice";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
-import { getFederatedRobot } from "../../resources/RobotSlice";
-import { getInstances } from "../../resources/InstanceSlice";
 import TaskManagement from "./TaskManagement/TaskManagement";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
@@ -17,13 +19,7 @@ import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
 import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
-import { toast } from "sonner";
 import ROSLIB from "roslib";
-import {
-  handleSetterCurrentOrganization,
-  handleSetterCurrentInstances,
-  handleSetterResponseRobot,
-} from "../../helpers/dashboardDispatcherFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -154,13 +150,7 @@ export default function RobotPage(): ReactElement {
             case "K8S Resources":
               return <K8SResources />;
             case "Code Editor":
-              return (
-                <CodeEditor
-                  ideURL={
-                    "https://org-robolaunch-001-i-07e8742cf454fa770.robolaunch.cloud//org_robolaunch-001/eu-central-1/test-cloud-003/test-fleet/test-robot/vdi/"
-                  }
-                />
-              );
+              return <CodeEditor ideURL={responseRobot?.ideIngressEndpoint} />;
             case "Visualization":
               return (
                 <Visualization

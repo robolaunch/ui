@@ -9,17 +9,15 @@ import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedRobot } from "../../resources/RobotSlice";
-import { toast } from "sonner";
 
 export default function CreateRobotFormStep2(): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
   const {
     selectedState,
     handleCreateRobotPreviousStep,
     handleCreateRobotNextStep,
     setSidebarState,
   } = useSidebar();
-
+  const { robotData, setRobotData } = useCreateRobot();
   const dispatch = useAppDispatch();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({

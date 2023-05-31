@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
-import useSidebar from "../../hooks/useSidebar";
-import { Link, useNavigate } from "react-router-dom";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import { Link, useNavigate } from "react-router-dom";
+import useSidebar from "../../hooks/useSidebar";
+import { toast } from "sonner";
 
 interface SidebarListItemProps {
   name: string;
@@ -59,19 +60,34 @@ export default function SidebarListItem({
         }
         break;
       case "instance":
-        if (selectedState?.instance?.name === data?.name) {
-          setSelectedState({ ...selectedState, instance: null, fleet: null });
+        if (data?.instanceCloudState === "ConnectionHub_Ready") {
+          if (selectedState?.instance?.name === data?.name) {
+            setSelectedState({
+              ...selectedState,
+              instance: null,
+              fleet: null,
+            });
+          } else {
+            setSelectedState({ ...selectedState, instance: data });
+          }
         } else {
-          setSelectedState({ ...selectedState, instance: data });
+          toast.error(
+            "Instance is not selectable now. Please try again later."
+          );
         }
         break;
       case "fleet":
-        if (selectedState?.fleet?.name === data?.name) {
-          setSelectedState({ ...selectedState, fleet: null });
+        if (data?.fleetStatus === "Ready") {
+          if (selectedState?.fleet?.name === data?.name) {
+            setSelectedState({ ...selectedState, fleet: null });
+          } else {
+            setSelectedState({ ...selectedState, fleet: data });
+            setSidebarState({ ...sidebarState, page: "robot" });
+          }
         } else {
-          setSelectedState({ ...selectedState, fleet: data });
-          setSidebarState({ ...sidebarState, page: "robot" });
+          toast.error("Fleet is not selectable now. Please try again later.");
         }
+
         break;
       case "robot":
         navigate(
