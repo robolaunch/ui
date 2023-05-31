@@ -13,7 +13,7 @@ import { getFederatedRobot } from "../../resources/RobotSlice";
 export default function CreateRobotFormStep3(): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
   const dispatch = useAppDispatch();
-  const [responseRobot, setResponseRobot] = useState < any > undefined;
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const { handleCreateRobotPreviousStep, handleCreateRobotNextStep } =
     useSidebar();
@@ -38,36 +38,32 @@ export default function CreateRobotFormStep3(): ReactElement {
 
   const { selectedState } = useSidebar();
 
-  const formik: FormikProps<IRobotBuildSteps> =
-    useFormik <
-    IRobotBuildSteps >
-    {
-      validationSchema: Yup.object().shape({
-        steps: Yup.array().of(
-          Yup.object().shape({
-            name: Yup.string()
-              .required("Step Name is required")
-              .test("unique-name", "This name is already taken", (value) => {
-                const temp = formik.values.steps.filter(
-                  (item: any) => item.name === value && item
-                );
-                return temp.length > 1 ? false : true;
-              }),
-            workspace: Yup.string().required("Workspace is required"),
-            isScriptCode: Yup.boolean().required("Code Type is required"),
-            code: Yup.string().required("Code is required"),
-          })
-        ),
-      }),
-      initialValues: robotData?.step3,
-      onSubmit: (values: any) => {
-        formik.setSubmitting(true);
-        //
-        formik.setSubmitting(false);
-        handleCreateRobotNextStep();
-      },
-    };
-
+  const formik: FormikProps<IRobotBuildSteps> = useFormik<IRobotBuildSteps>({
+    validationSchema: Yup.object().shape({
+      steps: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string()
+            .required("Step Name is required")
+            .test("unique-name", "This name is already taken", (value) => {
+              const temp = formik.values.steps.filter(
+                (item: any) => item.name === value && item
+              );
+              return temp.length > 1 ? false : true;
+            }),
+          workspace: Yup.string().required("Workspace is required"),
+          isScriptCode: Yup.boolean().required("Code Type is required"),
+          code: Yup.string().required("Code is required"),
+        })
+      ),
+    }),
+    initialValues: robotData?.step3,
+    onSubmit: (values: any) => {
+      formik.setSubmitting(true);
+      //
+      formik.setSubmitting(false);
+      handleCreateRobotNextStep();
+    },
+  });
   useEffect(() => {
     setRobotData({
       ...robotData,
