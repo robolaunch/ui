@@ -5,46 +5,98 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import { useAppDispatch } from "../../../hooks/redux";
-import UsersCell from "../../../components/Cells/UsersCell";
-import InfoCell from "../../../components/Cells/InfoCell";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import Button from "../../../components/Button/Button";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { useParams } from "react-router-dom";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import InfoCell from "../../../components/Cells/InfoCell";
+import Button from "../../../components/Button/Button";
+import { useAppDispatch } from "../../../hooks/redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { getFederatedRobots } from "../../../resources/RobotSlice";
+import useSidebar from "../../../hooks/useSidebar";
+import BasicCell from "../../../components/Cells/BasicCell";
+import {
+  handleSetterCurrentInstances,
+  handleSetterCurrentOrganization,
+  handleSetterResponseRobots,
+} from "../../../helpers/dashboardDispatcherFunctions";
 
 export default function FleetDashboardPage(): ReactElement {
-  const [reload, setReload] = React.useState(false);
-  const [responseTeams, setResponseTeams] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [responseRobots, setResponseRobots] = useState<any>(null);
+  const { selectedState, setSidebarState } = useSidebar();
+  const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const url = useParams();
 
-  useEffect(() => {
-    setLoading(true);
+  const [currentOrganization, setCurrentOrganization] = useState<any>(
+    selectedState?.organization || undefined
+  );
+  const [currentInstance, setCurrentInstance] = useState<any>(
+    selectedState?.instance || undefined
+  );
 
-    setResponseTeams([]);
-  }, [dispatch, reload]);
-
   useEffect(() => {
-    if (responseTeams?.length) {
-      setLoading(false);
+    if (!currentOrganization) {
+      handleSetterCurrentOrganization({
+        dispatch,
+        url,
+        navigate,
+        setCurrentOrganization,
+      });
+    } else if (currentOrganization && !currentInstance) {
+      handleSetterCurrentInstances({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        setCurrentInstance,
+      });
+    } else if (currentOrganization && currentInstance) {
+      handleSetterResponseRobots({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        currentInstance,
+        setResponseRobots,
+      });
     }
-  }, [responseTeams]);
+
+    const timer =
+      currentOrganization &&
+      currentInstance &&
+      setInterval(() => {
+        handleSetterResponseRobots({
+          dispatch,
+          url,
+          navigate,
+          currentOrganization,
+          currentInstance,
+          setResponseRobots,
+        });
+      }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, reload, currentOrganization, currentInstance]);
 
   const data: any = useMemo(
     () =>
-      responseTeams?.map((team: any) => {
+      responseRobots?.map((robot: any) => {
         return {
-          key: team?.name,
-          name: team,
+          key: robot?.name,
+          name: robot,
           organization: url?.organizationName,
-          users: team?.users,
+          users: robot?.users,
+          actions: robot,
         };
       }),
-    [responseTeams, url?.organizationName]
+    [responseRobots, url?.organizationName]
   );
 
   const columns: any = useMemo(
@@ -60,6 +112,7 @@ export default function FleetDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={rowData?.users?.length + " Members"}
+              titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`}
             />
           );
         },
@@ -71,33 +124,16 @@ export default function FleetDashboardPage(): ReactElement {
         filter: true,
         align: "left",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <span>{rowData.organization}</span>
-            </Fragment>
-          );
+          return <BasicCell text={rowData?.organization} />;
         },
       },
-      {
-        key: "users",
-        header: "Total Users",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return <UsersCell users={rowData?.users} />;
-        },
-      },
+
       {
         key: "actions",
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return (
-            <Fragment>
-              <button>{"Actions"}</button>
-            </Fragment>
-          );
+          return <></>;
         },
       },
     ],
@@ -107,21 +143,27 @@ export default function FleetDashboardPage(): ReactElement {
   const handleReload = () => {
     setReload(!reload);
   };
-
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
             title={url?.fleetName || ""}
-            subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-            actiontitle="If you need to create a new team or check the users in the team you
+            subtitle="From this page you can see details the robots"
+            actiontitle="If you need to create a new robot, you
             can proceed here."
             component={
               <Button
-                text="Manage RoboticsClouds"
-                className="!w-28 !h-10 !text-xs"
+                text="Create a new Robot"
+                className="!w-44 !h-10 !text-xs"
+                onClick={() => {
+                  setSidebarState((prevState: any): any => ({
+                    ...prevState,
+                    isOpen: true,
+                    isCreateMode: false,
+                    page: "robots",
+                  }));
+                }}
               />
             }
           />
@@ -139,7 +181,7 @@ export default function FleetDashboardPage(): ReactElement {
           title="Robots"
           data={data}
           columns={columns}
-          loading={loading}
+          loading={Array.isArray(responseRobots) ? false : true}
           handleReload={() => handleReload()}
         />
       </div>

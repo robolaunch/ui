@@ -2,10 +2,8 @@ import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import { getInstances } from "../../../resources/InstanceSlice";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
 import InfoCell from "../../../components/Cells/InfoCell";
@@ -13,7 +11,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
-import { toast } from "sonner";
+import {
+  handleSetterCurrentOrganization,
+  handleSetterResponseInstances,
+} from "../../../helpers/dashboardDispatcherFunctions";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -30,15 +31,32 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
   useEffect(() => {
     if (!currentOrganization) {
-      handleGetOrganizations();
+      handleSetterCurrentOrganization({
+        dispatch,
+        url,
+        navigate,
+        setCurrentOrganization,
+      });
     } else {
-      handleGetInstances();
+      handleSetterResponseInstances({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        setResponseInstances,
+      });
     }
 
     const timer =
       currentOrganization &&
       setInterval(() => {
-        handleGetInstances();
+        handleSetterResponseInstances({
+          dispatch,
+          url,
+          navigate,
+          currentOrganization,
+          setResponseInstances,
+        });
       }, 10000);
 
     return () => {
@@ -47,53 +65,6 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOrganization, url, reload]);
-
-  function handleGetOrganizations() {
-    dispatch(getOrganizations()).then((organizationsResponse: any) => {
-      if (
-        organizationsResponse?.payload?.data?.find(
-          (organization: any) =>
-            organization?.organizationName === `org_${url?.organizationName}`
-        )
-      ) {
-        setCurrentOrganization(
-          organizationsResponse?.payload?.data?.find(
-            (organization: any) =>
-              organization?.organizationName === `org_${url?.organizationName}`
-          )
-        );
-      } else {
-        toast.error(
-          "The current page does not exist or is not available to you."
-        );
-        navigate("/404");
-      }
-    });
-  }
-
-  function handleGetInstances() {
-    dispatch(
-      getInstances({
-        organizationId: currentOrganization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName,
-      })
-    ).then((responseInstances: any) => {
-      if (
-        Array.isArray(responseInstances?.payload?.data) &&
-        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-      ) {
-        setResponseInstances(
-          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-        );
-      } else {
-        toast.error(
-          "The current page does not exist or is not available to you."
-        );
-        navigate("/404");
-      }
-    });
-  }
 
   const data: any = useMemo(
     () =>

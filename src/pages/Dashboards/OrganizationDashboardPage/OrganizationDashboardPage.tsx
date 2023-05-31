@@ -5,11 +5,13 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import {
+  handleSetterCurrentOrganization,
+  handleSetterResponseRoboticsCloud,
+} from "../../../helpers/dashboardDispatcherFunctions";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { getRoboticsCloudsOfOrganization } from "../../../resources/RoboticsCloudSlice";
 import stringCapitalization from "../../../helpers/stringCapitalization";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
@@ -18,7 +20,6 @@ import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
-import { toast } from "sonner";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const { selectedState, setSidebarState } = useSidebar();
@@ -29,51 +30,26 @@ export default function OrganizationDashboardPage(): ReactElement {
     useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const url = useParams();
   const navigate = useNavigate();
+  const url = useParams();
 
   useEffect(() => {
     if (!currentOrganization) {
-      dispatch(getOrganizations()).then((responseOrganizations: any) => {
-        if (
-          responseOrganizations?.payload?.data?.filter(
-            (organization: any) =>
-              organization?.organizationName === `org_${url?.organizationName}`
-          )[0]
-        ) {
-          setCurrentOrganization(
-            responseOrganizations?.payload?.data?.filter(
-              (organization: any) =>
-                organization?.organizationName ===
-                `org_${url?.organizationName}`
-            )[0] || undefined
-          );
-        } else {
-          toast.error(
-            "The current page does not exist or is not available to you."
-          );
-          navigate("/404");
-        }
+      handleSetterCurrentOrganization({
+        dispatch,
+        url,
+        navigate,
+        setCurrentOrganization,
       });
     } else {
-      dispatch(
-        getRoboticsCloudsOfOrganization({
-          organizationId: currentOrganization?.organizationId,
-        })
-      ).then((response: any) => {
-        if (response?.payload?.data[0]?.roboticsClouds) {
-          setResponseRoboticsClouds(
-            response?.payload?.data[0]?.roboticsClouds || []
-          );
-        } else {
-          toast.error(
-            "The current page does not exist or is not available to you."
-          );
-          navigate("/404");
-        }
+      handleSetterResponseRoboticsCloud({
+        dispatch,
+        navigate,
+        currentOrganization,
+        setResponseRoboticsClouds,
       });
     }
-  }, [currentOrganization, dispatch, url?.organizationName, reload, navigate]);
+  }, [currentOrganization, dispatch, reload, navigate, url]);
 
   const data: any = useMemo(
     () =>

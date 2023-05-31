@@ -294,7 +294,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
       payload.setUint16(1, 8, true);
       payload.setBigUint64(3, BigInt(key), true);
       if (typeof buffer !== "undefined") {
-        channel.current!.send(buffer);
+        channel?.current!.send(buffer);
       }
     };
 

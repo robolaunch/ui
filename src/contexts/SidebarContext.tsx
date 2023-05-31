@@ -33,6 +33,10 @@ export default ({ children }: any) => {
     );
   }, [url]);
 
+  useEffect(() => {
+    console.log(selectedState);
+  }, [selectedState]);
+
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {
       case "workspacesmanager":

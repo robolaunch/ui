@@ -19,14 +19,16 @@ import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
+import {
+  handleSetterCurrentOrganization,
+  handleSetterCurrentInstances,
+  handleSetterResponseRobot,
+} from "../../helpers/dashboardDispatcherFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
-  const [ros, setRos] = useState<any>(null);
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const url = useParams();
   const { selectedState } = useSidebar();
   const [currentOrganization, setCurrentOrganization] = useState<any>(
     selectedState?.organization || undefined
@@ -34,15 +36,36 @@ export default function RobotPage(): ReactElement {
   const [currentInstance, setCurrentInstance] = useState<any>(
     selectedState?.instance || undefined
   );
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [ros, setRos] = useState<any>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const url = useParams();
 
   useEffect(() => {
     if (!currentOrganization) {
-      handleGetOrganization();
+      handleSetterCurrentOrganization({
+        dispatch,
+        url,
+        navigate,
+        setCurrentOrganization,
+      });
     } else if (!currentInstance) {
-      handleGetInstances();
+      handleSetterCurrentInstances({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        setCurrentInstance,
+      });
     } else {
-      handleGetRobot();
+      handleSetterResponseRobot({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        currentInstance,
+        setResponseRobot,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -60,13 +83,13 @@ export default function RobotPage(): ReactElement {
     });
     setRos(ros);
 
-    ros.on("connection", function () {
+    ros?.on("connection", function () {
       console.log("Connected to websocket server.");
     });
-    ros.on("error", function (error) {
-      console.log("Error connecting to websocket server: ", error);
+    ros?.on("error", function (error) {
+      console.error("Error connecting to websocket server: ", error);
     });
-    ros.on("close", function () {
+    ros?.on("close", function () {
       console.log("Connection to websocket server closed.");
     });
 
@@ -94,84 +117,6 @@ export default function RobotPage(): ReactElement {
       });
     }
   }, [ros]);
-
-  function handleGetOrganization() {
-    dispatch(getOrganizations()).then((organizationsResponse: any) => {
-      if (organizationsResponse?.payload?.success) {
-        setCurrentOrganization(
-          organizationsResponse?.payload?.data?.find(
-            (organization: any) =>
-              organization?.organizationName === `org_${url?.organizationName}`
-          ) || undefined
-        );
-      } else {
-        toast.error(
-          "You are not have this content or not authorized to view this page."
-        );
-        navigate("/404");
-      }
-    });
-  }
-
-  function handleGetInstances() {
-    dispatch(
-      getInstances({
-        organizationId: currentOrganization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName,
-      })
-    ).then((responseInstances: any) => {
-      if (
-        Array.isArray(responseInstances?.payload?.data) &&
-        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-        ) &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-      ) {
-        setCurrentInstance(
-          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-            (instance: any) => instance?.name === url?.instanceName
-          ) || undefined
-        );
-      } else {
-        toast.error(
-          "You are not have this content or not authorized to view this page."
-        );
-        navigate("/404");
-      }
-    });
-  }
-
-  function handleGetRobot() {
-    dispatch(
-      getFederatedRobot({
-        organizationId: currentOrganization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName,
-        instanceId: currentInstance?.instanceId,
-        region: currentInstance?.region,
-        fleetName: url?.fleetName,
-        robotName: url?.robotName,
-      })
-    ).then((responseRobot: any) => {
-      if (
-        Array.isArray(responseRobot?.payload?.data) &&
-        Array.isArray(responseRobot?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-        ) &&
-        Array.isArray(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-            ?.robolaunchFederatedRobots
-        ) &&
-        responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-          ?.robolaunchFederatedRobots[0]
-      )
-        setResponseRobot(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-            ?.robolaunchFederatedRobots[0]
-        );
-    });
-  }
 
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
@@ -241,7 +186,8 @@ export default function RobotPage(): ReactElement {
                 <RemoteDesktop
                   connectionURLs={{
                     rosURL: responseRobot?.bridgeIngressEndpoint,
-                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
+                    remoteDesktopURL:
+                      responseRobot?.vdiIngressEndpoint + "ws?password=admin",
                     ideURL: responseRobot?.ideIngressEndpoint,
                   }}
                 />

@@ -6,14 +6,16 @@ import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
+import { useNavigate, useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
-import { getFederatedFleets } from "../../../resources/FleetSlice";
-import { getInstances } from "../../../resources/InstanceSlice";
 import { useAppDispatch } from "../../../hooks/redux";
-import { useParams } from "react-router-dom";
-import { toast } from "sonner";
+import useSidebar from "../../../hooks/useSidebar";
+import {
+  handleSetterCurrentOrganization,
+  handleSetterCurrentInstances,
+  handleSetterResponseFleets,
+} from "../../../helpers/dashboardDispatcherFunctions";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [currentOrganization, setCurrentOrganization] =
@@ -22,22 +24,48 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const url = useParams();
 
   useEffect(() => {
     if (!currentOrganization) {
-      handleGetOrganization();
+      handleSetterCurrentOrganization({
+        dispatch,
+        url,
+        setCurrentOrganization,
+        navigate,
+      });
     } else if (currentOrganization && !currentInstance) {
-      handleGetInstances();
+      handleSetterCurrentInstances({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        setCurrentInstance,
+      });
     } else if (currentOrganization && currentInstance) {
-      handleGetFleets();
+      handleSetterResponseFleets({
+        dispatch,
+        url,
+        navigate,
+        currentOrganization,
+        currentInstance,
+        setResponseFleets,
+      });
     }
 
     const timer =
       currentOrganization &&
       currentInstance &&
       setInterval(() => {
-        handleGetFleets();
+        handleSetterResponseFleets({
+          dispatch,
+          url,
+          navigate,
+          currentOrganization,
+          currentInstance,
+          setResponseFleets,
+        });
       }, 10000);
 
     return () => {
@@ -49,77 +77,6 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   useEffect(() => {
     setResponseFleets(undefined);
   }, [url]);
-
-  function handleGetOrganization() {
-    dispatch(getOrganizations()).then((organizationsResponse: any) => {
-      if (organizationsResponse?.payload?.success) {
-        setCurrentOrganization(
-          organizationsResponse?.payload?.data?.find(
-            (organization: any) =>
-              organization?.organizationName === `org_${url?.organizationName}`
-          ) || undefined
-        );
-      } else {
-        toast.error(
-          "You are not have this content or not authorized to view this page."
-        );
-      }
-    });
-  }
-
-  function handleGetFleets() {
-    dispatch(
-      getFederatedFleets({
-        organizationId: currentOrganization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName,
-        instanceId: currentInstance?.instanceId,
-        region: currentInstance?.region,
-      })
-    ).then((responseFederatedFleets: any) => {
-      if (
-        Array.isArray(responseFederatedFleets?.payload?.data) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
-        ) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
-        ) &&
-        responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
-      ) {
-        setResponseFleets(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedFleets || []
-        );
-      } else {
-        toast.error(
-          "You are not have this content or not authorized to view this page."
-        );
-      }
-    });
-  }
-
-  function handleGetInstances() {
-    dispatch(
-      getInstances({
-        organizationId: currentOrganization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName,
-      })
-    ).then((responseInstances: any) => {
-      if (responseInstances?.payload?.success) {
-        setCurrentInstance(
-          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-            (instance: any) => instance?.name === url?.instanceName
-          ) || undefined
-        );
-      } else {
-        toast.error(
-          "You are not have this content or not authorized to view this page."
-        );
-      }
-    });
-  }
 
   const data: any = useMemo(
     () =>
@@ -148,6 +105,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={url?.organizationName as string}
+              titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${rowData?.name?.name}`}
             />
           );
         },
@@ -195,18 +153,30 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     [url, currentInstance, currentOrganization, reload]
   );
 
+  const { setSidebarState } = useSidebar();
+
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
         <div className="col-span-4">
           <InformationWidget
-            title={url?.roboticsCloudName || ""}
-            subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-            actiontitle="If you need to create a new team or check the users in the team you
-            can proceed here."
+            title={url?.instanceName || ""}
+            subtitle="From this page, you can manage your fleets and see the status of
+            your fleets."
+            actiontitle="If you want to new fleet, you can use this button."
             component={
-              <Button text="Manage Fleets" className="!w-28 !h-10 !text-xs" />
+              <Button
+                text="Create a new Fleet"
+                className="!w-40 !h-10 !text-xs"
+                onClick={() => {
+                  setSidebarState((prevState: any): any => ({
+                    ...prevState,
+                    isOpen: true,
+                    isCreateMode: false,
+                    page: "fleet",
+                  }));
+                }}
+              />
             }
           />
         </div>

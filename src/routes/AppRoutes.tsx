@@ -1,18 +1,18 @@
 import React, { ReactElement } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
-import RobotPage from "../pages/RobotPage/RobotPage";
+import PhysicalInstancesDashboardPage from "../pages/Dashboards/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
+import CloudInstanceDashboardPage from "../pages/Dashboards/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
 import RoboticsCloudDashboardPage from "../pages/Dashboards/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
+import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
+import OrganizationDashboardPage from "../pages/Dashboards/OrganizationDashboardPage/OrganizationDashboardPage";
 import FleetDashboardPage from "../pages/Dashboards/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/Dashboards/MainDashboardPage/MainDashboardPage";
-import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
-import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
-import ProfilePage from "../pages/Profile/ProfilePage";
+import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import BillingPage from "../pages/BillingPage/BillingPage";
+import { Navigate, Route, Routes } from "react-router-dom";
+import ProfilePage from "../pages/Profile/ProfilePage";
 import PrivateProvider from "../auth/PrivateProvider";
-import CloudInstanceDashboardPage from "../pages/Dashboards/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
-import PhysicalInstancesDashboardPage from "../pages/Dashboards/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
+import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
 
 export default function AppRoutes(): ReactElement {
