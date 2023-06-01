@@ -26,7 +26,7 @@ export default function InputSelect({
   return (
     <div className={`relative`}>
       <label
-        className={`absolute z-10 transition-all duration-300 text-layer-light-700 ${
+        className={`absolute z-10 transition-all duration-300 text-layer-light-700 pointer-events-none ${
           isFocused || value
             ? "text-xs left-0 -top-6"
             : "text-sm left-3 top-2.5"
