@@ -17,7 +17,7 @@ export default function CreateRobotFormStep2(): ReactElement {
     handleCreateRobotNextStep,
     setSidebarState,
   } = useSidebar();
-  const { robotData, setRobotData } = useCreateRobot();
+  const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
   const dispatch = useAppDispatch();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
@@ -49,7 +49,9 @@ export default function CreateRobotFormStep2(): ReactElement {
           region: selectedState?.instance?.region,
           robotName: robotData?.step1?.robotName,
           fleetName: selectedState?.fleet?.name,
-          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          physicalInstanceName: robotData?.step1?.isVirtualRobot
+            ? undefined
+            : robotData?.step1?.physicalInstanceName,
           distributions: robotData?.step1?.rosDistros,
           bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
           vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
@@ -85,22 +87,6 @@ export default function CreateRobotFormStep2(): ReactElement {
     // eslint-disable-next-line
   }, [formik.values]);
 
-  function handleAddWorkspace() {
-    const temp: any = [...formik.values.workspaces];
-    temp.push({
-      name: "",
-      workspaceDistro: "",
-      robotRepositories: [
-        {
-          name: "",
-          url: "",
-          branch: "",
-        },
-      ],
-    });
-    formik.setFieldValue("workspaces", temp);
-  }
-
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -121,7 +107,7 @@ export default function CreateRobotFormStep2(): ReactElement {
         )}
       </div>
       <BsPlusCircle
-        onClick={() => handleAddWorkspace()}
+        onClick={() => handleAddWorkspaceStep(formik)}
         size={22}
         className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
       />
