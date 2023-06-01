@@ -151,7 +151,8 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         },
       },
     ],
-    [currentOrganization, reload, url]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentOrganization, reload, url, responseInstances]
   );
   return (
     <div className="flex flex-col gap-8">

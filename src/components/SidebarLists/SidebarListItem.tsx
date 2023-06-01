@@ -77,7 +77,10 @@ export default function SidebarListItem({
         }
         break;
       case "fleet":
-        if (data?.fleetStatus === "Ready") {
+        if (
+          data?.fleetStatus === "Ready" &&
+          data?.physicalInstance?.length === 0
+        ) {
           if (selectedState?.fleet?.name === data?.name) {
             setSelectedState({ ...selectedState, fleet: null });
           } else {

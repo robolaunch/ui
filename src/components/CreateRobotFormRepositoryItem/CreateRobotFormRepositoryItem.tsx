@@ -14,6 +14,7 @@ import {
   getGithubUserRepositories,
 } from "../../resources/GithubSlice";
 import useGithub from "../../hooks/useGithub";
+import useCreateRobot from "../../hooks/useCreateRobot";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -34,6 +35,8 @@ export default function CreateRobotFormRepositoryItem({
   const dispatch = useAppDispatch();
 
   const github = useGithub();
+
+  const { handleRemoveRepositoryFromWorkspaceStep } = useCreateRobot();
 
   useEffect(() => {
     github?.githubAuth &&
@@ -92,15 +95,6 @@ export default function CreateRobotFormRepositoryItem({
       ].url,
     ]
   );
-
-  function handleRemoveRepository(
-    workspaceIndex: number,
-    repositoryIndex: number
-  ) {
-    const temp: any = [...formik.values.workspaces];
-    temp[workspaceIndex].repositories.splice(repositoryIndex, 1);
-    formik.setFieldValue("workspaces", temp);
-  }
 
   return (
     <Accordion
@@ -224,7 +218,11 @@ export default function CreateRobotFormRepositoryItem({
         </div>
         <span
           onClick={() => {
-            handleRemoveRepository(workspaceIndex, repositoryIndex);
+            handleRemoveRepositoryFromWorkspaceStep(
+              formik,
+              workspaceIndex,
+              repositoryIndex
+            );
           }}
           className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
         >

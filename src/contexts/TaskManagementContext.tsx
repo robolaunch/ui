@@ -27,6 +27,11 @@ export default ({ children, ros }: any) => {
       waypoints: [],
     },
   ]);
+
+  useEffect(() => {
+    console.log(missions);
+  }, [missions]);
+
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [activeMission, setActiveMission] = useState<number>(-1);
   const [hoverWaypoint, setHoverWaypoint] = useState<number>(-1);
@@ -114,6 +119,44 @@ export default ({ children, ros }: any) => {
       toast.error("Invalid file type. Please upload a JSON file.");
     }
   }
+
+  const waypointRequest = {
+    id: "STRING YADA INTEGER",
+    name: "STRING",
+    waypoints: [
+      {
+        id: "STRING YADA INTEGER",
+        name: "STRING (WAYPOINT 1)",
+        taskType: "STRING",
+      },
+      {
+        id: "STRING YADA INTEGER",
+        name: "STRING (WAYPOINT 2)",
+        taskType: "STRING",
+      },
+    ],
+  };
+
+  const waypointResponse = {
+    id: "STRING YADA INTEGER",
+    name: "STRING",
+    missionState: "STRING => `success` || `running` || `error`",
+    waypoints: [
+      {
+        id: "STRING YADA INTEGER",
+        name: "STRING (WAYPOINT 1)",
+        taskType: "STRING",
+        taskState: "STRING => `waiting` ||`success` || `running` || `error`",
+      },
+      {
+        id: "STRING YADA INTEGER",
+        name: "STRING (WAYPOINT 2)",
+        taskType: "STRING",
+        taskState: "STRING => `waiting` ||`success` || `running` || `error`",
+      },
+    ],
+  };
+
   return (
     <TaskManagementContext.Provider
       value={{

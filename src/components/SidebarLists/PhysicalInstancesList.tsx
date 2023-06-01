@@ -40,14 +40,24 @@ export default function PhysicalInstancesList({
             region: selectedState?.instance?.region,
           })
         ).then((response: any) => {
-          setResponsePhysicalInstances(
+          if (
+            Array.isArray(response?.payload?.data) &&
+            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
+            Array.isArray(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+            ) &&
             response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchPhysicalInstances || []
-          );
-          setItemCount(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchPhysicalInstances?.length || 0
-          );
+              ?.robolaunchPhysicalInstances
+          ) {
+            setResponsePhysicalInstances(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchPhysicalInstances || []
+            );
+            setItemCount(
+              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+                ?.robolaunchPhysicalInstances?.length || 0
+            );
+          }
         });
       }
     },

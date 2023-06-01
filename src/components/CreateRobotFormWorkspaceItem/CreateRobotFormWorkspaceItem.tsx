@@ -26,23 +26,11 @@ export default function CreateRobotFormWorkspaceItem({
 }: ICreateRobotFormWorkspaceItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
-  function handleAddRepository(workspaceIndex: number): void {
-    const temp: any = [...formik.values.workspaces];
-    temp[workspaceIndex].robotRepositories.push({
-      name: "",
-      url: "",
-      branch: "",
-    });
-    formik.setFieldValue("workspaces", temp);
-  }
-
-  const { robotData } = useCreateRobot();
-
-  function handleRemoveWorkspace(workspaceIndex: number) {
-    const temp: any = [...formik.values.workspaces];
-    temp.splice(workspaceIndex, 1);
-    formik.setFieldValue("workspaces", temp);
-  }
+  const {
+    robotData,
+    handleAddRepositoryToWorkspaceStep,
+    handleRemoveWorkspaceStep,
+  } = useCreateRobot();
 
   return (
     <Accordion
@@ -128,14 +116,16 @@ export default function CreateRobotFormWorkspaceItem({
             )
           )}
           <BsPlusCircle
-            onClick={() => handleAddRepository(workspaceIndex)}
+            onClick={() =>
+              handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
+            }
             size={22}
             className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer"
           />
         </div>
         <span
           onClick={() => {
-            handleRemoveWorkspace(workspaceIndex);
+            handleRemoveWorkspaceStep(formik, workspaceIndex);
           }}
           className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
         >

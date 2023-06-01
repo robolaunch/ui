@@ -8,10 +8,15 @@ import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/Create
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
-import { getFederatedRobot } from "../../resources/RobotSlice";
+import {
+  createRobotBuildManager,
+  getFederatedRobot,
+} from "../../resources/RobotSlice";
+import InputText from "../InputText/InputText";
+import InputError from "../InputError/InputError";
 
 export default function CreateRobotFormStep3(): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
+  const { robotData, setRobotData, handleAddBuildStep } = useCreateRobot();
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
@@ -28,6 +33,24 @@ export default function CreateRobotFormStep3(): ReactElement {
         getRobot();
       }, 10000);
 
+      if (responseRobot?.physicalInstance) {
+        if (
+          responseRobot?.robotClusters[0]?.robotStatus &&
+          responseRobot?.robotClusters[0]?.robotStatus === "EnvironmentReady" &&
+          responseRobot?.robotClusters[1]?.robotStatus &&
+          responseRobot?.robotClusters[1]?.robotStatus === "EnvironmentReady"
+        ) {
+          clearInterval(timer);
+        }
+      } else {
+        if (
+          responseRobot?.robotClusters[0]?.robotStatus &&
+          responseRobot?.robotClusters[0]?.robotStatus === "EnvironmentReady"
+        ) {
+          clearInterval(timer);
+        }
+      }
+
       return () => {
         clearInterval(timer);
       };
@@ -39,27 +62,51 @@ export default function CreateRobotFormStep3(): ReactElement {
   const { selectedState } = useSidebar();
 
   const formik: FormikProps<IRobotBuildSteps> = useFormik<IRobotBuildSteps>({
-    validationSchema: Yup.object().shape({
-      steps: Yup.array().of(
-        Yup.object().shape({
-          name: Yup.string()
-            .required("Step Name is required")
-            .test("unique-name", "This name is already taken", (value) => {
-              const temp = formik.values.steps.filter(
-                (item: any) => item.name === value && item
-              );
-              return temp.length > 1 ? false : true;
-            }),
-          workspace: Yup.string().required("Workspace is required"),
-          isScriptCode: Yup.boolean().required("Code Type is required"),
-          code: Yup.string().required("Code is required"),
-        })
-      ),
-    }),
+    // validationSchema: Yup.object().shape({
+    //   robotBuildSteps: Yup.array().of(
+    //     Yup.object().shape({
+    //       name: Yup.string()
+    //         .required("Step Name is required")
+    //         .test("unique-name", "This name is already taken", (value) => {
+    //           const temp = formik.values.robotBuildSteps.filter(
+    //             (item: any) => item.name === value && item
+    //           );
+    //           return temp.length > 1 ? false : true;
+    //         }),
+    //       workspace: Yup.string().required("Workspace is required"),
+    //       command: Yup.string().when("isCommandCode", {
+    //         is: true,
+    //         then: Yup.string(),
+    //         otherwise: Yup.string().required("Script is required"),
+    //       }),
+    //       script: Yup.string().when("isCommandCode", {
+    //         is: true,
+    //         then: Yup.string().required("Script is required"),
+    //         otherwise: Yup.string(),
+    //       }),
+    //     })
+    //   ),
+    // }),
     initialValues: robotData?.step3,
     onSubmit: (values: any) => {
       formik.setSubmitting(true);
-      //
+
+      dispatch(
+        createRobotBuildManager({
+          organizationId: selectedState?.organization?.organizationId,
+          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          instanceId: selectedState?.instance?.instanceId,
+          region: selectedState?.instance?.region,
+          robotName: robotData?.step1?.robotName,
+          fleetName: selectedState?.fleet?.name,
+          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          buildManagerName: values?.buildManagerName,
+          robotBuildSteps: values?.robotBuildSteps,
+        })
+      ).then((res: any) => {
+        console.log(res);
+      });
+
       formik.setSubmitting(false);
       handleCreateRobotNextStep();
     },
@@ -71,18 +118,6 @@ export default function CreateRobotFormStep3(): ReactElement {
     });
     // eslint-disable-next-line
   }, [formik.values]);
-
-  function handleAddBuildStep() {
-    formik.setFieldValue("steps", [
-      ...formik.values.steps,
-      {
-        name: "",
-        workspace: "",
-        isScriptCode: false,
-        code: "",
-      },
-    ]);
-  }
 
   function getRobot() {
     dispatch(
@@ -124,18 +159,31 @@ export default function CreateRobotFormStep3(): ReactElement {
     <Fragment>
       {(() => {
         if (
-          responseRobot?.robotClusters[0]?.robotStatus &&
-          responseRobot?.robotClusters[0]?.robotStatus === "EnvironmentReady" &&
-          responseRobot?.robotClusters[1]?.robotStatus &&
-          responseRobot?.robotClusters[1]?.robotStatus === "EnvironmentReady"
+          (responseRobot?.robotClusters[0]?.robotStatus &&
+            responseRobot?.robotClusters[0]?.robotStatus ===
+              "EnvironmentReady") ||
+          (responseRobot?.robotClusters[1]?.robotStatus &&
+            responseRobot?.robotClusters[1]?.robotStatus === "EnvironmentReady")
         ) {
           return (
             <form
               onSubmit={formik.handleSubmit}
               className="flex flex-col gap-8 animate__animated animate__fadeIn"
             >
+              <div>
+                <InputText
+                  {...formik.getFieldProps(`buildManagerName`)}
+                  placeholder="Build Manager Name"
+                  disabled={formik?.isSubmitting}
+                />
+                <InputError
+                  // @ts-ignore
+                  error={formik?.errors?.buildManagerName}
+                  touched={formik?.touched?.buildManagerName}
+                />
+              </div>
               <div className="flex flex-col gap-2">
-                {robotData?.step3?.steps?.map(
+                {robotData?.step3?.robotBuildSteps?.map(
                   (buildStep: any, buildStepIndex: number) => {
                     return (
                       <CreateRobotFormBuildStepItem
@@ -149,7 +197,7 @@ export default function CreateRobotFormStep3(): ReactElement {
                 )}
               </div>
               <BsPlusCircle
-                onClick={handleAddBuildStep}
+                onClick={() => handleAddBuildStep(formik)}
                 size={22}
                 className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
               />
