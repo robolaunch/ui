@@ -75,7 +75,7 @@ export default function RobotPage(): ReactElement {
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({
-      url: responseRobot?.bridgeIngressEndpoint,
+      url: responseRobot?.bridgeIngressEndpoint || "ws://localhost:9090",
     });
     setRos(ros);
 
