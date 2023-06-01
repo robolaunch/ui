@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import * as Yup from "yup";
 import InputToggle from "../InputToggle/InputToggle";
 import stringSlugify from "../../helpers/stringSlugify";
 import { toast } from "sonner";
@@ -17,6 +16,7 @@ import {
   getPhysicalInstances,
 } from "../../resources/InstanceSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 
 export default function CreateRobotFormStep1(): ReactElement {
   const [responsePhysicalInstances, setResponsePhysicalInstances] =
@@ -25,23 +25,7 @@ export default function CreateRobotFormStep1(): ReactElement {
   const { selectedState, handleCreateRobotNextStep } = useSidebar();
 
   const formik = useFormik({
-    validationSchema: Yup.object().shape({
-      robotName: Yup.string().required("Robot name is required"),
-      physicalInstanceName: Yup.string().when("isVirtualRobot", {
-        is: false,
-        then: Yup.string().required("Physical Instance is required"),
-        otherwise: Yup.string().notRequired(),
-      }),
-      remoteDesktop: Yup.object().shape({
-        isEnabled: Yup.boolean().notRequired(),
-        sessionCount: Yup.number().when("remoteDesktop.isEnabled", {
-          is: true,
-          then: Yup.number().required("Session Count is required"),
-          otherwise: Yup.number().notRequired(),
-        }),
-      }),
-      rosDistros: Yup.array().min(1, "At least one ROS Distro is required"),
-    }),
+    validationSchema: CreateRobotFormStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
       await formik.setSubmitting(true);
@@ -104,19 +88,25 @@ export default function CreateRobotFormStep1(): ReactElement {
   ]);
 
   function handleRosDistroFilter(item: string) {
-    if (item === "HUMBLE") {
+    if (item === "HUMBLE" || item === "IRON") {
       if (
         formik.values.rosDistros.includes("GALACTIC") ||
         formik.values.rosDistros.includes("FOXY")
       ) {
         return 1;
       }
+
+      return 0;
     } else {
-      if (formik.values.rosDistros.includes("HUMBLE")) {
+      if (
+        formik.values.rosDistros.includes("IRON") ||
+        formik.values.rosDistros.includes("HUMBLE")
+      ) {
         return 1;
       }
+
+      return 0;
     }
-    return 0;
   }
 
   return (
@@ -229,7 +219,12 @@ export default function CreateRobotFormStep1(): ReactElement {
                 )
               )}
             </div>
-            <InputError error={formik?.errors?.instance} touched={true} />
+            <InputError
+              error={
+                formik?.errors?.instance || formik.errors?.physicalInstance
+              }
+              touched={true}
+            />
           </div>
         ) : (
           <div className="relative h-8">
@@ -259,8 +254,8 @@ export default function CreateRobotFormStep1(): ReactElement {
           />
           :
         </div>
-        <div className="flex gap-6">
-          {["HUMBLE", "GALACTIC", "FOXY"]?.map(
+        <div className="flex gap-4">
+          {["IRON", "HUMBLE", "GALACTIC", "FOXY"]?.map(
             (item: string, index: number) => (
               <div
                 key={index}
@@ -270,32 +265,52 @@ export default function CreateRobotFormStep1(): ReactElement {
                     : "border-layer-light-100"
                 } transition-all duration-300`}
                 onClick={(e: any) => {
-                  if (item === "HUMBLE") {
-                    if (
-                      formik.values.rosDistros.includes("GALACTIC") ||
-                      formik.values.rosDistros.includes("FOXY")
-                    ) {
-                      toast.error(
-                        "You can't select Humble with Galactic or Foxy"
-                      );
-                      return;
-                    }
+                  if (formik.values.rosDistros.includes(item)) {
+                    return formik.setFieldValue(
+                      "rosDistros",
+                      formik.values.rosDistros.filter(
+                        (ros: string) => ros !== item
+                      )
+                    );
                   } else {
-                    if (formik.values.rosDistros.includes("HUMBLE")) {
-                      toast.error(
-                        "You can't select Galactic or Foxy with Humble"
-                      );
-                      return;
+                    if (item === "HUMBLE" || item === "IRON") {
+                      if (
+                        formik.values.rosDistros.includes("GALACTIC") ||
+                        formik.values.rosDistros.includes("FOXY")
+                      ) {
+                        return toast.error(
+                          "You can't select Humble with Galactic or Foxy"
+                        );
+                      } else {
+                        formik.setFieldValue(
+                          "rosDistros",
+                          formik.values.rosDistros.includes(item)
+                            ? formik.values.rosDistros.filter(
+                                (ros: string) => ros !== item
+                              )
+                            : [...formik.values.rosDistros, item]
+                        );
+                      }
+                    } else {
+                      if (
+                        formik.values.rosDistros.includes("IRON") ||
+                        formik.values.rosDistros.includes("HUMBLE")
+                      ) {
+                        return toast.error(
+                          "You can't select Galactic or Foxy with Humble or Iron"
+                        );
+                      } else {
+                        formik.setFieldValue(
+                          "rosDistros",
+                          formik.values.rosDistros.includes(item)
+                            ? formik.values.rosDistros.filter(
+                                (ros: string) => ros !== item
+                              )
+                            : [...formik.values.rosDistros, item]
+                        );
+                      }
                     }
                   }
-                  formik.setFieldValue(
-                    "rosDistros",
-                    formik.values.rosDistros.includes(item)
-                      ? formik.values.rosDistros.filter(
-                          (ros: string) => ros !== item
-                        )
-                      : [...formik.values.rosDistros, item]
-                  );
                 }}
               >
                 <div className="flex flex-col items-center gap-2">
@@ -307,13 +322,15 @@ export default function CreateRobotFormStep1(): ReactElement {
                       filter: `grayscale(${handleRosDistroFilter(item)})`,
                     }}
                   />
-                  <span className="text-[0.68rem] text-layer-light-700">
+                  <span className="text-[0.68rem] text-layer-light-700 text-center">
                     ROS2{" "}
                     {item === "FOXY"
-                      ? "Foxy Fitzroy"
+                      ? "Foxy"
                       : item === "HUMBLE"
-                      ? "Humble Hawksbill"
-                      : "Galactic Geochelone"}
+                      ? "Humble"
+                      : item === "GALACTIC"
+                      ? "Galactic"
+                      : item === "IRON" && "Iron"}
                   </span>
                 </div>
                 {formik.values.rosDistros.includes(item) && (
