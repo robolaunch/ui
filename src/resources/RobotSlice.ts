@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { robotApi } from "../api/api";
+import { robotApi, robotBuildManagerApi } from "../api/api";
 
 export const createFederatedRobot = createAsyncThunk(
   "robot/createFederatedRobot",
@@ -77,6 +77,37 @@ export const getFederatedRobot = createAsyncThunk(
               region: values?.region,
               robolaunchFederatedRobots: [
                 { fleetName: values?.fleetName, name: values?.robotName },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
+export const createRobotBuildManager = createAsyncThunk(
+  "robot/createRobotBuildManager",
+  async (values: any) => {
+    const response = await robotBuildManagerApi.createRobotBuildManager({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedRobots: [
+                {
+                  name: values?.robotName,
+                  fleetName: values?.fleetName,
+                  physicalInstance: values?.physicalInstanceName,
+                  buildManagerName: "test-robot-bm",
+                  robotBuildSteps: values?.robotBuildSteps,
+                },
               ],
             },
           ],
