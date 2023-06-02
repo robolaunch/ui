@@ -103,25 +103,35 @@ export default function RobotsList({
                 type="robot"
                 name={robot?.name}
                 description={
-                  <div className="flex gap-4">
-                    <StateCell
-                      state={
-                        Array.isArray(robot?.robotClusters) &&
-                        robot?.robotClusters[0]?.robotStatus ===
-                          "EnvironmentReady"
-                          ? "Ready"
-                          : robot?.robotClusters[0]?.robotStatus
-                      }
-                    />
-                    <StateCell
-                      state={
-                        Array.isArray(robot?.robotClusters) &&
-                        robot?.robotClusters[1]?.robotStatus ===
-                          "EnvironmentReady"
-                          ? "Ready"
-                          : robot?.robotClusters[1]?.robotStatus
-                      }
-                    />
+                  <div className="flex gap-2">
+                    <div className="flex gap-1.5">
+                      <span className="font-medium">VR:</span>
+                      <StateCell
+                        state={
+                          Array.isArray(robot?.robotClusters) &&
+                          robot?.robotClusters[0]?.robotStatus ===
+                            "EnvironmentReady"
+                            ? "Ready"
+                            : robot?.robotClusters[0]?.robotStatus
+                        }
+                      />
+                    </div>
+                    {Array.isArray(robot?.robotClusters) &&
+                      robot?.robotClusters.length > 1 && (
+                        <div className="flex gap-1.5">
+                          <span className="font-medium">PR:</span>
+
+                          <StateCell
+                            state={
+                              Array.isArray(robot?.robotClusters) &&
+                              robot?.robotClusters[1]?.robotStatus ===
+                                "EnvironmentReady"
+                                ? "Ready"
+                                : robot?.robotClusters[1]?.robotStatus
+                            }
+                          />
+                        </div>
+                      )}
                   </div>
                 }
                 url={`/${robot?.robotName}`}

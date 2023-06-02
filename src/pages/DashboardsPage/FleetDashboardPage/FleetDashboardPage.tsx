@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
@@ -20,6 +14,9 @@ import {
   handleSetterCurrentOrganization,
   handleSetterResponseRobots,
 } from "../../../helpers/dashboardDispatcherFunctions";
+import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
+import StateCell from "../../../components/Cells/StateCell";
+import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(null);
@@ -89,11 +86,26 @@ export default function FleetDashboardPage(): ReactElement {
           key: robot?.name,
           name: robot,
           organization: url?.organizationName,
-          users: robot?.users,
-          actions: robot,
+          virtualState: robot?.robotClusters[0]?.robotStatus || undefined,
+          physicalState: robot?.robotClusters[1]?.robotStatus || undefined,
+          robotServices: {
+            isEnabledRosBridge: robot?.bridgeEnabled,
+            isEnabledIDE: robot?.ideEnabled,
+            isEnabledVDI: robot?.vdiEnabled,
+          },
+          actions: {
+            organizationId: currentOrganization?.organizationId,
+            roboticsCloudName: url?.roboticsCloudName,
+            instanceId: currentInstance?.instanceId,
+            region: currentInstance?.region,
+            fleetName: url?.fleetName,
+            robotName: robot?.name,
+            virtualState: robot?.robotClusters[0] || undefined,
+            physicalState: robot?.robotClusters[1] || undefined,
+          },
         };
       }),
-    [responseRobots, url?.organizationName]
+    [currentInstance, currentOrganization, responseRobots, url]
   );
 
   const columns: any = useMemo(
@@ -108,7 +120,7 @@ export default function FleetDashboardPage(): ReactElement {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={rowData?.users?.length + " Members"}
+              subtitle={rowData?.name?.fleetName}
               titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`}
             />
           );
@@ -124,13 +136,55 @@ export default function FleetDashboardPage(): ReactElement {
           return <BasicCell text={rowData?.organization} />;
         },
       },
-
+      {
+        key: "robotServices",
+        header: "Robot Services",
+        sortable: true,
+        filter: true,
+        align: "left",
+        body: (rowData: any) => {
+          return (
+            <RobotServicesCell
+              data={undefined}
+              states={rowData.robotServices}
+            />
+          );
+        },
+      },
+      {
+        key: "virtualState",
+        header: "Virtual Robot State",
+        sortable: true,
+        filter: true,
+        align: "left",
+        body: (rowData: any) => {
+          return <StateCell state={rowData?.virtualState} />;
+        },
+      },
+      {
+        key: "physicalState",
+        header: "Physical Robot State",
+        sortable: true,
+        filter: true,
+        align: "left",
+        body: (rowData: any) => {
+          if (!rowData?.physicalState) {
+            return <BasicCell text="None" />;
+          }
+          return <StateCell state={rowData?.physicalState} />;
+        },
+      },
       {
         key: "actions",
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return <></>;
+          return (
+            <RobotActionCells
+              data={rowData?.actions}
+              reload={() => setReload(!reload)}
+            />
+          );
         },
       },
     ],
@@ -138,9 +192,6 @@ export default function FleetDashboardPage(): ReactElement {
     []
   );
 
-  const handleReload = () => {
-    setReload(!reload);
-  };
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">
@@ -180,7 +231,10 @@ export default function FleetDashboardPage(): ReactElement {
           data={data}
           columns={columns}
           loading={Array.isArray(responseRobots) ? false : true}
-          handleReload={() => handleReload()}
+          handleReload={() => {
+            setResponseRobots(undefined);
+            setReload(!reload);
+          }}
         />
       </div>
     </div>
