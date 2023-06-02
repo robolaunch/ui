@@ -1,7 +1,7 @@
 import React from "react";
 
 interface IStateCell {
-  state: string;
+  state: string | undefined;
   isRobolaunchState?: boolean;
 }
 
