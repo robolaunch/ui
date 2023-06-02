@@ -108,7 +108,13 @@ export const fleetSlice = createSlice({
         }
       })
       .addCase(createFederatedFleet.rejected, (_) => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong (createFederatedFleet)");
+      })
+      .addCase(getFederatedFleets.rejected, (_) => {
+        toast.error("Something went wrong (getFederatedFleets)");
+      })
+      .addCase(getFederatedFleetStatus.rejected, (_) => {
+        toast.error("Something went wrong (getFederatedFleetStatus)");
       })
       .addCase(deleteFederatedFleet.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -118,7 +124,7 @@ export const fleetSlice = createSlice({
         }
       })
       .addCase(deleteFederatedFleet.rejected, (_) => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong (deleteFederatedFleet)");
       });
   },
 });
