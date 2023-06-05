@@ -9,6 +9,7 @@ export interface ISidebarState {
     | "robot"
     | "workspacesmanager"
     | "buildsmanager"
+    | "launchsmanager"
     | undefined;
   instanceTab: "Cloud Instances" | "Physical Instances";
 }

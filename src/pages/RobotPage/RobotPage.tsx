@@ -75,7 +75,8 @@ export default function RobotPage(): ReactElement {
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({
-      url: responseRobot?.bridgeIngressEndpoint || "ws://localhost:9090",
+      // url: responseRobot?.bridgeIngressEndpoint || "ws://localhost:9090",
+      url: "ws://localhost:9090",
     });
     setRos(ros);
 
@@ -156,11 +157,6 @@ export default function RobotPage(): ReactElement {
                 <Visualization
                   ros={ros}
                   topicList={topicList}
-                  connectionURLs={{
-                    rosURL: responseRobot?.bridgeIngressEndpoint,
-                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
-                    ideURL: responseRobot?.ideIngressEndpoint,
-                  }}
                   handleForceUpdate={handleForceUpdate}
                 />
               );
@@ -169,23 +165,14 @@ export default function RobotPage(): ReactElement {
                 <Teleoperation
                   ros={ros}
                   topicList={topicList}
-                  connectionURLs={{
-                    rosURL: responseRobot?.bridgeIngressEndpoint,
-                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
-                    ideURL: responseRobot?.ideIngressEndpoint,
-                  }}
+                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
                   handleForceUpdate={handleForceUpdate}
                 />
               );
             case "Remote Desktop":
               return (
                 <RemoteDesktop
-                  connectionURLs={{
-                    rosURL: responseRobot?.bridgeIngressEndpoint,
-                    remoteDesktopURL:
-                      responseRobot?.vdiIngressEndpoint + "ws?password=admin",
-                    ideURL: responseRobot?.ideIngressEndpoint,
-                  }}
+                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
                 />
               );
             case "Settings":
@@ -193,19 +180,11 @@ export default function RobotPage(): ReactElement {
             case "Development Suite":
               return (
                 <StreamContext
-                  connectionURLs={{
-                    rosURL: responseRobot?.bridgeIngressEndpoint,
-                    remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
-                    ideURL: responseRobot?.ideIngressEndpoint,
-                  }}
+                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
                 >
                   <DevelopmentSuite
                     ros={ros}
-                    connectionURLs={{
-                      rosURL: responseRobot?.bridgeIngressEndpoint,
-                      remoteDesktopURL: responseRobot?.vdiIngressEndpoint,
-                      ideURL: responseRobot?.ideIngressEndpoint,
-                    }}
+                    ideIngressEndpoint={responseRobot?.ideIngressEndpoint}
                   />
                 </StreamContext>
               );

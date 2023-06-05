@@ -2,6 +2,7 @@ import React, { Fragment, ReactElement, useState } from "react";
 import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1";
 import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
+import CreateRobotFormStep4 from "../components/CreateForms/CreateRobotFormStep4";
 import { JSONTree } from "react-json-tree";
 import useSidebar from "../hooks/useSidebar";
 import useCreateRobot from "../hooks/useCreateRobot";
@@ -23,6 +24,8 @@ export default function CreateRobotLayout(): ReactElement {
                 return "Step 2";
               case "buildsmanager":
                 return "Step 3";
+              case "launchsmanager":
+                return "Step 4";
             }
           })()})`,
           "Preview JSON",
@@ -81,6 +84,8 @@ export default function CreateRobotLayout(): ReactElement {
               return <CreateRobotFormStep2 />;
             case "buildsmanager":
               return <CreateRobotFormStep3 />;
+            case "launchsmanager":
+              return <CreateRobotFormStep4 />;
           }
         }
       })()}

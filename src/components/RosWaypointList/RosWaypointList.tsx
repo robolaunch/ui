@@ -1,6 +1,6 @@
 import React from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import RosWaypointListItem from "../RosWaypointListItem/RosWaypointListItem";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 interface IRosWaypointList {
   setMissions: (value: any) => void;

@@ -4,17 +4,15 @@ import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
 import StreamContext from "../../../contexts/StreamContext.tsx";
 interface IRemoteDesktop {
-  connectionURLs: any;
+  vdiIngressEndpoint: any;
 }
 
 export default function RemoteDesktop({
-  connectionURLs,
+  vdiIngressEndpoint,
 }: IRemoteDesktop): ReactElement {
-  console.log("!", connectionURLs);
-
   return (
     <CardLayout>
-      <StreamContext connectionURLs={connectionURLs}>
+      <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
         <div className="grid grid-cols-12">
           <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
             <RemoteDesktopScene isControllerActive={true} />

@@ -98,6 +98,8 @@ export default function ContentLayout(): ReactElement {
         return "Robot Workspace Configuration";
       case "buildsmanager":
         return "Robot Build Configuration";
+      case "launchsmanager":
+        return "Robot Launch Configuration";
     }
 
     return stringCapitalization({
@@ -286,6 +288,7 @@ export default function ContentLayout(): ReactElement {
               case "robot":
               case "workspacesmanager":
               case "buildsmanager":
+              case "launchsmanager":
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }

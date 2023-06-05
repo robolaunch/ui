@@ -9,9 +9,9 @@ export default ({ children }: any) => {
   const url = useLocation();
 
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
-    isOpen: false,
-    isCreateMode: false,
-    page: undefined,
+    isOpen: true,
+    isCreateMode: true,
+    page: "launchsmanager",
     instanceTab: "Cloud Instances",
   });
 
@@ -76,7 +76,15 @@ export default ({ children }: any) => {
         );
         break;
       case "buildsmanager":
-        console.log("createrobot");
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "launchsmanager",
+          })
+        );
+        break;
+      case "launchsmanager":
+        console.log("launchsmanager");
         break;
     }
   }

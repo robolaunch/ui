@@ -53,6 +53,23 @@ export default ({ children }: any) => {
         },
       ],
     },
+    step4: {
+      launchManagerName: "",
+      robotLaunchSteps: [
+        {
+          workspace: "",
+          entryPointType: "custom",
+          entryPointCmd: "",
+          instancesName: [],
+          robotLmEnvs: [
+            {
+              name: "",
+              value: "",
+            },
+          ],
+        },
+      ],
+    },
   });
 
   function handleAddWorkspaceStep(formik: any) {
@@ -103,7 +120,7 @@ export default ({ children }: any) => {
     formik.setFieldValue("workspaces", temp);
   }
 
-  function handleAddBuildStep(formik: any) {
+  function handleAddStepToBuildStep(formik: any) {
     formik.setFieldValue("robotBuildSteps", [
       ...formik.values.robotBuildSteps,
       {
@@ -115,6 +132,58 @@ export default ({ children }: any) => {
         instancesName: [],
       },
     ]);
+  }
+
+  function handleRemoveStepFromBuildStep(formik: any, buildStepIndex: number) {
+    const temp: any = [...formik.values.robotBuildSteps];
+    temp.splice(buildStepIndex, 1);
+    formik.setFieldValue("robotBuildSteps", temp);
+  }
+
+  function handleAddStepToLaunchStep(formik: any) {
+    formik.setFieldValue("robotLaunchSteps", [
+      ...formik.values.robotLaunchSteps,
+      {
+        workspace: "",
+        entryPointType: "custom",
+        entryPointCmd: "",
+        instancesName: [],
+        robotLmEnvs: [
+          {
+            name: "",
+            value: "",
+          },
+        ],
+      },
+    ]);
+  }
+
+  function handleRemoveStepFromLaunchStep(
+    formik: any,
+    launchStepIndex: number
+  ) {
+    const temp: any = [...formik.values.robotLaunchSteps];
+    temp.splice(launchStepIndex, 1);
+    formik.setFieldValue("robotLaunchSteps", temp);
+  }
+
+  function handleAddENVToLaunchStep(formik: any, launchStepIndex: number) {
+    const temp: any = [...formik.values.robotLaunchSteps];
+    temp[launchStepIndex].robotLmEnvs.push({
+      name: "",
+      value: "",
+    });
+    formik.setFieldValue("robotLaunchSteps", temp);
+  }
+
+  function handleRemoveENVFromLaunchStep(
+    formik: any,
+    launchStepIndex: number,
+    envIndex: number
+  ) {
+    const temp: any = [...formik.values.robotLaunchSteps];
+    temp[launchStepIndex].robotLmEnvs.splice(envIndex, 1);
+    formik.setFieldValue("robotLaunchSteps", temp);
   }
 
   useEffect(() => {
@@ -130,7 +199,12 @@ export default ({ children }: any) => {
         handleRemoveWorkspaceStep,
         handleAddRepositoryToWorkspaceStep,
         handleRemoveRepositoryFromWorkspaceStep,
-        handleAddBuildStep,
+        handleAddStepToBuildStep,
+        handleRemoveStepFromBuildStep,
+        handleAddENVToLaunchStep,
+        handleRemoveENVFromLaunchStep,
+        handleAddStepToLaunchStep,
+        handleRemoveStepFromLaunchStep,
       }}
     >
       {children}

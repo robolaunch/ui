@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import getWaypointIcon from "../../helpers/GetWaypointIcon";
-import { EditText } from "react-edit-text";
 import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { Joystick } from "react-joystick-component";
+import { CgPlayButtonR } from "react-icons/cg";
+import { EditText } from "react-edit-text";
 
 interface IWaypointListItem {
   waypoint: {
@@ -24,7 +25,9 @@ export default function RosWaypointListItem({
   waypointIndex,
   missionIndex,
 }: IWaypointListItem) {
-  const { setMissions, activeMission }: any = useContext(TaskManagementContext);
+  const { setMissions, activeMission, handleStartMission }: any = useContext(
+    TaskManagementContext
+  );
   const joystickRef = useRef(null);
 
   const [joystickPosition, setJoystickPosition] = useState<{
@@ -138,6 +141,28 @@ export default function RosWaypointListItem({
             pos={joystickPosition}
           />
         </div>
+        <CgPlayButtonR
+          size={20}
+          className="cursor-pointer"
+          onClick={() => {
+            handleStartMission({
+              id: missionIndex,
+              name: waypointIndex,
+              waypoints: [
+                {
+                  coordinates: {
+                    x: waypoint?.coordinates?.x,
+                    y: waypoint?.coordinates?.y,
+                    z: waypoint?.coordinates?.z,
+                  },
+                  id: waypoint.id,
+                  name: waypoint.name,
+                  taskType: waypoint.taskType,
+                },
+              ],
+            });
+          }}
+        />
       </div>
       <button
         onClick={() => {

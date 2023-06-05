@@ -13,6 +13,8 @@ import { Editor } from "@monaco-editor/react";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import useSidebar from "../../hooks/useSidebar";
+import InfoTip from "../InfoTip/InfoTip";
+import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -29,6 +31,7 @@ export default function CreateRobotFormBuildStepItem({
 
   const { selectedState } = useSidebar();
   const { robotData } = useCreateRobot();
+  const { handleRemoveStepFromBuildStep } = useCreateRobot();
 
   return (
     <Accordion
@@ -39,8 +42,8 @@ export default function CreateRobotFormBuildStepItem({
       header={
         <span className="font-medium">
           {buildStep.name
-            ? buildStep?.name + " buildStep"
-            : `buildStep ${buildStepIndex + 1}`}
+            ? buildStep?.name + ` (Build Step #${buildStepIndex + 1})`
+            : `Build Step #${buildStepIndex + 1}`}
         </span>
       }
     >
@@ -142,15 +145,6 @@ export default function CreateRobotFormBuildStepItem({
               <option value="isScriptCode">Script Code</option>
             </Fragment>
           </InputSelect>
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.robotBuildSteps?.[buildStepIndex]?.workspace
-            }
-            touched={
-              formik?.touched?.robotBuildSteps?.[buildStepIndex]?.workspace
-            }
-          />
         </div>
         <div>
           <Editor
@@ -222,132 +216,76 @@ export default function CreateRobotFormBuildStepItem({
           />
           <InputError
             error={
-              // @ts-ignore
-              formik?.errors?.robotBuildSteps?.[buildStepIndex]?.command ||
-              // @ts-ignore
-              formik?.errors?.robotBuildSteps?.[buildStepIndex]?.script
+              formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
+                ? // @ts-ignore
+                  formik?.errors?.robotBuildSteps?.[buildStepIndex]?.command
+                : // @ts-ignore
+                  formik?.errors?.robotBuildSteps?.[buildStepIndex]?.script
             }
-            touched={
-              formik?.touched?.robotBuildSteps?.[buildStepIndex]?.command ||
-              formik?.touched?.robotBuildSteps?.[buildStepIndex]?.script
-            }
+            touched={true}
           />
         </div>
 
-        <div>
-          <div>
-            <span>Virtual Instance: </span>
-            <InputCheckbox
-              onChange={(e) => {
-                if (e.target.checked) {
-                  formik.setValues({
-                    ...formik.values,
-                    robotBuildSteps: formik.values.robotBuildSteps.map(
-                      (item: any, index: number) => {
-                        if (index === buildStepIndex) {
-                          return {
-                            ...item,
-                            instancesName: [
-                              ...item.instancesName,
-                              selectedState?.instance?.name,
-                            ],
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    ),
-                  });
-                } else {
-                  formik.setValues({
-                    ...formik.values,
-                    robotBuildSteps: formik.values.robotBuildSteps.map(
-                      (item: any, index: number) => {
-                        if (index === buildStepIndex) {
-                          return {
-                            ...item,
-                            instancesName: [
-                              ...item.instancesName.filter(
-                                (item: any) =>
-                                  item !== selectedState?.instance?.name
-                              ),
-                            ],
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    ),
-                  });
+        <CreateRobotFormCodeScope
+          virtualInstanceOnChange={(e) => {
+            formik.setValues((prevValues) => ({
+              ...prevValues,
+              robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
+                if (index === buildStepIndex) {
+                  return {
+                    ...item,
+                    instancesName: e.target.checked
+                      ? [...item.instancesName, selectedState?.instance?.name]
+                      : item.instancesName.filter(
+                          (name) => name !== selectedState?.instance?.name
+                        ),
+                  };
                 }
-              }}
-            />
-          </div>
-
-          <div>
-            <span>Physical Instance: </span>
-            <InputCheckbox
-              onChange={(e) => {
-                if (e.target.checked) {
-                  formik.setValues({
-                    ...formik.values,
-                    robotBuildSteps: formik.values.robotBuildSteps.map(
-                      (item: any, index: number) => {
-                        if (index === buildStepIndex) {
-                          return {
-                            ...item,
-                            instancesName: [
-                              ...item.instancesName,
-                              robotData?.step1?.physicalInstanceName,
-                            ],
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    ),
-                  });
-                } else {
-                  formik.setValues({
-                    ...formik.values,
-                    robotBuildSteps: formik.values.robotBuildSteps.map(
-                      (item: any, index: number) => {
-                        if (index === buildStepIndex) {
-                          return {
-                            ...item,
-                            instancesName: [
-                              ...item.instancesName.filter(
-                                (item: any) =>
-                                  item !==
-                                  robotData?.step1?.physicalInstanceName
-                              ),
-                            ],
-                          };
-                        } else {
-                          return item;
-                        }
-                      }
-                    ),
-                  });
-                }
-              }}
-            />
-          </div>
-        </div>
-
-        <span
-          onClick={() => {
-            formik.setValues({
-              ...formik.values,
-              robotBuildSteps: formik.values.robotBuildSteps.filter(
-                (item: any, index: number) => index !== buildStepIndex
-              ),
-            });
+                return item;
+              }),
+            }));
           }}
-          className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-        >
-          Delete {buildStep?.name ? buildStep.name : `this`} Build Step
-        </span>
+          physicalInstanceOnChange={(e) => {
+            formik.setValues((prevValues) => ({
+              ...prevValues,
+              robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
+                if (index === buildStepIndex) {
+                  return {
+                    ...item,
+                    instancesName: e.target.checked
+                      ? [
+                          ...item.instancesName,
+                          robotData?.step1?.physicalInstanceName,
+                        ]
+                      : item.instancesName.filter(
+                          (name) =>
+                            name !== robotData?.step1?.physicalInstanceName
+                        ),
+                  };
+                }
+                return item;
+              }),
+            }));
+          }}
+          isVisiblePhysicalInstanceCheckbox={
+            robotData?.step1?.physicalInstanceName
+          }
+          error={
+            // @ts-ignore
+            formik?.errors?.robotBuildSteps?.[buildStepIndex]?.instancesName
+          }
+        />
+
+        {formik.values?.robotBuildSteps?.length > 1 && (
+          <span
+            onClick={() => {
+              handleRemoveStepFromBuildStep(formik, buildStepIndex);
+            }}
+            className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
+          >
+            Delete {buildStep?.name ? buildStep.name : `this`} Build Step
+          </span>
+        )}
       </div>
     </Accordion>
   );

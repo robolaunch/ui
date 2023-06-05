@@ -265,51 +265,31 @@ export default function CreateRobotFormStep1(): ReactElement {
                     : "border-layer-light-100"
                 } transition-all duration-300`}
                 onClick={(e: any) => {
-                  if (formik.values.rosDistros.includes(item)) {
-                    return formik.setFieldValue(
+                  const { rosDistros } = formik.values;
+
+                  if (rosDistros.includes(item)) {
+                    formik.setFieldValue(
                       "rosDistros",
-                      formik.values.rosDistros.filter(
-                        (ros: string) => ros !== item
-                      )
+                      rosDistros.filter((ros: string) => ros !== item)
+                    );
+                  } else if (
+                    (item === "HUMBLE" || item === "IRON") &&
+                    (rosDistros.includes("GALACTIC") ||
+                      rosDistros.includes("FOXY"))
+                  ) {
+                    toast.error(
+                      "You can't select Humble with Galactic or Foxy"
+                    );
+                  } else if (
+                    (item === "GALACTIC" || item === "FOXY") &&
+                    (rosDistros.includes("IRON") ||
+                      rosDistros.includes("HUMBLE"))
+                  ) {
+                    toast.error(
+                      "You can't select Galactic or Foxy with Humble or Iron"
                     );
                   } else {
-                    if (item === "HUMBLE" || item === "IRON") {
-                      if (
-                        formik.values.rosDistros.includes("GALACTIC") ||
-                        formik.values.rosDistros.includes("FOXY")
-                      ) {
-                        return toast.error(
-                          "You can't select Humble with Galactic or Foxy"
-                        );
-                      } else {
-                        formik.setFieldValue(
-                          "rosDistros",
-                          formik.values.rosDistros.includes(item)
-                            ? formik.values.rosDistros.filter(
-                                (ros: string) => ros !== item
-                              )
-                            : [...formik.values.rosDistros, item]
-                        );
-                      }
-                    } else {
-                      if (
-                        formik.values.rosDistros.includes("IRON") ||
-                        formik.values.rosDistros.includes("HUMBLE")
-                      ) {
-                        return toast.error(
-                          "You can't select Galactic or Foxy with Humble or Iron"
-                        );
-                      } else {
-                        formik.setFieldValue(
-                          "rosDistros",
-                          formik.values.rosDistros.includes(item)
-                            ? formik.values.rosDistros.filter(
-                                (ros: string) => ros !== item
-                              )
-                            : [...formik.values.rosDistros, item]
-                        );
-                      }
-                    }
+                    formik.setFieldValue("rosDistros", [...rosDistros, item]);
                   }
                 }}
               >
