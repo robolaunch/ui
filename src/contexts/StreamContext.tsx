@@ -7,12 +7,12 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 export const StreamContext: any = createContext<any>(null);
 
 interface IStreamContext {
-  connectionURLs: any;
+  vdiIngressEndpoint: string;
   children: any;
 }
 
 // eslint-disable-next-line
-export default ({ connectionURLs, children }: IStreamContext) => {
+export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
   const candidate = useRef<any>(null);
@@ -150,7 +150,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
       }
     };
 
-    client.current = new WebSocket(connectionURLs.remoteDesktopURL || "");
+    client.current = new WebSocket(vdiIngressEndpoint || "");
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);
@@ -260,10 +260,7 @@ export default ({ connectionURLs, children }: IStreamContext) => {
     return () => {
       client.current.close();
     };
-  }, [
-    connectionURLs.remoteDesktopURL,
-    keycloak?.tokenParsed?.preferred_username,
-  ]);
+  }, [vdiIngressEndpoint, keycloak?.tokenParsed?.preferred_username]);
 
   useEffect(() => {
     var buffer: ArrayBuffer;
