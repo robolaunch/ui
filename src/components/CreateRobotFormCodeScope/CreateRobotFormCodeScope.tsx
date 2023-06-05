@@ -38,7 +38,7 @@ export default function CreateRobotFormCodeScope({
         {isVisiblePhysicalInstanceCheckbox && (
           <div className="flex items-center gap-2">
             <span className="text-xs">
-              Physical Instance ({robotData?.step1?.physicalInstance?.name}
+              Physical Instance ({robotData?.step1?.physicalInstanceName}
               ):{" "}
             </span>
             <InputCheckbox

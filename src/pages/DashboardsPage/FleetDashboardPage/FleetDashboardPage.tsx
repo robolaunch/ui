@@ -6,78 +6,57 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useAppDispatch } from "../../../hooks/redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useSidebar from "../../../hooks/useSidebar";
 import BasicCell from "../../../components/Cells/BasicCell";
-import {
-  handleSetterCurrentInstances,
-  handleSetterCurrentOrganization,
-  handleSetterResponseRobots,
-} from "../../../helpers/dashboardDispatcherFunctions";
+
 import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
 import StateCell from "../../../components/Cells/StateCell";
 import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
+import useFunctions from "../../../hooks/useFunctions";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(null);
   const { selectedState, setSidebarState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const url = useParams();
 
-  const [currentOrganization, setCurrentOrganization] = useState<any>(
-    selectedState?.organization || undefined
-  );
-  const [currentInstance, setCurrentInstance] = useState<any>(
-    selectedState?.instance || undefined
-  );
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterCurrentRoboticsCloud,
+    handleSetterCurrentInstance,
+    handleSetterCurrentFleet,
+    handleSetterResponseRobots,
+  } = useFunctions();
 
   useEffect(() => {
-    if (!currentOrganization) {
-      handleSetterCurrentOrganization({
-        dispatch,
-        url,
-        navigate,
-        setCurrentOrganization,
-      });
-    } else if (currentOrganization && !currentInstance) {
-      handleSetterCurrentInstances({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        setCurrentInstance,
-      });
-    } else if (currentOrganization && currentInstance) {
-      handleSetterResponseRobots({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        currentInstance,
-        setResponseRobots,
-      });
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else if (!selectedState?.roboticsCloud) {
+      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
+    } else if (!selectedState?.instance) {
+      handleSetterCurrentInstance(url?.instanceName);
+    } else if (!selectedState?.fleet) {
+      handleSetterCurrentFleet(url?.fleetName);
+    } else {
+      handleSetterResponseRobots(setResponseRobots);
     }
 
     const timer =
-      currentOrganization &&
-      currentInstance &&
+      selectedState?.organization &&
+      selectedState?.roboticsCloud &&
+      selectedState?.instance &&
+      selectedState?.fleet &&
       setInterval(() => {
-        handleSetterResponseRobots({
-          dispatch,
-          url,
-          navigate,
-          currentOrganization,
-          currentInstance,
-          setResponseRobots,
-        });
+        handleSetterResponseRobots(setResponseRobots);
       }, 10000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [url, reload, currentOrganization, currentInstance, dispatch, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, reload, dispatch, selectedState]);
 
   const data: any = useMemo(
     () =>
@@ -94,10 +73,10 @@ export default function FleetDashboardPage(): ReactElement {
             isEnabledVDI: robot?.vdiEnabled,
           },
           actions: {
-            organizationId: currentOrganization?.organizationId,
+            organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName,
-            instanceId: currentInstance?.instanceId,
-            region: currentInstance?.region,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.instance?.region,
             fleetName: url?.fleetName,
             robotName: robot?.name,
             virtualState: robot?.robotClusters[0] || undefined,
@@ -105,7 +84,7 @@ export default function FleetDashboardPage(): ReactElement {
           },
         };
       }),
-    [currentInstance, currentOrganization, responseRobots, url]
+    [responseRobots, url, selectedState]
   );
 
   const columns: any = useMemo(

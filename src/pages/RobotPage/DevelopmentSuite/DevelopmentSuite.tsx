@@ -36,18 +36,20 @@ export default function DevelopmentSuite({
         <div className={"flex grow"}>
           <div className={"flex grow"}>
             <div className={"grow bg-darker contents"}>
-              <iframe
-                className={`h-full w-full animate__animated animate__fadeIn`}
-                src={ideIngressEndpoint}
-                title="Code Editor"
-                style={
-                  isIDEDragging
-                    ? {
-                        pointerEvents: "none",
-                      }
-                    : {}
-                }
-              />
+              {ideIngressEndpoint && (
+                <iframe
+                  className={`h-full w-full animate__animated animate__fadeIn`}
+                  src={ideIngressEndpoint}
+                  title="Code Editor"
+                  style={
+                    isIDEDragging
+                      ? {
+                          pointerEvents: "none",
+                        }
+                      : {}
+                  }
+                />
+              )}
             </div>
             <SampleSplitter isDragging={isIDEDragging} {...ideDragBarProps} />
             <div

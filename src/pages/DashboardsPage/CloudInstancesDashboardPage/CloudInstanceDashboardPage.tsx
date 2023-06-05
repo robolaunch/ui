@@ -11,73 +11,47 @@ import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
-import {
-  handleSetterCurrentOrganization,
-  handleSetterCurrentInstances,
-  handleSetterResponseFleets,
-} from "../../../helpers/dashboardDispatcherFunctions";
+
+import useFunctions from "../../../hooks/useFunctions";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const { setSidebarState, selectedState } = useSidebar();
-  const [currentOrganization, setCurrentOrganization] = useState<any>(
-    selectedState?.organization || undefined
-  );
-  const [currentInstance, setCurrentInstance] = useState<any>(
-    selectedState?.instance || undefined
-  );
-  const [responseFleets, setResponseFleets] = useState<any>(
-    selectedState?.fleet || undefined
-  );
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterCurrentRoboticsCloud,
+    handleSetterCurrentInstance,
+    handleSetterResponseFleets,
+  } = useFunctions();
+  const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const url = useParams();
 
   useEffect(() => {
-    if (!currentOrganization) {
-      handleSetterCurrentOrganization({
-        dispatch,
-        url,
-        setCurrentOrganization,
-        navigate,
-      });
-    } else if (currentOrganization && !currentInstance) {
-      handleSetterCurrentInstances({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        setCurrentInstance,
-      });
-    } else if (currentOrganization && currentInstance) {
-      handleSetterResponseFleets({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        currentInstance,
-        setResponseFleets,
-      });
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else if (!selectedState?.roboticsCloud) {
+      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
+    } else if (!selectedState?.instance) {
+      handleSetterCurrentInstance(url?.instanceName);
+    } else {
+      handleSetterResponseFleets(setResponseFleets);
     }
 
     const timer =
-      currentOrganization &&
-      currentInstance &&
+      selectedState?.organization &&
+      selectedState?.roboticsCloud &&
+      selectedState?.instance &&
       setInterval(() => {
-        handleSetterResponseFleets({
-          dispatch,
-          url,
-          navigate,
-          currentOrganization,
-          currentInstance,
-          setResponseFleets,
-        });
+        handleSetterResponseFleets(setResponseFleets);
       }, 10000);
 
     return () => {
       clearInterval(timer);
     };
-  }, [url, reload, currentOrganization, currentInstance, dispatch, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url, reload, selectedState, dispatch, navigate]);
 
   useEffect(() => {
     setResponseFleets(undefined);
@@ -145,9 +119,9 @@ export default function CloudInstanceDashboardPage(): ReactElement {
             <FleetActionCells
               reload={() => setReload(!reload)}
               data={{
-                organization: currentOrganization,
+                organization: selectedState?.organization,
                 roboticsCloud: url?.roboticsCloudName,
-                instance: currentInstance,
+                instance: selectedState?.instance,
                 fleet: rowData?.actions,
               }}
             />
@@ -155,7 +129,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         },
       },
     ],
-    [url, currentInstance, currentOrganization, reload]
+    [url, selectedState, reload]
   );
 
   return (

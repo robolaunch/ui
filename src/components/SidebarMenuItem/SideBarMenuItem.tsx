@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useSidebar from "../../hooks/useSidebar";
 import useTheme from "../../hooks/useTheme";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ISideBarMenuItem {
   type: string;
@@ -9,6 +10,8 @@ interface ISideBarMenuItem {
 export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   const { theme } = useTheme();
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
+  const navigate = useNavigate();
+  const url = useParams();
 
   useEffect(() => {
     activeSwitcher();
@@ -53,6 +56,12 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   }
 
   function handleClick() {
+    if (type === "back") {
+      return navigate(
+        `/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}`.trim()
+      );
+    }
+
     if (sidebarState?.page !== type) {
       setSidebarState((prevState: any) => {
         return { ...prevState, page: type, isOpen: true };

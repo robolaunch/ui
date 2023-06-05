@@ -128,7 +128,38 @@ export default function SidebarListItem({
       </div>
       {!notSelectable && (
         <Link
-          onClick={() => setSidebarState({ ...sidebarState, isOpen: false })}
+          onClick={() => {
+            switch (type) {
+              case "organization":
+                setSelectedState({
+                  ...selectedState,
+                  organization: data,
+                  roboticsCloud: null,
+                  instance: null,
+                  fleet: null,
+                });
+                break;
+              case "roboticscloud":
+                setSelectedState({
+                  ...selectedState,
+                  roboticsCloud: data,
+                  instance: null,
+                  fleet: null,
+                });
+                break;
+              case "instance":
+                setSelectedState({
+                  ...selectedState,
+                  instance: data,
+                  fleet: null,
+                });
+                break;
+              case "fleet":
+                setSelectedState({ ...selectedState, fleet: data });
+                break;
+            }
+            setSidebarState({ ...sidebarState, isOpen: false });
+          }}
           to={url}
           className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
             selected

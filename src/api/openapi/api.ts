@@ -496,6 +496,43 @@ export interface GroupRepresentation {
 /**
  * 
  * @export
+ * @interface LogResponse
+ */
+export interface LogResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof LogResponse
+     */
+    'stepName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogResponse
+     */
+    'jobName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogResponse
+     */
+    'podName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogResponse
+     */
+    'containerName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LogResponse
+     */
+    'logs'?: string;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -1545,6 +1582,18 @@ export interface RobotBuildStep {
     'command'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof RobotBuildStep
+     */
+    'script'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RobotBuildStep
+     */
+    'isCommandCode'?: boolean;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof RobotBuildStep
      */
@@ -1671,6 +1720,12 @@ export interface RobotLaunchStep {
      * @memberof RobotLaunchStep
      */
     'workspace'?: string;
+    /**
+     * 
+     * @type {Array<RobotCluster>}
+     * @memberof RobotLaunchStep
+     */
+    'robotClusters'?: Array<RobotCluster>;
     /**
      * 
      * @type {string}
@@ -4532,11 +4587,11 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {string} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedRobotWorkspaces: async (robolaunchFederatedRobot?: RobolaunchFederatedRobot, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getFederatedRobotWorkspaces: async (body?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/getFederatedRobotWorkspaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4556,7 +4611,7 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(robolaunchFederatedRobot, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4668,12 +4723,12 @@ export const RobotApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {string} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFederatedRobotWorkspaces(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobotWorkspaces(robolaunchFederatedRobot, options);
+        async getFederatedRobotWorkspaces(body?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RobotWorkspace>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobotWorkspaces(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4752,12 +4807,12 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
-         * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+         * @param {string} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFederatedRobotWorkspaces(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: any): AxiosPromise<string> {
-            return localVarFp.getFederatedRobotWorkspaces(robolaunchFederatedRobot, options).then((request) => request(axios, basePath));
+        getFederatedRobotWorkspaces(body?: string, options?: any): AxiosPromise<Array<RobotWorkspace>> {
+            return localVarFp.getFederatedRobotWorkspaces(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4846,13 +4901,13 @@ export class RobotApi extends BaseAPI {
 
     /**
      * 
-     * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
+     * @param {string} [body] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RobotApi
      */
-    public getFederatedRobotWorkspaces(robolaunchFederatedRobot?: RobolaunchFederatedRobot, options?: AxiosRequestConfig) {
-        return RobotApiFp(this.configuration).getFederatedRobotWorkspaces(robolaunchFederatedRobot, options).then((request) => request(this.axios, this.basePath));
+    public getFederatedRobotWorkspaces(body?: string, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).getFederatedRobotWorkspaces(body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4948,6 +5003,39 @@ export const RobotBuildManagerApiAxiosParamCreator = function (configuration?: C
          */
         getRobotBuildManager: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robotBuildManager/getRobotBuildManager`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotBuildManagerLogs: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robotBuildManager/getRobotBuildManagerLogs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5114,6 +5202,16 @@ export const RobotBuildManagerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRobotBuildManagerLogs(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LogResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRobotBuildManagerLogs(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {RobolaunchFederatedRobot} [robolaunchFederatedRobot] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5178,6 +5276,15 @@ export const RobotBuildManagerApiFactory = function (configuration?: Configurati
          */
         getRobotBuildManager(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getRobotBuildManager(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotBuildManagerLogs(organization?: Organization, options?: any): AxiosPromise<Array<LogResponse>> {
+            return localVarFp.getRobotBuildManagerLogs(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5247,6 +5354,17 @@ export class RobotBuildManagerApi extends BaseAPI {
      */
     public getRobotBuildManager(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotBuildManagerApiFp(this.configuration).getRobotBuildManager(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotBuildManagerApi
+     */
+    public getRobotBuildManagerLogs(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotBuildManagerApiFp(this.configuration).getRobotBuildManagerLogs(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5356,6 +5474,72 @@ export const RobotLaunchManagerApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotLaunchManager: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robotLaunchManager/getRobotLaunchManager`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotLaunchManagers: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robotLaunchManager/getRobotLaunchManagers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -5386,6 +5570,26 @@ export const RobotLaunchManagerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRobotLaunchManager(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRobotLaunchManager(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRobotLaunchManagers(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRobotLaunchManagers(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -5413,6 +5617,24 @@ export const RobotLaunchManagerApiFactory = function (configuration?: Configurat
          */
         deleteRobotLaunchManager(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.deleteRobotLaunchManager(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotLaunchManager(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getRobotLaunchManager(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobotLaunchManagers(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getRobotLaunchManagers(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5444,6 +5666,28 @@ export class RobotLaunchManagerApi extends BaseAPI {
      */
     public deleteRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotLaunchManagerApiFp(this.configuration).deleteRobotLaunchManager(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotLaunchManagerApi
+     */
+    public getRobotLaunchManager(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotLaunchManagerApiFp(this.configuration).getRobotLaunchManager(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotLaunchManagerApi
+     */
+    public getRobotLaunchManagers(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotLaunchManagerApiFp(this.configuration).getRobotLaunchManagers(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

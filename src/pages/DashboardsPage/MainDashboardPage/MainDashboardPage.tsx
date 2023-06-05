@@ -5,22 +5,31 @@ import organizationNameViewer from "../../../helpers/organizationNameViewer";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
+import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
-import { getOrganizations } from "../../../resources/OrganizationSlice";
-import { useAppDispatch } from "../../../hooks/redux";
 
 export default function MainDashboardPage(): ReactElement {
-  const [responseOrganizations, setResponseOrganizations] = useState<any[]>();
+  const [responseOrganizations, setResponseOrganizations] = useState<
+    any[] | undefined
+  >();
+  const { handleSetterResponseOrganizations } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const { setSidebarState } = useSidebar();
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getOrganizations()).then((response: any) => {
-      setResponseOrganizations(response?.payload?.data || []);
-    });
-  }, [dispatch, reload]);
+    handleSetterResponseOrganizations(setResponseOrganizations);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const timer = setInterval(() => {
+      handleSetterResponseOrganizations(setResponseOrganizations);
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
 
   const data: any = useMemo(
     () =>
@@ -115,7 +124,7 @@ export default function MainDashboardPage(): ReactElement {
           title="Organizations"
           data={data}
           columns={columns}
-          loading={responseOrganizations?.length ? false : true}
+          loading={Array.isArray(responseOrganizations) ? false : true}
           handleReload={() => {
             setResponseOrganizations(undefined);
             setReload(!reload);

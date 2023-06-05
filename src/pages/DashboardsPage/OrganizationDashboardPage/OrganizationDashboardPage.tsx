@@ -5,56 +5,48 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import {
-  handleSetterCurrentOrganization,
-  handleSetterResponseRoboticsCloud,
-} from "../../../helpers/dashboardDispatcherFunctions";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import stringCapitalization from "../../../helpers/stringCapitalization";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
+import useFunctions from "../../../hooks/useFunctions";
 
 export default function OrganizationDashboardPage(): ReactElement {
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterResponseRoboticsClouds,
+  } = useFunctions();
   const { selectedState, setSidebarState } = useSidebar();
-  const [currentOrganization, setCurrentOrganization] = useState<any>(
-    selectedState?.organization || undefined
-  );
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const url = useParams();
 
   useEffect(() => {
-    if (!currentOrganization) {
-      handleSetterCurrentOrganization({
-        dispatch,
-        url,
-        navigate,
-        setCurrentOrganization,
-      });
-    } else {
-      handleSetterResponseRoboticsCloud({
-        dispatch,
-        navigate,
-        currentOrganization,
-        setResponseRoboticsClouds,
-      });
-    }
-  }, [currentOrganization, dispatch, reload, navigate, url]);
-
-  useEffect(() => {
-    setCurrentOrganization(selectedState?.organization || undefined);
     setResponseRoboticsClouds(undefined);
-  }, [selectedState?.organization, url]);
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else {
+      handleSetterResponseRoboticsClouds(setResponseRoboticsClouds);
+    }
+
+    const timer =
+      selectedState?.organization &&
+      setInterval(() => {
+        handleSetterResponseRoboticsClouds(setResponseRoboticsClouds);
+      }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload, url, selectedState]);
 
   const data: any = useMemo(
     () =>

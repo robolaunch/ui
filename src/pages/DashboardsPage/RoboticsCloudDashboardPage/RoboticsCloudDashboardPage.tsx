@@ -7,56 +7,39 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
 import InfoCell from "../../../components/Cells/InfoCell";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
-import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
-import {
-  handleSetterCurrentOrganization,
-  handleSetterResponseInstances,
-} from "../../../helpers/dashboardDispatcherFunctions";
-
+import useFunctions from "../../../hooks/useFunctions";
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { setSidebarState, selectedState } = useSidebar();
-  const [currentOrganization, setCurrentOrganization] = useState<any>(
-    selectedState?.organization || undefined
-  );
+
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
-  const dispatch = useAppDispatch();
   const url = useParams();
-  const navigate = useNavigate();
+
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterCurrentRoboticsCloud,
+    handleSetterResponseInstances,
+  } = useFunctions();
 
   useEffect(() => {
-    if (!currentOrganization) {
-      handleSetterCurrentOrganization({
-        dispatch,
-        url,
-        navigate,
-        setCurrentOrganization,
-      });
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else if (!selectedState?.roboticsCloud) {
+      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
     } else {
-      handleSetterResponseInstances({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        setResponseInstances,
-      });
+      handleSetterResponseInstances(setResponseInstances);
     }
 
     const timer =
-      currentOrganization &&
+      selectedState?.organization &&
+      selectedState?.roboticsCloud &&
       setInterval(() => {
-        handleSetterResponseInstances({
-          dispatch,
-          url,
-          navigate,
-          currentOrganization,
-          setResponseInstances,
-        });
+        handleSetterResponseInstances(setResponseInstances);
       }, 10000);
 
     return () => {
@@ -64,7 +47,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentOrganization, url, reload]);
+  }, [selectedState, url, reload]);
 
   const data: any = useMemo(
     () =>
@@ -140,7 +123,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             <InstanceActionCells
               data={{
                 state: rowData?.providerState,
-                organizationId: currentOrganization?.organizationId,
+                organizationId: selectedState?.organization?.organizationId,
                 roboticsCloudName: url?.roboticsCloudName,
                 instanceId: rowData?.name?.instanceId,
                 region: rowData?.name?.region,
@@ -152,7 +135,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentOrganization, reload, url, responseInstances]
+    [selectedState, reload, url, responseInstances]
   );
   return (
     <div className="flex flex-col gap-8">

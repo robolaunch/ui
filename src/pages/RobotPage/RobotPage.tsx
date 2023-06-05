@@ -1,9 +1,4 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import {
-  handleSetterCurrentOrganization,
-  handleSetterCurrentInstances,
-  handleSetterResponseRobot,
-} from "../../helpers/dashboardDispatcherFunctions";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
@@ -11,67 +6,47 @@ import TaskManagement from "./TaskManagement/TaskManagement";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
 import K8SResources from "./K8SResources/K8SResources";
-import { useAppDispatch } from "../../hooks/redux";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
 import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
   const { selectedState } = useSidebar();
-  const [currentOrganization, setCurrentOrganization] = useState<any>(
-    selectedState?.organization || undefined
-  );
-  const [currentInstance, setCurrentInstance] = useState<any>(
-    selectedState?.instance || undefined
-  );
+
   const [ros, setRos] = useState<any>(null);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const url = useParams();
 
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterCurrentRoboticsCloud,
+    handleSetterCurrentInstance,
+    handleSetterCurrentFleet,
+    handleSetterResponseRobot,
+  } = useFunctions();
+
   useEffect(() => {
-    if (!currentOrganization) {
-      handleSetterCurrentOrganization({
-        dispatch,
-        url,
-        navigate,
-        setCurrentOrganization,
-      });
-    } else if (!currentInstance) {
-      handleSetterCurrentInstances({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        setCurrentInstance,
-      });
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else if (!selectedState?.roboticsCloud) {
+      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
+    } else if (!selectedState?.instance) {
+      handleSetterCurrentInstance(url?.instanceName);
+    } else if (!selectedState?.fleet) {
+      handleSetterCurrentFleet(url?.fleetName);
     } else {
-      handleSetterResponseRobot({
-        dispatch,
-        url,
-        navigate,
-        currentOrganization,
-        currentInstance,
-        setResponseRobot,
-      });
+      handleSetterResponseRobot(url?.robotName, setResponseRobot);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    currentInstance,
-    currentOrganization,
-    dispatch,
-    url?.fleetName,
-    url?.robotName,
-    url?.roboticsCloudName,
-  ]);
+  }, [selectedState, url]);
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({

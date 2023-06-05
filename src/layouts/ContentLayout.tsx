@@ -18,7 +18,7 @@ import useSidebar from "../hooks/useSidebar";
 import { toast } from "sonner";
 import RobotBuildManagerList from "../components/SidebarLists/RobotBuildManagerList";
 import { useParams } from "react-router-dom";
-import RobotList from "../components/SidebarLists/RobotList";
+import RobotUpdateForm from "../components/SidebarLists/RobotUpdateForm";
 
 export default function ContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
@@ -207,7 +207,9 @@ export default function ContentLayout(): ReactElement {
   }
 
   return (
-    <div className="fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32]">
+    <div
+      className={`fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32] `}
+    >
       <div
         className={`flex gap-4 items-center ${
           sidebarState?.isCreateMode ? "pb-8" : " pb-4"
@@ -296,7 +298,10 @@ export default function ContentLayout(): ReactElement {
 
                 if (url?.robotName) {
                   return (
-                    <RobotList reload={reload} setItemCount={setItemCount} />
+                    <RobotUpdateForm
+                      reload={reload}
+                      setItemCount={setItemCount}
+                    />
                   );
                 }
 
@@ -333,14 +338,17 @@ export default function ContentLayout(): ReactElement {
           })()}
         </div>
       </div>
-      <Button
-        className={`${
-          sidebarState?.isCreateMode &&
-          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
-        }`}
-        text={buttonTextGenerator()}
-        onClick={() => handleCreateButton()}
-      />
+
+      {sidebarState?.page !== "robot" && !sidebarState?.isCreateMode && (
+        <Button
+          className={`${
+            sidebarState?.isCreateMode &&
+            "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
+          }`}
+          text={buttonTextGenerator()}
+          onClick={() => handleCreateButton()}
+        />
+      )}
     </div>
   );
 }

@@ -27,16 +27,11 @@ export default function Sidebar(): ReactElement {
               sidebarState?.page as string
             ) ? (
               <Fragment>
+                {url?.robotName && <SideBarMenuItem type="back" />}
                 <SideBarMenuItem type="robot" />
                 <SideBarMenuItem type="workspacesmanager" />
                 <SideBarMenuItem type="buildsmanager" />
                 <SideBarMenuItem type="launchsmanager" />
-                {url?.robotName && (
-                  <SideBarMenuItem
-                    type="
-                back"
-                  />
-                )}
               </Fragment>
             ) : (
               <Fragment>

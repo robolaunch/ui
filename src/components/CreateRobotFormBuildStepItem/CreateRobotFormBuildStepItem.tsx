@@ -11,9 +11,7 @@ import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
 import { Editor } from "@monaco-editor/react";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import useSidebar from "../../hooks/useSidebar";
-import InfoTip from "../InfoTip/InfoTip";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 
 interface ICreateRobotFormBuildStepItem {
@@ -177,41 +175,24 @@ export default function CreateRobotFormBuildStepItem({
             }}
             theme="vs-dark"
             onChange={(e: any) => {
-              if (
-                formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-              ) {
-                formik.setValues({
-                  ...formik.values,
-                  robotBuildSteps: formik.values.robotBuildSteps.map(
-                    (item: any, index: number) => {
-                      if (index === buildStepIndex) {
-                        return {
-                          ...item,
-                          command: e,
-                        };
-                      } else {
-                        return item;
-                      }
+              formik.setValues({
+                ...formik.values,
+                robotBuildSteps: formik.values.robotBuildSteps.map(
+                  (item: any, index: number) => {
+                    if (index === buildStepIndex) {
+                      return {
+                        ...item,
+                        [formik.values.robotBuildSteps[buildStepIndex]
+                          ?.isCommandCode
+                          ? "command"
+                          : "script"]: e,
+                      };
+                    } else {
+                      return item;
                     }
-                  ),
-                });
-              } else {
-                formik.setValues({
-                  ...formik.values,
-                  robotBuildSteps: formik.values.robotBuildSteps.map(
-                    (item: any, index: number) => {
-                      if (index === buildStepIndex) {
-                        return {
-                          ...item,
-                          script: e,
-                        };
-                      } else {
-                        return item;
-                      }
-                    }
-                  ),
-                });
-              }
+                  }
+                ),
+              });
             }}
           />
           <InputError
