@@ -5,6 +5,7 @@ import {
   RobotApi,
   KubernetesApi,
   RobotBuildManagerApi,
+  RobotLaunchManagerApi,
   CreateInstanceApi,
 } from "./openapi";
 
@@ -33,6 +34,13 @@ export const kubernetesApi: KubernetesApi = new KubernetesApi(
 
 export const robotBuildManagerApi: RobotBuildManagerApi =
   new RobotBuildManagerApi(
+    apiConfig,
+    process.env.REACT_APP_BACKEND_URL,
+    axiosInterceptorOpenApi
+  );
+
+export const robotLaunchManagerApi: RobotLaunchManagerApi =
+  new RobotLaunchManagerApi(
     apiConfig,
     process.env.REACT_APP_BACKEND_URL,
     axiosInterceptorOpenApi
