@@ -5,12 +5,12 @@ import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 
 interface IDevelopmentSuiteProps {
-  connectionURLs: any;
+  ideIngressEndpoint: string;
   ros: any;
 }
 
 export default function DevelopmentSuite({
-  connectionURLs,
+  ideIngressEndpoint,
   ros,
 }: IDevelopmentSuiteProps): ReactElement {
   const {
@@ -38,7 +38,7 @@ export default function DevelopmentSuite({
             <div className={"grow bg-darker contents"}>
               <iframe
                 className={`h-full w-full animate__animated animate__fadeIn`}
-                src={connectionURLs?.ideURL}
+                src={ideIngressEndpoint}
                 title="Code Editor"
                 style={
                   isIDEDragging

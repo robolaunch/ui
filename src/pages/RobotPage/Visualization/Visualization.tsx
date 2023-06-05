@@ -9,18 +9,12 @@ import ROSLIB from "roslib";
 interface IVisualization {
   ros: any;
   topicList: string[];
-  connectionURLs: {
-    rosURL: string;
-    remoteDesktopURL: string;
-    ideURL: string;
-  };
   handleForceUpdate: (page: string) => void;
 }
 
 export default function Visualization({
   ros,
   topicList,
-  connectionURLs,
   handleForceUpdate,
 }: IVisualization): ReactElement {
   const [grid, setGrid] = useState<any>();
@@ -122,7 +116,6 @@ export default function Visualization({
           topicList={topicList}
           localStoragePath={localStoragePath}
           handleRemoveWidget={handleRemoveWidget}
-          connectionURLs={connectionURLs}
         />
         {gridLayout.length === 0 && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

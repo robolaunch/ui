@@ -16,14 +16,14 @@ import ROSLIB from "roslib";
 interface ITeleoperation {
   ros: any;
   topicList: string[];
-  connectionURLs: any;
+  vdiIngressEndpoint: string;
   handleForceUpdate: (page: string) => void;
 }
 
 export default function Teleoperation({
   ros,
   topicList,
-  connectionURLs,
+  vdiIngressEndpoint,
   handleForceUpdate,
 }: ITeleoperation): ReactElement {
   const [grid, setGrid] = useState<any>();
@@ -165,10 +165,9 @@ export default function Teleoperation({
               topicList={topicList}
               localStoragePath={localStoragePath}
               handleRemoveWidget={handleRemoveWidget}
-              connectionURLs={connectionURLs}
             />
             {isRemoteDesktopStream && (
-              <StreamContext connectionURLs={connectionURLs}>
+              <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
                 <div className="absolute inset-0 -z-10">
                   <RemoteDesktopScene isControllerActive={false} />
                 </div>
