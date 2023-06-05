@@ -1,8 +1,9 @@
-import randomstring from "randomstring";
 import React, { createContext, useEffect, useState } from "react";
+import randomstring from "randomstring";
 import saveAs from "file-saver";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
+
 export const TaskManagementContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
@@ -27,10 +28,6 @@ export default ({ children, ros }: any) => {
       waypoints: [],
     },
   ]);
-
-  useEffect(() => {
-    console.log(missions);
-  }, [missions]);
 
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [activeMission, setActiveMission] = useState<number>(-1);
@@ -58,17 +55,6 @@ export default ({ children, ros }: any) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  function handleStartWaypoint() {
-    rosWaypointsWeb.publish({
-      data: `stringdata`,
-    });
-  }
-  function handleStartMission() {
-    rosWaypointsWeb.publish({
-      data: `stringdata`,
-    });
-  }
 
   function handleAddMissions() {
     let temp = [...missions];
@@ -120,42 +106,60 @@ export default ({ children, ros }: any) => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const waypointRequest = {
-    id: "STRING YADA INTEGER",
+    id: "STRING OR INTEGER",
     name: "STRING",
     waypoints: [
       {
-        id: "STRING YADA INTEGER",
-        name: "STRING (WAYPOINT 1)",
+        id: "STRING OR INTEGER",
+        name: "STRING (WAYPOINT #1)",
         taskType: "STRING",
       },
       {
-        id: "STRING YADA INTEGER",
-        name: "STRING (WAYPOINT 2)",
+        id: "STRING OR INTEGER",
+        name: "STRING (WAYPOINT #2)",
         taskType: "STRING",
       },
     ],
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const waypointResponse = {
-    id: "STRING YADA INTEGER",
+    id: "STRING OR INTEGER",
     name: "STRING",
-    missionState: "STRING => `success` || `running` || `error`",
+    missionState: "STRING => `success` | `running` | `error` ",
     waypoints: [
       {
-        id: "STRING YADA INTEGER",
+        coordinates: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        id: "STRING OR INTEGER",
         name: "STRING (WAYPOINT 1)",
         taskType: "STRING",
-        taskState: "STRING => `waiting` ||`success` || `running` || `error`",
+        taskState: "STRING => `waiting` | `success` | `running` | `error` ",
       },
       {
-        id: "STRING YADA INTEGER",
+        coordinates: {
+          x: 0,
+          y: 0,
+          z: 0,
+        },
+        id: "STRING OR INTEGER",
         name: "STRING (WAYPOINT 2)",
         taskType: "STRING",
         taskState: "STRING => `waiting` ||`success` || `running` || `error`",
       },
     ],
   };
+
+  function handleStartMission(mission: any) {
+    rosWaypointsWeb.publish({
+      data: JSON.stringify(mission),
+    });
+  }
 
   return (
     <TaskManagementContext.Provider
@@ -180,7 +184,6 @@ export default ({ children, ros }: any) => {
         handleImportJSON,
         handleAddMissions,
         handleAddWaypointToMission,
-        handleStartWaypoint,
         handleStartMission,
       }}
     >
