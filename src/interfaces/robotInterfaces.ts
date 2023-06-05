@@ -2,6 +2,7 @@ export interface IRobotData {
   step1: any;
   step2: IRobotWorkspaces;
   step3: IRobotBuildSteps;
+  step4: any;
 }
 
 export interface IRobotWorkspaces {
@@ -33,6 +34,24 @@ export interface IRobotBuildStep {
   instancesName: any[];
 }
 
+export interface IRobotLaunchSteps {
+  launchManagerName: string;
+  robotLaunchSteps: IRobotLaunchStep[];
+}
+
+export interface IRobotLaunchStep {
+  workspace: string;
+  entryPointType: string;
+  entryPointCmd: string;
+  instancesName: any[];
+  robotLmEnvs: IRobotLaunchENV[];
+}
+
+export interface IRobotLaunchENV {
+  name: string;
+  value: string;
+}
+
 export interface IuseCreateRobot {
   robotData: IRobotData;
   setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
@@ -47,5 +66,17 @@ export interface IuseCreateRobot {
     workspaceIndex: number,
     repositoryIndex: number
   ) => void;
-  handleAddBuildStep: (formik: any) => void;
+  handleAddStepToBuildStep: (formik: any) => void;
+  handleRemoveStepFromBuildStep: (formik: any, buildStepIndex: number) => void;
+  handleAddENVToLaunchStep: (formik: any, launchStepIndex: number) => void;
+  handleRemoveENVFromLaunchStep: (
+    formik: any,
+    launchStepIndex: number,
+    envIndex: number
+  ) => void;
+  handleAddStepToLaunchStep: (formik: any) => void;
+  handleRemoveStepFromLaunchStep: (
+    formik: any,
+    launchStepIndex: number
+  ) => void;
 }
