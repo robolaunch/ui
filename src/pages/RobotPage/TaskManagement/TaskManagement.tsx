@@ -6,28 +6,29 @@ import React, {
   useRef,
   useState,
 } from "react";
-import CardLayout from "../../../layouts/CardLayout";
+import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
+import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
+import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
+import RosMapImportExport from "../../../components/RosMapImportExport/RosMapImportExport";
+import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
+import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
+import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
+import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
+import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
+import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import ROSLIB from "roslib";
-import { BsPlusCircle } from "react-icons/bs";
 import InputToggle from "../../../components/InputToggle/InputToggle";
 import Accordion from "../../../components/Accordion/Accordion";
-import { useContextMenu } from "react-contexify";
-import "react-contexify/dist/ReactContexify.css";
-import useMouse from "@react-hook/mouse-position";
-import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
-import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
-import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
-
 import GridLines from "../../../components/GridLines/GridLines";
-import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
-import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
-import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
-import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
-import RosControlBar from "../../../components/RosControlBar/RosControlBar";
-import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
+import CardLayout from "../../../layouts/CardLayout";
+import useMouse from "@react-hook/mouse-position";
+import "react-contexify/dist/ReactContexify.css";
+import { useContextMenu } from "react-contexify";
+import { CgPlayButtonR } from "react-icons/cg";
+import { BsPlusCircle } from "react-icons/bs";
 import { EditText } from "react-edit-text";
-import RosMapImportExport from "../../../components/RosMapImportExport/RosMapImportExport";
+import ROSLIB from "roslib";
+
 interface ITask {
   ros: any;
 }
@@ -48,6 +49,7 @@ export default function Task({ ros }: ITask): ReactElement {
     setRightClickRosMapCoordinates,
     handleAddMissions,
     handleAddWaypointToMission,
+    handleStartMission,
   }: any = useContext(TaskManagementContext);
   const [isGrabbingMap, setIsGrabbingMap] = useState<boolean>(false);
   const mouseRef = useRef<any>(null);
@@ -135,6 +137,17 @@ export default function Task({ ros }: ITask): ReactElement {
                                   !temp[missionIndex].active;
                                 return temp;
                               });
+                            }}
+                          />
+                          <CgPlayButtonR
+                            size={20}
+                            className="cursor-pointer"
+                            onClick={() => {
+                              const missionScope = mission;
+
+                              delete missionScope.active;
+
+                              handleStartMission(missionScope);
                             }}
                           />
                         </div>
