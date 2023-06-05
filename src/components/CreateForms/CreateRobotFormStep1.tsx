@@ -17,18 +17,89 @@ import {
 } from "../../resources/InstanceSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  createFederatedRobot,
+  getFederatedRobot,
+} from "../../resources/RobotSlice";
 
-export default function CreateRobotFormStep1(): ReactElement {
+interface ICreateRobotFormStep1 {
+  isImportRobot?: boolean;
+}
+
+export default function CreateRobotFormStep1({
+  isImportRobot,
+}: ICreateRobotFormStep1): ReactElement {
   const [responsePhysicalInstances, setResponsePhysicalInstances] =
     useState<any>(undefined);
   const { robotData, setRobotData }: any = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useSidebar();
+  const navigate = useNavigate();
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const url = useParams();
+
+  useEffect(() => {
+    if (isImportRobot && !responseRobot) {
+      dispatch(
+        getFederatedRobot({
+          organizationId: selectedState?.organization?.organizationId,
+          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          instanceId: selectedState?.instance?.instanceId,
+          region: selectedState?.instance?.region,
+          fleetName: selectedState?.fleet?.name,
+          robotName: url?.robotName,
+        })
+      ).then((response: any) => {
+        setResponseRobot(
+          response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+            ?.robolaunchFederatedRobots[0]
+        );
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseRobot]);
 
   const formik = useFormik({
     validationSchema: CreateRobotFormStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
-      await formik.setSubmitting(true);
+      formik.setSubmitting(true);
+
+      if (isImportRobot) {
+        dispatch(
+          createFederatedRobot({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.instance?.region,
+            fleetName: selectedState?.fleet?.name,
+            robotName: formik.values?.robotName,
+            physicalInstanceName: formik.values?.physicalInstanceName,
+            distributions: formik.values?.rosDistros,
+            bridgeEnabled: formik.values?.isEnabledROS2Bridge,
+            vdiEnabled: formik.values?.remoteDesktop?.isEnabled,
+            vdiSessionCount: formik.values?.remoteDesktop?.sessionCount,
+            ideEnabled: formik.values?.isEnabledIde,
+            storageAmount: formik.values?.robotStorage,
+            gpuEnabledForCloudInstance:
+              formik.values?.gpuEnabledForCloudInstance,
+            robotWorkspaces: responseRobot?.robotWorkspaces,
+          })
+        ).then((res: any) => {
+          toast.success(
+            "Robot updated successfully. Redirecting to fleet page..."
+          );
+
+          setTimeout(() => {
+            navigate(
+              `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
+            );
+          }, 2000);
+        });
+
+        return;
+      }
+
       if (!formik.values?.isVirtualRobot) {
         await dispatch(
           addPhysicalInstanceToFleet({
@@ -42,8 +113,9 @@ export default function CreateRobotFormStep1(): ReactElement {
           })
         );
       }
-      await formik.setSubmitting(false);
-      await handleCreateRobotNextStep();
+      formik.setSubmitting(false);
+
+      handleCreateRobotNextStep();
     },
   });
   const dispatch = useAppDispatch();
@@ -123,6 +195,7 @@ export default function CreateRobotFormStep1(): ReactElement {
         <InputText
           {...formik.getFieldProps("robotName")}
           className="!text-sm"
+          disabled={formik.isSubmitting || isImportRobot}
         />
         <InputError
           error={formik.errors.robotName}
@@ -132,6 +205,7 @@ export default function CreateRobotFormStep1(): ReactElement {
       {/* RobotName */}
 
       {/* RobotType */}
+
       <div className="flex flex-col gap-1.5">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
@@ -145,10 +219,12 @@ export default function CreateRobotFormStep1(): ReactElement {
             {
               name: "Virtual Robot",
               isVirtualRobot: true,
+              disabled: isImportRobot,
             },
             {
               name: "Hybrid Robot",
               isVirtualRobot: false,
+              disabled: isImportRobot,
             },
           ]?.map((robotType: any, index: number) => (
             <div
@@ -160,10 +236,12 @@ export default function CreateRobotFormStep1(): ReactElement {
               } transition-all duration-300
                `}
               onClick={() => {
-                formik.setFieldValue(
-                  "isVirtualRobot",
-                  robotType?.isVirtualRobot
-                );
+                robotType?.disabled
+                  ? toast.error("You can't change robot type in update mode")
+                  : formik.setFieldValue(
+                      "isVirtualRobot",
+                      robotType?.isVirtualRobot
+                    );
               }}
             >
               <div className="flex flex-col items-center gap-2">
@@ -177,6 +255,7 @@ export default function CreateRobotFormStep1(): ReactElement {
         </div>
         <InputError error={formik?.errors?.instance} touched={true} />
       </div>
+
       {/* RobotType */}
 
       {/* PhysicalInstance */}
@@ -203,10 +282,14 @@ export default function CreateRobotFormStep1(): ReactElement {
                     } transition-all duration-300
                `}
                     onClick={() => {
-                      formik.setFieldValue(
-                        "physicalInstanceName",
-                        instance?.name
-                      );
+                      isImportRobot
+                        ? toast.error(
+                            "You can't change physical instance in update mode"
+                          )
+                        : formik.setFieldValue(
+                            "physicalInstanceName",
+                            instance?.name
+                          );
                     }}
                   >
                     <div className="flex flex-col items-center gap-2">
@@ -265,6 +348,12 @@ export default function CreateRobotFormStep1(): ReactElement {
                     : "border-layer-light-100"
                 } transition-all duration-300`}
                 onClick={(e: any) => {
+                  if (isImportRobot) {
+                    return toast.error(
+                      "You can't change ros distro in update mode"
+                    );
+                  }
+
                   const { rosDistros } = formik.values;
 
                   if (rosDistros.includes(item)) {
@@ -354,6 +443,7 @@ export default function CreateRobotFormStep1(): ReactElement {
               color: "#AC2DFE",
               accentColor: "currentcolor",
             }}
+            disabled={formik.isSubmitting || isImportRobot}
           />
         </div>
         {/* Robot Storage */}
@@ -451,6 +541,7 @@ export default function CreateRobotFormStep1(): ReactElement {
                 color: "#AC2DFE",
                 accentColor: "currentcolor",
               }}
+              disabled={formik.isSubmitting || isImportRobot}
             />
           </div>
         )}
@@ -470,6 +561,7 @@ export default function CreateRobotFormStep1(): ReactElement {
             onChange={(e: any) => {
               formik.setFieldValue("gpuEnabledForCloudInstance", e);
             }}
+            disabled={formik.isSubmitting || isImportRobot}
           />
         </div>
         {/* GPU Resource */}
@@ -493,6 +585,7 @@ export default function CreateRobotFormStep1(): ReactElement {
             onChange={(e: any) => {
               formik.setFieldValue("isDevelopmentMode", e);
             }}
+            disabled={formik.isSubmitting || isImportRobot}
           />
         </div>
         {/* Development Mode */}

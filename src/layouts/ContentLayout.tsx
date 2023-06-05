@@ -16,12 +16,16 @@ import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import useSidebar from "../hooks/useSidebar";
 import { toast } from "sonner";
+import RobotBuildManagerList from "../components/SidebarLists/RobotBuildManagerList";
+import { useParams } from "react-router-dom";
+import RobotList from "../components/SidebarLists/RobotList";
 
 export default function ContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const url = useParams();
 
   useEffect(() => {
     setItemCount(0);
@@ -286,15 +290,45 @@ export default function ContentLayout(): ReactElement {
                   <FleetsList reload={reload} setItemCount={setItemCount} />
                 );
               case "robot":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateRobotLayout />;
+                }
+
+                if (url?.robotName) {
+                  return (
+                    <RobotList reload={reload} setItemCount={setItemCount} />
+                  );
+                }
+
+                return (
+                  <RobotsList reload={reload} setItemCount={setItemCount} />
+                );
               case "workspacesmanager":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateRobotLayout />;
+                }
+
+                return (
+                  <OrganizationsList
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                );
               case "buildsmanager":
+                if (sidebarState?.isCreateMode) {
+                  return <CreateRobotLayout />;
+                }
+
+                return (
+                  <RobotBuildManagerList
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                );
               case "launchsmanager":
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-                return (
-                  <RobotsList reload={reload} setItemCount={setItemCount} />
-                );
             }
           })()}
         </div>

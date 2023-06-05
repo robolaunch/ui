@@ -21,18 +21,22 @@ export default function Sidebar(): ReactElement {
         </Link>
         <div className="h-full flex flex-col justify-between">
           <div className="flex flex-col gap-4 ">
-            {(sidebarState?.isCreateMode || url?.robotName) &&
-            [
-              "robot",
-              "workspacesmanager",
-              "buildsmanager",
-              "launchsmanager",
-            ].includes(sidebarState?.page as string) ? (
+            {sidebarState?.isCreateMode ||
+            url?.robotName ||
+            ["workspacesmanager", "buildsmanager", "launchsmanager"].includes(
+              sidebarState?.page as string
+            ) ? (
               <Fragment>
                 <SideBarMenuItem type="robot" />
                 <SideBarMenuItem type="workspacesmanager" />
                 <SideBarMenuItem type="buildsmanager" />
                 <SideBarMenuItem type="launchsmanager" />
+                {url?.robotName && (
+                  <SideBarMenuItem
+                    type="
+                back"
+                  />
+                )}
               </Fragment>
             ) : (
               <Fragment>

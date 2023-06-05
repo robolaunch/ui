@@ -14,6 +14,8 @@ import {
 import { BsPlusCircle } from "react-icons/bs";
 import Button from "../Button/Button";
 import { MdVerified } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function CreateRobotFormStep4(): ReactElement {
   const { robotData, setRobotData, handleAddStepToLaunchStep } =
@@ -22,6 +24,7 @@ export default function CreateRobotFormStep4(): ReactElement {
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
+  const navigate = useNavigate();
 
   const formik: FormikProps<IRobotLaunchSteps> = useFormik<IRobotLaunchSteps>({
     initialValues: robotData?.step4,
@@ -40,7 +43,16 @@ export default function CreateRobotFormStep4(): ReactElement {
           launchManagerName: values?.launchManagerName,
           robotLaunchSteps: values?.robotLaunchSteps,
         })
-      );
+      ).then((responseRobotLaunchManager: any) => {
+        toast.success(
+          "Robot Launch Manager created successfully. Redirecting to robot page..."
+        );
+        setTimeout(() => {
+          navigate(
+            `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
+          );
+        }, 1000);
+      });
     },
   });
 

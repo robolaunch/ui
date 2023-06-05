@@ -10,7 +10,13 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedRobot } from "../../resources/RobotSlice";
 
-export default function CreateRobotFormStep2(): ReactElement {
+interface ICreateRobotFormStep2 {
+  isImportRobot?: boolean;
+}
+
+export default function CreateRobotFormStep2({
+  isImportRobot,
+}: ICreateRobotFormStep2): ReactElement {
   const {
     selectedState,
     handleCreateRobotPreviousStep,

@@ -47,7 +47,7 @@ export default function InputText({
         type={type || "text"}
         name={name}
         value={value}
-        onFocus={() => setIsFocused(true)}
+        onFocus={() => !disabled && setIsFocused(true)}
         onChange={onChange}
         onBlur={(e) => {
           onBlur && onBlur(e);

@@ -11,6 +11,7 @@ interface IInputToggle {
   icons?: any;
   color?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 export default function InputToggle({
@@ -22,6 +23,7 @@ export default function InputToggle({
   icons,
   color,
   className,
+  disabled,
 }: IInputToggle): ReactElement {
   return (
     <div
@@ -37,6 +39,7 @@ export default function InputToggle({
           icons={icons}
           onChange={(e) => onChange(e.target.checked)}
           checked={checked || false}
+          disabled={disabled}
         />
         {rightLabel && <span>{rightLabel}</span>}
       </div>

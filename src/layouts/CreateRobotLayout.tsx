@@ -3,18 +3,18 @@ import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1
 import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
 import CreateRobotFormStep4 from "../components/CreateForms/CreateRobotFormStep4";
-import { JSONTree } from "react-json-tree";
-import useSidebar from "../hooks/useSidebar";
 import useCreateRobot from "../hooks/useCreateRobot";
+import useSidebar from "../hooks/useSidebar";
+import { JSONTree } from "react-json-tree";
 
 export default function CreateRobotLayout(): ReactElement {
-  const { sidebarState } = useSidebar();
-  const { robotData } = useCreateRobot();
   const [isShowPreview, setIsShowPreview] = useState<boolean>(false);
+  const { robotData } = useCreateRobot();
+  const { sidebarState } = useSidebar();
 
   return (
     <Fragment>
-      <ul className="h-10 w-full flex items-center ">
+      <ul className="h-10 w-full flex items-center">
         {[
           `Create Form (${(() => {
             switch (sidebarState?.page) {

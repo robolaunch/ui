@@ -53,24 +53,14 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   }
 
   function handleClick() {
-    if (
-      (type === "robot" && sidebarState?.page === "robot") ||
-      sidebarState?.page === "buildsmanager" ||
-      sidebarState?.page === "launchsmanager"
-    ) {
+    if (sidebarState?.page !== type) {
       setSidebarState((prevState: any) => {
-        return { ...prevState, isOpen: false };
+        return { ...prevState, page: type, isOpen: true };
       });
     } else {
-      if (sidebarState?.page !== type) {
-        setSidebarState((prevState: any) => {
-          return { ...prevState, page: type, isOpen: true };
-        });
-      } else {
-        setSidebarState((prevState: any) => {
-          return { ...prevState, page: undefined, isOpen: false };
-        });
-      }
+      setSidebarState((prevState: any) => {
+        return { ...prevState, page: undefined, isOpen: false };
+      });
     }
   }
 

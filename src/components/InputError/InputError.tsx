@@ -12,8 +12,8 @@ export default function InputError({
   return (
     <div className="w-full font-light text-xs text-center pt-1 h-2">
       {touched && error && (
-        <span className="text-[0.7rem] font-medium text-red-500 italic">
-          {error}
+        <span className="text-[0.64rem] font-medium text-red-500 italic">
+          * {error}
         </span>
       )}
     </div>
