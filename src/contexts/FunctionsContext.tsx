@@ -9,7 +9,7 @@ import { getFederatedRobot, getFederatedRobots } from "../resources/RobotSlice";
 import { getFederatedFleets } from "../resources/FleetSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
 
-export const FunctionalContext: any = createContext<any>(null);
+export const FunctionsContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
@@ -230,7 +230,7 @@ export default ({ children }: any) => {
   }
 
   return (
-    <FunctionalContext.Provider
+    <FunctionsContext.Provider
       value={{
         handleSetterCurrentOrganization,
         handleSetterCurrentRoboticsCloud,
@@ -245,6 +245,6 @@ export default ({ children }: any) => {
       }}
     >
       {children}
-    </FunctionalContext.Provider>
+    </FunctionsContext.Provider>
   );
 };

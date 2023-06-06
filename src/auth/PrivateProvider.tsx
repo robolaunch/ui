@@ -5,7 +5,7 @@ import CreateRobotContext from "../contexts/CreateRobotContext";
 import keycloak from "../api/keycloak";
 import PrivateLayout from "../layouts/PrivateLayout";
 import SidebarContext from "../contexts/SidebarContext";
-import FunctionalContext from "../contexts/FunctionalContext";
+import FunctionsContext from "../contexts/FunctionsContext";
 
 export default function PrivateProvider(): ReactElement {
   const loadingPage = (
@@ -41,9 +41,9 @@ export default function PrivateProvider(): ReactElement {
       <SidebarContext>
         <GithubContext>
           <CreateRobotContext>
-            <FunctionalContext>
+            <FunctionsContext>
               <PrivateLayout />
-            </FunctionalContext>
+            </FunctionsContext>
           </CreateRobotContext>
         </GithubContext>
       </SidebarContext>

@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { FunctionalContext } from "../contexts/FunctionalContext";
+import { FunctionsContext } from "../contexts/FunctionsContext";
 import { IuseFunctions } from "../interfaces/useFunctionsInterfaces";
 
 const useFunctions = () => {
-  const functions: IuseFunctions = useContext(FunctionalContext);
+  const functions: IuseFunctions = useContext(FunctionsContext);
 
   return functions;
 };

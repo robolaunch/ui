@@ -61,7 +61,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "node pre-start.js && react-scripts start",
+    "start": "react-scripts start",
     "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
     "build": "react-scripts build",
     "test": "react-scripts test",

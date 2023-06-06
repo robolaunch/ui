@@ -47,7 +47,7 @@ export default function Sidebar(): ReactElement {
         <div className="flex flex-col gap-2">
           <SidebarStaticItem
             to="/billing"
-            imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
+            imgSrc={`/svg/general/billing/billing-gray.svg`}
           />
           <SidebarStaticItem
             to="/marketplace"
