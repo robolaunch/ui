@@ -6,53 +6,57 @@ import TaskManagement from "./TaskManagement/TaskManagement";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
 import K8SResources from "./K8SResources/K8SResources";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
-import useSidebar from "../../hooks/useSidebar";
+// import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
-import useFunctions from "../../hooks/useFunctions";
+import { useAppSelector } from "../../hooks/redux";
+// import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
-  const { selectedState } = useSidebar();
+  // const { selectedState } = useSidebar();
 
   const [ros, setRos] = useState<any>(null);
-  const url = useParams();
+  // const url = useParams();
 
-  const {
-    handleSetterCurrentOrganization,
-    handleSetterCurrentRoboticsCloud,
-    handleSetterCurrentInstance,
-    handleSetterCurrentFleet,
-    handleSetterResponseRobot,
-  } = useFunctions();
+  // const {
+  //   handleSetterCurrentOrganization,
+  //   handleSetterCurrentRoboticsCloud,
+  //   handleSetterCurrentInstance,
+  //   handleSetterCurrentFleet,
+  //   handleSetterResponseRobot,
+  // } = useFunctions();
 
-  useEffect(() => {
-    if (!selectedState?.organization) {
-      handleSetterCurrentOrganization(url?.organizationName);
-    } else if (!selectedState?.roboticsCloud) {
-      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
-    } else if (!selectedState?.instance) {
-      handleSetterCurrentInstance(url?.instanceName);
-    } else if (!selectedState?.fleet) {
-      handleSetterCurrentFleet(url?.fleetName);
-    } else {
-      handleSetterResponseRobot(url?.robotName, setResponseRobot);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedState, url]);
+  // useEffect(() => {
+  //   if (!selectedState?.organization) {
+  //     handleSetterCurrentOrganization(url?.organizationName);
+  //   } else if (!selectedState?.roboticsCloud) {
+  //     handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
+  //   } else if (!selectedState?.instance) {
+  //     handleSetterCurrentInstance(url?.instanceName);
+  //   } else if (!selectedState?.fleet) {
+  //     handleSetterCurrentFleet(url?.fleetName);
+  //   } else {
+  //     handleSetterResponseRobot(url?.robotName, setResponseRobot);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [selectedState, url]);
+
+  const { urls } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({
-      // url: responseRobot?.bridgeIngressEndpoint || "ws://localhost:9090",
-      url: "ws://localhost:9090",
+      url: urls?.ros || "ws://localhost:9090",
     });
+
     setRos(ros);
 
     ros?.on("connection", function () {
@@ -126,7 +130,7 @@ export default function RobotPage(): ReactElement {
             case "K8S Resources":
               return <K8SResources />;
             case "Code Editor":
-              return <CodeEditor ideURL={responseRobot?.ideIngressEndpoint} />;
+              return <CodeEditor ideURL={urls?.ide} />;
             case "Visualization":
               return (
                 <Visualization
@@ -140,27 +144,18 @@ export default function RobotPage(): ReactElement {
                 <Teleoperation
                   ros={ros}
                   topicList={topicList}
-                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
+                  vdiIngressEndpoint={urls?.vdi}
                   handleForceUpdate={handleForceUpdate}
                 />
               );
             case "Remote Desktop":
-              return (
-                <RemoteDesktop
-                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
-                />
-              );
+              return <RemoteDesktop vdiIngressEndpoint={urls?.vdi} />;
             case "Settings":
               return <div>Settings</div>;
             case "Development Suite":
               return (
-                <StreamContext
-                  vdiIngressEndpoint={responseRobot?.vdiIngressEndpoint}
-                >
-                  <DevelopmentSuite
-                    ros={ros}
-                    ideIngressEndpoint={responseRobot?.ideIngressEndpoint}
-                  />
+                <StreamContext vdiIngressEndpoint={urls?.vdi}>
+                  <DevelopmentSuite ros={ros} ideIngressEndpoint={urls?.ide} />
                 </StreamContext>
               );
             case "Loading":

@@ -3,14 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 export const UserSlice = createSlice({
   name: "user",
   initialState: {
-    user: {
-      username: "gokhangunduz",
-      firstName: "Gökhan",
-      lastName: "Gündüz",
-      email: "test@test.com",
+    urls: {
+      vdi: "ws://domain.cloud/org/eu/instance/fleet/robot/vdi/",
+      ide: "https://domain.cloud/org/eu/instance/fleet/robot/ide/",
+      ros: "ws://localhost:9090",
     },
   },
-  reducers: {},
+  reducers: {
+    updateUrls: (state, action) => {
+      state.urls = action.payload;
+      return state;
+    },
+  },
 });
-
+export const { updateUrls } = UserSlice.actions;
 export default UserSlice.reducer;
