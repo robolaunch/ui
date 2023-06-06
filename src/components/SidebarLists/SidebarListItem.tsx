@@ -106,10 +106,13 @@ export default function SidebarListItem({
   };
 
   return (
-    <div key={name} className={`flex animate__animated animate__fadeIn`}>
+    <div
+      key={name}
+      className={`flex cursor-pointer animate__animated animate__fadeIn`}
+    >
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full cursor-pointer flex p-3 gap-4  border-r rounded-l-lg transition-all duration-300  ${
+        className={`w-full flex p-3 gap-4  border-r rounded-l-lg transition-all duration-300  ${
           selected
             ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
             : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
@@ -128,7 +131,7 @@ export default function SidebarListItem({
         </div>
       </div>
       {!notSelectable && (
-        <Link
+        <div
           onClick={() => {
             switch (type) {
               case "organization":
@@ -160,8 +163,8 @@ export default function SidebarListItem({
                 break;
             }
             setSidebarState({ ...sidebarState, isOpen: false });
+            navigate(url);
           }}
-          to={url}
           className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
             selected
               ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
@@ -174,7 +177,7 @@ export default function SidebarListItem({
             }`}
             style={{ fontSize: "1.25rem" }}
           />
-        </Link>
+        </div>
       )}
     </div>
   );

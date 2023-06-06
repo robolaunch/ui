@@ -8,14 +8,12 @@ import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/Create
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
-import {
-  createRobotBuildManager,
-  getFederatedRobot,
-} from "../../resources/RobotSlice";
+import { createRobotBuildManager } from "../../resources/RobotSlice";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import { MdVerified } from "react-icons/md";
 import InfoTip from "../InfoTip/InfoTip";
+import useFunctions from "../../hooks/useFunctions";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -33,19 +31,26 @@ export default function CreateRobotFormStep3({
     handleCreateRobotNextStep,
     selectedState,
   } = useSidebar();
+  const { handleSetterResponseRobot } = useFunctions();
 
   useEffect(
     () => {
       if (!responseRobot) {
-        getRobot();
+        handleSetterResponseRobot(
+          robotData?.step1?.robotName,
+          setResponseRobot
+        );
       }
 
       const timer = setInterval(() => {
-        getRobot();
+        handleSetterResponseRobot(
+          robotData?.step1?.robotName,
+          setResponseRobot
+        );
       }, 10000);
 
       if (
-        responseRobot?.robotClusters.filter(
+        responseRobot?.robotClusters?.filter(
           (robotCluster: any) =>
             robotCluster?.robotStatus !== "EnvironmentReady"
         )?.length < 1
@@ -121,38 +126,6 @@ export default function CreateRobotFormStep3({
     });
     // eslint-disable-next-line
   }, [formik.values]);
-
-  function getRobot() {
-    dispatch(
-      getFederatedRobot({
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
-        fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
-      })
-    ).then((responseRobot: any) => {
-      if (
-        Array.isArray(responseRobot?.payload?.data) &&
-        Array.isArray(responseRobot?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-        ) &&
-        Array.isArray(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-            ?.robolaunchFederatedRobots
-        ) &&
-        responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-          ?.robolaunchFederatedRobots[0]
-      ) {
-        setResponseRobot(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-            ?.robolaunchFederatedRobots[0]
-        );
-      }
-    });
-  }
 
   return (
     <Fragment>

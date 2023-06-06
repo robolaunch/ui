@@ -24,14 +24,14 @@ export const createFederatedRobot = createAsyncThunk(
                   name: values?.robotName,
                   fleetName: values?.fleetName,
                   physicalInstance: values?.physicalInstanceName,
-                  distributions: values?.distributions, // "HUMBLE",
-                  bridgeEnabled: values?.bridgeEnabled, // true,
-                  vdiEnabled: values?.vdiEnabled, // true,
-                  vdiSessionCount: values?.vdiSessionCount, // 1
-                  ideEnabled: values?.ideEnabled, // true,
-                  storageAmount: values?.storageAmount, // 10000,
+                  distributions: values?.distributions,
+                  bridgeEnabled: values?.bridgeEnabled,
+                  vdiEnabled: values?.vdiEnabled,
+                  vdiSessionCount: values?.vdiSessionCount,
+                  ideEnabled: values?.ideEnabled,
+                  storageAmount: values?.storageAmount,
                   gpuEnabledForCloudInstance:
-                    values?.gpuEnabledForCloudInstance, // true,
+                    values?.gpuEnabledForCloudInstance,
                   robotWorkspaces: values?.workspaces,
                 },
               ],
@@ -263,6 +263,61 @@ export const createRobotLaunchManager = createAsyncThunk(
   }
 );
 
+export const getRobotLaunchManagers = createAsyncThunk(
+  "robot/getRobotLaunchManagers",
+  async (values: any) => {
+    const response = await robotLaunchManagerApi.getRobotLaunchManagers({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedRobots: [
+                { fleetName: values?.fleetName, name: values?.robotName },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
+export const deleteRobotLaunchManager = createAsyncThunk(
+  "robot/deleteRobotLaunchManager",
+  async (values: any) => {
+    const response = await robotLaunchManagerApi.deleteRobotLaunchManager({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedRobots: [
+                {
+                  name: values?.robotName,
+                  fleetName: values?.fleetName,
+                  physicalInstance: values?.physicalInstanceName,
+                  launchManagerName: values?.launchManagerName,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
 export const robotSlice = createSlice({
   name: "robot",
   initialState: {
@@ -320,6 +375,16 @@ export const robotSlice = createSlice({
       })
       .addCase(deleteRobotBuildManager.rejected, (_) => {
         toast.error("Something went wrong (deleteRobotBuildManager)");
+      })
+      .addCase(createRobotLaunchManager.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        } else {
+          toast.success(action?.payload?.message);
+        }
+      })
+      .addCase(createRobotLaunchManager.rejected, (_) => {
+        toast.error("Something went wrong (createRobotLaunchManager)");
       });
   },
 });

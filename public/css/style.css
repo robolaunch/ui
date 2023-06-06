@@ -1593,14 +1593,6 @@ video {
   border-width: 4px;
 }
 
-.border-\[3px\]{
-  border-width: 3px;
-}
-
-.border-\[1px\]{
-  border-width: 1px;
-}
-
 .border-x-2{
   border-left-width: 2px;
   border-right-width: 2px;
@@ -1912,10 +1904,6 @@ video {
 
 .p-1\.5{
   padding: 0.375rem;
-}
-
-.p-10{
-  padding: 2.5rem;
 }
 
 .p-12{

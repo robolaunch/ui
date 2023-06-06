@@ -150,7 +150,9 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
       }
     };
 
-    client.current = new WebSocket(vdiIngressEndpoint || "");
+    client.current = new WebSocket(
+      vdiIngressEndpoint + "ws?password=admin" || ""
+    );
 
     client.current.onmessage = (e: any) => {
       const { event, ...payload } = JSON.parse(e.data);
