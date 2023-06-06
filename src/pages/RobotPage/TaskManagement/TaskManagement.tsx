@@ -28,6 +28,7 @@ import { CgPlayButtonR } from "react-icons/cg";
 import { BsPlusCircle } from "react-icons/bs";
 import { EditText } from "react-edit-text";
 import ROSLIB from "roslib";
+import RosBarcodeMapItems from "../../../components/RosBarcodeMapItems/RosBarcodeMapItems";
 
 interface ITask {
   ros: any;
@@ -243,6 +244,7 @@ export default function Task({ ros }: ITask): ReactElement {
                       />
                       <RosWaypointLine ros={ros} />
                       <RosMapWaypointLayout />
+                      <RosBarcodeMapItems ros={ros} />
                       <RosRobotLocation
                         ros={ros}
                         rosMapWebsocketWidth={rosMapDetails?.resolution?.x}

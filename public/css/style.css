@@ -1966,6 +1966,14 @@ video {
   padding: 2rem;
 }
 
+.p-\[2px\]{
+  padding: 2px;
+}
+
+.p-\[1px\]{
+  padding: 1px;
+}
+
 .\!px-0{
   padding-left: 0px !important;
   padding-right: 0px !important;
@@ -2213,6 +2221,14 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[2px\]{
+  font-size: 2px;
+}
+
+.text-\[6px\]{
+  font-size: 6px;
 }
 
 .\!font-semibold{
