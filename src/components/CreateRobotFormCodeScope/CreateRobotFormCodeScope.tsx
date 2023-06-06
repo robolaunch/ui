@@ -6,6 +6,8 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import useSidebar from "../../hooks/useSidebar";
 
 interface ICreateRobotFormCodeScope {
+  virtualInstanceChecked?: boolean;
+  physicalInstanceChecked?: boolean;
   virtualInstanceOnChange: (e: any) => void;
   isVisiblePhysicalInstanceCheckbox?: boolean;
   physicalInstanceOnChange?: (e: any) => void;
@@ -13,6 +15,8 @@ interface ICreateRobotFormCodeScope {
 }
 
 export default function CreateRobotFormCodeScope({
+  virtualInstanceChecked,
+  physicalInstanceChecked,
   virtualInstanceOnChange,
   isVisiblePhysicalInstanceCheckbox,
   physicalInstanceOnChange,
@@ -32,7 +36,10 @@ export default function CreateRobotFormCodeScope({
           <span className="text-xs">
             Virtual Instance ({selectedState?.instance?.name}):{" "}
           </span>
-          <InputCheckbox onChange={(e) => virtualInstanceOnChange(e)} />
+          <InputCheckbox
+            value={virtualInstanceChecked}
+            onChange={(e) => virtualInstanceOnChange(e)}
+          />
         </div>
 
         {isVisiblePhysicalInstanceCheckbox && (
@@ -42,6 +49,7 @@ export default function CreateRobotFormCodeScope({
               ):{" "}
             </span>
             <InputCheckbox
+              value={physicalInstanceChecked}
               onChange={(e) =>
                 physicalInstanceOnChange && physicalInstanceOnChange(e)
               }

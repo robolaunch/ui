@@ -5,7 +5,11 @@ import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 
-export default function Overview(): ReactElement {
+interface IOverview {
+  responseRobot: any;
+}
+
+export default function Overview({ responseRobot }: IOverview): ReactElement {
   const url = useParams();
 
   return (

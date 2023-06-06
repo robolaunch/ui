@@ -16,9 +16,11 @@ import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import useSidebar from "../hooks/useSidebar";
 import { toast } from "sonner";
-import RobotBuildManagerList from "../components/SidebarLists/RobotBuildManagerList";
 import { useParams } from "react-router-dom";
 import RobotUpdateForm from "../components/SidebarLists/RobotUpdateForm";
+import WorkspaceUpdateForm from "../components/SidebarLists/WorkspaceUpdateForm";
+import BuildUpdateForm from "../components/SidebarLists/BuildUpdateForm";
+import LaunchUpdateForm from "../components/SidebarLists/LaunchUpdateForm";
 
 export default function ContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
@@ -233,7 +235,7 @@ export default function ContentLayout(): ReactElement {
           </Fragment>
         )}
       </div>
-      {!sidebarState?.isCreateMode && <FilteredTags />}
+      {(!sidebarState?.isCreateMode || !url?.robotName) && <FilteredTags />}
       <div
         className={`h-full overflow-auto scrollbar-hide mb-4 ${
           sidebarState?.page && "py-6 px-2"
@@ -314,7 +316,7 @@ export default function ContentLayout(): ReactElement {
                 }
 
                 return (
-                  <OrganizationsList
+                  <WorkspaceUpdateForm
                     reload={reload}
                     setItemCount={setItemCount}
                   />
@@ -325,7 +327,7 @@ export default function ContentLayout(): ReactElement {
                 }
 
                 return (
-                  <RobotBuildManagerList
+                  <BuildUpdateForm
                     reload={reload}
                     setItemCount={setItemCount}
                   />
@@ -334,21 +336,26 @@ export default function ContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
+
+                return (
+                  <LaunchUpdateForm
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                );
             }
           })()}
         </div>
       </div>
 
-      {sidebarState?.page !== "robot" && !sidebarState?.isCreateMode && (
-        <Button
-          className={`${
-            sidebarState?.isCreateMode &&
-            "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
-          }`}
-          text={buttonTextGenerator()}
-          onClick={() => handleCreateButton()}
-        />
-      )}
+      <Button
+        className={`${
+          sidebarState?.isCreateMode &&
+          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
+        }`}
+        text={buttonTextGenerator()}
+        onClick={() => handleCreateButton()}
+      />
     </div>
   );
 }

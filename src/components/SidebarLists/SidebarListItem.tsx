@@ -69,6 +69,7 @@ export default function SidebarListItem({
             });
           } else {
             setSelectedState({ ...selectedState, instance: data });
+            setSidebarState({ ...sidebarState, page: "fleet" });
           }
         } else {
           toast.error(

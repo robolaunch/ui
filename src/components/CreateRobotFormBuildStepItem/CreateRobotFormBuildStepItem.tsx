@@ -208,6 +208,12 @@ export default function CreateRobotFormBuildStepItem({
         </div>
 
         <CreateRobotFormCodeScope
+          virtualInstanceChecked={formik.values.robotBuildSteps[
+            buildStepIndex
+          ]?.instancesName?.includes(selectedState?.instance?.name)}
+          physicalInstanceChecked={formik.values.robotBuildSteps[
+            buildStepIndex
+          ]?.instancesName?.includes(robotData?.step1?.physicalInstanceName)}
           virtualInstanceOnChange={(e) => {
             formik.setValues((prevValues) => ({
               ...prevValues,

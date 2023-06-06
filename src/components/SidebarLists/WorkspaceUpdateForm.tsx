@@ -1,22 +1,22 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import CreateRobotFormStep1 from "../CreateForms/CreateRobotFormStep1";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import CreateRobotFormStep2 from "../CreateForms/CreateRobotFormStep2";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
-interface IRobotUpdateForm {
+interface IWorkspaceUpdateForm {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function RobotUpdateForm({
+export default function WorkspaceUpdateForm({
   reload,
   setItemCount,
-}: IRobotUpdateForm): ReactElement {
+}: IWorkspaceUpdateForm): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const url = useParams();
-  const { setRobotData } = useCreateRobot();
   const { handleSetterResponseRobot } = useFunctions();
+  const { setRobotData } = useCreateRobot();
+  const url = useParams();
 
   useEffect(() => {
     if (!responseRobot) {
@@ -60,7 +60,7 @@ export default function RobotUpdateForm({
           alt="Loading..."
         />
       ) : (
-        <CreateRobotFormStep1 isImportRobot />
+        <CreateRobotFormStep2 isImportRobot />
       )}
     </Fragment>
   );

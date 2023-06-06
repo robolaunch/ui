@@ -17,7 +17,13 @@ import { MdVerified } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-export default function CreateRobotFormStep4(): ReactElement {
+interface ICreateRobotFormStep4 {
+  isImportRobot?: boolean;
+}
+
+export default function CreateRobotFormStep4({
+  isImportRobot,
+}: ICreateRobotFormStep4): ReactElement {
   const { robotData, setRobotData, handleAddStepToLaunchStep } =
     useCreateRobot();
   const { selectedState } = useSidebar();

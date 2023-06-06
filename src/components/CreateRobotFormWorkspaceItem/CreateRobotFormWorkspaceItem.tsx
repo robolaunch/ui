@@ -99,7 +99,7 @@ export default function CreateRobotFormWorkspaceItem({
             }
           />
         </div>
-        <div className="flex flex-col gap-3 border-[3px] border-layer-light-100 p-10 rounded !shadow">
+        <div className="flex flex-col gap-3 p-4">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
           </span>

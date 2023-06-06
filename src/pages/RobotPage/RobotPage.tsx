@@ -114,7 +114,7 @@ export default function RobotPage(): ReactElement {
         {(() => {
           switch (activeTab) {
             case "Overview":
-              return <Overview />;
+              return <Overview responseRobot={responseRobot} />;
             case "Task Management":
               return (
                 <TaskManagementContext ros={ros}>

@@ -17,7 +17,13 @@ import InputError from "../InputError/InputError";
 import { MdVerified } from "react-icons/md";
 import InfoTip from "../InfoTip/InfoTip";
 
-export default function CreateRobotFormStep3(): ReactElement {
+interface ICreateRobotFormStep3 {
+  isImportRobot?: boolean;
+}
+
+export default function CreateRobotFormStep3({
+  isImportRobot,
+}: ICreateRobotFormStep3): ReactElement {
   const { robotData, setRobotData, handleAddStepToBuildStep } =
     useCreateRobot();
   const dispatch = useAppDispatch();
