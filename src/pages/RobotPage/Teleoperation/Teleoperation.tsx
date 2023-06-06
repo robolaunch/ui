@@ -28,7 +28,7 @@ export default function Teleoperation({
 }: ITeleoperation): ReactElement {
   const [grid, setGrid] = useState<any>();
   const url = useParams();
-  const localStoragePath = `visualization_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
+  const localStoragePath = `teleoperation_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
   const gridLayout =
     JSON.parse(localStorage.getItem(localStoragePath) || JSON.stringify([])) ||
     [];
