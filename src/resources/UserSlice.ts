@@ -4,8 +4,8 @@ export const UserSlice = createSlice({
   name: "user",
   initialState: {
     urls: {
-      vdi: "ws://domain.cloud/org/eu/instance/fleet/robot/vdi/",
-      ide: "https://domain.cloud/org/eu/instance/fleet/robot/ide/",
+      vdi: "ws://localhost:8080/",
+      ide: "http://localhost:3000/",
       ros: "ws://localhost:9090",
     },
   },
