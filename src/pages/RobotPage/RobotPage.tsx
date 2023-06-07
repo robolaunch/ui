@@ -53,6 +53,7 @@ export default function RobotPage(): ReactElement {
   const { urls } = useAppSelector((state) => state.user);
 
   useEffect(() => {
+    console.log(urls);
     const ros = new ROSLIB.Ros({
       url: urls?.ros || "ws://localhost:9090",
     });

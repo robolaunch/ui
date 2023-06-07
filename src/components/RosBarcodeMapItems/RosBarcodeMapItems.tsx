@@ -14,46 +14,115 @@ export default function RosBarcodeMapItems({
 
   const { rosMapDetails }: any = useContext(TaskManagementContext);
 
-  const rosBarcode = new ROSLIB.Topic({
+  const rosBarcode0 = new ROSLIB.Topic({
     ros: ros,
-    name: "/barcode_pose",
+    name: "/barcode_pose0",
+    messageType: "std_msgs/msg/String",
+  });
+
+  const rosBarcode1 = new ROSLIB.Topic({
+    ros: ros,
+    name: "/barcode_pose1",
+    messageType: "std_msgs/msg/String",
+  });
+
+  const rosBarcode2 = new ROSLIB.Topic({
+    ros: ros,
+    name: "/barcode_pose2",
+    messageType: "std_msgs/msg/String",
+  });
+
+  const rosBarcode3 = new ROSLIB.Topic({
+    ros: ros,
+    name: "/barcode_pose3",
     messageType: "std_msgs/msg/String",
   });
 
   useEffect(() => {
-    rosBarcode?.subscribe(function (message: any) {
-      handleBarcodeSetters(JSON.parse(message?.data));
+    rosBarcode0?.subscribe(function (message: any) {
+      console.log(message);
+      const messageWithScannerId = JSON.parse(message?.data);
+
+      handleBarcodeSetters({
+        ...messageWithScannerId,
+        scannerId: Number(
+          rosBarcode0?.name.charAt(rosBarcode0?.name?.length - 1)
+        ),
+      });
+    });
+
+    rosBarcode1?.subscribe(function (message: any) {
+      console.log(message);
+      const messageWithScannerId = JSON.parse(message?.data);
+
+      handleBarcodeSetters({
+        ...messageWithScannerId,
+        scannerId: Number(
+          rosBarcode1?.name.charAt(rosBarcode1?.name?.length - 1)
+        ),
+      });
+    });
+
+    rosBarcode2?.subscribe(function (message: any) {
+      console.log(message);
+      const messageWithScannerId = JSON.parse(message?.data);
+
+      handleBarcodeSetters({
+        ...messageWithScannerId,
+        scannerId: Number(
+          rosBarcode2?.name.charAt(rosBarcode2?.name?.length - 1)
+        ),
+      });
+    });
+
+    rosBarcode3?.subscribe(function (message: any) {
+      console.log(message);
+      const messageWithScannerId = JSON.parse(message?.data);
+
+      handleBarcodeSetters({
+        ...messageWithScannerId,
+        scannerId: Number(
+          rosBarcode3?.name.charAt(rosBarcode3?.name?.length - 1)
+        ),
+      });
     });
 
     return () => {
-      rosBarcode?.unsubscribe();
+      rosBarcode0?.unsubscribe();
+      rosBarcode1?.unsubscribe();
+      rosBarcode2?.unsubscribe();
+      rosBarcode3?.unsubscribe();
     };
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleBarcodeSetters(message: any) {
-    const { barcode, coordinates } = message;
-
     setBarcodeItems((prevBarcodeItems: any) => {
       const updatedBarcodeItems = [...prevBarcodeItems];
+
       const barcodeIndex = prevBarcodeItems.findIndex(
         (barcodeItem: any) =>
           barcodeItem.coordinates &&
-          barcodeItem.coordinates.x.toFixed(2) === coordinates.x.toFixed(2) &&
-          barcodeItem.coordinates.y.toFixed(2) === coordinates.y.toFixed(2)
+          barcodeItem.coordinates.x.toFixed(2) ===
+            message?.coordinates.x.toFixed(2) &&
+          barcodeItem.coordinates.y.toFixed(2) ===
+            message?.coordinates.y.toFixed(2)
       );
 
       if (barcodeIndex !== -1) {
         updatedBarcodeItems[barcodeIndex] = {
           ...prevBarcodeItems[barcodeIndex],
-          barcodes: [
-            ...(prevBarcodeItems[barcodeIndex].barcodes || []),
-            barcode,
-          ],
+          barcodes: prevBarcodeItems[barcodeIndex].barcodes.map(
+            (barcode: any, index: number) =>
+              index === message?.scannerId ? message?.barcode : barcode
+          ),
         };
       } else {
         updatedBarcodeItems.push({
-          barcodes: [barcode],
-          coordinates,
+          barcodes: ["", "", "", ""].map((_, index: number) =>
+            index === message?.scannerId ? message?.barcode : ""
+          ),
+          coordinates: message?.coordinates,
         });
       }
 
@@ -71,7 +140,7 @@ export default function RosBarcodeMapItems({
         return (
           <div
             key={index}
-            className="absolute z-50 bg-red-500 h-fit w-fit text-[6px] rounded p-[1px]"
+            className="absolute flex flex-col gap-1 z-50 bg-red-500 h-fit w-fit text-[4px] rounded"
             style={{
               left:
                 handleRostoDomMouseCoordinatesConverter({
@@ -93,7 +162,7 @@ export default function RosBarcodeMapItems({
                 }).y - 12,
             }}
           >
-            <div className="flex flex-col gap-1">
+            <div>
               {item?.barcodes?.map((barcode: any, barcodeIndex: number) => {
                 return <div key={barcodeIndex}>{barcode}</div>;
               })}
