@@ -22,16 +22,48 @@ export default function RosBarcodeMapItems({
 
   useEffect(() => {
     rosBarcode?.subscribe(function (message: any) {
-      console.log(message);
-      setBarcodeItems((prev: any) => {
-        return [...prev, JSON.parse(message?.data)];
-      });
-
-      return () => {
-        rosBarcode?.unsubscribe();
-      };
+      handleBarcodeSetters(JSON.parse(message?.data));
     });
+
+    return () => {
+      rosBarcode?.unsubscribe();
+    };
   });
+
+  function handleBarcodeSetters(message: any) {
+    const { barcode, coordinates } = message;
+
+    setBarcodeItems((prevBarcodeItems: any) => {
+      const updatedBarcodeItems = [...prevBarcodeItems];
+      const barcodeIndex = prevBarcodeItems.findIndex(
+        (barcodeItem: any) =>
+          barcodeItem.coordinates &&
+          barcodeItem.coordinates.x.toFixed(2) === coordinates.x.toFixed(2) &&
+          barcodeItem.coordinates.y.toFixed(2) === coordinates.y.toFixed(2)
+      );
+
+      if (barcodeIndex !== -1) {
+        updatedBarcodeItems[barcodeIndex] = {
+          ...prevBarcodeItems[barcodeIndex],
+          barcodes: [
+            ...(prevBarcodeItems[barcodeIndex].barcodes || []),
+            barcode,
+          ],
+        };
+      } else {
+        updatedBarcodeItems.push({
+          barcodes: [barcode],
+          coordinates,
+        });
+      }
+
+      return updatedBarcodeItems;
+    });
+  }
+
+  useEffect(() => {
+    console.log("barcodeItems", barcodeItems);
+  }, [barcodeItems]);
 
   return (
     <div className="absolute inset-0">
@@ -61,7 +93,11 @@ export default function RosBarcodeMapItems({
                 }).y - 12,
             }}
           >
-            {item?.barcode}
+            <div className="flex flex-col gap-1">
+              {item?.barcodes?.map((barcode: any, barcodeIndex: number) => {
+                return <div key={barcodeIndex}>{barcode}</div>;
+              })}
+            </div>
           </div>
         );
       })}
