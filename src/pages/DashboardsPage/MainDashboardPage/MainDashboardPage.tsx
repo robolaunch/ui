@@ -19,7 +19,6 @@ export default function MainDashboardPage(): ReactElement {
 
   useEffect(() => {
     handleSetterResponseOrganizations(setResponseOrganizations);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     const timer = setInterval(() => {
       handleSetterResponseOrganizations(setResponseOrganizations);
