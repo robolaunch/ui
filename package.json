@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "dependencies": {
     "@emotion/css": "^11.10.6",
@@ -25,6 +25,7 @@
     "randomstring": "^1.2.3",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-barcode": "^1.4.6",
     "react-beautiful-dnd": "^13.1.1",
     "react-circular-menu": "^2.3.10",
     "react-collapsible": "^2.10.0",

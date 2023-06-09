@@ -1,5 +1,7 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormStep4 from "../CreateForms/CreateRobotFormStep4";
+import useFunctions from "../../hooks/useFunctions";
+import { useParams } from "react-router-dom";
 
 interface ILaunchUpdateForm {
   reload: boolean;
@@ -10,9 +12,17 @@ export default function LaunchUpdateForm({
   reload,
   setItemCount,
 }: ILaunchUpdateForm): ReactElement {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobotLaunchManagers, setResponseRobotLaunchManagers] =
     useState<any>(undefined);
+  const { handleSetterResponseLaunchManagers } = useFunctions();
+  const url = useParams();
+
+  useEffect(() => {
+    handleSetterResponseLaunchManagers(
+      url?.robotName,
+      setResponseRobotLaunchManagers
+    );
+  }, []);
 
   return (
     <Fragment>
