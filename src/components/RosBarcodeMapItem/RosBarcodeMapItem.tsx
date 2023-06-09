@@ -15,8 +15,8 @@ export default function RosBarcodeMapItem({
 
   return (
     <div
-      className={`absolute flex flex-col gap-1 z-50 bg-red-500 text-[4px] ${
-        isHovered ? "h-1 w-1 rounded-full" : "h-fit w-fit rounded"
+      className={`absolute flex flex-col gap-1 z-50 bg-red-500 text-[2px] ${
+        isHovered ? "h-fit w-fit rounded" : "h-[4px] w-[4px] rounded-full"
       }`}
       style={{
         left:
@@ -41,11 +41,18 @@ export default function RosBarcodeMapItem({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isHovered && (
+      {isHovered ? (
         <div>
           {item?.barcodes?.map((barcode: any, barcodeIndex: number) => {
             return <div key={barcodeIndex}>{barcode}</div>;
           })}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center">
+          {
+            item?.barcodes?.filter((barcode: string) => barcode && barcode)
+              .length
+          }
         </div>
       )}
     </div>
