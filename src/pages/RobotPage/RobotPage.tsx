@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState } from "react";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
-import TaskManagement from "./TaskManagement/TaskManagement";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
@@ -15,6 +14,8 @@ import Workspaces from "./Workspaces/Workspaces";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
 import { useAppSelector } from "../../hooks/redux";
+import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
+import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 // import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
@@ -23,7 +24,6 @@ export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
   // const { selectedState } = useSidebar();
-
   const [ros, setRos] = useState<any>(null);
   // const url = useParams();
 
@@ -124,7 +124,9 @@ export default function RobotPage(): ReactElement {
             case "Task Management":
               return (
                 <TaskManagementContext ros={ros}>
-                  <TaskManagement ros={ros} />
+                  <BarcodeManagementContext ros={ros}>
+                    <TaskManagementLayout ros={ros} />
+                  </BarcodeManagementContext>
                 </TaskManagementContext>
               );
             case "ROS Workspaces":

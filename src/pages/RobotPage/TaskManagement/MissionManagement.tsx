@@ -34,7 +34,7 @@ interface ITask {
   ros: any;
 }
 
-export default function Task({ ros }: ITask): ReactElement {
+export default function MissionManagement({ ros }: ITask): ReactElement {
   const {
     missions,
     setMissions,
@@ -183,10 +183,15 @@ export default function Task({ ros }: ITask): ReactElement {
             <TransformWrapper
               disabled={isDragging}
               onWheel={(e: any) => {
+                console.log(e.state.scale);
                 setSceneScale(e.state.scale);
               }}
               onPanningStart={() => setIsGrabbingMap(true)}
               onPanningStop={() => setIsGrabbingMap(false)}
+              maxScale={100}
+              wheel={{
+                step: sceneScale > 10 ? 10 : 1,
+              }}
             >
               <TransformComponent>
                 <div

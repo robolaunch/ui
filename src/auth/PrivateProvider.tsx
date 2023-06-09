@@ -6,6 +6,7 @@ import keycloak from "../api/keycloak";
 import PrivateLayout from "../layouts/PrivateLayout";
 import SidebarContext from "../contexts/SidebarContext";
 import FunctionsContext from "../contexts/FunctionsContext";
+import BarcodeManagementContext from "../contexts/BarcodeManagementContext";
 
 export default function PrivateProvider(): ReactElement {
   const loadingPage = (
