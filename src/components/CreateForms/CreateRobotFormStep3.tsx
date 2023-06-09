@@ -35,11 +35,20 @@ export default function CreateRobotFormStep3({
 
   useEffect(
     () => {
-      if (!responseRobot) {
+      if (!responseRobot && !isImportRobot) {
         handleSetterResponseRobot(
           robotData?.step1?.robotName,
           setResponseRobot
         );
+      } else {
+        setTimeout(() => {
+          if (!responseRobot) {
+            handleSetterResponseRobot(
+              robotData?.step1?.robotName,
+              setResponseRobot
+            );
+          }
+        }, 10000);
       }
 
       const timer = setInterval(() => {
@@ -215,12 +224,14 @@ export default function CreateRobotFormStep3({
             className="h-14 mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
           />
           <div className="flex gap-6">
-            <Button
-              onClick={handleCreateRobotPreviousStep}
-              type="reset"
-              className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
-              text={`Previous Step`}
-            />
+            {!isImportRobot && (
+              <Button
+                onClick={handleCreateRobotPreviousStep}
+                type="reset"
+                className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
+                text={`Previous Step`}
+              />
+            )}
             <Button
               type="submit"
               disabled={!formik?.isValid || formik.isSubmitting}
@@ -232,6 +243,8 @@ export default function CreateRobotFormStep3({
                     src="/svg/general/loading.svg"
                     alt="loading"
                   />
+                ) : isImportRobot ? (
+                  `Update Build Configration`
                 ) : (
                   `Next Step`
                 )
@@ -246,6 +259,12 @@ export default function CreateRobotFormStep3({
             src="/svg/general/loading.svg"
             alt="Loading..."
           />
+          {!isImportRobot && (
+            <span className="text-sm text-layer-light-900 pb-4">
+              Please wait while we create your robot. This may take a few
+              minutes.
+            </span>
+          )}
         </div>
       )}
     </Fragment>

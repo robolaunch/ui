@@ -237,9 +237,9 @@ export default ({ children }: any) => {
     });
   }
 
-  async function handleSetterResponseBuildManagers(
+  async function handleSetterResponseBuildManager(
     urlRobotName: string,
-    setResponseRobotBuildManagers: any
+    setResponseRobotBuildManager: any
   ) {
     await dispatch(
       getRobotBuildManagers({
@@ -263,7 +263,7 @@ export default ({ children }: any) => {
         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
       ) {
-        setResponseRobotBuildManagers(
+        setResponseRobotBuildManager(
           responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
             ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
         );
@@ -285,6 +285,7 @@ export default ({ children }: any) => {
         robotName: urlRobotName,
       })
     ).then((responseRobotLaunchManagers: any) => {
+      console.log(responseRobotLaunchManagers);
       if (
         Array.isArray(responseRobotLaunchManagers?.payload?.data) &&
         Array.isArray(
@@ -294,12 +295,16 @@ export default ({ children }: any) => {
           responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
             ?.cloudInstances
         ) &&
+        Array.isArray(
+          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedRobots
+        ) &&
         responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+          ?.cloudInstances[0]?.robolaunchFederatedRobots
       ) {
         setResponseRobotLaunchManagers(
           responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+            ?.cloudInstances[0]?.robolaunchFederatedRobots
         );
       }
     });
@@ -323,7 +328,7 @@ export default ({ children }: any) => {
         handleSetterResponseFleets,
         handleSetterResponseRobots,
         handleSetterResponseRobot,
-        handleSetterResponseBuildManagers,
+        handleSetterResponseBuildManager,
         handleSetterResponseLaunchManagers,
       }}
     >

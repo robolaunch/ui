@@ -7,22 +7,22 @@ import InputError from "../InputError/InputError";
 import CreateRobotFormLaunchStepItem from "../CreateRobotFormLaunchStepItem/CreateRobotFormLaunchStepItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import {
-  createRobotLaunchManager,
-  getRobotBuildManagers,
-} from "../../resources/RobotSlice";
+import { createRobotLaunchManager } from "../../resources/RobotSlice";
 import { BsPlusCircle } from "react-icons/bs";
 import Button from "../Button/Button";
 import { MdVerified } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import useFunctions from "../../hooks/useFunctions";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
+  robotDataLaunchIndex?: number;
 }
 
 export default function CreateRobotFormStep4({
   isImportRobot,
+  robotDataLaunchIndex,
 }: ICreateRobotFormStep4): ReactElement {
   const { robotData, setRobotData, handleAddStepToLaunchStep } =
     useCreateRobot();
@@ -31,9 +31,10 @@ export default function CreateRobotFormStep4({
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const navigate = useNavigate();
+  const { handleSetterResponseBuildManager } = useFunctions();
 
   const formik: FormikProps<IRobotLaunchSteps> = useFormik<IRobotLaunchSteps>({
-    initialValues: robotData?.step4,
+    initialValues: robotData?.step4[robotDataLaunchIndex || 0],
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
 
@@ -65,11 +66,17 @@ export default function CreateRobotFormStep4({
   useEffect(
     () => {
       if (!responseBuildManager) {
-        getBuildManager();
+        handleSetterResponseBuildManager(
+          robotData?.step1?.robotName,
+          setResponseBuildManager
+        );
       }
 
       const timer = setInterval(() => {
-        getBuildManager();
+        handleSetterResponseBuildManager(
+          robotData?.step1?.robotName,
+          setResponseBuildManager
+        );
       }, 10000);
 
       if (
@@ -89,43 +96,22 @@ export default function CreateRobotFormStep4({
     [responseBuildManager]
   );
 
-  function getBuildManager() {
-    dispatch(
-      getRobotBuildManagers({
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
-        fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
-      })
-    ).then((responseBuildManager: any) => {
-      if (
-        Array.isArray(responseBuildManager?.payload?.data) &&
-        Array.isArray(responseBuildManager?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
-        ) &&
-        Array.isArray(
-          responseBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots
-        ) &&
-        responseBuildManager?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-      ) {
-        setResponseBuildManager(
-          responseBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-        );
-      }
-    });
-  }
-
   useEffect(() => {
-    setRobotData({
-      ...robotData,
-      step4: formik.values,
+    setRobotData((prevState: any) => {
+      return {
+        ...robotData,
+        step4: [
+          ...prevState.step4.map((step: any, index: number) => {
+            if (index === robotDataLaunchIndex) {
+              return {
+                launchManagerName: formik.values?.launchManagerName,
+                robotLaunchSteps: formik.values?.robotLaunchSteps,
+              };
+            }
+            return step;
+          }),
+        ],
+      };
     });
     // eslint-disable-next-line
   }, [formik.values]);
@@ -189,7 +175,7 @@ export default function CreateRobotFormStep4({
           </div>
 
           <div className="flex flex-col gap-2">
-            {robotData?.step4?.robotLaunchSteps?.map(
+            {robotData?.step4[robotDataLaunchIndex || 0].robotLaunchSteps?.map(
               (launchStep: any, launchStepIndex: number) => {
                 return (
                   <CreateRobotFormLaunchStepItem
@@ -209,16 +195,18 @@ export default function CreateRobotFormStep4({
             />
           </div>
           <div className="flex gap-6">
-            <Button
-              type="reset"
-              className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
-              text={`Previous Step`}
-            />
+            {!isImportRobot && (
+              <Button
+                type="reset"
+                className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
+                text={`Previous Step`}
+              />
+            )}
             <Button
               type="submit"
               disabled={!formik?.isValid || formik.isSubmitting}
               className="!h-11 text-xs"
-              text={`Next Step`}
+              text={isImportRobot ? `Update Launch Step` : `Create Robot`}
             />
           </div>
         </form>

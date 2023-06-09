@@ -9,7 +9,7 @@ export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const [robotData, setRobotData] = useState<IRobotData>({
+  const initialRobotData: IRobotData = {
     step1: {
       robotName: "",
       isVirtualRobot: true,
@@ -53,24 +53,32 @@ export default ({ children }: any) => {
         },
       ],
     },
-    step4: {
-      launchManagerName: "",
-      robotLaunchSteps: [
-        {
-          workspace: "",
-          entryPointType: "custom",
-          entryPointCmd: "",
-          instancesName: [],
-          robotLmEnvs: [
-            {
-              name: "",
-              value: "",
-            },
-          ],
-        },
-      ],
-    },
-  });
+    step4: [
+      {
+        launchManagerName: "",
+        robotLaunchSteps: [
+          {
+            workspace: "",
+            entryPointType: "custom",
+            entryPointCmd: "",
+            instancesName: [],
+            robotLmEnvs: [
+              {
+                name: "",
+                value: "",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const [robotData, setRobotData] = useState<IRobotData>(initialRobotData);
+
+  function handleResetRobotForm() {
+    setRobotData(initialRobotData);
+  }
 
   function handleAddWorkspaceStep(formik: any) {
     const temp: any = [...formik.values.workspaces];
@@ -195,6 +203,7 @@ export default ({ children }: any) => {
       value={{
         robotData,
         setRobotData,
+        handleResetRobotForm,
         handleAddWorkspaceStep,
         handleRemoveWorkspaceStep,
         handleAddRepositoryToWorkspaceStep,

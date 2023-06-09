@@ -16,9 +16,9 @@ export interface IuseFunctions {
     urlRobotName: string | undefined,
     setResponseRobot: any
   ) => void;
-  handleSetterResponseBuildManagers: (
+  handleSetterResponseBuildManager: (
     urlRobotName: string | undefined,
-    setResponseBuildManagers: any
+    setResponseBuildManager: any
   ) => void;
   handleSetterResponseLaunchManagers: (
     urlRobotName: string | undefined,

@@ -1,8 +1,8 @@
 import React, { Fragment, ReactElement } from "react";
-import { Link, useParams } from "react-router-dom";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
+import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
-import ContentLayout from "../../layouts/ContentLayout";
+import { Link, useParams } from "react-router-dom";
 
 import useSidebar from "../../hooks/useSidebar";
 
@@ -59,7 +59,7 @@ export default function Sidebar(): ReactElement {
           />
         </div>
       </div>
-      {sidebarState?.isOpen && <ContentLayout />}
+      {sidebarState?.isOpen && <SidebarContentLayout />}
     </>
   );
 }

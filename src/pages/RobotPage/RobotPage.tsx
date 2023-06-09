@@ -5,50 +5,50 @@ import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
 import K8SResources from "./K8SResources/K8SResources";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
-// import useSidebar from "../../hooks/useSidebar";
+import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
 import { useAppSelector } from "../../hooks/redux";
 import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
-// import useFunctions from "../../hooks/useFunctions";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
-  // const { selectedState } = useSidebar();
+  const { selectedState } = useSidebar();
   const [ros, setRos] = useState<any>(null);
-  // const url = useParams();
+  const url = useParams();
 
-  // const {
-  //   handleSetterCurrentOrganization,
-  //   handleSetterCurrentRoboticsCloud,
-  //   handleSetterCurrentInstance,
-  //   handleSetterCurrentFleet,
-  //   handleSetterResponseRobot,
-  // } = useFunctions();
+  const {
+    handleSetterCurrentOrganization,
+    handleSetterCurrentRoboticsCloud,
+    handleSetterCurrentInstance,
+    handleSetterCurrentFleet,
+    handleSetterResponseRobot,
+  } = useFunctions();
 
-  // useEffect(() => {
-  //   if (!selectedState?.organization) {
-  //     handleSetterCurrentOrganization(url?.organizationName);
-  //   } else if (!selectedState?.roboticsCloud) {
-  //     handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
-  //   } else if (!selectedState?.instance) {
-  //     handleSetterCurrentInstance(url?.instanceName);
-  //   } else if (!selectedState?.fleet) {
-  //     handleSetterCurrentFleet(url?.fleetName);
-  //   } else {
-  //     handleSetterResponseRobot(url?.robotName, setResponseRobot);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [selectedState, url]);
+  useEffect(() => {
+    if (!selectedState?.organization) {
+      handleSetterCurrentOrganization(url?.organizationName);
+    } else if (!selectedState?.roboticsCloud) {
+      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
+    } else if (!selectedState?.instance) {
+      handleSetterCurrentInstance(url?.instanceName);
+    } else if (!selectedState?.fleet) {
+      handleSetterCurrentFleet(url?.fleetName);
+    } else {
+      handleSetterResponseRobot(url?.robotName, setResponseRobot);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedState, url]);
 
   const { urls } = useAppSelector((state) => state.user);
 

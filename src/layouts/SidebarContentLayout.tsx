@@ -4,9 +4,13 @@ import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsClo
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
 import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
+import WorkspaceUpdateForm from "../components/SidebarLists/WorkspaceUpdateForm";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
+import LaunchUpdateForm from "../components/SidebarLists/LaunchUpdateForm";
+import BuildUpdateForm from "../components/SidebarLists/BuildUpdateForm";
+import RobotUpdateForm from "../components/SidebarLists/RobotUpdateForm";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import stringCapitalization from "../helpers/stringCapitalization";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
@@ -14,15 +18,11 @@ import FleetsList from "../components/SidebarLists/FleetsList";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
+import { useParams } from "react-router-dom";
 import useSidebar from "../hooks/useSidebar";
 import { toast } from "sonner";
-import { useParams } from "react-router-dom";
-import RobotUpdateForm from "../components/SidebarLists/RobotUpdateForm";
-import WorkspaceUpdateForm from "../components/SidebarLists/WorkspaceUpdateForm";
-import BuildUpdateForm from "../components/SidebarLists/BuildUpdateForm";
-import LaunchUpdateForm from "../components/SidebarLists/LaunchUpdateForm";
 
-export default function ContentLayout(): ReactElement {
+export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
@@ -99,6 +99,9 @@ export default function ContentLayout(): ReactElement {
     }
     switch (sidebarState?.page) {
       case "robot":
+        if (url?.robotName) {
+          return `${url.robotName} Robot Details`;
+        }
         return sidebarState?.isCreateMode ? "Robot Details" : "Robots";
       case "workspacesmanager":
         return "Robot Workspace Configuration";
@@ -210,7 +213,9 @@ export default function ContentLayout(): ReactElement {
 
   return (
     <div
-      className={`fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast p-8 z-[32] `}
+      className={`fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast  z-[32] ${
+        url?.robotName ? "px-8 pt-8 pb-2" : "p-8"
+      }`}
     >
       <div
         className={`flex gap-4 items-center ${
@@ -218,7 +223,7 @@ export default function ContentLayout(): ReactElement {
         }`}
       >
         <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
-        {!sidebarState?.isCreateMode && (
+        {!sidebarState?.isCreateMode && sidebarState.page !== "robot" && (
           <Fragment>
             <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
               {itemCount}
@@ -235,7 +240,9 @@ export default function ContentLayout(): ReactElement {
           </Fragment>
         )}
       </div>
-      {(!sidebarState?.isCreateMode || !url?.robotName) && <FilteredTags />}
+      {!sidebarState?.isCreateMode && sidebarState.page !== "robot" && (
+        <FilteredTags />
+      )}
       <div
         className={`h-full overflow-auto scrollbar-hide mb-4 ${
           sidebarState?.page && "py-6 px-2"
@@ -348,14 +355,16 @@ export default function ContentLayout(): ReactElement {
         </div>
       </div>
 
-      <Button
-        className={`${
-          sidebarState?.isCreateMode &&
-          "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
-        }`}
-        text={buttonTextGenerator()}
-        onClick={() => handleCreateButton()}
-      />
+      {!url?.robotName && (
+        <Button
+          className={`${
+            sidebarState?.isCreateMode &&
+            "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
+          }`}
+          text={buttonTextGenerator()}
+          onClick={() => handleCreateButton()}
+        />
+      )}
     </div>
   );
 }

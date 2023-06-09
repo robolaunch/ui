@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
-import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
-
 interface IOverview {
   responseRobot: any;
 }

@@ -36,15 +36,6 @@ export default function OrganizationDashboardPage(): ReactElement {
       handleSetterResponseRoboticsClouds(setResponseRoboticsClouds);
     }
 
-    const timer =
-      selectedState?.organization &&
-      setInterval(() => {
-        handleSetterResponseRoboticsClouds(setResponseRoboticsClouds);
-      }, 10000);
-
-    return () => {
-      clearInterval(timer);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload, url, selectedState]);
 

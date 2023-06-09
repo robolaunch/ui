@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
@@ -182,358 +182,261 @@ export default function CreateRobotFormStep1({
   }
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-3 animate__animated animate__fadeIn"
-    >
-      {/* RobotName */}
-      <div>
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-          Robot Name:
-          <InfoTip content="Robot Name" />
+    <Fragment>
+      <form
+        onSubmit={formik.handleSubmit}
+        className="flex flex-col gap-3 animate__animated animate__fadeIn"
+      >
+        {/* RobotName */}
+        <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Robot Name:
+            <InfoTip content="Robot Name" />
+          </div>
+          <InputText
+            {...formik.getFieldProps("robotName")}
+            className="!text-sm"
+            disabled={formik.isSubmitting || isImportRobot}
+          />
+          <InputError
+            error={formik.errors.robotName}
+            touched={formik.touched.robotName}
+          />
         </div>
-        <InputText
-          {...formik.getFieldProps("robotName")}
-          className="!text-sm"
-          disabled={formik.isSubmitting || isImportRobot}
-        />
-        <InputError
-          error={formik.errors.robotName}
-          touched={formik.touched.robotName}
-        />
-      </div>
-      {/* RobotName */}
+        {/* RobotName */}
 
-      {/* RobotType */}
+        {/* RobotType */}
 
-      <div className="flex flex-col gap-1.5">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-          Robot Type:
-          <InfoTip
-            content="
+        <div className="flex flex-col gap-1.5">
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+            Robot Type:
+            <InfoTip
+              content="
              Robot Type"
-          />
-        </div>
-        <div className="flex gap-6">
-          {[
-            {
-              name: "Virtual Robot",
-              isVirtualRobot: true,
-              disabled: isImportRobot,
-            },
-            {
-              name: "Hybrid Robot",
-              isVirtualRobot: false,
-              disabled: isImportRobot,
-            },
-          ]?.map((robotType: any, index: number) => (
-            <div
-              key={index}
-              className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-full  ${
-                formik.values?.isVirtualRobot === robotType?.isVirtualRobot
-                  ? "border-layer-primary-600 shadow"
-                  : "border-layer-light-100"
-              } transition-all duration-300
-               `}
-              onClick={() => {
-                robotType?.disabled
-                  ? toast.error("You can't change robot type in update mode")
-                  : formik.setFieldValue(
-                      "isVirtualRobot",
-                      robotType?.isVirtualRobot
-                    );
-              }}
-            >
-              <div className="flex flex-col items-center gap-2">
-                <span className="text-xs text-layer-light-800">
-                  {robotType?.name}
-                </span>
-              </div>
-              <div className="absolute inset-0 flex items-start justify-end p-2"></div>
-            </div>
-          ))}
-        </div>
-        <InputError error={formik?.errors?.instance} touched={true} />
-      </div>
-
-      {/* RobotType */}
-
-      {/* PhysicalInstance */}
-      {!formik.values?.isVirtualRobot &&
-      Array.isArray(responsePhysicalInstances) ? (
-        responsePhysicalInstances?.length > 0 ? (
-          <div className="flex flex-col gap-1.5">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-              Physical Instances:
-              <InfoTip
-                content="
-             Regions are the cloud regions that you can use to create your cloud instance."
-              />
-            </div>
-            <div className="flex gap-6">
-              {responsePhysicalInstances?.map(
-                (instance: any, index: number) => (
-                  <div
-                    key={index}
-                    className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-40  ${
-                      formik.values?.physicalInstanceName === instance?.name
-                        ? "border-layer-primary-600 shadow"
-                        : "border-layer-light-100"
-                    } transition-all duration-300
-               `}
-                    onClick={() => {
-                      isImportRobot
-                        ? toast.error(
-                            "You can't change physical instance in update mode"
-                          )
-                        : formik.setFieldValue(
-                            "physicalInstanceName",
-                            instance?.name
-                          );
-                    }}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="text-xs text-layer-light-800">
-                        {instance?.name}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 flex items-start justify-end p-2"></div>
-                  </div>
-                )
-              )}
-            </div>
-            <InputError
-              error={
-                formik?.errors?.instance || formik.errors?.physicalInstance
-              }
-              touched={true}
             />
           </div>
-        ) : (
-          <div className="relative h-8">
-            <SidebarInfo text="You need to create a physical instance first" />
-          </div>
-        )
-      ) : (
-        !formik.values?.isVirtualRobot && (
-          <div className="relative h-8">
-            <img
-              className="w-12 mx-auto"
-              src="/svg/general/loading.svg"
-              alt="Loading..."
-            />
-          </div>
-        )
-      )}
-      {/* PhysicalInstance */}
-
-      {/* ROS Distro */}
-      <div className="flex flex-col gap-3">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-          Ros Distrobutions
-          <InfoTip
-            content="
-          ROS Distributions are the versions of ROS that are installed on the robot. Each ROS distribution is independent of the other, meaning that you can use multiple ROS distributions on the same robot."
-          />
-          :
-        </div>
-        <div className="flex gap-4">
-          {["IRON", "HUMBLE", "GALACTIC", "FOXY"]?.map(
-            (item: string, index: number) => (
+          <div className="flex gap-6">
+            {[
+              {
+                name: "Virtual Robot",
+                isVirtualRobot: true,
+                disabled: isImportRobot,
+              },
+              {
+                name: "Hybrid Robot",
+                isVirtualRobot: false,
+                disabled: isImportRobot,
+              },
+            ]?.map((robotType: any, index: number) => (
               <div
                 key={index}
-                className={`relative flex items-center gap-1 border-2 p-2 rounded cursor-pointer w-full justify-center ${
-                  formik.values.rosDistros.includes(item)
+                className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-full  ${
+                  formik.values?.isVirtualRobot === robotType?.isVirtualRobot
                     ? "border-layer-primary-600 shadow"
                     : "border-layer-light-100"
-                } transition-all duration-300`}
-                onClick={(e: any) => {
-                  if (isImportRobot) {
-                    return toast.error(
-                      "You can't change ros distro in update mode"
-                    );
-                  }
-
-                  const { rosDistros } = formik.values;
-
-                  if (rosDistros.includes(item)) {
-                    formik.setFieldValue(
-                      "rosDistros",
-                      rosDistros.filter((ros: string) => ros !== item)
-                    );
-                  } else if (
-                    (item === "HUMBLE" || item === "IRON") &&
-                    (rosDistros.includes("GALACTIC") ||
-                      rosDistros.includes("FOXY"))
-                  ) {
-                    toast.error(
-                      "You can't select Humble with Galactic or Foxy"
-                    );
-                  } else if (
-                    (item === "GALACTIC" || item === "FOXY") &&
-                    (rosDistros.includes("IRON") ||
-                      rosDistros.includes("HUMBLE"))
-                  ) {
-                    toast.error(
-                      "You can't select Galactic or Foxy with Humble or Iron"
-                    );
-                  } else {
-                    formik.setFieldValue("rosDistros", [...rosDistros, item]);
-                  }
+                } transition-all duration-300
+               `}
+                onClick={() => {
+                  robotType?.disabled
+                    ? toast.error("You can't change robot type in update mode")
+                    : formik.setFieldValue(
+                        "isVirtualRobot",
+                        robotType?.isVirtualRobot
+                      );
                 }}
               >
                 <div className="flex flex-col items-center gap-2">
-                  <img
-                    className="h-12"
-                    src={`/svg/ros/${stringSlugify(item)}.svg`}
-                    alt={item}
-                    style={{
-                      filter: `grayscale(${handleRosDistroFilter(item)})`,
-                    }}
-                  />
-                  <span className="text-[0.68rem] text-layer-light-700 text-center">
-                    ROS2{" "}
-                    {item === "FOXY"
-                      ? "Foxy"
-                      : item === "HUMBLE"
-                      ? "Humble"
-                      : item === "GALACTIC"
-                      ? "Galactic"
-                      : item === "IRON" && "Iron"}
+                  <span className="text-xs text-layer-light-800">
+                    {robotType?.name}
                   </span>
                 </div>
-                {formik.values.rosDistros.includes(item) && (
-                  <div className="absolute inset-0 flex items-start justify-end p-2">
-                    <MdVerified size={16} className="!text-primary" />
-                  </div>
+                <div className="absolute inset-0 flex items-start justify-end p-2"></div>
+              </div>
+            ))}
+          </div>
+          <InputError error={formik?.errors?.instance} touched={true} />
+        </div>
+
+        {/* RobotType */}
+
+        {/* PhysicalInstance */}
+        {!formik.values?.isVirtualRobot &&
+        Array.isArray(responsePhysicalInstances) ? (
+          responsePhysicalInstances?.length > 0 ? (
+            <div className="flex flex-col gap-1.5">
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                Physical Instances:
+                <InfoTip
+                  content="
+             Regions are the cloud regions that you can use to create your cloud instance."
+                />
+              </div>
+              <div className="flex gap-6">
+                {responsePhysicalInstances?.map(
+                  (instance: any, index: number) => (
+                    <div
+                      key={index}
+                      className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-40  ${
+                        formik.values?.physicalInstanceName === instance?.name
+                          ? "border-layer-primary-600 shadow"
+                          : "border-layer-light-100"
+                      } transition-all duration-300
+               `}
+                      onClick={() => {
+                        isImportRobot
+                          ? toast.error(
+                              "You can't change physical instance in update mode"
+                            )
+                          : formik.setFieldValue(
+                              "physicalInstanceName",
+                              instance?.name
+                            );
+                      }}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <span className="text-xs text-layer-light-800">
+                          {instance?.name}
+                        </span>
+                      </div>
+                      <div className="absolute inset-0 flex items-start justify-end p-2"></div>
+                    </div>
+                  )
                 )}
               </div>
-            )
-          )}
-        </div>
-        <InputError error={formik?.errors?.rosDistros} touched={true} />
-      </div>
-      {/* ROS Distro */}
+              <InputError
+                error={
+                  formik?.errors?.instance || formik.errors?.physicalInstance
+                }
+                touched={true}
+              />
+            </div>
+          ) : (
+            <div className="relative h-8">
+              <SidebarInfo text="You need to create a physical instance first" />
+            </div>
+          )
+        ) : (
+          !formik.values?.isVirtualRobot && (
+            <div className="relative h-8">
+              <img
+                className="w-12 mx-auto"
+                src="/svg/general/loading.svg"
+                alt="Loading..."
+              />
+            </div>
+          )
+        )}
+        {/* PhysicalInstance */}
 
-      <div className="flex flex-col gap-5 py-4">
-        {/* Seperator */}
-        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
-        {/* Seperator */}
-
-        {/* Robot Storage */}
-        <div className="flex gap-2">
+        {/* ROS Distro */}
+        <div className="flex flex-col gap-3">
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-            Robot Storage
+            Ros Distrobutions
             <InfoTip
               content="
+          ROS Distributions are the versions of ROS that are installed on the robot. Each ROS distribution is independent of the other, meaning that you can use multiple ROS distributions on the same robot."
+            />
+            :
+          </div>
+          <div className="flex gap-4">
+            {["IRON", "HUMBLE", "GALACTIC", "FOXY"]?.map(
+              (item: string, index: number) => (
+                <div
+                  key={index}
+                  className={`relative flex items-center gap-1 border-2 p-2 rounded cursor-pointer w-full justify-center ${
+                    formik.values.rosDistros.includes(item)
+                      ? "border-layer-primary-600 shadow"
+                      : "border-layer-light-100"
+                  } transition-all duration-300`}
+                  onClick={(e: any) => {
+                    if (isImportRobot) {
+                      return toast.error(
+                        "You can't change ros distro in update mode"
+                      );
+                    }
+
+                    const { rosDistros } = formik.values;
+
+                    if (rosDistros.includes(item)) {
+                      formik.setFieldValue(
+                        "rosDistros",
+                        rosDistros.filter((ros: string) => ros !== item)
+                      );
+                    } else if (
+                      (item === "HUMBLE" || item === "IRON") &&
+                      (rosDistros.includes("GALACTIC") ||
+                        rosDistros.includes("FOXY"))
+                    ) {
+                      toast.error(
+                        "You can't select Humble with Galactic or Foxy"
+                      );
+                    } else if (
+                      (item === "GALACTIC" || item === "FOXY") &&
+                      (rosDistros.includes("IRON") ||
+                        rosDistros.includes("HUMBLE"))
+                    ) {
+                      toast.error(
+                        "You can't select Galactic or Foxy with Humble or Iron"
+                      );
+                    } else {
+                      formik.setFieldValue("rosDistros", [...rosDistros, item]);
+                    }
+                  }}
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    <img
+                      className="h-12"
+                      src={`/svg/ros/${stringSlugify(item)}.svg`}
+                      alt={item}
+                      style={{
+                        filter: `grayscale(${handleRosDistroFilter(item)})`,
+                      }}
+                    />
+                    <span className="text-[0.68rem] text-layer-light-700 text-center">
+                      ROS2{" "}
+                      {item === "FOXY"
+                        ? "Foxy"
+                        : item === "HUMBLE"
+                        ? "Humble"
+                        : item === "GALACTIC"
+                        ? "Galactic"
+                        : item === "IRON" && "Iron"}
+                    </span>
+                  </div>
+                  {formik.values.rosDistros.includes(item) && (
+                    <div className="absolute inset-0 flex items-start justify-end p-2">
+                      <MdVerified size={16} className="!text-primary" />
+                    </div>
+                  )}
+                </div>
+              )
+            )}
+          </div>
+          <InputError error={formik?.errors?.rosDistros} touched={true} />
+        </div>
+        {/* ROS Distro */}
+
+        <div className="flex flex-col gap-5 py-4">
+          {/* Seperator */}
+          <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+          {/* Seperator */}
+
+          {/* Robot Storage */}
+          <div className="flex gap-2">
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+              Robot Storage
+              <InfoTip
+                content="
           Storage is the amount of disk space available to the robot. This is where the robot's files and data are stored. The storage is persistent, meaning that it will not be deleted when the robot is shut down."
-            />
-            : ({formik?.values?.robotStorage}GB)
-          </div>
-          <input
-            min="20"
-            max="100"
-            type="range"
-            autoComplete="off"
-            {...formik.getFieldProps("robotStorage")}
-            className="w-full"
-            style={{
-              appearance: "auto",
-              padding: "0px",
-              color: "#AC2DFE",
-              accentColor: "currentcolor",
-            }}
-            disabled={formik.isSubmitting || isImportRobot}
-          />
-        </div>
-        {/* Robot Storage */}
-
-        {/* Seperator */}
-        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
-        {/* Seperator */}
-
-        {/* Robot Services */}
-        <div className="flex items-center justify-between">
-          {/* Code Editor */}
-          <div className="flex items-center gap-1">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-              Code Editor (IDE)
-              <InfoTip
-                content="
-          The IDE is a web-based code editor that allows you to write code for your robot. The IDE is accessible from any device with a web browser, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
               />
-              :
-            </div>
-            <InputToggle
-              checked={formik?.values?.isEnabledIde}
-              onChange={(e: any) => {
-                formik.setFieldValue("isEnabledIde", e);
-              }}
-            />
-          </div>
-          {/* Code Editor */}
-
-          {/* ROS2 Bridge */}
-          <div className="flex items-center gap-1">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-              ROS2 Bridge
-              <InfoTip
-                content="
-          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot, such as RViz, RQT, and ROS2 tools.
-          "
-              />
-              :
-            </div>
-            <InputToggle
-              checked={formik?.values?.isEnabledROS2Bridge}
-              onChange={(e: any) => {
-                formik.setFieldValue("isEnabledROS2Bridge", e);
-              }}
-            />
-          </div>
-          {/* ROS2 Bridge */}
-
-          {/* Remote Desktop */}
-          <div className="flex items-center gap-1">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-              Remote Desktop
-              <InfoTip
-                rightTip
-                content="
-          Remote Desktop allows you to connect to your robot's desktop from any device with a web browser. This allows you to use your robot's desktop from anywhere, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
-              />
-              :
-            </div>
-            <InputToggle
-              checked={formik?.values?.remoteDesktop?.isEnabled}
-              onChange={(e: any) => {
-                formik.setFieldValue("remoteDesktop.isEnabled", e);
-              }}
-            />
-          </div>
-          {/* Remote Desktop */}
-        </div>
-        {/* Robot Services */}
-
-        {formik?.values?.remoteDesktop?.isEnabled && (
-          <div className="flex gap-2 pt-2">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-              Session Count
-              <InfoTip
-                content="
-          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
-          "
-              />
-              : ({formik?.values?.remoteDesktop?.sessionCount} User)
+              : ({formik?.values?.robotStorage}GB)
             </div>
             <input
-              min="1"
-              max="10"
+              min="20"
+              max="100"
               type="range"
               autoComplete="off"
-              {...formik.getFieldProps("remoteDesktop.sessionCount")}
+              {...formik.getFieldProps("robotStorage")}
               className="w-full"
               style={{
                 appearance: "auto",
@@ -544,75 +447,176 @@ export default function CreateRobotFormStep1({
               disabled={formik.isSubmitting || isImportRobot}
             />
           </div>
-        )}
+          {/* Robot Storage */}
 
-        {/* Seperator */}
-        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
-        {/* Seperator */}
+          {/* Seperator */}
+          <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+          {/* Seperator */}
 
-        {/* GPU Resource */}
-        <div className="flex items-center gap-1">
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-            GPU Usage enabled for Cloud Instance
-            <InfoTip content="GPU Usage enabled for Cloud Instance" />:
-          </div>
-          <InputToggle
-            checked={formik?.values?.gpuEnabledForCloudInstance}
-            onChange={(e: any) => {
-              formik.setFieldValue("gpuEnabledForCloudInstance", e);
-            }}
-            disabled={formik.isSubmitting || isImportRobot}
-          />
-        </div>
-        {/* GPU Resource */}
-
-        {/* Seperator */}
-        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
-        {/* Seperator */}
-
-        {/* Development Mode */}
-        <div className="flex items-center gap-1">
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-            Development Mode
-            <InfoTip
-              content="
-            Development Mode"
-            />
-            :
-          </div>
-          <InputToggle
-            checked={formik?.values?.isDevelopmentMode}
-            onChange={(e: any) => {
-              formik.setFieldValue("isDevelopmentMode", e);
-            }}
-            disabled={formik.isSubmitting || isImportRobot}
-          />
-        </div>
-        {/* Development Mode */}
-
-        {/* Seperator */}
-        <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
-        {/* Seperator */}
-      </div>
-
-      <div className="flex gap-4">
-        <Button
-          disabled={!formik.isValid || formik.isSubmitting}
-          type="submit"
-          className="!h-11 text-xs"
-          text={
-            formik.isSubmitting ? (
-              <img
-                className="w-10 h-10"
-                src="/svg/general/loading.svg"
-                alt="loading"
+          {/* Robot Services */}
+          <div className="flex items-center justify-between">
+            {/* Code Editor */}
+            <div className="flex items-center gap-1">
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                Code Editor (IDE)
+                <InfoTip
+                  content="
+          The IDE is a web-based code editor that allows you to write code for your robot. The IDE is accessible from any device with a web browser, and it is pre-configured with all the tools you need to develop code for your robot.
+          "
+                />
+                :
+              </div>
+              <InputToggle
+                checked={formik?.values?.isEnabledIde}
+                onChange={(e: any) => {
+                  formik.setFieldValue("isEnabledIde", e);
+                }}
               />
-            ) : (
-              `Next Step`
-            )
-          }
-        />
-      </div>
-    </form>
+            </div>
+            {/* Code Editor */}
+
+            {/* ROS2 Bridge */}
+            <div className="flex items-center gap-1">
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                ROS2 Bridge
+                <InfoTip
+                  content="
+          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot, such as RViz, RQT, and ROS2 tools.
+          "
+                />
+                :
+              </div>
+              <InputToggle
+                checked={formik?.values?.isEnabledROS2Bridge}
+                onChange={(e: any) => {
+                  formik.setFieldValue("isEnabledROS2Bridge", e);
+                }}
+              />
+            </div>
+            {/* ROS2 Bridge */}
+
+            {/* Remote Desktop */}
+            <div className="flex items-center gap-1">
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                Remote Desktop
+                <InfoTip
+                  rightTip
+                  content="
+          Remote Desktop allows you to connect to your robot's desktop from any device with a web browser. This allows you to use your robot's desktop from anywhere, and it is pre-configured with all the tools you need to develop code for your robot.
+          "
+                />
+                :
+              </div>
+              <InputToggle
+                checked={formik?.values?.remoteDesktop?.isEnabled}
+                onChange={(e: any) => {
+                  formik.setFieldValue("remoteDesktop.isEnabled", e);
+                }}
+              />
+            </div>
+            {/* Remote Desktop */}
+          </div>
+          {/* Robot Services */}
+
+          {formik?.values?.remoteDesktop?.isEnabled && (
+            <div className="flex gap-2 pt-2">
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                Session Count
+                <InfoTip
+                  content="
+          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
+          "
+                />
+                : ({formik?.values?.remoteDesktop?.sessionCount} User)
+              </div>
+              <input
+                min="1"
+                max="10"
+                type="range"
+                autoComplete="off"
+                {...formik.getFieldProps("remoteDesktop.sessionCount")}
+                className="w-full"
+                style={{
+                  appearance: "auto",
+                  padding: "0px",
+                  color: "#AC2DFE",
+                  accentColor: "currentcolor",
+                }}
+                disabled={formik.isSubmitting || isImportRobot}
+              />
+            </div>
+          )}
+
+          {/* Seperator */}
+          <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+          {/* Seperator */}
+
+          {/* GPU Resource */}
+          <div className="flex items-center gap-1">
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+              GPU Usage enabled for Cloud Instance
+              <InfoTip content="GPU Usage enabled for Cloud Instance" />:
+            </div>
+            <InputToggle
+              checked={formik?.values?.gpuEnabledForCloudInstance}
+              onChange={(e: any) => {
+                formik.setFieldValue("gpuEnabledForCloudInstance", e);
+              }}
+              disabled={formik.isSubmitting || isImportRobot}
+            />
+          </div>
+          {/* GPU Resource */}
+
+          {/* Seperator */}
+          <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+          {/* Seperator */}
+
+          {/* Development Mode */}
+          <div className="flex items-center gap-1">
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+              Development Mode
+              <InfoTip
+                content="
+            Development Mode"
+              />
+              :
+            </div>
+            <InputToggle
+              checked={formik?.values?.isDevelopmentMode}
+              onChange={(e: any) => {
+                formik.setFieldValue("isDevelopmentMode", e);
+              }}
+              disabled={formik.isSubmitting || isImportRobot}
+            />
+          </div>
+          {/* Development Mode */}
+
+          {/* Seperator */}
+          <div className="w-full h-0.5 bg-layer-light-100 rounded-lg" />
+          {/* Seperator */}
+        </div>
+
+        <div className="flex gap-4">
+          <Button
+            disabled={!formik.isValid || formik.isSubmitting}
+            type="submit"
+            className="!h-11 text-xs"
+            text={
+              formik.isSubmitting ? (
+                <img
+                  className="w-10 h-10"
+                  src="/svg/general/loading.svg"
+                  alt="loading"
+                />
+              ) : isImportRobot ? (
+                "Update Robot"
+              ) : (
+                `Next Step`
+              )
+            }
+          />
+        </div>
+      </form>
+    </Fragment>
   );
 }

@@ -1,11 +1,12 @@
-import { useKeycloak } from "@react-keycloak/web";
 import React, { ReactElement, useState } from "react";
+import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
+import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
-import Button from "../Button/Button";
-import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
+import { useKeycloak } from "@react-keycloak/web";
 import { TfiReload } from "react-icons/tfi";
-import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
+import Button from "../Button/Button";
+
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
   client: any;

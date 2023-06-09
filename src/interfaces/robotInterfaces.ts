@@ -55,6 +55,7 @@ export interface IRobotLaunchENV {
 export interface IuseCreateRobot {
   robotData: IRobotData;
   setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
+  handleResetRobotForm: () => void;
   handleAddWorkspaceStep: (formik: any) => void;
   handleRemoveWorkspaceStep: (formik: any, workspaceIndex: number) => void;
   handleAddRepositoryToWorkspaceStep: (

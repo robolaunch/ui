@@ -101,7 +101,7 @@ export default function FleetsList({
               : !selectedState?.roboticsCloud
               ? "Robotics Cloud"
               : "Instance"
-          } to view robots.`}
+          } to view fleets.`}
         />
       ) : (
         <Fragment>
@@ -111,6 +111,8 @@ export default function FleetsList({
               src="/svg/general/loading.svg"
               alt="Loading..."
             />
+          ) : responseFleets.length === 0 ? (
+            <SidebarInfo text={`No fleets.`} />
           ) : (
             responseFleets
               ?.filter((fleet: any) => !fleet.fleetName)
