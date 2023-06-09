@@ -20,4 +20,8 @@ export interface IuseFunctions {
     urlRobotName: string | undefined,
     setResponseBuildManagers: any
   ) => void;
+  handleSetterResponseLaunchManagers: (
+    urlRobotName: string | undefined,
+    setResponseLaunchManagers: any
+  ) => void;
 }

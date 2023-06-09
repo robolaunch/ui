@@ -9,6 +9,7 @@ import {
   getFederatedRobot,
   getFederatedRobots,
   getRobotBuildManagers,
+  getRobotLaunchManagers,
 } from "../resources/RobotSlice";
 import { getFederatedFleets } from "../resources/FleetSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
@@ -270,6 +271,40 @@ export default ({ children }: any) => {
     });
   }
 
+  async function handleSetterResponseLaunchManagers(
+    urlRobotName: string,
+    setResponseRobotLaunchManagers: any
+  ) {
+    await dispatch(
+      getRobotLaunchManagers({
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: urlRobotName,
+      })
+    ).then((responseRobotLaunchManagers: any) => {
+      if (
+        Array.isArray(responseRobotLaunchManagers?.payload?.data) &&
+        Array.isArray(
+          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+      ) {
+        setResponseRobotLaunchManagers(
+          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+        );
+      }
+    });
+  }
+
   function navigateTo404() {
     toast.error("The current page does not exist or is not available to you.");
     navigate("/404");
@@ -289,6 +324,7 @@ export default ({ children }: any) => {
         handleSetterResponseRobots,
         handleSetterResponseRobot,
         handleSetterResponseBuildManagers,
+        handleSetterResponseLaunchManagers,
       }}
     >
       {children}
