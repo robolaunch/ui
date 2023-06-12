@@ -5,7 +5,16 @@ export const BarcodeManagementContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children, ros }: any) => {
-  const [barcodeItems, setBarcodeItems] = useState<any[]>([]);
+  const [barcodeItems, setBarcodeItems] = useState<any[]>([
+    {
+      barcodes: ["123", "321", ""],
+      coordinates: { x: -1, y: 1 },
+    },
+    {
+      barcodes: ["ASD", "", "DSA"],
+      coordinates: { x: 1, y: 1 },
+    },
+  ]);
 
   const rosBarcode0 = new ROSLIB.Topic({
     ros: ros,
