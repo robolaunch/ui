@@ -41,7 +41,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
 
   if (isRobolaunchState) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <div
           className={`w-2.5 h-2.5 rounded-full 
         ${states?.[`${state}`]?.color || "bg-red-500"}`}
@@ -71,7 +71,8 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "Connecting" ||
         state === "WaitingForMulticast" ||
         state === "WaitingForCredentials" ||
-        state === "ConfiguringEnvironment" ? (
+        state === "ConfiguringEnvironment" ||
+        state === "CreatingDevelopmentSuite" ? (
         <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
       ) : (
         <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />

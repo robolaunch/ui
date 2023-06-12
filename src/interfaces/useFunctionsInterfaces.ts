@@ -11,10 +11,11 @@ export interface IuseFunctions {
   handleSetterResponseRoboticsClouds: (setResponseRoboticsClouds: any) => void;
   handleSetterResponseInstances: (setResponseInstances: any) => void;
   handleSetterResponseFleets: (setResponseFleets: any) => void;
+  handleSetterResponseFleet: (setResponseFleet: any) => void;
   handleSetterResponseRobots: (setResponseRobots: any) => void;
   handleSetterResponseRobot: (
     urlRobotName: string | undefined,
-    setResponseRobot: any
+    setResponseRobot?: any
   ) => void;
   handleSetterResponseBuildManager: (
     urlRobotName: string | undefined,

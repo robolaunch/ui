@@ -11,8 +11,12 @@ import {
   getRobotBuildManagers,
   getRobotLaunchManagers,
 } from "../resources/RobotSlice";
-import { getFederatedFleets } from "../resources/FleetSlice";
+import {
+  getFederatedFleetStatus,
+  getFederatedFleets,
+} from "../resources/FleetSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
+import useCreateRobot from "../hooks/useCreateRobot";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -21,10 +25,17 @@ export default ({ children }: any) => {
   const dispatch = useAppDispatch();
   const { selectedState, setSelectedState } = useSidebar();
   const navigate = useNavigate();
+  const { setRobotData } = useCreateRobot();
 
   async function handleSetterCurrentOrganization(urlOrganizationName: string) {
     await dispatch(getOrganizations()).then((organizationsResponse: any) => {
-      if (organizationsResponse?.payload?.data) {
+      if (
+        organizationsResponse?.payload?.data &&
+        organizationsResponse?.payload?.data?.find(
+          (organization: any) =>
+            organization?.organizationName === `org_${urlOrganizationName}`
+        )
+      ) {
         setSelectedState((prevState: any) => {
           return {
             ...prevState,
@@ -171,6 +182,42 @@ export default ({ children }: any) => {
     });
   }
 
+  async function handleSetterResponseFleet(setResponseFleet: any) {
+    await dispatch(
+      getFederatedFleetStatus({
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+      })
+    ).then(async (responseFederatedFleet: any) => {
+      if (
+        Array.isArray(responseFederatedFleet?.payload?.data) &&
+        Array.isArray(
+          responseFederatedFleet?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseFederatedFleet?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        Array.isArray(
+          responseFederatedFleet?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedFleets
+        ) &&
+        responseFederatedFleet?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+      ) {
+        await setResponseFleet(
+          responseFederatedFleet?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+        );
+      } else {
+        navigateTo404();
+      }
+    });
+  }
+
   async function handleSetterResponseRobots(setResponseRobots: any) {
     await dispatch(
       getFederatedRobots({
@@ -202,7 +249,7 @@ export default ({ children }: any) => {
 
   async function handleSetterResponseRobot(
     urlRobotName: string,
-    setResponseRobot: any
+    setResponseRobot?: any
   ) {
     await dispatch(
       getFederatedRobot({
@@ -227,10 +274,70 @@ export default ({ children }: any) => {
         responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
           ?.robolaunchFederatedRobots[0]
       ) {
-        await setResponseRobot(
-          responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-            ?.robolaunchFederatedRobots[0]
-        );
+        setRobotData((prevState: any) => {
+          return {
+            ...prevState,
+            step1: {
+              ...prevState.step1,
+              robotName:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.name,
+              isVirtualRobot: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                ?.physicalInstance
+                ? false
+                : true,
+              physicalInstanceName:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.physicalInstance,
+              robotStorage:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.storageAmount,
+              isEnabledIde:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.ideEnabled,
+              isEnabledROS2Bridge:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.bridgeEnabled,
+              remoteDesktop: {
+                isEnabled:
+                  responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                    ?.vdiEnabled,
+                sessionCount:
+                  responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                    ?.vdiSessionCount,
+              },
+              rosDistros:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.distributions,
+              gpuEnabledForCloudInstance:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.vdiGpuResource > 0
+                  ? true
+                  : false,
+              isDevelopmentMode: false,
+            },
+            step2: {
+              workspaces:
+                responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.robotWorkspaces,
+            },
+          };
+        });
+
+        setResponseRobot &&
+          (await setResponseRobot(
+            responseRobot?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+          ));
       } else {
         navigateTo404();
       }
@@ -263,6 +370,23 @@ export default ({ children }: any) => {
         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
       ) {
+        // setRobotData((prevState: any) => {
+        //   return {
+        //     ...prevState,
+
+        //     step3: {
+        //       buildManagerName:
+        //         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
+        //           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+        //           ?.buildManagerName,
+        //       robotBuildSteps:
+        //         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
+        //           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+        //           ?.robotBuildSteps,
+        //     },
+        //   };
+        // });
+
         setResponseRobotBuildManager(
           responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
             ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
@@ -326,6 +450,7 @@ export default ({ children }: any) => {
         handleSetterResponseRoboticsClouds,
         handleSetterResponseInstances,
         handleSetterResponseFleets,
+        handleSetterResponseFleet,
         handleSetterResponseRobots,
         handleSetterResponseRobot,
         handleSetterResponseBuildManager,

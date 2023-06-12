@@ -1,21 +1,21 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
+import UpdateRobotLaunchsForm from "../components/UpdateRobotLaunchsForm/UpdateRobotLaunchsForm";
+import UpdateRobotDetailsForm from "../components/UpdateRobotDetailsForm/UpdateRobotDetailsForm";
 import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
+import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRobotBuildsForm";
 import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
 import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
-import WorkspaceUpdateForm from "../components/SidebarLists/WorkspaceUpdateForm";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
-import LaunchUpdateForm from "../components/SidebarLists/LaunchUpdateForm";
-import BuildUpdateForm from "../components/SidebarLists/BuildUpdateForm";
-import RobotUpdateForm from "../components/SidebarLists/RobotUpdateForm";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import stringCapitalization from "../helpers/stringCapitalization";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
-import FleetsList from "../components/SidebarLists/FleetsList";
 import RobotsList from "../components/SidebarLists/RobotsList";
+import FleetsList from "../components/SidebarLists/FleetsList";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
@@ -128,23 +128,53 @@ export default function SidebarContentLayout(): ReactElement {
           if (!selectedState?.organization) {
             setSidebarState((prev: any) => ({ ...prev, page: "organization" }));
             return toast.error(
-              "If you want to create a robotics cloud, you need to select an organization first."
+              `If you want to create a robotics cloud, you need to select an organization first.`
             );
           }
           break;
         case "instance":
-          if (!selectedState?.organization || !selectedState?.roboticsCloud) {
-            setSidebarState((prev: any) => ({
-              ...prev,
-              page: !selectedState?.organization
-                ? "organization"
-                : "robotics cloud",
-            }));
-            return toast.error(
-              `If you want to create a cloud instance, you need to select a ${
-                !selectedState?.organization ? "organization" : "robotics cloud"
-              } first.`
-            );
+          if (sidebarState?.instanceTab === "Cloud Instances") {
+            if (!selectedState?.organization || !selectedState?.roboticsCloud) {
+              setSidebarState((prev: any) => ({
+                ...prev,
+                page: !selectedState?.organization
+                  ? "organization"
+                  : "robotics cloud",
+              }));
+              return toast.error(
+                `If you want to create a cloud instance, you need to select a ${
+                  !selectedState?.organization
+                    ? "organization"
+                    : "robotics cloud"
+                } first.`
+              );
+            }
+          } else if (sidebarState?.instanceTab === "Physical Instances") {
+            if (
+              !selectedState?.organization ||
+              !selectedState?.roboticsCloud ||
+              !selectedState?.instance
+            ) {
+              setSidebarState((prev: any) => ({
+                ...prev,
+                page: !selectedState?.organization
+                  ? "organization"
+                  : !selectedState?.roboticsCloud
+                  ? "robotics cloud"
+                  : "instance",
+                instanceTab: "Cloud Instances",
+              }));
+
+              return toast.error(
+                `If you want to create a physical instance, you need to select a ${
+                  !selectedState?.organization
+                    ? "organization"
+                    : !selectedState?.roboticsCloud
+                    ? "robotics cloud"
+                    : "instance"
+                } first.`
+              );
+            }
           }
           break;
         case "fleet":
@@ -162,15 +192,13 @@ export default function SidebarContentLayout(): ReactElement {
                 : "instance",
             }));
             return toast.error(
-              `
-              If you want to create a fleet, you need to select a ${
+              `If you want to create a fleet, you need to select a ${
                 !selectedState?.organization
                   ? "organization"
                   : !selectedState?.roboticsCloud
                   ? "robotics cloud"
                   : "instance"
-              } first.
-              `
+              } first.`
             );
           }
           break;
@@ -192,8 +220,7 @@ export default function SidebarContentLayout(): ReactElement {
                 : "fleet",
             }));
             return toast.error(
-              `
-              If you want to create a robot, you need to select a ${
+              `If you want to create a robot, you need to select a ${
                 !selectedState?.organization
                   ? "organization"
                   : !selectedState?.roboticsCloud
@@ -201,8 +228,7 @@ export default function SidebarContentLayout(): ReactElement {
                   : !selectedState?.instance
                   ? "instance"
                   : "fleet"
-              } first.
-              `
+              } first.`
             );
           }
       }
@@ -223,7 +249,8 @@ export default function SidebarContentLayout(): ReactElement {
         }`}
       >
         <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
-        {!sidebarState?.isCreateMode && sidebarState.page !== "robot" && (
+        {!url?.robotName ||
+        (!sidebarState?.isCreateMode && sidebarState.page !== "robot") ? (
           <Fragment>
             <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
               {itemCount}
@@ -238,11 +265,12 @@ export default function SidebarContentLayout(): ReactElement {
               style={{ fontSize: "1rem" }}
             />
           </Fragment>
-        )}
+        ) : null}
       </div>
-      {!sidebarState?.isCreateMode && sidebarState.page !== "robot" && (
+      {!url?.robotName ||
+      (!sidebarState?.isCreateMode && sidebarState.page !== "robot") ? (
         <FilteredTags />
-      )}
+      ) : null}
       <div
         className={`h-full overflow-auto scrollbar-hide mb-4 ${
           sidebarState?.page && "py-6 px-2"
@@ -304,16 +332,14 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-
                 if (url?.robotName) {
                   return (
-                    <RobotUpdateForm
+                    <UpdateRobotDetailsForm
                       reload={reload}
                       setItemCount={setItemCount}
                     />
                   );
                 }
-
                 return (
                   <RobotsList reload={reload} setItemCount={setItemCount} />
                 );
@@ -321,7 +347,6 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-
                 return (
                   <WorkspaceUpdateForm
                     reload={reload}
@@ -332,9 +357,8 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-
                 return (
-                  <BuildUpdateForm
+                  <UpdateRobotBuildsForm
                     reload={reload}
                     setItemCount={setItemCount}
                   />
@@ -343,9 +367,8 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-
                 return (
-                  <LaunchUpdateForm
+                  <UpdateRobotLaunchsForm
                     reload={reload}
                     setItemCount={setItemCount}
                   />
