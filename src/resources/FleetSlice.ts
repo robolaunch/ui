@@ -57,9 +57,9 @@ export const getFederatedFleetStatus = createAsyncThunk(
           name: values?.roboticsCloudName,
           cloudInstances: [
             {
-              instanceId: "i-045fbc86880c38054",
-              region: "eu-central-1",
-              robolaunchFederatedFleets: [{ name: "test-fleet" }],
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedFleets: [{ name: values?.fleetName }],
             },
           ],
         },
