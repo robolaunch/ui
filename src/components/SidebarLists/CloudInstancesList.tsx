@@ -79,12 +79,18 @@ export default function CloudInstancesList({
                 type="instance"
                 name={instance?.name}
                 description={
-                  <div className="flex gap-4">
-                    <StateCell state={instance?.instanceState} />
-                    <StateCell
-                      state={instance?.instanceCloudState}
-                      isRobolaunchState
-                    />
+                  <div className="flex gap-2">
+                    <div className="flex gap-1.5">
+                      <span className="font-medium">RS:</span>
+                      <StateCell
+                        state={instance?.instanceCloudState}
+                        isRobolaunchState
+                      />
+                    </div>
+                    <div className="flex gap-1.5">
+                      <span className="font-medium">PS:</span>
+                      <StateCell state={instance?.instanceState} />
+                    </div>
                   </div>
                 }
                 url={`/${organizationNameViewer({

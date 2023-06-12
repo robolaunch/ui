@@ -4,15 +4,15 @@ import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
-interface ILaunchUpdateForm {
+interface IUpdateRobotLaunchsForm {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function LaunchUpdateForm({
+export default function UpdateRobotLaunchsForm({
   reload,
   setItemCount,
-}: ILaunchUpdateForm): ReactElement {
+}: IUpdateRobotLaunchsForm): ReactElement {
   const [responseRobotLaunchManagers, setResponseRobotLaunchManagers] =
     useState<any>(undefined);
   const { handleSetterResponseLaunchManagers } = useFunctions();
