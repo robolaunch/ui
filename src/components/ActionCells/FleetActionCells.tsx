@@ -19,18 +19,8 @@ export default function FleetActionCells({
     <Fragment>
       <div className="card flex gap-4 float-right">
         <Button
-          className={`!w-8 !h-8 !bg-transparent !border  ${
-            data?.fleet?.fleetStatus === "Ready"
-              ? "!border-red-600"
-              : "!border-layer-dark-100"
-          }`}
-          text={
-            data?.fleet?.fleetStatus === "Ready" ? (
-              <BiTrash className="text-red-600" />
-            ) : (
-              <img src="/svg/general/loading.svg" alt="loading" />
-            )
-          }
+          className={`!w-8 !h-8 !bg-transparent !border !border-red-600`}
+          text={<BiTrash className="text-red-600" />}
           onClick={() => setIsDeleteModalVisible(true)}
         />
       </div>
