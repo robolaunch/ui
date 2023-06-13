@@ -69,6 +69,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "Waiting Connection" ||
         state === "Registered" ||
         state === "Connecting" ||
+        state === "CreatingBridge" ||
         state === "WaitingForMulticast" ||
         state === "WaitingForCredentials" ||
         state === "ConfiguringEnvironment" ||

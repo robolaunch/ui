@@ -6,8 +6,8 @@ import Barcode from "react-barcode";
 import BarcodeManagement3D from "./BarcodeManagement3D";
 
 export default function BarcodeManagement(): ReactElement {
-  const [activeTab, setActiveTab] = useState<"2D" | "3D">("2D");
-  const { barcodeItems }: any = useBarcodeManagement();
+  const [activeTab, setActiveTab] = useState<"2D" | "3D">("3D");
+  const { barcodeItems, setBarcodeItems }: any = useBarcodeManagement();
 
   return (
     <CardLayout className="!relative h-[36rem]">
