@@ -742,6 +742,22 @@ video {
   bottom: 5rem;
 }
 
+.bottom-7{
+  bottom: 1.75rem;
+}
+
+.bottom-10{
+  bottom: 2.5rem;
+}
+
+.right-10{
+  right: 2.5rem;
+}
+
+.bottom-12{
+  bottom: 3rem;
+}
+
 .-z-10{
   z-index: -10;
 }
@@ -1091,6 +1107,10 @@ video {
   height: 5rem;
 }
 
+.h-\[10\]{
+  height: 10;
+}
+
 .max-h-\[40rem\]{
   max-height: 40rem;
 }
@@ -1281,6 +1301,10 @@ video {
 
 .w-full{
   width: 100%;
+}
+
+.w-16{
+  width: 4rem;
 }
 
 .min-w-\[8rem\]{

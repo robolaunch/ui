@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useRef, useState, useMemo } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls, useCursor } from "@react-three/drei";
 import create from "zustand";
 import useBarcodeManagement from "../../../hooks/useBarcodeManagement";
 import Barcode from "react-barcode";
+import * as THREE from "three";
 
 const useStore = create((set: any) => ({
   target: null,
@@ -15,7 +16,35 @@ function Box(props: any) {
   const [hovered, setHovered] = useState(false);
   useCursor(hovered);
 
-  console.log(props);
+  const meshRef: any = useRef();
+
+  const { camera } = useThree();
+  const frustum: any = useMemo(() => new THREE.Frustum(), []);
+  const [isBoxInFrustum, setIsBoxInFrustum] = useState(true);
+
+  useFrame(() => {
+    if (!meshRef.current) return; // Geçerlilik kontrolü
+
+    meshRef.current.updateMatrixWorld(); // Kutunun dünya koordinatlarındaki pozisyonunu güncelle
+
+    frustum.setFromMatrix(
+      new THREE.Matrix4().multiplyMatrices(
+        camera.projectionMatrix,
+        camera.matrixWorldInverse
+      )
+    ); // Kameraların görüş açısına ait frustum'ı oluştur
+
+    // Kutunun dünya koordinatlarındaki pozisyonunu frustum ile kontrol et
+    if (frustum.intersectsObject(meshRef.current)) {
+      setIsBoxInFrustum(true);
+    } else {
+      setIsBoxInFrustum(false);
+    }
+  });
+
+  if (!isBoxInFrustum) {
+    return null; // Render nothing if the box is outside the frustum
+  }
 
   return (
     <mesh
@@ -23,184 +52,133 @@ function Box(props: any) {
       onClick={(e) => setTarget(e.object)}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
-      scale={0.98}
     >
-      <boxGeometry />
+      <boxBufferGeometry args={[1, props.barcodes?.length, 1]} />
       <meshNormalMaterial />
-      <group>
-        {/* Front Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
+      {hovered && (
+        <group>
+          {/* Front Face */}
           <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
+            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
             position={[0, 0.1, 0.51]}
             transform
             occlude
           >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
+            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return (
+                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
+                  {barcode ? (
+                    <Barcode
+                      fontSize={16}
+                      height={24}
+                      width={0.5}
+                      value={barcode}
+                      background="transparent"
+                    />
+                  ) : (
+                    "None"
+                  )}
+                </div>
+              );
+            })}
           </Html>
-        </mesh>
+          {/* Front Face */}
 
-        {/* Back Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
+          {/* Back Face */}
           <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
+            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
             position={[0, 0.1, -0.505]}
             transform
             occlude
           >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
+            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return (
+                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
+                  {barcode ? (
+                    <Barcode
+                      fontSize={16}
+                      height={24}
+                      width={0.5}
+                      value={barcode}
+                      background="transparent"
+                    />
+                  ) : (
+                    "None"
+                  )}
+                </div>
+              );
+            })}
           </Html>
-        </mesh>
+          {/* Back Face */}
 
-        {/* Right Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
+          {/* Right Face */}
           <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
+            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
             position={[0.505, 0.1, 0]}
             rotation={[0, Math.PI / 2, 0]}
             transform
             occlude
           >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
+            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return (
+                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
+                  {barcode ? (
+                    <Barcode
+                      fontSize={16}
+                      height={24}
+                      width={0.5}
+                      value={barcode}
+                      background="transparent"
+                    />
+                  ) : (
+                    "None"
+                  )}
+                </div>
+              );
+            })}
           </Html>
-        </mesh>
+          {/* Right Face */}
 
-        {/* Left Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
+          {/* Left Face */}
           <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
+            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
             position={[-0.505, 0.1, 0]}
             rotation={[0, -Math.PI / 2, 0]}
             transform
             occlude
           >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
+            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return (
+                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
+                  {barcode ? (
+                    <Barcode
+                      fontSize={16}
+                      height={24}
+                      width={0.5}
+                      value={barcode}
+                      background="transparent"
+                    />
+                  ) : (
+                    "None"
+                  )}
+                </div>
+              );
+            })}
           </Html>
-        </mesh>
-
-        {/* Top Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
-          <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
-            distanceFactor={1.5}
-            position={[0, 0.505, 0.1]}
-            rotation={[Math.PI / 2, 0, 0]}
-            transform
-            occlude
-          >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
-          </Html>
-        </mesh>
-
-        {/* Bottom Face */}
-        <mesh>
-          <boxGeometry />
-          <meshNormalMaterial />
-          <Html
-            className="relative inset-0 flex items-center justify-center w-full h-full"
-            distanceFactor={1.5}
-            position={[0, -0.505, -0.1]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            transform
-            occlude
-          >
-            <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-              {props?.barcode ? (
-                <Barcode
-                  fontSize={16}
-                  height={24}
-                  width={0.5}
-                  value={props?.barcode}
-                  background="transparent"
-                />
-              ) : (
-                <span className="text-xs">None</span>
-              )}
-            </div>
-          </Html>
-        </mesh>
-      </group>
+          {/* Left Face */}
+        </group>
+      )}
     </mesh>
   );
 }
 
 function Plane(props: any) {
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
       <planeBufferGeometry args={[2500, 2500]} />
       <meshStandardMaterial color="#FFF" />
     </mesh>
@@ -209,23 +187,20 @@ function Plane(props: any) {
 
 export default function App() {
   const { barcodeItems } = useBarcodeManagement();
+
   return (
-    <Canvas dpr={[1, 2]}>
+    <Canvas dpr={[1, 2]} gl={{ powerPreference: "high-performance" }}>
       {barcodeItems?.map((barcodeItem: any, barcodeItemIndex: number) => {
-        return barcodeItem?.barcodes?.map(
-          (barcode: any, barcodeIndex: number) => {
-            return (
-              <Box
-                key={`${barcodeItemIndex}-${barcodeIndex}`}
-                position={[
-                  barcodeItem?.coordinates?.x,
-                  barcodeIndex,
-                  barcodeItem?.coordinates?.y,
-                ]}
-                barcode={barcode}
-              />
-            );
-          }
+        return (
+          <Box
+            key={`${barcodeItemIndex}`}
+            position={[
+              barcodeItem?.coordinates?.x,
+              barcodeItem?.barcodes?.length / 2,
+              barcodeItem?.coordinates?.y,
+            ]}
+            barcodes={barcodeItem?.barcodes}
+          />
         );
       })}
 
