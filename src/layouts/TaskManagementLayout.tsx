@@ -54,7 +54,7 @@ export default function TaskManagementLayout({
           case "Mission Management":
             return <MissionManagement ros={ros} />;
           case "Barcode Management":
-            return <BarcodeManagement />;
+            return <BarcodeManagement ros={ros} />;
         }
       })()}
     </Fragment>

@@ -33,14 +33,37 @@ export default ({ children, ros }: any) => {
   ]);
 
   useEffect(() => {
-    const a = Array.apply(null, Array(5000)).map((_, index: number) => {
+    const a = Array.apply(null, Array(50)).map((_, index: number) => {
       return {
         barcodes: ["ASD", "", "DSA"],
         coordinates: { x: index, y: index },
       };
     });
 
+    const b = Array.apply(null, Array(50)).map((_, index: number) => {
+      return {
+        barcodes: ["ASD", "", "DSA"],
+        coordinates: { x: -index, y: 0 },
+      };
+    });
+
+    const c = Array.apply(null, Array(50)).map((_, index: number) => {
+      return {
+        barcodes: ["ASD", "", "DSA"],
+        coordinates: { x: 0, y: -index },
+      };
+    });
+    const d = Array.apply(null, Array(50)).map((_, index: number) => {
+      return {
+        barcodes: ["ASD", "", "DSA"],
+        coordinates: { x: -index, y: -index },
+      };
+    });
+
     setBarcodeItems((prevBarcodeItems: any) => [...prevBarcodeItems, ...a]);
+    setBarcodeItems((prevBarcodeItems: any) => [...prevBarcodeItems, ...b]);
+    setBarcodeItems((prevBarcodeItems: any) => [...prevBarcodeItems, ...c]);
+    setBarcodeItems((prevBarcodeItems: any) => [...prevBarcodeItems, ...d]);
   }, []);
 
   const rosBarcode0 = new ROSLIB.Topic({

@@ -1,10 +1,17 @@
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Html, OrbitControls, useCursor } from "@react-three/drei";
+import {
+  Html,
+  MapControls,
+  OrbitControls,
+  OrthographicCamera,
+  useCursor,
+} from "@react-three/drei";
 import create from "zustand";
 import useBarcodeManagement from "../../../hooks/useBarcodeManagement";
 import Barcode from "react-barcode";
 import * as THREE from "three";
+import ROSLIB from "roslib";
 
 const useStore = create((set: any) => ({
   target: null,
@@ -52,6 +59,7 @@ function Box(props: any) {
       onClick={(e) => setTarget(e.object)}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
+      scale={0.6}
     >
       <boxBufferGeometry args={[1, props.barcodes?.length, 1]} />
       <meshNormalMaterial />
@@ -185,7 +193,31 @@ function Plane(props: any) {
   );
 }
 
-export default function App() {
+export default function App({ ros }: any) {
+  const [robotLocation, setRobotLocation] = useState({
+    x: 5,
+    y: -4,
+    z: 0,
+  });
+
+  useEffect(() => {
+    var poseTopic = new ROSLIB.Topic({
+      ros: ros,
+      name: "/robot_position",
+      messageType: "geometry_msgs/msg/PoseStamped",
+    });
+
+    poseTopic.subscribe(function (pose: any) {
+      if (
+        pose?.pose?.position?.x.toFixed(3) !== robotLocation?.x.toFixed(3) &&
+        pose?.pose?.position?.y.toFixed(3) !== robotLocation?.y.toFixed(3)
+      ) {
+        setRobotLocation(pose?.pose?.position);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const { barcodeItems } = useBarcodeManagement();
 
   return (
@@ -196,18 +228,22 @@ export default function App() {
             key={`${barcodeItemIndex}`}
             position={[
               barcodeItem?.coordinates?.x,
-              barcodeItem?.barcodes?.length / 2,
+              barcodeItem?.barcodes?.length / 3.33,
               barcodeItem?.coordinates?.y,
             ]}
             barcodes={barcodeItem?.barcodes}
           />
         );
       })}
-
-      <directionalLight position={[10, 10, 5]} />
+      <Box
+        color="red"
+        scale={0.1}
+        position={[robotLocation?.x, 0.5, robotLocation?.y]}
+      />
+      <directionalLight position={[10, 15, 5]} />
       <Plane />
 
-      <OrbitControls makeDefault />
+      <MapControls makeDefault enableDamping />
     </Canvas>
   );
 }

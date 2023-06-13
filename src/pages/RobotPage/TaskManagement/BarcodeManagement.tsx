@@ -7,7 +7,7 @@ import BarcodeManagement3D from "./BarcodeManagement3D";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen } from "react-icons/bs";
 
-export default function BarcodeManagement(): ReactElement {
+export default function BarcodeManagement({ ros }: any): ReactElement {
   const [activeTab, setActiveTab] = useState<"2D" | "3D">("3D");
   const { barcodeItems } = useBarcodeManagement();
   const handleFullScreen = useFullScreenHandle();
@@ -77,7 +77,7 @@ export default function BarcodeManagement(): ReactElement {
               </TransformComponent>
             </TransformWrapper>
           ) : (
-            <BarcodeManagement3D />
+            <BarcodeManagement3D ros={ros} />
           )}
         </Fragment>
       </FullScreen>
