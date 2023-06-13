@@ -14,6 +14,7 @@ import InputError from "../InputError/InputError";
 import InfoTip from "../InfoTip/InfoTip";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import { useParams } from "react-router-dom";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -31,23 +32,22 @@ export default function CreateRobotFormStep3({
     handleCreateRobotNextStep,
     selectedState,
   } = useSidebar();
-  const { handleSetterResponseRobot } = useFunctions();
+  const { handleSetterResponseRobot, handleSetterResponseBuildManager } =
+    useFunctions();
+  const url = useParams();
 
   useEffect(
     () => {
-      if (isImportRobot) {
-        handleSetterResponseRobot(
-          robotData?.step1?.robotName,
-          setResponseRobot
-        );
-      } else {
+      if (!responseRobot && isImportRobot) {
+        handleSetterResponseRobot(url?.robotName, setResponseRobot);
+
+        handleSetterResponseBuildManager(url?.robotName);
+      } else if (!responseRobot) {
         setTimeout(() => {
-          if (!responseRobot) {
-            handleSetterResponseRobot(
-              robotData?.step1?.robotName,
-              setResponseRobot
-            );
-          }
+          handleSetterResponseRobot(
+            robotData?.step1?.robotName,
+            setResponseRobot
+          );
         }, 10000);
       }
 
@@ -141,6 +141,11 @@ export default function CreateRobotFormStep3({
 
   return (
     <CreateRobotFormLoader
+      loadingText={
+        isImportRobot
+          ? "Loading..."
+          : "Please wait while we create your robot. This may take a few minutes."
+      }
       isLoading={
         !responseRobot ||
         responseRobot?.robotClusters.filter(

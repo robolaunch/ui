@@ -36,7 +36,7 @@ export default function CreateRobotFormStep1({
   const { handleSetterResponseRobot } = useFunctions();
 
   useEffect(() => {
-    if (!responseRobot) {
+    if (!responseRobot && isImportRobot) {
       handleSetterResponseRobot(url?.robotName, setResponseRobot);
     }
   }, []);
@@ -115,7 +115,7 @@ export default function CreateRobotFormStep1({
         <CreateRobotFormLoader
           loadingText="Loading..."
           loadingItems={[]}
-          isLoading={!responseRobot}
+          isLoading={isImportRobot ? !responseRobot : false}
         >
           <form
             onSubmit={formik.handleSubmit}
