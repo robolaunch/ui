@@ -12,9 +12,36 @@ export default ({ children, ros }: any) => {
     },
     {
       barcodes: ["ASD", "", "DSA"],
+      coordinates: { x: -1, y: 2 },
+    },
+    {
+      barcodes: ["ASD", "", "DSA"],
+      coordinates: { x: -1, y: 3 },
+    },
+    {
+      barcodes: ["ASD", "", "DSA"],
       coordinates: { x: 1, y: 1 },
     },
+    {
+      barcodes: ["ASD", "", "DSA"],
+      coordinates: { x: 1, y: 2 },
+    },
+    {
+      barcodes: ["ASD", "", "DSA"],
+      coordinates: { x: 1, y: 3 },
+    },
   ]);
+
+  // useEffect(() => {
+  //   const a = Array.apply(null, Array(1000)).map((_, index: number) => {
+  //     return {
+  //       barcodes: ["ASD", "", "DSA"],
+  //       coordinates: { x: index, y: index },
+  //     };
+  //   });
+
+  //   setBarcodeItems(a);
+  // }, []);
 
   const rosBarcode0 = new ROSLIB.Topic({
     ros: ros,

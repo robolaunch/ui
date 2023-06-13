@@ -346,7 +346,7 @@ export default ({ children }: any) => {
 
   async function handleSetterResponseBuildManager(
     urlRobotName: string,
-    setResponseRobotBuildManager: any
+    setResponseRobotBuildManager?: any
   ) {
     await dispatch(
       getRobotBuildManagers({
@@ -370,27 +370,27 @@ export default ({ children }: any) => {
         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
       ) {
-        // setRobotData((prevState: any) => {
-        //   return {
-        //     ...prevState,
+        setRobotData((prevState: any) => {
+          return {
+            ...prevState,
+            step3: {
+              buildManagerName:
+                responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.buildManagerName,
+              robotBuildSteps:
+                responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                  ?.robotBuildSteps,
+            },
+          };
+        });
 
-        //     step3: {
-        //       buildManagerName:
-        //         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
-        //           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-        //           ?.buildManagerName,
-        //       robotBuildSteps:
-        //         responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
-        //           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-        //           ?.robotBuildSteps,
-        //     },
-        //   };
-        // });
-
-        setResponseRobotBuildManager(
-          responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-        );
+        setResponseRobotBuildManager &&
+          setResponseRobotBuildManager(
+            responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+          );
       }
     });
   }
