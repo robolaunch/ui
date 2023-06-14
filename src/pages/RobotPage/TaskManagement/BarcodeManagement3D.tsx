@@ -1,12 +1,6 @@
 import { useRef, useState, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  Html,
-  MapControls,
-  OrbitControls,
-  OrthographicCamera,
-  useCursor,
-} from "@react-three/drei";
+import { Html, MapControls, useCursor } from "@react-three/drei";
 import create from "zustand";
 import useBarcodeManagement from "../../../hooks/useBarcodeManagement";
 import Barcode from "react-barcode";
@@ -242,7 +236,6 @@ export default function App({ ros }: any) {
       />
       <directionalLight position={[10, 15, 5]} />
       <Plane />
-
       <MapControls makeDefault enableDamping />
     </Canvas>
   );
