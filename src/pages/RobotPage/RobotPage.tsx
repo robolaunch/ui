@@ -50,7 +50,7 @@ export default function RobotPage(): ReactElement {
       handleSetterCurrentInstance(url?.instanceName);
     } else if (!selectedState?.fleet) {
       handleSetterCurrentFleet(url?.fleetName);
-    } else {
+    } else if (!responseRobot) {
       handleSetterResponseRobot(url?.robotName, setResponseRobot);
       handleSetterResponseBuildManager(url?.robotName, setResponseBuildManager);
       handleSetterResponseLaunchManagers(
@@ -58,6 +58,24 @@ export default function RobotPage(): ReactElement {
         setResponseLaunchManagers
       );
     }
+
+    const timerResponseRobot = setInterval(() => {
+      responseRobot?.robotCluster?.filter(
+        (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+      )?.length && handleSetterResponseRobot(url?.robotName, setResponseRobot);
+    }, 10000);
+
+    const timerResponseBuildManager = setInterval(() => {
+      responseBuildManager?.robotClusters?.filter(
+        (robot: any) => robot?.buildManagerStatus !== "EnvironmentReady"
+      )?.length && handleSetterResponseRobot(url?.robotName, setResponseRobot);
+    }, 10000);
+
+    return () => {
+      clearInterval(timerResponseRobot);
+      clearInterval(timerResponseBuildManager);
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedState, url]);
 
