@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormStep4 from "../CreateForms/CreateRobotFormStep4";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
 
 interface IUpdateRobotLaunchsForm {
   reload: boolean;
@@ -17,7 +17,6 @@ export default function UpdateRobotLaunchsForm({
     useState<any>(undefined);
   const { handleSetterResponseLaunchManagers } = useFunctions();
   const url = useParams();
-  const { setRobotData } = useCreateRobot();
 
   useEffect(() => {
     if (!responseRobotLaunchManagers) {
@@ -25,47 +24,30 @@ export default function UpdateRobotLaunchsForm({
         url?.robotName,
         setResponseRobotLaunchManagers
       );
-    } else {
-      setRobotData((prevState: any) => {
-        return {
-          ...prevState,
-
-          step4: responseRobotLaunchManagers?.map((launchManager: any) => {
-            return {
-              launchManagerName: launchManager?.robotLaunchSteps[0]?.name,
-              robotLaunchSteps: launchManager?.robotLaunchSteps.map(
-                (step: any) => {
-                  return {
-                    workspace: step?.workspace,
-                    entryPointType: "custom",
-                    entryPointCmd: step?.entryPointCmd,
-                    robotLmEnvs: step?.robotLmEnvs,
-                    instancesName: step?.robotClusters.map((cluster: any) => {
-                      return cluster?.name;
-                    }),
-                  };
-                }
-              ),
-            };
-          }),
-        };
-      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleSetterResponseLaunchManagers, responseRobotLaunchManagers, url]);
+  }, [responseRobotLaunchManagers, url]);
 
   return (
     <Fragment>
       {!responseRobotLaunchManagers ? (
-        <img
-          className="w-12 mx-auto pt-10"
-          src="/svg/general/loading.svg"
-          alt="Loading..."
-        />
+        <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+          <img
+            className="w-12 mx-auto pt-10"
+            src="/svg/general/loading.svg"
+            alt="Loading..."
+          />
+          <span className="text-sm text-layer-light-900 pb-4">Loading...</span>
+        </div>
       ) : (
         responseRobotLaunchManagers?.map((step: any, index: number) => {
-          console.log("HER LAUNCH STEP", step);
-          return <CreateRobotFormStep4 isImportRobot key={index} />;
+          return (
+            <UpdateLaunchAccordion id={index} key={index}>
+              <div className="p-4">
+                <CreateRobotFormStep4 isImportRobot key={index} />
+              </div>
+            </UpdateLaunchAccordion>
+          );
         })
       )}
     </Fragment>

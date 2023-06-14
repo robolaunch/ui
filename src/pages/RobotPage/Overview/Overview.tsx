@@ -4,11 +4,18 @@ import InformationWidget from "../../../components/InformationWidget/Information
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
+import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
 interface IOverview {
   responseRobot: any;
+  responseBuildManager: any;
+  responseLaunchManagers: any;
 }
 
-export default function Overview({ responseRobot }: IOverview): ReactElement {
+export default function Overview({
+  responseRobot,
+  responseBuildManager,
+  responseLaunchManagers,
+}: IOverview): ReactElement {
   const url = useParams();
 
   return (
@@ -38,7 +45,13 @@ export default function Overview({ responseRobot }: IOverview): ReactElement {
       </div>
 
       <div className="col-span-9">
-        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full"></div>
+        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full">
+          <RobotStatusWidget
+            responseRobot={responseRobot}
+            responseBuildManager={responseBuildManager}
+            responseLaunchManagers={responseLaunchManagers}
+          />
+        </div>
       </div>
     </div>
   );

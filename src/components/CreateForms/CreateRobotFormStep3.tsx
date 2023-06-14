@@ -42,7 +42,7 @@ export default function CreateRobotFormStep3({
         handleSetterResponseRobot(url?.robotName, setResponseRobot);
 
         handleSetterResponseBuildManager(url?.robotName);
-      } else if (!responseRobot) {
+      } else if (!responseRobot && !isImportRobot) {
         setTimeout(() => {
           handleSetterResponseRobot(
             robotData?.step1?.robotName,

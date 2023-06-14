@@ -22,6 +22,10 @@ export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [responseBuildManager, setResponseBuildManager] =
+    useState<any>(undefined);
+  const [responseLaunchManagers, setResponseLaunchManagers] =
+    useState<any>(undefined);
   const [topicList, setTopicList] = useState<any>([]);
   const { selectedState } = useSidebar();
   const [ros, setRos] = useState<any>(null);
@@ -33,6 +37,8 @@ export default function RobotPage(): ReactElement {
     handleSetterCurrentInstance,
     handleSetterCurrentFleet,
     handleSetterResponseRobot,
+    handleSetterResponseBuildManager,
+    handleSetterResponseLaunchManagers,
   } = useFunctions();
 
   useEffect(() => {
@@ -46,6 +52,11 @@ export default function RobotPage(): ReactElement {
       handleSetterCurrentFleet(url?.fleetName);
     } else {
       handleSetterResponseRobot(url?.robotName, setResponseRobot);
+      handleSetterResponseBuildManager(url?.robotName, setResponseBuildManager);
+      handleSetterResponseLaunchManagers(
+        url?.robotName,
+        setResponseLaunchManagers
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedState, url]);
@@ -120,7 +131,13 @@ export default function RobotPage(): ReactElement {
         {(() => {
           switch (activeTab) {
             case "Overview":
-              return <Overview responseRobot={responseRobot} />;
+              return (
+                <Overview
+                  responseRobot={responseRobot}
+                  responseBuildManager={responseBuildManager}
+                  responseLaunchManagers={responseLaunchManagers}
+                />
+              );
             case "Task Management":
               return (
                 <TaskManagementContext ros={ros}>

@@ -4,12 +4,14 @@ import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import LoadingBar from "react-top-loading-bar";
 import useSidebar from "../hooks/useSidebar";
+import { toast } from "sonner";
 
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState } = useSidebar();
+  const url = useLocation();
 
   function handleCloseSidebar() {
-    if (sidebarState?.isOpen) {
+    if (sidebarState?.isOpen && !sidebarState?.isCreateMode) {
       setSidebarState((previousState: any) => {
         return {
           ...previousState,
@@ -18,10 +20,10 @@ export default function PrivateLayout(): ReactElement {
           isCreateMode: false,
         };
       });
+    } else if (sidebarState?.isOpen && sidebarState?.isCreateMode) {
+      toast.error("You can't close the sidebar while create mode is active.");
     }
   }
-
-  const url = useLocation();
 
   const [progress, setProgress] = useState<number>(0);
   useEffect(() => {
@@ -40,6 +42,10 @@ export default function PrivateLayout(): ReactElement {
             width: "calc(100% - 5rem)",
             marginLeft: "5rem",
             minHeight: "100vh",
+            cursor:
+              sidebarState?.isOpen && sidebarState?.isCreateMode
+                ? "not-allowed"
+                : "default",
           }}
           onClick={() => handleCloseSidebar()}
         >

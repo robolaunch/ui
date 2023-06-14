@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { IRobotLaunchSteps } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps, useFormik } from "formik";
@@ -10,7 +10,6 @@ import useSidebar from "../../hooks/useSidebar";
 import { createRobotLaunchManager } from "../../resources/RobotSlice";
 import { BsPlusCircle } from "react-icons/bs";
 import Button from "../Button/Button";
-import { MdVerified } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
@@ -51,7 +50,7 @@ export default function CreateRobotFormStep4({
           launchManagerName: values?.launchManagerName,
           robotLaunchSteps: values?.robotLaunchSteps,
         })
-      ).then((responseRobotLaunchManager: any) => {
+      ).then(() => {
         toast.success(
           "Robot Launch Manager created successfully. Redirecting to robot page..."
         );
@@ -74,17 +73,19 @@ export default function CreateRobotFormStep4({
       }
 
       const timer = setInterval(() => {
-        handleSetterResponseBuildManager(
-          robotData?.step1?.robotName,
-          setResponseBuildManager
-        );
+        !isImportRobot &&
+          handleSetterResponseBuildManager(
+            robotData?.step1?.robotName,
+            setResponseBuildManager
+          );
       }, 10000);
 
       if (
-        responseBuildManager?.robotClusters.filter(
+        !responseBuildManager?.robotClusters.filter(
           (robotCluster: any) =>
             robotCluster?.buildManagerStatus !== "EnvironmentReady"
-        )?.length < 1
+        )?.length &&
+        !isImportRobot
       ) {
         clearInterval(timer);
       }
@@ -131,6 +132,11 @@ export default function CreateRobotFormStep4({
           status: item?.buildManagerStatus,
         };
       })}
+      loadingText={
+        isImportRobot
+          ? "Loading..."
+          : `Please wait while we create your robot. This may take a few minutes.`
+      }
     >
       <form
         onSubmit={formik.handleSubmit}
