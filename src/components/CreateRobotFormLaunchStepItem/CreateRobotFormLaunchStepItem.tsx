@@ -190,6 +190,7 @@ export default function CreateRobotFormLaunchStepItem({
           ]?.robotLmEnvs?.map((env: any, envIndex: number) => {
             return (
               <CreateRobotFormEnvItem
+                key={envIndex}
                 formik={formik}
                 launchStepIndex={launchStepIndex}
                 envIndex={envIndex}
