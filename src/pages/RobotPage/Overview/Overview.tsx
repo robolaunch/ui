@@ -35,23 +35,19 @@ export default function Overview({
         />
       </div>
       <div className="col-span-5">
-        <UtilizationWidget title="Team" />
+        <RobotStatusWidget
+          responseRobot={responseRobot}
+          responseBuildManager={responseBuildManager}
+          responseLaunchManagers={responseLaunchManagers}
+        />
       </div>
 
       <div className="col-span-3 row-span-2">
-        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full">
-          <ActivitiesWidget />
-        </div>
+        <ActivitiesWidget />
       </div>
 
       <div className="col-span-9">
-        <div className="bg-layer-light-50 rounded-lg shadow-lg w-full h-full">
-          <RobotStatusWidget
-            responseRobot={responseRobot}
-            responseBuildManager={responseBuildManager}
-            responseLaunchManagers={responseLaunchManagers}
-          />
-        </div>
+        <UtilizationWidget title="Robot" />
       </div>
     </div>
   );
