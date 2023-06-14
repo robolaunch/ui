@@ -397,7 +397,7 @@ export default ({ children }: any) => {
 
   async function handleSetterResponseLaunchManagers(
     urlRobotName: string,
-    setResponseRobotLaunchManagers: any
+    setResponseRobotLaunchManagers?: any
   ) {
     await dispatch(
       getRobotLaunchManagers({
@@ -426,10 +426,41 @@ export default ({ children }: any) => {
         responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots
       ) {
-        setResponseRobotLaunchManagers(
-          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots
-        );
+        setRobotData((prevState: any) => {
+          return {
+            ...prevState,
+
+            step4:
+              responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.map(
+                (launchManager: any) => {
+                  return {
+                    launchManagerName: launchManager?.robotLaunchSteps[0]?.name,
+                    robotLaunchSteps: launchManager?.robotLaunchSteps.map(
+                      (step: any) => {
+                        return {
+                          workspace: step?.workspace,
+                          entryPointType: "custom",
+                          entryPointCmd: step?.entryPointCmd,
+                          robotLmEnvs: step?.robotLmEnvs,
+                          instancesName: step?.robotClusters.map(
+                            (cluster: any) => {
+                              return cluster?.name;
+                            }
+                          ),
+                        };
+                      }
+                    ),
+                  };
+                }
+              ),
+          };
+        });
+
+        setResponseRobotLaunchManagers &&
+          setResponseRobotLaunchManagers(
+            responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedRobots
+          );
       }
     });
   }

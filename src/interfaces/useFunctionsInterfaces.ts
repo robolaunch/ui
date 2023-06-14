@@ -23,6 +23,6 @@ export interface IuseFunctions {
   ) => void;
   handleSetterResponseLaunchManagers: (
     urlRobotName: string | undefined,
-    setResponseLaunchManagers: any
+    setResponseLaunchManagers?: any
   ) => void;
 }
