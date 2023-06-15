@@ -15,6 +15,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -27,11 +28,7 @@ export default function CreateRobotFormStep3({
     useCreateRobot();
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const {
-    handleCreateRobotPreviousStep,
-    handleCreateRobotNextStep,
-    selectedState,
-  } = useSidebar();
+  const { handleCreateRobotNextStep, selectedState } = useSidebar();
   const { handleSetterResponseRobot, handleSetterResponseBuildManager } =
     useFunctions();
   const url = useParams();
@@ -109,6 +106,7 @@ export default function CreateRobotFormStep3({
         })
       ),
     }),
+
     initialValues: robotData?.step3,
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
@@ -124,10 +122,15 @@ export default function CreateRobotFormStep3({
           buildManagerName: values?.buildManagerName,
           robotBuildSteps: values?.robotBuildSteps,
         })
-      ).then(async (res: any) => {
-        formik.setSubmitting(false);
-        handleCreateRobotNextStep();
-      });
+      );
+
+      if (isImportRobot) {
+        toast.success("Robot updated successfully");
+        return window.location.reload();
+      }
+
+      formik.setSubmitting(false);
+      handleCreateRobotNextStep();
     },
   });
 
@@ -201,34 +204,25 @@ export default function CreateRobotFormStep3({
           size={22}
           className="h-14 mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
         />
-        <div className="flex gap-6">
-          {!isImportRobot && (
-            <Button
-              onClick={handleCreateRobotPreviousStep}
-              type="reset"
-              className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
-              text={`Previous Step`}
-            />
-          )}
-          <Button
-            type="submit"
-            disabled={!formik?.isValid || formik.isSubmitting}
-            className="!h-11 text-xs"
-            text={
-              formik.isSubmitting ? (
-                <img
-                  className="w-10 h-10"
-                  src="/svg/general/loading.svg"
-                  alt="loading"
-                />
-              ) : isImportRobot ? (
-                `Update Build Configration`
-              ) : (
-                `Next Step`
-              )
-            }
-          />
-        </div>
+
+        <Button
+          type="submit"
+          disabled={!formik?.isValid || formik.isSubmitting}
+          className="w-full !h-11 text-xs"
+          text={
+            formik.isSubmitting ? (
+              <img
+                className="w-10 h-10"
+                src="/svg/general/loading.svg"
+                alt="loading"
+              />
+            ) : isImportRobot ? (
+              `Update Build Configration`
+            ) : (
+              `Next Step`
+            )
+          }
+        />
       </form>
     </CreateRobotFormLoader>
   );

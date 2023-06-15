@@ -39,6 +39,7 @@ export default function CreateRobotFormStep1({
     if (!responseRobot && isImportRobot) {
       handleSetterResponseRobot(url?.robotName, setResponseRobot);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const formik = useFormik({
@@ -106,7 +107,11 @@ export default function CreateRobotFormStep1({
       ...robotData,
       step1: formik.values,
     });
-    // eslint-disable-next-line
+
+    if (formik.values.isVirtualRobot) {
+      formik.setFieldValue("physicalInstanceName", "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
   return (
@@ -125,7 +130,7 @@ export default function CreateRobotFormStep1({
             <div>
               <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
                 Robot Name:
-                <InfoTip content="Robot Name" />
+                <InfoTip content="Type a new robot name." />
               </div>
               <InputText
                 {...formik.getFieldProps("robotName")}
@@ -137,10 +142,9 @@ export default function CreateRobotFormStep1({
                 touched={formik.touched.robotName}
               />
             </div>
+            {/* RobotName */}
 
             <Seperator />
-
-            {/* RobotName */}
 
             {/* RobotType */}
             <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
@@ -155,7 +159,7 @@ export default function CreateRobotFormStep1({
             />
             {/* ROS Distro */}
 
-            <div className="flex flex-col gap-5 py-4">
+            <div className="flex flex-col gap-4">
               <Seperator />
 
               {/* Robot Storage */}
@@ -170,15 +174,14 @@ export default function CreateRobotFormStep1({
               {/* Robot Services */}
               <div className="flex items-center justify-between">
                 {/* Code Editor */}
-                <div className="flex items-center gap-1">
+                <div className="flex justify-center items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Code Editor (IDE)
+                    Code Editor (IDE) :
                     <InfoTip
                       content="
           The IDE is a web-based code editor that allows you to write code for your robot. The IDE is accessible from any device with a web browser, and it is pre-configured with all the tools you need to develop code for your robot.
           "
                     />
-                    :
                   </div>
                   <InputToggle
                     checked={formik?.values?.isEnabledIde}
@@ -192,12 +195,11 @@ export default function CreateRobotFormStep1({
                 {/* ROS2 Bridge */}
                 <div className="flex items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    ROS2 Bridge
+                    ROS2 (Bridge) :
                     <InfoTip
                       content="
-          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot, such as RViz, RQT, and ROS2 tools."
+          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot."
                     />
-                    :
                   </div>
                   <InputToggle
                     checked={formik?.values?.isEnabledROS2Bridge}
@@ -211,14 +213,13 @@ export default function CreateRobotFormStep1({
                 {/* Remote Desktop */}
                 <div className="flex items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Remote Desktop
+                    Remote Desktop (VDI) :
                     <InfoTip
                       rightTip
                       content="
           Remote Desktop allows you to connect to your robot's desktop from any device with a web browser. This allows you to use your robot's desktop from anywhere, and it is pre-configured with all the tools you need to develop code for your robot.
           "
                     />
-                    :
                   </div>
                   <InputToggle
                     checked={formik?.values?.remoteDesktop?.isEnabled}
@@ -234,13 +235,13 @@ export default function CreateRobotFormStep1({
               {formik?.values?.remoteDesktop?.isEnabled && (
                 <div className="flex gap-2 pt-2">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Session Count
+                    Session Count ({formik?.values?.remoteDesktop?.sessionCount}{" "}
+                    User) :
                     <InfoTip
                       content="
           Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
           "
                     />
-                    : ({formik?.values?.remoteDesktop?.sessionCount} User)
                   </div>
                   <input
                     min="1"
@@ -267,8 +268,8 @@ export default function CreateRobotFormStep1({
               {/* GPU Resource */}
               <div className="flex items-center gap-1">
                 <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                  GPU Usage enabled for Cloud Instance
-                  <InfoTip content="GPU Usage enabled for Cloud Instance" />:
+                  GPU Usage Enabled for Cloud Instance:
+                  <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
                 </div>
                 <InputToggle
                   checked={formik?.values?.gpuEnabledForCloudInstance}
@@ -287,12 +288,8 @@ export default function CreateRobotFormStep1({
               {/* Development Mode */}
               <div className="flex items-center gap-1">
                 <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                  Development Mode
-                  <InfoTip
-                    content="
-            Development Mode"
-                  />
-                  :
+                  Development Mode:
+                  <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
                 </div>
                 <InputToggle
                   checked={formik?.values?.isDevelopmentMode}
@@ -309,26 +306,24 @@ export default function CreateRobotFormStep1({
               {/* Seperator */}
             </div>
 
-            <div className="flex gap-4">
-              <Button
-                disabled={!formik.isValid || formik.isSubmitting}
-                type="submit"
-                className="!h-11 text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="w-10 h-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    "Update Robot"
-                  ) : (
-                    `Next Step`
-                  )
-                }
-              />
-            </div>
+            <Button
+              disabled={!formik.isValid || formik.isSubmitting}
+              type="submit"
+              className="!h-11 text-xs t-4"
+              text={
+                formik.isSubmitting ? (
+                  <img
+                    className="w-10 h-10"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
+                  />
+                ) : isImportRobot ? (
+                  "Update Robot"
+                ) : (
+                  `Next Step`
+                )
+              }
+            />
           </form>
         </CreateRobotFormLoader>
       }

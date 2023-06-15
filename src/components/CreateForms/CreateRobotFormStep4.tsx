@@ -38,7 +38,7 @@ export default function CreateRobotFormStep4({
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
 
-      dispatch(
+      await dispatch(
         createRobotLaunchManager({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
@@ -50,16 +50,21 @@ export default function CreateRobotFormStep4({
           launchManagerName: values?.launchManagerName,
           robotLaunchSteps: values?.robotLaunchSteps,
         })
-      ).then(() => {
-        toast.success(
-          "Robot Launch Manager created successfully. Redirecting to robot page..."
+      );
+      toast.success(
+        "Robot Launch Manager created successfully. Redirecting to robot page..."
+      );
+
+      if (isImportRobot) {
+        toast.success("Robot updated successfully");
+        return window.location.reload();
+      }
+
+      setTimeout(() => {
+        navigate(
+          `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
         );
-        setTimeout(() => {
-          navigate(
-            `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
-          );
-        }, 1000);
-      });
+      }, 1000);
     },
   });
 
@@ -175,21 +180,13 @@ export default function CreateRobotFormStep4({
             className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer mt-2"
           />
         </div>
-        <div className="flex gap-6">
-          {!isImportRobot && (
-            <Button
-              type="reset"
-              className="!h-11 !bg-layer-light-50 !text-primary border border-primary hover:!bg-layer-primary-100 transition-all duration-500 text-xs"
-              text={`Previous Step`}
-            />
-          )}
-          <Button
-            type="submit"
-            disabled={!formik?.isValid || formik.isSubmitting}
-            className="!h-11 text-xs"
-            text={isImportRobot ? `Update Launch Step` : `Create Robot`}
-          />
-        </div>
+
+        <Button
+          type="submit"
+          disabled={!formik?.isValid || formik.isSubmitting}
+          className="w-full !h-11 text-xs"
+          text={isImportRobot ? `Update Launch Step` : `Create Robot`}
+        />
       </form>
     </CreateRobotFormLoader>
   );
