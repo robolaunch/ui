@@ -3,7 +3,7 @@ import { MdOutlineCancel } from "react-icons/md";
 import useSidebar from "../../hooks/useSidebar";
 
 export default function FilteredTags() {
-  const { selectedState, setSelectedState } = useSidebar();
+  const { setSidebarState, selectedState, setSelectedState } = useSidebar();
 
   return (
     <div className="flex flex-wrap gap-2 pb-4 animate__animated animate__fadeIn">
@@ -19,15 +19,18 @@ export default function FilteredTags() {
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
-            onClick={() =>
+            onClick={() => {
               setSelectedState({
                 ...selectedState,
                 organization: null,
                 roboticsCloud: null,
                 instance: null,
                 fleet: null,
-              })
-            }
+              });
+              setSidebarState((prevState: any) => {
+                return { ...prevState, page: "organization" };
+              });
+            }}
             size={14}
           />
         </div>
@@ -44,14 +47,17 @@ export default function FilteredTags() {
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
-            onClick={() =>
+            onClick={() => {
               setSelectedState({
                 ...selectedState,
                 roboticsCloud: null,
                 instance: null,
                 fleet: null,
-              })
-            }
+              });
+              setSidebarState((prevState: any) => {
+                return { ...prevState, page: "roboticscloud" };
+              });
+            }}
             size={14}
           />
         </div>
@@ -68,13 +74,16 @@ export default function FilteredTags() {
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
-            onClick={() =>
+            onClick={() => {
               setSelectedState({
                 ...selectedState,
                 instance: null,
                 fleet: null,
-              })
-            }
+              });
+              setSidebarState((prevState: any) => {
+                return { ...prevState, page: "instance" };
+              });
+            }}
             size={14}
           />
         </div>
@@ -91,7 +100,12 @@ export default function FilteredTags() {
           </span>
           <MdOutlineCancel
             className="text-layer-secondary-900 cursor-pointer"
-            onClick={() => setSelectedState({ ...selectedState, fleet: null })}
+            onClick={() => {
+              setSelectedState({ ...selectedState, fleet: null });
+              setSidebarState((prevState: any) => {
+                return { ...prevState, page: "fleet" };
+              });
+            }}
             size={14}
           />
         </div>

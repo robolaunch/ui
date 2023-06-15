@@ -13,6 +13,7 @@ import { Editor } from "@monaco-editor/react";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useSidebar from "../../hooks/useSidebar";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -264,14 +265,14 @@ export default function CreateRobotFormBuildStepItem({
         />
 
         {formik.values?.robotBuildSteps?.length > 1 && (
-          <span
+          <CreateRobotFormDeleteButton
             onClick={() => {
               handleRemoveStepFromBuildStep(formik, buildStepIndex);
             }}
-            className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-          >
-            Delete {buildStep?.name ? buildStep.name : `this`} Build Step
-          </span>
+            text={`Delete ${
+              buildStep?.name ? buildStep.name : "this"
+            } Build Step`}
+          />
         )}
       </div>
     </Accordion>

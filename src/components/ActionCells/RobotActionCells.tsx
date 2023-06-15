@@ -15,8 +15,6 @@ export default function RobotActionCells({
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false);
 
-  console.log(data);
-
   return (
     <Fragment>
       <div className="card flex gap-4 float-right">

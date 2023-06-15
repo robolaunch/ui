@@ -12,6 +12,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import CreateRobotFormRepositoryItem from "../CreateRobotFormRepositoryItem/CreateRobotFormRepositoryItem";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import stringCapitalization from "../../helpers/stringCapitalization";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -44,7 +45,7 @@ export default function CreateRobotFormWorkspaceItem({
         <span className="font-medium">
           {workspace.name
             ? workspace?.name + " Workspace"
-            : `Workspace ${workspaceIndex + 1}`}
+            : `Workspace #${workspaceIndex + 1}`}
         </span>
       }
     >
@@ -67,6 +68,7 @@ export default function CreateRobotFormWorkspaceItem({
               `workspaces.${workspaceIndex}.workspaceDistro`
             )}
             placeholder="Workspace Distro"
+            disabled={formik?.isSubmitting}
           >
             <Fragment>
               {!formik?.values?.workspaces[workspaceIndex]?.workspaceDistro && (
@@ -123,14 +125,12 @@ export default function CreateRobotFormWorkspaceItem({
             className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer"
           />
         </div>
-        <span
+        <CreateRobotFormDeleteButton
           onClick={() => {
             handleRemoveWorkspaceStep(formik, workspaceIndex);
           }}
-          className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-        >
-          Delete {workspace?.name ? workspace.name : `this`} Workspace
-        </span>
+          text={`Delete ${workspace?.name ? workspace.name : "this"} Workspace`}
+        />
       </div>
     </Accordion>
   );

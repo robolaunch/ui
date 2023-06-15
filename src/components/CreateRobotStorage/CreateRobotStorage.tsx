@@ -13,12 +13,11 @@ export default function CreateRobotStorage({
   return (
     <div className="flex gap-2">
       <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-        Robot Storage
+        Robot Storage ({formik?.values?.robotStorage} GB) :
         <InfoTip
           content="
-          Storage is the amount of disk space available to the robot. This is where the robot's files and data are stored. The storage is persistent, meaning that it will not be deleted when the robot is shut down."
+          Storage is the amount of disk space available to the robot. This is where the robot's files and data are stored. The storage is persistent, meaning that it will not be deleted when the robot is shut down. If you need more storage, you can not upgrade it later. You will need to create a new robot with the desired storage size."
         />
-        : ({formik?.values?.robotStorage}GB)
       </div>
       <input
         min="20"

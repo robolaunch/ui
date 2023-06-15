@@ -13,6 +13,7 @@ import { BsPlusCircle } from "react-icons/bs";
 import useSidebar from "../../hooks/useSidebar";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import { Editor } from "@monaco-editor/react";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 
 interface ICreateRobotFormLaunchStepItem {
   launchStep: any;
@@ -129,7 +130,6 @@ export default function CreateRobotFormLaunchStepItem({
             touched={true}
           />
         </div>
-
         <CreateRobotFormCodeScope
           virtualInstanceOnChange={(e) => {
             formik.setValues({
@@ -205,14 +205,14 @@ export default function CreateRobotFormLaunchStepItem({
           />
         </div>
         {formik.values?.robotLaunchSteps?.length > 1 && (
-          <span
+          <CreateRobotFormDeleteButton
             onClick={() => {
               handleRemoveStepFromLaunchStep(formik, launchStepIndex);
             }}
-            className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-          >
-            Delete {launchStep?.name ? launchStep.name : `this`} Launch Step
-          </span>
+            text={`Delete ${
+              launchStep?.name ? launchStep.name : `this`
+            } Launch Step`}
+          />
         )}
       </div>
     </Accordion>

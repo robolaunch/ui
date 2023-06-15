@@ -15,6 +15,7 @@ import {
 } from "../../resources/GithubSlice";
 import useGithub from "../../hooks/useGithub";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -139,6 +140,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
               placeholder="Repository"
+              disabled={formik?.isSubmitting}
             >
               <Fragment>
                 {!formik?.values?.workspaces?.[workspaceIndex]
@@ -181,6 +183,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
               placeholder="Repository Branch"
+              disabled={formik?.isSubmitting}
             >
               <Fragment>
                 {!formik?.values?.workspaces?.[workspaceIndex]
@@ -216,18 +219,21 @@ export default function CreateRobotFormRepositoryItem({
             }
           />
         </div>
-        <span
-          onClick={() => {
-            handleRemoveRepositoryFromWorkspaceStep(
-              formik,
-              workspaceIndex,
-              repositoryIndex
-            );
-          }}
-          className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-        >
-          Delete {repository?.name ? repository.name : `this`} Repository
-        </span>
+        {formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
+          ?.length > 1 && (
+          <CreateRobotFormDeleteButton
+            onClick={() => {
+              handleRemoveRepositoryFromWorkspaceStep(
+                formik,
+                workspaceIndex,
+                repositoryIndex
+              );
+            }}
+            text={`Delete ${
+              repository?.name ? repository.name : "this"
+            } Repository`}
+          />
+        )}
       </div>
     </Accordion>
   );

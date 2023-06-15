@@ -1,7 +1,8 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
 import { FiAlertCircle, FiCheckCircle } from "react-icons/fi";
+import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -15,6 +16,44 @@ export default function RobotStatusWidget({
   responseLaunchManagers,
 }: IRobotStatusWidget): ReactElement {
   console.log(responseLaunchManagers);
+  const [responseLaunchManagersFiltered, setResponseLaunchManagersFiltered] =
+    useState<any[]>([]);
+
+  useEffect(() => {
+    setResponseLaunchManagersFiltered(() => {
+      try {
+        return responseLaunchManagers
+          .map((launchManager: any, index: number) => {
+            return launchManager?.robotLaunchSteps?.map(
+              (robotLaunchStep: any) => {
+                return robotLaunchStep?.robotClusters;
+              }
+            );
+          })
+          ?.flat()
+          ?.flat();
+      } catch (error) {
+        return [];
+      }
+    });
+  }, [responseLaunchManagers]);
+
+  useEffect(() => {
+    console.log(responseLaunchManagersFiltered);
+  }, [responseLaunchManagersFiltered]);
+
+  console.log(
+    "ready",
+    responseBuildManager?.robotClusters?.filter(
+      (robot: any) => robot?.buildManagerStatus !== "Ready"
+    )?.length
+  );
+  console.log(
+    "err",
+    responseBuildManager?.robotClusters?.filter(
+      (robot: any) => robot?.buildManagerStatus === "Error"
+    )?.length
+  );
 
   return (
     <WidgetLayout
@@ -24,79 +63,100 @@ export default function RobotStatusWidget({
     >
       <div className="flex items-center justify-around w-full h-full">
         {/* Workspace */}
-        <div className="flex flex-col gap-6 items-center justify-center">
-          <span>Workspace Manager</span>
-          <div className="flex flex-col justify-center items-center gap-2">
-            {!responseRobot ? (
-              <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
-                <img
-                  className="w-12 mx-auto pt-10"
-                  src="/svg/general/loading.svg"
-                  alt="Loading..."
-                />
-              </div>
-            ) : responseRobot?.robotCluster?.filter(
-                (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-              )?.length ? (
-              <FiAlertCircle size={28} className="text-red-500" />
-            ) : (
-              <FiCheckCircle size={28} className="text-green-500" />
-            )}
-            <span className="text-sm">
-              {!responseRobot
-                ? "Loading..."
-                : responseRobot?.robotCluster?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )?.length
-                ? responseRobot?.robotCluster?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )[0]?.robotStatus
-                : "Ready"}
-            </span>
-          </div>
-        </div>
+        <RobotStatusWidgetItem
+          title="Workspace Manager"
+          loading={!responseRobot}
+          state={
+            responseRobot?.robotCluster?.filter(
+              (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+            )?.length
+              ? "warning"
+              : responseRobot?.robotCluster?.filter(
+                  (robot: any) => robot?.robotStatus === "Error"
+                )?.length
+              ? "error"
+              : "success"
+          }
+          stateTextLoading={
+            responseRobot?.robotCluster?.filter(
+              (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+            )?.length
+          }
+          stateText={
+            responseRobot?.robotCluster?.filter(
+              (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+            )?.length
+              ? responseRobot?.robotCluster?.filter(
+                  (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                )[0]
+              : "Ready"
+          }
+        />
         {/* Workspace */}
 
         {/* Build */}
-        <div className="flex flex-col gap-6 items-center justify-center">
-          <span>Build Manager</span>
-          <div className="flex flex-col justify-center items-center gap-2">
-            {!responseBuildManager ? (
-              <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
-                <img
-                  className="w-12 mx-auto pt-10"
-                  src="/svg/general/loading.svg"
-                  alt="Loading..."
-                />
-              </div>
-            ) : responseBuildManager?.robotClusters?.filter(
-                (robot: any) => robot?.buildManagerStatus !== "EnvironmentReady"
-              )?.length ? (
-              <FiAlertCircle size={28} className="text-red-500" />
-            ) : (
-              <FiCheckCircle size={28} className="text-green-500" />
-            )}
-            <span className="text-sm">
-              {!responseBuildManager
-                ? "Loading..."
-                : responseBuildManager?.robotClusters?.filter(
-                    (robot: any) =>
-                      robot?.buildManagerStatus !== "EnvironmentReady"
-                  )?.length
-                ? responseBuildManager?.robotClusters?.filter(
-                    (robot: any) =>
-                      robot?.buildManagerStatus !== "EnvironmentReady"
-                  )[0]?.buildManagerStatus
-                : "Ready"}
-            </span>
-          </div>
-        </div>
+        <RobotStatusWidgetItem
+          title="Build Manager"
+          loading={!responseBuildManager}
+          state={
+            responseBuildManager?.robotClusters?.filter(
+              (robot: any) => robot?.buildManagerStatus !== "Ready"
+            )?.length
+              ? "warning"
+              : responseBuildManager?.robotClusters?.filter(
+                  (robot: any) => robot?.buildManagerStatus === "Error"
+                )?.length
+              ? "error"
+              : "success"
+          }
+          stateTextLoading={
+            responseBuildManager?.robotClusters?.filter(
+              (robot: any) => robot?.buildManagerStatus !== "Ready"
+            )?.length
+          }
+          stateText={
+            responseBuildManager?.robotClusters?.filter(
+              (robot: any) => robot?.buildManagerStatus !== "Ready"
+            )?.length
+              ? responseBuildManager?.robotClusters?.filter(
+                  (robot: any) => robot?.buildManagerStatus !== "Ready"
+                )[0]?.buildManagerStatus
+              : "Ready"
+          }
+        />
         {/* Build */}
 
-        <div className="flex flex-col gap-4">
-          <div>icon</div>
-          <span>Launch Manager</span>
-        </div>
+        {/* Launch */}
+        <RobotStatusWidgetItem
+          title="Launch Manager"
+          loading={!responseBuildManager}
+          state={
+            responseLaunchManagersFiltered.filter(
+              (robot: any) => robot?.launchManagerStatus !== "Ready"
+            )?.length
+              ? "warning"
+              : responseBuildManager?.robotClusters?.filter(
+                  (robot: any) => robot?.launchManagerStatus === "Error"
+                )?.length
+              ? "error"
+              : "success"
+          }
+          stateTextLoading={
+            responseBuildManager?.robotClusters?.filter(
+              (robot: any) => robot?.launchManagerStatus !== "Ready"
+            )?.length
+          }
+          stateText={
+            responseLaunchManagersFiltered?.filter(
+              (robot: any) => robot?.launchManagerStatus !== "Ready"
+            )?.length
+              ? responseLaunchManagersFiltered?.filter(
+                  (robot: any) => robot?.launchManagerStatus !== "Ready"
+                )[0]?.launchManagerStatus
+              : "Ready"
+          }
+        />
+        {/* Launch */}
       </div>
     </WidgetLayout>
   );

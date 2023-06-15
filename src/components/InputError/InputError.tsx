@@ -10,9 +10,9 @@ export default function InputError({
   error,
 }: InterfaceInputError): ReactElement {
   return (
-    <div className="w-full font-light text-xs text-center pt-1 h-2">
+    <div className="flex items-center justify-center py-1">
       {touched && error && (
-        <span className="text-[0.64rem] font-medium text-red-500 italic">
+        <span className="text-[0.64rem] font-medium text-red-400 italic">
           * {error}
         </span>
       )}

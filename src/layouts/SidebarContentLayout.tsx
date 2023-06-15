@@ -1,9 +1,10 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
 import UpdateRobotLaunchsForm from "../components/UpdateRobotLaunchsForm/UpdateRobotLaunchsForm";
 import UpdateRobotDetailsForm from "../components/UpdateRobotDetailsForm/UpdateRobotDetailsForm";
 import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
 import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRobotBuildsForm";
+import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
 import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
 import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
@@ -16,6 +17,7 @@ import stringCapitalization from "../helpers/stringCapitalization";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
+import useCreateRobot from "../hooks/useCreateRobot";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
@@ -24,9 +26,10 @@ import { toast } from "sonner";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
-  const [reload, setReload] = useState<boolean>(false);
-  const [itemCount, setItemCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
+  const [itemCount, setItemCount] = useState<number>(0);
+  const [reload, setReload] = useState<boolean>(false);
+  const { handleResetRobotForm } = useCreateRobot();
   const url = useParams();
 
   useEffect(() => {
@@ -87,39 +90,16 @@ export default function SidebarContentLayout(): ReactElement {
     }
   }
 
-  function titleGenerator() {
-    if (sidebarState?.page === "roboticscloud") {
-      return "Robotics Clouds";
-    }
-    if (sidebarState?.page === "instance") {
-      if (sidebarState?.instanceTab === "Cloud Instances") {
-        return "Cloud Instances";
-      }
-      return "Physical Instances";
-    }
-    switch (sidebarState?.page) {
-      case "robot":
-        if (url?.robotName) {
-          return `${url.robotName} Robot Details`;
-        }
-        return sidebarState?.isCreateMode ? "Robot Details" : "Robots";
-      case "workspacesmanager":
-        return "Robot Workspace Configuration";
-      case "buildsmanager":
-        return "Robot Build Configuration";
-      case "launchsmanager":
-        return "Robot Launch Configuration";
-    }
-
-    return stringCapitalization({
-      str: sidebarState?.page + "s",
-    });
-  }
-
   function handleCreateButton() {
     if (sidebarState?.isCreateMode) {
       setSidebarState((prev: any) => ({
         ...prev,
+        page:
+          prev?.page === "workspacesmanager" ||
+          prev?.page === "buildsmanager" ||
+          prev?.page === "launchsmanager"
+            ? "robot"
+            : prev?.page,
         isCreateMode: false,
       }));
     } else {
@@ -230,11 +210,31 @@ export default function SidebarContentLayout(): ReactElement {
                   : "fleet"
               } first.`
             );
+          } else {
+            handleResetRobotForm();
           }
       }
 
-      setSidebarState((prev: any) => ({ ...prev, isCreateMode: true }));
+      setSidebarState((prev: any) => ({
+        ...prev,
+
+        isCreateMode: true,
+      }));
     }
+  }
+
+  function handleShowDetails() {
+    if (
+      !sidebarState.isCreateMode &&
+      (sidebarState.page === "organization" ||
+        sidebarState.page === "roboticscloud" ||
+        sidebarState.page === "instance" ||
+        sidebarState.page === "fleet" ||
+        (sidebarState.page === "robot" && !url?.robotName))
+    ) {
+      return true;
+    }
+    return false;
   }
 
   return (
@@ -243,37 +243,18 @@ export default function SidebarContentLayout(): ReactElement {
         url?.robotName ? "px-8 pt-8 pb-2" : "p-8"
       }`}
     >
-      <div
-        className={`flex gap-4 items-center ${
-          sidebarState?.isCreateMode ? "pb-8" : " pb-4"
-        }`}
-      >
-        <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
-        {!url?.robotName ||
-        (!sidebarState?.isCreateMode && sidebarState.page !== "robot") ? (
-          <Fragment>
-            <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
-              {itemCount}
-            </span>
-            <i
-              onClick={() => {
-                setReload(!reload);
-              }}
-              className={`pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 ${
-                loading && "animate-spin"
-              }`}
-              style={{ fontSize: "1rem" }}
-            />
-          </Fragment>
-        ) : null}
-      </div>
-      {!url?.robotName ||
-      (!sidebarState?.isCreateMode && sidebarState.page !== "robot") ? (
-        <FilteredTags />
-      ) : null}
+      <SidebarContentHeader
+        handleReload={() => {
+          setReload(!reload);
+        }}
+        itemCount={itemCount}
+        loading={loading}
+        handleShowDetails={handleShowDetails}
+      />
+      {handleShowDetails() && <FilteredTags />}
       <div
         className={`h-full overflow-auto scrollbar-hide mb-4 ${
-          sidebarState?.page && "py-6 px-2"
+          !sidebarState?.isCreateMode ? "py-6 px-2" : "p-1"
         }`}
       >
         <div className="h-full flex flex-col gap-4">

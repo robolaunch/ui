@@ -6,7 +6,6 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { getPhysicalInstances } from "../../resources/InstanceSlice";
-import Seperator from "../Seperator/Seperator";
 
 interface ICreateRobotTypes {
   formik: any;
@@ -58,10 +57,7 @@ export default function CreateRobotTypes({
       <div className="flex flex-col gap-1.5">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
-          <InfoTip
-            content="
-             Robot Type"
-          />
+          <InfoTip content="Select the type of robot you want to create." />
         </div>
         <div className="flex gap-6">
           {[
@@ -102,19 +98,15 @@ export default function CreateRobotTypes({
             </div>
           ))}
         </div>
-        <InputError error={formik?.errors?.instance} touched={true} />
       </div>
 
       {!formik.values?.isVirtualRobot &&
       Array.isArray(responsePhysicalInstances) ? (
         responsePhysicalInstances?.length > 0 ? (
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1.5 pt-1">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
               Physical Instances:
-              <InfoTip
-                content="
-             Regions are the cloud regions that you can use to create your cloud instance."
-              />
+              <InfoTip content="Select the physical instance you want to hybrid robot to be deployed on." />
             </div>
             <div className="flex gap-6">
               {responsePhysicalInstances?.map(
@@ -149,9 +141,7 @@ export default function CreateRobotTypes({
               )}
             </div>
             <InputError
-              error={
-                formik?.errors?.instance || formik.errors?.physicalInstance
-              }
+              error={formik.errors?.physicalInstanceName}
               touched={true}
             />
           </div>

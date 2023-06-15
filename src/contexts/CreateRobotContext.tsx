@@ -23,7 +23,7 @@ export default ({ children }: any) => {
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,
-      isDevelopmentMode: true,
+      isDevelopmentMode: false,
     },
     step2: {
       workspaces: [
@@ -123,9 +123,12 @@ export default ({ children }: any) => {
     workspaceIndex: number,
     repositoryIndex: number
   ) {
-    const temp: any = [...formik.values.workspaces];
-    temp[workspaceIndex].repositories.splice(repositoryIndex, 1);
-    formik.setFieldValue("workspaces", temp);
+    formik.setFieldValue(
+      `workspaces.${workspaceIndex}.robotRepositories`,
+      formik.values.workspaces[workspaceIndex].robotRepositories.filter(
+        (item: any, index: number) => index !== repositoryIndex
+      )
+    );
   }
 
   function handleAddStepToBuildStep(formik: any) {

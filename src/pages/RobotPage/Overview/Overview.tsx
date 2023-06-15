@@ -23,8 +23,7 @@ export default function Overview({
       <div className="col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
-          subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software.
-          "
+          subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
           actiontitle="If you need to quickly control your robot, you can continue here."
           component={
             <Button
