@@ -288,6 +288,35 @@ export const getRobotLaunchManagers = createAsyncThunk(
   }
 );
 
+export const getRobotLaunchManager = createAsyncThunk(
+  "robot/getRobotLaunchManager",
+  async (values: any) => {
+    const response = await robotLaunchManagerApi.getRobotLaunchManager({
+      name: values?.name,
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              robolaunchFederatedRobots: [
+                {
+                  fleetName: values?.fleetName,
+                  name: values?.robotName,
+                  buildManagerName: values?.buildManagerName,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  }
+);
+
 export const deleteRobotLaunchManager = createAsyncThunk(
   "robot/deleteRobotLaunchManager",
   async (values: any) => {
