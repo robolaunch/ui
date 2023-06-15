@@ -13,6 +13,7 @@ export const CreateRobotFormStep1Validations = Yup.object().shape({
     then: Yup.string().required("Physical Instance is required"),
     otherwise: Yup.string().notRequired(),
   }),
+  rosDistros: Yup.array().min(1, "At least one ROS Distro is required"),
   remoteDesktop: Yup.object().shape({
     isEnabled: Yup.boolean().notRequired(),
     sessionCount: Yup.number().when("remoteDesktop.isEnabled", {
@@ -21,5 +22,20 @@ export const CreateRobotFormStep1Validations = Yup.object().shape({
       otherwise: Yup.number().notRequired(),
     }),
   }),
-  rosDistros: Yup.array().min(1, "At least one ROS Distro is required"),
+});
+
+export const CreateRobotFormStep2Validations = Yup.object().shape({
+  workspaces: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Workspace Name is required"),
+      workspaceDistro: Yup.string().required("Workspace Distro is required"),
+      robotRepositories: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string().required("Repository Name is required"),
+          url: Yup.string().required("Repository URL is required"),
+          branch: Yup.string().required("Repository Branch is required"),
+        })
+      ),
+    })
+  ),
 });
