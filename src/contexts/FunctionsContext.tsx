@@ -409,7 +409,6 @@ export default ({ children }: any) => {
         robotName: urlRobotName,
       })
     ).then((responseRobotLaunchManagers: any) => {
-      console.log(responseRobotLaunchManagers);
       if (
         Array.isArray(responseRobotLaunchManagers?.payload?.data) &&
         Array.isArray(
@@ -423,43 +422,41 @@ export default ({ children }: any) => {
           responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
             ?.cloudInstances[0]?.robolaunchFederatedRobots
         ) &&
+        Array.isArray(
+          responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.robotLaunchSteps
+        ) &&
         responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots
+          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.robotLaunchSteps
       ) {
         setRobotData((prevState: any) => {
           return {
             ...prevState,
-
-            step4:
-              responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.map(
-                (launchManager: any) => {
-                  return {
-                    launchManagerName: launchManager?.robotLaunchSteps[0]?.name,
-                    robotLaunchSteps: launchManager?.robotLaunchSteps.map(
-                      (step: any) => {
-                        return {
-                          workspace: step?.workspace,
-                          entryPointType: "custom",
-                          entryPointCmd: step?.entryPointCmd,
-                          robotLmEnvs: step?.robotLmEnvs,
-                          instancesName: step?.robotClusters.map(
-                            (cluster: any) => {
-                              return cluster?.name;
-                            }
-                          ),
-                        };
-                      }
-                    ),
-                  };
-                }
-              ),
+            step4: {
+              robotLaunchSteps:
+                responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.robotLaunchSteps?.map(
+                  (launchStep: any) => {
+                    return {
+                      name: launchStep?.name,
+                      workspace: launchStep?.workspace,
+                      entryPointType: "custom",
+                      entryPointCmd: launchStep?.entryPointCmd,
+                      instancesName: launchStep?.robotClusters?.map(
+                        (instance: any) => instance?.name
+                      ),
+                      robotLmEnvs: launchStep?.robotLmEnvs,
+                    };
+                  }
+                ),
+            },
           };
         });
 
         setResponseRobotLaunchManagers &&
           setResponseRobotLaunchManagers(
             responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots
+              ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+              ?.robotLaunchSteps
           );
       }
     });

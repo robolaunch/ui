@@ -53,25 +53,23 @@ export default ({ children }: any) => {
         },
       ],
     },
-    step4: [
-      {
-        launchManagerName: "",
-        robotLaunchSteps: [
-          {
-            workspace: "",
-            entryPointType: "custom",
-            entryPointCmd: "",
-            instancesName: [],
-            robotLmEnvs: [
-              {
-                name: "",
-                value: "",
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    step4: {
+      robotLaunchSteps: [
+        {
+          name: "",
+          workspace: "",
+          entryPointType: "custom",
+          entryPointCmd: "",
+          instancesName: [],
+          robotLmEnvs: [
+            {
+              name: "",
+              value: "",
+            },
+          ],
+        },
+      ],
+    },
   };
 
   const [robotData, setRobotData] = useState<IRobotData>(initialRobotData);
@@ -178,23 +176,23 @@ export default ({ children }: any) => {
     formik.setFieldValue("robotLaunchSteps", temp);
   }
 
-  function handleAddENVToLaunchStep(formik: any, launchStepIndex: number) {
-    const temp: any = [...formik.values.robotLaunchSteps];
-    temp[launchStepIndex].robotLmEnvs.push({
-      name: "",
-      value: "",
-    });
-    formik.setFieldValue("robotLaunchSteps", temp);
+  function handleAddENVToLaunchStep(formik: any) {
+    formik.setFieldValue(`robotLmEnvs`, [
+      ...formik.values.robotLmEnvs,
+      {
+        name: "",
+        value: "",
+      },
+    ]);
   }
 
-  function handleRemoveENVFromLaunchStep(
-    formik: any,
-    launchStepIndex: number,
-    envIndex: number
-  ) {
-    const temp: any = [...formik.values.robotLaunchSteps];
-    temp[launchStepIndex].robotLmEnvs.splice(envIndex, 1);
-    formik.setFieldValue("robotLaunchSteps", temp);
+  function handleRemoveENVFromLaunchStep(formik: any, index: number) {
+    formik.setFieldValue(
+      `robotLmEnvs`,
+      formik.values.robotLmEnvs.filter(
+        (env: any, envIndex: number) => envIndex !== index
+      )
+    );
   }
 
   useEffect(() => {

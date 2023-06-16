@@ -6,14 +6,14 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICreateRobotFormEnvItem {
   formik: any;
-  launchStepIndex: number;
   envIndex: number;
+  disabled?: boolean;
 }
 
 export default function CreteRobotFormEnvItem({
   formik,
-  launchStepIndex,
   envIndex,
+  disabled,
 }: ICreateRobotFormEnvItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
@@ -31,42 +31,34 @@ export default function CreteRobotFormEnvItem({
         <div className="flex items-center gap-3">
           <div>
             <InputText
-              {...formik.getFieldProps(
-                `robotLaunchSteps.${launchStepIndex}.robotLmEnvs.${envIndex}.name`
-              )}
+              {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].name`)}
               placeholder="Env Name"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             />
             <InputError
+              error={formik?.errors?.robotLmEnvs?.[envIndex]?.name}
               // @ts-ignore
-              error={formik?.errors?.robotLaunchSteps?.[launchStepIndex]?.name}
-              touched={
-                formik?.touched?.robotLaunchSteps?.[launchStepIndex]?.name
-              }
+              touched={formik?.touched?.robotLmEnvs?.[envIndex]?.name}
             />
           </div>
           <span className="-mt-1.5">=</span>
           <div>
             <InputText
-              {...formik.getFieldProps(
-                `robotLaunchSteps.${launchStepIndex}.robotLmEnvs.${envIndex}.value`
-              )}
+              {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].value`)}
               placeholder="Env Value"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             />
             <InputError
+              error={formik?.errors?.robotLmEnvs?.[envIndex]?.value}
               // @ts-ignore
-              error={formik?.errors?.robotLaunchSteps?.[launchStepIndex]?.value}
-              touched={
-                formik?.touched?.robotLaunchSteps?.[launchStepIndex]?.value
-              }
+              touched={formik?.touched?.robotLmEnvs?.[envIndex]?.value}
             />
           </div>
         </div>
 
         <span
           onClick={() => {
-            handleRemoveENVFromLaunchStep(formik, launchStepIndex, envIndex);
+            handleRemoveENVFromLaunchStep(formik, envIndex);
           }}
           className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
         >

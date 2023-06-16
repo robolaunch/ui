@@ -1,10 +1,12 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { IRobotLaunchSteps } from "../../interfaces/robotInterfaces";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import {
+  IRobotLaunchStep,
+  IRobotWorkspace,
+} from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps, useFormik } from "formik";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-import CreateRobotFormLaunchStepItem from "../CreateRobotFormLaunchStepItem/CreateRobotFormLaunchStepItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import { createRobotLaunchManager } from "../../resources/RobotSlice";
@@ -14,6 +16,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import InputSelect from "../InputSelect/InputSelect";
+import { Editor } from "@monaco-editor/react";
+import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
+import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -24,17 +30,20 @@ export default function CreateRobotFormStep4({
   isImportRobot,
   robotDataLaunchIndex,
 }: ICreateRobotFormStep4): ReactElement {
-  const { robotData, setRobotData, handleAddStepToLaunchStep } =
-    useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const { selectedState } = useSidebar();
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const navigate = useNavigate();
   const { handleSetterResponseBuildManager } = useFunctions();
+  const { handleAddENVToLaunchStep } = useCreateRobot();
 
-  const formik: FormikProps<IRobotLaunchSteps> = useFormik<IRobotLaunchSteps>({
-    initialValues: robotData?.step4[robotDataLaunchIndex || 0],
+  const formik: FormikProps<IRobotLaunchStep> = useFormik<IRobotLaunchStep>({
+    initialValues:
+      robotData?.step4?.robotLaunchSteps[
+        robotDataLaunchIndex ? robotDataLaunchIndex : 0
+      ],
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
 
@@ -51,19 +60,19 @@ export default function CreateRobotFormStep4({
           robotLaunchSteps: values?.robotLaunchSteps,
         })
       );
+
       toast.success(
-        "Robot Launch Manager created successfully. Redirecting to robot page..."
+        isImportRobot
+          ? "Robot updated successfully"
+          : "Robot Launch Manager created successfully. Redirecting to robot page..."
       );
 
-      if (isImportRobot) {
-        toast.success("Robot updated successfully");
-        return window.location.reload();
-      }
-
       setTimeout(() => {
-        navigate(
-          `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
-        );
+        isImportRobot
+          ? window.location.reload()
+          : navigate(
+              `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
+            );
       }, 1000);
     },
   });
@@ -106,22 +115,26 @@ export default function CreateRobotFormStep4({
   useEffect(() => {
     setRobotData((prevState: any) => {
       return {
-        ...robotData,
-        step4: [
-          ...prevState.step4.map((step: any, index: number) => {
-            if (index === robotDataLaunchIndex) {
-              return {
-                launchManagerName: formik.values?.launchManagerName,
-                robotLaunchSteps: formik.values?.robotLaunchSteps,
-              };
-            }
-            return step;
-          }),
-        ],
+        ...prevState,
+        step4: {
+          ...prevState.step4,
+          robotLaunchSteps: [
+            ...prevState.step4.robotLaunchSteps.map(
+              (item: any, index: number) =>
+                index === robotDataLaunchIndex ? formik.values : item
+            ),
+          ],
+        },
       };
     });
     // eslint-disable-next-line
   }, [formik.values]);
+
+  console.log(
+    formik.values?.instancesName?.includes(
+      robotData?.step1?.virtualInstanceName
+    )
+  );
 
   return (
     <CreateRobotFormLoader
@@ -145,40 +158,146 @@ export default function CreateRobotFormStep4({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 animate__animated animate__fadeIn pt-6"
+        className="flex flex-col gap-4 animate__animated animate__fadeIn "
       >
-        <div>
-          <InputText
-            {...formik.getFieldProps(`launchManagerName`)}
-            placeholder="Launch Manager Name"
-            disabled={formik?.isSubmitting}
+        <div className="flex flex-col gap-7 p-4">
+          <div>
+            <InputText
+              {...formik.getFieldProps(`name`)}
+              placeholder="Launch Manager Name"
+              disabled={isImportRobot || formik?.isSubmitting}
+            />
+            <InputError
+              // @ts-ignore
+              error={formik?.errors?.name}
+              touched={formik?.touched?.name}
+            />
+          </div>
+          <div>
+            <InputSelect
+              {...formik.getFieldProps(`workspace`)}
+              placeholder="Workspace"
+              disabled={isImportRobot || formik?.isSubmitting}
+            >
+              <Fragment>
+                {!formik?.values?.workspace && <option value=""></option>}
+                {robotData?.step2?.workspaces?.map(
+                  (workspace: IRobotWorkspace, index: number) => (
+                    <option key={index} value={workspace.name}>
+                      {workspace.name}
+                    </option>
+                  )
+                )}
+              </Fragment>
+            </InputSelect>
+            <InputError
+              error={
+                // @ts-ignore
+                formik?.errors?.workspace
+              }
+              touched={formik?.touched?.workspace}
+            />
+          </div>
+          <div>
+            <Editor
+              height="140px"
+              defaultLanguage="shell"
+              defaultValue={formik?.values?.entryPointCmd}
+              value={formik?.values?.entryPointCmd}
+              options={{
+                readOnly: isImportRobot || formik?.isSubmitting,
+                minimap: {
+                  enabled: false,
+                },
+                fontSize: 12,
+                fontFamily: "monospace",
+                lineDecorationsWidth: 10,
+                wordWrap: "on",
+                lineNumbersMinChars: 3,
+                folding: false,
+                padding: {
+                  top: 6,
+                  bottom: 6,
+                },
+              }}
+              theme="vs-dark"
+              onChange={(e: any) => {
+                formik.setValues({
+                  ...formik.values,
+                  entryPointCmd: e,
+                });
+              }}
+            />
+            <InputError
+              error={
+                // @ts-ignore
+                formik?.errors?.entryPointCmd
+              }
+              touched={true}
+            />
+          </div>
+          <CreateRobotFormCodeScope
+            virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
+            physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}
+            virtualInstanceChecked={formik.values?.instancesName?.includes(
+              selectedState?.instance?.name
+            )}
+            virtualInstanceOnChange={() => {
+              formik.setValues({
+                ...formik.values,
+                instancesName: formik.values.instancesName.includes(
+                  selectedState?.instance?.name
+                )
+                  ? formik.values.instancesName.filter(
+                      (item) => item !== selectedState?.instance?.name
+                    )
+                  : [
+                      ...formik.values.instancesName,
+                      selectedState?.instance?.name,
+                    ],
+              });
+            }}
+            physicalInstanceOnChange={(e) => {
+              formik.setValues({
+                ...formik.values,
+                instancesName: formik.values.instancesName.includes(
+                  robotData?.step1?.physicalInstanceName
+                )
+                  ? formik.values.instancesName.filter(
+                      (item) => item !== robotData?.step1?.physicalInstanceName
+                    )
+                  : [
+                      ...formik.values.instancesName,
+                      robotData?.step1?.physicalInstanceName,
+                    ],
+              });
+            }}
+            isVisiblePhysicalInstanceCheckbox={
+              robotData?.step1?.physicalInstanceName
+            }
+            error={
+              // @ts-ignore
+              formik?.errors?.instancesName
+            }
           />
-          <InputError
-            // @ts-ignore
-            error={formik?.errors?.launchManagerName}
-            touched={formik?.touched?.launchManagerName}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          {robotData?.step4[robotDataLaunchIndex || 0].robotLaunchSteps?.map(
-            (launchStep: any, launchStepIndex: number) => {
+          <div className="flex flex-col gap-2">
+            {formik?.values?.robotLmEnvs?.map((env: any, envIndex: number) => {
               return (
-                <CreateRobotFormLaunchStepItem
-                  key={launchStepIndex}
+                <CreateRobotFormEnvItem
+                  key={envIndex}
                   formik={formik}
-                  launchStep={launchStep}
-                  launchStepIndex={launchStepIndex}
+                  envIndex={envIndex}
+                  disabled={isImportRobot || formik?.isSubmitting}
                 />
               );
-            }
-          )}
+            })}
 
-          <BsPlusCircle
-            onClick={() => handleAddStepToLaunchStep(formik)}
-            size={22}
-            className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer mt-2"
-          />
+            <BsPlusCircle
+              onClick={() => handleAddENVToLaunchStep(formik)}
+              size={22}
+              className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer mt-2"
+            />
+          </div>
         </div>
 
         <Button

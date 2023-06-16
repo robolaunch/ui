@@ -28,6 +28,10 @@ export default function UpdateRobotLaunchsForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseRobotLaunchManagers, url]);
 
+  useEffect(() => {
+    console.log("upt", responseRobotLaunchManagers);
+  }, [responseRobotLaunchManagers]);
+
   return (
     <Fragment>
       {!responseRobotLaunchManagers ? (
@@ -42,9 +46,21 @@ export default function UpdateRobotLaunchsForm({
       ) : (
         responseRobotLaunchManagers?.map((step: any, index: number) => {
           return (
-            <UpdateLaunchAccordion id={index} key={index}>
+            <UpdateLaunchAccordion
+              id={index}
+              key={index}
+              header={
+                <span className="font-medium">
+                  {step?.name || `Launch Step # ${index + 1}`}
+                </span>
+              }
+            >
               <div className="p-4">
-                <CreateRobotFormStep4 isImportRobot key={index} />
+                <CreateRobotFormStep4
+                  isImportRobot
+                  key={index}
+                  robotDataLaunchIndex={index}
+                />
               </div>
             </UpdateLaunchAccordion>
           );

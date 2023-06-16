@@ -75,7 +75,7 @@ export default function CreateRobotFormStep1({
 
           setTimeout(() => {
             navigate(
-              `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
+              `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
             );
           }, 2000);
         });
@@ -108,11 +108,15 @@ export default function CreateRobotFormStep1({
       step1: formik.values,
     });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values]);
+
+  useEffect(() => {
     if (formik.values.isVirtualRobot) {
       formik.setFieldValue("physicalInstanceName", "");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values]);
+  }, [formik.values.isVirtualRobot]);
 
   return (
     <Fragment>

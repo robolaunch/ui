@@ -75,29 +75,29 @@ export default function RobotPage(): ReactElement {
         );
     }, 10000);
 
-    const timerResponseLaunchManagers = setInterval(() => {
-      responseLaunchManagers
-        ?.map((launchManager: any) => {
-          return launchManager?.robotLaunchSteps?.map(
-            (robotLaunchStep: any) => {
-              return robotLaunchStep?.robotClusters;
-            }
-          );
-        })
-        ?.flat()
-        ?.flat()
-        ?.filter((robot: any) => robot?.launchManagerStatus !== "Ready")
-        ?.length &&
-        handleSetterResponseLaunchManagers(
-          url?.robotName,
-          setResponseLaunchManagers
-        );
-    }, 10000);
+    // const timerResponseLaunchManagers = setInterval(() => {
+    //   responseLaunchManagers
+    //     ?.map((launchManager: any) => {
+    //       return launchManager?.robotLaunchSteps?.map(
+    //         (robotLaunchStep: any) => {
+    //           return robotLaunchStep?.robotClusters;
+    //         }
+    //       );
+    //     })
+    //     ?.flat()
+    //     ?.flat()
+    //     ?.filter((robot: any) => robot?.launchManagerStatus !== "Running")
+    //     ?.length &&
+    //     handleSetterResponseLaunchManagers(
+    //       url?.robotName,
+    //       setResponseLaunchManagers
+    //     );
+    // }, 10000);
 
     return () => {
       clearInterval(timerResponseRobot);
       clearInterval(timerResponseBuildManager);
-      clearInterval(timerResponseLaunchManagers);
+      // clearInterval(timerResponseLaunchManagers);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

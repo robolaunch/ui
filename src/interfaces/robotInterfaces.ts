@@ -2,7 +2,7 @@ export interface IRobotData {
   step1: any;
   step2: IRobotWorkspaces;
   step3: IRobotBuildSteps;
-  step4: any;
+  step4: IRobotLaunchSteps;
 }
 
 export interface IRobotWorkspaces {
@@ -35,11 +35,11 @@ export interface IRobotBuildStep {
 }
 
 export interface IRobotLaunchSteps {
-  launchManagerName: string;
   robotLaunchSteps: IRobotLaunchStep[];
 }
 
 export interface IRobotLaunchStep {
+  name: string;
   workspace: string;
   entryPointType: string;
   entryPointCmd: string;
@@ -69,12 +69,8 @@ export interface IuseCreateRobot {
   ) => void;
   handleAddStepToBuildStep: (formik: any) => void;
   handleRemoveStepFromBuildStep: (formik: any, buildStepIndex: number) => void;
-  handleAddENVToLaunchStep: (formik: any, launchStepIndex: number) => void;
-  handleRemoveENVFromLaunchStep: (
-    formik: any,
-    launchStepIndex: number,
-    envIndex: number
-  ) => void;
+  handleAddENVToLaunchStep: (formik: any) => void;
+  handleRemoveENVFromLaunchStep: (formik: any, index: number) => void;
   handleAddStepToLaunchStep: (formik: any) => void;
   handleRemoveStepFromLaunchStep: (
     formik: any,

@@ -160,6 +160,7 @@ export default function CreateRobotFormBuildStepItem({
                 : formik.values.robotBuildSteps[buildStepIndex]?.script
             }
             options={{
+              readOnly: formik?.isSubmitting,
               minimap: {
                 enabled: false,
               },
