@@ -68,16 +68,46 @@ export default function RobotPage(): ReactElement {
     const timerResponseBuildManager = setInterval(() => {
       responseBuildManager?.robotClusters?.filter(
         (robot: any) => robot?.buildManagerStatus !== "EnvironmentReady"
-      )?.length && handleSetterResponseRobot(url?.robotName, setResponseRobot);
+      )?.length &&
+        handleSetterResponseBuildManager(
+          url?.robotName,
+          setResponseBuildManager
+        );
+    }, 10000);
+
+    const timerResponseLaunchManagers = setInterval(() => {
+      responseLaunchManagers
+        ?.map((launchManager: any) => {
+          return launchManager?.robotLaunchSteps?.map(
+            (robotLaunchStep: any) => {
+              return robotLaunchStep?.robotClusters;
+            }
+          );
+        })
+        ?.flat()
+        ?.flat()
+        ?.filter((robot: any) => robot?.launchManagerStatus !== "Ready")
+        ?.length &&
+        handleSetterResponseLaunchManagers(
+          url?.robotName,
+          setResponseLaunchManagers
+        );
     }, 10000);
 
     return () => {
       clearInterval(timerResponseRobot);
       clearInterval(timerResponseBuildManager);
+      clearInterval(timerResponseLaunchManagers);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedState, url]);
+  }, [
+    selectedState,
+    url,
+    responseRobot,
+    responseBuildManager,
+    responseLaunchManagers,
+  ]);
 
   const { urls } = useAppSelector((state) => state.user);
 

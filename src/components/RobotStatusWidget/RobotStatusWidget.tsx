@@ -1,8 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
-import { FiAlertCircle, FiCheckCircle } from "react-icons/fi";
-import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -15,9 +14,8 @@ export default function RobotStatusWidget({
   responseBuildManager,
   responseLaunchManagers,
 }: IRobotStatusWidget): ReactElement {
-  console.log(responseLaunchManagers);
   const [responseLaunchManagersFiltered, setResponseLaunchManagersFiltered] =
-    useState<any[]>([]);
+    useState<any>(undefined);
 
   useEffect(() => {
     setResponseLaunchManagersFiltered(() => {
@@ -33,27 +31,10 @@ export default function RobotStatusWidget({
           ?.flat()
           ?.flat();
       } catch (error) {
-        return [];
+        return undefined;
       }
     });
   }, [responseLaunchManagers]);
-
-  useEffect(() => {
-    console.log(responseLaunchManagersFiltered);
-  }, [responseLaunchManagersFiltered]);
-
-  console.log(
-    "ready",
-    responseBuildManager?.robotClusters?.filter(
-      (robot: any) => robot?.buildManagerStatus !== "Ready"
-    )?.length
-  );
-  console.log(
-    "err",
-    responseBuildManager?.robotClusters?.filter(
-      (robot: any) => robot?.buildManagerStatus === "Error"
-    )?.length
-  );
 
   return (
     <WidgetLayout
@@ -113,6 +94,8 @@ export default function RobotStatusWidget({
             responseBuildManager?.robotClusters?.filter(
               (robot: any) => robot?.buildManagerStatus !== "Ready"
             )?.length
+              ? true
+              : false
           }
           stateText={
             responseBuildManager?.robotClusters?.filter(
@@ -129,22 +112,24 @@ export default function RobotStatusWidget({
         {/* Launch */}
         <RobotStatusWidgetItem
           title="Launch Manager"
-          loading={!responseBuildManager}
+          loading={!responseLaunchManagersFiltered}
           state={
-            responseLaunchManagersFiltered.filter(
+            responseLaunchManagersFiltered?.filter(
               (robot: any) => robot?.launchManagerStatus !== "Ready"
             )?.length
               ? "warning"
-              : responseBuildManager?.robotClusters?.filter(
+              : responseLaunchManagersFiltered?.filter(
                   (robot: any) => robot?.launchManagerStatus === "Error"
                 )?.length
               ? "error"
               : "success"
           }
           stateTextLoading={
-            responseBuildManager?.robotClusters?.filter(
+            responseLaunchManagersFiltered?.filter(
               (robot: any) => robot?.launchManagerStatus !== "Ready"
             )?.length
+              ? true
+              : false
           }
           stateText={
             responseLaunchManagersFiltered?.filter(

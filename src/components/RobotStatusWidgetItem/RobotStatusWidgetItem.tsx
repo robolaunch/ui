@@ -23,7 +23,7 @@ export default function RobotStatusWidgetItem({
         {loading ? (
           <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
             <img
-              className="w-12 mx-auto pt-10"
+              className="w-12 mx-auto"
               src="/svg/general/loading.svg"
               alt="Loading..."
             />
@@ -36,10 +36,10 @@ export default function RobotStatusWidgetItem({
           <FiAlertCircle size={28} className="text-red-500" />
         )}
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           {stateTextLoading && (
             <img
-              className="w-8"
+              className="w-4 scale-[2.5]"
               src="/svg/general/loading.svg"
               alt="Loading..."
             />

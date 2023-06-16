@@ -125,12 +125,16 @@ export default function CreateRobotFormWorkspaceItem({
             className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer"
           />
         </div>
-        <CreateRobotFormDeleteButton
-          onClick={() => {
-            handleRemoveWorkspaceStep(formik, workspaceIndex);
-          }}
-          text={`Delete ${workspace?.name ? workspace.name : "this"} Workspace`}
-        />
+        {robotData?.step2?.workspaces?.length > 1 && (
+          <CreateRobotFormDeleteButton
+            onClick={() => {
+              handleRemoveWorkspaceStep(formik, workspaceIndex);
+            }}
+            text={`Delete ${
+              workspace?.name ? workspace.name : "this"
+            } Workspace`}
+          />
+        )}
       </div>
     </Accordion>
   );
