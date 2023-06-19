@@ -26,7 +26,6 @@ export interface IRobotBuildSteps {
   robotBuildSteps: IRobotBuildStep[];
 }
 export interface IRobotBuildStep {
-  robotClusters: any;
   name: string;
   workspace: string;
   isCommandCode: boolean;
