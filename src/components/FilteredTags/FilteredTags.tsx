@@ -1,5 +1,6 @@
 import React from "react";
 import useSidebar from "../../hooks/useSidebar";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
 
 export default function FilteredTags() {
   const { selectedState } = useSidebar();
@@ -14,7 +15,10 @@ export default function FilteredTags() {
             alt="robolaunch"
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
-            {selectedState?.organization?.organizationName}
+            {organizationNameViewer({
+              organizationName: selectedState?.organization?.name,
+              capitalization: false,
+            })}
           </span>
         </div>
       )}

@@ -58,6 +58,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
       {state === "running" ||
       state === "Ready" ||
       state === "Connected" ||
+      state === "Running" ||
       state === "EnvironmentReady" ? (
         <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
       ) : state === "stopping" ||
@@ -69,6 +70,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "Waiting Connection" ||
         state === "Registered" ||
         state === "Connecting" ||
+        state === "Pending" ||
         state === "CreatingBridge" ||
         state === "WaitingForMulticast" ||
         state === "WaitingForCredentials" ||

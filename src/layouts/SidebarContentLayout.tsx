@@ -348,12 +348,7 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
-                return (
-                  <UpdateRobotLaunchsForm
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
-                );
+                return <UpdateRobotLaunchsForm />;
             }
           })()}
         </div>

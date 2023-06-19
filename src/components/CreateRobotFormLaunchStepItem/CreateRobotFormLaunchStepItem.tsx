@@ -192,14 +192,13 @@ export default function CreateRobotFormLaunchStepItem({
               <CreateRobotFormEnvItem
                 key={envIndex}
                 formik={formik}
-                launchStepIndex={launchStepIndex}
                 envIndex={envIndex}
               />
             );
           })}
 
           <BsPlusCircle
-            onClick={() => handleAddENVToLaunchStep(formik, launchStepIndex)}
+            onClick={() => handleAddENVToLaunchStep(formik)}
             size={22}
             className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer mt-2"
           />

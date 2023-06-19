@@ -14,6 +14,7 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import useSidebar from "../../hooks/useSidebar";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import StateCell from "../Cells/StateCell";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -41,11 +42,49 @@ export default function CreateRobotFormBuildStepItem({
       isOpen={isShowAccordion}
       handleOpen={() => setIsShowAccordion(!isShowAccordion)}
       header={
-        <span className="font-medium">
-          {buildStep.name
-            ? buildStep?.name + ` (Build Step #${buildStepIndex + 1})`
-            : `Build Step #${buildStepIndex + 1}`}
-        </span>
+        <div className="flex justify-between">
+          <span className="font-medium">
+            {buildStep.name
+              ? buildStep?.name + ` (Build Step #${buildStepIndex + 1})`
+              : `Build Step #${buildStepIndex + 1}`}
+          </span>
+          <div className="flex items-center gap-2 text-xs">
+            {Array.isArray(buildStep?.robotClusters) &&
+              buildStep?.robotClusters[0]?.buildManagerStatus && (
+                <div className="flex gap-1.5">
+                  <span
+                    title={`Launch State of Cloud Instance`}
+                    className="font-medium"
+                  >
+                    CI:
+                  </span>
+                  <StateCell
+                    state={
+                      Array.isArray(buildStep?.robotClusters) &&
+                      buildStep?.robotClusters[0]?.buildManagerStatus
+                    }
+                  />
+                </div>
+              )}
+            {Array.isArray(buildStep?.robotClusters) &&
+              buildStep?.robotClusters[1]?.buildManagerStatus && (
+                <div className="flex gap-1.5">
+                  <span
+                    title={`Launch State of Physical Instance`}
+                    className="font-medium"
+                  >
+                    PI:
+                  </span>
+                  <StateCell
+                    state={
+                      Array.isArray(buildStep?.robotClusters) &&
+                      buildStep?.robotClusters[1]?.buildManagerStatus
+                    }
+                  />
+                </div>
+              )}
+          </div>
+        </div>
       }
     >
       <div className="flex flex-col gap-7 p-4">

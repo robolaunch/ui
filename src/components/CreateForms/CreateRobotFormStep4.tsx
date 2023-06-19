@@ -58,11 +58,15 @@ export default function CreateRobotFormStep4({
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
-          robotName: robotData?.step1?.robotName,
-          fleetName: selectedState?.fleet?.name,
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          fleetName: selectedState?.fleet?.name,
+          robotName: robotData?.step1?.robotName,
           launchManagerName: values?.name,
-          robotLaunchSteps: robotData?.step4?.robotLaunchSteps,
+          robotLaunchSteps: [
+            robotData?.step4?.robotLaunchSteps[
+              robotDataLaunchIndex ? robotDataLaunchIndex : 0
+            ],
+          ],
         })
       );
 

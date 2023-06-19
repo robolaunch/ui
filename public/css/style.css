@@ -758,6 +758,22 @@ video {
   z-index: 32;
 }
 
+.order-1{
+  order: 1;
+}
+
+.order-2{
+  order: 2;
+}
+
+.order-3{
+  order: 3;
+}
+
+.order-4{
+  order: 4;
+}
+
 .\!col-span-3{
   grid-column: span 3 / span 3 !important;
 }
@@ -1426,6 +1442,10 @@ video {
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.\!cursor-default{
+  cursor: default !important;
 }
 
 .resize{
@@ -3136,6 +3156,14 @@ td{
     grid-column: span 5 / span 5;
   }
 
+  .md\:col-span-12{
+    grid-column: span 12 / span 12;
+  }
+
+  .md\:col-span-4{
+    grid-column: span 4 / span 4;
+  }
+
   .md\:flex{
     display: flex;
   }
@@ -3160,6 +3188,10 @@ td{
 
   .lg\:col-span-8{
     grid-column: span 8 / span 8;
+  }
+
+  .lg\:col-span-9{
+    grid-column: span 9 / span 9;
   }
 
   .lg\:block{
@@ -3198,6 +3230,10 @@ td{
 
   .xl\:col-span-9{
     grid-column: span 9 / span 9;
+  }
+
+  .xl\:col-span-4{
+    grid-column: span 4 / span 4;
   }
 }
 

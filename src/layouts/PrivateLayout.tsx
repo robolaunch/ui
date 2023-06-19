@@ -46,6 +46,10 @@ export default function PrivateLayout(): ReactElement {
               sidebarState?.isOpen && sidebarState?.isCreateMode
                 ? "not-allowed"
                 : "default",
+            pointerEvents:
+              sidebarState?.isOpen && sidebarState?.isCreateMode
+                ? "none"
+                : "all",
           }}
           onClick={() => handleCloseSidebar()}
         >

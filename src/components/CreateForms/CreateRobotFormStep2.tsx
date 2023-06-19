@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { FormikProps, useFormik } from "formik";
-import { BsPlusCircle } from "react-icons/bs";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import Button from "../Button/Button";
 import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";

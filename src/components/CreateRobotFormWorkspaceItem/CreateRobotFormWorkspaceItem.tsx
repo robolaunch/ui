@@ -8,7 +8,6 @@ import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
-import { BsPlusCircle } from "react-icons/bs";
 import CreateRobotFormRepositoryItem from "../CreateRobotFormRepositoryItem/CreateRobotFormRepositoryItem";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import stringCapitalization from "../../helpers/stringCapitalization";

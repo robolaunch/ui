@@ -5,16 +5,10 @@ import { useParams } from "react-router-dom";
 import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import StateCell from "../Cells/StateCell";
+import InfoTip from "../InfoTip/InfoTip";
 
-interface IUpdateRobotLaunchsForm {
-  reload: boolean;
-  setItemCount: any;
-}
-
-export default function UpdateRobotLaunchsForm({
-  reload,
-  setItemCount,
-}: IUpdateRobotLaunchsForm): ReactElement {
+export default function UpdateRobotLaunchsForm(): ReactElement {
   const [isAddedForm, setIsAddedForm] = useState<boolean>(false);
   const [responseRobotLaunchManagers, setResponseRobotLaunchManagers] =
     useState<any>(undefined);
@@ -44,17 +38,54 @@ export default function UpdateRobotLaunchsForm({
         </div>
       ) : (
         <Fragment>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+            Launch Steps:
+            <InfoTip content="Launch Steps" />
+          </div>
           {responseRobotLaunchManagers?.map((step: any, index: number) => {
-            console.log(step);
-
             return (
               <UpdateLaunchAccordion
                 id={index}
                 key={index}
                 header={
-                  <span className="font-medium">
-                    {step?.name || `Launch Step # ${index + 1}`}
-                  </span>
+                  <div className="flex justify-between">
+                    <span className="font-medium">
+                      {step?.name || `Launch Step # ${index + 1}`}
+                    </span>
+
+                    <div className="flex items-center gap-2 text-xs">
+                      <div className="flex gap-1.5">
+                        <span
+                          title={`Launch State of Cloud Instance`}
+                          className="font-medium"
+                        >
+                          CI:
+                        </span>
+                        <StateCell
+                          state={
+                            Array.isArray(step?.robotClusters) &&
+                            step?.robotClusters[0]?.launchManagerStatus
+                          }
+                        />
+                      </div>
+                      {step?.robotClusters[1]?.launchManagerStatus && (
+                        <div className="flex gap-1.5">
+                          <span
+                            title={`Launch State of Physical Instance`}
+                            className="font-medium"
+                          >
+                            PI:
+                          </span>
+                          <StateCell
+                            state={
+                              Array.isArray(step?.robotClusters) &&
+                              step?.robotClusters[1]?.launchManagerStatus
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 }
               >
                 <div className="p-4">
