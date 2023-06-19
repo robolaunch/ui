@@ -3,6 +3,7 @@ import Accordion from "../Accordion/AccordionV2";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 
 interface ICreateRobotFormEnvItem {
   formik: any;
@@ -34,6 +35,7 @@ export default function CreteRobotFormEnvItem({
               {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].name`)}
               placeholder="Env Name"
               disabled={disabled}
+              className="!text-sm"
             />
             <InputError
               error={formik?.errors?.robotLmEnvs?.[envIndex]?.name}
@@ -47,6 +49,7 @@ export default function CreteRobotFormEnvItem({
               {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].value`)}
               placeholder="Env Value"
               disabled={disabled}
+              className="!text-sm"
             />
             <InputError
               error={formik?.errors?.robotLmEnvs?.[envIndex]?.value}
@@ -56,14 +59,13 @@ export default function CreteRobotFormEnvItem({
           </div>
         </div>
 
-        <span
+        <CreateRobotFormDeleteButton
           onClick={() => {
             handleRemoveENVFromLaunchStep(formik, envIndex);
           }}
-          className="text-[0.66rem] text-red-500 cursor-pointer mx-auto hover:underline"
-        >
-          Delete this Env
-        </span>
+          text="Delete this Env"
+          disabled={disabled}
+        />
       </div>
     </Accordion>
   );

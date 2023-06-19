@@ -67,7 +67,7 @@ export default function RobotPage(): ReactElement {
 
     const timerResponseBuildManager = setInterval(() => {
       responseBuildManager?.robotClusters?.filter(
-        (robot: any) => robot?.buildManagerStatus !== "EnvironmentReady"
+        (robot: any) => robot?.buildManagerStatus !== "Ready"
       )?.length &&
         handleSetterResponseBuildManager(
           url?.robotName,
@@ -75,29 +75,26 @@ export default function RobotPage(): ReactElement {
         );
     }, 10000);
 
-    // const timerResponseLaunchManagers = setInterval(() => {
-    //   responseLaunchManagers
-    //     ?.map((launchManager: any) => {
-    //       return launchManager?.robotLaunchSteps?.map(
-    //         (robotLaunchStep: any) => {
-    //           return robotLaunchStep?.robotClusters;
-    //         }
-    //       );
-    //     })
-    //     ?.flat()
-    //     ?.flat()
-    //     ?.filter((robot: any) => robot?.launchManagerStatus !== "Running")
-    //     ?.length &&
-    //     handleSetterResponseLaunchManagers(
-    //       url?.robotName,
-    //       setResponseLaunchManagers
-    //     );
-    // }, 10000);
+    const timerResponseLaunchManagers = setInterval(() => {
+      responseLaunchManagers
+        ?.map((launchStep: any) => {
+          return launchStep?.robotClusters;
+        })
+        .flat()
+        ?.map((cluster: any) => {
+          return cluster?.launchManagerStatus;
+        })
+        ?.filter((status: any) => status !== "Running")?.length &&
+        handleSetterResponseLaunchManagers(
+          url?.robotName,
+          setResponseLaunchManagers
+        );
+    }, 10000);
 
     return () => {
       clearInterval(timerResponseRobot);
       clearInterval(timerResponseBuildManager);
-      // clearInterval(timerResponseLaunchManagers);
+      clearInterval(timerResponseLaunchManagers);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,6 +181,9 @@ export default function RobotPage(): ReactElement {
                   responseRobot={responseRobot}
                   responseBuildManager={responseBuildManager}
                   responseLaunchManagers={responseLaunchManagers}
+                  informationWidgetAction={() => {
+                    setActiveTab("Teleoperation");
+                  }}
                 />
               );
             case "Task Management":

@@ -50,11 +50,13 @@ export default function CreateRobotRosDistrobutions({
           (item: string, index: number) => (
             <div
               key={index}
-              className={`relative flex items-center gap-1 border-2 p-2 rounded cursor-pointer w-full justify-center ${
+              className={`relative flex items-center gap-1 border-2 p-2 rounded  w-full justify-center transition-all duration-300 ${
                 formik.values.rosDistros.includes(item)
-                  ? "border-layer-primary-600 shadow"
+                  ? isImportRobot
+                    ? "border-layer-primary-300"
+                    : "border-layer-primary-600 shadow"
                   : "border-layer-light-100"
-              } transition-all duration-300`}
+              } ${isImportRobot ? "cursor-not-allowed" : "cursor-pointer"}`}
               onClick={(e: any) => {
                 if (isImportRobot) {
                   return toast.error(
@@ -109,7 +111,14 @@ export default function CreateRobotRosDistrobutions({
               </div>
               {formik.values.rosDistros.includes(item) && (
                 <div className="absolute inset-0 flex items-start justify-end p-2">
-                  <MdVerified size={16} className="!text-primary" />
+                  <MdVerified
+                    size={16}
+                    className={
+                      isImportRobot
+                        ? "!text-layer-primary-300"
+                        : "!text-primary"
+                    }
+                  />
                 </div>
               )}
             </div>

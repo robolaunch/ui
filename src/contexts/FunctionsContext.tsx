@@ -375,9 +375,9 @@ export default ({ children }: any) => {
             ...prevState,
             step3: {
               buildManagerName:
-                responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
-                  ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                  ?.buildManagerName,
+                responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.buildManagerName?.split(
+                  "-"
+                )[0],
               robotBuildSteps:
                 responseRobotBuildManagers?.payload?.data[0]?.roboticsClouds[0]
                   ?.cloudInstances[0]?.robolaunchFederatedRobots[0]

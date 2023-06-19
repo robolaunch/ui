@@ -18,22 +18,16 @@ export default function RobotStatusWidget({
     useState<any>(undefined);
 
   useEffect(() => {
-    setResponseLaunchManagersFiltered(() => {
-      try {
-        return responseLaunchManagers
-          .map((launchManager: any, index: number) => {
-            return launchManager?.robotLaunchSteps?.map(
-              (robotLaunchStep: any) => {
-                return robotLaunchStep?.robotClusters;
-              }
-            );
-          })
-          ?.flat()
-          ?.flat();
-      } catch (error) {
-        return undefined;
-      }
-    });
+    setResponseLaunchManagersFiltered(
+      responseLaunchManagers
+        ?.map((launchStep: any) => {
+          return launchStep?.robotClusters;
+        })
+        .flat()
+        ?.map((cluster: any) => {
+          return cluster?.launchManagerStatus;
+        }) || undefined
+    );
   }, [responseLaunchManagers]);
 
   return (
@@ -119,18 +113,18 @@ export default function RobotStatusWidget({
           loading={!responseLaunchManagersFiltered}
           state={
             responseLaunchManagersFiltered?.filter(
-              (robot: any) => robot?.launchManagerStatus !== "Running"
+              (status: any) => status !== "Running"
             )?.length
               ? "warning"
               : responseLaunchManagersFiltered?.filter(
-                  (robot: any) => robot?.launchManagerStatus === "Error"
+                  (status: any) => status === "Error"
                 )?.length
               ? "error"
               : "success"
           }
           stateTextLoading={
             responseLaunchManagersFiltered?.filter(
-              (robot: any) => robot?.launchManagerStatus !== "Running"
+              (status: any) => status !== "Running"
             )?.length
               ? true
               : false
@@ -139,11 +133,11 @@ export default function RobotStatusWidget({
             !responseLaunchManagersFiltered
               ? "Loading..."
               : responseLaunchManagersFiltered?.filter(
-                  (robot: any) => robot?.launchManagerStatus !== "Running"
+                  (status: any) => status !== "Running"
                 )?.length
               ? responseLaunchManagersFiltered?.filter(
-                  (robot: any) => robot?.launchManagerStatus !== "Running"
-                )[0]?.launchManagerStatus
+                  (status: any) => status !== "Running"
+                )[0]
               : "Ready"
           }
         />

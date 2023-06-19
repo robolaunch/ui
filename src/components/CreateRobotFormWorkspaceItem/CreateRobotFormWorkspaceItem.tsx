@@ -13,17 +13,20 @@ import CreateRobotFormRepositoryItem from "../CreateRobotFormRepositoryItem/Crea
 import useCreateRobot from "../../hooks/useCreateRobot";
 import stringCapitalization from "../../helpers/stringCapitalization";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
   workspace: IRobotWorkspace;
   workspaceIndex: number;
+  disabled?: boolean;
 }
 
 export default function CreateRobotFormWorkspaceItem({
   formik,
   workspace,
   workspaceIndex,
+  disabled,
 }: ICreateRobotFormWorkspaceItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
@@ -54,7 +57,7 @@ export default function CreateRobotFormWorkspaceItem({
           <InputText
             {...formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
             placeholder="Workspace Name"
-            disabled={formik?.isSubmitting}
+            disabled={disabled}
           />
           <InputError
             // @ts-ignore
@@ -68,7 +71,7 @@ export default function CreateRobotFormWorkspaceItem({
               `workspaces.${workspaceIndex}.workspaceDistro`
             )}
             placeholder="Workspace Distro"
-            disabled={formik?.isSubmitting}
+            disabled={disabled}
           >
             <Fragment>
               {!formik?.values?.workspaces[workspaceIndex]?.workspaceDistro && (
@@ -114,19 +117,20 @@ export default function CreateRobotFormWorkspaceItem({
                 workspaceIndex={workspaceIndex}
                 repositoryIndex={repositoryIndex}
                 repository={repository}
+                disabled={disabled}
               />
             )
           )}
-          <BsPlusCircle
+          <CreateRobotFormAddButton
             onClick={() =>
               handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
             }
-            size={22}
-            className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer"
+            disabled={disabled}
           />
         </div>
         {robotData?.step2?.workspaces?.length > 1 && (
           <CreateRobotFormDeleteButton
+            disabled={disabled}
             onClick={() => {
               handleRemoveWorkspaceStep(formik, workspaceIndex);
             }}

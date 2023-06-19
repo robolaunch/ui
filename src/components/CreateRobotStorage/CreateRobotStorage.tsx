@@ -25,7 +25,7 @@ export default function CreateRobotStorage({
         type="range"
         autoComplete="off"
         {...formik.getFieldProps("robotStorage")}
-        className="w-full"
+        className={`w-full ${isImportRobot && "cursor-not-allowed"}`}
         style={{
           appearance: "auto",
           padding: "0px",

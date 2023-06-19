@@ -9,12 +9,14 @@ interface IOverview {
   responseRobot: any;
   responseBuildManager: any;
   responseLaunchManagers: any;
+  informationWidgetAction: () => void;
 }
 
 export default function Overview({
   responseRobot,
   responseBuildManager,
   responseLaunchManagers,
+  informationWidgetAction,
 }: IOverview): ReactElement {
   const url = useParams();
 
@@ -29,6 +31,7 @@ export default function Overview({
             <Button
               text="Teleoperation of Robot"
               className="!w-44 !h-10 !text-xs"
+              onClick={informationWidgetAction}
             />
           }
         />

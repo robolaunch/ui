@@ -19,12 +19,14 @@ interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
   buildStep: IRobotBuildStep;
   formik: FormikProps<IRobotBuildSteps>;
+  disabled?: boolean;
 }
 
 export default function CreateRobotFormBuildStepItem({
   buildStepIndex,
   buildStep,
   formik,
+  disabled,
 }: ICreateRobotFormBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
@@ -65,6 +67,7 @@ export default function CreateRobotFormBuildStepItem({
               `robotBuildSteps.${buildStepIndex}.workspace`
             )}
             placeholder="Workspace"
+            disabled={formik?.isSubmitting}
           >
             <Fragment>
               {!formik?.values?.robotBuildSteps[buildStepIndex]?.workspace && (
@@ -138,6 +141,7 @@ export default function CreateRobotFormBuildStepItem({
                 });
               }
             }}
+            disabled={formik?.isSubmitting}
           >
             <Fragment>
               <option value="isCommandCode">Command Code</option>
@@ -210,6 +214,8 @@ export default function CreateRobotFormBuildStepItem({
         </div>
 
         <CreateRobotFormCodeScope
+          virtualInstanceDisabled={formik?.isSubmitting}
+          physicalInstanceDisabled={formik?.isSubmitting}
           virtualInstanceChecked={formik.values.robotBuildSteps[
             buildStepIndex
           ]?.instancesName?.includes(selectedState?.instance?.name)}
@@ -273,6 +279,7 @@ export default function CreateRobotFormBuildStepItem({
             text={`Delete ${
               buildStep?.name ? buildStep.name : "this"
             } Build Step`}
+            disabled={formik?.isSubmitting}
           />
         )}
       </div>

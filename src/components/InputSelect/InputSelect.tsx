@@ -41,7 +41,7 @@ export default function InputSelect({
       <select
         className={`w-full p-2 h-10 bg-transparent outline-none transition-all duration-500
       border border-layer-light-300 rounded-md
-      focus:border-layer-primary focus:ring-2 focus:ring-primary ${
+      focus:border-layer-primary focus:ring-2 focus:ring-primary text-sm ${
         disabled ? "cursor-not-allowed" : "hover:cursor-pointer"
       } ${className}`}
         name={name}

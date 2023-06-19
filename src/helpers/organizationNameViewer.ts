@@ -11,9 +11,9 @@ export default function organizationNameViewer({
 }: IOrganizationNameViewer) {
   if (capitalization) {
     return stringCapitalization({
-      str: organizationName.split("_")[1],
+      str: organizationName?.split("_")[1],
     });
   }
 
-  return organizationName.split("_")[1];
+  return organizationName?.split("_")[1];
 }

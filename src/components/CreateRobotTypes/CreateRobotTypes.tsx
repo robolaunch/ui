@@ -74,12 +74,15 @@ export default function CreateRobotTypes({
           ]?.map((robotType: any, index: number) => (
             <div
               key={index}
-              className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-full  ${
+              className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded  w-full transition-all duration-300 ${
                 formik.values?.isVirtualRobot === robotType?.isVirtualRobot
-                  ? "border-layer-primary-600 shadow"
+                  ? robotType?.disabled
+                    ? "border-layer-primary-300"
+                    : "border-layer-primary-600 shadow"
                   : "border-layer-light-100"
-              } transition-all duration-300
-               `}
+              } ${
+                robotType?.disabled ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
               onClick={() => {
                 robotType?.disabled
                   ? toast.error("You can't change robot type in update mode")

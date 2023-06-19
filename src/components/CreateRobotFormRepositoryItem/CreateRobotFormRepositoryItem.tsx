@@ -21,6 +21,7 @@ interface ICreateRobotFormRepositoryItem {
   repository: IRobotWorkspace;
   repositoryIndex: number;
   workspaceIndex: number;
+  disabled?: boolean;
 }
 
 export default function CreateRobotFormRepositoryItem({
@@ -28,6 +29,7 @@ export default function CreateRobotFormRepositoryItem({
   repository,
   repositoryIndex,
   workspaceIndex,
+  disabled,
 }: ICreateRobotFormRepositoryItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
@@ -118,7 +120,7 @@ export default function CreateRobotFormRepositoryItem({
               `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`
             )}
             placeholder="Repository Name"
-            disabled={formik?.isSubmitting}
+            disabled={disabled}
           />
           <InputError
             error={
@@ -140,7 +142,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
               placeholder="Repository"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             >
               <Fragment>
                 {!formik?.values?.workspaces?.[workspaceIndex]
@@ -160,7 +162,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
               placeholder="Repository URL"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             />
           )}
           <InputError
@@ -183,7 +185,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
               placeholder="Repository Branch"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             >
               <Fragment>
                 {!formik?.values?.workspaces?.[workspaceIndex]
@@ -203,7 +205,7 @@ export default function CreateRobotFormRepositoryItem({
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
               placeholder="Repository URL"
-              disabled={formik?.isSubmitting}
+              disabled={disabled}
             />
           )}
           <InputError
@@ -222,6 +224,7 @@ export default function CreateRobotFormRepositoryItem({
         {formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
           ?.length > 1 && (
           <CreateRobotFormDeleteButton
+            disabled={disabled}
             onClick={() => {
               handleRemoveRepositoryFromWorkspaceStep(
                 formik,
