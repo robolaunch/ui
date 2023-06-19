@@ -3,7 +3,7 @@ import packageJSON from "../../../package.json";
 
 export default function VersionViewer() {
   return (
-    <div className="fixed bottom-0 right-1 z-50 text-[0.64rem] text-layer-light-700">
+    <div className="fixed bottom-0 right-1 z-50 text-[0.64rem] text-layer-light-700 pointer-events-none">
       {process.env.NODE_ENV === "production" ? "P" : "D"} {packageJSON?.version}
     </div>
   );

@@ -6,7 +6,7 @@ import { addPhysicalInstanceToFleet } from "../../resources/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { createFederatedRobot } from "../../resources/RobotSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
@@ -29,7 +29,6 @@ export default function CreateRobotFormStep1({
 }: ICreateRobotFormStep1): ReactElement {
   const { robotData, setRobotData }: any = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useSidebar();
-  const navigate = useNavigate();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const url = useParams();
   const dispatch = useAppDispatch();
@@ -74,9 +73,7 @@ export default function CreateRobotFormStep1({
           "Robot updated successfully. Redirecting to fleet page..."
         );
         setTimeout(() => {
-          navigate(
-            `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
-          );
+          window.location.href = `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`;
         }, 2000);
       } else if (!formik.values?.isVirtualRobot) {
         await dispatch(
