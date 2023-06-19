@@ -37,7 +37,7 @@ export default function CreateOrganizationForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn pt-6"
     >
       <div>
         <InputText

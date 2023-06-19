@@ -16,7 +16,7 @@ export default function FilteredTags() {
           />
           <span className="text-xs text-layer-secondary-900 cursor-default">
             {organizationNameViewer({
-              organizationName: selectedState?.organization?.name,
+              organizationName: selectedState?.organization?.organizationName,
               capitalization: false,
             })}
           </span>

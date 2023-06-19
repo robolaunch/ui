@@ -5,6 +5,7 @@ import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import SidebarListItem from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
+import StateCell from "../Cells/StateCell";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -49,6 +50,9 @@ export default function RoboticsCloudsList({
               src="/svg/general/loading.svg"
               alt="Loading..."
             />
+          ) : Array.isArray(responseRoboticsClouds) &&
+            !responseRoboticsClouds?.length ? (
+            <SidebarSelectInfo text={`Create a Robotics Cloud.`} />
           ) : (
             responseRoboticsClouds?.map((roboticsCloud: any, index: number) => {
               return (
@@ -56,7 +60,7 @@ export default function RoboticsCloudsList({
                   key={index}
                   type="roboticscloud"
                   name={roboticsCloud?.name}
-                  description={`Description`}
+                  description={<StateCell state={"Ready"} />}
                   url={`/${organizationNameViewer({
                     organizationName:
                       selectedState?.organization?.organizationName,

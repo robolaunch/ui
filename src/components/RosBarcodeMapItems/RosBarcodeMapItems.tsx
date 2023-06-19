@@ -10,7 +10,7 @@ interface IRosBarcodeMap {
 export default function RosBarcodeMapItems({
   ros,
 }: IRosBarcodeMap): ReactElement {
-  const { barcodeItems, setBarcodeItems }: any = useBarcodeManagement();
+  const { barcodeItems } = useBarcodeManagement();
 
   useEffect(() => {
     console.log("barcodeItems", barcodeItems);
