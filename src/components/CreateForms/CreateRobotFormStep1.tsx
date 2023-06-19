@@ -49,7 +49,7 @@ export default function CreateRobotFormStep1({
       formik.setSubmitting(true);
 
       if (isImportRobot) {
-        dispatch(
+        await dispatch(
           createFederatedRobot({
             organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
@@ -68,22 +68,17 @@ export default function CreateRobotFormStep1({
               formik.values?.gpuEnabledForCloudInstance,
             robotWorkspaces: responseRobot?.robotWorkspaces,
           })
-        ).then((res: any) => {
-          toast.success(
-            "Robot updated successfully. Redirecting to fleet page..."
+        );
+
+        toast.success(
+          "Robot updated successfully. Redirecting to fleet page..."
+        );
+        setTimeout(() => {
+          navigate(
+            `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
           );
-
-          setTimeout(() => {
-            navigate(
-              `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`
-            );
-          }, 2000);
-        });
-
-        return;
-      }
-
-      if (!formik.values?.isVirtualRobot) {
+        }, 2000);
+      } else if (!formik.values?.isVirtualRobot) {
         await dispatch(
           addPhysicalInstanceToFleet({
             organizationId: selectedState?.organization?.organizationId,
@@ -95,10 +90,10 @@ export default function CreateRobotFormStep1({
             robolaunchFederatedFleetsName: selectedState?.fleet?.name,
           })
         );
-      }
-      formik.setSubmitting(false);
 
-      handleCreateRobotNextStep();
+        formik.setSubmitting(false);
+        handleCreateRobotNextStep();
+      }
     },
   });
 
@@ -253,7 +248,9 @@ export default function CreateRobotFormStep1({
                     type="range"
                     autoComplete="off"
                     {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                    className="w-full"
+                    className={`w-full ${
+                      isImportRobot && "cursor-not-allowed"
+                    }`}
                     style={{
                       appearance: "auto",
                       padding: "0px",

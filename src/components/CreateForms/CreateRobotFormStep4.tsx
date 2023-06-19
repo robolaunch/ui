@@ -9,10 +9,11 @@ import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { createRobotLaunchManager } from "../../resources/RobotSlice";
-import { BsPlusCircle } from "react-icons/bs";
+import {
+  createRobotLaunchManager,
+  deleteRobotLaunchManager,
+} from "../../resources/RobotSlice";
 import Button from "../Button/Button";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
@@ -20,6 +21,10 @@ import InputSelect from "../InputSelect/InputSelect";
 import { Editor } from "@monaco-editor/react";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import { useParams } from "react-router-dom";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -35,9 +40,9 @@ export default function CreateRobotFormStep4({
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
-  const navigate = useNavigate();
   const { handleSetterResponseBuildManager } = useFunctions();
   const { handleAddENVToLaunchStep } = useCreateRobot();
+  const url = useParams();
 
   const formik: FormikProps<IRobotLaunchStep> = useFormik<IRobotLaunchStep>({
     initialValues:
@@ -56,8 +61,8 @@ export default function CreateRobotFormStep4({
           robotName: robotData?.step1?.robotName,
           fleetName: selectedState?.fleet?.name,
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
-          launchManagerName: values?.launchManagerName,
-          robotLaunchSteps: values?.robotLaunchSteps,
+          launchManagerName: values?.name,
+          robotLaunchSteps: robotData?.step4?.robotLaunchSteps,
         })
       );
 
@@ -68,11 +73,12 @@ export default function CreateRobotFormStep4({
       );
 
       setTimeout(() => {
-        isImportRobot
-          ? window.location.reload()
-          : navigate(
-              `/${selectedState?.organization?.name}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`
-            );
+        window.location.href = `/${organizationNameViewer({
+          organizationName: selectedState?.organization?.organizationName,
+          capitalization: false,
+        })}/${selectedState?.roboticsCloud?.name}/${
+          selectedState?.instance?.name
+        }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`;
       }, 1000);
     },
   });
@@ -118,23 +124,27 @@ export default function CreateRobotFormStep4({
         ...prevState,
         step4: {
           ...prevState.step4,
-          robotLaunchSteps: [
-            ...prevState.step4.robotLaunchSteps.map(
-              (item: any, index: number) =>
-                index === robotDataLaunchIndex ? formik.values : item
-            ),
-          ],
+
+          robotLaunchSteps: prevState?.step4?.robotLaunchSteps?.map(
+            (step: any, index: number) => {
+              const stepIndex = robotDataLaunchIndex ? robotDataLaunchIndex : 0;
+
+              if (index === stepIndex) {
+                return formik.values;
+              } else {
+                return step;
+              }
+            }
+          ),
         },
       };
     });
+
+    console.log(formik.values);
+    console.log(robotData);
+
     // eslint-disable-next-line
   }, [formik.values]);
-
-  console.log(
-    formik.values?.instancesName?.includes(
-      robotData?.step1?.virtualInstanceName
-    )
-  );
 
   return (
     <CreateRobotFormLoader
@@ -166,6 +176,7 @@ export default function CreateRobotFormStep4({
               {...formik.getFieldProps(`name`)}
               placeholder="Launch Manager Name"
               disabled={isImportRobot || formik?.isSubmitting}
+              className="!text-sm"
             />
             <InputError
               // @ts-ignore
@@ -292,20 +303,45 @@ export default function CreateRobotFormStep4({
               );
             })}
 
-            <BsPlusCircle
+            <CreateRobotFormAddButton
               onClick={() => handleAddENVToLaunchStep(formik)}
-              size={22}
-              className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer mt-2"
+              disabled={isImportRobot || formik?.isSubmitting}
             />
           </div>
         </div>
 
-        <Button
-          type="submit"
-          disabled={!formik?.isValid || formik.isSubmitting}
-          className="w-full !h-11 text-xs"
-          text={isImportRobot ? `Update Launch Step` : `Create Robot`}
-        />
+        {isImportRobot ? (
+          <CreateRobotFormDeleteButton
+            onClick={async () => {
+              await dispatch(
+                deleteRobotLaunchManager({
+                  organizationId: selectedState?.organization?.organizationId,
+                  roboticsCloudName: selectedState?.roboticsCloud?.name,
+                  instanceId: selectedState?.instance?.instanceId,
+                  region: selectedState?.instance?.region,
+                  robotName: robotData?.step1?.robotName,
+                  fleetName: selectedState?.fleet?.name,
+                  physicalInstanceName: robotData?.step1?.physicalInstanceName,
+                  launchManagerName: formik.values?.name,
+                })
+              );
+
+              toast.success("Launch Step deleted successfully");
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            }}
+            text="Delete Launch Step"
+          />
+        ) : (
+          <Button
+            type="submit"
+            disabled={!formik?.isValid || formik.isSubmitting}
+            className="w-full !h-11 text-xs"
+            text={url?.robotName ? `Add Launch Step` : `Create Robot`}
+          />
+        )}
       </form>
     </CreateRobotFormLoader>
   );

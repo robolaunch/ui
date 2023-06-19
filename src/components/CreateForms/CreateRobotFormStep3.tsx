@@ -3,7 +3,6 @@ import { FormikProps, useFormik } from "formik";
 import * as Yup from "yup";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import Button from "../Button/Button";
-import { BsPlusCircle } from "react-icons/bs";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -16,6 +15,7 @@ import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -193,16 +193,17 @@ export default function CreateRobotFormStep3({
                     formik={formik}
                     buildStep={buildStep}
                     buildStepIndex={buildStepIndex}
+                    disabled={isImportRobot || formik?.isSubmitting}
                   />
                 );
               }
             )}
           </div>
         </div>
-        <BsPlusCircle
+
+        <CreateRobotFormAddButton
           onClick={() => handleAddStepToBuildStep(formik)}
-          size={22}
-          className="h-14 mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
+          disabled={formik?.isSubmitting}
         />
 
         <Button

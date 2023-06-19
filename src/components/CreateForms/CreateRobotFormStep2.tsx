@@ -13,6 +13,7 @@ import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoade
 import { useParams } from "react-router-dom";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { toast } from "sonner";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -149,15 +150,16 @@ export default function CreateRobotFormStep2({
                   formik={formik}
                   workspace={workspace}
                   workspaceIndex={workspaceIndex}
+                  disabled={formik.isSubmitting || isImportRobot}
                 />
               );
             }
           )}
         </div>
-        <BsPlusCircle
+
+        <CreateRobotFormAddButton
+          disabled={formik.isSubmitting || isImportRobot}
           onClick={() => handleAddWorkspaceStep(formik)}
-          size={22}
-          className="mx-auto text-layer-secondary-700 hover:scale-90 transition-all duration-500 cursor-pointer -mt-4"
         />
 
         <Button
