@@ -87,10 +87,10 @@ export default function CreateRobotFormStep1({
             robolaunchFederatedFleetsName: selectedState?.fleet?.name,
           })
         );
-
-        formik.setSubmitting(false);
-        handleCreateRobotNextStep();
       }
+
+      formik.setSubmitting(false);
+      handleCreateRobotNextStep();
     },
   });
 
