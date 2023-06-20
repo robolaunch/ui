@@ -18,6 +18,7 @@ export default function CodeEditor({ ideURL }: ICodeEditor): ReactElement {
     <CardLayout loading={loading}>
       <FullScreen className="relative" handle={handleFullScreen}>
         <iframe
+          allow="clipboard-read"
           className={`w-full animate__animated animate__fadeIn ${
             handleFullScreen?.active ? "h-screen" : "h-[55rem]"
           }`}
