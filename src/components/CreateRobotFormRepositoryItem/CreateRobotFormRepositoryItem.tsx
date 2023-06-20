@@ -204,7 +204,7 @@ export default function CreateRobotFormRepositoryItem({
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
-              placeholder="Repository URL"
+              placeholder="Repository Branch"
               disabled={disabled}
             />
           )}

@@ -40,6 +40,7 @@ export default function InputText({
         {placeholder}
       </label>
       <input
+        autoComplete="off"
         disabled={disabled}
         className={`w-full p-3 h-10 outline-none transition-all duration-500
       border border-layer-light-300 rounded-md
