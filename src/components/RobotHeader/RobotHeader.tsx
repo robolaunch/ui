@@ -8,14 +8,18 @@ import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 interface IRobotHeader {
+  responseRobot: any;
   handleChangeActiveTab: any;
   activeTab: string;
 }
 
 export default function RobotHeader({
+  responseRobot,
   handleChangeActiveTab,
   activeTab,
 }: IRobotHeader): ReactElement {
+  console.log(responseRobot);
+
   const url = useParams();
 
   const resources = {
@@ -85,15 +89,15 @@ export default function RobotHeader({
                   <span>Code Editor</span>
                   <InputToggle
                     icons={false}
-                    checked={true}
+                    checked={responseRobot?.ideEnabled}
                     onChange={() => {}}
                   />
                 </div>
                 <div className="flex  items-center rounded-lg p-2">
-                  <span>Teleoperation</span>
+                  <span>ROS2 Bridge</span>
                   <InputToggle
                     icons={false}
-                    checked={true}
+                    checked={responseRobot?.bridgeEnabled}
                     onChange={() => {}}
                   />
                 </div>
@@ -101,42 +105,44 @@ export default function RobotHeader({
                   <span>Remote Desktop</span>
                   <InputToggle
                     icons={false}
-                    checked={true}
+                    checked={responseRobot?.vdiEnabled}
                     onChange={() => {}}
                   />
                 </div>
               </div>
 
               <div className="flex flex-col items-end">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs text-center font-semibold">
-                    Physical Resources:
-                  </span>
-                  <div className="col-span-1 flex items-center gap-2">
-                    <BsFillCpuFill size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.physical?.cpu}
+                {responseRobot?.robotClusters?.length > 1 && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-center font-semibold">
+                      Physical Resources:
                     </span>
+                    <div className="col-span-1 flex items-center gap-2">
+                      <BsFillCpuFill size={16} color="#666666" />
+                      <span className="text-xs font-light">
+                        {resources?.physical?.cpu}
+                      </span>
+                    </div>
+                    <div className="col-span-1 flex items-center gap-2">
+                      <BsFillCpuFill size={16} color="#666666" />
+                      <span className="text-xs font-light">
+                        {resources?.physical?.gpu}
+                      </span>
+                    </div>{" "}
+                    <div className="col-span-1 flex items-center gap-2">
+                      <FaMemory size={16} color="#666666" />
+                      <span className="text-xs font-light">
+                        {resources?.physical?.ram}
+                      </span>
+                    </div>{" "}
+                    <div className="col-span-1 flex items-center gap-2">
+                      <MdOutlineStorage size={16} color="#666666" />
+                      <span className="text-xs font-light">
+                        {resources?.physical?.storage}
+                      </span>
+                    </div>
                   </div>
-                  <div className="col-span-1 flex items-center gap-2">
-                    <BsFillCpuFill size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.physical?.gpu}
-                    </span>
-                  </div>{" "}
-                  <div className="col-span-1 flex items-center gap-2">
-                    <FaMemory size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.physical?.ram}
-                    </span>
-                  </div>{" "}
-                  <div className="col-span-1 flex items-center gap-2">
-                    <MdOutlineStorage size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.physical?.storage}
-                    </span>
-                  </div>
-                </div>
+                )}
                 <div className="flex items-center gap-3 pt-6">
                   <span className="text-xs text-center font-semibold">
                     Virtual Resources:
