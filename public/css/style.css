@@ -758,22 +758,6 @@ video {
   z-index: 32;
 }
 
-.order-1{
-  order: 1;
-}
-
-.order-2{
-  order: 2;
-}
-
-.order-3{
-  order: 3;
-}
-
-.order-4{
-  order: 4;
-}
-
 .\!col-span-3{
   grid-column: span 3 / span 3 !important;
 }
@@ -1428,6 +1412,10 @@ video {
           animation: spin 1s linear infinite;
 }
 
+.\!cursor-default{
+  cursor: default !important;
+}
+
 .cursor-default{
   cursor: default;
 }
@@ -1442,10 +1430,6 @@ video {
 
 .cursor-pointer{
   cursor: pointer;
-}
-
-.\!cursor-default{
-  cursor: default !important;
 }
 
 .resize{
@@ -1791,6 +1775,11 @@ video {
   border-color: rgb(237 208 255 / var(--tw-border-opacity));
 }
 
+.border-layer-primary-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(223 172 255 / var(--tw-border-opacity));
+}
+
 .border-layer-primary-500{
   --tw-border-opacity: 1;
   border-color: rgb(184 67 255 / var(--tw-border-opacity));
@@ -1834,16 +1823,6 @@ video {
 .border-yellow-500{
   --tw-border-opacity: 1;
   border-color: rgb(234 179 8 / var(--tw-border-opacity));
-}
-
-.border-layer-primary-400{
-  --tw-border-opacity: 1;
-  border-color: rgb(203 119 255 / var(--tw-border-opacity));
-}
-
-.border-layer-primary-300{
-  --tw-border-opacity: 1;
-  border-color: rgb(223 172 255 / var(--tw-border-opacity));
 }
 
 .\!bg-layer-light-50{
@@ -2357,6 +2336,11 @@ video {
   color: rgb(194 194 194 / var(--tw-text-opacity)) !important;
 }
 
+.\!text-layer-primary-300{
+  --tw-text-opacity: 1 !important;
+  color: rgb(223 172 255 / var(--tw-text-opacity)) !important;
+}
+
 .\!text-layer-primary-500{
   --tw-text-opacity: 1 !important;
   color: rgb(184 67 255 / var(--tw-text-opacity)) !important;
@@ -2575,11 +2559,6 @@ video {
 .text-yellow-600{
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
-}
-
-.\!text-layer-primary-300{
-  --tw-text-opacity: 1 !important;
-  color: rgb(223 172 255 / var(--tw-text-opacity)) !important;
 }
 
 .accent-primary{
@@ -3002,12 +2981,12 @@ td{
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.hover\:cursor-pointer:hover{
-  cursor: pointer;
-}
-
 .hover\:cursor-not-allowed:hover{
   cursor: not-allowed;
+}
+
+.hover\:cursor-pointer:hover{
+  cursor: pointer;
 }
 
 .hover\:border:hover{
@@ -3156,14 +3135,6 @@ td{
     grid-column: span 5 / span 5;
   }
 
-  .md\:col-span-12{
-    grid-column: span 12 / span 12;
-  }
-
-  .md\:col-span-4{
-    grid-column: span 4 / span 4;
-  }
-
   .md\:flex{
     display: flex;
   }
@@ -3188,10 +3159,6 @@ td{
 
   .lg\:col-span-8{
     grid-column: span 8 / span 8;
-  }
-
-  .lg\:col-span-9{
-    grid-column: span 9 / span 9;
   }
 
   .lg\:block{
@@ -3230,10 +3197,6 @@ td{
 
   .xl\:col-span-9{
     grid-column: span 9 / span 9;
-  }
-
-  .xl\:col-span-4{
-    grid-column: span 4 / span 4;
   }
 }
 
