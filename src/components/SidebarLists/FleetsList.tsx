@@ -2,9 +2,9 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListItem from "./SidebarListItem";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { getFederatedFleets } from "../../resources/FleetSlice";
 import StateCell from "../Cells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
 
 interface IFleetsList {
   reload: boolean;
@@ -18,6 +18,7 @@ export default function FleetsList({
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const { selectedState } = useSidebar();
   const dispatch = useAppDispatch();
+  const { handleSetterResponseFleets } = useFunctions();
 
   useEffect(
     () => {
@@ -27,53 +28,19 @@ export default function FleetsList({
         selectedState?.instance
       ) {
         setResponseFleets(undefined);
-        dispatch(
-          getFederatedFleets({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.instance?.region,
-          })
-        ).then((response: any) => {
-          if (
-            Array.isArray(response?.payload?.data) &&
-            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
-            Array.isArray(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-            ) &&
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedFleets
-          ) {
-            setResponseFleets(() => {
-              console.log();
-
-              if (
-                response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                  ?.robolaunchPhysicalInstances &&
-                Array.isArray(
-                  response?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchPhysicalInstances
-                )
-              ) {
-                return [
-                  ...(response?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedFleets || []),
-                  ...(response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchPhysicalInstances?.flat() ||
-                    []),
-                ];
-              }
-              return (
-                response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                  ?.robolaunchFederatedFleets || []
-              );
-            });
-            setItemCount(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                ?.robolaunchFederatedFleets?.length || 0
-            );
-          }
-        });
+        handleGetFleets();
       }
+
+      const timer = setInterval(() => {
+        selectedState?.organization &&
+          selectedState?.roboticsCloud &&
+          selectedState?.instance &&
+          handleGetFleets();
+      }, 10000);
+
+      return () => {
+        clearInterval(timer);
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -85,9 +52,10 @@ export default function FleetsList({
     ]
   );
 
-  useEffect(() => {
-    console.log(responseFleets);
-  }, [responseFleets]);
+  function handleGetFleets() {
+    handleSetterResponseFleets(setResponseFleets);
+    setItemCount(responseFleets?.length || 0);
+  }
 
   return (
     <Fragment>

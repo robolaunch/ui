@@ -1,12 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListItem from "./SidebarListItem";
-import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { getInstances } from "../../resources/InstanceSlice";
 import StateCell from "../Cells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import useFunctions from "../../hooks/useFunctions";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -17,41 +16,42 @@ export default function CloudInstancesList({
   reload,
   setItemCount,
 }: ICloudInstancesList): ReactElement {
-  const [responseCloudInstances, setResponseCloudInstances] = useState<
-    any[] | undefined
-  >(undefined);
+  const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
+    undefined
+  );
   const { sidebarState, selectedState } = useSidebar();
-  const dispatch = useAppDispatch();
+  const { handleSetterResponseInstances } = useFunctions();
 
   useEffect(
     () => {
       if (selectedState?.organization && selectedState?.roboticsCloud) {
-        setResponseCloudInstances(undefined);
-        dispatch(
-          getInstances({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-          })
-        ).then((response: any) => {
-          setResponseCloudInstances(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances || []
-          );
-          setItemCount(
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-              ?.length || 0
-          );
-        });
+        setResponseInstances(undefined);
+        handleGetInstances();
       }
+
+      const timer = setInterval(() => {
+        selectedState?.organization &&
+          selectedState?.roboticsCloud &&
+          handleGetInstances();
+      }, 10000);
+
+      return () => {
+        clearInterval(timer);
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      dispatch,
       reload,
       selectedState.organization,
       selectedState?.roboticsCloud,
       sidebarState?.instanceTab,
     ]
   );
+
+  function handleGetInstances() {
+    handleSetterResponseInstances(setResponseInstances);
+    setItemCount(responseInstances?.length || 0);
+  }
 
   return (
     <Fragment>
@@ -62,17 +62,17 @@ export default function CloudInstancesList({
             !selectedState?.organization ? "Organization" : "Robotics Cloud"
           } to view instances.`}
         />
-      ) : !Array.isArray(responseCloudInstances) ? (
+      ) : !Array.isArray(responseInstances) ? (
         <img
           className="w-12 mx-auto pt-10"
           src="/svg/general/loading.svg"
           alt="Loading..."
         />
-      ) : responseCloudInstances.length === 0 ? (
-        <SidebarInfo text={`No instances.`} />
+      ) : responseInstances.length === 0 ? (
+        <SidebarInfo text={`Create an Cloud Instances`} />
       ) : (
         <Fragment>
-          {responseCloudInstances?.map((instance: any, index: number) => {
+          {responseInstances?.map((instance: any, index: number) => {
             return (
               <SidebarListItem
                 key={index}
