@@ -4,9 +4,12 @@ export const UserSlice = createSlice({
   name: "user",
   initialState: {
     urls: {
-      vdi: "ws://localhost:8080/",
-      ide: "http://localhost:3000/",
-      ros: "ws://localhost:9090",
+      // vdi: "ws://localhost:8080/",
+      // ide: "http://localhost:3000/",
+      // ros: "ws://localhost:9090",
+      vdi: "",
+      ide: "",
+      ros: "",
     },
   },
   reducers: {

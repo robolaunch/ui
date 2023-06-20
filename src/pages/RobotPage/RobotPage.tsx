@@ -109,9 +109,11 @@ export default function RobotPage(): ReactElement {
   const { urls } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    console.log(urls);
     const ros = new ROSLIB.Ros({
-      url: urls?.ros || "ws://localhost:9090",
+      url:
+        urls?.ros ||
+        responseRobot?.bridgeIngressEndpoint ||
+        "ws://localhost:9090",
     });
 
     setRos(ros);
@@ -200,7 +202,11 @@ export default function RobotPage(): ReactElement {
             case "K8S Resources":
               return <K8SResources />;
             case "Code Editor":
-              return <CodeEditor ideURL={urls?.ide} />;
+              return (
+                <CodeEditor
+                  ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+                />
+              );
             case "Visualization":
               return (
                 <Visualization
@@ -214,18 +220,35 @@ export default function RobotPage(): ReactElement {
                 <Teleoperation
                   ros={ros}
                   topicList={topicList}
-                  vdiIngressEndpoint={urls?.vdi}
+                  vdiIngressEndpoint={
+                    urls?.vdi || responseRobot?.vdiIngressEndpoint
+                  }
                   handleForceUpdate={handleForceUpdate}
                 />
               );
             case "Remote Desktop":
-              return <RemoteDesktop vdiIngressEndpoint={urls?.vdi} />;
+              return (
+                <RemoteDesktop
+                  vdiIngressEndpoint={
+                    urls?.vdi || responseRobot?.vdiIngressEndpoint
+                  }
+                />
+              );
             case "Settings":
               return <div>Settings</div>;
             case "Development Suite":
               return (
-                <StreamContext vdiIngressEndpoint={urls?.vdi}>
-                  <DevelopmentSuite ros={ros} ideIngressEndpoint={urls?.ide} />
+                <StreamContext
+                  vdiIngressEndpoint={
+                    urls?.vdi || responseRobot?.vdiIngressEndpoint
+                  }
+                >
+                  <DevelopmentSuite
+                    ros={ros}
+                    ideIngressEndpoint={
+                      urls?.ide || responseRobot?.ideIngressEndpoint
+                    }
+                  />
                 </StreamContext>
               );
             case "Loading":
