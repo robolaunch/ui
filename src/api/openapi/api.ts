@@ -1606,6 +1606,12 @@ export interface RobotBuildStep {
     'instancesName'?: Array<string>;
     /**
      * 
+     * @type {Array<RobotCluster>}
+     * @memberof RobotBuildStep
+     */
+    'robotClusters'?: Array<RobotCluster>;
+    /**
+     * 
      * @type {string}
      * @memberof RobotBuildStep
      */
