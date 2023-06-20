@@ -45,7 +45,7 @@ export default function Overview({
       </div>
 
       <div className="col-span-3 row-span-2">
-        <ActivitiesWidget />
+        <ActivitiesWidget responseRobot={responseRobot} />
       </div>
 
       <div className="col-span-9">
