@@ -40,27 +40,42 @@ export default function RobotHeader({
   const tabs = [
     {
       name: "Overview",
+      state: true,
     },
     {
       name: "K8S Resources",
+      state: responseRobot ? true : false,
     },
     {
       name: "Task Management",
+      state: responseRobot ? true : false,
+      disabled: responseRobot?.bridgeEnabled ? false : true,
     },
     {
       name: "Teleoperation",
+      state: responseRobot ? true : false,
+      disabled: responseRobot?.bridgeEnabled ? false : true,
     },
     {
       name: "Visualization",
+      state: responseRobot ? true : false,
+      disabled: responseRobot?.bridgeEnabled ? false : true,
     },
     {
       name: "Development Suite",
+      state: responseRobot ? true : false,
+      disabled:
+        responseRobot?.ideEnabled && responseRobot?.vdiEnabled ? false : true,
     },
     {
       name: "Code Editor",
+      state: responseRobot ? true : false,
+      disabled: responseRobot?.ideEnabled ? false : true,
     },
     {
       name: "Remote Desktop",
+      state: responseRobot ? true : false,
+      disabled: responseRobot?.vdiEnabled ? false : true,
     },
   ];
 
@@ -176,12 +191,18 @@ export default function RobotHeader({
             </div>
           </div>
         </div>
-        <ul className="flex gap-8 px-6 pt-5 overflow-x-auto">
+        <ul className="flex gap-8 px-6 pt-5 overflow-x-auto items-end">
           {tabs.map((tab: any, index: number) => {
             return (
               <div
-                className="flex flex-col gap-3 cursor-pointer "
-                onClick={() => handleChangeActiveTab(tab.name)}
+                className={`flex flex-col gap-3 ${
+                  tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
+                onClick={() =>
+                  tab?.state &&
+                  !tab?.disabled &&
+                  handleChangeActiveTab(tab.name)
+                }
                 key={index}
               >
                 <li
@@ -191,7 +212,15 @@ export default function RobotHeader({
                       : "text-layer-light-500"
                   } `}
                 >
-                  {tab.name}
+                  {!tab?.state ? (
+                    <img
+                      className="w-6 h-6 scale-125"
+                      src="/svg/general/loading.svg"
+                      alt="loading"
+                    />
+                  ) : (
+                    tab.name
+                  )}
                 </li>
                 <div
                   className={`w-full h-[2px] transition-all duration-500 
