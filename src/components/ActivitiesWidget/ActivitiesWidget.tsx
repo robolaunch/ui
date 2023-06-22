@@ -50,7 +50,6 @@ export default function ActivitiesWidget({
         {data
           .filter((item: any) => item !== undefined)
           .map((item: any, index: number) => {
-            console.log(data);
             return (
               <li key={index} className="grid grid-cols-12 gap-2">
                 <span className="col-span-1 text-xs font-medium">

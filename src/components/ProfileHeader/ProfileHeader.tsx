@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import Gravatar from "react-gravatar";
 import { useKeycloak } from "@react-keycloak/web";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { updateUrls } from "../../resources/UserSlice";
+// import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+// import { updateUrls } from "../../resources/UserSlice";
 
 interface IProfileHeader {
   className?: string;
@@ -18,47 +18,47 @@ export default function ProfileHeader({
 }: IProfileHeader): ReactElement {
   const { keycloak } = useKeycloak();
 
-  const { urls } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  // const { urls } = useAppSelector((state) => state.user);
+  // const dispatch = useAppDispatch();
 
-  const inputs = (
-    <div className="flex flex-col gap-5">
-      <label className="flex gap-2" htmlFor="">
-        vdi (ws://localhost:8080/) (son ek "/" olmalı)
-        <input
-          className="border border-layer-light-200"
-          type="text"
-          value={urls?.vdi}
-          onChange={(e) => {
-            dispatch(updateUrls({ ...urls, vdi: e.target.value }));
-          }}
-        />
-      </label>
-      <label className="flex gap-2" htmlFor="">
-        ide (http://localhost:3000/) (son ek "/" olmalı)
-        <input
-          className="border border-layer-light-200"
-          type="text"
-          value={urls?.ide}
-          onChange={(e) => {
-            dispatch(updateUrls({ ...urls, ide: e.target.value }));
-          }}
-        />
-      </label>
-      <label className="flex gap-2" htmlFor="">
-        ros (ws://localhost:9090) (boş bırakılmamalı. bırakılacaksa örnekteki
-        yazılmalı)
-        <input
-          className="border border-layer-light-200"
-          type="text"
-          value={urls?.ros}
-          onChange={(e) => {
-            dispatch(updateUrls({ ...urls, ros: e.target.value }));
-          }}
-        />
-      </label>
-    </div>
-  );
+  // const inputs = (
+  //   <div className="flex flex-col gap-5">
+  //     <label className="flex gap-2" htmlFor="">
+  //       vdi (ws://localhost:8080/) (son ek "/" olmalı)
+  //       <input
+  //         className="border border-layer-light-200"
+  //         type="text"
+  //         value={urls?.vdi}
+  //         onChange={(e) => {
+  //           dispatch(updateUrls({ ...urls, vdi: e.target.value }));
+  //         }}
+  //       />
+  //     </label>
+  //     <label className="flex gap-2" htmlFor="">
+  //       ide (http://localhost:3000/) (son ek "/" olmalı)
+  //       <input
+  //         className="border border-layer-light-200"
+  //         type="text"
+  //         value={urls?.ide}
+  //         onChange={(e) => {
+  //           dispatch(updateUrls({ ...urls, ide: e.target.value }));
+  //         }}
+  //       />
+  //     </label>
+  //     <label className="flex gap-2" htmlFor="">
+  //       ros (ws://localhost:9090) (boş bırakılmamalı. bırakılacaksa örnekteki
+  //       yazılmalı)
+  //       <input
+  //         className="border border-layer-light-200"
+  //         type="text"
+  //         value={urls?.ros}
+  //         onChange={(e) => {
+  //           dispatch(updateUrls({ ...urls, ros: e.target.value }));
+  //         }}
+  //       />
+  //     </label>
+  //   </div>
+  // );
 
   return (
     <CardLayout className={`col-span-1 flex flex-col gap-6 ${className}`}>
@@ -80,7 +80,7 @@ export default function ProfileHeader({
             {keycloak?.tokenParsed?.email}
           </p>
         </div>
-        {inputs}
+        {/* {inputs} */}
       </div>
       <ul className="flex gap-8 px-6 pt-5 -mb-1.5 overflow-x-auto">
         {[

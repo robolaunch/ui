@@ -32,11 +32,12 @@ export default function DeleteRobotModalModal({
         fleetName: data?.fleetName,
         robotName: data?.robotName,
       })
-    ).then(() => {
-      setTimeout(() => {
-        reload();
-        handleCloseModal();
-      }, 1000);
+    ).then(async (res: any) => {
+      (await res) &&
+        setTimeout(() => {
+          reload();
+          handleCloseModal();
+        }, 1000);
     });
   }
 

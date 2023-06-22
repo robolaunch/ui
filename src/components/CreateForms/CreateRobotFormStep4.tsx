@@ -98,7 +98,7 @@ export default function CreateRobotFormStep4({
       }, 10000);
 
       if (
-        !responseBuildManager?.robotClusters.filter(
+        !responseBuildManager?.robotClusters?.filter(
           (robotCluster: any) =>
             robotCluster?.buildManagerStatus !== "EnvironmentReady"
         )?.length &&
@@ -162,11 +162,11 @@ export default function CreateRobotFormStep4({
     <CreateRobotFormLoader
       isLoading={
         !responseBuildManager ||
-        responseBuildManager?.robotClusters.filter(
+        responseBuildManager?.robotClusters?.filter(
           (item: any) => item?.buildManagerStatus !== "Ready"
         )?.length
       }
-      loadingItems={responseBuildManager?.robotClusters.map((item: any) => {
+      loadingItems={responseBuildManager?.robotClusters?.map((item: any) => {
         return {
           name: item?.name,
           status: item?.buildManagerStatus,

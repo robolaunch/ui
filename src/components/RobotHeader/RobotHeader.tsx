@@ -18,8 +18,6 @@ export default function RobotHeader({
   handleChangeActiveTab,
   activeTab,
 }: IRobotHeader): ReactElement {
-  console.log(responseRobot);
-
   const url = useParams();
 
   const resources = {
