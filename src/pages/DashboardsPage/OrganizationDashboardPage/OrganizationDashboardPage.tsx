@@ -18,26 +18,42 @@ import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
 
 export default function OrganizationDashboardPage(): ReactElement {
-  const {
-    handleSetterCurrentOrganization,
-    handleSetterResponseRoboticsClouds,
-  } = useFunctions();
-  const { selectedState, setSidebarState } = useSidebar();
+  const { getOrganization, getRoboticsClouds } = useFunctions();
+  const { setSidebarState } = useSidebar();
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
+  const [responseCurrentOrganization, setResponseCurrentOrganization] =
+    useState<any>(undefined);
+
   useEffect(() => {
-    setResponseRoboticsClouds(undefined);
-    if (!selectedState?.organization) {
-      handleSetterCurrentOrganization(url?.organizationName);
+    if (!responseCurrentOrganization) {
+      getOrganization(
+        {
+          organizationName: url?.organizationName as string,
+        },
+        {
+          isSetState: true,
+          setResponse: setResponseCurrentOrganization,
+          ifErrorNavigateTo404: !responseCurrentOrganization,
+        }
+      );
     } else {
-      handleSetterResponseRoboticsClouds(setResponseRoboticsClouds);
+      getRoboticsClouds(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+        },
+        {
+          setResponse: setResponseRoboticsClouds,
+          ifErrorNavigateTo404: !responseRoboticsClouds,
+        }
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reload, url, selectedState]);
+  }, [responseCurrentOrganization, reload, url]);
 
   const data: any = useMemo(
     () =>

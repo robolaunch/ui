@@ -1,10 +1,9 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListItem from "./SidebarListItem";
-import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { getFederatedRobots } from "../../resources/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import StateCell from "../Cells/StateCell";
+import useFunctions from "../../hooks/useFunctions";
 
 interface IRobotsList {
   reload: boolean;
@@ -17,7 +16,7 @@ export default function RobotsList({
 }: IRobotsList): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
   const { selectedState } = useSidebar();
-  const dispatch = useAppDispatch();
+  const { getRobots } = useFunctions();
 
   useEffect(
     () => {
@@ -27,47 +26,41 @@ export default function RobotsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
-        setResponseRobots(undefined);
-        dispatch(
-          getFederatedRobots({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.instance?.region,
-            fleetName: selectedState?.fleet?.name,
-          })
-        ).then((response: any) => {
-          if (
-            Array.isArray(response?.payload?.data) &&
-            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
-            Array.isArray(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-            ) &&
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchFederatedRobots
-          ) {
-            setResponseRobots(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                ?.robolaunchFederatedRobots || []
-            );
-            setItemCount(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                ?.robolaunchFederatedRobots?.length || 0
-            );
-          }
-        });
+        handleGetRobots();
       }
+
+      const timer = setInterval(() => {
+        selectedState?.organization &&
+          selectedState?.roboticsCloud &&
+          selectedState?.instance &&
+          selectedState?.fleet &&
+          handleGetRobots();
+      }, 10000);
+
+      return () => {
+        clearInterval(timer);
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      dispatch,
-      reload,
-      selectedState?.instance,
-      selectedState?.organization,
-      selectedState?.roboticsCloud,
-      selectedState?.fleet,
-    ]
+    [reload]
   );
+
+  function handleGetRobots() {
+    getRobots(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseRobots,
+      }
+    );
+    setItemCount(responseRobots?.length);
+  }
 
   return (
     <Fragment>
@@ -92,11 +85,11 @@ export default function RobotsList({
           src="/svg/general/loading.svg"
           alt="Loading..."
         />
-      ) : responseRobots.length === 0 ? (
+      ) : responseRobots?.length === 0 ? (
         <SidebarInfo text={`No robots.`} />
       ) : (
         <Fragment>
-          {responseRobots.map((robot: any, index: number) => {
+          {responseRobots?.map((robot: any, index: number) => {
             return (
               <SidebarListItem
                 key={index}

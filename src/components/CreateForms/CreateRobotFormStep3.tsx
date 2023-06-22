@@ -13,7 +13,6 @@ import InputError from "../InputError/InputError";
 import InfoTip from "../InfoTip/InfoTip";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 
@@ -29,31 +28,22 @@ export default function CreateRobotFormStep3({
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useSidebar();
-  const { handleSetterResponseRobot, handleSetterResponseBuildManager } =
-    useFunctions();
-  const url = useParams();
+  const { getRobot, getBuildManager } = useFunctions();
 
   useEffect(
     () => {
       if (!responseRobot && isImportRobot) {
-        handleSetterResponseRobot(url?.robotName, setResponseRobot);
+        handleGetRobot();
 
-        handleSetterResponseBuildManager(url?.robotName);
+        handleGetBuildManager();
       } else if (!responseRobot && !isImportRobot) {
         setTimeout(() => {
-          handleSetterResponseRobot(
-            robotData?.step1?.robotName,
-            setResponseRobot
-          );
+          handleGetRobot();
         }, 10000);
       }
 
       const timer = setInterval(() => {
-        !isImportRobot &&
-          handleSetterResponseRobot(
-            robotData?.step1?.robotName,
-            setResponseRobot
-          );
+        !isImportRobot && handleGetRobot();
       }, 10000);
 
       if (
@@ -73,6 +63,41 @@ export default function CreateRobotFormStep3({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [responseRobot]
   );
+
+  function handleGetRobot() {
+    getRobot(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setRobotData: true,
+        setResponse: setResponseRobot,
+      }
+    );
+  }
+
+  function handleGetBuildManager() {
+    getBuildManager(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setRobotData: true,
+      }
+    );
+  }
 
   const formik: FormikProps<IRobotBuildSteps> = useFormik<IRobotBuildSteps>({
     validationSchema: Yup.object().shape({

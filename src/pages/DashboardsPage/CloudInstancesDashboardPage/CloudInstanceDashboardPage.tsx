@@ -6,56 +6,109 @@ import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import { useAppDispatch } from "../../../hooks/redux";
 import useSidebar from "../../../hooks/useSidebar";
 
 import useFunctions from "../../../hooks/useFunctions";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
-  const { setSidebarState, selectedState } = useSidebar();
-  const {
-    handleSetterCurrentOrganization,
-    handleSetterCurrentRoboticsCloud,
-    handleSetterCurrentInstance,
-    handleSetterResponseFleets,
-  } = useFunctions();
+  const [responseCurrentOrganization, setResponseCurrentOrganization] =
+    useState<any>(undefined);
+  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
+    useState<any>(undefined);
+  const [responseCurrentInstance, setResponseCurrentInstance] =
+    useState<any>(undefined);
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const { setSidebarState, selectedState } = useSidebar();
+  const { getOrganization, getRoboticsCloud, getInstance, getFleets } =
+    useFunctions();
   const [reload, setReload] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const url = useParams();
 
   useEffect(() => {
-    if (!selectedState?.organization) {
-      handleSetterCurrentOrganization(url?.organizationName);
-    } else if (!selectedState?.roboticsCloud) {
-      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
-    } else if (!selectedState?.instance) {
-      handleSetterCurrentInstance(url?.instanceName);
+    if (!responseCurrentOrganization) {
+      getOrganization(
+        {
+          organizationName: url?.organizationName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentOrganization,
+          setResponse: setResponseCurrentOrganization,
+        }
+      );
+    } else if (!responseCurrentRoboticsCloud) {
+      getRoboticsCloud(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: url?.roboticsCloudName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
+          setResponse: setResponseCurrentRoboticsCloud,
+        }
+      );
+    } else if (!responseCurrentInstance) {
+      getInstance(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          instanceName: url?.instanceName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentInstance,
+          setResponse: setResponseCurrentInstance,
+        }
+      );
     } else {
-      handleSetterResponseFleets(setResponseFleets);
+      getFleets(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          instanceId: responseCurrentInstance?.instanceId,
+          region: responseCurrentInstance?.region,
+        },
+        {
+          ifErrorNavigateTo404: !responseFleets,
+          setResponse: setResponseFleets,
+        }
+      );
     }
 
     const timer =
-      selectedState?.organization &&
-      selectedState?.roboticsCloud &&
-      selectedState?.instance &&
+      responseCurrentOrganization &&
+      responseCurrentRoboticsCloud &&
+      responseCurrentInstance &&
       setInterval(() => {
-        handleSetterResponseFleets(setResponseFleets);
+        getFleets(
+          {
+            organizationId: responseCurrentOrganization?.organizationId,
+            roboticsCloudName: url?.roboticsCloudName as string,
+            instanceId: responseCurrentInstance?.instanceId,
+            region: responseCurrentInstance?.region,
+          },
+          {
+            ifErrorNavigateTo404: !responseFleets,
+            setResponse: setResponseFleets,
+          }
+        );
       }, 10000);
 
     return () => {
       clearInterval(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, reload, selectedState, dispatch, navigate]);
-
-  useEffect(() => {
-    setResponseFleets(undefined);
-  }, [url]);
+  }, [
+    responseCurrentOrganization,
+    responseCurrentRoboticsCloud,
+    responseCurrentInstance,
+    url,
+    reload,
+  ]);
 
   const data: any = useMemo(
     () =>

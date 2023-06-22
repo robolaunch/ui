@@ -40,7 +40,7 @@ export default function CreateRobotFormStep4({
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
-  const { handleSetterResponseBuildManager } = useFunctions();
+  const { getBuildManager } = useFunctions();
   const { handleAddENVToLaunchStep } = useCreateRobot();
   const url = useParams();
 
@@ -90,18 +90,11 @@ export default function CreateRobotFormStep4({
   useEffect(
     () => {
       if (!responseBuildManager) {
-        handleSetterResponseBuildManager(
-          robotData?.step1?.robotName,
-          setResponseBuildManager
-        );
+        handleGetBuildManager();
       }
 
       const timer = setInterval(() => {
-        !isImportRobot &&
-          handleSetterResponseBuildManager(
-            robotData?.step1?.robotName,
-            setResponseBuildManager
-          );
+        !isImportRobot && handleGetBuildManager();
       }, 10000);
 
       if (
@@ -144,11 +137,26 @@ export default function CreateRobotFormStep4({
       };
     });
 
-    console.log(formik.values);
-    console.log(robotData);
-
     // eslint-disable-next-line
   }, [formik.values]);
+
+  function handleGetBuildManager() {
+    getBuildManager(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseBuildManager,
+        setRobotData: true,
+      }
+    );
+  }
 
   return (
     <CreateRobotFormLoader

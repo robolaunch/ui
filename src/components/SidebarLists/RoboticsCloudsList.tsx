@@ -1,11 +1,10 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { getRoboticsCloudsOfOrganization } from "../../resources/RoboticsCloudSlice";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import SidebarListItem from "./SidebarListItem";
-import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
+import useFunctions from "../../hooks/useFunctions";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -20,23 +19,28 @@ export default function RoboticsCloudsList({
     any[] | undefined
   >(undefined);
   const { selectedState } = useSidebar();
-  const dispatch = useAppDispatch();
+  const { getRoboticsClouds } = useFunctions();
 
   useEffect(() => {
     if (selectedState?.organization) {
-      setResponseRoboticsClouds(undefined);
-      dispatch(
-        getRoboticsCloudsOfOrganization({
-          organizationId: selectedState?.organization?.organizationId,
-        })
-      ).then((response: any) => {
-        setResponseRoboticsClouds(
-          response?.payload?.data[0]?.roboticsClouds || []
-        );
-        setItemCount(response?.payload?.data[0]?.roboticsClouds?.length || 0);
-      });
+      handleGetRoboticsClouds();
     }
-  }, [dispatch, reload, selectedState.organization, setItemCount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
+
+  function handleGetRoboticsClouds() {
+    setResponseRoboticsClouds(undefined);
+    getRoboticsClouds(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseRoboticsClouds,
+      }
+    );
+    setItemCount(responseRoboticsClouds?.length);
+  }
 
   return (
     <Fragment>

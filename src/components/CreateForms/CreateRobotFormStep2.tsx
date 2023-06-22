@@ -9,7 +9,6 @@ import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedRobot } from "../../resources/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { useParams } from "react-router-dom";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
@@ -26,11 +25,9 @@ export default function CreateRobotFormStep2({
     useSidebar();
   const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
   const dispatch = useAppDispatch();
-  const { handleSetterResponseFleet } = useFunctions();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
-  const { handleSetterResponseRobot } = useFunctions();
-  const url = useParams();
+  const { getRobot, getFleet } = useFunctions();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
     validationSchema: CreateRobotFormStep2Validations,
@@ -91,18 +88,18 @@ export default function CreateRobotFormStep2({
   useEffect(
     () => {
       if (isImportRobot) {
-        handleSetterResponseRobot(url?.robotName);
+        handleGetRobot();
         setTimeout(() => {
           setIsLoadingImportRobot(false);
         }, 2000);
       } else {
         if (!responseFleet) {
-          handleSetterResponseFleet(setResponseFleet);
+          handleGetFleet();
         }
       }
 
       const timer = setInterval(() => {
-        !isImportRobot && handleSetterResponseFleet(setResponseFleet);
+        !isImportRobot && handleGetFleet();
       }, 10000);
 
       return () => {
@@ -112,6 +109,39 @@ export default function CreateRobotFormStep2({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [responseFleet]
   );
+
+  function handleGetRobot() {
+    getRobot(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setRobotData: true,
+      }
+    );
+  }
+
+  function handleGetFleet() {
+    getFleet(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseFleet,
+      }
+    );
+  }
 
   return (
     <CreateRobotFormLoader

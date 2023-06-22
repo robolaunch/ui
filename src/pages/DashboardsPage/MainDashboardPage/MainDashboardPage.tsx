@@ -8,20 +8,24 @@ import InfoCell from "../../../components/Cells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
+import { useParams } from "react-router-dom";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
     any[] | undefined
   >();
-  const { handleSetterResponseOrganizations } = useFunctions();
+  const { getOrganizations } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const { setSidebarState } = useSidebar();
+  const url = useParams();
 
   useEffect(() => {
-    handleSetterResponseOrganizations(setResponseOrganizations);
-
+    getOrganizations({
+      setResponse: setResponseOrganizations,
+      ifErrorNavigateTo404: false,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reload]);
+  }, [reload, url]);
 
   const data: any = useMemo(
     () =>

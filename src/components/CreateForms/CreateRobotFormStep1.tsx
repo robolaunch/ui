@@ -6,7 +6,6 @@ import { addPhysicalInstanceToFleet } from "../../resources/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { createFederatedRobot } from "../../resources/RobotSlice";
-import { useParams } from "react-router-dom";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
@@ -30,16 +29,33 @@ export default function CreateRobotFormStep1({
   const { robotData, setRobotData }: any = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useSidebar();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const url = useParams();
   const dispatch = useAppDispatch();
-  const { handleSetterResponseRobot } = useFunctions();
+  const { getRobot } = useFunctions();
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      handleSetterResponseRobot(url?.robotName, setResponseRobot);
+      handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function handleGetRobot() {
+    getRobot(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseRobot,
+        setRobotData: setRobotData,
+      }
+    );
+  }
 
   const formik = useFormik({
     validationSchema: CreateRobotFormStep1Validations,

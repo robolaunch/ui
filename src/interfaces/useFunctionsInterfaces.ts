@@ -1,4 +1,142 @@
+export interface IsingleGetParameters {
+  isSetState?: boolean;
+  ifErrorNavigateTo404?: boolean;
+  setResponse?: any;
+}
+
+export interface ImultipleGetParameters {
+  ifErrorNavigateTo404?: boolean;
+  setResponse?: any;
+}
+
+export interface IgetOrganization {
+  organizationName: string;
+}
+
+export interface IgetRoboticsCloud {
+  organizationId: string;
+  roboticsCloudName: string;
+}
+
+export interface IgetRoboticsClouds {
+  organizationId: string;
+}
+
+export interface IgetInstance {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceName: string;
+}
+
+export interface IgetInstances {
+  organizationId: string;
+  roboticsCloudName: string;
+}
+
+export interface IgetFleet {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+}
+
+export interface IgetFleets {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+}
+
+export interface IgetRobot {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
+export interface IgetRobots {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+}
+
+export interface IgetBuildManager {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
+export interface IgetLaunchManagers {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
+export interface IsingleGetRobotParameters {
+  setRobotData?: boolean;
+  ifErrorNavigateTo404?: boolean;
+  setResponse?: any;
+}
+
+export interface IsingleGetBuildParameters {
+  setRobotData?: boolean;
+  ifErrorNavigateTo404?: boolean;
+  setResponse?: any;
+}
+
+export interface ImultipleGetLaunchParameters {
+  setRobotData?: boolean;
+  ifErrorNavigateTo404?: boolean;
+  setResponse?: any;
+}
+
 export interface IuseFunctions {
+  getOrganizations: (parameters?: ImultipleGetParameters) => void;
+  getOrganization: (
+    values: IgetOrganization,
+    parameters?: IsingleGetParameters
+  ) => void;
+  getRoboticsClouds: (
+    values: IgetRoboticsClouds,
+    parameters?: ImultipleGetParameters
+  ) => void;
+  getRoboticsCloud: (
+    values: IgetRoboticsCloud,
+    parameters?: IsingleGetParameters
+  ) => void;
+  getInstances: (
+    values: IgetInstances,
+    parameters?: ImultipleGetParameters
+  ) => void;
+  getInstance: (
+    values: IgetInstance,
+    parameters?: IsingleGetParameters
+  ) => void;
+  getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
+  getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
+  getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
+  getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
+
+  getBuildManager: (
+    values: IgetBuildManager,
+    parameters?: IsingleGetBuildParameters
+  ) => void;
+  getLaunchManagers: (
+    values: IgetLaunchManagers,
+    parameters?: ImultipleGetLaunchParameters
+  ) => void;
+
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined
   ) => void;

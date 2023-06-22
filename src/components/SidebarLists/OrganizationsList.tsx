@@ -1,10 +1,9 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListItem from "./SidebarListItem";
-import { getOrganizations } from "../../resources/OrganizationSlice";
-import { useAppDispatch } from "../../hooks/redux";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import useSidebar from "../../hooks/useSidebar";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
 
 interface IOrganizationList {
   setItemCount: any;
@@ -19,15 +18,22 @@ export default function OrganizationsList({
     any[] | undefined
   >(undefined);
   const { selectedState } = useSidebar();
-  const dispatch = useAppDispatch();
+  const { getOrganizations } = useFunctions();
 
   useEffect(() => {
+    handleGetOrganizations();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
+
+  function handleGetOrganizations() {
     setResponseOrganizations(undefined);
-    dispatch(getOrganizations()).then((responseOrganizations: any) => {
-      setResponseOrganizations(responseOrganizations?.payload?.data || []);
-      setItemCount(responseOrganizations?.payload?.data?.length || 0);
+    getOrganizations({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponseOrganizations,
     });
-  }, [dispatch, setItemCount, reload]);
+    setItemCount(responseOrganizations?.length);
+  }
 
   return (
     <Fragment>

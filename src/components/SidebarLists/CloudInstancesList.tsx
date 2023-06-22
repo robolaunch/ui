@@ -19,20 +19,20 @@ export default function CloudInstancesList({
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
-  const { sidebarState, selectedState } = useSidebar();
-  const { handleSetterResponseInstances } = useFunctions();
+  const { selectedState } = useSidebar();
+  const { getInstances } = useFunctions();
 
   useEffect(
     () => {
       if (selectedState?.organization && selectedState?.roboticsCloud) {
         setResponseInstances(undefined);
-        handleGetInstances();
+        handleGetCloudInstances();
       }
 
       const timer = setInterval(() => {
         selectedState?.organization &&
           selectedState?.roboticsCloud &&
-          handleGetInstances();
+          handleGetCloudInstances();
       }, 10000);
 
       return () => {
@@ -40,17 +40,22 @@ export default function CloudInstancesList({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      reload,
-      selectedState.organization,
-      selectedState?.roboticsCloud,
-      sidebarState?.instanceTab,
-    ]
+    [reload]
   );
 
-  function handleGetInstances() {
-    handleSetterResponseInstances(setResponseInstances);
-    setItemCount(responseInstances?.length || 0);
+  function handleGetCloudInstances() {
+    setResponseInstances(undefined);
+    getInstances(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+      },
+      {
+        setResponse: setResponseInstances,
+        ifErrorNavigateTo404: !responseInstances,
+      }
+    );
+    setItemCount(responseInstances?.length);
   }
 
   return (

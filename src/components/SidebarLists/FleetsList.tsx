@@ -18,7 +18,7 @@ export default function FleetsList({
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const { selectedState } = useSidebar();
   const dispatch = useAppDispatch();
-  const { handleSetterResponseFleets } = useFunctions();
+  const { getFleets } = useFunctions();
 
   useEffect(
     () => {
@@ -27,7 +27,6 @@ export default function FleetsList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
-        setResponseFleets(undefined);
         handleGetFleets();
       }
 
@@ -53,7 +52,18 @@ export default function FleetsList({
   );
 
   function handleGetFleets() {
-    handleSetterResponseFleets(setResponseFleets);
+    getFleets(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseFleets,
+      }
+    );
     setItemCount(responseFleets?.length || 0);
   }
 

@@ -5,7 +5,6 @@ import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import { useAppDispatch } from "../../../hooks/redux";
 import { useParams } from "react-router-dom";
 import useSidebar from "../../../hooks/useSidebar";
 import BasicCell from "../../../components/Cells/BasicCell";
@@ -16,31 +15,93 @@ import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 
 export default function FleetDashboardPage(): ReactElement {
-  const [responseRobots, setResponseRobots] = useState<any>(null);
+  const [responseCurrentOrganization, setResponseCurrentOrganization] =
+    useState<any>(undefined);
+  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
+    useState<any>(undefined);
+  const [responseCurrentInstance, setResponseCurrentInstance] =
+    useState<any>(undefined);
+  const [responseCurrentFleet, setResponseCurrentFleet] =
+    useState<any>(undefined);
+  const [responseRobots, setResponseRobots] = useState<any>(undefined);
   const { selectedState, setSidebarState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
   const url = useParams();
 
   const {
-    handleSetterCurrentOrganization,
-    handleSetterCurrentRoboticsCloud,
-    handleSetterCurrentInstance,
-    handleSetterCurrentFleet,
-    handleSetterResponseRobots,
+    getOrganization,
+    getRoboticsCloud,
+    getInstance,
+    getFleet,
+    getRobots,
   } = useFunctions();
 
   useEffect(() => {
-    if (!selectedState?.organization) {
-      handleSetterCurrentOrganization(url?.organizationName);
-    } else if (!selectedState?.roboticsCloud) {
-      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
-    } else if (!selectedState?.instance) {
-      handleSetterCurrentInstance(url?.instanceName);
-    } else if (!selectedState?.fleet) {
-      handleSetterCurrentFleet(url?.fleetName);
+    if (!responseCurrentOrganization) {
+      getOrganization(
+        {
+          organizationName: url?.organizationName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentOrganization,
+          setResponse: setResponseCurrentOrganization,
+        }
+      );
+    } else if (!responseCurrentRoboticsCloud) {
+      getRoboticsCloud(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: url?.roboticsCloudName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
+          setResponse: setResponseCurrentRoboticsCloud,
+        }
+      );
+    } else if (!responseCurrentInstance) {
+      getInstance(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          instanceName: url?.instanceName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentInstance,
+          setResponse: setResponseCurrentInstance,
+        }
+      );
+    } else if (!responseCurrentFleet) {
+      getFleet(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          instanceId: responseCurrentInstance?.instanceId,
+          region: responseCurrentInstance?.region,
+          fleetName: url?.fleetName as string,
+        },
+        {
+          isSetState: true,
+          ifErrorNavigateTo404: !responseCurrentFleet,
+          setResponse: setResponseCurrentFleet,
+        }
+      );
     } else {
-      handleSetterResponseRobots(setResponseRobots);
+      getRobots(
+        {
+          organizationId: responseCurrentOrganization?.organizationId,
+          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          instanceId: responseCurrentInstance?.instanceId,
+          region: responseCurrentInstance?.region,
+          fleetName: responseCurrentFleet?.name,
+        },
+        {
+          ifErrorNavigateTo404: !responseRobots,
+          setResponse: setResponseRobots,
+        }
+      );
     }
 
     const timer =
@@ -49,14 +110,33 @@ export default function FleetDashboardPage(): ReactElement {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        handleSetterResponseRobots(setResponseRobots);
+        getRobots(
+          {
+            organizationId: responseCurrentOrganization?.organizationId,
+            roboticsCloudName: responseCurrentRoboticsCloud?.name,
+            instanceId: responseCurrentInstance?.instanceId,
+            region: responseCurrentInstance?.region,
+            fleetName: responseCurrentFleet?.name,
+          },
+          {
+            ifErrorNavigateTo404: !responseRobots,
+            setResponse: setResponseRobots,
+          }
+        );
       }, 10000);
 
     return () => {
       clearInterval(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, reload, dispatch, selectedState]);
+  }, [
+    responseCurrentOrganization,
+    responseCurrentRoboticsCloud,
+    responseCurrentInstance,
+    responseCurrentFleet,
+    url,
+    reload,
+  ]);
 
   const data: any = useMemo(
     () =>

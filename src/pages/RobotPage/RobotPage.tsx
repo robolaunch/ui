@@ -20,59 +20,61 @@ import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const [responseBuildManager, setResponseBuildManager] =
-    useState<any>(undefined);
-  const [responseLaunchManagers, setResponseLaunchManagers] =
-    useState<any>(undefined);
+
   const [topicList, setTopicList] = useState<any>([]);
   const { selectedState } = useSidebar();
   const [ros, setRos] = useState<any>(null);
   const url = useParams();
 
   const {
-    handleSetterCurrentOrganization,
-    handleSetterCurrentRoboticsCloud,
-    handleSetterCurrentInstance,
-    handleSetterCurrentFleet,
-    handleSetterResponseRobot,
-    handleSetterResponseBuildManager,
-    handleSetterResponseLaunchManagers,
+    getOrganization,
+    getRoboticsCloud,
+    getInstance,
+    getFleet,
+    getRobot,
+    getBuildManager,
+    getLaunchManagers,
   } = useFunctions();
 
+  const [responseCurrentOrganization, setResponseCurrentOrganization] =
+    useState<any>(undefined);
+  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
+    useState<any>(undefined);
+  const [responseCurrentInstance, setResponseCurrentInstance] =
+    useState<any>(undefined);
+  const [responseCurrentFleet, setResponseCurrentFleet] =
+    useState<any>(undefined);
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [responseBuildManager, setResponseBuildManager] =
+    useState<any>(undefined);
+  const [responseLaunchManagers, setResponseLaunchManagers] =
+    useState<any>(undefined);
+
   useEffect(() => {
-    if (!selectedState?.organization) {
-      handleSetterCurrentOrganization(url?.organizationName);
-    } else if (!selectedState?.roboticsCloud) {
-      handleSetterCurrentRoboticsCloud(url?.roboticsCloudName);
-    } else if (!selectedState?.instance) {
-      handleSetterCurrentInstance(url?.instanceName);
-    } else if (!selectedState?.fleet) {
-      handleSetterCurrentFleet(url?.fleetName);
+    if (!responseCurrentOrganization) {
+      handleGetOrganization();
+    } else if (!responseCurrentRoboticsCloud) {
+      handleGetRoboticsCloud();
+    } else if (!responseCurrentInstance) {
+      handleGetInstance();
+    } else if (!responseCurrentFleet) {
+      handleGetFleet();
     } else if (!responseRobot) {
-      handleSetterResponseRobot(url?.robotName, setResponseRobot);
-      handleSetterResponseBuildManager(url?.robotName, setResponseBuildManager);
-      handleSetterResponseLaunchManagers(
-        url?.robotName,
-        setResponseLaunchManagers
-      );
+      handleGetRobot();
+      handleGetBuildManager();
+      handleGetLaunchManagers();
     }
 
     const timerResponseRobot = setInterval(() => {
       responseRobot?.robotCluster?.filter(
         (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-      )?.length && handleSetterResponseRobot(url?.robotName, setResponseRobot);
+      )?.length && handleGetRobot();
     }, 10000);
 
     const timerResponseBuildManager = setInterval(() => {
       responseBuildManager?.robotClusters?.filter(
         (robot: any) => robot?.buildManagerStatus !== "Ready"
-      )?.length &&
-        handleSetterResponseBuildManager(
-          url?.robotName,
-          setResponseBuildManager
-        );
+      )?.length && handleGetBuildManager();
     }, 10000);
 
     const timerResponseLaunchManagers = setInterval(() => {
@@ -85,10 +87,7 @@ export default function RobotPage(): ReactElement {
           return cluster?.launchManagerStatus;
         })
         ?.filter((status: any) => status !== "Running")?.length &&
-        handleSetterResponseLaunchManagers(
-          url?.robotName,
-          setResponseLaunchManagers
-        );
+        handleGetLaunchManagers();
     }, 10000);
 
     return () => {
@@ -105,6 +104,119 @@ export default function RobotPage(): ReactElement {
     responseBuildManager,
     responseLaunchManagers,
   ]);
+
+  function handleGetOrganization() {
+    getOrganization(
+      {
+        organizationName: url?.organizationName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseCurrentOrganization,
+        isSetState: true,
+        setResponse: setResponseCurrentOrganization,
+      }
+    );
+  }
+
+  function handleGetRoboticsCloud() {
+    getRoboticsCloud(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
+        isSetState: true,
+        setResponse: setResponseCurrentRoboticsCloud,
+      }
+    );
+  }
+
+  function handleGetInstance() {
+    getInstance(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceName: url?.instanceName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseCurrentInstance,
+        isSetState: true,
+        setResponse: setResponseCurrentInstance,
+      }
+    );
+  }
+
+  function handleGetFleet() {
+    getFleet(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceId: responseCurrentInstance?.instanceId,
+        region: responseCurrentInstance?.region,
+        fleetName: url?.fleetName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseCurrentFleet,
+        isSetState: true,
+        setResponse: setResponseCurrentFleet,
+      }
+    );
+  }
+
+  function handleGetRobot() {
+    getRobot(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceId: responseCurrentInstance?.instanceId,
+        region: responseCurrentInstance?.region,
+        fleetName: responseCurrentFleet?.name,
+        robotName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobot,
+        setRobotData: true,
+        setResponse: setResponseRobot,
+      }
+    );
+  }
+
+  function handleGetBuildManager() {
+    getBuildManager(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceId: responseCurrentInstance?.instanceId,
+        region: responseCurrentInstance?.region,
+        fleetName: responseCurrentFleet?.name,
+        robotName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseBuildManager,
+        setRobotData: true,
+      }
+    );
+  }
+
+  function handleGetLaunchManagers() {
+    getLaunchManagers(
+      {
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceId: responseCurrentInstance?.instanceId,
+        region: responseCurrentInstance?.region,
+        fleetName: responseCurrentFleet?.name,
+        robotName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseLaunchManagers,
+        setRobotData: true,
+      }
+    );
+  }
 
   const { urls } = useAppSelector((state) => state.user);
 

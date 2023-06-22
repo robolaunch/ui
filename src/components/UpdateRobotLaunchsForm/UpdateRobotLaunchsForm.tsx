@@ -7,23 +7,41 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import useCreateRobot from "../../hooks/useCreateRobot";
 import StateCell from "../Cells/StateCell";
 import InfoTip from "../InfoTip/InfoTip";
+import useSidebar from "../../hooks/useSidebar";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
   const [isAddedForm, setIsAddedForm] = useState<boolean>(false);
   const [responseRobotLaunchManagers, setResponseRobotLaunchManagers] =
     useState<any>(undefined);
-  const { handleSetterResponseLaunchManagers } = useFunctions();
+  const { getLaunchManagers } = useFunctions();
   const url = useParams();
-  const { setRobotData } = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
+  const { selectedState } = useSidebar();
   useEffect(() => {
+    console.log(responseRobotLaunchManagers);
     if (!responseRobotLaunchManagers) {
-      handleSetterResponseLaunchManagers(
-        url?.robotName,
-        setResponseRobotLaunchManagers
-      );
+      handleGetLaunchManagers();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseRobotLaunchManagers, url]);
+
+  function handleGetLaunchManagers() {
+    getLaunchManagers(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData?.step1?.robotName,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseRobotLaunchManagers,
+        setRobotData: true,
+      }
+    );
+  }
 
   return (
     <Fragment>
@@ -141,7 +159,6 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                     },
                   };
                 });
-
                 setIsAddedForm(true);
               }}
             />

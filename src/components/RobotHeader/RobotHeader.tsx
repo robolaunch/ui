@@ -48,34 +48,39 @@ export default function RobotHeader({
     },
     {
       name: "Task Management",
-      state: responseRobot ? true : false,
-      disabled: responseRobot?.bridgeEnabled ? false : true,
+      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Teleoperation",
-      state: responseRobot ? true : false,
-      disabled: responseRobot?.bridgeEnabled ? false : true,
+      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Visualization",
-      state: responseRobot ? true : false,
-      disabled: responseRobot?.bridgeEnabled ? false : true,
+      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Development Suite",
-      state: responseRobot ? true : false,
+      state:
+        responseRobot?.ideIngressEndpoint && responseRobot?.vdiIngressEndpoint
+          ? true
+          : false,
       disabled:
-        responseRobot?.ideEnabled && responseRobot?.vdiEnabled ? false : true,
+        responseRobot?.ideIngressEndpoint && responseRobot?.vdiIngressEndpoint
+          ? false
+          : true,
     },
     {
       name: "Code Editor",
-      state: responseRobot ? true : false,
-      disabled: responseRobot?.ideEnabled ? false : true,
+      state: responseRobot?.ideIngressEndpoint ? true : false,
+      disabled: responseRobot?.ideIngressEndpoint ? false : true,
     },
     {
       name: "Remote Desktop",
-      state: responseRobot ? true : false,
-      disabled: responseRobot?.vdiEnabled ? false : true,
+      state: responseRobot?.vdiIngressEndpoint ? true : false,
+      disabled: responseRobot?.vdiIngressEndpoint ? false : true,
     },
   ];
 
