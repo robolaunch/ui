@@ -1,10 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 import { ISelectedState, ISidebarState } from "../interfaces/sidebarInterfaces";
+import { useLocation } from "react-router-dom";
 
 export const SidebarContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const url = useLocation();
+
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
     isOpen: false,
     isCreateMode: false,
@@ -22,6 +25,15 @@ export default ({ children }: any) => {
   useEffect(() => {
     console.log(selectedState);
   }, [selectedState]);
+
+  useEffect(() => {
+    setSidebarState({
+      isOpen: false,
+      page: undefined,
+      isCreateMode: false,
+      instanceTab: "Cloud Instances",
+    });
+  }, [url]);
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {

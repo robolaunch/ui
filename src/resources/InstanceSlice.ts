@@ -191,14 +191,6 @@ export const instanceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getInstances.fulfilled, (_, action: any) => {
-        if (!action?.payload?.success) {
-          toast.error(action?.payload?.message);
-        }
-      })
-      .addCase(getInstances.rejected, () => {
-        toast.error("Something went wrong");
-      })
       .addCase(createCloudInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
@@ -209,6 +201,14 @@ export const instanceSlice = createSlice({
       .addCase(createCloudInstance.rejected, () => {
         toast.error("Something went wrong");
       })
+      .addCase(getInstances.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getInstances.rejected, () => {
+        toast.error("Something went wrong of getting instances");
+      })
       .addCase(stopInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
@@ -217,7 +217,7 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(stopInstance.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of stopping instance");
       })
       .addCase(startInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -227,7 +227,7 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(startInstance.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of starting instance");
       })
       .addCase(terminateInstance.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -237,7 +237,7 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(terminateInstance.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of terminating instance");
       })
       .addCase(getInstanceState.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -245,13 +245,13 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(getInstanceState.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of getting instance state");
       })
       .addCase(addPhysicalInstance.fulfilled, (_, action: any) => {
         toast.success("Physical instance added successfully");
       })
       .addCase(addPhysicalInstance.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of adding physical instance");
       })
       .addCase(addPhysicalInstanceToFleet.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -261,7 +261,9 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(addPhysicalInstanceToFleet.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error(
+          "Something went wrong of adding physical instance to fleet"
+        );
       });
   },
 });

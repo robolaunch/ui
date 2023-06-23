@@ -27,6 +27,7 @@ export default function FleetsList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
+        setResponseFleets(undefined);
         handleGetFleets();
       }
 

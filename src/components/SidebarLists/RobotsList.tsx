@@ -26,6 +26,7 @@ export default function RobotsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
+        setResponseRobots(undefined);
         handleGetRobots();
       }
 

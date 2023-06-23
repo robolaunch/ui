@@ -12,7 +12,7 @@ function App() {
   return (
     <ThemeContext>
       <ToastContainer />
-      <Toaster position="top-center" />
+      <Toaster richColors position="top-center" />
       <AppRoutes />
       <VersionViewer />
     </ThemeContext>

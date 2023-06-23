@@ -39,12 +39,12 @@ export const roboticsCloudSlice = createSlice({
         }
       })
       .addCase(createRoboticsCloud.rejected, (state, action: any) => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of creating robotics cloud");
       })
       .addCase(
         getRoboticsCloudsOfOrganization.rejected,
         (state, action: any) => {
-          toast.error("Something went wrong");
+          toast.error("Something went wrong of getting robotics clouds");
         }
       );
   },

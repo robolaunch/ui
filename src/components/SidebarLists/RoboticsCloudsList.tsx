@@ -23,13 +23,13 @@ export default function RoboticsCloudsList({
 
   useEffect(() => {
     if (selectedState?.organization) {
+      setResponseRoboticsClouds(undefined);
       handleGetRoboticsClouds();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload]);
 
   function handleGetRoboticsClouds() {
-    setResponseRoboticsClouds(undefined);
     getRoboticsClouds(
       {
         organizationId: selectedState?.organization?.organizationId,

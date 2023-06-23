@@ -44,7 +44,6 @@ export default function CloudInstancesList({
   );
 
   function handleGetCloudInstances() {
-    setResponseInstances(undefined);
     getInstances(
       {
         organizationId: selectedState?.organization?.organizationId,

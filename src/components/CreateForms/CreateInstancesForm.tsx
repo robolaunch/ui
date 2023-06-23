@@ -9,6 +9,7 @@ import { createCloudInstance } from "../../resources/InstanceSlice";
 import InfoTip from "../InfoTip/InfoTip";
 import { toast } from "sonner";
 import { BsCpu } from "react-icons/bs";
+import { createInstanceSchema } from "../../validations/InstancesValidations";
 
 export default function CreateInstancesForm(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
@@ -24,12 +25,27 @@ export default function CreateInstancesForm(): ReactElement {
         regions: [
           {
             name: "eu-central-1",
+            city: "Frankfurt",
+          },
+          {
+            name: "eu-west-2",
+            city: "London",
           },
           {
             name: "us-east-1",
+            city: "N. Virginia",
           },
           {
             name: "us-east-2",
+            city: "Ohio",
+          },
+          {
+            name: "us-west-1",
+            city: "N. California",
+          },
+          {
+            name: "ap-northeast-1",
+            city: "Tokyo",
           },
         ],
         types: [
@@ -78,6 +94,7 @@ export default function CreateInstancesForm(): ReactElement {
       region: "",
       instanceType: "",
     },
+    validationSchema: createInstanceSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
       dispatch(
@@ -170,7 +187,7 @@ export default function CreateInstancesForm(): ReactElement {
              Regions are the cloud regions that you can use to create your cloud instance."
             />
           </div>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-6">
             {responseProviders
               ?.filter(
                 (provider: any) => provider.name === formik?.values?.provider
@@ -190,7 +207,10 @@ export default function CreateInstancesForm(): ReactElement {
                 >
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-xs text-layer-light-800">
-                      {region.name}
+                      {region?.name}
+                    </span>
+                    <span className="text-xs text-layer-light-700">
+                      ({region?.city})
                     </span>
                   </div>
                   <div className="absolute inset-0 flex items-start justify-end p-2"></div>
@@ -263,7 +283,7 @@ export default function CreateInstancesForm(): ReactElement {
                 </div>
               ))}
           </div>
-          <InputError error={formik?.errors?.type} touched={true} />
+          <InputError error={formik?.errors?.instanceType} touched={true} />
         </div>
       )}
 
