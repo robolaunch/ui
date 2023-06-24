@@ -45,7 +45,7 @@ export default function OrganizationsList({
         />
       ) : Array.isArray(responseOrganizations) &&
         !responseOrganizations?.length ? (
-        <SidebarSelectInfo text={`Create an Organization`} />
+        <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
         responseOrganizations.map((organization: any, index: number) => {
           return (

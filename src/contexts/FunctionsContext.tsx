@@ -1,19 +1,4 @@
 import React, { createContext } from "react";
-import { useAppDispatch } from "../hooks/redux";
-import { getOrganizations as getAllOrganizations } from "../resources/OrganizationSlice";
-import useSidebar from "../hooks/useSidebar";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { getInstances as getAllInstances } from "../resources/InstanceSlice";
-import {
-  getFederatedRobot,
-  getFederatedRobots,
-  getRobotBuildManagers,
-  getRobotLaunchManagers,
-} from "../resources/RobotSlice";
-import { getFederatedFleets } from "../resources/FleetSlice";
-import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
 import {
   IgetBuildManager,
   IgetFleet,
@@ -22,6 +7,8 @@ import {
   IgetInstances,
   IgetLaunchManagers,
   IgetOrganization,
+  IgetPhysicalFleet,
+  IgetPhysicalInstances,
   IgetRobot,
   IgetRoboticsCloud,
   IgetRoboticsClouds,
@@ -32,6 +19,22 @@ import {
   IsingleGetParameters,
   IsingleGetRobotParameters,
 } from "../interfaces/useFunctionsInterfaces";
+import {
+  getFederatedRobot,
+  getFederatedRobots,
+  getRobotBuildManagers,
+  getRobotLaunchManagers,
+} from "../resources/RobotSlice";
+import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
+import { getOrganizations as getAllOrganizations } from "../resources/OrganizationSlice";
+import { getPhysicalInstances as getAllPhysicalInstances } from "../resources/InstanceSlice";
+import { getInstances as getAllInstances } from "../resources/InstanceSlice";
+import { getFederatedFleets } from "../resources/FleetSlice";
+import useCreateRobot from "../hooks/useCreateRobot";
+import { useAppDispatch } from "../hooks/redux";
+import { useNavigate } from "react-router-dom";
+import useSidebar from "../hooks/useSidebar";
+import { toast } from "sonner";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -181,6 +184,42 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getPhysicalInstances(
+    values: IgetPhysicalInstances,
+    parameters?: ImultipleGetParameters
+  ) {
+    dispatch(
+      getAllPhysicalInstances({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        instanceId: values?.instanceId,
+        region: values?.region,
+      })
+    ).then((responsePhysicalInstances: any) => {
+      if (
+        Array.isArray(responsePhysicalInstances?.payload?.data) &&
+        Array.isArray(
+          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchPhysicalInstances
+      ) {
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchPhysicalInstances || []
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse([]);
+      }
+    });
+  }
+
   async function getInstance(
     values: IgetInstance,
     parameters?: IsingleGetParameters
@@ -293,6 +332,56 @@ export default ({ children }: any) => {
           parameters?.setResponse(
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
               (fleet: any) => fleet?.name === values?.fleetName
+            ) || {}
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function getPhysicalFleet(
+    values: IgetPhysicalFleet,
+    parameters?: IsingleGetParameters
+  ) {
+    dispatch(
+      getFederatedFleets({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        instanceId: values?.instanceId,
+        region: values?.region,
+      })
+    ).then((responseFederatedFleets: any) => {
+      if (
+        Array.isArray(responseFederatedFleets?.payload?.data) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        //Change robolaunchFederatedFleets object
+        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedFleets
+      ) {
+        parameters?.isSetState &&
+          setSelectedState((prevState: any) => {
+            return {
+              ...prevState,
+              fleet:
+                //Change robolaunchFederatedFleets object
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                  (fleet: any) => fleet?.fleetName === values?.fleetName
+                ) || {},
+            };
+          });
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            //Change robolaunchFederatedFleets object
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+              (fleet: any) => fleet?.fleetName === values?.fleetName
             ) || {}
           );
       } else {
@@ -563,9 +652,11 @@ export default ({ children }: any) => {
         getRoboticsClouds,
         getRoboticsCloud,
         getInstances,
+        getPhysicalInstances,
         getInstance,
         getFleets,
         getFleet,
+        getPhysicalFleet,
         getRobots,
         getRobot,
         getBuildManager,

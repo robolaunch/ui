@@ -91,7 +91,7 @@ export default function FleetsList({
               alt="Loading..."
             />
           ) : responseFleets.length === 0 ? (
-            <SidebarInfo text={`No fleets.`} />
+            <SidebarInfo text={`Create a Fleet.`} />
           ) : (
             responseFleets
               ?.filter((fleet: any) => !fleet.fleetName)

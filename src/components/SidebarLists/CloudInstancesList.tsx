@@ -33,7 +33,7 @@ export default function CloudInstancesList({
         selectedState?.organization &&
           selectedState?.roboticsCloud &&
           handleGetCloudInstances();
-      }, 10000);
+      }, 20000);
 
       return () => {
         clearInterval(timer);
@@ -73,7 +73,7 @@ export default function CloudInstancesList({
           alt="Loading..."
         />
       ) : responseInstances.length === 0 ? (
-        <SidebarInfo text={`Create an Cloud Instances`} />
+        <SidebarInfo text={`Create an Cloud Instances.`} />
       ) : (
         <Fragment>
           {responseInstances?.map((instance: any, index: number) => {

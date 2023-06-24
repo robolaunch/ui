@@ -1,9 +1,9 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import StateCell from "../Cells/StateCell";
-import useFunctions from "../../hooks/useFunctions";
 
 interface IRobotsList {
   reload: boolean;
@@ -87,7 +87,7 @@ export default function RobotsList({
           alt="Loading..."
         />
       ) : responseRobots?.length === 0 ? (
-        <SidebarInfo text={`No robots.`} />
+        <SidebarInfo text={`Create a Robot.`} />
       ) : (
         <Fragment>
           {responseRobots?.map((robot: any, index: number) => {

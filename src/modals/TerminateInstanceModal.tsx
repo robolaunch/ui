@@ -20,8 +20,6 @@ export default function TerminateInstanceModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  console.log(data);
-
   function handleTerminateInstance() {
     dispatch(
       terminateInstance({
@@ -41,13 +39,17 @@ export default function TerminateInstanceModal({
 
   return (
     <Dialog
-      header="Terminate Instance Modal"
+      header={`Terminate Instance ${data?.name}`}
       visible={visibleModal}
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="w-full flex flex-col gap-8">
-        <p className="text-sm">Details</p>
+        <p className="text-sm">
+          If you terminate this instance, delete all data associated with it.
+          Including all robots, fleets, and other resources. This action cannot
+          be undone. Are you sure you want to terminate this instance?
+        </p>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-44 !h-11"

@@ -1,12 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import SidebarListItem from "./SidebarListItem";
-import { useAppDispatch } from "../../hooks/redux";
-import useSidebar from "../../hooks/useSidebar";
-import { getPhysicalInstances } from "../../resources/InstanceSlice";
-import StateCell from "../Cells/StateCell";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import organizationNameViewer from "../../helpers/organizationNameViewer";
+import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
+import SidebarListItem from "./SidebarListItem";
+import useSidebar from "../../hooks/useSidebar";
+import StateCell from "../Cells/StateCell";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -21,8 +20,8 @@ export default function PhysicalInstancesList({
     any[] | undefined
   >(undefined);
 
+  const { getPhysicalInstances } = useFunctions();
   const { sidebarState, selectedState } = useSidebar();
-  const dispatch = useAppDispatch();
 
   useEffect(
     () => {
@@ -32,44 +31,43 @@ export default function PhysicalInstancesList({
         selectedState?.instance
       ) {
         setResponsePhysicalInstances(undefined);
-        dispatch(
-          getPhysicalInstances({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.instance?.region,
-          })
-        ).then((response: any) => {
-          if (
-            Array.isArray(response?.payload?.data) &&
-            Array.isArray(response?.payload?.data[0]?.roboticsClouds) &&
-            Array.isArray(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-            ) &&
-            response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.robolaunchPhysicalInstances
-          ) {
-            setResponsePhysicalInstances(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                ?.robolaunchPhysicalInstances || []
-            );
-            setItemCount(
-              response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-                ?.robolaunchPhysicalInstances?.length || 0
-            );
-          }
-        });
+        handleGetPhysicalInstances();
       }
+
+      const timer = setInterval(() => {
+        selectedState?.organization &&
+          selectedState?.roboticsCloud &&
+          selectedState?.instance &&
+          handleGetPhysicalInstances();
+      }, 10000);
+
+      return () => {
+        clearInterval(timer);
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      dispatch,
       reload,
       selectedState.organization,
       selectedState?.roboticsCloud,
       sidebarState?.instanceTab,
     ]
   );
+
+  function handleGetPhysicalInstances() {
+    getPhysicalInstances(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponsePhysicalInstances,
+      }
+    );
+  }
 
   return (
     <Fragment>
@@ -93,7 +91,7 @@ export default function PhysicalInstancesList({
           alt="Loading..."
         />
       ) : responsePhysicalInstances.length === 0 ? (
-        <SidebarInfo text={`No instances.`} />
+        <SidebarInfo text={`Add a Physical Instances.`} />
       ) : (
         <Fragment>
           {responsePhysicalInstances?.map((instance: any, index: number) => {

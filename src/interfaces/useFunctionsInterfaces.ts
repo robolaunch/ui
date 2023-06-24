@@ -13,13 +13,24 @@ export interface IgetOrganization {
   organizationName: string;
 }
 
+export interface IgetRoboticsClouds {
+  organizationId: string;
+}
 export interface IgetRoboticsCloud {
   organizationId: string;
   roboticsCloudName: string;
 }
 
-export interface IgetRoboticsClouds {
+export interface IgetInstances {
   organizationId: string;
+  roboticsCloudName: string;
+}
+
+export interface IgetPhysicalInstances {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
 }
 
 export interface IgetInstance {
@@ -28,9 +39,11 @@ export interface IgetInstance {
   instanceName: string;
 }
 
-export interface IgetInstances {
+export interface IgetFleets {
   organizationId: string;
   roboticsCloudName: string;
+  instanceId: string;
+  region: string;
 }
 
 export interface IgetFleet {
@@ -41,20 +54,12 @@ export interface IgetFleet {
   fleetName: string;
 }
 
-export interface IgetFleets {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-}
-
-export interface IgetRobot {
+export interface IgetPhysicalFleet {
   organizationId: string;
   roboticsCloudName: string;
   instanceId: string;
   region: string;
   fleetName: string;
-  robotName: string;
 }
 
 export interface IgetRobots {
@@ -64,8 +69,7 @@ export interface IgetRobots {
   region: string;
   fleetName: string;
 }
-
-export interface IgetBuildManager {
+export interface IgetRobot {
   organizationId: string;
   roboticsCloudName: string;
   instanceId: string;
@@ -75,6 +79,14 @@ export interface IgetBuildManager {
 }
 
 export interface IgetLaunchManagers {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+export interface IgetBuildManager {
   organizationId: string;
   roboticsCloudName: string;
   instanceId: string;
@@ -119,12 +131,20 @@ export interface IuseFunctions {
     values: IgetInstances,
     parameters?: ImultipleGetParameters
   ) => void;
+  getPhysicalInstances: (
+    values: IgetPhysicalInstances,
+    parameters?: ImultipleGetParameters
+  ) => void;
   getInstance: (
     values: IgetInstance,
     parameters?: IsingleGetParameters
   ) => void;
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
   getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
+  getPhysicalFleet: (
+    values: IgetPhysicalFleet,
+    parameters?: IsingleGetParameters
+  ) => void;
   getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
 
@@ -148,6 +168,7 @@ export interface IuseFunctions {
   handleSetterResponseOrganizations: (setResponseOrganizations: any) => void;
   handleSetterResponseRoboticsClouds: (setResponseRoboticsClouds: any) => void;
   handleSetterResponseInstances: (setResponseInstances: any) => void;
+
   handleSetterResponseFleets: (setResponseFleets: any) => void;
   handleSetterResponseFleet: (setResponseFleet: any) => void;
   handleSetterResponseRobots: (setResponseRobots: any) => void;

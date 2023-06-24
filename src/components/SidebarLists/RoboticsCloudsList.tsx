@@ -56,7 +56,7 @@ export default function RoboticsCloudsList({
             />
           ) : Array.isArray(responseRoboticsClouds) &&
             !responseRoboticsClouds?.length ? (
-            <SidebarSelectInfo text={`Create a Robotics Cloud`} />
+            <SidebarSelectInfo text={`Create a Robotics Cloud.`} />
           ) : (
             responseRoboticsClouds?.map((roboticsCloud: any, index: number) => {
               return (

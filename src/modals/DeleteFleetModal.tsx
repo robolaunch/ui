@@ -40,13 +40,17 @@ export default function DeleteFleetModalModal({
 
   return (
     <Dialog
-      header="Delete Fleet Modal"
+      header="Delete Fleet"
       visible={visibleModal}
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="w-full flex flex-col gap-8">
-        <p className="text-sm">Details</p>
+        <p className="text-sm">
+          If you delete this fleet, delete all data associated with it.
+          Including all robots, and other resources. This action cannot be
+          undone. Are you sure you want to delete this fleet?
+        </p>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-44 !h-11"

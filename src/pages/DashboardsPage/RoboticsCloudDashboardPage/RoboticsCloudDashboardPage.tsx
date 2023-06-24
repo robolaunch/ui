@@ -75,7 +75,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             ifErrorNavigateTo404: !responseInstances,
           }
         );
-      }, 10000);
+      }, 20000);
 
     return () => {
       clearInterval(timer);
@@ -157,6 +157,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           return (
             <InstanceActionCells
               data={{
+                name: rowData?.name?.name,
                 state: rowData?.providerState,
                 organizationId: selectedState?.organization?.organizationId,
                 roboticsCloudName: url?.roboticsCloudName,
