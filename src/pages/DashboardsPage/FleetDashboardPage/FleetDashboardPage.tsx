@@ -80,7 +80,7 @@ export default function FleetDashboardPage(): ReactElement {
           organizationId: responseCurrentOrganization?.organizationId,
           roboticsCloudName: responseCurrentRoboticsCloud?.name,
           instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentInstance?.region,
+          region: responseCurrentRoboticsCloud?.region,
           fleetName: url?.fleetName as string,
         },
         {
@@ -95,7 +95,7 @@ export default function FleetDashboardPage(): ReactElement {
           organizationId: responseCurrentOrganization?.organizationId,
           roboticsCloudName: responseCurrentRoboticsCloud?.name,
           instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentInstance?.region,
+          region: responseCurrentRoboticsCloud?.region,
           fleetName: responseCurrentFleet?.name,
         },
         {
@@ -116,7 +116,7 @@ export default function FleetDashboardPage(): ReactElement {
             organizationId: responseCurrentOrganization?.organizationId,
             roboticsCloudName: responseCurrentRoboticsCloud?.name,
             instanceId: responseCurrentInstance?.instanceId,
-            region: responseCurrentInstance?.region,
+            region: responseCurrentRoboticsCloud?.region,
             fleetName: responseCurrentFleet?.name,
           },
           {
@@ -157,7 +157,7 @@ export default function FleetDashboardPage(): ReactElement {
             organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName,
             instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.instance?.region,
+            region: selectedState?.roboticsCloud?.region,
             fleetName: url?.fleetName,
             robotName: robot?.name,
             virtualState: robot?.robotClusters[0] || undefined,

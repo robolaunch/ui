@@ -70,7 +70,7 @@ export default function CreateRobotFormStep3({
         organizationId: selectedState?.organization?.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud?.name,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        region: selectedState?.roboticsCloud?.region,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },

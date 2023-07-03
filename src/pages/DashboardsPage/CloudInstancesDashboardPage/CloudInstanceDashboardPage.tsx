@@ -57,6 +57,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           organizationId: responseCurrentOrganization?.organizationId,
           roboticsCloudName: responseCurrentRoboticsCloud?.name,
           instanceName: url?.instanceName as string,
+          region: responseCurrentRoboticsCloud?.region,
         },
         {
           isSetState: true,
@@ -70,7 +71,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           organizationId: responseCurrentOrganization?.organizationId,
           roboticsCloudName: responseCurrentRoboticsCloud?.name,
           instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentInstance?.region,
+          region: responseCurrentRoboticsCloud?.region,
         },
         {
           ifErrorNavigateTo404: !responseFleets,
@@ -89,7 +90,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
             organizationId: responseCurrentOrganization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName as string,
             instanceId: responseCurrentInstance?.instanceId,
-            region: responseCurrentInstance?.region,
+            region: responseCurrentRoboticsCloud?.region,
           },
           {
             ifErrorNavigateTo404: !responseFleets,
@@ -109,6 +110,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     url,
     reload,
   ]);
+
+  useEffect(() => {
+    console.log(responseCurrentRoboticsCloud);
+  }, [responseCurrentRoboticsCloud]);
 
   const data: any = useMemo(
     () =>

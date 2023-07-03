@@ -39,7 +39,7 @@ export default function CreateRobotFormStep2({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.instance?.region,
+          region: selectedState?.roboticsCloud?.region,
           robotName: robotData?.step1?.robotName,
           fleetName: selectedState?.fleet?.name,
           physicalInstanceName: robotData?.step1?.isVirtualRobot
