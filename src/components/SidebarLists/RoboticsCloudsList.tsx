@@ -5,7 +5,6 @@ import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
 import useFunctions from "../../hooks/useFunctions";
-import InfoCell from "../Cells/InfoCell";
 import BasicCell from "../Cells/BasicCell";
 
 interface IRoboticsCloudsList {

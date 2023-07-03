@@ -50,9 +50,15 @@ export default ({ children }: any) => {
       if (organizationsResponse?.payload?.data) {
         parameters?.setResponse &&
           parameters?.setResponse(organizationsResponse?.payload?.data || []);
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            organizationsResponse?.payload?.data?.length || 0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }
@@ -112,9 +118,16 @@ export default ({ children }: any) => {
           parameters?.setResponse(
             responseRoboticsClouds?.payload?.data[0]?.roboticsClouds || []
           );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.length ||
+              0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }
@@ -178,9 +191,16 @@ export default ({ children }: any) => {
             responseInstances?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances || []
           );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseInstances?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances?.length || 0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }
@@ -214,9 +234,16 @@ export default ({ children }: any) => {
             responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances[0]?.robolaunchPhysicalInstances || []
           );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchPhysicalInstances?.length || 0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }
@@ -289,9 +316,16 @@ export default ({ children }: any) => {
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances[0]?.robolaunchFederatedFleets || []
           );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }
@@ -420,9 +454,16 @@ export default ({ children }: any) => {
             responseRobots?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances[0]?.robolaunchFederatedRobots || []
           );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseRobots?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedRobots?.length || 0
+          );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
       }
     });
   }

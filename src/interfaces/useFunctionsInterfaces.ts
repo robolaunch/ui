@@ -7,6 +7,7 @@ export interface IsingleGetParameters {
 export interface ImultipleGetParameters {
   ifErrorNavigateTo404?: boolean;
   setResponse?: any;
+  setItemCount?: any;
 }
 
 export interface IgetOrganization {
