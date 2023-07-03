@@ -138,6 +138,7 @@ export default function RobotPage(): ReactElement {
         organizationId: responseCurrentOrganization?.organizationId,
         roboticsCloudName: responseCurrentRoboticsCloud?.name,
         instanceName: url?.instanceName as string,
+        region: responseCurrentRoboticsCloud?.region,
       },
       {
         ifErrorNavigateTo404: !responseCurrentInstance,

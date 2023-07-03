@@ -31,9 +31,8 @@ export default function OrganizationsList({
     getOrganizations({
       ifErrorNavigateTo404: false,
       setResponse: setResponseOrganizations,
+      setItemCount: setItemCount,
     });
-    console.log(responseOrganizations);
-    setItemCount(responseOrganizations?.length);
   }
 
   return (

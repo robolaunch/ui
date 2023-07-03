@@ -63,9 +63,9 @@ export default function FleetsList({
       {
         ifErrorNavigateTo404: false,
         setResponse: setResponseFleets,
+        setItemCount: setItemCount,
       }
     );
-    setItemCount(responseFleets?.length || 0);
   }
 
   return (

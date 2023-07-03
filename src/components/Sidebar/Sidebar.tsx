@@ -3,7 +3,6 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import { Link, useParams } from "react-router-dom";
-
 import useSidebar from "../../hooks/useSidebar";
 
 export default function Sidebar(): ReactElement {

@@ -35,6 +35,15 @@ export default ({ children }: any) => {
     });
   }, [url]);
 
+  useEffect(() => {
+    setSidebarState(
+      (prevState: ISidebarState): ISidebarState => ({
+        ...prevState,
+        isCreateMode: false,
+      })
+    );
+  }, [sidebarState?.page]);
+
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {
       case "workspacesmanager":

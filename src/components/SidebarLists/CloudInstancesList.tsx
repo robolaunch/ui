@@ -53,9 +53,9 @@ export default function CloudInstancesList({
       {
         setResponse: setResponseInstances,
         ifErrorNavigateTo404: !responseInstances,
+        setItemCount: setItemCount,
       }
     );
-    setItemCount(responseInstances?.length);
   }
 
   return (

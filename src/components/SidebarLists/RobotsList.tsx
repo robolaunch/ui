@@ -58,9 +58,9 @@ export default function RobotsList({
       {
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobots,
+        setItemCount: setItemCount,
       }
     );
-    setItemCount(responseRobots?.length);
   }
 
   return (

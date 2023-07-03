@@ -65,6 +65,7 @@ export default function PhysicalInstancesList({
       {
         ifErrorNavigateTo404: false,
         setResponse: setResponsePhysicalInstances,
+        setItemCount: setItemCount,
       }
     );
   }
