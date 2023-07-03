@@ -20,7 +20,7 @@ export default function SidebarStaticItem({
         "bg-layer-light-100 transition-all duration-500"
       }`}
     >
-      <img className="w-10" src={imgSrc} alt="Robolaunch" />
+      <img draggable="false" className="w-10" src={imgSrc} alt="Robolaunch" />
     </Link>
   );
 }

@@ -10,6 +10,7 @@ export default function FilteredTags() {
       {selectedState?.organization && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
+            draggable="false"
             className="w-4 h-4"
             src="/svg/general/organization/organization-blue.svg"
             alt="robolaunch"
@@ -25,6 +26,7 @@ export default function FilteredTags() {
       {selectedState?.roboticsCloud && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
+            draggable="false"
             className="w-4 h-4"
             src="/svg/general/roboticscloud/roboticscloud-blue.svg"
             alt="robolaunch"
@@ -37,6 +39,7 @@ export default function FilteredTags() {
       {selectedState?.instance && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
+            draggable="false"
             className="w-4 h-4"
             src="/svg/general/instance/instance-blue.svg"
             alt="robolaunch"
@@ -49,6 +52,7 @@ export default function FilteredTags() {
       {selectedState?.fleet && (
         <div className="col-span-1 max-w-fit flex items-center gap-2 border border-layer-secondary-400 bg-layer-secondary-100 rounded p-1">
           <img
+            draggable="false"
             className="w-4 h-4"
             src="/svg/general/fleet/fleet-blue.svg"
             alt="robolaunch"

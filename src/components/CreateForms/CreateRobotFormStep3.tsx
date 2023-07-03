@@ -107,7 +107,7 @@ export default function CreateRobotFormStep3({
           name: Yup.string()
             .required("Step Name is required")
             .test("unique-name", "This name is already taken", (value) => {
-              const temp = formik.values.robotBuildSteps.filter(
+              const temp = formik.values.robotBuildSteps?.filter(
                 (item: any) => item.name === value && item
               );
               return temp.length > 1 ? false : true;
@@ -176,7 +176,7 @@ export default function CreateRobotFormStep3({
       }
       isLoading={
         !responseRobot ||
-        responseRobot?.robotClusters.filter(
+        responseRobot?.robotClusters?.filter(
           (robotCluster: any) =>
             robotCluster?.robotStatus !== "EnvironmentReady"
         )?.length

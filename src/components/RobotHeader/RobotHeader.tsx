@@ -7,6 +7,7 @@ import { BsFillCpuFill } from "react-icons/bs";
 import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
+import ContentLoader from "react-content-loader";
 interface IRobotHeader {
   responseRobot: any;
   handleChangeActiveTab: any;
@@ -216,11 +217,15 @@ export default function RobotHeader({
                   } `}
                 >
                   {!tab?.state ? (
-                    <img
-                      className="w-6 h-6 scale-125"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
+                    <ContentLoader
+                      speed={1}
+                      width={92}
+                      height={12}
+                      backgroundColor="#f6f6ef"
+                      foregroundColor="#e8e8e3"
+                    >
+                      <rect width="92" height="12" />
+                    </ContentLoader>
                   ) : (
                     tab.name
                   )}

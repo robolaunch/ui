@@ -79,7 +79,8 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
       className={`${activeSwitcher()} transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
     >
       <img
-        className="w-10"
+        draggable="false"
+        className="w-10 animate__animated animate__fadeInLeft"
         src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
         alt="Robolaunch"
       />

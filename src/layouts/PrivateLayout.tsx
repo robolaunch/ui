@@ -42,14 +42,14 @@ export default function PrivateLayout(): ReactElement {
             width: "calc(100% - 5rem)",
             marginLeft: "5rem",
             minHeight: "100vh",
-            cursor:
-              sidebarState?.isOpen && sidebarState?.isCreateMode
-                ? "not-allowed"
-                : "default",
             pointerEvents:
               sidebarState?.isOpen && sidebarState?.isCreateMode
                 ? "none"
                 : "all",
+            filter:
+              sidebarState?.isOpen && sidebarState?.isCreateMode
+                ? "blur(5px)"
+                : "none",
           }}
           onClick={() => handleCloseSidebar()}
         >

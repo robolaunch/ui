@@ -52,11 +52,6 @@ export default function RobotStatusWidget({
               ? "error"
               : "success"
           }
-          stateTextLoading={
-            responseRobot?.robotCluster?.filter(
-              (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-            )?.length
-          }
           stateText={
             !responseRobot
               ? "Loading..."
@@ -76,33 +71,30 @@ export default function RobotStatusWidget({
           title="Build Manager"
           loading={!responseBuildManager}
           state={
-            responseBuildManager?.robotClusters?.filter(
-              (robot: any) => robot?.buildManagerStatus !== "Ready"
-            )?.length
-              ? "warning"
-              : responseBuildManager?.robotClusters?.filter(
-                  (robot: any) => robot?.buildManagerStatus === "Error"
-                )?.length
-              ? "error"
-              : "success"
-          }
-          stateTextLoading={
-            responseBuildManager?.robotClusters?.filter(
-              (robot: any) => robot?.buildManagerStatus !== "Ready"
-            )?.length
-              ? true
-              : false
-          }
-          stateText={
-            !responseBuildManager
-              ? "Loading..."
-              : responseBuildManager?.robotClusters?.filter(
-                  (robot: any) => robot?.buildManagerStatus !== "Ready"
-                )?.length
+            responseBuildManager?.robotClusters?.length
               ? responseBuildManager?.robotClusters?.filter(
                   (robot: any) => robot?.buildManagerStatus !== "Ready"
-                )[0]?.buildManagerStatus
-              : "Ready"
+                )?.length
+                ? "warning"
+                : responseBuildManager?.robotClusters?.filter(
+                    (robot: any) => robot?.buildManagerStatus === "Error"
+                  )?.length
+                ? "error"
+                : "success"
+              : "none"
+          }
+          stateText={
+            responseBuildManager?.robotClusters?.length
+              ? !responseBuildManager
+                ? "Loading..."
+                : responseBuildManager?.robotClusters?.filter(
+                    (robot: any) => robot?.buildManagerStatus !== "Ready"
+                  )?.length
+                ? responseBuildManager?.robotClusters?.filter(
+                    (robot: any) => robot?.buildManagerStatus !== "Ready"
+                  )[0]?.buildManagerStatus
+                : "Ready"
+              : "None"
           }
         />
         {/* Build */}
@@ -112,33 +104,30 @@ export default function RobotStatusWidget({
           title="Launch Manager"
           loading={!responseLaunchManagersFiltered}
           state={
-            responseLaunchManagersFiltered?.filter(
-              (status: any) => status !== "Running"
-            )?.length
-              ? "warning"
-              : responseLaunchManagersFiltered?.filter(
-                  (status: any) => status === "Error"
-                )?.length
-              ? "error"
-              : "success"
-          }
-          stateTextLoading={
-            responseLaunchManagersFiltered?.filter(
-              (status: any) => status !== "Running"
-            )?.length
-              ? true
-              : false
-          }
-          stateText={
-            !responseLaunchManagersFiltered
-              ? "Loading..."
-              : responseLaunchManagersFiltered?.filter(
-                  (status: any) => status !== "Running"
-                )?.length
+            responseLaunchManagersFiltered?.length
               ? responseLaunchManagersFiltered?.filter(
                   (status: any) => status !== "Running"
-                )[0]
-              : "Ready"
+                )?.length
+                ? "warning"
+                : responseLaunchManagersFiltered?.filter(
+                    (status: any) => status === "Error"
+                  )?.length
+                ? "error"
+                : "success"
+              : "none"
+          }
+          stateText={
+            responseLaunchManagersFiltered?.length
+              ? !responseLaunchManagersFiltered
+                ? "Loading..."
+                : responseLaunchManagersFiltered?.filter(
+                    (status: any) => status !== "Running"
+                  )?.length
+                ? responseLaunchManagersFiltered?.filter(
+                    (status: any) => status !== "Running"
+                  )[0]
+                : "Ready"
+              : "None"
           }
         />
         {/* Launch */}

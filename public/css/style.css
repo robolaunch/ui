@@ -1276,6 +1276,18 @@ video {
   width: max-content;
 }
 
+.w-\[36rem\]{
+  width: 36rem;
+}
+
+.w-\[42rem\]{
+  width: 42rem;
+}
+
+.w-\[38rem\]{
+  width: 38rem;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
@@ -2578,6 +2590,11 @@ video {
 .text-yellow-600{
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
+}
+
+.text-blue-500{
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 .accent-primary{

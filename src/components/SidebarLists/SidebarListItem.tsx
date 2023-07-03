@@ -117,6 +117,7 @@ export default function SidebarListItem({
         } ${notSelectable && "!border-0"}`}
       >
         <img
+          draggable="false"
           className="w-8"
           src={`/svg/general/${type}/${type}-${
             selected ? "blue" : "purple"
