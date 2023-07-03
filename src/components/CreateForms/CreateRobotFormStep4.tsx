@@ -180,7 +180,7 @@ export default function CreateRobotFormStep4({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 animate__animated animate__fadeIn "
+        className="flex flex-col gap-4 animate__animated animate__fadeIn pt-6"
       >
         <div className="flex flex-col gap-7 p-4">
           <div>

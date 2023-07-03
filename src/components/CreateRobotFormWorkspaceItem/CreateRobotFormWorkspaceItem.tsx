@@ -19,6 +19,7 @@ interface ICreateRobotFormWorkspaceItem {
   workspace: IRobotWorkspace;
   workspaceIndex: number;
   disabled?: boolean;
+  isImportRobot?: boolean;
 }
 
 export default function CreateRobotFormWorkspaceItem({
@@ -26,6 +27,7 @@ export default function CreateRobotFormWorkspaceItem({
   workspace,
   workspaceIndex,
   disabled,
+  isImportRobot,
 }: ICreateRobotFormWorkspaceItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
@@ -120,12 +122,14 @@ export default function CreateRobotFormWorkspaceItem({
               />
             )
           )}
-          <CreateRobotFormAddButton
-            onClick={() =>
-              handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
-            }
-            disabled={disabled}
-          />
+          {!isImportRobot && (
+            <CreateRobotFormAddButton
+              onClick={() =>
+                handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
+              }
+              disabled={disabled}
+            />
+          )}
         </div>
         {robotData?.step2?.workspaces?.length > 1 && (
           <CreateRobotFormDeleteButton

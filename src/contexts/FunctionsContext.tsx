@@ -623,6 +623,16 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
+        parameters?.setRobotData &&
+          setRobotData((prevState: any) => {
+            return {
+              ...prevState,
+              step3: {
+                buildManagerName: "",
+                robotBuildSteps: [],
+              },
+            };
+          });
       }
     });
   }
@@ -678,6 +688,15 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setRobotData &&
+          setRobotData((prevState: any) => {
+            return {
+              ...prevState,
+              step4: {
+                robotLaunchSteps: [],
+              },
+            };
+          });
       }
     });
   }

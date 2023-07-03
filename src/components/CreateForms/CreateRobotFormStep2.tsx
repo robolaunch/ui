@@ -180,37 +180,42 @@ export default function CreateRobotFormStep2({
                   workspace={workspace}
                   workspaceIndex={workspaceIndex}
                   disabled={formik.isSubmitting || isImportRobot}
+                  isImportRobot={isImportRobot}
                 />
               );
             }
           )}
         </div>
 
-        <CreateRobotFormAddButton
-          disabled={formik.isSubmitting || isImportRobot}
-          onClick={() => handleAddWorkspaceStep(formik)}
-        />
+        {!isImportRobot && (
+          <CreateRobotFormAddButton
+            disabled={formik.isSubmitting || isImportRobot}
+            onClick={() => handleAddWorkspaceStep(formik)}
+          />
+        )}
 
-        <Button
-          type="submit"
-          disabled={!formik?.isValid || formik.isSubmitting}
-          className="w-full !h-11 text-xs"
-          text={
-            formik.isSubmitting ? (
-              <img
-                className="w-10 h-10"
-                src="/svg/general/loading.svg"
-                alt="loading"
-              />
-            ) : isImportRobot ? (
-              `Update Robot`
-            ) : robotData?.step1?.isDevelopmentMode ? (
-              `Create Robot`
-            ) : (
-              `Next Step`
-            )
-          }
-        />
+        {!isImportRobot && (
+          <Button
+            type="submit"
+            disabled={!formik?.isValid || formik.isSubmitting}
+            className="w-full !h-11 text-xs"
+            text={
+              formik.isSubmitting ? (
+                <img
+                  className="w-10 h-10"
+                  src="/svg/general/loading.svg"
+                  alt="loading"
+                />
+              ) : isImportRobot ? (
+                `Update Robot`
+              ) : robotData?.step1?.isDevelopmentMode ? (
+                `Create Robot`
+              ) : (
+                `Next Step`
+              )
+            }
+          />
+        )}
       </form>
     </CreateRobotFormLoader>
   );

@@ -67,7 +67,7 @@ export default function GeneralTable({
           )
         }
       >
-        {columns.map((col: any, index: number) => {
+        {columns?.map((col: any, index: number) => {
           return (
             <Column
               style={col?.style || {}}
