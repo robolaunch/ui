@@ -36,12 +36,20 @@ export default ({ children }: any) => {
   }, [url]);
 
   useEffect(() => {
-    setSidebarState(
-      (prevState: ISidebarState): ISidebarState => ({
-        ...prevState,
-        isCreateMode: false,
-      })
-    );
+    if (
+      sidebarState?.page === "organization" ||
+      sidebarState?.page === "roboticscloud" ||
+      sidebarState?.page === "instance" ||
+      sidebarState?.page === "fleet" ||
+      sidebarState?.page === "robot"
+    ) {
+      setSidebarState(
+        (prevState: ISidebarState): ISidebarState => ({
+          ...prevState,
+          isCreateMode: false,
+        })
+      );
+    }
   }, [sidebarState?.page]);
 
   function handleCreateRobotPreviousStep() {

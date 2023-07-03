@@ -153,7 +153,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         sortable: false,
         filter: false,
         align: "lehrefft",
-        body: (rowData: any) => {
+        body: () => {
           return <BasicCell text={url?.organizationName as string} />;
         },
       },
