@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useSidebar from "../../hooks/useSidebar";
 import { toast } from "sonner";
 
-interface SidebarListItemProps {
+interface ISidebarListItem {
   name: string;
   description: string | ReactElement | ReactElement[];
   type: "organization" | "roboticscloud" | "instance" | "fleet" | "robot";
@@ -22,7 +22,7 @@ export default function SidebarListItem({
   data,
   selected,
   notSelectable,
-}: SidebarListItemProps): ReactElement {
+}: ISidebarListItem): ReactElement {
   const { selectedState, setSelectedState, sidebarState, setSidebarState } =
     useSidebar();
   const navigate = useNavigate();
@@ -31,31 +31,15 @@ export default function SidebarListItem({
     switch (type) {
       case "organization":
         if (
-          selectedState?.organization?.organizationName ===
+          selectedState?.organization?.organizationName !==
           data?.organizationName
         ) {
-          // navigate("/");
-          // setSelectedState({
-          //   ...selectedState,
-          //   organization: null,
-          //   roboticsCloud: null,
-          //   instance: null,
-          //   fleet: null,
-          // });
-        } else {
-          // navigate(
-          //   `/${organizationNameViewer({
-          //     organizationName: data?.organizationName,
-          //     capitalization: false,
-          //   })}`
-          // );
           setSelectedState({ ...selectedState, organization: data });
           setSidebarState({ ...sidebarState, page: "roboticscloud" });
         }
         break;
       case "roboticscloud":
         if (selectedState?.roboticsCloud?.name === data?.name) {
-          // navigate(`/${selectedState?.organization?.organizationName}`);
           setSelectedState({
             ...selectedState,
             roboticsCloud: null,
@@ -64,9 +48,6 @@ export default function SidebarListItem({
           });
           setSidebarState({ ...sidebarState, page: "organization" });
         } else {
-          // navigate(
-          //   `/${selectedState?.organization?.organizationName}/${data?.name}`
-          // );
           setSelectedState({ ...selectedState, roboticsCloud: data });
           setSidebarState({ ...sidebarState, page: "instance" });
         }
@@ -74,9 +55,6 @@ export default function SidebarListItem({
       case "instance":
         if (data?.instanceCloudState === "ConnectionHub_Ready") {
           if (selectedState?.instance?.name === data?.name) {
-            // navigate(
-            //   `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}`
-            // );
             setSelectedState({
               ...selectedState,
               instance: null,
@@ -84,9 +62,6 @@ export default function SidebarListItem({
             });
             setSidebarState({ ...sidebarState, page: "roboticscloud" });
           } else {
-            // navigate(
-            //   `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${data?.name}`
-            // );
             setSelectedState({ ...selectedState, instance: data });
             setSidebarState({ ...sidebarState, page: "fleet" });
           }
@@ -102,15 +77,9 @@ export default function SidebarListItem({
           data?.physicalInstance?.length === 0
         ) {
           if (selectedState?.fleet?.name === data?.name) {
-            // navigate(
-            //   `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}`
-            // );
             setSelectedState({ ...selectedState, fleet: null });
             setSidebarState({ ...sidebarState, page: "instance" });
           } else {
-            // navigate(
-            //   `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${data?.name}`
-            // );
             setSelectedState({ ...selectedState, fleet: data });
             setSidebarState({ ...sidebarState, page: "robot" });
           }
@@ -133,15 +102,19 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`flex cursor-pointer animate__animated animate__fadeIn`}
+      className={`flex cursor-pointer animate__animated animate__fadeIn shadow border rounded-lg ${
+        selected
+          ? "border-layer-secondary-300 hover:border-layer-secondary-400"
+          : "border-layer-primary-300 hover:border-layer-primary-400"
+      } transition-300`}
     >
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full flex p-3 gap-4  border-r rounded-l-lg transition-all duration-300  ${
+        className={`w-full flex p-3 gap-4 border-r transition-300 ${
           selected
             ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
             : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
-        } ${notSelectable && "!border-0 !rounded-lg"}`}
+        } ${notSelectable && "!border-0"}`}
       >
         <img
           className="w-8"
@@ -190,14 +163,14 @@ export default function SidebarListItem({
             setSidebarState({ ...sidebarState, isOpen: false });
             navigate(url);
           }}
-          className={`flex items-center justify-center px-4 rounded-r-lg transition-all duration-300 ${
+          className={`flex items-center justify-center px-4 rounded-r-lg transition-300 ${
             selected
               ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
               : "bg-layer-primary-200 hover:bg-layer-primary-300"
           } `}
         >
           <i
-            className={`pi pi-angle-right transition-all duration-300 ${
+            className={`pi pi-angle-right transition-300 ${
               selected ? "text-layer-secondary-700" : "text-layer-primary-700"
             }`}
             style={{ fontSize: "1.25rem" }}

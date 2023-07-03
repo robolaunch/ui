@@ -81,8 +81,8 @@ export default function PhysicalInstancesList({
               ? "Organization"
               : !selectedState?.roboticsCloud
               ? "Robotics Cloud"
-              : "Instance"
-          } to view instances.`}
+              : "Cloud Instance"
+          } to view Physical Instances.`}
         />
       ) : !Array.isArray(responsePhysicalInstances) ? (
         <img

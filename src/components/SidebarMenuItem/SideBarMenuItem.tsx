@@ -51,7 +51,7 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
 
   function activeSwitcher() {
     if (sidebarState?.page === type) {
-      return "bg-layer-light-100";
+      return "bg-layer-light-100 shadow";
     }
   }
 
@@ -76,7 +76,7 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   return (
     <div
       onClick={() => handleClick()}
-      className={`${activeSwitcher()} transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
+      className={`${activeSwitcher()} transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
     >
       <img
         className="w-10"

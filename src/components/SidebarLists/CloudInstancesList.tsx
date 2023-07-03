@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import organizationNameViewer from "../../helpers/organizationNameViewer";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
-import organizationNameViewer from "../../helpers/organizationNameViewer";
-import useFunctions from "../../hooks/useFunctions";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -48,6 +48,7 @@ export default function CloudInstancesList({
       {
         organizationId: selectedState?.organization?.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud?.name,
+        region: selectedState?.roboticsCloud?.region,
       },
       {
         setResponse: setResponseInstances,

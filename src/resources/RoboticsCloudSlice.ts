@@ -8,7 +8,9 @@ export const createRoboticsCloud = createAsyncThunk(
     const response = await createInstanceApi.createRoboticsCloud({
       name: values.name,
       organizationId: values.organizationId,
-      roboticsClouds: [{ name: values.roboticsCloudName }],
+      roboticsClouds: [
+        { name: values.roboticsCloudName, region: values.region },
+      ],
     });
     return response.data;
   }

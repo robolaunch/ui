@@ -165,6 +165,7 @@ export default ({ children }: any) => {
       getAllInstances({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
+        region: values?.region,
       })
     ).then((responseInstances: any) => {
       if (
@@ -228,6 +229,7 @@ export default ({ children }: any) => {
       getAllInstances({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
+        region: values?.region,
       })
     ).then((responseInstances: any) => {
       if (

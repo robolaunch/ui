@@ -53,6 +53,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         {
           organizationId: responseCurrentOrganization?.organizationId,
           roboticsCloudName: url?.roboticsCloudName as string,
+          region: responseCurrentRoboticsCloud?.region,
         },
         {
           setResponse: setResponseInstances,
@@ -69,6 +70,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           {
             organizationId: responseCurrentOrganization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName as string,
+            region: responseCurrentRoboticsCloud?.region,
           },
           {
             setResponse: setResponseInstances,

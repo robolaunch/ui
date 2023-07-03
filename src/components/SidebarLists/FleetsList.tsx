@@ -1,10 +1,10 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import SidebarListItem from "./SidebarListItem";
-import { useAppDispatch } from "../../hooks/redux";
-import useSidebar from "../../hooks/useSidebar";
-import StateCell from "../Cells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
+import { useAppDispatch } from "../../hooks/redux";
+import SidebarListItem from "./SidebarListItem";
+import useSidebar from "../../hooks/useSidebar";
+import StateCell from "../Cells/StateCell";
 
 interface IFleetsList {
   reload: boolean;
