@@ -31,9 +31,17 @@ export default function SidebarListItem({
     switch (type) {
       case "organization":
         if (
-          selectedState?.organization?.organizationName !==
+          selectedState?.organization?.organizationName ===
           data?.organizationName
         ) {
+          setSelectedState({
+            ...selectedState,
+            organization: null,
+            roboticsCloud: null,
+            instance: null,
+            fleet: null,
+          });
+        } else {
           setSelectedState({ ...selectedState, organization: data });
           setSidebarState({ ...sidebarState, page: "roboticscloud" });
         }

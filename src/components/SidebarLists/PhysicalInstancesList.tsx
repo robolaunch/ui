@@ -6,6 +6,8 @@ import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
+import ContentLoader from "react-content-loader";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -86,11 +88,7 @@ export default function PhysicalInstancesList({
           } to view Physical Instances.`}
         />
       ) : !Array.isArray(responsePhysicalInstances) ? (
-        <img
-          className="w-12 mx-auto pt-10"
-          src="/svg/general/loading.svg"
-          alt="Loading..."
-        />
+        <SidebarListLoader />
       ) : responsePhysicalInstances.length === 0 ? (
         <SidebarInfo text={`Add a Physical Instances.`} />
       ) : (

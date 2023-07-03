@@ -22,12 +22,12 @@ export default function RobotStatusWidgetItem({
           <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
             <ContentLoader
               speed={1}
-              width={32}
-              height={32}
+              width={48}
+              height={48}
               backgroundColor="#f6f6ef"
               foregroundColor="#e8e8e3"
             >
-              <circle cx="16" cy="16" r={16} />
+              <circle cx="24" cy="24" r={24} />
             </ContentLoader>
           </div>
         ) : state === "success" ? (
@@ -44,12 +44,12 @@ export default function RobotStatusWidgetItem({
           {stateText === "Loading..." ? (
             <ContentLoader
               speed={1}
-              width={64}
-              height={12}
+              width={96}
+              height={14}
               backgroundColor="#f6f6ef"
               foregroundColor="#e8e8e3"
             >
-              <rect width="64" height="12" />
+              <rect rx={4} ry={4} width="96" height="14" />
             </ContentLoader>
           ) : (
             <span className="text-xs">{stateText}</span>

@@ -4,6 +4,8 @@ import organizationNameViewer from "../../helpers/organizationNameViewer";
 import useSidebar from "../../hooks/useSidebar";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
+import ContentLoader from "react-content-loader";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IOrganizationList {
   setItemCount: any;
@@ -38,16 +40,12 @@ export default function OrganizationsList({
   return (
     <Fragment>
       {!Array.isArray(responseOrganizations) ? (
-        <img
-          className="w-12 mx-auto pt-10"
-          src="/svg/general/loading.svg"
-          alt="Loading..."
-        />
+        <SidebarListLoader />
       ) : Array.isArray(responseOrganizations) &&
         !responseOrganizations?.length ? (
         <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
-        responseOrganizations.map((organization: any, index: number) => {
+        responseOrganizations?.map((organization: any, index: number) => {
           return (
             <SidebarListItem
               key={index}

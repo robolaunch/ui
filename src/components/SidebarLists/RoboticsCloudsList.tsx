@@ -6,6 +6,8 @@ import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
 import useFunctions from "../../hooks/useFunctions";
 import BasicCell from "../Cells/BasicCell";
+import ContentLoader from "react-content-loader";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -50,11 +52,7 @@ export default function RoboticsCloudsList({
       ) : (
         <Fragment>
           {!Array.isArray(responseRoboticsClouds) ? (
-            <img
-              className="w-12 mx-auto pt-10"
-              src="/svg/general/loading.svg"
-              alt="Loading..."
-            />
+            <SidebarListLoader />
           ) : Array.isArray(responseRoboticsClouds) &&
             !responseRoboticsClouds?.length ? (
             <SidebarSelectInfo text={`Create a Robotics Cloud.`} />

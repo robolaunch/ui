@@ -5,6 +5,8 @@ import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
+import ContentLoader from "react-content-loader";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IFleetsList {
   reload: boolean;
@@ -85,11 +87,7 @@ export default function FleetsList({
       ) : (
         <Fragment>
           {!Array.isArray(responseFleets) ? (
-            <img
-              className="w-12 mx-auto pt-10"
-              src="/svg/general/loading.svg"
-              alt="Loading..."
-            />
+            <SidebarListLoader />
           ) : responseFleets.length === 0 ? (
             <SidebarInfo text={`Create a Fleet.`} />
           ) : (
