@@ -6,7 +6,6 @@ import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
 import useFunctions from "../../hooks/useFunctions";
 import BasicCell from "../Cells/BasicCell";
-import ContentLoader from "react-content-loader";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IRoboticsCloudsList {

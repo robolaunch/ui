@@ -6,7 +6,6 @@ import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";
 import StateCell from "../Cells/StateCell";
-import ContentLoader from "react-content-loader";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface ICloudInstancesList {

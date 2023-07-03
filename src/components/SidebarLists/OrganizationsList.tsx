@@ -4,7 +4,6 @@ import organizationNameViewer from "../../helpers/organizationNameViewer";
 import useSidebar from "../../hooks/useSidebar";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import ContentLoader from "react-content-loader";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IOrganizationList {
