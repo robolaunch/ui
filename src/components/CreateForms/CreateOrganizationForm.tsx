@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import { useAppDispatch } from "../../hooks/redux";
 import { createOrganization } from "../../resources/OrganizationSlice";
 import useSidebar from "../../hooks/useSidebar";
+import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useSidebar();
@@ -37,16 +38,21 @@ export default function CreateOrganizationForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn pt-6"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn"
     >
       <div>
+        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          Organization Name:
+          <InfoTip content="Type a new organization name." />
+        </div>
         <InputText
           {...formik.getFieldProps("name")}
-          placeholder="Organization Name"
+          className="!text-sm"
           disabled={formik.isSubmitting}
         />
         <InputError error={formik.errors.name} touched={formik.errors.name} />
       </div>
+
       <Button
         type="submit"
         text="Create a new organization"

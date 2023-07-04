@@ -1,6 +1,6 @@
 import { createInstanceSchema } from "../../validations/InstancesValidations";
 import { createCloudInstance } from "../../resources/InstanceSlice";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import useSidebar from "../../hooks/useSidebar";
@@ -9,81 +9,11 @@ import InfoTip from "../InfoTip/InfoTip";
 import { BsCpu } from "react-icons/bs";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
+import responseProviders from "../../mock/CloudInstanceProviders.json";
 
-export default function CreateInstancesForm(): ReactElement {
+export default function CreateCloudInstancesForm(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const dispatch = useAppDispatch();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [responseProviders, setResponseProviders] = useState<any[] | undefined>(
-    [
-      {
-        name: "AWS",
-        fullName: "Amazon Web Services",
-        logo: "/svg/providers/aws.svg",
-        isDisabled: false,
-        regions: [
-          {
-            name: "eu-central-1",
-            city: "Frankfurt",
-          },
-          {
-            name: "eu-west-2",
-            city: "London",
-          },
-          {
-            name: "us-east-1",
-            city: "N. Virginia",
-          },
-          {
-            name: "us-east-2",
-            city: "Ohio",
-          },
-          {
-            name: "us-west-1",
-            city: "N. California",
-          },
-          {
-            name: "ap-northeast-1",
-            city: "Tokyo",
-          },
-        ],
-        types: [
-          {
-            name: "g4dn.xlarge",
-            resources: {
-              cpu: 4,
-              ram: 16,
-              gpu: "1T4",
-            },
-          },
-          {
-            name: "g4dn.2xlarge",
-            resources: {
-              cpu: 8,
-              ram: 32,
-              gpu: "1T4",
-            },
-          },
-          {
-            name: "g4dn.4xlarge",
-            resources: {
-              cpu: 16,
-              ram: 64,
-              gpu: "1T4",
-            },
-          },
-        ],
-      },
-      {
-        name: "Azure",
-        fullName: "Microsoft Azure",
-        logo: "/svg/providers/azure.svg",
-        isDisabled: true,
-        types: [],
-      },
-    ]
-  );
 
   const formik: any = useFormik({
     initialValues: {
@@ -113,13 +43,16 @@ export default function CreateInstancesForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn pt-6"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn"
     >
       <div>
+        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          Cloud Instance Name:
+          <InfoTip content="Type a new cloud instance name." />
+        </div>
         <InputText
           {...formik.getFieldProps("cloudInstanceName")}
-          placeholder="Cloud Instance Name"
-          type="text"
+          className="!text-sm"
           disabled={formik.isSubmitting}
         />
         <InputError

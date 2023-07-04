@@ -1,11 +1,11 @@
-import { ReactKeycloakProvider } from "@react-keycloak/web";
-import React, { ReactElement } from "react";
-import GithubContext from "../contexts/GithubContext";
 import CreateRobotContext from "../contexts/CreateRobotContext";
-import keycloak from "../api/keycloak";
-import PrivateLayout from "../layouts/PrivateLayout";
-import SidebarContext from "../contexts/SidebarContext";
 import FunctionsContext from "../contexts/FunctionsContext";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import SidebarContext from "../contexts/SidebarContext";
+import GithubContext from "../contexts/GithubContext";
+import PrivateLayout from "../layouts/PrivateLayout";
+import React, { ReactElement } from "react";
+import keycloak from "../api/keycloak";
 
 export default function PrivateProvider(): ReactElement {
   const loadingPage = (

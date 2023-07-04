@@ -7,7 +7,7 @@ import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRob
 import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
 import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
-import CreateCloudInstancesForm from "../components/CreateForms/CreateInstancesForm";
+import CreateCloudInstancesForm from "../components/CreateForms/CreateCloudInstancesForm";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";

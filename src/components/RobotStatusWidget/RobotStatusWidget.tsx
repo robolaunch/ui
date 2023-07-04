@@ -42,11 +42,11 @@ export default function RobotStatusWidget({
           title="Workspace Manager"
           loading={!responseRobot}
           state={
-            responseRobot?.robotCluster?.filter(
+            responseRobot?.robotClusters?.filter(
               (robot: any) => robot?.robotStatus !== "EnvironmentReady"
             )?.length
               ? "warning"
-              : responseRobot?.robotCluster?.filter(
+              : responseRobot?.robotClusters?.filter(
                   (robot: any) => robot?.robotStatus === "Error"
                 )?.length
               ? "error"
@@ -55,12 +55,12 @@ export default function RobotStatusWidget({
           stateText={
             !responseRobot
               ? "Loading..."
-              : responseRobot?.robotCluster?.filter(
+              : responseRobot?.robotClusters?.filter(
                   (robot: any) => robot?.robotStatus !== "EnvironmentReady"
                 )?.length
-              ? responseRobot?.robotCluster?.filter(
+              ? responseRobot?.robotClusters?.filter(
                   (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                )[0]
+                )[0]?.robotStatus
               : "Ready"
           }
         />

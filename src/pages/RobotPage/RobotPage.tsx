@@ -66,7 +66,7 @@ export default function RobotPage(): ReactElement {
     }
 
     const timerResponseRobot = setInterval(() => {
-      responseRobot?.robotCluster?.filter(
+      responseRobot?.robotClusters?.filter(
         (robot: any) => robot?.robotStatus !== "EnvironmentReady"
       )?.length && handleGetRobot();
     }, 10000);
