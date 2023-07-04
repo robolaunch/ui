@@ -93,6 +93,11 @@ export default function RobotHeader({
       state: responseRobot?.vdiIngressEndpoint ? true : false,
       disabled: responseRobot?.vdiIngressEndpoint ? false : true,
     },
+    {
+      name: "Logs",
+      state: responseRobot ? true : false,
+      disabled: responseRobot ? false : true,
+    },
   ];
 
   function handleSwitchToggle(data: {
