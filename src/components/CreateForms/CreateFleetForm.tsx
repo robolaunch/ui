@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import useSidebar from "../../hooks/useSidebar";
 import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedFleet } from "../../resources/FleetSlice";
+import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateFleetForm(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
@@ -27,7 +28,7 @@ export default function CreateFleetForm(): ReactElement {
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
         })
-      ).then((response) => {
+      ).then(() => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
       });
@@ -37,25 +38,28 @@ export default function CreateFleetForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn pt-6"
+      className="flex flex-col gap-8 animate__animated animate__fadeIn"
     >
       <div>
+        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          Fleet Name:
+          <InfoTip content="Type a new fleet name." />
+        </div>
         <InputText
           {...formik.getFieldProps("name")}
-          placeholder="Fleet Name"
+          className="!text-sm"
           disabled={formik.isSubmitting}
         />
-        <InputError error={formik.errors.name} touched={formik.touched.name} />
+        <InputError error={formik.errors.name} touched={formik.errors.name} />
       </div>
-      <div>
-        <Button
-          type="submit"
-          text="Create a new fleet"
-          disabled={formik.isSubmitting || !formik.isValid}
-          loading={formik.isSubmitting}
-          className="!h-11"
-        />
-      </div>
+
+      <Button
+        type="submit"
+        text="Create a new fleet"
+        disabled={formik.isSubmitting || !formik.isValid}
+        loading={formik.isSubmitting}
+        className="!h-11"
+      />
     </form>
   );
 }

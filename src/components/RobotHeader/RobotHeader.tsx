@@ -210,13 +210,15 @@ export default function RobotHeader({
                 key={index}
               >
                 <li
-                  className={`text-xs font-medium px-2 transition-all duration-500 min-w-max hover:scale-90  ${
+                  className={`text-xs font-medium px-2 transition-all duration-500 min-w-max ${
+                    !tab?.disabled && "hover:scale-90"
+                  }  ${
                     tab.name === activeTab
                       ? "text-layer-primary-500"
                       : "text-layer-light-500"
                   } `}
                 >
-                  {!tab?.state ? (
+                  {!responseRobot ? (
                     <ContentLoader
                       speed={1}
                       width={92}

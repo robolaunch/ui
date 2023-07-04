@@ -313,7 +313,7 @@ export default function RobotPage(): ReactElement {
             case "ROS Workspaces":
               return <Workspaces />;
             case "K8S Resources":
-              return <K8SResources />;
+              return <K8SResources responseRobot={responseRobot} />;
             case "Code Editor":
               return (
                 <CodeEditor

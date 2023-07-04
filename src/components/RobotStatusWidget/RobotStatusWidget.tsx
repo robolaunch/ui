@@ -84,12 +84,12 @@ export default function RobotStatusWidget({
               : "none"
           }
           stateText={
-            responseBuildManager?.robotClusters?.length
-              ? !responseBuildManager
-                ? "Loading..."
-                : responseBuildManager?.robotClusters?.filter(
-                    (robot: any) => robot?.buildManagerStatus !== "Ready"
-                  )?.length
+            !responseBuildManager
+              ? "Loading..."
+              : responseBuildManager?.robotClusters?.length
+              ? responseBuildManager?.robotClusters?.filter(
+                  (robot: any) => robot?.buildManagerStatus !== "Ready"
+                )?.length
                 ? responseBuildManager?.robotClusters?.filter(
                     (robot: any) => robot?.buildManagerStatus !== "Ready"
                   )[0]?.buildManagerStatus
@@ -117,12 +117,12 @@ export default function RobotStatusWidget({
               : "none"
           }
           stateText={
-            responseLaunchManagersFiltered?.length
-              ? !responseLaunchManagersFiltered
-                ? "Loading..."
-                : responseLaunchManagersFiltered?.filter(
-                    (status: any) => status !== "Running"
-                  )?.length
+            !responseLaunchManagersFiltered
+              ? "Loading..."
+              : responseLaunchManagersFiltered?.length
+              ? responseLaunchManagersFiltered?.filter(
+                  (status: any) => status !== "Running"
+                )?.length
                 ? responseLaunchManagersFiltered?.filter(
                     (status: any) => status !== "Running"
                   )[0]

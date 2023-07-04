@@ -1284,6 +1284,10 @@ video {
   width: max-content;
 }
 
+.w-16{
+  width: 4rem;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
