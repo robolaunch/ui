@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import stringCapitalization from "../../../helpers/stringCapitalization";
@@ -16,6 +10,8 @@ import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
+import StateCell from "../../../components/Cells/StateCell";
+import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const { getOrganization, getRoboticsClouds } = useFunctions();
@@ -57,12 +53,14 @@ export default function OrganizationDashboardPage(): ReactElement {
 
   const data: any = useMemo(
     () =>
-      responseRoboticsClouds?.map((team: any) => {
+      responseRoboticsClouds?.map((rc: any) => {
         return {
-          key: team?.name,
-          name: team,
+          key: rc?.name,
+          name: rc,
           organization: url?.organizationName,
-          users: team?.users,
+          region: rc?.region,
+          state: "Ready",
+          users: rc?.actions,
         };
       }),
     [url, responseRoboticsClouds]
@@ -105,14 +103,43 @@ export default function OrganizationDashboardPage(): ReactElement {
         },
       },
       {
+        key: "region",
+        header: "Region",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.region} />;
+        },
+      },
+      {
+        key: "state",
+        header: "State",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          console.log(rowData);
+          return <StateCell state={rowData?.state} />;
+        },
+      },
+      {
         key: "actions",
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return <></>;
+          return (
+            <RoboticsCloudActionCells
+              data={rowData}
+              reload={() => {
+                setReload(!reload);
+              }}
+            />
+          );
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [url]
   );
 
@@ -126,10 +153,7 @@ export default function OrganizationDashboardPage(): ReactElement {
                 str: url?.organizationName as string,
               }) || ""
             }
-            subtitle="
-             From this page you get information or you can manage the Robotics Clouds of your organization.
-            "
-            actiontitle="If you need to create organization you can proceed here."
+            subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
             component={
               <Button
                 text="Create a new Robotics Cloud"
@@ -156,8 +180,8 @@ export default function OrganizationDashboardPage(): ReactElement {
         <div className="hidden lg:block lg:col-span-3">
           <CountWidget
             data={{
-              series: [responseRoboticsClouds?.length || 0],
-              categories: ["Robotics Clouds"],
+              series: [responseRoboticsClouds?.length || 0, 0, 0],
+              categories: [["Ready"], ["Pending"], ["Error"]],
             }}
             title={`${stringCapitalization({
               str: url?.organizationName as string,

@@ -9,6 +9,8 @@ import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
 import { useParams } from "react-router-dom";
+import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
+import StateCell from "../../../components/Cells/StateCell";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -33,6 +35,7 @@ export default function MainDashboardPage(): ReactElement {
         return {
           key: organization?.organizationName,
           name: organization,
+          state: organization?.state,
           actions: organization,
         };
       }),
@@ -65,11 +68,19 @@ export default function MainDashboardPage(): ReactElement {
         },
       },
       {
+        key: "state",
+        header: "State",
+        align: "left",
+        body: (rowData: any) => {
+          return <StateCell state="Ready" />;
+        },
+      },
+      {
         key: "actions",
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return <></>;
+          return <OrganizationActionCells data={rowData?.actions} />;
         },
       },
     ],
@@ -82,9 +93,7 @@ export default function MainDashboardPage(): ReactElement {
         <div className="col-span-12 lg:col-span-4">
           <InformationWidget
             title={`Main Dashboard`}
-            subtitle="From this page, you can view, control or get information about all
-            the details of your organization."
-            actiontitle="If you need to create a new organization you can proceed here."
+            subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. If you need to create a new organization, you can click the button below to create a organization."
             component={
               <Button
                 text="Create a new Organization"
@@ -107,8 +116,8 @@ export default function MainDashboardPage(): ReactElement {
         <div className="hidden lg:block lg:col-span-3">
           <CountWidget
             data={{
-              series: [responseOrganizations?.length || 0],
-              categories: [["Organizations"]],
+              series: [responseOrganizations?.length || 0, 0, 0],
+              categories: [["Ready"], ["Pending"], ["Error"]],
             }}
             title="Account"
           />

@@ -181,8 +181,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         <div className="col-span-12 lg:col-span-4">
           <InformationWidget
             title={url?.roboticsCloudName || ""}
-            subtitle="From this page, you can manage the instances of your robotics cloud."
-            actiontitle="If you need to create a new instance, you can do it from here."
+            subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances. If you need to create a new cloud instance, you can do so by clicking the button below."
             component={
               <Button
                 text="Create a new Cloud Instance"

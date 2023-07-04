@@ -258,9 +258,7 @@ export default function FleetDashboardPage(): ReactElement {
         <div className="col-span-4">
           <InformationWidget
             title={url?.fleetName || ""}
-            subtitle="From this page you can see details the robots"
-            actiontitle="If you need to create a new robot, you
-            can proceed here."
+            subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
             component={
               <Button
                 text="Create a new Robot"
@@ -270,7 +268,7 @@ export default function FleetDashboardPage(): ReactElement {
                     ...prevState,
                     isOpen: true,
                     isCreateMode: false,
-                    page: "robots",
+                    page: "robot",
                   }));
                 }}
               />
