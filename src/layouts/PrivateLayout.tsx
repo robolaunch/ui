@@ -37,19 +37,11 @@ export default function PrivateLayout(): ReactElement {
       <div className="flex">
         <Sidebar />
         <div
-          className="flex flex-col"
+          className={`flex flex-col transition-500 ml-20 min-h-screen ${
+            sidebarState?.isOpen && "blur-sm"
+          } ${sidebarState?.isCreateMode && "pointer-events-none"}`}
           style={{
             width: "calc(100% - 5rem)",
-            marginLeft: "5rem",
-            minHeight: "100vh",
-            pointerEvents:
-              sidebarState?.isOpen && sidebarState?.isCreateMode
-                ? "none"
-                : "all",
-            filter:
-              sidebarState?.isOpen && sidebarState?.isCreateMode
-                ? "blur(5px)"
-                : "none",
           }}
           onClick={() => handleCloseSidebar()}
         >
