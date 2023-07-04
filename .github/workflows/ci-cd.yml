@@ -19,4 +19,4 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build App
-        run: npm run build --no-warnings
+        run: NODE_OPTIONS="--max-old-space-size=4096" npm run build --no-warnings
