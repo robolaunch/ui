@@ -38,8 +38,8 @@ export default function InputToggle({
           className={`toggle-color`}
           icons={icons}
           onChange={(e) => onChange(e.target.checked)}
-          checked={checked || false}
           disabled={disabled}
+          checked={checked || false}
         />
         {rightLabel && <span>{rightLabel}</span>}
       </div>

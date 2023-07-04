@@ -8,17 +8,29 @@ import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
+import { useAppDispatch } from "../../hooks/redux";
+import { createFederatedRobot } from "../../resources/RobotSlice";
 interface IRobotHeader {
+  responseCurrentOrganization: any;
+  responseCurrentRoboticsCloud: any;
+  responseCurrentInstance: any;
+  responseCurrentFleet: any;
   responseRobot: any;
   handleChangeActiveTab: any;
   activeTab: string;
 }
 
 export default function RobotHeader({
+  responseCurrentOrganization,
+  responseCurrentRoboticsCloud,
+  responseCurrentInstance,
+  responseCurrentFleet,
   responseRobot,
   handleChangeActiveTab,
   activeTab,
 }: IRobotHeader): ReactElement {
+  const dispatch = useAppDispatch();
+
   const url = useParams();
 
   const resources = {
@@ -83,6 +95,34 @@ export default function RobotHeader({
     },
   ];
 
+  function handleSwitchToggle(data: {
+    vdi: string | boolean;
+    ide: string | boolean;
+    bridge: string | boolean;
+  }) {
+    dispatch(
+      createFederatedRobot({
+        organizationId: responseCurrentOrganization?.organizationId,
+        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        instanceId: responseCurrentInstance?.instanceId,
+        region: responseCurrentRoboticsCloud?.region,
+        robotName: responseRobot?.name,
+        fleetName: responseCurrentFleet?.name,
+        physicalInstanceName: responseRobot?.physicalInstanceName,
+        distributions: responseRobot?.distributions,
+        bridgeEnabled: data.bridge ? true : false,
+        ideEnabled: data.ide ? true : false,
+        vdiEnabled: data.vdi ? true : false,
+        vdiSessionCount: responseRobot?.vdiSessionCount,
+        storageAmount: responseRobot?.storageAmount,
+        gpuEnabledForCloudInstance: responseRobot?.gpuEnabledForCloudInstance,
+        workspaces: responseRobot?.robotWorkspaces,
+      })
+    ).then(() => {
+      window.location.reload();
+    });
+  }
+
   return (
     <CardLayout className="pt-6 px-8 !pb-0">
       <Fragment>
@@ -108,24 +148,42 @@ export default function RobotHeader({
                   <span>Code Editor</span>
                   <InputToggle
                     icons={false}
-                    checked={responseRobot?.ideEnabled}
-                    onChange={() => {}}
+                    checked={responseRobot?.ideIngressEndpoint}
+                    onChange={() => {
+                      handleSwitchToggle({
+                        vdi: responseRobot?.vdiIngressEndpoint,
+                        ide: !responseRobot?.ideIngressEndpoint,
+                        bridge: responseRobot?.bridgeIngressEndpoint,
+                      });
+                    }}
                   />
                 </div>
                 <div className="flex  items-center rounded-lg p-2">
                   <span>ROS2 Bridge</span>
                   <InputToggle
                     icons={false}
-                    checked={responseRobot?.bridgeEnabled}
-                    onChange={() => {}}
+                    checked={responseRobot?.bridgeIngressEndpoint}
+                    onChange={() => {
+                      handleSwitchToggle({
+                        vdi: responseRobot?.vdiIngressEndpoint,
+                        ide: responseRobot?.ideIngressEndpoint,
+                        bridge: !responseRobot?.bridgeIngressEndpoint,
+                      });
+                    }}
                   />
                 </div>
                 <div className="flex  items-center rounded-lg p-2">
                   <span>Remote Desktop</span>
                   <InputToggle
                     icons={false}
-                    checked={responseRobot?.vdiEnabled}
-                    onChange={() => {}}
+                    checked={responseRobot?.vdiIngressEndpoint}
+                    onChange={() => {
+                      handleSwitchToggle({
+                        vdi: !responseRobot?.vdiIngressEndpoint,
+                        ide: responseRobot?.ideIngressEndpoint,
+                        bridge: responseRobot?.bridgeIngressEndpoint,
+                      });
+                    }}
                   />
                 </div>
               </div>
