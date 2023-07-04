@@ -6,7 +6,7 @@ import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
 import RenameOrganizationModal from "../../modals/RenameOrganizationModal";
 interface IOrganizationActionCells {
   data: any;
-  onClickSee: any;
+  onClickSee?: any;
 }
 
 export default function OrganizationActionCells({
@@ -19,16 +19,18 @@ export default function OrganizationActionCells({
   return (
     <Fragment>
       <div className="card flex gap-4 float-right">
-        <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-secondary-500 !ring-layer-secondary-500"
-          text={<HiOutlineEye className="text-layer-secondary-500" />}
-          onClick={() =>
-            onClickSee({
-              page: "organizationUsers",
-              selectedOrganization: data,
-            })
-          }
-        />
+        {onClickSee && (
+          <Button
+            className="!w-8 !h-8 !bg-transparent !border !border-layer-secondary-500 !ring-layer-secondary-500"
+            text={<HiOutlineEye className="text-layer-secondary-500" />}
+            onClick={() =>
+              onClickSee({
+                page: "organizationUsers",
+                selectedOrganization: data,
+              })
+            }
+          />
+        )}
         <Button
           className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500"
           text={<BiPencil className="text-layer-primary-500" />}

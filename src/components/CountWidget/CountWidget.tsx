@@ -38,7 +38,7 @@ export default function CountWidget({
               },
             },
           },
-          colors: ["#AC2DFE", "#35B8FA", "#c77bfc", "#5492fc"],
+          colors: ["#AC2DFE99", "#35B8FA", "#c77bfc", "#5492fc"],
           plotOptions: {
             bar: {
               columnWidth: "45%",
