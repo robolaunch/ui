@@ -219,7 +219,7 @@ export default function RobotPage(): ReactElement {
     );
   }
 
-  const { urls } = useAppSelector((state) => state.user);
+  const { urls } = useAppSelector((state) => state.robot);
 
   useEffect(() => {
     const ros = new ROSLIB.Ros({

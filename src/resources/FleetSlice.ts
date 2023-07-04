@@ -94,7 +94,7 @@ export const deleteFederatedFleet = createAsyncThunk(
   }
 );
 
-export const fleetSlice = createSlice({
+export const FleetSlice = createSlice({
   name: "fleet",
   initialState: {},
   reducers: {},
@@ -129,4 +129,4 @@ export const fleetSlice = createSlice({
   },
 });
 
-export default fleetSlice.reducer;
+export default FleetSlice.reducer;

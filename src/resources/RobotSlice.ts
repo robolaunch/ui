@@ -347,12 +347,24 @@ export const deleteRobotLaunchManager = createAsyncThunk(
   }
 );
 
-export const robotSlice = createSlice({
+export const RobotSlice = createSlice({
   name: "robot",
   initialState: {
-    robots: [],
+    urls: {
+      // vdi: "ws://localhost:8080/",
+      // ide: "http://localhost:3000/",
+      // ros: "ws://localhost:9090",
+      vdi: "",
+      ide: "",
+      ros: "",
+    },
   },
-  reducers: {},
+  reducers: {
+    updateUrls: (state, action) => {
+      state.urls = action.payload;
+      return state;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createFederatedRobot.fulfilled, (_, action: any) => {
@@ -417,3 +429,6 @@ export const robotSlice = createSlice({
       });
   },
 });
+
+export const { updateUrls } = RobotSlice.actions;
+export default RobotSlice.reducer;

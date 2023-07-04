@@ -2,10 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import UserReducer from "./UserSlice";
 import OrganizationReducer from "./OrganizationSlice";
 import RoboticsCloudReducer from "./RoboticsCloudSlice";
 import FleetReducer from "./FleetSlice";
+import RobotReducer from "./RobotSlice";
+import UserReducer from "./UserSlice";
 import GithubReducer from "./GithubSlice";
 import instanceReducer from "./InstanceSlice";
 /* Data must be persisted in order not to lose them on page refresh. */
@@ -71,6 +72,16 @@ const persistedReducerFleet = persistReducer<any, any>(
   FleetReducer
 );
 
+const persistConfigRobot = {
+  key: "robot",
+  version: 1,
+  storage,
+};
+const persistedReducerRobot = persistReducer<any, any>(
+  persistConfigRobot,
+  RobotReducer
+);
+
 const store = configureStore({
   reducer: {
     user: persistedReducerUser,
@@ -79,6 +90,7 @@ const store = configureStore({
     roboticsCloud: persistedReducerRoboticsCloud,
     instance: persistedReducerInstance,
     fleet: persistedReducerFleet,
+    robot: persistedReducerRobot,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
