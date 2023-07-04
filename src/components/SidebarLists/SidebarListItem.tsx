@@ -42,7 +42,13 @@ export default function SidebarListItem({
             fleet: null,
           });
         } else {
-          setSelectedState({ ...selectedState, organization: data });
+          setSelectedState({
+            ...selectedState,
+            organization: data,
+            roboticsCloud: null,
+            instance: null,
+            fleet: null,
+          });
           setSidebarState({ ...sidebarState, page: "roboticscloud" });
         }
         break;
@@ -55,7 +61,12 @@ export default function SidebarListItem({
             fleet: null,
           });
         } else {
-          setSelectedState({ ...selectedState, roboticsCloud: data });
+          setSelectedState({
+            ...selectedState,
+            roboticsCloud: data,
+            instance: null,
+            fleet: null,
+          });
           setSidebarState({ ...sidebarState, page: "instance" });
         }
         break;
@@ -68,7 +79,7 @@ export default function SidebarListItem({
               fleet: null,
             });
           } else {
-            setSelectedState({ ...selectedState, instance: data });
+            setSelectedState({ ...selectedState, instance: data, fleet: null });
             setSidebarState({ ...sidebarState, page: "fleet" });
           }
         } else {
