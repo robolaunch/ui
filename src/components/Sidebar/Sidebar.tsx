@@ -30,7 +30,12 @@ export default function Sidebar(): ReactElement {
                 "launchsmanager",
               ].includes(sidebarState?.page as string)) ? (
               <Fragment>
-                {url?.robotName && <SideBarMenuItem type="back" />}
+                {url?.robotName && (
+                  <SideBarMenuItem
+                    type="back"
+                    description="You can go back to the previous page here."
+                  />
+                )}
                 <SideBarMenuItem
                   type="robot"
                   description="You can access all your robots here."

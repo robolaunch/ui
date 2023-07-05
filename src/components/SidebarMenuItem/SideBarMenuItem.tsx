@@ -111,6 +111,8 @@ export default function SideBarMenuItem({
               ? "Robot Build Managers"
               : type === "launchsmanager"
               ? "Robot Launch Managers"
+              : type === "back"
+              ? "Back"
               : type
           }
           description={description}
