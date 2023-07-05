@@ -31,18 +31,46 @@ export default function Sidebar(): ReactElement {
               ].includes(sidebarState?.page as string)) ? (
               <Fragment>
                 {url?.robotName && <SideBarMenuItem type="back" />}
-                <SideBarMenuItem type="robot" />
-                <SideBarMenuItem type="workspacesmanager" />
-                <SideBarMenuItem type="buildsmanager" />
-                <SideBarMenuItem type="launchsmanager" />
+                <SideBarMenuItem
+                  type="robot"
+                  description="You can access all your robots here."
+                />
+                <SideBarMenuItem
+                  type="workspacesmanager"
+                  description="You can access all your workspaces here."
+                />
+
+                <SideBarMenuItem
+                  type="buildsmanager"
+                  description="You can access all your builds here."
+                />
+                <SideBarMenuItem
+                  type="launchsmanager"
+                  description="You can access all your launches here."
+                />
               </Fragment>
             ) : (
               <Fragment>
-                <SideBarMenuItem type="organization" />
-                <SideBarMenuItem type="roboticscloud" />
-                <SideBarMenuItem type="instance" />
-                <SideBarMenuItem type="fleet" />
-                <SideBarMenuItem type="robot" />
+                <SideBarMenuItem
+                  type="organization"
+                  description="You can access all your organizations here."
+                />
+                <SideBarMenuItem
+                  type="roboticscloud"
+                  description="You can access all your robotics clouds here."
+                />
+                <SideBarMenuItem
+                  type="instance"
+                  description="You can access all your instances here."
+                />
+                <SideBarMenuItem
+                  type="fleet"
+                  description="You can access all your fleets here."
+                />
+                <SideBarMenuItem
+                  type="robot"
+                  description="You can access all your robots here."
+                />
               </Fragment>
             )}
           </div>

@@ -1,13 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useSidebar from "../../hooks/useSidebar";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate, useParams } from "react-router-dom";
+import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
 
 interface ISideBarMenuItem {
   type: string;
+  description?: string;
 }
 
-export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
+export default function SideBarMenuItem({
+  type,
+  description,
+}: ISideBarMenuItem) {
+  const [isHover, setIsHover] = useState<boolean>(false);
   const { theme } = useTheme();
   const { sidebarState, setSidebarState, selectedState } = useSidebar();
   const navigate = useNavigate();
@@ -76,7 +82,9 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
   return (
     <div
       onClick={() => handleClick()}
-      className={`${activeSwitcher()} transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
+      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
       <img
         draggable="false"
@@ -84,6 +92,30 @@ export default function SideBarMenuItem({ type }: ISideBarMenuItem) {
         src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
         alt="Robolaunch"
       />
+      {isHover && (
+        <SidebarMenuItemToolTip
+          title={
+            type === "organization"
+              ? "Organizations"
+              : type === "roboticscloud"
+              ? "Robotics Clouds"
+              : type === "instance"
+              ? "Instances"
+              : type === "fleet"
+              ? "Fleets"
+              : type === "robot"
+              ? "Robots"
+              : type === "workspacesmanager"
+              ? "Robot Workspace Managers"
+              : type === "buildsmanager"
+              ? "Robot Build Managers"
+              : type === "launchsmanager"
+              ? "Robot Launch Managers"
+              : type
+          }
+          description={description}
+        />
+      )}
     </div>
   );
 }

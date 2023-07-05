@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
+import { LogViewer } from "@patternfly/react-log-viewer";
 
 export default function Logs(): ReactElement {
   return (
