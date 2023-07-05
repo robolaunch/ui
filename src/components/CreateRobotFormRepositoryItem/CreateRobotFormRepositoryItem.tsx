@@ -16,6 +16,7 @@ import {
 import useGithub from "../../hooks/useGithub";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import InfoTip from "../InfoTip/InfoTip";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -113,13 +114,16 @@ export default function CreateRobotFormRepositoryItem({
         </span>
       }
     >
-      <div className="flex flex-col gap-7 px-3 py-6">
+      <div className="flex flex-col gap-4 px-3 py-6">
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Repository Name:
+            <InfoTip content="Type a repository name." />
+          </div>
           <InputText
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`
             )}
-            placeholder="Repository Name"
             disabled={disabled}
           />
           <InputError
@@ -136,6 +140,10 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Repository URL:
+            <InfoTip content="Type a repository URL." />
+          </div>
           {github?.githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
@@ -161,7 +169,6 @@ export default function CreateRobotFormRepositoryItem({
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
               )}
-              placeholder="Repository URL"
               disabled={disabled}
             />
           )}
@@ -179,6 +186,10 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Repository Branch Name:
+            <InfoTip content="Type a repository branch name." />
+          </div>
           {github?.githubAuth ? (
             <InputSelect
               {...formik.getFieldProps(
@@ -204,7 +215,6 @@ export default function CreateRobotFormRepositoryItem({
               {...formik.getFieldProps(
                 `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
               )}
-              placeholder="Repository Branch"
               disabled={disabled}
             />
           )}

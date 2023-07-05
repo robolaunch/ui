@@ -13,6 +13,7 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import stringCapitalization from "../../helpers/stringCapitalization";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -53,11 +54,14 @@ export default function CreateRobotFormWorkspaceItem({
         </span>
       }
     >
-      <div className="flex flex-col gap-7 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Workspace Name:
+            <InfoTip content="Type a workspace name." />
+          </div>
           <InputText
             {...formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
-            placeholder="Workspace Name"
             disabled={disabled}
           />
           <InputError
@@ -66,7 +70,12 @@ export default function CreateRobotFormWorkspaceItem({
             touched={formik?.touched?.workspaces?.[workspaceIndex]?.name}
           />
         </div>
+
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Workspace Distro:
+            <InfoTip content="Select a workspace ros2 distro." />
+          </div>
           <InputSelect
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.workspaceDistro`
@@ -105,6 +114,7 @@ export default function CreateRobotFormWorkspaceItem({
             }
           />
         </div>
+
         <div className="flex flex-col gap-3 p-4">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories

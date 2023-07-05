@@ -4,6 +4,7 @@ import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormEnvItem {
   formik: any;
@@ -28,12 +29,15 @@ export default function CreteRobotFormEnvItem({
       handleOpen={() => setIsShowAccordion(!isShowAccordion)}
       header={<span className="font-medium">ENV</span>}
     >
-      <div className="flex flex-col gap-7 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-3">
           <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Env Name:
+              <InfoTip content="Type a new env name." />
+            </div>
             <InputText
               {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].name`)}
-              placeholder="Env Name"
               disabled={disabled}
               className="!text-sm"
             />
@@ -43,11 +47,16 @@ export default function CreteRobotFormEnvItem({
               touched={formik?.touched?.robotLmEnvs?.[envIndex]?.name}
             />
           </div>
-          <span className="-mt-1.5">=</span>
+
+          <span className="mt-4">=</span>
+
           <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Env Value:
+              <InfoTip content="Type a new env value." />
+            </div>
             <InputText
               {...formik.getFieldProps(`robotLmEnvs.[${envIndex}].value`)}
-              placeholder="Env Value"
               disabled={disabled}
               className="!text-sm"
             />

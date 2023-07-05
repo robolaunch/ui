@@ -25,6 +25,7 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import organizationNameViewer from "../../helpers/organizationNameViewer";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { useParams } from "react-router-dom";
+import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -180,13 +181,16 @@ export default function CreateRobotFormStep4({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 animate__animated animate__fadeIn pt-6"
+        className="flex flex-col gap-4 animate__animated animate__fadeIn"
       >
-        <div className="flex flex-col gap-7 p-4">
+        <div className="flex flex-col gap-4 p-4">
           <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Launch Manager Name:
+              <InfoTip content="Type a new launch manager name." />
+            </div>
             <InputText
               {...formik.getFieldProps(`name`)}
-              placeholder="Launch Manager Name"
               disabled={isImportRobot || formik?.isSubmitting}
               className="!text-sm"
             />
@@ -196,10 +200,14 @@ export default function CreateRobotFormStep4({
               touched={formik?.touched?.name}
             />
           </div>
+
           <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Workspace:
+              <InfoTip content="Select a workspace." />
+            </div>
             <InputSelect
               {...formik.getFieldProps(`workspace`)}
-              placeholder="Workspace"
               disabled={isImportRobot || formik?.isSubmitting}
             >
               <Fragment>
@@ -221,7 +229,12 @@ export default function CreateRobotFormStep4({
               touched={formik?.touched?.workspace}
             />
           </div>
+
           <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Code:
+              <InfoTip content="Type code" />
+            </div>
             <Editor
               height="140px"
               defaultLanguage="shell"

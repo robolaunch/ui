@@ -28,9 +28,9 @@ export default ({ children }: any) => {
 
   useEffect(() => {
     setSidebarState({
-      isOpen: true,
-      page: "buildsmanager",
-      isCreateMode: true,
+      isOpen: false,
+      page: undefined,
+      isCreateMode: false,
       instanceTab: "Cloud Instances",
     });
   }, [url]);

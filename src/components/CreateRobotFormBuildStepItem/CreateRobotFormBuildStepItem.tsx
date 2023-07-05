@@ -15,6 +15,7 @@ import useSidebar from "../../hooks/useSidebar";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import StateCell from "../Cells/StateCell";
+import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -87,11 +88,15 @@ export default function CreateRobotFormBuildStepItem({
         </div>
       }
     >
-      <div className="flex flex-col gap-7 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Build Step Name:
+            <InfoTip content="Type a unique build step name." />
+          </div>
           <InputText
             {...formik.getFieldProps(`robotBuildSteps.${buildStepIndex}.name`)}
-            placeholder="Build Step Name"
+            className="!text-sm"
             disabled={formik?.isSubmitting}
           />
           <InputError
@@ -100,12 +105,17 @@ export default function CreateRobotFormBuildStepItem({
             touched={formik?.touched?.robotBuildSteps?.[buildStepIndex]?.name}
           />
         </div>
+
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Workspace:
+            <InfoTip content="Select a workspace name." />
+          </div>
           <InputSelect
             {...formik.getFieldProps(
               `robotBuildSteps.${buildStepIndex}.workspace`
             )}
-            placeholder="Workspace"
+            placeholder=""
             disabled={formik?.isSubmitting}
           >
             <Fragment>
@@ -131,7 +141,12 @@ export default function CreateRobotFormBuildStepItem({
             }
           />
         </div>
+
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Command/Script Code:
+            <InfoTip content="Select command or script code" />
+          </div>
           <InputSelect
             {...formik.getFieldProps(
               `robotBuildSteps.${buildStepIndex}.isCommandCode`
@@ -141,7 +156,6 @@ export default function CreateRobotFormBuildStepItem({
                 ? "isCommandCode"
                 : "isScriptCode"
             }
-            placeholder="isCommandCode"
             onChange={(e) => {
               if (e.target.value === "isCommandCode") {
                 formik.setValues({
@@ -189,6 +203,10 @@ export default function CreateRobotFormBuildStepItem({
           </InputSelect>
         </div>
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Code:
+            <InfoTip content="Type code" />
+          </div>
           <Editor
             height="140px"
             defaultLanguage="shell"

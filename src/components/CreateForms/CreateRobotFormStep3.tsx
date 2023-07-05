@@ -341,15 +341,18 @@ export default function CreateRobotFormStep3({
         className="flex flex-col gap-4 animate__animated animate__fadeIn pt-6"
       >
         <div>
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Build Manager Name:
+            <InfoTip content="Type a new build manager name." />
+          </div>
           <InputText
-            {...formik.getFieldProps(`buildManagerName`)}
-            placeholder="Build Manager Name"
+            {...formik.getFieldProps("buildManagerName")}
+            className="!text-sm"
             disabled={formik?.isSubmitting}
           />
           <InputError
-            // @ts-ignore
-            error={formik?.errors?.buildManagerName}
-            touched={formik?.touched?.buildManagerName}
+            error={formik.errors.buildManagerName}
+            touched={formik.touched.buildManagerName}
           />
         </div>
         <div>
