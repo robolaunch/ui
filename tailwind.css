@@ -15,6 +15,13 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+progress::-webkit-progress-bar {
+  @apply !bg-layer-primary-200;
+}
+progress::-webkit-progress-value {
+  @apply !bg-green-300;
+}
+
 .react-toggle {
   @apply !scale-75;
 }

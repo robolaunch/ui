@@ -28,29 +28,29 @@ export default ({ children }: any) => {
 
   useEffect(() => {
     setSidebarState({
-      isOpen: false,
-      page: undefined,
-      isCreateMode: false,
+      isOpen: true,
+      page: "buildsmanager",
+      isCreateMode: true,
       instanceTab: "Cloud Instances",
     });
   }, [url]);
 
-  useEffect(() => {
-    if (
-      sidebarState?.page === "organization" ||
-      sidebarState?.page === "roboticscloud" ||
-      sidebarState?.page === "instance" ||
-      sidebarState?.page === "fleet" ||
-      sidebarState?.page === "robot"
-    ) {
-      setSidebarState(
-        (prevState: ISidebarState): ISidebarState => ({
-          ...prevState,
-          isCreateMode: false,
-        })
-      );
-    }
-  }, [sidebarState?.page]);
+  // useEffect(() => {
+  //   if (
+  //     sidebarState?.page === "organization" ||
+  //     sidebarState?.page === "roboticscloud" ||
+  //     sidebarState?.page === "instance" ||
+  //     sidebarState?.page === "fleet" ||
+  //     sidebarState?.page === "robot"
+  //   ) {
+  //     setSidebarState(
+  //       (prevState: ISidebarState): ISidebarState => ({
+  //         ...prevState,
+  //         isCreateMode: false,
+  //       })
+  //     );
+  //   }
+  // }, [sidebarState?.page]);
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {

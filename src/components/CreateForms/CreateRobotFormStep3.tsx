@@ -1,20 +1,20 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { FormikProps, useFormik } from "formik";
-import * as Yup from "yup";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
-import Button from "../Button/Button";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
-import useSidebar from "../../hooks/useSidebar";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import { useAppDispatch } from "../../hooks/redux";
-import { createRobotBuildManager } from "../../resources/RobotSlice";
-import InputText from "../InputText/InputText";
-import InputError from "../InputError/InputError";
-import InfoTip from "../InfoTip/InfoTip";
-import useFunctions from "../../hooks/useFunctions";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import { createRobotBuildManager } from "../../resources/RobotSlice";
+import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import useCreateRobot from "../../hooks/useCreateRobot";
+import useFunctions from "../../hooks/useFunctions";
+import { useAppDispatch } from "../../hooks/redux";
+import InputError from "../InputError/InputError";
+import { FormikProps, useFormik } from "formik";
+import useSidebar from "../../hooks/useSidebar";
+import InputText from "../InputText/InputText";
+import InfoTip from "../InfoTip/InfoTip";
+import Button from "../Button/Button";
+import { toast } from "sonner";
+import * as Yup from "yup";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -181,12 +181,160 @@ export default function CreateRobotFormStep3({
             robotCluster?.robotStatus !== "EnvironmentReady"
         )?.length
       }
-      loadingItems={responseRobot?.robotClusters.map((item: any) => {
+      loadingItems={responseRobot?.robotClusters?.map((item: any) => {
         return {
           name: item?.name,
           status: item?.robotStatus,
         };
       })}
+      currentStep={
+        !responseRobot
+          ? 1
+          : responseRobot?.robotClusters?.filter(
+              (robotCluster: any) =>
+                robotCluster?.robotStatus === "CreatingEnvironment" ||
+                robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                robotCluster?.robotStatus === "ConfiguringEnvironment"
+            )?.length
+          ? 1
+          : responseRobot?.robotClusters?.filter(
+              (robotCluster: any) =>
+                robotCluster?.robotStatus === "CreatingBridge" ||
+                robotCluster?.robotStatus === "CreatingDevelopmentSuite"
+            )?.length
+          ? 2
+          : 3
+      }
+      stepbarItems={[
+        {
+          name: "Creating Environment",
+          process: [
+            {
+              name: "Creating Environment",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment"
+                  )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Creating Discovery Server",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment" ||
+                      robotCluster?.robotStatus === "CreatingDiscoveryServer"
+                  )?.length
+                ? false
+                : true,
+            },
+
+            {
+              name: "Pulling ROS2 Image",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment" ||
+                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                      robotCluster?.robotStatus === "ConfiguringEnvironment"
+                  )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Setting up ROS2 Environment",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment" ||
+                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                      robotCluster?.robotStatus === "ConfiguringEnvironment"
+                  )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Creating Directories",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment" ||
+                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                      robotCluster?.robotStatus === "ConfiguringEnvironment"
+                  )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Setting up Ubuntu",
+              isFinished: !responseRobot
+                ? false
+                : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingEnvironment" ||
+                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                      robotCluster?.robotStatus === "ConfiguringEnvironment"
+                  )?.length
+                ? false
+                : true,
+            },
+          ],
+        },
+        {
+          name: "Creating Development Suite",
+          process: [
+            {
+              name: "Creating ROS Bridge Suite",
+              isFinished: responseRobot?.robotClusters?.filter(
+                (robotCluster: any) =>
+                  robotCluster?.robotStatus === "CreatingBridge"
+              )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Creating Development Suite",
+              isFinished: responseRobot?.robotClusters?.filter(
+                (robotCluster: any) =>
+                  robotCluster?.robotStatus === "CreatingBridge" ||
+                  robotCluster?.robotStatus === "CreatingDevelopmentSuite"
+              )?.length
+                ? false
+                : true,
+            },
+          ],
+        },
+        {
+          name: "Configuring Workspaces",
+          process: [
+            {
+              name: "Cloning Repositories",
+              isFinished: responseRobot?.robotClusters?.filter(
+                (robotCluster: any) =>
+                  robotCluster?.robotStatus === "ConfiguringWorkspaces"
+              )?.length
+                ? false
+                : true,
+            },
+            {
+              name: "Setting up ROS2 Workspaces",
+              isFinished: responseRobot?.robotClusters?.filter(
+                (robotCluster: any) =>
+                  robotCluster?.robotStatus === "ConfiguringWorkspaces"
+              )?.length
+                ? false
+                : true,
+            },
+          ],
+        },
+      ]}
     >
       <form
         onSubmit={formik.handleSubmit}
