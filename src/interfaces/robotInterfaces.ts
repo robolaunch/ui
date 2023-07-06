@@ -42,6 +42,18 @@ export interface IdeleteRobotRequest {
   robotName: string;
 }
 
+export interface IcreateBuildManagerRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  robotName: string;
+  fleetName: string;
+  physicalInstanceName: string;
+  buildManagerName: string;
+  robotBuildSteps: any;
+}
+
 export interface IRobotData {
   step1: any;
   step2: IRobotWorkspaces;

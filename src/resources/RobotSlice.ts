@@ -6,6 +6,7 @@ import {
 } from "../api/api";
 import { toast } from "sonner";
 import {
+  IcreateBuildManagerRequest,
   IcreateRobotRequest,
   IdeleteRobotRequest,
   IgetRobotRequest,
@@ -125,17 +126,7 @@ export const deleteRobot = createAsyncThunk(
 
 export const createBuildManager = createAsyncThunk(
   "robot/createRobotBuildManager",
-  async (values: {
-    organizationId: string;
-    roboticsCloudName: string;
-    instanceId: string;
-    region: string;
-    robotName: string;
-    fleetName: string;
-    physicalInstanceName: string;
-    buildManagerName: string;
-    robotBuildSteps: any;
-  }) => {
+  async (values: IcreateBuildManagerRequest) => {
     const response = await robotBuildManagerApi.createRobotBuildManager({
       name: "robot/createRobotBuildManager",
       organizationId: values?.organizationId,
