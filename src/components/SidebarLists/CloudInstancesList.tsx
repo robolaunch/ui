@@ -53,7 +53,7 @@ export default function CloudInstancesList({
       },
       {
         setResponse: setResponseInstances,
-        ifErrorNavigateTo404: !responseInstances,
+        ifErrorNavigateTo404: false,
         setItemCount: setItemCount,
       }
     );

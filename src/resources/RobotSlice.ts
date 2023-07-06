@@ -382,7 +382,7 @@ export const RobotSlice = createSlice({
       .addCase(getFederatedRobots.rejected, () => {
         toast.error("Something went wrong of getting robots");
       })
-      .addCase(getFederatedRobots.fulfilled, (_, action: any) => {
+      .addCase(getFederatedRobot.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
