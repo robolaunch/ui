@@ -1,3 +1,47 @@
+export interface IcreateRobotRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  robotName: string;
+  fleetName: string;
+  physicalInstanceName: string;
+  distributions: string[];
+  bridgeEnabled: boolean;
+  vdiEnabled: boolean;
+  vdiSessionCount: number;
+  ideEnabled: boolean;
+  storageAmount: number;
+  gpuEnabledForCloudInstance: boolean;
+  workspaces: IRobotWorkspace[];
+}
+
+export interface IgetRobotsRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+}
+
+export interface IgetRobotRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
+export interface IdeleteRobotRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
 export interface IRobotData {
   step1: any;
   step2: IRobotWorkspaces;

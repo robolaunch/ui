@@ -3,7 +3,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import { Link } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 import Gravatar from "react-gravatar";
-import { handleLogout } from "../../helpers/functions";
+import { handleLogout } from "../../helpers/GeneralFunctions";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);

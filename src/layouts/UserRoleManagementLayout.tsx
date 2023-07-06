@@ -3,7 +3,7 @@ import CardLayout from "./CardLayout";
 import InformationWidget from "../components/InformationWidget/InformationWidget";
 import OrganizationsTable from "../pages/UserRoleManagement/OrganizationsPage";
 import OrganizationUsersPage from "../pages/UserRoleManagement/OrganizationUsersPage";
-import { organizationNameViewer } from "../helpers/functions";
+import { organizationNameViewer } from "../helpers/GeneralFunctions";
 import OrganizationGuestsPage from "../pages/UserRoleManagement/OrganizationGuestsPage";
 import OrganizationAdminsPage from "../pages/UserRoleManagement/OrganizationAdminsPage";
 import Button from "../components/Button/Button";

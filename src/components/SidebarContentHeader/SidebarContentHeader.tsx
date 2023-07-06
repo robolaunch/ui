@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement } from "react";
 import useSidebar from "../../hooks/useSidebar";
 import { useParams } from "react-router-dom";
-import { stringCapitalization } from "../../helpers/functions";
+import { stringCapitalization } from "../../helpers/GeneralFunctions";
 
 interface ISidebarContentHeader {
   itemCount?: number;

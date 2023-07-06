@@ -13,7 +13,7 @@ import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
-import { stringCapitalization } from "../helpers/functions";
+import { stringCapitalization } from "../helpers/GeneralFunctions";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";

@@ -5,12 +5,18 @@ import {
   robotLaunchManagerApi,
 } from "../api/api";
 import { toast } from "sonner";
+import {
+  IcreateRobotRequest,
+  IdeleteRobotRequest,
+  IgetRobotRequest,
+  IgetRobotsRequest,
+} from "../interfaces/robotInterfaces";
 
-export const createFederatedRobot = createAsyncThunk(
+export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
-  async (values: any) => {
+  async (values: IcreateRobotRequest) => {
     const response = await robotApi.createFederatedRobot({
-      name: values.name,
+      name: "robot/createFederatedRobot",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -44,11 +50,11 @@ export const createFederatedRobot = createAsyncThunk(
   }
 );
 
-export const getFederatedRobots = createAsyncThunk(
+export const getRobots = createAsyncThunk(
   "robot/getFederatedRobots",
-  async (values: any) => {
+  async (values: IgetRobotsRequest) => {
     const response = await robotApi.getFederatedRobots({
-      name: values?.name,
+      name: "robot/getFederatedRobots",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -67,11 +73,11 @@ export const getFederatedRobots = createAsyncThunk(
   }
 );
 
-export const getFederatedRobot = createAsyncThunk(
+export const getRobot = createAsyncThunk(
   "robot/getFederatedRobot",
-  async (values: any) => {
+  async (values: IgetRobotRequest) => {
     const response = await robotApi.getFederatedRobot({
-      name: values?.name,
+      name: "robot/getFederatedRobot",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -92,11 +98,11 @@ export const getFederatedRobot = createAsyncThunk(
   }
 );
 
-export const deleteFederatedRobot = createAsyncThunk(
+export const deleteRobot = createAsyncThunk(
   "robot/deleteFederatedRobot",
-  async (values: any) => {
+  async (values: IdeleteRobotRequest) => {
     const response = await robotApi.deleteFederatedRobot({
-      name: values?.name,
+      name: "robot/deleteFederatedRobot",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -117,11 +123,21 @@ export const deleteFederatedRobot = createAsyncThunk(
   }
 );
 
-export const createRobotBuildManager = createAsyncThunk(
+export const createBuildManager = createAsyncThunk(
   "robot/createRobotBuildManager",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    physicalInstanceName: string;
+    buildManagerName: string;
+    robotBuildSteps: any;
+  }) => {
     const response = await robotBuildManagerApi.createRobotBuildManager({
-      name: values?.name,
+      name: "robot/createRobotBuildManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -364,50 +380,50 @@ export const RobotSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createFederatedRobot.fulfilled, (_, action: any) => {
+      .addCase(createRobot.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createFederatedRobot.rejected, () => {
+      .addCase(createRobot.rejected, () => {
         toast.error("Something went wrong of creating robot");
       })
-      .addCase(getFederatedRobots.fulfilled, (_, action: any) => {
+      .addCase(getRobots.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getFederatedRobots.rejected, () => {
+      .addCase(getRobots.rejected, () => {
         toast.error("Something went wrong of getting robots");
       })
-      .addCase(getFederatedRobot.fulfilled, (_, action: any) => {
+      .addCase(getRobot.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getFederatedRobot.rejected, () => {
+      .addCase(getRobot.rejected, () => {
         toast.error("Something went wrong of getting robot");
       })
-      .addCase(deleteFederatedRobot.fulfilled, (_, action: any) => {
+      .addCase(deleteRobot.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(deleteFederatedRobot.rejected, () => {
+      .addCase(deleteRobot.rejected, () => {
         toast.error("Something went wrong of deleting robot");
       })
-      .addCase(createRobotBuildManager.fulfilled, (_, action: any) => {
+      .addCase(createBuildManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createRobotBuildManager.rejected, () => {
+      .addCase(createBuildManager.rejected, () => {
         toast.error("Something went wrong of creating build manager");
       })
       .addCase(getRobotBuildManagers.fulfilled, (_, action: any) => {

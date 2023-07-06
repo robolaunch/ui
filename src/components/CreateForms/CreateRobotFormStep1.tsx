@@ -5,7 +5,7 @@ import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoade
 import { addPhysicalInstanceToFleet } from "../../resources/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
-import { createFederatedRobot } from "../../resources/RobotSlice";
+import { createRobot } from "../../resources/RobotSlice";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
@@ -65,7 +65,7 @@ export default function CreateRobotFormStep1({
 
       if (isImportRobot) {
         await dispatch(
-          createFederatedRobot({
+          createRobot({
             organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
             instanceId: selectedState?.instance?.instanceId,
@@ -81,7 +81,7 @@ export default function CreateRobotFormStep1({
             storageAmount: formik.values?.robotStorage,
             gpuEnabledForCloudInstance:
               formik.values?.gpuEnabledForCloudInstance,
-            robotWorkspaces: responseRobot?.robotWorkspaces,
+            workspaces: responseRobot?.robotWorkspaces,
           })
         );
 

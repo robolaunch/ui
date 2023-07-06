@@ -20,8 +20,8 @@ import {
   IsingleGetRobotParameters,
 } from "../interfaces/useFunctionsInterfaces";
 import {
-  getFederatedRobot,
-  getFederatedRobots,
+  getRobot as getRobotDispatch,
+  getRobots as getRobotsDispatch,
   getRobotBuildManagers,
   getRobotLaunchManagers,
 } from "../resources/RobotSlice";
@@ -432,7 +432,7 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetParameters
   ) {
     dispatch(
-      getFederatedRobots({
+      getRobotsDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
@@ -473,7 +473,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetRobotParameters
   ) {
     dispatch(
-      getFederatedRobot({
+      getRobotDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,

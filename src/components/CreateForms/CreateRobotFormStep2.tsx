@@ -6,7 +6,7 @@ import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/Create
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
-import { createFederatedRobot } from "../../resources/RobotSlice";
+import { createRobot } from "../../resources/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
@@ -35,7 +35,7 @@ export default function CreateRobotFormStep2({
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
       await dispatch(
-        createFederatedRobot({
+        createRobot({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,

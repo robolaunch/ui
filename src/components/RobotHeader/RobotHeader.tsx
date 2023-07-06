@@ -9,7 +9,7 @@ import { MdOutlineStorage } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { useAppDispatch } from "../../hooks/redux";
-import { createFederatedRobot } from "../../resources/RobotSlice";
+import { createRobot } from "../../resources/RobotSlice";
 interface IRobotHeader {
   responseCurrentOrganization: any;
   responseCurrentRoboticsCloud: any;
@@ -106,7 +106,7 @@ export default function RobotHeader({
     bridge: string | boolean;
   }) {
     dispatch(
-      createFederatedRobot({
+      createRobot({
         organizationId: responseCurrentOrganization?.organizationId,
         roboticsCloudName: responseCurrentRoboticsCloud?.name,
         instanceId: responseCurrentInstance?.instanceId,

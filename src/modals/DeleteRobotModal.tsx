@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteFederatedRobot } from "../resources/RobotSlice";
+import { deleteRobot } from "../resources/RobotSlice";
 
 interface IDeleteRobotModalModal {
   data: any;
@@ -24,7 +24,7 @@ export default function DeleteRobotModalModal({
     setIsLoading(true);
 
     dispatch(
-      deleteFederatedRobot({
+      deleteRobot({
         organizationId: data?.organizationId,
         roboticsCloudName: data?.roboticsCloudName,
         instanceId: data?.instanceId,

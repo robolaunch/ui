@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { createRobotBuildManager } from "../../resources/RobotSlice";
+import { createBuildManager } from "../../resources/RobotSlice";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useFunctions from "../../hooks/useFunctions";
@@ -136,7 +136,7 @@ export default function CreateRobotFormStep3({
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
       await dispatch(
-        createRobotBuildManager({
+        createBuildManager({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
