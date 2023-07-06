@@ -10,7 +10,7 @@ import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
 import CreateRobotFormRepositoryItem from "../CreateRobotFormRepositoryItem/CreateRobotFormRepositoryItem";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import stringCapitalization from "../../helpers/stringCapitalization";
+import { stringCapitalization } from "../../helpers/functions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import InfoTip from "../InfoTip/InfoTip";

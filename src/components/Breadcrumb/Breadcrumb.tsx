@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import stringCapitalization from "../../helpers/stringCapitalization";
+import { stringCapitalization } from "../../helpers/functions";
 import { Link, useParams } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import {

@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import stringCapitalization from "../../../helpers/stringCapitalization";
+import { stringCapitalization } from "../../../helpers/functions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";

@@ -3,7 +3,7 @@ import CardLayout from "./CardLayout";
 import InformationWidget from "../components/InformationWidget/InformationWidget";
 import OrganizationsTable from "../pages/UserRoleManagement/OrganizationsPage";
 import OrganizationUsersPage from "../pages/UserRoleManagement/OrganizationUsersPage";
-import organizationNameViewer from "../helpers/organizationNameViewer";
+import { organizationNameViewer } from "../helpers/functions";
 import OrganizationGuestsPage from "../pages/UserRoleManagement/OrganizationGuestsPage";
 import OrganizationAdminsPage from "../pages/UserRoleManagement/OrganizationAdminsPage";
 import Button from "../components/Button/Button";
@@ -79,8 +79,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                   })} Guests`
             }
             subtitle="From this page, you can view, control or get information about all
-            the details of the teams in your organization."
-            actiontitle="If you need to create a new team or check the users in the team you
+            the details of the teams in your organization. If you need to create a new team or check the users in the team you
             can proceed here."
             component={
               <div className="flex flex-col gap-6">
