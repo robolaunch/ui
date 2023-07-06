@@ -249,7 +249,7 @@ export const instanceSlice = createSlice({
       .addCase(getInstanceState.rejected, () => {
         toast.error("Something went wrong of getting instance state");
       })
-      .addCase(addPhysicalInstance.fulfilled, (_, action: any) => {
+      .addCase(addPhysicalInstance.fulfilled, () => {
         toast.success("Physical instance added successfully");
       })
       .addCase(addPhysicalInstance.rejected, () => {

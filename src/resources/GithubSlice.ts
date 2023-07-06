@@ -59,7 +59,7 @@ export const githubSlice = createSlice({
   name: "github",
   initialState: {},
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: () => {},
 });
 
 export default githubSlice.reducer;

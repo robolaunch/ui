@@ -56,7 +56,6 @@ export default function CountWidget({
             labels: {
               style: {
                 colors: "#00000075",
-
                 fontSize: "12px",
               },
             },
@@ -65,6 +64,9 @@ export default function CountWidget({
             labels: {
               style: {
                 colors: "#00000075",
+              },
+              formatter(val, opts) {
+                return val.toFixed(0);
               },
             },
           },

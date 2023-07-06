@@ -107,13 +107,13 @@ export const FleetSlice = createSlice({
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createFederatedFleet.rejected, (_) => {
+      .addCase(createFederatedFleet.rejected, () => {
         toast.error("Something went wrong of creating fleet");
       })
-      .addCase(getFederatedFleets.rejected, (_) => {
+      .addCase(getFederatedFleets.rejected, () => {
         toast.error("Something went wrong of getting fleets");
       })
-      .addCase(getFederatedFleetStatus.rejected, (_) => {
+      .addCase(getFederatedFleetStatus.rejected, () => {
         toast.error("Something went wrong of getting fleet status");
       })
       .addCase(deleteFederatedFleet.fulfilled, (_, action: any) => {
@@ -123,7 +123,7 @@ export const FleetSlice = createSlice({
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(deleteFederatedFleet.rejected, (_) => {
+      .addCase(deleteFederatedFleet.rejected, () => {
         toast.error("Something went wrong of deleting fleet");
       });
   },

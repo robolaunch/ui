@@ -371,25 +371,34 @@ export const RobotSlice = createSlice({
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createFederatedRobot.rejected, (_) => {
-        toast.error("Something went wrong (createFederatedRobot)");
+      .addCase(createFederatedRobot.rejected, () => {
+        toast.error("Something went wrong of creating robot");
       })
-      .addCase(getFederatedRobots.rejected, (_) => {
-        toast.error("Something went wrong (getFederatedRobots)");
+      .addCase(getFederatedRobots.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
       })
-      .addCase(getFederatedRobot.rejected, (_) => {
-        toast.error("Something went wrong (getFederatedRobot)");
+      .addCase(getFederatedRobots.rejected, () => {
+        toast.error("Something went wrong of getting robots");
+      })
+      .addCase(getFederatedRobots.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getFederatedRobot.rejected, () => {
+        toast.error("Something went wrong of getting robot");
       })
       .addCase(deleteFederatedRobot.fulfilled, (_, action: any) => {
-        console.log("!", action);
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(deleteFederatedRobot.rejected, (_) => {
-        toast.error("Something went wrong (deleteFederatedRobot)");
+      .addCase(deleteFederatedRobot.rejected, () => {
+        toast.error("Something went wrong of deleting robot");
       })
       .addCase(createRobotBuildManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -398,11 +407,16 @@ export const RobotSlice = createSlice({
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createRobotBuildManager.rejected, (_) => {
-        toast.error("Something went wrong (createRobotBuildManager)");
+      .addCase(createRobotBuildManager.rejected, () => {
+        toast.error("Something went wrong of creating build manager");
       })
-      .addCase(getRobotBuildManagers.rejected, (_) => {
-        toast.error("Something went wrong (getRobotBuildManagers)");
+      .addCase(getRobotBuildManagers.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getRobotBuildManagers.rejected, () => {
+        toast.error("Something went wrong of getting build managers");
       })
       .addCase(deleteRobotBuildManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -412,7 +426,7 @@ export const RobotSlice = createSlice({
         }
       })
       .addCase(deleteRobotBuildManager.rejected, (_) => {
-        toast.error("Something went wrong (deleteRobotBuildManager)");
+        toast.error("Something went wrong of deleting build manager");
       })
       .addCase(createRobotLaunchManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -421,8 +435,18 @@ export const RobotSlice = createSlice({
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createRobotLaunchManager.rejected, (_) => {
-        toast.error("Something went wrong (createRobotLaunchManager)");
+      .addCase(createRobotLaunchManager.rejected, () => {
+        toast.error("Something went wrong of creating launch manager");
+      })
+      .addCase(deleteRobotLaunchManager.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        } else {
+          toast.success(action?.payload?.message);
+        }
+      })
+      .addCase(deleteRobotLaunchManager.rejected, () => {
+        toast.error("Something went wrong of deleting launch manager");
       });
   },
 });

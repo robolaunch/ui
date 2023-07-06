@@ -33,22 +33,19 @@ export const roboticsCloudSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createRoboticsCloud.fulfilled, (state, action: any) => {
+      .addCase(createRoboticsCloud.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(createRoboticsCloud.rejected, (state, action: any) => {
+      .addCase(createRoboticsCloud.rejected, () => {
         toast.error("Something went wrong of creating robotics cloud");
       })
-      .addCase(
-        getRoboticsCloudsOfOrganization.rejected,
-        (state, action: any) => {
-          toast.error("Something went wrong of getting robotics clouds");
-        }
-      );
+      .addCase(getRoboticsCloudsOfOrganization.rejected, () => {
+        toast.error("Something went wrong of getting robotics clouds");
+      });
   },
 });
 

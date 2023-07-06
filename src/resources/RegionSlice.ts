@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const regionSlice = createSlice({
+export const RegionSlice = createSlice({
   name: "region",
   initialState: {},
   reducers: {},
 });
 
-export default regionSlice.reducer;
+export default RegionSlice.reducer;

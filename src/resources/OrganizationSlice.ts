@@ -119,128 +119,98 @@ export const organizationSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createOrganization.fulfilled, (state: any, action: any) => {
+      .addCase(createOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
           toast.success(action?.payload?.message);
         } else {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(createOrganization.rejected, (action: any) => {
+      .addCase(createOrganization.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(getOrganizations.fulfilled, (state: any, action: any) => {
+      .addCase(getOrganizations.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getOrganizations.rejected, (action: any) => {
+      .addCase(getOrganizations.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(getOrganizationUsers.fulfilled, (state: any, action: any) => {
+      .addCase(getOrganizationUsers.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getOrganizationUsers.rejected, (action: any) => {
+      .addCase(getOrganizationUsers.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(getOrganizationAdmins.fulfilled, (state: any, action: any) => {
+      .addCase(getOrganizationAdmins.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getOrganizationAdmins.rejected, (action: any) => {
+      .addCase(getOrganizationAdmins.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(getOrganizationGuests.fulfilled, (state: any, action: any) => {
+      .addCase(getOrganizationGuests.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getOrganizationGuests.rejected, (action: any) => {
+      .addCase(getOrganizationGuests.rejected, () => {
         toast.error("Something went wrong");
       })
-      .addCase(
-        moveAdminAsUserFromOrganization.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
+      .addCase(moveAdminAsUserFromOrganization.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
         }
-      )
-      .addCase(
-        moveAdminAsUserFromOrganization.rejected,
-        (state: any, action: any) => {
-          toast.error("Something went wrong");
+      })
+      .addCase(moveAdminAsUserFromOrganization.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(moveUserAsAdminToOrganization.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
         }
-      )
-      .addCase(
-        moveUserAsAdminToOrganization.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
+      })
+      .addCase(moveUserAsAdminToOrganization.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(deleteUserFromOrganization.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
         }
-      )
-      .addCase(
-        moveUserAsAdminToOrganization.rejected,
-        (state: any, action: any) => {
-          toast.error("Something went wrong");
+      })
+      .addCase(deleteUserFromOrganization.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(deleteAdminFromOrganization.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
         }
-      )
-      .addCase(
-        deleteUserFromOrganization.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
+      })
+      .addCase(deleteAdminFromOrganization.rejected, () => {
+        toast.error("Something went wrong");
+      })
+      .addCase(deleteGuestFromOrganization.fulfilled, (_, action: any) => {
+        if (action?.payload?.success) {
+          toast.success(action?.payload?.message);
+        } else {
+          toast.error(action?.payload?.message);
         }
-      )
-      .addCase(
-        deleteUserFromOrganization.rejected,
-        (state: any, action: any) => {
-          toast.error("Something went wrong");
-        }
-      )
-      .addCase(
-        deleteAdminFromOrganization.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(
-        deleteAdminFromOrganization.rejected,
-        (state: any, action: any) => {
-          toast.error("Something went wrong");
-        }
-      )
-      .addCase(
-        deleteGuestFromOrganization.fulfilled,
-        (state: any, action: any) => {
-          if (action?.payload?.success) {
-            toast.success(action?.payload?.message);
-          } else {
-            toast.error(action?.payload?.message);
-          }
-        }
-      )
-      .addCase(
-        deleteGuestFromOrganization.rejected,
-        (state: any, action: any) => {
-          toast.error("Something went wrong");
-        }
-      );
+      })
+      .addCase(deleteGuestFromOrganization.rejected, () => {
+        toast.error("Something went wrong");
+      });
   },
 });
 
