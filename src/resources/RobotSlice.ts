@@ -8,7 +8,10 @@ import { toast } from "sonner";
 import {
   IcreateBuildManagerRequest,
   IcreateRobotRequest,
+  IdeleteBuildManagerRequest,
   IdeleteRobotRequest,
+  IgetBuildManagerRequest,
+  IgetBuildManagersRequest,
   IgetRobotRequest,
   IgetRobotsRequest,
 } from "../interfaces/robotInterfaces";
@@ -155,11 +158,11 @@ export const createBuildManager = createAsyncThunk(
   }
 );
 
-export const getRobotBuildManagers = createAsyncThunk(
+export const getBuildManagers = createAsyncThunk(
   "robot/getRobotBuildManagers",
-  async (values: any) => {
+  async (values: IgetBuildManagersRequest) => {
     const response = await robotBuildManagerApi.getRobotBuildManagers({
-      name: values?.name,
+      name: "robot/getRobotBuildManagers",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -180,11 +183,11 @@ export const getRobotBuildManagers = createAsyncThunk(
   }
 );
 
-export const getRobotBuildManager = createAsyncThunk(
+export const getBuildManager = createAsyncThunk(
   "robot/getRobotBuildManager",
-  async (values: any) => {
+  async (values: IgetBuildManagerRequest) => {
     const response = await robotBuildManagerApi.getRobotBuildManager({
-      name: values?.name,
+      name: "robot/getRobotBuildManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -209,11 +212,11 @@ export const getRobotBuildManager = createAsyncThunk(
   }
 );
 
-export const deleteRobotBuildManager = createAsyncThunk(
+export const deleteBuildManager = createAsyncThunk(
   "robot/deleteRobotBuildManager",
-  async (values: any) => {
+  async (values: IdeleteBuildManagerRequest) => {
     const response = await robotBuildManagerApi.deleteRobotBuildManager({
-      name: values?.name,
+      name: "robot/deleteRobotBuildManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -239,11 +242,11 @@ export const deleteRobotBuildManager = createAsyncThunk(
   }
 );
 
-export const createRobotLaunchManager = createAsyncThunk(
+export const createLaunchManager = createAsyncThunk(
   "robot/createRobotLaunchManager",
   async (values: any) => {
     const response = await robotLaunchManagerApi.createRobotLaunchManager({
-      name: values?.name,
+      name: "robot/createRobotLaunchManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -417,32 +420,40 @@ export const RobotSlice = createSlice({
       .addCase(createBuildManager.rejected, () => {
         toast.error("Something went wrong of creating build manager");
       })
-      .addCase(getRobotBuildManagers.fulfilled, (_, action: any) => {
+      .addCase(getBuildManagers.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         }
       })
-      .addCase(getRobotBuildManagers.rejected, () => {
+      .addCase(getBuildManagers.rejected, () => {
         toast.error("Something went wrong of getting build managers");
       })
-      .addCase(deleteRobotBuildManager.fulfilled, (_, action: any) => {
+      .addCase(getBuildManager.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getBuildManager.rejected, () => {
+        toast.error("Something went wrong of getting build manager");
+      })
+      .addCase(deleteBuildManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(deleteRobotBuildManager.rejected, (_) => {
+      .addCase(deleteBuildManager.rejected, (_) => {
         toast.error("Something went wrong of deleting build manager");
       })
-      .addCase(createRobotLaunchManager.fulfilled, (_, action: any) => {
+      .addCase(createLaunchManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(createRobotLaunchManager.rejected, () => {
+      .addCase(createLaunchManager.rejected, () => {
         toast.error("Something went wrong of creating launch manager");
       })
       .addCase(deleteRobotLaunchManager.fulfilled, (_, action: any) => {

@@ -22,7 +22,7 @@ import {
 import {
   getRobot as getRobotDispatch,
   getRobots as getRobotsDispatch,
-  getRobotBuildManagers,
+  getBuildManagers as getBuildManagerDispatch,
   getRobotLaunchManagers,
 } from "../resources/RobotSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
@@ -573,7 +573,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetBuildParameters
   ) {
     dispatch(
-      getRobotBuildManagers({
+      getBuildManagerDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
