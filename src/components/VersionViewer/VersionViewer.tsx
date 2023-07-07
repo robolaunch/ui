@@ -10,7 +10,7 @@ export default function VersionViewer() {
             window.location.href?.split("3000")[1] || ""
           }`;
         } else {
-          window.location.href = `localhost:3000${
+          window.location.href = `http://localhost:3000${
             window.location.href?.split("robolaunch.cloud")[1] || ""
           }`;
         }
