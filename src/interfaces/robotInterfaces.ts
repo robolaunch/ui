@@ -105,6 +105,27 @@ export interface IgetLaunchManagersRequest {
   robotName: string;
 }
 
+export interface IgetLaunchManagerRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+  buildManagerName: string;
+}
+
+export interface IdeleteLaunchManagerRequest {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  robotName: string;
+  fleetName: string;
+  physicalInstanceName: string;
+  launchManagerName: string;
+}
+
 export interface IRobotData {
   step1: any;
   step2: IRobotWorkspaces;
