@@ -11,7 +11,7 @@ export default function Stepbar({
   currentStep,
 }: IStepbar): ReactElement {
   return (
-    <div className="flex flex-col items-center gap-6 w-full">
+    <div className="flex flex-col items-center gap-12 w-full">
       <div className="relative w-full h-fit flex items-center justify-between text-xs">
         {steps?.map((step: any, index: number) => {
           return (

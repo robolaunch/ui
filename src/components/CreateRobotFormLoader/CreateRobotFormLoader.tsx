@@ -2,6 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import { MdVerified } from "react-icons/md";
 import "react-step-progress-bar/styles.css";
 import CreateRobotFormStepbar from "../CreateRobotFormStepbar/CreateRobotFormStepbar";
+import { useParams } from "react-router-dom";
 interface ICreateRobotFormLoader {
   isLoading?: boolean;
   loadingItems?: any[];
@@ -19,6 +20,8 @@ export default function CreateRobotFormLoader({
   stepbarItems,
   currentStep,
 }: ICreateRobotFormLoader): ReactElement {
+  const url = useParams();
+
   return (
     <Fragment>
       {isLoading ? (
@@ -32,7 +35,7 @@ export default function CreateRobotFormLoader({
             {loadingText ||
               "Please wait while we create your robot. This may take a few minutes."}
           </span>
-          {stepbarItems && currentStep ? (
+          {stepbarItems && currentStep && !url?.robotName ? (
             <CreateRobotFormStepbar
               steps={stepbarItems || []}
               currentStep={currentStep || 1}

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 export const createOrganization = createAsyncThunk(
   "organizations/createOrganization",
-  async (values: any) => {
+  async (values: { name: string }) => {
     const response = await organizationApi.createOrganization({
       name: values.name,
     });
@@ -110,6 +110,13 @@ export const deleteGuestFromOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
+  }
+);
+
+export const deleteOrganization = createAsyncThunk(
+  "organizations/deleteOrganization",
+  async (values: { organizationId: string }) => {
+    return undefined;
   }
 );
 

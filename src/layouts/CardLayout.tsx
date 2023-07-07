@@ -15,7 +15,7 @@ export default function CardLayout({
 }: ICard): ReactElement {
   return (
     <div
-      className={`bg-layer-light-50 shadow-lg p-1.5 rounded-lg animate__animated animate__fadeIn transition-all duration-500 ${className}`}
+      className={`bg-layer-light-50 shadow-lg p-1.5 rounded-lg animate__animated animate__fadeIn transition-all duration-500 border border-layer-light-200 ${className}`}
       style={
         loading
           ? {

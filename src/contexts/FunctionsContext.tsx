@@ -25,7 +25,7 @@ import {
   getBuildManagers as getBuildManagerDispatch,
   getLaunchManagers as getLaunchManagerDispatch,
 } from "../resources/RobotSlice";
-import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
+import { getRoboticsClouds as getRoboticsCloudDispatch } from "../resources/RoboticsCloudSlice";
 import { getOrganizations as getAllOrganizations } from "../resources/OrganizationSlice";
 import { getPhysicalInstances as getAllPhysicalInstances } from "../resources/InstanceSlice";
 import { getInstances as getAllInstances } from "../resources/InstanceSlice";
@@ -106,7 +106,7 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetParameters
   ) {
     dispatch(
-      getRoboticsCloudsOfOrganization({
+      getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
       })
     ).then((responseRoboticsClouds: any) => {
@@ -137,7 +137,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetParameters
   ) {
     dispatch(
-      getRoboticsCloudsOfOrganization({
+      getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
       })
     ).then((responseRoboticsClouds: any) => {

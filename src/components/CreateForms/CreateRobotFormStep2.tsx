@@ -20,7 +20,7 @@ interface ICreateRobotFormStep2 {
 export default function CreateRobotFormStep2({
   isImportRobot,
 }: ICreateRobotFormStep2): ReactElement {
-  const [responseFleet, setResponseFleet] = useState<any>();
+  const [responseFleet, setResponseFleet] = useState<any>(undefined);
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useSidebar();
   const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
@@ -28,6 +28,7 @@ export default function CreateRobotFormStep2({
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
   const { getRobot, getFleet } = useFunctions();
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
     validationSchema: CreateRobotFormStep2Validations,
@@ -99,7 +100,7 @@ export default function CreateRobotFormStep2({
       }
 
       const timer = setInterval(() => {
-        !isImportRobot && handleGetFleet();
+        !isImportRobot && !robotData?.step1?.isVirtualRobot && handleGetFleet();
       }, 10000);
 
       return () => {
@@ -123,6 +124,7 @@ export default function CreateRobotFormStep2({
       {
         ifErrorNavigateTo404: false,
         setRobotData: true,
+        setResponse: setResponseRobot,
       }
     );
   }
@@ -179,6 +181,9 @@ export default function CreateRobotFormStep2({
                   formik={formik}
                   workspace={workspace}
                   workspaceIndex={workspaceIndex}
+                  workspaceState={responseRobot?.robotClusters.map(
+                    (cluster: any) => cluster.robotStatus
+                  )}
                   disabled={formik.isSubmitting || isImportRobot}
                   isImportRobot={isImportRobot}
                 />

@@ -17,7 +17,7 @@ export default function WidgetLayout({
 }: WidgetLayoutProps): ReactElement {
   return (
     <div
-      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-full animate__animated animate__fadeIn"
+      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-full animate__animated animate__fadeIn border border-layer-light-200"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",

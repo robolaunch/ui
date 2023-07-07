@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createInstanceApi } from "../api/api";
 import { toast } from "sonner";
+import { IcreateRoboticsCloudRequest } from "../interfaces/roboticsCloudInterfaces";
 
 export const createRoboticsCloud = createAsyncThunk(
   "roboticsCloud/createRoboticsCloud",
-  async (values: any) => {
+  async (values: IcreateRoboticsCloudRequest) => {
     const response = await createInstanceApi.createRoboticsCloud({
-      name: values.name,
+      name: "roboticsCloud/createRoboticsCloud",
       organizationId: values.organizationId,
       roboticsClouds: [
         { name: values.roboticsCloudName, region: values.region },
@@ -16,11 +17,11 @@ export const createRoboticsCloud = createAsyncThunk(
   }
 );
 
-export const getRoboticsCloudsOfOrganization = createAsyncThunk(
+export const getRoboticsClouds = createAsyncThunk(
   "roboticsCloud/getRoboticsCloudsOfOrganization",
   async (values: any) => {
     const response = await createInstanceApi.getRoboticsClouds({
-      name: values.name,
+      name: "roboticsCloud/getRoboticsCloudsOfOrganization",
       organizationId: values.organizationId,
     });
     return response.data;
@@ -43,7 +44,12 @@ export const roboticsCloudSlice = createSlice({
       .addCase(createRoboticsCloud.rejected, () => {
         toast.error("Something went wrong of creating robotics cloud");
       })
-      .addCase(getRoboticsCloudsOfOrganization.rejected, () => {
+      .addCase(getRoboticsClouds.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getRoboticsClouds.rejected, () => {
         toast.error("Something went wrong of getting robotics clouds");
       });
   },

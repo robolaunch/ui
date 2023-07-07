@@ -80,10 +80,16 @@ export default function MainDashboardPage(): ReactElement {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return <OrganizationActionCells data={rowData?.actions} />;
+          return (
+            <OrganizationActionCells
+              data={rowData?.actions}
+              reload={() => setReload(!reload)}
+            />
+          );
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

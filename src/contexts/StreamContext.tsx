@@ -260,6 +260,7 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
     };
 
     return () => {
+      peer.current.close();
       client.current.close();
     };
   }, [vdiIngressEndpoint, keycloak?.tokenParsed?.preferred_username]);

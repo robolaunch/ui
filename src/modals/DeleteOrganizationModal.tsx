@@ -5,29 +5,41 @@ import { deleteOrganizationSchema } from "../validations/OrganizationsValidation
 import InputError from "../components/InputError/InputError";
 import InputText from "../components/InputText/InputText";
 import Button from "../components/Button/Button";
+import { useAppDispatch } from "../hooks/redux";
+import { deleteOrganization } from "../resources/OrganizationSlice";
 
 interface IDeleteOrganizationModal {
   data: any;
+  reload: () => void;
   visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function DeleteOrganizationModal({
   data,
+  reload,
   visibleModal,
   handleCloseModal,
 }: IDeleteOrganizationModal): ReactElement {
+  const dispatch = useAppDispatch();
   const deleteFormik = useFormik({
     initialValues: {
       deleteOrganizationName: "",
     },
-    validationSchema: deleteOrganizationSchema(data?.organizationName),
+    validationSchema: deleteOrganizationSchema(
+      data?.organizationName?.split("_")[1]
+    ),
     onSubmit: (values) => {
       deleteFormik.setSubmitting(true);
-      console.log(values, data);
-      deleteFormik.resetForm();
-      handleCloseModal();
-      deleteFormik.setSubmitting(false);
+
+      dispatch(
+        deleteOrganization({
+          organizationId: data?.organizationId,
+        })
+      ).then(async () => {
+        deleteFormik.resetForm();
+        handleCloseModal();
+      });
     },
   });
 
@@ -43,7 +55,8 @@ export default function DeleteOrganizationModal({
         className="w-full flex flex-col gap-8"
       >
         <p className="text-sm">
-          If you delete this organization, type the name of the organization to
+          If you delete this organization, type the name (
+          {data?.organizationName?.split("_")[1]}) of the organization to
           confirm.
         </p>
         <div className="w-full">

@@ -20,6 +20,7 @@ import InfoTip from "../InfoTip/InfoTip";
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
   buildStep: IRobotBuildStep;
+  stepState?: string[];
   formik: FormikProps<IRobotBuildSteps>;
   disabled?: boolean;
 }
@@ -27,6 +28,7 @@ interface ICreateRobotFormBuildStepItem {
 export default function CreateRobotFormBuildStepItem({
   buildStepIndex,
   buildStep,
+  stepState,
   formik,
   disabled,
 }: ICreateRobotFormBuildStepItem): ReactElement {
@@ -50,40 +52,28 @@ export default function CreateRobotFormBuildStepItem({
               : `Build Step #${buildStepIndex + 1}`}
           </span>
           <div className="flex items-center gap-2 text-xs">
-            {Array.isArray(buildStep?.robotClusters) &&
-              buildStep?.robotClusters[0]?.buildManagerStatus && (
-                <div className="flex gap-1.5">
-                  <span
-                    title={`Launch State of Cloud Instance`}
-                    className="font-medium"
-                  >
-                    CI:
-                  </span>
-                  <StateCell
-                    state={
-                      Array.isArray(buildStep?.robotClusters) &&
-                      buildStep?.robotClusters[0]?.buildManagerStatus
-                    }
-                  />
-                </div>
-              )}
-            {Array.isArray(buildStep?.robotClusters) &&
-              buildStep?.robotClusters[1]?.buildManagerStatus && (
-                <div className="flex gap-1.5">
-                  <span
-                    title={`Launch State of Physical Instance`}
-                    className="font-medium"
-                  >
-                    PI:
-                  </span>
-                  <StateCell
-                    state={
-                      Array.isArray(buildStep?.robotClusters) &&
-                      buildStep?.robotClusters[1]?.buildManagerStatus
-                    }
-                  />
-                </div>
-              )}
+            {Array.isArray(stepState) && stepState?.[0] && (
+              <div className="flex gap-1.5">
+                <span
+                  title={`Launch State of Cloud Instance`}
+                  className="font-medium"
+                >
+                  CI:
+                </span>
+                <StateCell state={stepState?.[0]} />
+              </div>
+            )}
+            {Array.isArray(stepState) && stepState?.[1] && (
+              <div className="flex gap-1.5">
+                <span
+                  title={`Launch State of Physical Instance`}
+                  className="font-medium"
+                >
+                  PI:
+                </span>
+                <StateCell state={stepState?.[1]} />
+              </div>
+            )}
           </div>
         </div>
       }

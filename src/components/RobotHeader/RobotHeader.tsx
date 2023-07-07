@@ -2,14 +2,24 @@ import React, { Fragment, ReactElement } from "react";
 import InputToggle from "../InputToggle/InputToggle";
 import { useParams } from "react-router-dom";
 import { IoLocationOutline } from "react-icons/io5";
-import { AiOutlineTeam } from "react-icons/ai";
-import { BsFillCpuFill } from "react-icons/bs";
+import { AiFillCode, AiOutlineTeam } from "react-icons/ai";
+import { BsCameraVideoFill, BsFillCpuFill } from "react-icons/bs";
 import { FaMemory } from "react-icons/fa";
-import { MdOutlineStorage } from "react-icons/md";
+import {
+  MdDashboard,
+  MdOutlineStorage,
+  MdMap,
+  MdScreenShare,
+} from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRobot } from "../../resources/RobotSlice";
+import { SiKubernetes } from "react-icons/si";
+import { BiJoystickButton } from "react-icons/bi";
+import { RxDashboard } from "react-icons/rx";
+import { FaBox } from "react-icons/fa";
+
 interface IRobotHeader {
   responseCurrentOrganization: any;
   responseCurrentRoboticsCloud: any;
@@ -51,29 +61,35 @@ export default function RobotHeader({
   const tabs = [
     {
       name: "Overview",
+      icon: <MdDashboard size={14} />,
       state: true,
     },
     {
       name: "K8S Resources",
+      icon: <SiKubernetes size={14} />,
       state: responseRobot ? true : false,
     },
     {
       name: "Task Management",
+      icon: <MdMap size={14} />,
       state: responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Teleoperation",
+      icon: <BiJoystickButton size={14} />,
       state: responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Visualization",
+      icon: <BsCameraVideoFill size={14} />,
       state: responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Development Suite",
+      icon: <RxDashboard size={14} />,
       state:
         responseRobot?.ideIngressEndpoint && responseRobot?.vdiIngressEndpoint
           ? true
@@ -85,16 +101,19 @@ export default function RobotHeader({
     },
     {
       name: "Code Editor",
+      icon: <AiFillCode size={14} />,
       state: responseRobot?.ideIngressEndpoint ? true : false,
       disabled: responseRobot?.ideIngressEndpoint ? false : true,
     },
     {
       name: "Remote Desktop",
+      icon: <MdScreenShare size={14} />,
       state: responseRobot?.vdiIngressEndpoint ? true : false,
       disabled: responseRobot?.vdiIngressEndpoint ? false : true,
     },
     {
       name: "Logs",
+      icon: <FaBox size={13} />,
       state: responseRobot ? true : false,
       disabled: responseRobot ? false : true,
     },
@@ -258,10 +277,10 @@ export default function RobotHeader({
             </div>
           </div>
         </div>
-        <ul className="flex gap-8 px-6 pt-5 overflow-x-auto items-end">
+        <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
           {tabs.map((tab: any, index: number) => {
             return (
-              <div
+              <li
                 className={`flex flex-col gap-3 ${
                   tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
                 }`}
@@ -272,8 +291,8 @@ export default function RobotHeader({
                 }
                 key={index}
               >
-                <li
-                  className={`text-xs font-medium px-2 transition-all duration-500 min-w-max ${
+                <div
+                  className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max ${
                     !tab?.disabled && "hover:scale-90"
                   }  ${
                     tab.name === activeTab
@@ -292,9 +311,12 @@ export default function RobotHeader({
                       <rect width="92" height="12" />
                     </ContentLoader>
                   ) : (
-                    tab.name
+                    <Fragment>
+                      {tab?.icon}
+                      <span>{tab.name}</span>
+                    </Fragment>
                   )}
-                </li>
+                </div>
                 <div
                   className={`w-full h-[2px] transition-all duration-500 
                   ${
@@ -303,7 +325,7 @@ export default function RobotHeader({
                       : "bg-layer-light-100"
                   } `}
                 />
-              </div>
+              </li>
             );
           })}
         </ul>

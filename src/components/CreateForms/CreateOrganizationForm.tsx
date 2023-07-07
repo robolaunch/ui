@@ -26,12 +26,10 @@ export default function CreateOrganizationForm(): ReactElement {
         createOrganization({
           name: values.name,
         })
-      );
-
-      setTimeout(() => {
+      ).then(async () => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
-      }, 5000);
+      });
     },
   });
 

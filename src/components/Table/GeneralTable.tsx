@@ -28,7 +28,7 @@ export default function GeneralTable({
 }: GeneralTableProps): ReactElement {
   return (
     <div
-      className="flex flex-col px-4 pt-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn"
+      className="flex flex-col px-4 pt-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn border border-layer-light-200"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex px-4 pt-1 pb-8 items-center gap-2">

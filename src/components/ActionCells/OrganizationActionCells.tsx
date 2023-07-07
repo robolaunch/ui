@@ -6,11 +6,13 @@ import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
 import RenameOrganizationModal from "../../modals/RenameOrganizationModal";
 interface IOrganizationActionCells {
   data: any;
+  reload: () => void;
   onClickSee?: any;
 }
 
 export default function OrganizationActionCells({
   data,
+  reload,
   onClickSee,
 }: IOrganizationActionCells): ReactElement {
   const [visibleRenameModal, setVisibleRenameModal] = useState<boolean>(false);
@@ -46,6 +48,7 @@ export default function OrganizationActionCells({
         <RenameOrganizationModal
           data={data}
           visibleModal={visibleRenameModal}
+          reload={reload}
           handleCloseModal={() => setVisibleRenameModal(false)}
         />
       )}
@@ -53,6 +56,7 @@ export default function OrganizationActionCells({
         <DeleteOrganizationModal
           data={data}
           visibleModal={visibleDeleteModal}
+          reload={reload}
           handleCloseModal={() => setVisibleDeleteModal(false)}
         />
       )}

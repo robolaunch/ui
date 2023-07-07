@@ -14,11 +14,13 @@ import { stringCapitalization } from "../../helpers/GeneralFunctions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import InfoTip from "../InfoTip/InfoTip";
+import StateCell from "../Cells/StateCell";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
   workspace: IRobotWorkspace;
   workspaceIndex: number;
+  workspaceState: string[];
   disabled?: boolean;
   isImportRobot?: boolean;
 }
@@ -27,6 +29,7 @@ export default function CreateRobotFormWorkspaceItem({
   formik,
   workspace,
   workspaceIndex,
+  workspaceState,
   disabled,
   isImportRobot,
 }: ICreateRobotFormWorkspaceItem): ReactElement {
@@ -47,11 +50,37 @@ export default function CreateRobotFormWorkspaceItem({
         setIsShowAccordion(!isShowAccordion);
       }}
       header={
-        <span className="font-medium">
-          {workspace.name
-            ? workspace?.name + " Workspace"
-            : `Workspace #${workspaceIndex + 1}`}
-        </span>
+        <div className="flex justify-between">
+          <span className="font-medium">
+            {workspace.name
+              ? workspace?.name + " Workspace"
+              : `Workspace #${workspaceIndex + 1}`}
+          </span>
+          <div className="flex items-center gap-2 text-xs">
+            {Array.isArray(workspaceState) && workspaceState?.[0] && (
+              <div className="flex gap-1.5">
+                <span
+                  title={`Launch State of Cloud Instance`}
+                  className="font-medium"
+                >
+                  CI:
+                </span>
+                <StateCell state={workspaceState?.[0]} />
+              </div>
+            )}
+            {Array.isArray(workspaceState) && workspaceState?.[1] && (
+              <div className="flex gap-1.5">
+                <span
+                  title={`Launch State of Physical Instance`}
+                  className="font-medium"
+                >
+                  PI:
+                </span>
+                <StateCell state={workspaceState?.[1]} />
+              </div>
+            )}
+          </div>
+        </div>
       }
     >
       <div className="flex flex-col gap-4 p-4">
@@ -80,7 +109,6 @@ export default function CreateRobotFormWorkspaceItem({
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.workspaceDistro`
             )}
-            placeholder="Workspace Distro"
             disabled={disabled}
           >
             <Fragment>

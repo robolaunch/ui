@@ -27,6 +27,8 @@ export default function CreateRobotFormStep3({
     useCreateRobot();
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [responseBuildManager, setResponseBuildManager] =
+    useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useSidebar();
   const { getRobot, getBuildManager } = useFunctions();
 
@@ -95,6 +97,7 @@ export default function CreateRobotFormStep3({
       {
         ifErrorNavigateTo404: false,
         setRobotData: true,
+        setResponse: setResponseBuildManager,
       }
     );
   }
@@ -369,6 +372,9 @@ export default function CreateRobotFormStep3({
                     formik={formik}
                     buildStep={buildStep}
                     buildStepIndex={buildStepIndex}
+                    stepState={responseBuildManager?.robotClusters.map(
+                      (item: any) => item?.buildManagerStatus
+                    )}
                     disabled={isImportRobot || formik?.isSubmitting}
                   />
                 );

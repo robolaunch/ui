@@ -8,6 +8,7 @@ import Button from "../components/Button/Button";
 
 interface IRenameOrganizationModal {
   data: any;
+  reload: () => void;
   visibleModal: boolean;
   handleCloseModal: () => void;
 }
