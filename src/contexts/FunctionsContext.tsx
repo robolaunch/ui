@@ -23,7 +23,7 @@ import {
   getRobot as getRobotDispatch,
   getRobots as getRobotsDispatch,
   getBuildManagers as getBuildManagerDispatch,
-  getRobotLaunchManagers,
+  getLaunchManagers as getLaunchManagerDispatch,
 } from "../resources/RobotSlice";
 import { getRoboticsCloudsOfOrganization } from "../resources/RoboticsCloudSlice";
 import { getOrganizations as getAllOrganizations } from "../resources/OrganizationSlice";
@@ -642,7 +642,7 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetLaunchParameters
   ) {
     dispatch(
-      getRobotLaunchManagers({
+      getLaunchManagerDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,

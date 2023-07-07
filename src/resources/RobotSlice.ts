@@ -7,11 +7,15 @@ import {
 import { toast } from "sonner";
 import {
   IcreateBuildManagerRequest,
+  IcreateLaunchManagerRequest,
   IcreateRobotRequest,
   IdeleteBuildManagerRequest,
+  IdeleteLaunchManagerRequest,
   IdeleteRobotRequest,
   IgetBuildManagerRequest,
   IgetBuildManagersRequest,
+  IgetLaunchManagerRequest,
+  IgetLaunchManagersRequest,
   IgetRobotRequest,
   IgetRobotsRequest,
 } from "../interfaces/robotInterfaces";
@@ -244,7 +248,7 @@ export const deleteBuildManager = createAsyncThunk(
 
 export const createLaunchManager = createAsyncThunk(
   "robot/createRobotLaunchManager",
-  async (values: any) => {
+  async (values: IcreateLaunchManagerRequest) => {
     const response = await robotLaunchManagerApi.createRobotLaunchManager({
       name: "robot/createRobotLaunchManager",
       organizationId: values?.organizationId,
@@ -273,11 +277,11 @@ export const createLaunchManager = createAsyncThunk(
   }
 );
 
-export const getRobotLaunchManagers = createAsyncThunk(
+export const getLaunchManagers = createAsyncThunk(
   "robot/getRobotLaunchManagers",
-  async (values: any) => {
+  async (values: IgetLaunchManagersRequest) => {
     const response = await robotLaunchManagerApi.getRobotLaunchManagers({
-      name: values?.name,
+      name: "robot/getRobotLaunchManagers",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -298,11 +302,11 @@ export const getRobotLaunchManagers = createAsyncThunk(
   }
 );
 
-export const getRobotLaunchManager = createAsyncThunk(
+export const getLaunchManager = createAsyncThunk(
   "robot/getRobotLaunchManager",
-  async (values: any) => {
+  async (values: IgetLaunchManagerRequest) => {
     const response = await robotLaunchManagerApi.getRobotLaunchManager({
-      name: values?.name,
+      name: "robot/getRobotLaunchManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -327,11 +331,11 @@ export const getRobotLaunchManager = createAsyncThunk(
   }
 );
 
-export const deleteRobotLaunchManager = createAsyncThunk(
+export const deleteLaunchManager = createAsyncThunk(
   "robot/deleteRobotLaunchManager",
-  async (values: any) => {
+  async (values: IdeleteLaunchManagerRequest) => {
     const response = await robotLaunchManagerApi.deleteRobotLaunchManager({
-      name: values?.name,
+      name: "robot/deleteRobotLaunchManager",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -456,14 +460,30 @@ export const RobotSlice = createSlice({
       .addCase(createLaunchManager.rejected, () => {
         toast.error("Something went wrong of creating launch manager");
       })
-      .addCase(deleteRobotLaunchManager.fulfilled, (_, action: any) => {
+      .addCase(getLaunchManagers.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getLaunchManagers.rejected, () => {
+        toast.error("Something went wrong of getting launch managers");
+      })
+      .addCase(getLaunchManager.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getLaunchManager.rejected, () => {
+        toast.error("Something went wrong of getting launch manager");
+      })
+      .addCase(deleteLaunchManager.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
           toast.success(action?.payload?.message);
         }
       })
-      .addCase(deleteRobotLaunchManager.rejected, () => {
+      .addCase(deleteLaunchManager.rejected, () => {
         toast.error("Something went wrong of deleting launch manager");
       });
   },
