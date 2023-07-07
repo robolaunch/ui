@@ -34,7 +34,6 @@ export default function RemoteDesktopScene({
             style={{
               position: "relative",
               backgroundColor: "#000",
-              minHeight: video?.current ? "660px" : "unset",
             }}
           />
           {isControllerActive && remoteDesktopReducer?.isMuted && (
