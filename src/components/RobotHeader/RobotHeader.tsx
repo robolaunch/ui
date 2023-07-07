@@ -152,6 +152,13 @@ export default function RobotHeader({
       <Fragment>
         <div className="h-28 flex items-center justify-between">
           <div className="h-full flex flex-col justify-around">
+            {responseRobot?.ideIngressEndpoint && (
+              <iframe
+                title="idex"
+                className="hidden"
+                src={responseRobot?.ideIngressEndpoint}
+              />
+            )}
             <span className="text-lg font-medium">{url?.robotName}</span>
             <span className="flex gap-2 items-center">
               <AiOutlineTeam size={16} />

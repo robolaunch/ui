@@ -11,6 +11,7 @@ import useSidebar from "../../../hooks/useSidebar";
 import { useParams } from "react-router-dom";
 import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import StateCell from "../../../components/Cells/StateCell";
+import { useKeycloak } from "@react-keycloak/web";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -20,6 +21,9 @@ export default function MainDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { setSidebarState } = useSidebar();
   const url = useParams();
+
+  const { keycloak } = useKeycloak();
+  console.log(keycloak);
 
   useEffect(() => {
     getOrganizations({

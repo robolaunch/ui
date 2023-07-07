@@ -18,6 +18,7 @@ import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
 import Logs from "./Logs/Logs";
+import axios from "axios";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
