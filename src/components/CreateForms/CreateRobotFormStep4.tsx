@@ -10,7 +10,7 @@ import InputError from "../InputError/InputError";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import {
-  createRobotLaunchManager,
+  createLaunchManager,
   deleteRobotLaunchManager,
 } from "../../resources/RobotSlice";
 import Button from "../Button/Button";
@@ -54,7 +54,7 @@ export default function CreateRobotFormStep4({
       formik.setSubmitting(true);
 
       await dispatch(
-        createRobotLaunchManager({
+        createLaunchManager({
           organizationId: selectedState?.organization?.organizationId,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
