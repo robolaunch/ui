@@ -11,7 +11,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
 import {
   createLaunchManager,
-  deleteRobotLaunchManager,
+  deleteLaunchManager,
 } from "../../resources/RobotSlice";
 import Button from "../Button/Button";
 import { toast } from "sonner";
@@ -339,7 +339,7 @@ export default function CreateRobotFormStep4({
           <CreateRobotFormDeleteButton
             onClick={async () => {
               await dispatch(
-                deleteRobotLaunchManager({
+                deleteLaunchManager({
                   organizationId: selectedState?.organization?.organizationId,
                   roboticsCloudName: selectedState?.roboticsCloud?.name,
                   instanceId: selectedState?.instance?.instanceId,
