@@ -1,4 +1,10 @@
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
@@ -11,6 +17,7 @@ import { useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
+import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseCurrentOrganization, setResponseCurrentOrganization] =
     useState<any>(undefined);
@@ -93,6 +100,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           key: instance?.name,
           name: instance,
           organization: url?.organizationName,
+          usages: instance?.cloudInstanceResource,
           providerState: instance?.instanceState,
           robolaunchState: instance?.instanceCloudState,
           actions: instance,
@@ -124,9 +132,38 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         header: "Organization",
         sortable: true,
         filter: true,
-        align: "lehrefft",
+        align: "left",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.organization} />;
+        },
+      },
+      {
+        key: "usages",
+        header: "Resources & Usages",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return (
+            <div className="flex gap-4">
+              {rowData?.usages?.cpuUsage ? (
+                <Fragment>
+                  <CirclePercentageBar
+                    percentage={rowData?.usages?.cpuUsage}
+                    title={`CPU (${rowData?.usages?.cpuTotal} Core)`}
+                    size={46}
+                  />
+                  <CirclePercentageBar
+                    percentage={rowData?.usages?.memoryUsage}
+                    title={`Memory (${rowData?.usages?.memoryTotal} GB)`}
+                    size={46}
+                  />
+                </Fragment>
+              ) : (
+                <BasicCell text={"Pending..."} />
+              )}
+            </div>
+          );
         },
       },
       {
@@ -175,6 +212,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedState, reload, url, responseInstances]
   );
+
+  useEffect(() => {
+    console.log(responseInstances);
+  }, [responseInstances]);
+
   return (
     <div className="flex flex-col gap-8">
       <div className="grid gap-8 grid-cols-12">

@@ -161,6 +161,7 @@ export interface IRobotBuildStep {
   script: string;
   instancesName: any[];
   robotClusters?: any;
+  buildLog?: string;
 }
 
 export interface IRobotLaunchSteps {

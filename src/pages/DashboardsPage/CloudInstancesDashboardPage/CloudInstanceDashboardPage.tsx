@@ -12,6 +12,8 @@ import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
 
 import useFunctions from "../../../hooks/useFunctions";
+import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseCurrentOrganization, setResponseCurrentOrganization] =
@@ -190,63 +192,88 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     [url, selectedState, reload]
   );
 
+  console.log(responseCurrentInstance);
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-4">
-          <InformationWidget
-            title={url?.instanceName || ""}
-            subtitle="This page is the Fleet page of the platform. Here, you can manage, delete, or view the details of your existing fleets. If you need to create a new fleet, you can do so by clicking the button below."
-            component={
-              <Button
-                text="Create a new Fleet"
-                className="!w-40 !h-10 !text-xs"
-                onClick={() => {
-                  setSidebarState((prevState: any): any => ({
-                    ...prevState,
-                    isOpen: true,
-                    isCreateMode: false,
-                    page: "fleet",
-                  }));
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Robotics Cloud" />
-        </div>
-        <div className="col-span-12 lg:col-span-3">
-          <CountWidget
-            data={{
-              series: [
-                responseFleets?.filter(
-                  (fleet: any) =>
-                    fleet?.fleetStatus === "CheckingRemoteNamespace"
-                ).length || 0,
-                responseFleets?.filter(
-                  (fleet: any) => fleet?.fleetStatus === "CreatingNamespace"
-                ).length || 0,
-                responseFleets?.filter(
-                  (fleet: any) =>
-                    fleet?.fleetStatus === "CreatingDiscoveryServer"
-                ).length || 0,
-                responseFleets?.filter(
-                  (fleet: any) => fleet?.fleetStatus === "Ready"
-                ).length || 0,
-              ],
-              categories: [
-                ["Checking"],
-                ["Creating NS"],
-                ["Creating DS"],
-                ["Ready"],
-              ],
-            }}
-            title="Robotics Cloud"
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
+    <DashboardLayout
+      widget1={
+        <InformationWidget
+          title={url?.instanceName || ""}
+          subtitle="This page is the Fleet page of the platform. Here, you can manage, delete, or view the details of your existing fleets. If you need to create a new fleet, you can do so by clicking the button below."
+          component={
+            <Button
+              text="Create a new Fleet"
+              className="!w-40 !h-10 !text-xs"
+              onClick={() => {
+                setSidebarState((prevState: any): any => ({
+                  ...prevState,
+                  isOpen: true,
+                  isCreateMode: false,
+                  page: "fleet",
+                }));
+              }}
+            />
+          }
+        />
+      }
+      widget2={
+        <UsagesWidget
+          title={`Cloud Instances`}
+          datas={[
+            {
+              title: `CPU (${
+                responseCurrentInstance?.cloudInstanceResource?.cpuTotal || 0
+              } Core)`,
+              percentage:
+                responseCurrentInstance?.cloudInstanceResource?.cpuUsage || 0,
+            },
+            {
+              title: `Memory (${
+                responseCurrentInstance?.cloudInstanceResource?.memoryTotal || 0
+              } GB)`,
+              percentage:
+                responseCurrentInstance?.cloudInstanceResource?.memoryUsage ||
+                0,
+            },
+            {
+              title: `VGPU (${
+                responseCurrentInstance?.cloudInstanceResource?.vgpuTotal || 0
+              } Core)`,
+              percentage:
+                responseCurrentInstance?.cloudInstanceResource?.vgpuUsage || 0,
+            },
+          ]}
+        />
+      }
+      widget3={<UtilizationWidget title="Robotics Cloud" />}
+      widget4={
+        <CountWidget
+          data={{
+            series: [
+              responseFleets?.filter(
+                (fleet: any) => fleet?.fleetStatus === "CheckingRemoteNamespace"
+              ).length || 0,
+              responseFleets?.filter(
+                (fleet: any) => fleet?.fleetStatus === "CreatingNamespace"
+              ).length || 0,
+              responseFleets?.filter(
+                (fleet: any) => fleet?.fleetStatus === "CreatingDiscoveryServer"
+              ).length || 0,
+              responseFleets?.filter(
+                (fleet: any) => fleet?.fleetStatus === "Ready"
+              ).length || 0,
+            ],
+            categories: [
+              ["Checking"],
+              ["Creating NS"],
+              ["Creating DS"],
+              ["Ready"],
+            ],
+          }}
+          title="Robotics Cloud"
+        />
+      }
+      table={
         <GeneralTable
           type="fleet"
           title="Fleets"
@@ -255,7 +282,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           loading={Array.isArray(responseFleets) ? false : true}
           handleReload={() => setReload(!reload)}
         />
-      </div>
-    </div>
+      }
+    />
   );
 }

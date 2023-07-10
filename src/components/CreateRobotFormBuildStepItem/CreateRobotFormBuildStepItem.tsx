@@ -16,6 +16,7 @@ import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFor
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import StateCell from "../Cells/StateCell";
 import InfoTip from "../InfoTip/InfoTip";
+import Terminal from "../Terminal/Terminal";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -23,6 +24,7 @@ interface ICreateRobotFormBuildStepItem {
   stepState?: string[];
   formik: FormikProps<IRobotBuildSteps>;
   disabled?: boolean;
+  isImportRobot: boolean;
 }
 
 export default function CreateRobotFormBuildStepItem({
@@ -31,12 +33,26 @@ export default function CreateRobotFormBuildStepItem({
   stepState,
   formik,
   disabled,
+  isImportRobot,
 }: ICreateRobotFormBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
-
   const { selectedState } = useSidebar();
   const { robotData } = useCreateRobot();
   const { handleRemoveStepFromBuildStep } = useCreateRobot();
+  const [activeTab, setActiveTab] = useState<string>(
+    isImportRobot ? "Logs" : "Form"
+  );
+
+  const tabs = [
+    {
+      name: "Form",
+      icon: <></>,
+    },
+    {
+      name: "Logs",
+      icon: <></>,
+    },
+  ];
 
   return (
     <Accordion
@@ -78,258 +94,327 @@ export default function CreateRobotFormBuildStepItem({
         </div>
       }
     >
-      <div className="flex flex-col gap-4 p-4">
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Build Step Name:
-            <InfoTip content="Type a unique build step name." />
-          </div>
-          <InputText
-            {...formik.getFieldProps(`robotBuildSteps.${buildStepIndex}.name`)}
-            className="!text-sm"
-            disabled={formik?.isSubmitting}
-          />
-          <InputError
-            // @ts-ignore
-            error={formik?.errors?.robotBuildSteps?.[buildStepIndex]?.name}
-            touched={formik?.touched?.robotBuildSteps?.[buildStepIndex]?.name}
-          />
-        </div>
-
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Workspace:
-            <InfoTip content="Select a workspace name." />
-          </div>
-          <InputSelect
-            {...formik.getFieldProps(
-              `robotBuildSteps.${buildStepIndex}.workspace`
-            )}
-            placeholder=""
-            disabled={formik?.isSubmitting}
-          >
-            <Fragment>
-              {!formik?.values?.robotBuildSteps[buildStepIndex]?.workspace && (
-                <option value=""></option>
-              )}
-              {robotData?.step2?.workspaces?.map(
-                (workspace: IRobotWorkspace, index: number) => (
-                  <option key={index} value={workspace.name}>
-                    {workspace.name}
-                  </option>
-                )
-              )}
-            </Fragment>
-          </InputSelect>
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.robotBuildSteps?.[buildStepIndex]?.workspace
-            }
-            touched={
-              formik?.touched?.robotBuildSteps?.[buildStepIndex]?.workspace
-            }
-          />
-        </div>
-
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Command/Script Code:
-            <InfoTip content="Select command or script code" />
-          </div>
-          <InputSelect
-            {...formik.getFieldProps(
-              `robotBuildSteps.${buildStepIndex}.isCommandCode`
-            )}
-            value={
-              formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-                ? "isCommandCode"
-                : "isScriptCode"
-            }
-            onChange={(e) => {
-              if (e.target.value === "isCommandCode") {
-                formik.setValues({
-                  ...formik.values,
-                  robotBuildSteps: formik.values.robotBuildSteps.map(
-                    (item: any, index: number) => {
-                      if (index === buildStepIndex) {
-                        return {
-                          ...item,
-                          script: "",
-                          isCommandCode:
-                            e.target.value === "isCommandCode" ? true : false,
-                        };
-                      }
-                      return item;
-                    }
-                  ),
-                });
-              } else {
-                formik.setValues({
-                  ...formik.values,
-                  robotBuildSteps: formik.values.robotBuildSteps.map(
-                    (item: any, index: number) => {
-                      if (index === buildStepIndex) {
-                        return {
-                          ...item,
-                          command: "",
-
-                          isCommandCode:
-                            e.target.value === "isCommandCode" ? true : false,
-                        };
-                      }
-                      return item;
-                    }
-                  ),
-                });
-              }
-            }}
-            disabled={formik?.isSubmitting}
-          >
-            <Fragment>
-              <option value="isCommandCode">Command Code</option>
-              <option value="isScriptCode">Script Code</option>
-            </Fragment>
-          </InputSelect>
-        </div>
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Code:
-            <InfoTip content="Type code" />
-          </div>
-          <Editor
-            height="140px"
-            defaultLanguage="shell"
-            defaultValue={
-              formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-                ? formik.values.robotBuildSteps[buildStepIndex]?.command
-                : formik.values.robotBuildSteps[buildStepIndex]?.script
-            }
-            value={
-              formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-                ? formik.values.robotBuildSteps[buildStepIndex]?.command
-                : formik.values.robotBuildSteps[buildStepIndex]?.script
-            }
-            options={{
-              readOnly: formik?.isSubmitting,
-              minimap: {
-                enabled: false,
-              },
-              fontSize: 12,
-              fontFamily: "monospace",
-              lineDecorationsWidth: 10,
-              wordWrap: "on",
-              lineNumbersMinChars: 3,
-              folding: false,
-              padding: {
-                top: 6,
-                bottom: 6,
-              },
-            }}
-            theme="vs-dark"
-            onChange={(e: any) => {
-              formik.setValues({
-                ...formik.values,
-                robotBuildSteps: formik.values.robotBuildSteps.map(
-                  (item: any, index: number) => {
-                    if (index === buildStepIndex) {
-                      return {
-                        ...item,
-                        [formik.values.robotBuildSteps[buildStepIndex]
-                          ?.isCommandCode
-                          ? "command"
-                          : "script"]: e,
-                      };
-                    } else {
-                      return item;
-                    }
-                  }
-                ),
-              });
-            }}
-          />
-          <InputError
-            error={
-              formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-                ? // @ts-ignore
-                  formik?.errors?.robotBuildSteps?.[buildStepIndex]?.command
-                : // @ts-ignore
-                  formik?.errors?.robotBuildSteps?.[buildStepIndex]?.script
-            }
-            touched={true}
-          />
-        </div>
-
-        <CreateRobotFormCodeScope
-          virtualInstanceDisabled={formik?.isSubmitting}
-          physicalInstanceDisabled={formik?.isSubmitting}
-          virtualInstanceChecked={formik.values.robotBuildSteps[
-            buildStepIndex
-          ]?.instancesName?.includes(selectedState?.instance?.name)}
-          physicalInstanceChecked={formik.values.robotBuildSteps[
-            buildStepIndex
-          ]?.instancesName?.includes(robotData?.step1?.physicalInstanceName)}
-          virtualInstanceOnChange={(e) => {
-            formik.setValues((prevValues) => ({
-              ...prevValues,
-              robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
-                if (index === buildStepIndex) {
-                  return {
-                    ...item,
-                    instancesName: e.target.checked
-                      ? [...item.instancesName, selectedState?.instance?.name]
-                      : item.instancesName.filter(
-                          (name) => name !== selectedState?.instance?.name
-                        ),
-                  };
-                }
-                return item;
-              }),
-            }));
-          }}
-          physicalInstanceOnChange={(e) => {
-            formik.setValues((prevValues) => ({
-              ...prevValues,
-              robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
-                if (index === buildStepIndex) {
-                  return {
-                    ...item,
-                    instancesName: e.target.checked
-                      ? [
-                          ...item.instancesName,
-                          robotData?.step1?.physicalInstanceName,
-                        ]
-                      : item.instancesName.filter(
-                          (name) =>
-                            name !== robotData?.step1?.physicalInstanceName
-                        ),
-                  };
-                }
-                return item;
-              }),
-            }));
-          }}
-          isVisiblePhysicalInstanceCheckbox={
-            robotData?.step1?.physicalInstanceName
-          }
-          error={
-            // @ts-ignore
-            formik?.errors?.robotBuildSteps?.[buildStepIndex]?.instancesName
-          }
-        />
-
-        {formik.values?.robotBuildSteps?.length > 1 && (
-          <CreateRobotFormDeleteButton
-            onClick={() => {
-              handleRemoveStepFromBuildStep(formik, buildStepIndex);
-            }}
-            text={`Delete ${
-              buildStep?.name ? buildStep.name : "this"
-            } Build Step`}
-            disabled={formik?.isSubmitting}
-          />
+      <Fragment>
+        {isImportRobot && (
+          <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
+            {tabs.map((tab: any, index: number) => {
+              return (
+                <li
+                  className={`flex flex-col items-center gap-3 cursor-pointer w-full`}
+                  onClick={() => setActiveTab(tab.name)}
+                  key={index}
+                >
+                  <div
+                    className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max ${
+                      !tab?.disabled && "hover:scale-90"
+                    }  ${
+                      tab.name === activeTab
+                        ? "text-layer-primary-500"
+                        : "text-layer-light-500"
+                    } `}
+                  >
+                    <Fragment>
+                      <span>{tab.name}</span>
+                    </Fragment>
+                  </div>
+                  <div
+                    className={`w-full h-[2px] transition-all duration-500 
+                  ${
+                    tab.name === activeTab
+                      ? "bg-layer-primary-500"
+                      : "bg-layer-light-100"
+                  } `}
+                  />
+                </li>
+              );
+            })}
+          </ul>
         )}
-      </div>
+        <div className="flex flex-col gap-4 p-4">
+          {activeTab === "Logs" ? (
+            <div className="h-80">
+              <Terminal value={buildStep?.buildLog || ""} />
+            </div>
+          ) : (
+            <Fragment>
+              <div>
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Build Step Name:
+                  <InfoTip content="Type a unique build step name." />
+                </div>
+                <InputText
+                  {...formik.getFieldProps(
+                    `robotBuildSteps.${buildStepIndex}.name`
+                  )}
+                  className="!text-sm"
+                  disabled={formik?.isSubmitting}
+                />
+                <InputError
+                  error={
+                    // @ts-ignore
+                    formik?.errors?.robotBuildSteps?.[buildStepIndex]?.name
+                  }
+                  touched={
+                    formik?.touched?.robotBuildSteps?.[buildStepIndex]?.name
+                  }
+                />
+              </div>
+
+              <div>
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Workspace:
+                  <InfoTip content="Select a workspace name." />
+                </div>
+                <InputSelect
+                  {...formik.getFieldProps(
+                    `robotBuildSteps.${buildStepIndex}.workspace`
+                  )}
+                  placeholder=""
+                  disabled={formik?.isSubmitting}
+                >
+                  <Fragment>
+                    {!formik?.values?.robotBuildSteps[buildStepIndex]
+                      ?.workspace && <option value=""></option>}
+                    {robotData?.step2?.workspaces?.map(
+                      (workspace: IRobotWorkspace, index: number) => (
+                        <option key={index} value={workspace.name}>
+                          {workspace.name}
+                        </option>
+                      )
+                    )}
+                  </Fragment>
+                </InputSelect>
+                <InputError
+                  error={
+                    // @ts-ignore
+                    formik?.errors?.robotBuildSteps?.[buildStepIndex]?.workspace
+                  }
+                  touched={
+                    formik?.touched?.robotBuildSteps?.[buildStepIndex]
+                      ?.workspace
+                  }
+                />
+              </div>
+
+              <div>
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Command/Script Code:
+                  <InfoTip content="Select command or script code" />
+                </div>
+                <InputSelect
+                  {...formik.getFieldProps(
+                    `robotBuildSteps.${buildStepIndex}.isCommandCode`
+                  )}
+                  value={
+                    formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
+                      ? "isCommandCode"
+                      : "isScriptCode"
+                  }
+                  onChange={(e) => {
+                    if (e.target.value === "isCommandCode") {
+                      formik.setValues({
+                        ...formik.values,
+                        robotBuildSteps: formik.values.robotBuildSteps.map(
+                          (item: any, index: number) => {
+                            if (index === buildStepIndex) {
+                              return {
+                                ...item,
+                                script: "",
+                                isCommandCode:
+                                  e.target.value === "isCommandCode"
+                                    ? true
+                                    : false,
+                              };
+                            }
+                            return item;
+                          }
+                        ),
+                      });
+                    } else {
+                      formik.setValues({
+                        ...formik.values,
+                        robotBuildSteps: formik.values.robotBuildSteps.map(
+                          (item: any, index: number) => {
+                            if (index === buildStepIndex) {
+                              return {
+                                ...item,
+                                command: "",
+
+                                isCommandCode:
+                                  e.target.value === "isCommandCode"
+                                    ? true
+                                    : false,
+                              };
+                            }
+                            return item;
+                          }
+                        ),
+                      });
+                    }
+                  }}
+                  disabled={formik?.isSubmitting}
+                >
+                  <Fragment>
+                    <option value="isCommandCode">Command Code</option>
+                    <option value="isScriptCode">Script Code</option>
+                  </Fragment>
+                </InputSelect>
+              </div>
+              <div>
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Code:
+                  <InfoTip content="Type code" />
+                </div>
+                <Editor
+                  height="140px"
+                  defaultLanguage="shell"
+                  defaultValue={
+                    formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
+                      ? formik.values.robotBuildSteps[buildStepIndex]?.command
+                      : formik.values.robotBuildSteps[buildStepIndex]?.script
+                  }
+                  value={
+                    formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
+                      ? formik.values.robotBuildSteps[buildStepIndex]?.command
+                      : formik.values.robotBuildSteps[buildStepIndex]?.script
+                  }
+                  options={{
+                    readOnly: formik?.isSubmitting,
+                    minimap: {
+                      enabled: false,
+                    },
+                    fontSize: 12,
+                    fontFamily: "monospace",
+                    lineDecorationsWidth: 10,
+                    wordWrap: "on",
+                    lineNumbersMinChars: 3,
+                    folding: false,
+                    padding: {
+                      top: 6,
+                      bottom: 6,
+                    },
+                  }}
+                  theme="vs-dark"
+                  onChange={(e: any) => {
+                    formik.setValues({
+                      ...formik.values,
+                      robotBuildSteps: formik.values.robotBuildSteps.map(
+                        (item: any, index: number) => {
+                          if (index === buildStepIndex) {
+                            return {
+                              ...item,
+                              [formik.values.robotBuildSteps[buildStepIndex]
+                                ?.isCommandCode
+                                ? "command"
+                                : "script"]: e,
+                            };
+                          } else {
+                            return item;
+                          }
+                        }
+                      ),
+                    });
+                  }}
+                />
+                <InputError
+                  error={
+                    formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
+                      ? // @ts-ignore
+                        formik?.errors?.robotBuildSteps?.[buildStepIndex]
+                          ?.command
+                      : // @ts-ignore
+                        formik?.errors?.robotBuildSteps?.[buildStepIndex]
+                          ?.script
+                  }
+                  touched={true}
+                />
+              </div>
+
+              <CreateRobotFormCodeScope
+                virtualInstanceDisabled={formik?.isSubmitting}
+                physicalInstanceDisabled={formik?.isSubmitting}
+                virtualInstanceChecked={formik.values.robotBuildSteps[
+                  buildStepIndex
+                ]?.instancesName?.includes(selectedState?.instance?.name)}
+                physicalInstanceChecked={formik.values.robotBuildSteps[
+                  buildStepIndex
+                ]?.instancesName?.includes(
+                  robotData?.step1?.physicalInstanceName
+                )}
+                virtualInstanceOnChange={(e) => {
+                  formik.setValues((prevValues) => ({
+                    ...prevValues,
+                    robotBuildSteps: prevValues.robotBuildSteps.map(
+                      (item, index) => {
+                        if (index === buildStepIndex) {
+                          return {
+                            ...item,
+                            instancesName: e.target.checked
+                              ? [
+                                  ...item.instancesName,
+                                  selectedState?.instance?.name,
+                                ]
+                              : item.instancesName.filter(
+                                  (name) =>
+                                    name !== selectedState?.instance?.name
+                                ),
+                          };
+                        }
+                        return item;
+                      }
+                    ),
+                  }));
+                }}
+                physicalInstanceOnChange={(e) => {
+                  formik.setValues((prevValues) => ({
+                    ...prevValues,
+                    robotBuildSteps: prevValues.robotBuildSteps.map(
+                      (item, index) => {
+                        if (index === buildStepIndex) {
+                          return {
+                            ...item,
+                            instancesName: e.target.checked
+                              ? [
+                                  ...item.instancesName,
+                                  robotData?.step1?.physicalInstanceName,
+                                ]
+                              : item.instancesName.filter(
+                                  (name) =>
+                                    name !==
+                                    robotData?.step1?.physicalInstanceName
+                                ),
+                          };
+                        }
+                        return item;
+                      }
+                    ),
+                  }));
+                }}
+                isVisiblePhysicalInstanceCheckbox={
+                  robotData?.step1?.physicalInstanceName
+                }
+                error={
+                  // @ts-ignore
+                  formik?.errors?.robotBuildSteps?.[buildStepIndex]
+                    ?.instancesName
+                }
+              />
+
+              {formik.values?.robotBuildSteps?.length > 1 && (
+                <CreateRobotFormDeleteButton
+                  onClick={() => {
+                    handleRemoveStepFromBuildStep(formik, buildStepIndex);
+                  }}
+                  text={`Delete ${
+                    buildStep?.name ? buildStep.name : "this"
+                  } Build Step`}
+                  disabled={formik?.isSubmitting}
+                />
+              )}
+            </Fragment>
+          )}
+        </div>
+      </Fragment>
     </Accordion>
   );
 }

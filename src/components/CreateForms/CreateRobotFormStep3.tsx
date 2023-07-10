@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
@@ -15,6 +15,8 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import Terminal from "../Terminal/Terminal";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -178,7 +180,7 @@ export default function CreateRobotFormStep3({
           : "Please wait while we create your robot. This may take a few minutes."
       }
       isLoading={
-        !responseRobot ||
+        !responseRobot?.robotClusters ||
         responseRobot?.robotClusters?.filter(
           (robotCluster: any) =>
             robotCluster?.robotStatus !== "EnvironmentReady"
@@ -341,71 +343,92 @@ export default function CreateRobotFormStep3({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 animate__animated animate__fadeIn pt-6"
+        className="flex flex-col gap-4 animate__animated animate__fadeIn"
       >
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Build Manager Name:
-            <InfoTip content="Type a new build manager name." />
-          </div>
-          <InputText
-            {...formik.getFieldProps("buildManagerName")}
-            className="!text-sm"
-            disabled={formik?.isSubmitting}
-          />
-          <InputError
-            error={formik.errors.buildManagerName}
-            touched={formik.touched.buildManagerName}
-          />
-        </div>
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Build Steps:
-            <InfoTip content="Build Steps" />
-          </div>
-          <div className="flex flex-col gap-2">
-            {robotData?.step3?.robotBuildSteps?.map(
-              (buildStep: any, buildStepIndex: number) => {
-                return (
-                  <CreateRobotFormBuildStepItem
-                    key={buildStepIndex}
-                    formik={formik}
-                    buildStep={buildStep}
-                    buildStepIndex={buildStepIndex}
-                    stepState={responseBuildManager?.robotClusters.map(
-                      (item: any) => item?.buildManagerStatus
-                    )}
-                    disabled={isImportRobot || formik?.isSubmitting}
-                  />
-                );
+        {isImportRobot && robotData?.step3?.robotBuildSteps?.length === 0 ? (
+          <div className="h-full w-full flex flex-col items-center gap-4">
+            <SidebarInfo
+              text="It seems that you have not configured any build steps for this
+              robot. If you want to configure build steps, please click on the +
+              button below."
+              component={
+                <CreateRobotFormAddButton
+                  onClick={() => handleAddStepToBuildStep(formik)}
+                  disabled={formik?.isSubmitting}
+                />
               }
-            )}
+            />
           </div>
-        </div>
-
-        <CreateRobotFormAddButton
-          onClick={() => handleAddStepToBuildStep(formik)}
-          disabled={formik?.isSubmitting}
-        />
-
-        <Button
-          type="submit"
-          disabled={!formik?.isValid || formik.isSubmitting}
-          className="w-full !h-11 text-xs"
-          text={
-            formik.isSubmitting ? (
-              <img
-                className="w-10 h-10"
-                src="/svg/general/loading.svg"
-                alt="loading"
+        ) : (
+          <Fragment>
+            <div>
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                Build Manager Name:
+                <InfoTip content="Type a new build manager name." />
+              </div>
+              <InputText
+                {...formik.getFieldProps("buildManagerName")}
+                className="!text-sm"
+                disabled={formik?.isSubmitting}
               />
-            ) : isImportRobot ? (
-              `Update Build Configration`
-            ) : (
-              `Next Step`
-            )
-          }
-        />
+              <InputError
+                error={formik.errors.buildManagerName}
+                touched={formik.touched.buildManagerName}
+              />
+            </div>
+
+            <div>
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                Build Steps:
+                <InfoTip content="Build Steps" />
+              </div>
+              <div className="flex flex-col gap-2">
+                {robotData?.step3?.robotBuildSteps?.map(
+                  (buildStep: any, buildStepIndex: number) => {
+                    console.log(buildStep);
+                    return (
+                      <CreateRobotFormBuildStepItem
+                        key={buildStepIndex}
+                        formik={formik}
+                        buildStep={buildStep}
+                        buildStepIndex={buildStepIndex}
+                        stepState={responseBuildManager?.robotClusters?.map(
+                          (item: any) => item?.buildManagerStatus
+                        )}
+                        disabled={isImportRobot || formik?.isSubmitting}
+                        isImportRobot={isImportRobot || false}
+                      />
+                    );
+                  }
+                )}
+              </div>
+            </div>
+
+            <CreateRobotFormAddButton
+              onClick={() => handleAddStepToBuildStep(formik)}
+              disabled={formik?.isSubmitting}
+            />
+
+            <Button
+              type="submit"
+              disabled={!formik?.isValid || formik.isSubmitting}
+              className="w-full !h-11 text-xs"
+              text={
+                formik.isSubmitting ? (
+                  <img
+                    className="w-10 h-10"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
+                  />
+                ) : isImportRobot ? (
+                  `Update Build Configration`
+                ) : (
+                  `Next Step`
+                )
+              }
+            />
+          </Fragment>
+        )}
       </form>
     </CreateRobotFormLoader>
   );

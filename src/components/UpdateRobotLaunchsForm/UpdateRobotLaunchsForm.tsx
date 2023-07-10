@@ -8,6 +8,7 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import StateCell from "../Cells/StateCell";
 import InfoTip from "../InfoTip/InfoTip";
 import useSidebar from "../../hooks/useSidebar";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
   const [isAddedForm, setIsAddedForm] = useState<boolean>(false);
@@ -17,6 +18,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   const url = useParams();
   const { robotData, setRobotData } = useCreateRobot();
   const { selectedState } = useSidebar();
+
   useEffect(() => {
     console.log(responseRobotLaunchManagers);
     if (!responseRobotLaunchManagers) {
@@ -43,6 +45,10 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
     );
   }
 
+  useEffect(() => {
+    console.log(responseRobotLaunchManagers);
+  }, [responseRobotLaunchManagers]);
+
   return (
     <Fragment>
       {!responseRobotLaunchManagers ? (
@@ -53,6 +59,44 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
             alt="Loading..."
           />
           <span className="text-sm text-layer-light-900 pb-4">Loading...</span>
+        </div>
+      ) : url?.robotName && robotData?.step4?.robotLaunchSteps?.length === 0 ? (
+        <div className="h-full w-full flex flex-col items-center gap-4">
+          <SidebarInfo
+            text="It seems that you have not configured any launch steps for this
+              robot. If you want to configure launch steps, please click on the +
+              button below."
+            component={
+              <CreateRobotFormAddButton
+                onClick={() => {
+                  setRobotData((prev: any) => {
+                    return {
+                      ...prev,
+                      step4: {
+                        ...prev.step4,
+                        robotLaunchSteps: [
+                          ...prev.step4.robotLaunchSteps,
+                          {
+                            workspace: "",
+                            entryPointType: "custom",
+                            entryPointCmd: "",
+                            instancesName: [],
+                            robotLmEnvs: [
+                              {
+                                name: "",
+                                value: "",
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    };
+                  });
+                  setIsAddedForm(true);
+                }}
+              />
+            }
+          />
         </div>
       ) : (
         <Fragment>
@@ -81,12 +125,12 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                         </span>
                         <StateCell
                           state={
-                            Array.isArray(step?.robotClusters) &&
-                            step?.robotClusters[0]?.launchManagerStatus
+                            step?.robotClusters?.[0]?.launchManagerStatus ||
+                            "Pending"
                           }
                         />
                       </div>
-                      {step?.robotClusters[1]?.launchManagerStatus && (
+                      {step?.robotClusters?.[1]?.launchManagerStatus && (
                         <div className="flex gap-1.5">
                           <span
                             title={`Launch State of Physical Instance`}
@@ -96,8 +140,8 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                           </span>
                           <StateCell
                             state={
-                              Array.isArray(step?.robotClusters) &&
-                              step?.robotClusters[1]?.launchManagerStatus
+                              step?.robotClusters[1]?.launchManagerStatus ||
+                              "Pending"
                             }
                           />
                         </div>
@@ -111,6 +155,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                     isImportRobot
                     key={index}
                     robotDataLaunchIndex={index}
+                    robotClusters={step?.robotClusters}
                   />
                 </div>
               </UpdateLaunchAccordion>

@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createInstanceApi } from "../api/api";
 import { toast } from "sonner";
-import { IcreateRoboticsCloudRequest } from "../interfaces/roboticsCloudInterfaces";
+import {
+  ICreateRoboticsCloudRequest,
+  IGetRoboticsCloudsRequest,
+} from "../interfaces/roboticsCloudInterfaces";
 
 export const createRoboticsCloud = createAsyncThunk(
   "roboticsCloud/createRoboticsCloud",
-  async (values: IcreateRoboticsCloudRequest) => {
+  async (values: ICreateRoboticsCloudRequest) => {
     const response = await createInstanceApi.createRoboticsCloud({
       name: "roboticsCloud/createRoboticsCloud",
       organizationId: values.organizationId,
@@ -19,7 +22,7 @@ export const createRoboticsCloud = createAsyncThunk(
 
 export const getRoboticsClouds = createAsyncThunk(
   "roboticsCloud/getRoboticsCloudsOfOrganization",
-  async (values: any) => {
+  async (values: IGetRoboticsCloudsRequest) => {
     const response = await createInstanceApi.getRoboticsClouds({
       name: "roboticsCloud/getRoboticsCloudsOfOrganization",
       organizationId: values.organizationId,

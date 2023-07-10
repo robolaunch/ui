@@ -4,7 +4,7 @@ import { SlArrowRight } from "react-icons/sl";
 
 interface IAccordion {
   id: number;
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
   header?: ReactElement | string;
   isOpen: boolean;
   handleOpen: () => void;
