@@ -3,7 +3,6 @@ import GeneralTable from "../Table/GeneralTable";
 import InfoCell from "../Cells/InfoCell";
 import { useParams } from "react-router-dom";
 import BasicCell from "../Cells/BasicCell";
-import Terminal from "../Terminal/Terminal";
 import StateCell from "../Cells/StateCell";
 import LogsCell from "../Cells/LogsCell";
 
@@ -100,7 +99,7 @@ export default function BuildManagerStepsTable({
         },
       },
     ],
-    []
+    [responseBuildManager?.robotClusters, url?.instanceName]
   );
 
   return (

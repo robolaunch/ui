@@ -18,7 +18,6 @@ import { createRobot } from "../../resources/RobotSlice";
 import { SiKubernetes } from "react-icons/si";
 import { BiJoystickButton } from "react-icons/bi";
 import { RxDashboard } from "react-icons/rx";
-import { FaBox } from "react-icons/fa";
 
 interface IRobotHeader {
   responseCurrentOrganization: any;
