@@ -652,8 +652,9 @@ export default ({ children }: any) => {
       })
     ).then((responseRobotLaunchManagers: any) => {
       if (
-        responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.robotLaunchSteps
+        responseRobotLaunchManagers?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
+          ?.robotLaunchSteps
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {

@@ -1300,6 +1300,30 @@ video {
   width: max-content;
 }
 
+.w-96{
+  width: 24rem;
+}
+
+.w-80{
+  width: 20rem;
+}
+
+.w-\[44rem\]{
+  width: 44rem;
+}
+
+.\!w-\[40rem\]{
+  width: 40rem !important;
+}
+
+.\!w-\[42rem\]{
+  width: 42rem !important;
+}
+
+.\!w-\[46rem\]{
+  width: 46rem !important;
+}
+
 .min-w-\[8rem\]{
   min-width: 8rem;
 }

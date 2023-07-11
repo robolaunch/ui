@@ -17,7 +17,6 @@ import { useAppSelector } from "../../hooks/redux";
 import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
-import Logs from "./Logs/Logs";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -318,7 +317,13 @@ export default function RobotPage(): ReactElement {
             case "ROS Workspaces":
               return <Workspaces />;
             case "K8S Resources":
-              return <K8SResources responseRobot={responseRobot} />;
+              return (
+                <K8SResources
+                  responseRobot={responseRobot}
+                  responseBuildManager={responseBuildManager}
+                  responseLaunchManagers={responseLaunchManagers}
+                />
+              );
             case "Code Editor":
               return (
                 <CodeEditor
@@ -369,8 +374,6 @@ export default function RobotPage(): ReactElement {
                   />
                 </StreamContext>
               );
-            case "Logs":
-              return <Logs />;
             case "Loading":
               return (
                 <div>
