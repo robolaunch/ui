@@ -20,7 +20,7 @@ import useFunctions from "../../hooks/useFunctions";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
-
+  const [isSettedCookies, setIsSettedCookies] = useState<boolean>(false);
   const [topicList, setTopicList] = useState<any>([]);
   const { selectedState } = useSidebar();
   const [ros, setRos] = useState<any>(null);
@@ -245,7 +245,7 @@ export default function RobotPage(): ReactElement {
       ros.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseRobot]);
+  }, [responseRobot, isSettedCookies]);
 
   useEffect(() => {
     if (ros) {
@@ -290,6 +290,9 @@ export default function RobotPage(): ReactElement {
           responseRobot={responseRobot}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}
+          handleSetCookies={() => {
+            setIsSettedCookies(true);
+          }}
         />
       </div>
       <div className="col-span-1">

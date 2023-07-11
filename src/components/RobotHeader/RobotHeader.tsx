@@ -27,6 +27,7 @@ interface IRobotHeader {
   responseRobot: any;
   handleChangeActiveTab: any;
   activeTab: string;
+  handleSetCookies: () => void;
 }
 
 export default function RobotHeader({
@@ -37,6 +38,7 @@ export default function RobotHeader({
   responseRobot,
   handleChangeActiveTab,
   activeTab,
+  handleSetCookies,
 }: IRobotHeader): ReactElement {
   const dispatch = useAppDispatch();
 
@@ -147,9 +149,12 @@ export default function RobotHeader({
           <div className="h-full flex flex-col justify-around">
             {responseRobot?.ideIngressEndpoint && (
               <iframe
-                title="idex"
+                title="gg"
                 className="hidden"
                 src={responseRobot?.ideIngressEndpoint}
+                onLoad={() => {
+                  handleSetCookies();
+                }}
               />
             )}
             <span className="text-lg font-medium">{url?.robotName}</span>

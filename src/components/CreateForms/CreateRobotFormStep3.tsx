@@ -16,7 +16,6 @@ import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import Terminal from "../Terminal/Terminal";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
