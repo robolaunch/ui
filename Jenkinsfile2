@@ -74,7 +74,7 @@ pipeline {
     stage('Docker Build') {
       steps {
         container('docker') {
-          sh "docker build -t robolaunchio/ui-httpd:${env.VER} ."
+          sh "docker build -t robolaunchio/ui-demo-httpd:${env.VER} ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
