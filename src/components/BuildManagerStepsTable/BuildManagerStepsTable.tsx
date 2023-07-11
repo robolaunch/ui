@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import BasicCell from "../Cells/BasicCell";
 import Terminal from "../Terminal/Terminal";
 import StateCell from "../Cells/StateCell";
+import LogsCell from "../Cells/LogsCell";
 
 interface IBuildManagerStepsTable {
   responseBuildManager: any;
@@ -94,13 +95,8 @@ export default function BuildManagerStepsTable({
         key: "log",
         header: "log",
         align: "right",
-        className: "!w-[46rem]",
         body: (rowData: any) => {
-          return (
-            <div className="float-right h-36 w-[40rem]">
-              <Terminal value={rowData?.log as string} />
-            </div>
-          );
+          return <LogsCell log={rowData?.log} />;
         },
       },
     ],

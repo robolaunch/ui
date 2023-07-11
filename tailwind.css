@@ -40,7 +40,7 @@ progress::-webkit-progress-value {
 }
 
 .p-column-title {
-  @apply !text-xs !text-layer-light-800 !font-semibold !uppercase;
+  @apply !text-[10px] !text-layer-light-800 !font-semibold !uppercase;
 }
 
 th {

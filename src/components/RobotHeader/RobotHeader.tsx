@@ -111,12 +111,6 @@ export default function RobotHeader({
       state: responseRobot?.vdiIngressEndpoint ? true : false,
       disabled: responseRobot?.vdiIngressEndpoint ? false : true,
     },
-    {
-      name: "Logs",
-      icon: <FaBox size={13} />,
-      state: responseRobot ? true : false,
-      disabled: responseRobot ? false : true,
-    },
   ];
 
   function handleSwitchToggle(data: {

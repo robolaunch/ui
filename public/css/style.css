@@ -1099,6 +1099,18 @@ video {
   height: 100vh;
 }
 
+.h-40{
+  height: 10rem;
+}
+
+.h-60{
+  height: 15rem;
+}
+
+.h-96{
+  height: 24rem;
+}
+
 .max-h-\[40rem\]{
   max-height: 40rem;
 }
@@ -1157,6 +1169,10 @@ video {
 
 .\!w-9{
   width: 2.25rem !important;
+}
+
+.\!w-\[46rem\]{
+  width: 46rem !important;
 }
 
 .\!w-fit{
@@ -1300,28 +1316,8 @@ video {
   width: max-content;
 }
 
-.w-96{
-  width: 24rem;
-}
-
-.w-80{
-  width: 20rem;
-}
-
-.w-\[44rem\]{
-  width: 44rem;
-}
-
-.\!w-\[40rem\]{
-  width: 40rem !important;
-}
-
-.\!w-\[42rem\]{
-  width: 42rem !important;
-}
-
-.\!w-\[46rem\]{
-  width: 46rem !important;
+.w-\[50vw\]{
+  width: 50vw;
 }
 
 .min-w-\[8rem\]{
@@ -2380,6 +2376,10 @@ video {
   font-weight: 600;
 }
 
+.font-normal{
+  font-weight: 400;
+}
+
 .uppercase{
   text-transform: uppercase;
 }
@@ -2845,8 +2845,7 @@ progress::-webkit-progress-value{
 }
 
 .p-column-title{
-  font-size: 0.75rem !important;
-  line-height: 1rem !important;
+  font-size: 10px !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
   --tw-text-opacity: 1 !important;

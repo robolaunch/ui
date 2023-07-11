@@ -31,13 +31,13 @@ export default function GeneralTable({
       className="flex flex-col px-4 pt-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn border border-layer-light-200"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
-      <div className="flex px-4 pt-1 pb-8 items-center gap-2">
+      <div className="flex px-4 pt-1 pb-8 items-center gap-3">
         <img
-          className="w-8"
+          className="w-7"
           src={`/svg/general/${type}/${type}-gray.svg`}
           alt=""
         />
-        <h5 className="text-lg font-semibold">{title}</h5>
+        <h5 className="text-base font-medium">{title}</h5>
       </div>
       <DataTable
         className={` ${
