@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
 import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
@@ -11,24 +11,34 @@ interface IRemoteDesktop {
 export default function RemoteDesktop({
   vdiIngressEndpoint,
 }: IRemoteDesktop): ReactElement {
-  console.log(`https://${vdiIngressEndpoint.split("//")[1]}health`);
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
   return (
-    <CardLayout>
-      <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
-            <RemoteDesktopScene isControllerActive={true} />
-          </div>
-          <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
-            <RemoteDesktopTabs />
-          </div>
-        </div>
-      </StreamContext>
-      <HiddenFrames
-        type="vdi"
-        url={`https://${vdiIngressEndpoint.split("//")[1]}health`}
-      />
+    <CardLayout
+      loading={!isSettedCookie}
+      className={`${!isSettedCookie && "h-80"}`}
+    >
+      <Fragment>
+        {isSettedCookie && (
+          <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
+            <div className="grid grid-cols-12">
+              <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
+                <RemoteDesktopScene isControllerActive={true} />
+              </div>
+              <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
+                <RemoteDesktopTabs />
+              </div>
+            </div>
+          </StreamContext>
+        )}
+        <HiddenFrames
+          type="vdi"
+          url={`https://${vdiIngressEndpoint.split("//")[1]}health`}
+          onLoad={() => {
+            setIsSettedCookie(true);
+          }}
+        />
+      </Fragment>
     </CardLayout>
   );
 }
