@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 
 interface IHiddenFrames {
   type: "vdi" | "ros";
@@ -11,6 +11,24 @@ export default function HiddenFrames({
   url,
   onLoad,
 }: IHiddenFrames): ReactElement {
+  const [reload, setReload] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(type, reload);
+
+    const timer = setInterval(() => {
+      type && setReload(true);
+    }, 60000);
+
+    setTimeout(() => {
+      setReload(false);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [type, reload]);
+
   return (
     <Fragment>
       {(() => {
@@ -20,8 +38,12 @@ export default function HiddenFrames({
               <iframe
                 title="vdi"
                 className="hidden"
-                src={url}
-                onLoad={onLoad}
+                src={!reload ? url : ""}
+                onLoad={() => {
+                  setTimeout(() => {
+                    onLoad();
+                  }, 500);
+                }}
               />
             );
           case "ros":
@@ -29,8 +51,12 @@ export default function HiddenFrames({
               <iframe
                 title="ros"
                 className="hidden"
-                src={url}
-                onLoad={onLoad}
+                src={!reload ? url : ""}
+                onLoad={() => {
+                  setTimeout(() => {
+                    onLoad();
+                  }, 500);
+                }}
               />
             );
         }

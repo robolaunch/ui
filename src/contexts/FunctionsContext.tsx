@@ -582,10 +582,29 @@ export default ({ children }: any) => {
         robotName: values?.robotName,
       })
     ).then((responseRobotBuildManager: any) => {
+      console.log("x", responseRobotBuildManager);
       if (
-        responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
+        Array.isArray(responseRobotBuildManager?.payload?.data) &&
+        Array.isArray(
+          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        Array.isArray(
+          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances[0]?.robolaunchFederatedRobots
+        ) &&
+        responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
       ) {
+        console.log(
+          "!",
+          responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
+            ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
+        );
+
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {

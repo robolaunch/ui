@@ -110,9 +110,7 @@ export default function BuildManagerStepsTable({
       title="Build Manager Steps"
       data={data}
       columns={columns}
-      loading={
-        Array.isArray(responseBuildManager?.robotBuildSteps) ? false : true
-      }
+      loading={responseBuildManager === "{}" ? false : true}
     />
   );
 }
