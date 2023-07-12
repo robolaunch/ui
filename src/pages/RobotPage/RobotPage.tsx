@@ -7,7 +7,6 @@ import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import { useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
-import K8SResources from "./K8SResources/K8SResources";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
 import useSidebar from "../../hooks/useSidebar";
@@ -316,14 +315,6 @@ export default function RobotPage(): ReactElement {
               );
             case "ROS Workspaces":
               return <Workspaces />;
-            case "K8S Resources":
-              return (
-                <K8SResources
-                  responseRobot={responseRobot}
-                  responseBuildManager={responseBuildManager}
-                  responseLaunchManagers={responseLaunchManagers}
-                />
-              );
             case "Code Editor":
               return (
                 <CodeEditor

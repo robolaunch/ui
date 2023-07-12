@@ -102,6 +102,8 @@ export default function BuildManagerStepsTable({
     [responseBuildManager?.robotClusters, url?.instanceName]
   );
 
+  console.log("!", responseBuildManager);
+
   return (
     <GeneralTable
       type="buildsmanager"

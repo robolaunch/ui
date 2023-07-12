@@ -15,7 +15,6 @@ import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRobot } from "../../resources/RobotSlice";
-import { SiKubernetes } from "react-icons/si";
 import { BiJoystickButton } from "react-icons/bi";
 import { RxDashboard } from "react-icons/rx";
 
@@ -62,11 +61,6 @@ export default function RobotHeader({
       name: "Overview",
       icon: <MdDashboard size={14} />,
       state: true,
-    },
-    {
-      name: "K8S Resources",
-      icon: <SiKubernetes size={14} />,
-      state: responseRobot ? true : false,
     },
     {
       name: "Task Management",

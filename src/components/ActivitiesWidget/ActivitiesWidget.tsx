@@ -11,32 +11,29 @@ export default function ActivitiesWidget({
 }: IActivitiesWidget): ReactElement {
   const data: any[] = [
     {
-      time: "",
-      description: "Robot is defined.",
-    },
-    {
+      show: responseRobot ? true : false,
       time: "",
       description: "Robot is created.",
     },
     {
+      show: responseRobot ? true : false,
       time: "",
-      description: "Defined workspaces are created.",
+      description: "Workspaces are created.",
     },
-    responseRobot?.ideEnabled && {
+    {
+      show: responseRobot?.ideEnabled,
       time: "",
       description: "IDE is opened.",
     },
-    responseRobot?.bridgeEnabled && {
+    {
+      show: responseRobot?.bridgeEnabled,
       time: "",
       description: "Bridge is opened.",
     },
-    responseRobot?.vdiEnabled && {
+    {
+      show: responseRobot?.vdiEnabled,
       time: "",
       description: "VDI is opened.",
-    },
-    {
-      time: "",
-      description: "Robot is started.",
     },
   ];
 
@@ -70,7 +67,7 @@ export default function ActivitiesWidget({
             );
           })}
         <li className="grid grid-cols-12 gap-2 -mt-5">
-          <span className="col-span-1 text-xs font-medium">{}</span>
+          <span className="col-span-1 text-xs font-medium" />
 
           <div className="col-span-2 justify-center">
             <img
@@ -80,7 +77,7 @@ export default function ActivitiesWidget({
             />
           </div>
 
-          <span className="col-span-9 text-xs font-light"></span>
+          <span className="col-span-9 text-xs font-light" />
         </li>
       </ul>
     </WidgetLayout>

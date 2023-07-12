@@ -1,10 +1,12 @@
 import React, { ReactElement } from "react";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
 import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
+import WorkspacesTable from "../../../components/WorkspacesTable/WorkspacesTable";
+import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/BuildManagerStepsTable";
+import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 interface IOverview {
   responseRobot: any;
   responseBuildManager: any;
@@ -21,12 +23,11 @@ export default function Overview({
   const url = useParams();
 
   return (
-    <div className="grid gap-6 grid-cols-1 lg:grid-rows-2 lg:grid-cols-12 animate__animated animate__fadeIn">
+    <div className="grid gap-6 grid-cols-1 lg:grid-cols-12 animate__animated animate__fadeIn">
       <div className="col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
           subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
-          actiontitle="If you need to quickly control your robot, you can continue here."
           component={
             <Button
               text="Teleoperation of Robot"
@@ -43,13 +44,19 @@ export default function Overview({
           responseLaunchManagers={responseLaunchManagers}
         />
       </div>
-
-      <div className="col-span-3 row-span-2">
+      <div className="col-span-3">
         <ActivitiesWidget responseRobot={responseRobot} />
       </div>
-
-      <div className="col-span-9">
-        <UtilizationWidget title="Robot" />
+      <div className="col-span-full">
+        <WorkspacesTable responseRobot={responseRobot} />
+      </div>
+      <div className="col-span-full">
+        <BuildManagerStepsTable responseBuildManager={responseBuildManager} />
+      </div>
+      <div className="col-span-full">
+        <LaunchManagerStepsTable
+          responseLaunchManagers={responseLaunchManagers}
+        />
       </div>
     </div>
   );

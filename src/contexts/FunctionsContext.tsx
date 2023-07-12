@@ -583,20 +583,8 @@ export default ({ children }: any) => {
       })
     ).then((responseRobotBuildManager: any) => {
       if (
-        Array.isArray(responseRobotBuildManager?.payload?.data) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds
-        ) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
-        ) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots
-        ) &&
-        responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+        responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
@@ -610,7 +598,7 @@ export default ({ children }: any) => {
                 robotBuildSteps:
                   responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.robotBuildSteps,
+                    ?.robotBuildSteps || [],
               },
             };
           });
