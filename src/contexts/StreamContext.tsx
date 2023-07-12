@@ -151,7 +151,8 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
     };
 
     client.current = new WebSocket(
-      vdiIngressEndpoint + "ws?password=admin" || ""
+      vdiIngressEndpoint + "ws?password=admin" || "",
+      ["soap", "wamp"]
     );
 
     client.current.onmessage = (e: any) => {

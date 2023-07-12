@@ -1,5 +1,10 @@
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
@@ -13,6 +18,7 @@ import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
 import StateCell from "../../../components/Cells/StateCell";
 import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseCurrentOrganization, setResponseCurrentOrganization] =
@@ -253,36 +259,30 @@ export default function FleetDashboardPage(): ReactElement {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-4">
-          <InformationWidget
-            title={url?.fleetName || ""}
-            subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
-            component={
-              <Button
-                text="Create a new Robot"
-                className="!w-44 !h-10 !text-xs"
-                onClick={() => {
-                  setSidebarState((prevState: any): any => ({
-                    ...prevState,
-                    isOpen: true,
-                    isCreateMode: false,
-                    page: "robot",
-                  }));
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Robot" />
-        </div>
-        <div className="col-span-12 lg:col-span-3">
-          <CountWidget data={[5, 2, 4, 3]} title="Robot" />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
+    <DashboardLayout
+      widget1={
+        <InformationWidget
+          title={url?.fleetName || ""}
+          subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
+          component={
+            <Button
+              text="Create a new Robot"
+              className="!w-44 !h-10 !text-xs"
+              onClick={() => {
+                setSidebarState((prevState: any): any => ({
+                  ...prevState,
+                  isOpen: true,
+                  isCreateMode: false,
+                  page: "robot",
+                }));
+              }}
+            />
+          }
+        />
+      }
+      widget2={<></>}
+      widget3={<CountWidget data={[5, 2, 4, 3]} title="Robot" />}
+      table={
         <GeneralTable
           type="robot"
           title="Robots"
@@ -294,7 +294,7 @@ export default function FleetDashboardPage(): ReactElement {
             setReload(!reload);
           }}
         />
-      </div>
-    </div>
+      }
+    />
   );
 }

@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
 import CountWidget from "../../../components/CountWidget/CountWidget";
@@ -192,8 +191,6 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     [url, selectedState, reload]
   );
 
-  console.log(responseCurrentInstance);
-
   return (
     <DashboardLayout
       widget1={
@@ -235,18 +232,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                 responseCurrentInstance?.cloudInstanceResource?.memoryUsage ||
                 0,
             },
-            {
-              title: `VGPU (${
-                responseCurrentInstance?.cloudInstanceResource?.vgpuTotal || 0
-              } Core)`,
-              percentage:
-                responseCurrentInstance?.cloudInstanceResource?.vgpuUsage || 0,
-            },
           ]}
         />
       }
-      widget3={<UtilizationWidget title="Robotics Cloud" />}
-      widget4={
+      widget3={
         <CountWidget
           data={{
             series: [
@@ -262,12 +251,14 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               responseFleets?.filter(
                 (fleet: any) => fleet?.fleetStatus === "Ready"
               ).length || 0,
+              0,
             ],
             categories: [
               ["Checking"],
               ["Creating NS"],
               ["Creating DS"],
               ["Ready"],
+              ["Deleting"],
             ],
           }}
           title="Robotics Cloud"

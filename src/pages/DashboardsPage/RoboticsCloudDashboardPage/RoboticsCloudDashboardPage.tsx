@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
@@ -18,6 +17,7 @@ import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
 import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseCurrentOrganization, setResponseCurrentOrganization] =
     useState<any>(undefined);
@@ -218,56 +218,52 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   }, [responseInstances]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-12 lg:col-span-4">
-          <InformationWidget
-            title={url?.roboticsCloudName || ""}
-            subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances. If you need to create a new cloud instance, you can do so by clicking the button below."
-            component={
-              <Button
-                text="Create a new Cloud Instance"
-                className="!w-52 !h-10 !text-xs"
-                onClick={() => {
-                  setSidebarState((prevState: any): any => ({
-                    ...prevState,
-                    isOpen: true,
-                    isCreateMode: false,
-                    page: "instance",
-                    instanceTab: "Cloud Instances",
-                  }));
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Robotics Cloud" />
-        </div>
-        <div className="col-span-12 lg:col-span-3">
-          <CountWidget
-            data={{
-              series: [
-                responseInstances?.filter(
-                  (instance: any) => instance?.instanceState === "pending"
-                )?.length || 0,
-                responseInstances?.filter(
-                  (instance: any) => instance?.instanceState === "running"
-                )?.length || 0,
-                responseInstances?.filter(
-                  (instance: any) => instance?.instanceState === "stopping"
-                )?.length || 0,
-                responseInstances?.filter(
-                  (instance: any) => instance?.instanceState === "stopped"
-                )?.length || 0,
-              ],
-              categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
-            }}
-            title="Robotics Cloud"
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
+    <DashboardLayout
+      widget1={
+        <InformationWidget
+          title={url?.roboticsCloudName || ""}
+          subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances. If you need to create a new cloud instance, you can do so by clicking the button below."
+          component={
+            <Button
+              text="Create a new Cloud Instance"
+              className="!w-52 !h-10 !text-xs"
+              onClick={() => {
+                setSidebarState((prevState: any): any => ({
+                  ...prevState,
+                  isOpen: true,
+                  isCreateMode: false,
+                  page: "instance",
+                  instanceTab: "Cloud Instances",
+                }));
+              }}
+            />
+          }
+        />
+      }
+      widget2={<></>}
+      widget3={
+        <CountWidget
+          data={{
+            series: [
+              responseInstances?.filter(
+                (instance: any) => instance?.instanceState === "pending"
+              )?.length || 0,
+              responseInstances?.filter(
+                (instance: any) => instance?.instanceState === "running"
+              )?.length || 0,
+              responseInstances?.filter(
+                (instance: any) => instance?.instanceState === "stopping"
+              )?.length || 0,
+              responseInstances?.filter(
+                (instance: any) => instance?.instanceState === "stopped"
+              )?.length || 0,
+            ],
+            categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
+          }}
+          title="Robotics Cloud"
+        />
+      }
+      table={
         <GeneralTable
           type="instance"
           title="Cloud Instances"
@@ -279,7 +275,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
             setReload(!reload);
           }}
         />
-      </div>
-    </div>
+      }
+    />
   );
 }

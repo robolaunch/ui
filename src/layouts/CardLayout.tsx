@@ -22,7 +22,7 @@ export default function CardLayout({
               backgroundImage: `url("/svg/general/loading.svg")`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
-              backgroundSize: "10%",
+              backgroundSize: "6.48%",
             }
           : style
       }

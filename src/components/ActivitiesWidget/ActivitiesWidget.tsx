@@ -69,7 +69,7 @@ export default function ActivitiesWidget({
               </li>
             );
           })}
-        <li className="grid grid-cols-12 gap-2">
+        <li className="grid grid-cols-12 gap-2 -mt-5">
           <span className="col-span-1 text-xs font-medium">{}</span>
 
           <div className="col-span-2 justify-center">
@@ -80,9 +80,7 @@ export default function ActivitiesWidget({
             />
           </div>
 
-          <span className="col-span-9 text-xs font-light">
-            {/* {item?.description} */}
-          </span>
+          <span className="col-span-9 text-xs font-light"></span>
         </li>
       </ul>
     </WidgetLayout>

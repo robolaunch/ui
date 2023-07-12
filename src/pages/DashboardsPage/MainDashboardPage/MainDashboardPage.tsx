@@ -1,5 +1,10 @@
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { organizationNameViewer } from "../../../helpers/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
@@ -12,6 +17,7 @@ import { useParams } from "react-router-dom";
 import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import StateCell from "../../../components/Cells/StateCell";
 import { useKeycloak } from "@react-keycloak/web";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -98,42 +104,38 @@ export default function MainDashboardPage(): ReactElement {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-12 lg:col-span-4">
-          <InformationWidget
-            title={`Main Dashboard`}
-            subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. If you need to create a new organization, you can click the button below to create a organization."
-            component={
-              <Button
-                text="Create a new Organization"
-                className="!w-48 !h-10 !text-xs"
-                onClick={() => {
-                  setSidebarState((prevState: any): any => ({
-                    ...prevState,
-                    isOpen: true,
-                    isCreateMode: false,
-                    page: "organization",
-                  }));
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget title="Account" />
-        </div>
-        <div className="hidden lg:block lg:col-span-3">
-          <CountWidget
-            data={{
-              series: [responseOrganizations?.length || 0, 0, 0],
-              categories: [["Ready"], ["Pending"], ["Error"]],
-            }}
-            title="Account"
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
+    <DashboardLayout
+      widget1={
+        <InformationWidget
+          title={`Main Dashboard`}
+          subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. If you need to create a new organization, you can click the button below to create a organization."
+          component={
+            <Button
+              text="Create a new Organization"
+              className="!w-48 !h-10 !text-xs"
+              onClick={() => {
+                setSidebarState((prevState: any): any => ({
+                  ...prevState,
+                  isOpen: true,
+                  isCreateMode: false,
+                  page: "organization",
+                }));
+              }}
+            />
+          }
+        />
+      }
+      widget2={<></>}
+      widget3={
+        <CountWidget
+          data={{
+            series: [0, responseOrganizations?.length || 0, 0],
+            categories: [["Creating"], ["Ready"], ["Deleting"]],
+          }}
+          title="Account"
+        />
+      }
+      table={
         <GeneralTable
           type="organization"
           title="Organizations"
@@ -145,7 +147,7 @@ export default function MainDashboardPage(): ReactElement {
             setReload(!reload);
           }}
         />
-      </div>
-    </div>
+      }
+    />
   );
 }

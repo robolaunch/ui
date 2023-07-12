@@ -27,7 +27,6 @@ interface IRobotHeader {
   responseRobot: any;
   handleChangeActiveTab: any;
   activeTab: string;
-  handleSetCookies: () => void;
 }
 
 export default function RobotHeader({
@@ -38,7 +37,6 @@ export default function RobotHeader({
   responseRobot,
   handleChangeActiveTab,
   activeTab,
-  handleSetCookies,
 }: IRobotHeader): ReactElement {
   const dispatch = useAppDispatch();
 
@@ -46,16 +44,16 @@ export default function RobotHeader({
 
   const resources = {
     virtual: {
-      cpu: "4 Core",
-      gpu: "Nvidia RTX 2080",
-      ram: "16 GB",
-      storage: "100 GB",
+      cpu: `${responseCurrentInstance?.cloudInstanceResource?.cpuTotal} CPU`,
+      gpu: "1T4 GPU",
+      ram: `${responseCurrentInstance?.cloudInstanceResource?.memoryTotal} GB`,
+      storage: `${responseRobot?.storageAmount} GB`,
     },
     physical: {
-      cpu: "4 Core",
-      gpu: "None",
-      ram: "16 GB",
-      storage: "100 GB",
+      cpu: "Null",
+      gpu: "Null",
+      ram: "Null",
+      storage: "Null",
     },
   };
 
@@ -75,6 +73,7 @@ export default function RobotHeader({
       icon: <MdMap size={14} />,
       state: responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
+      hidden: true,
     },
     {
       name: "Teleoperation",
@@ -147,16 +146,6 @@ export default function RobotHeader({
       <Fragment>
         <div className="h-28 flex items-center justify-between">
           <div className="h-full flex flex-col justify-around">
-            {responseRobot?.ideIngressEndpoint && (
-              <iframe
-                title="gg"
-                className="hidden"
-                src={responseRobot?.ideIngressEndpoint}
-                onLoad={() => {
-                  handleSetCookies();
-                }}
-              />
-            )}
             <span className="text-lg font-medium">{url?.robotName}</span>
             <span className="flex gap-2 items-center">
               <AiOutlineTeam size={16} />
@@ -169,13 +158,13 @@ export default function RobotHeader({
               <span className="text-xs font-light">Ankara, Turkiye</span>
             </span>
           </div>
-
           <div className="hidden md:flex text-xs font-medium text-layer-dark-400  gap-8">
             <div className="h-full flex flex-col items-end gap-4">
               <div className="flex gap-2">
                 <div className="flex  items-center rounded-lg p-2">
                   <span>Code Editor</span>
                   <InputToggle
+                    disabled
                     icons={false}
                     checked={responseRobot?.ideIngressEndpoint}
                     onChange={() => {
@@ -190,6 +179,7 @@ export default function RobotHeader({
                 <div className="flex  items-center rounded-lg p-2">
                   <span>ROS2 Bridge</span>
                   <InputToggle
+                    disabled
                     icons={false}
                     checked={responseRobot?.bridgeIngressEndpoint}
                     onChange={() => {
@@ -204,6 +194,7 @@ export default function RobotHeader({
                 <div className="flex  items-center rounded-lg p-2">
                   <span>Remote Desktop</span>
                   <InputToggle
+                    disabled
                     icons={false}
                     checked={responseRobot?.vdiIngressEndpoint}
                     onChange={() => {
@@ -288,7 +279,7 @@ export default function RobotHeader({
               <li
                 className={`flex flex-col gap-3 ${
                   tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
-                }`}
+                } ${tab?.hidden && "!hidden"}`}
                 onClick={() =>
                   tab?.state &&
                   !tab?.disabled &&

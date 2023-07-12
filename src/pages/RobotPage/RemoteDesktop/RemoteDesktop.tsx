@@ -3,6 +3,7 @@ import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDeskt
 import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
 import StreamContext from "../../../contexts/StreamContext.tsx";
+import HiddenFrames from "../../../components/HiddenFrames/HiddenFrames.tsx";
 interface IRemoteDesktop {
   vdiIngressEndpoint: any;
 }
@@ -10,6 +11,8 @@ interface IRemoteDesktop {
 export default function RemoteDesktop({
   vdiIngressEndpoint,
 }: IRemoteDesktop): ReactElement {
+  console.log(`https://${vdiIngressEndpoint.split("//")[1]}health`);
+
   return (
     <CardLayout>
       <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
@@ -22,6 +25,10 @@ export default function RemoteDesktop({
           </div>
         </div>
       </StreamContext>
+      <HiddenFrames
+        type="vdi"
+        url={`https://${vdiIngressEndpoint.split("//")[1]}health`}
+      />
     </CardLayout>
   );
 }

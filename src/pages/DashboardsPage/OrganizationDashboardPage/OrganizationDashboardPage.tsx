@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import UtilizationWidget from "../../../components/UtilizationWidget/UtilizationWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { stringCapitalization } from "../../../helpers/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
@@ -12,13 +11,14 @@ import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
 import StateCell from "../../../components/Cells/StateCell";
 import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 
 export default function OrganizationDashboardPage(): ReactElement {
+  const [reload, setReload] = useState<boolean>(false);
   const { getOrganization, getRoboticsClouds } = useFunctions();
   const { setSidebarState } = useSidebar();
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
-  const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
   const [responseCurrentOrganization, setResponseCurrentOrganization] =
@@ -119,7 +119,6 @@ export default function OrganizationDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          console.log(rowData);
           return <StateCell state={rowData?.state} />;
         },
       },
@@ -139,57 +138,49 @@ export default function OrganizationDashboardPage(): ReactElement {
         },
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [url]
+
+    [reload, url?.organizationName]
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 grid-cols-12">
-        <div className="col-span-12 lg:col-span-4">
-          <InformationWidget
-            title={
-              stringCapitalization({
-                str: url?.organizationName as string,
-              }) || ""
-            }
-            subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
-            component={
-              <Button
-                text="Create a new Robotics Cloud"
-                className="!w-56 !h-10 !text-xs"
-                onClick={() => {
-                  setSidebarState((prevState: any): any => ({
-                    ...prevState,
-                    isOpen: true,
-                    isCreateMode: false,
-                    page: "roboticscloud",
-                  }));
-                }}
-              />
-            }
-          />
-        </div>
-        <div className="col-span-12 lg:col-span-5">
-          <UtilizationWidget
-            title={`${stringCapitalization({
+    <DashboardLayout
+      widget1={
+        <InformationWidget
+          title={
+            stringCapitalization({
               str: url?.organizationName as string,
-            })} Organization`}
-          />
-        </div>
-        <div className="hidden lg:block lg:col-span-3">
-          <CountWidget
-            data={{
-              series: [responseRoboticsClouds?.length || 0, 0, 0],
-              categories: [["Ready"], ["Pending"], ["Error"]],
-            }}
-            title={`${stringCapitalization({
-              str: url?.organizationName as string,
-            })} Organization`}
-          />
-        </div>
-      </div>
-      <div className="grid grid-cols-1">
+            }) || ""
+          }
+          subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
+          component={
+            <Button
+              text="Create a new Robotics Cloud"
+              className="!w-56 !h-10 !text-xs"
+              onClick={() => {
+                setSidebarState((prevState: any): any => ({
+                  ...prevState,
+                  isOpen: true,
+                  isCreateMode: false,
+                  page: "roboticscloud",
+                }));
+              }}
+            />
+          }
+        />
+      }
+      widget2={<></>}
+      widget3={
+        <CountWidget
+          data={{
+            series: [0, responseRoboticsClouds?.length || 0, 0],
+            categories: [["Pending"], ["Ready"], ["Deleting"]],
+          }}
+          title={`${stringCapitalization({
+            str: url?.organizationName as string,
+          })} Organization`}
+        />
+      }
+      table={
         <GeneralTable
           type="roboticscloud"
           title="Robotics Clouds"
@@ -201,7 +192,7 @@ export default function OrganizationDashboardPage(): ReactElement {
             setReload(!reload);
           }}
         />
-      </div>
-    </div>
+      }
+    />
   );
 }
