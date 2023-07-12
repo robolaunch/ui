@@ -6,17 +6,18 @@ import React, {
   useRef,
   useState,
 } from "react";
-import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
 import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
+import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
 import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
 import RosMapImportExport from "../../../components/RosMapImportExport/RosMapImportExport";
-import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
+import RosBarcodeMapItems from "../../../components/RosBarcodeMapItems/RosBarcodeMapItems";
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
-import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
+import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
+import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
 import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
-import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import InputToggle from "../../../components/InputToggle/InputToggle";
 import Accordion from "../../../components/Accordion/Accordion";
 import GridLines from "../../../components/GridLines/GridLines";
@@ -28,7 +29,6 @@ import { CgPlayButtonR } from "react-icons/cg";
 import { BsPlusCircle } from "react-icons/bs";
 import { EditText } from "react-edit-text";
 import ROSLIB from "roslib";
-import RosBarcodeMapItems from "../../../components/RosBarcodeMapItems/RosBarcodeMapItems";
 
 interface ITask {
   ros: any;

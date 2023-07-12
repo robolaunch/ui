@@ -18,6 +18,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { useParams } from "react-router-dom";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -31,6 +32,7 @@ export default function CreateRobotFormStep1({
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
   const { getRobot } = useFunctions();
+  const url = useParams();
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
@@ -47,7 +49,7 @@ export default function CreateRobotFormStep1({
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.roboticsCloud?.region,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.robotName || url?.robotName,
       },
       {
         ifErrorNavigateTo404: false,

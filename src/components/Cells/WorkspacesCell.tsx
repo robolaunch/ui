@@ -8,8 +8,6 @@ interface IWorkspacesCell {
 export default function WorkspacesCell({
   workspaces,
 }: IWorkspacesCell): ReactElement {
-  console.log(workspaces);
-
   return (
     <div className="flex flex-col items-center gap-2">
       {workspaces?.map((workspace: any) => {

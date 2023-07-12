@@ -319,12 +319,11 @@ export default function CreateRobotFormBuildStepItem({
                 <InputError
                   error={
                     formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-                      ? // @ts-ignore
-                        formik?.errors?.robotBuildSteps?.[buildStepIndex]
-                          ?.command
-                      : // @ts-ignore
-                        formik?.errors?.robotBuildSteps?.[buildStepIndex]
-                          ?.script
+                      ? 
+                      // @ts-ignore
+                        formik?.errors?.robotBuildSteps?.[buildStepIndex]?.command
+                      // @ts-ignore
+                      : formik?.errors?.robotBuildSteps?.[buildStepIndex]?.script
                   }
                   touched={true}
                 />
@@ -395,8 +394,7 @@ export default function CreateRobotFormBuildStepItem({
                 }
                 error={
                   // @ts-ignore
-                  formik?.errors?.robotBuildSteps?.[buildStepIndex]
-                    ?.instancesName
+                  formik?.errors?.robotBuildSteps?.[buildStepIndex]?.instancesName
                 }
               />
 

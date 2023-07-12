@@ -102,15 +102,13 @@ export default function BuildManagerStepsTable({
     [responseBuildManager?.robotClusters, url?.instanceName]
   );
 
-  console.log("!", responseBuildManager);
-
   return (
     <GeneralTable
       type="buildsmanager"
       title="Build Manager Steps"
       data={data}
       columns={columns}
-      loading={responseBuildManager === "{}" ? false : true}
+      loading={!responseBuildManager}
     />
   );
 }

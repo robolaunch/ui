@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 
 interface IHiddenFrames {
   type: "vdi" | "ros";
@@ -30,37 +30,17 @@ export default function HiddenFrames({
   }, [type, reload]);
 
   return (
-    <Fragment>
-      {(() => {
-        switch (type) {
-          case "vdi":
-            return (
-              <iframe
-                title="vdi"
-                className="hidden"
-                src={!reload ? url : ""}
-                onLoad={() => {
-                  setTimeout(() => {
-                    onLoad();
-                  }, 500);
-                }}
-              />
-            );
-          case "ros":
-            return (
-              <iframe
-                title="ros"
-                className="hidden"
-                src={!reload ? url : ""}
-                onLoad={() => {
-                  setTimeout(() => {
-                    onLoad();
-                  }, 500);
-                }}
-              />
-            );
-        }
-      })()}
-    </Fragment>
+    <iframe
+      title={type}
+      sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-downloads"
+      allow="microphone; camera; usb; midi; encrypted-media; autoplay; clipboard-write; clipboard-read"
+      className="hidden"
+      src={!reload ? url : ""}
+      onLoad={() => {
+        setTimeout(() => {
+          onLoad();
+        }, 500);
+      }}
+    />
   );
 }

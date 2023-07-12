@@ -5,11 +5,11 @@ export default function VersionViewer() {
   return (
     <div
       onClick={() => {
-        if (process.env.NODE_ENV !== "production") {
+        if (process.env.NODE_ENV === "development") {
           window.location.href = `${process.env.REACT_APP_FRONTEND_URL}${
             window.location.href?.split("3000")[1] || ""
           }`;
-        } else {
+        } else if (process.env.NODE_ENV === "production") {
           window.location.href = `http://localhost:3000${
             window.location.href?.split("robolaunch.cloud")[1] || ""
           }`;

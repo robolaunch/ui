@@ -1,5 +1,4 @@
 import React, { Fragment, ReactElement } from "react";
-import InputToggle from "../InputToggle/InputToggle";
 import { useParams } from "react-router-dom";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiFillCode, AiOutlineTeam } from "react-icons/ai";
@@ -13,10 +12,9 @@ import {
 } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
-import { useAppDispatch } from "../../hooks/redux";
-import { createRobot } from "../../resources/RobotSlice";
 import { BiJoystickButton } from "react-icons/bi";
 import { RxDashboard } from "react-icons/rx";
+import Button from "../Button/Button";
 
 interface IRobotHeader {
   responseCurrentOrganization: any;
@@ -37,8 +35,6 @@ export default function RobotHeader({
   handleChangeActiveTab,
   activeTab,
 }: IRobotHeader): ReactElement {
-  const dispatch = useAppDispatch();
-
   const url = useParams();
 
   const resources = {
@@ -107,34 +103,6 @@ export default function RobotHeader({
     },
   ];
 
-  function handleSwitchToggle(data: {
-    vdi: string | boolean;
-    ide: string | boolean;
-    bridge: string | boolean;
-  }) {
-    dispatch(
-      createRobot({
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
-        instanceId: responseCurrentInstance?.instanceId,
-        region: responseCurrentRoboticsCloud?.region,
-        robotName: responseRobot?.name,
-        fleetName: responseCurrentFleet?.name,
-        physicalInstanceName: responseRobot?.physicalInstanceName,
-        distributions: responseRobot?.distributions,
-        bridgeEnabled: data.bridge ? true : false,
-        ideEnabled: data.ide ? true : false,
-        vdiEnabled: data.vdi ? true : false,
-        vdiSessionCount: responseRobot?.vdiSessionCount,
-        storageAmount: responseRobot?.storageAmount,
-        gpuEnabledForCloudInstance: responseRobot?.gpuEnabledForCloudInstance,
-        workspaces: responseRobot?.robotWorkspaces,
-      })
-    ).then(() => {
-      window.location.reload();
-    });
-  }
-
   return (
     <CardLayout className="pt-6 px-8 !pb-0">
       <Fragment>
@@ -155,8 +123,8 @@ export default function RobotHeader({
           <div className="hidden md:flex text-xs font-medium text-layer-dark-400  gap-8">
             <div className="h-full flex flex-col items-end gap-4">
               <div className="flex gap-2">
-                <div className="flex  items-center rounded-lg p-2">
-                  <span>Code Editor</span>
+                <div className="flex  items-center rounded-lg ">
+                  {/* <span>Code Editor</span>
                   <InputToggle
                     disabled
                     icons={false}
@@ -168,9 +136,20 @@ export default function RobotHeader({
                         bridge: responseRobot?.bridgeIngressEndpoint,
                       });
                     }}
-                  />
+                  /> */}
+
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={responseRobot?.ideIngressEndpoint}
+                  >
+                    <Button
+                      text={"Code Editor"}
+                      className="!h-9 text-xs px-4"
+                    />
+                  </a>
                 </div>
-                <div className="flex  items-center rounded-lg p-2">
+                {/* <div className="flex  items-center rounded-lg p-2">
                   <span>ROS2 Bridge</span>
                   <InputToggle
                     disabled
@@ -184,9 +163,9 @@ export default function RobotHeader({
                       });
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="flex  items-center rounded-lg p-2">
-                  <span>Remote Desktop</span>
+                  {/* <span>Remote Desktop</span>
                   <InputToggle
                     disabled
                     icons={false}
@@ -198,7 +177,20 @@ export default function RobotHeader({
                         bridge: responseRobot?.bridgeIngressEndpoint,
                       });
                     }}
-                  />
+                  /> */}
+
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`https://${
+                      responseRobot?.vdiIngressEndpoint.split("//")[1]
+                    }`}
+                  >
+                    <Button
+                      text={"Remote Desktop"}
+                      className="!h-9 text-xs px-4"
+                    />
+                  </a>
                 </div>
               </div>
 

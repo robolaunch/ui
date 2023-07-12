@@ -22,7 +22,7 @@ export default function TeleoperationControlBar({
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
   return (
-    <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-t-lg z-10 rounded-t">
+    <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-t-lg z-10 rounded-t py-3">
       <div className="flex gap-2">
         <InputSelect
           disabled={isRemoteDesktopStream}
@@ -50,7 +50,7 @@ export default function TeleoperationControlBar({
         />
       </div>
 
-      <div className="flex gap-4">
+      {/* <div className="flex gap-4">
         <div className="flex items-center text-xs font-medium text-layer-light-700">
           <span>CPU: </span>
           <ReactApexChart
@@ -558,7 +558,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-      </div>
+      </div> */}
 
       {handleFullScreen.active ? (
         <button onClick={handleFullScreen.exit}>
