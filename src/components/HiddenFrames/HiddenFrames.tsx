@@ -14,7 +14,7 @@ export default function HiddenFrames({
   const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(type, reload);
+    console.log("renew vdi token");
 
     const timer = setInterval(() => {
       type && setReload(true);
@@ -39,7 +39,7 @@ export default function HiddenFrames({
       onLoad={() => {
         setTimeout(() => {
           onLoad();
-        }, 500);
+        }, 1000);
       }}
     />
   );

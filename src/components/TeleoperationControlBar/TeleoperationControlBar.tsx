@@ -1,6 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
 import InputToggle from "../InputToggle/InputToggle";
-import ReactApexChart from "react-apexcharts";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import InputSelect from "../InputSelect/InputSelect";
 
