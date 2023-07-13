@@ -9,19 +9,18 @@ import { useParams } from "react-router-dom";
 import StreamContext from "../../contexts/StreamContext";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Workspaces from "./Workspaces/Workspaces";
-import useSidebar from "../../hooks/useSidebar";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
 import { useAppSelector } from "../../hooks/redux";
 import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
+import usePages from "../../hooks/usePages";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
 
   const [topicList, setTopicList] = useState<any>([]);
-  const { selectedState } = useSidebar();
   const [ros, setRos] = useState<any>(null);
   const url = useParams();
 
@@ -35,28 +34,25 @@ export default function RobotPage(): ReactElement {
     getLaunchManagers,
   } = useFunctions();
 
-  const [responseCurrentOrganization, setResponseCurrentOrganization] =
-    useState<any>(undefined);
-  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
-    useState<any>(undefined);
-  const [responseCurrentInstance, setResponseCurrentInstance] =
-    useState<any>(undefined);
-  const [responseCurrentFleet, setResponseCurrentFleet] =
-    useState<any>(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
 
+  const { pagesState } = usePages();
+
   useEffect(() => {
-    if (!responseCurrentOrganization) {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
       handleGetOrganization();
-    } else if (!responseCurrentRoboticsCloud) {
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       handleGetRoboticsCloud();
-    } else if (!responseCurrentInstance) {
+    } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
-    } else if (!responseCurrentFleet) {
+    } else if (pagesState?.fleet?.name !== url?.fleetName) {
       handleGetFleet();
     } else if (!responseRobot) {
       handleGetRobot();
@@ -96,13 +92,7 @@ export default function RobotPage(): ReactElement {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    selectedState,
-    url,
-    responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
-  ]);
+  }, [pagesState]);
 
   function handleGetOrganization() {
     getOrganization(
@@ -110,9 +100,9 @@ export default function RobotPage(): ReactElement {
         organizationName: url?.organizationName as string,
       },
       {
-        ifErrorNavigateTo404: !responseCurrentOrganization,
+        ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
-        setResponse: setResponseCurrentOrganization,
+        setPages: true,
       }
     );
   }
@@ -120,13 +110,13 @@ export default function RobotPage(): ReactElement {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
+        organizationId: pagesState?.organization?.organizationId,
         roboticsCloudName: url?.roboticsCloudName as string,
       },
       {
-        ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
+        ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
-        setResponse: setResponseCurrentRoboticsCloud,
+        setPages: true,
       }
     );
   }
@@ -134,15 +124,15 @@ export default function RobotPage(): ReactElement {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
         instanceName: url?.instanceName as string,
-        region: responseCurrentRoboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region,
       },
       {
-        ifErrorNavigateTo404: !responseCurrentInstance,
+        ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
-        setResponse: setResponseCurrentInstance,
+        setPages: true,
       }
     );
   }
@@ -150,16 +140,16 @@ export default function RobotPage(): ReactElement {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
-        instanceId: responseCurrentInstance?.instanceId,
-        region: responseCurrentRoboticsCloud?.region,
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
         fleetName: url?.fleetName as string,
       },
       {
-        ifErrorNavigateTo404: !responseCurrentFleet,
+        ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
-        setResponse: setResponseCurrentFleet,
+        setPages: true,
       }
     );
   }
@@ -167,11 +157,11 @@ export default function RobotPage(): ReactElement {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
-        instanceId: responseCurrentInstance?.instanceId,
-        region: responseCurrentRoboticsCloud?.region,
-        fleetName: responseCurrentFleet?.name,
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },
       {
@@ -185,11 +175,11 @@ export default function RobotPage(): ReactElement {
   function handleGetBuildManager() {
     getBuildManager(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
-        instanceId: responseCurrentInstance?.instanceId,
-        region: responseCurrentRoboticsCloud?.region,
-        fleetName: responseCurrentFleet?.name,
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },
       {
@@ -203,11 +193,12 @@ export default function RobotPage(): ReactElement {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: responseCurrentOrganization?.organizationId,
-        roboticsCloudName: responseCurrentRoboticsCloud?.name,
-        instanceId: responseCurrentInstance?.instanceId,
-        region: responseCurrentRoboticsCloud?.region,
-        fleetName: responseCurrentFleet?.name,
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },
       {
@@ -282,10 +273,10 @@ export default function RobotPage(): ReactElement {
     <div className="grid grid-cols-1 gap-6">
       <div className="col-span-1">
         <RobotHeader
-          responseCurrentOrganization={responseCurrentOrganization}
-          responseCurrentRoboticsCloud={responseCurrentRoboticsCloud}
-          responseCurrentInstance={responseCurrentInstance}
-          responseCurrentFleet={responseCurrentFleet}
+          responseCurrentOrganization={pagesState?.organization}
+          responseCurrentRoboticsCloud={pagesState?.roboticsCloud}
+          responseCurrentInstance={pagesState?.instance}
+          responseCurrentFleet={pagesState?.fleet}
           responseRobot={responseRobot}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}

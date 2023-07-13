@@ -3,7 +3,7 @@ import FunctionsContext from "../contexts/FunctionsContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import SidebarContext from "../contexts/SidebarContext";
 import GithubContext from "../contexts/GithubContext";
-import PageContext from "../contexts/PageContext";
+import PageContext from "../contexts/PagesContext";
 import PrivateLayout from "../layouts/PrivateLayout";
 import React, { ReactElement } from "react";
 import keycloak from "../api/keycloak";

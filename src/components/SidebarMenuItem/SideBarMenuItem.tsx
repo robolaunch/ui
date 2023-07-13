@@ -7,11 +7,13 @@ import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToo
 interface ISideBarMenuItem {
   type: string;
   description?: string;
+  loading?: boolean;
 }
 
 export default function SideBarMenuItem({
   type,
   description,
+  loading,
 }: ISideBarMenuItem) {
   const [isHover, setIsHover] = useState<boolean>(false);
   const { theme } = useTheme();
@@ -48,7 +50,6 @@ export default function SideBarMenuItem({
           }
           break;
       }
-
       return "gray";
     } else {
       return "white";
@@ -70,28 +71,45 @@ export default function SideBarMenuItem({
 
     if (sidebarState?.page !== type) {
       setSidebarState((prevState: any) => {
-        return { ...prevState, page: type, isOpen: true };
+        return { ...prevState, page: type, isOpen: true, isCreateMode: false };
       });
     } else {
       setSidebarState((prevState: any) => {
-        return { ...prevState, page: undefined, isOpen: false };
+        return {
+          ...prevState,
+          page: undefined,
+          isOpen: false,
+          isCreateMode: false,
+          instanceTab: "Cloud Instances",
+        };
       });
     }
   }
 
   return (
     <div
-      onClick={() => handleClick()}
-      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft`}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      onClick={() => !loading && handleClick()}
+      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft ${
+        loading && "!cursor-not-allowed"
+      }`}
+      onMouseEnter={() => !loading && setIsHover(true)}
+      onMouseLeave={() => !loading && setIsHover(false)}
     >
-      <img
-        draggable="false"
-        className="w-10 animate__animated animate__fadeInLeft"
-        src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
-        alt="Robolaunch"
-      />
+      {loading ? (
+        <img
+          draggable="false"
+          className="w-10 animate__animated animate__fadeInLeft"
+          src={`/svg/general/loading.svg`}
+          alt="Robolaunch"
+        />
+      ) : (
+        <img
+          draggable="false"
+          className="w-10 animate__animated animate__fadeInLeft"
+          src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
+          alt="Robolaunch"
+        />
+      )}
       {isHover && (
         <SidebarMenuItemToolTip
           title={

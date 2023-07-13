@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
@@ -13,22 +7,14 @@ import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useSidebar from "../../../hooks/useSidebar";
 import BasicCell from "../../../components/Cells/BasicCell";
-
 import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
 import StateCell from "../../../components/Cells/StateCell";
 import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import usePages from "../../../hooks/usePages";
 
 export default function FleetDashboardPage(): ReactElement {
-  const [responseCurrentOrganization, setResponseCurrentOrganization] =
-    useState<any>(undefined);
-  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
-    useState<any>(undefined);
-  const [responseCurrentInstance, setResponseCurrentInstance] =
-    useState<any>(undefined);
-  const [responseCurrentFleet, setResponseCurrentFleet] =
-    useState<any>(undefined);
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
   const { selectedState, setSidebarState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
@@ -42,67 +28,72 @@ export default function FleetDashboardPage(): ReactElement {
     getRobots,
   } = useFunctions();
 
+  const { pagesState } = usePages();
+
   useEffect(() => {
-    if (!responseCurrentOrganization) {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
       getOrganization(
         {
           organizationName: url?.organizationName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentOrganization,
-          setResponse: setResponseCurrentOrganization,
+          ifErrorNavigateTo404: !responseRobots,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentRoboticsCloud) {
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       getRoboticsCloud(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
+          organizationId: pagesState?.organization?.organizationId,
           roboticsCloudName: url?.roboticsCloudName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
-          setResponse: setResponseCurrentRoboticsCloud,
+          ifErrorNavigateTo404: !responseRobots,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentInstance) {
+    } else if (pagesState?.instance?.name !== url?.instanceName) {
       getInstance(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
-          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          organizationId: pagesState?.organization?.organizationId,
+          roboticsCloudName: pagesState?.roboticsCloud?.name,
           instanceName: url?.instanceName as string,
-          region: responseCurrentRoboticsCloud?.region,
+          region: pagesState?.roboticsCloud?.region,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentInstance,
-          setResponse: setResponseCurrentInstance,
+          ifErrorNavigateTo404: !responseRobots,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentFleet) {
+    } else if (pagesState?.fleet?.name !== url?.fleetName) {
       getFleet(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
-          roboticsCloudName: responseCurrentRoboticsCloud?.name,
-          instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentRoboticsCloud?.region,
+          organizationId: pagesState?.organization?.organizationId,
+          roboticsCloudName: pagesState?.roboticsCloud?.name,
+          instanceId: pagesState?.instance?.instanceId,
+          region: pagesState?.roboticsCloud?.region,
           fleetName: url?.fleetName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentFleet,
-          setResponse: setResponseCurrentFleet,
+          ifErrorNavigateTo404: !responseRobots,
+          setPages: true,
         }
       );
     } else {
       getRobots(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
-          roboticsCloudName: responseCurrentRoboticsCloud?.name,
-          instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentRoboticsCloud?.region,
-          fleetName: responseCurrentFleet?.name,
+          organizationId: pagesState?.organization?.organizationId,
+          roboticsCloudName: pagesState?.roboticsCloud?.name,
+          instanceId: pagesState?.instance?.instanceId,
+          region: pagesState?.roboticsCloud?.region,
+          fleetName: pagesState?.fleet?.name,
         },
         {
           ifErrorNavigateTo404: !responseRobots,
@@ -119,11 +110,11 @@ export default function FleetDashboardPage(): ReactElement {
       setInterval(() => {
         getRobots(
           {
-            organizationId: responseCurrentOrganization?.organizationId,
-            roboticsCloudName: responseCurrentRoboticsCloud?.name,
-            instanceId: responseCurrentInstance?.instanceId,
-            region: responseCurrentRoboticsCloud?.region,
-            fleetName: responseCurrentFleet?.name,
+            organizationId: pagesState?.organization?.organizationId,
+            roboticsCloudName: pagesState?.roboticsCloud?.name,
+            instanceId: pagesState?.instance?.instanceId,
+            region: pagesState?.roboticsCloud?.region,
+            fleetName: pagesState?.fleet?.name,
           },
           {
             ifErrorNavigateTo404: !responseRobots,
@@ -136,14 +127,7 @@ export default function FleetDashboardPage(): ReactElement {
       clearInterval(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    responseCurrentOrganization,
-    responseCurrentRoboticsCloud,
-    responseCurrentInstance,
-    responseCurrentFleet,
-    url,
-    reload,
-  ]);
+  }, [pagesState, url, reload]);
 
   const data: any = useMemo(
     () =>
@@ -281,7 +265,45 @@ export default function FleetDashboardPage(): ReactElement {
         />
       }
       widget2={<></>}
-      widget3={<CountWidget data={[5, 2, 4, 3]} title="Robot" />}
+      widget3={
+        <CountWidget
+          data={{
+            series: [
+              responseRobots?.filter(
+                (robot: any) =>
+                  robot?.robotClusters[0]?.robotStatus ===
+                    "CreatingEnvironment" ||
+                  robot?.robotClusters[0]?.robotStatus ===
+                    "CreatingDevelopmentSuite"
+              )?.length || 0,
+              responseRobots?.filter(
+                (robot: any) =>
+                  robot?.robotClusters[0]?.robotStatus === "BuildingRobot"
+              )?.length || 0,
+              responseRobots?.filter(
+                (robot: any) =>
+                  robot?.robotClusters[0]?.robotStatus === "Launching"
+              )?.length || 0,
+              responseRobots?.filter(
+                (robot: any) =>
+                  robot?.robotClusters[0]?.robotStatus === "EnvironmentReady"
+              )?.length || 0,
+              responseRobots?.filter(
+                (robot: any) =>
+                  robot?.robotClusters[0]?.robotStatus === "Deleting"
+              )?.length || 0,
+            ],
+            categories: [
+              "Creating",
+              "Building",
+              "Launching",
+              "Ready",
+              "Deleting",
+            ],
+          }}
+          title="Robot"
+        />
+      }
       table={
         <GeneralTable
           type="robot"

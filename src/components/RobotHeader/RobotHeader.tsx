@@ -233,7 +233,17 @@ export default function RobotHeader({
                   <div className="col-span-1 flex items-center gap-2">
                     <BsFillCpuFill size={16} color="#666666" />
                     <span className="text-xs font-light">
-                      {resources?.virtual?.cpu}
+                      {resources?.virtual?.cpu || (
+                        <ContentLoader
+                          speed={1}
+                          width={92}
+                          height={12}
+                          backgroundColor="#f6f6ef"
+                          foregroundColor="#e8e8e3"
+                        >
+                          <rect width="92" height="12" />
+                        </ContentLoader>
+                      )}
                     </span>
                   </div>
                   <div className="col-span-1 flex items-center gap-2">

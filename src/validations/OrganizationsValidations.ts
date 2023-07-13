@@ -3,10 +3,9 @@ import * as Yup from "yup";
 export const createOrganizationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Organization name is required.")
-    .matches(
-      /^[a-z0-9-]{8,24}$/,
-      "Minimum 8 to 24 characters, lowercase letters, numbers and hyphens only."
-    ),
+    .min(3, "Minimum 3 characters.")
+    .max(12, "Maximum 12 characters.")
+    .lowercase("Must be lowercase."),
 });
 
 export const renameOrganizationSchema = Yup.object().shape({

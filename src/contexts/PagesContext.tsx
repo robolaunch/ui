@@ -1,10 +1,11 @@
 import React, { createContext, useState } from "react";
+import { IpagesState } from "../interfaces/usePagesInterfaces";
 
-export const PageContext: any = createContext<any>(null);
+export const PagesContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const [pageState, setPageState] = useState<any>({
+  const [pagesState, setPagesState] = useState<IpagesState>({
     organization: null,
     roboticsCloud: null,
     instance: null,
@@ -12,13 +13,13 @@ export default ({ children }: any) => {
   });
 
   return (
-    <PageContext.Provider
+    <PagesContext.Provider
       value={{
-        pageState,
-        setPageState,
+        pagesState,
+        setPagesState,
       }}
     >
       {children}
-    </PageContext.Provider>
+    </PagesContext.Provider>
   );
 };

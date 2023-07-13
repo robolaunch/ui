@@ -35,6 +35,7 @@ import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useSidebar from "../hooks/useSidebar";
 import { toast } from "sonner";
+import usePages from "../hooks/usePages";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -44,6 +45,7 @@ export default ({ children }: any) => {
   const { setSelectedState } = useSidebar();
   const navigate = useNavigate();
   const { setRobotData } = useCreateRobot();
+  const { pagesState, setPagesState } = usePages();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
     dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
@@ -94,6 +96,17 @@ export default ({ children }: any) => {
                 `org_${values?.organizationName}`
             )
           );
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              organization: organizationsResponse?.payload?.data?.find(
+                (organization: any) =>
+                  organization?.organizationName ===
+                  `org_${values?.organizationName}`
+              ),
+            };
+          });
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -163,6 +176,34 @@ export default ({ children }: any) => {
                 roboticsCloud?.name === values?.roboticsCloudName
             ) || {}
           );
+
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              roboticsCloud:
+                responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
+                  (roboticsCloud: any) =>
+                    roboticsCloud?.name === values?.roboticsCloudName
+                ) || {},
+            };
+          });
+
+        if (
+          parameters?.setPages &&
+          pagesState?.roboticsCloud?.name !== values?.roboticsCloudName
+        ) {
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              roboticsCloud:
+                responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
+                  (roboticsCloud: any) =>
+                    roboticsCloud?.name === values?.roboticsCloudName
+                ) || {},
+            };
+          });
+        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -280,6 +321,17 @@ export default ({ children }: any) => {
               (instance: any) => instance?.name === values?.instanceName
             ) || {}
           );
+
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              instance:
+                responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
+                  (instance: any) => instance?.name === values?.instanceName
+                ) || {},
+            };
+          });
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -370,6 +422,17 @@ export default ({ children }: any) => {
               (fleet: any) => fleet?.name === values?.fleetName
             ) || {}
           );
+
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              fleet:
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                  (fleet: any) => fleet?.name === values?.fleetName
+                ) || {},
+            };
+          });
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});

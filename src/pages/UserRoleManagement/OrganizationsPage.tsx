@@ -78,6 +78,7 @@ export default function OrganizationsPage({
                 })
               }
               data={rowData?.name}
+              reload={() => {}}
             />
           );
         },

@@ -818,10 +818,6 @@ video {
   grid-column: 1 / -1;
 }
 
-.row-span-2{
-  grid-row: span 2 / span 2;
-}
-
 .float-right{
   float: right;
 }
@@ -857,6 +853,10 @@ video {
 
 .-mt-4{
   margin-top: -1rem;
+}
+
+.-mt-5{
+  margin-top: -1.25rem;
 }
 
 .mb-2{
@@ -915,10 +915,6 @@ video {
   margin-top: 0.1rem;
 }
 
-.-mt-5{
-  margin-top: -1.25rem;
-}
-
 .block{
   display: block;
 }
@@ -943,12 +939,12 @@ video {
   display: contents;
 }
 
-.hidden{
-  display: none;
-}
-
 .\!hidden{
   display: none !important;
+}
+
+.hidden{
+  display: none;
 }
 
 .\!h-10{
@@ -1109,10 +1105,6 @@ video {
 
 .h-screen{
   height: 100vh;
-}
-
-.h-40{
-  height: 10rem;
 }
 
 .max-h-\[40rem\]{
@@ -1487,6 +1479,14 @@ video {
   cursor: pointer;
 }
 
+.\!cursor-not-allowed{
+  cursor: not-allowed !important;
+}
+
+.\!cursor-pointer{
+  cursor: pointer !important;
+}
+
 .resize{
   resize: both;
 }
@@ -1677,6 +1677,11 @@ video {
 .rounded-t-lg{
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+}
+
+.rounded-l-lg{
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 .\!border{
@@ -1874,6 +1879,26 @@ video {
 .border-yellow-500{
   --tw-border-opacity: 1;
   border-color: rgb(234 179 8 / var(--tw-border-opacity));
+}
+
+.border-layer-light-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(173 173 173 / var(--tw-border-opacity));
+}
+
+.border-layer-light-700{
+  --tw-border-opacity: 1;
+  border-color: rgb(112 112 112 / var(--tw-border-opacity));
+}
+
+.border-layer-secondary-200{
+  --tw-border-opacity: 1;
+  border-color: rgb(185 228 254 / var(--tw-border-opacity));
+}
+
+.border-layer-light-50{
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
 .\!bg-layer-light-50{
@@ -3135,6 +3160,26 @@ td{
   border-color: rgb(53 184 250 / var(--tw-border-opacity));
 }
 
+.hover\:border-layer-light-300:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(194 194 194 / var(--tw-border-opacity));
+}
+
+.hover\:border-layer-light-400:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(173 173 173 / var(--tw-border-opacity));
+}
+
+.hover\:border-layer-light-600:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(133 133 133 / var(--tw-border-opacity));
+}
+
+.hover\:border-layer-light-500:hover{
+  --tw-border-opacity: 1;
+  border-color: rgb(153 153 153 / var(--tw-border-opacity));
+}
+
 .hover\:\!bg-layer-light-100:hover{
   --tw-bg-opacity: 1 !important;
   background-color: rgb(235 235 235 / var(--tw-bg-opacity)) !important;
@@ -3193,6 +3238,21 @@ td{
 .hover\:bg-red-500:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-layer-light-400:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(173 173 173 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-layer-light-300:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(194 194 194 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-layer-light-500:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 153 153 / var(--tw-bg-opacity));
 }
 
 .hover\:text-layer-light-50:hover{
@@ -3268,10 +3328,6 @@ td{
 }
 
 @media (min-width: 768px){
-  .md\:col-span-12{
-    grid-column: span 12 / span 12;
-  }
-
   .md\:col-span-5{
     grid-column: span 5 / span 5;
   }
@@ -3302,10 +3358,6 @@ td{
     grid-column: span 8 / span 8;
   }
 
-  .lg\:block{
-    display: block;
-  }
-
   .lg\:flex{
     display: flex;
   }
@@ -3322,24 +3374,12 @@ td{
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  .lg\:grid-rows-2{
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
-
   .lg\:p-6{
     padding: 1.5rem;
   }
 }
 
 @media (min-width: 1280px){
-  .xl\:order-3{
-    order: 3;
-  }
-
-  .xl\:order-4{
-    order: 4;
-  }
-
   .xl\:col-span-3{
     grid-column: span 3 / span 3;
   }
@@ -3348,16 +3388,8 @@ td{
     grid-column: span 7 / span 7;
   }
 
-  .xl\:col-span-8{
-    grid-column: span 8 / span 8;
-  }
-
   .xl\:col-span-9{
     grid-column: span 9 / span 9;
-  }
-
-  .xl\:col-span-full{
-    grid-column: 1 / -1;
   }
 
   .xl\:p-2{
@@ -3372,14 +3404,6 @@ td{
 
   .\32xl\:col-span-2{
     grid-column: span 2 / span 2;
-  }
-
-  .\32xl\:col-span-5{
-    grid-column: span 5 / span 5;
-  }
-
-  .\32xl\:col-span-6{
-    grid-column: span 6 / span 6;
   }
 
   .\32xl\:col-span-8{

@@ -2,8 +2,9 @@ import * as Yup from "yup";
 
 export const createRoboticsCloudSchema = Yup.object().shape({
   roboticsCloudName: Yup.string()
-    .min(3, "Text must be at least 3 characters long")
-    .max(12, "Text must be at most 12 characters long"),
+    .required("Roıbotics Cloud name is required.")
+    .min(3, "Minimum 3 characters.")
+    .max(12, "Maximum 12 characters."),
   provider: Yup.string().required("Provider is required"),
   region: Yup.string().required("Region is required"),
 });

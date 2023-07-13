@@ -2,6 +2,7 @@ export interface IsingleGetParameters {
   isSetState?: boolean;
   ifErrorNavigateTo404?: boolean;
   setResponse?: any;
+  setPages?: boolean;
 }
 
 export interface ImultipleGetParameters {

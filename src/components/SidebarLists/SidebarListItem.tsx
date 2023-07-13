@@ -118,26 +118,24 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`flex cursor-pointer animate__animated animate__fadeIn shadow border rounded-lg hover:scale-[0.98] ${
+      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.98] ${
         selected
-          ? "border-layer-secondary-300 hover:border-layer-secondary-400"
-          : "border-layer-primary-300 hover:border-layer-primary-400"
+          ? "bg-layer-light-100 border-layer-light-400 shadow"
+          : "bg-layer-light-50 border-layer-light-200 shadow-sm"
       } transition-300`}
     >
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full flex p-3 gap-4 border-r transition-300 ${
+        className={`w-full flex p-3 gap-4 rounded-l-lg border-r transition-300 ${
           selected
-            ? "bg-layer-secondary-200 border-layer-secondary-600 hover:bg-layer-secondary-300"
-            : "bg-layer-primary-200 border-layer-primary-600 hover:bg-layer-primary-300"
+            ? "hover:bg-layer-light-200 border-layer-light-400"
+            : "hover:bg-layer-light-100 border-layer-light-200"
         } ${notSelectable && "!border-0"}`}
       >
         <img
           draggable="false"
           className="w-8"
-          src={`/svg/general/${type}/${type}-${
-            selected ? "blue" : "purple"
-          }.svg`}
+          src={`/svg/general/${type}/${type}-${selected ? "blue" : "gray"}.svg`}
           alt=""
         />
         <div className="flex flex-col gap-1">
@@ -182,13 +180,13 @@ export default function SidebarListItem({
           }}
           className={`flex items-center justify-center px-4 rounded-r-lg transition-300 ${
             selected
-              ? "bg-layer-secondary-200 hover:bg-layer-secondary-300"
-              : "bg-layer-primary-200 hover:bg-layer-primary-300"
+              ? "hover:bg-layer-light-200 border-layer-light-400"
+              : "hover:bg-layer-light-100 border-layer-light-100"
           } `}
         >
           <i
             className={`pi pi-angle-right transition-300 ${
-              selected ? "text-layer-secondary-700" : "text-layer-primary-700"
+              selected ? "text-layer-light-900" : "text-layer-light-700"
             }`}
             style={{ fontSize: "1.25rem" }}
           />

@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
@@ -6,10 +6,18 @@ import { Link, useParams } from "react-router-dom";
 import useSidebar from "../../hooks/useSidebar";
 
 export default function Sidebar(): ReactElement {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { sidebarState } = useSidebar();
   const url = useParams();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+  }, [url?.robotName]);
+
   return (
-    <>
+    <Fragment>
       <div className="fixed flex flex-col items-center gap-4 h-screen w-20 py-2 bg-layer-light-50 shadow-2xl z-40 animate__animated animate__fadeInLeft">
         <Link to={`/`}>
           <img
@@ -39,19 +47,23 @@ export default function Sidebar(): ReactElement {
                 <SideBarMenuItem
                   type="robot"
                   description="You can access all your robots here."
+                  loading={isLoading}
                 />
                 <SideBarMenuItem
                   type="workspacesmanager"
                   description="You can access all your workspaces here."
+                  loading={isLoading}
                 />
 
                 <SideBarMenuItem
                   type="buildsmanager"
                   description="You can access all your builds here."
+                  loading={isLoading}
                 />
                 <SideBarMenuItem
                   type="launchsmanager"
                   description="You can access all your launches here."
+                  loading={isLoading}
                 />
               </Fragment>
             ) : (
@@ -96,6 +108,6 @@ export default function Sidebar(): ReactElement {
         </div>
       </div>
       {sidebarState?.isOpen && <SidebarContentLayout />}
-    </>
+    </Fragment>
   );
 }

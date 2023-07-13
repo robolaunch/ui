@@ -18,11 +18,8 @@ import useSidebar from "../../../hooks/useSidebar";
 import useFunctions from "../../../hooks/useFunctions";
 import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import usePages from "../../../hooks/usePages";
 export default function RoboticsCloudDashboardPage(): ReactElement {
-  const [responseCurrentOrganization, setResponseCurrentOrganization] =
-    useState<any>(undefined);
-  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
-    useState<any>(undefined);
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
@@ -30,37 +27,41 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   const { setSidebarState, selectedState } = useSidebar();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
+  const { pagesState } = usePages();
 
   useEffect(() => {
-    if (!responseCurrentOrganization) {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
       getOrganization(
         {
           organizationName: url?.organizationName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentOrganization,
-          setResponse: setResponseCurrentOrganization,
+          ifErrorNavigateTo404: !responseInstances,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentRoboticsCloud) {
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       getRoboticsCloud(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
+          organizationId: pagesState?.organization?.organizationId,
           roboticsCloudName: url?.roboticsCloudName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
-          setResponse: setResponseCurrentRoboticsCloud,
+          ifErrorNavigateTo404: !responseInstances,
+          setPages: true,
         }
       );
     } else {
       getInstances(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
+          organizationId: pagesState?.organization?.organizationId,
           roboticsCloudName: url?.roboticsCloudName as string,
-          region: responseCurrentRoboticsCloud?.region,
+          region: pagesState?.roboticsCloud?.region,
         },
         {
           setResponse: setResponseInstances,
@@ -75,9 +76,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       setInterval(() => {
         getInstances(
           {
-            organizationId: responseCurrentOrganization?.organizationId,
+            organizationId: pagesState?.organization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName as string,
-            region: responseCurrentRoboticsCloud?.region,
+            region: pagesState?.roboticsCloud?.region,
           },
           {
             setResponse: setResponseInstances,
@@ -91,7 +92,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseCurrentOrganization, responseCurrentRoboticsCloud, url, reload]);
+  }, [pagesState, url, reload]);
 
   const data: any = useMemo(
     () =>

@@ -9,70 +9,68 @@ import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import useSidebar from "../../../hooks/useSidebar";
-
 import useFunctions from "../../../hooks/useFunctions";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import usePages from "../../../hooks/usePages";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
-  const [responseCurrentOrganization, setResponseCurrentOrganization] =
-    useState<any>(undefined);
-  const [responseCurrentRoboticsCloud, setResponseCurrentRoboticsCloud] =
-    useState<any>(undefined);
-  const [responseCurrentInstance, setResponseCurrentInstance] =
-    useState<any>(undefined);
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const { setSidebarState, selectedState } = useSidebar();
   const { getOrganization, getRoboticsCloud, getInstance, getFleets } =
     useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
+  const { pagesState } = usePages();
 
   useEffect(() => {
-    if (!responseCurrentOrganization) {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
       getOrganization(
         {
           organizationName: url?.organizationName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentOrganization,
-          setResponse: setResponseCurrentOrganization,
+          ifErrorNavigateTo404: !responseFleets,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentRoboticsCloud) {
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       getRoboticsCloud(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
+          organizationId: pagesState?.organization?.organizationId,
           roboticsCloudName: url?.roboticsCloudName as string,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentRoboticsCloud,
-          setResponse: setResponseCurrentRoboticsCloud,
+          ifErrorNavigateTo404: !responseFleets,
+          setPages: true,
         }
       );
-    } else if (!responseCurrentInstance) {
+    } else if (pagesState?.instance?.name !== url?.instanceName) {
       getInstance(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
-          roboticsCloudName: responseCurrentRoboticsCloud?.name,
+          organizationId: pagesState?.organization?.organizationId,
+          roboticsCloudName: pagesState?.roboticsCloud?.name,
           instanceName: url?.instanceName as string,
-          region: responseCurrentRoboticsCloud?.region,
+          region: pagesState?.roboticsCloud?.region,
         },
         {
           isSetState: true,
-          ifErrorNavigateTo404: !responseCurrentInstance,
-          setResponse: setResponseCurrentInstance,
+          ifErrorNavigateTo404: !responseFleets,
+          setPages: true,
         }
       );
     } else {
       getFleets(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
-          roboticsCloudName: responseCurrentRoboticsCloud?.name,
-          instanceId: responseCurrentInstance?.instanceId,
-          region: responseCurrentRoboticsCloud?.region,
+          organizationId: pagesState?.organization?.organizationId,
+          roboticsCloudName: pagesState?.roboticsCloud?.name,
+          instanceId: pagesState?.instance?.instanceId,
+          region: pagesState?.roboticsCloud?.region,
         },
         {
           ifErrorNavigateTo404: !responseFleets,
@@ -81,40 +79,30 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       );
     }
 
-    const timer =
-      responseCurrentOrganization &&
-      responseCurrentRoboticsCloud &&
-      responseCurrentInstance &&
-      setInterval(() => {
+    const timer = setInterval(() => {
+      pagesState?.organization?.organizationName !==
+        `org_${url?.organizationName}` &&
+        pagesState?.roboticsCloud?.name !== url?.roboticsCloudName &&
+        pagesState?.instance?.name !== url?.instanceName &&
         getFleets(
           {
-            organizationId: responseCurrentOrganization?.organizationId,
+            organizationId: pagesState?.organization?.organizationId,
             roboticsCloudName: url?.roboticsCloudName as string,
-            instanceId: responseCurrentInstance?.instanceId,
-            region: responseCurrentRoboticsCloud?.region,
+            instanceId: pagesState?.instance?.instanceId,
+            region: pagesState?.roboticsCloud?.region,
           },
           {
             ifErrorNavigateTo404: !responseFleets,
             setResponse: setResponseFleets,
           }
         );
-      }, 10000);
+    }, 10000);
 
     return () => {
       clearInterval(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    responseCurrentOrganization,
-    responseCurrentRoboticsCloud,
-    responseCurrentInstance,
-    url,
-    reload,
-  ]);
-
-  useEffect(() => {
-    console.log(responseCurrentRoboticsCloud);
-  }, [responseCurrentRoboticsCloud]);
+  }, [pagesState, url, reload]);
 
   const data: any = useMemo(
     () =>
@@ -168,7 +156,6 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           return <StateCell state={rowData?.state} />;
         },
       },
-
       {
         key: "actions",
         header: "Actions",
@@ -219,18 +206,17 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           datas={[
             {
               title: `CPU (${
-                responseCurrentInstance?.cloudInstanceResource?.cpuTotal || 0
+                pagesState?.instance?.cloudInstanceResource?.cpuTotal || 0
               } Core)`,
               percentage:
-                responseCurrentInstance?.cloudInstanceResource?.cpuUsage || 0,
+                pagesState?.instance?.cloudInstanceResource?.cpuUsage || 0,
             },
             {
               title: `Memory (${
-                responseCurrentInstance?.cloudInstanceResource?.memoryTotal || 0
+                pagesState?.instance?.cloudInstanceResource?.memoryTotal || 0
               } GB)`,
               percentage:
-                responseCurrentInstance?.cloudInstanceResource?.memoryUsage ||
-                0,
+                pagesState?.instance?.cloudInstanceResource?.memoryUsage || 0,
             },
           ]}
         />

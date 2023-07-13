@@ -12,6 +12,7 @@ import useFunctions from "../../../hooks/useFunctions";
 import StateCell from "../../../components/Cells/StateCell";
 import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import usePages from "../../../hooks/usePages";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -21,25 +22,27 @@ export default function OrganizationDashboardPage(): ReactElement {
     useState<any>(undefined);
   const url = useParams();
 
-  const [responseCurrentOrganization, setResponseCurrentOrganization] =
-    useState<any>(undefined);
+  const { pagesState } = usePages();
 
   useEffect(() => {
-    if (!responseCurrentOrganization) {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
       getOrganization(
         {
           organizationName: url?.organizationName as string,
         },
         {
           isSetState: true,
-          setResponse: setResponseCurrentOrganization,
-          ifErrorNavigateTo404: !responseCurrentOrganization,
+          ifErrorNavigateTo404: !responseRoboticsClouds,
+          setPages: true,
         }
       );
     } else {
       getRoboticsClouds(
         {
-          organizationId: responseCurrentOrganization?.organizationId,
+          organizationId: pagesState?.organization?.organizationId,
         },
         {
           setResponse: setResponseRoboticsClouds,
@@ -49,7 +52,7 @@ export default function OrganizationDashboardPage(): ReactElement {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseCurrentOrganization, reload, url]);
+  }, [pagesState, reload, url]);
 
   const data: any = useMemo(
     () =>
@@ -186,7 +189,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           title="Robotics Clouds"
           data={data}
           columns={columns}
-          loading={responseRoboticsClouds?.length ? false : true}
+          loading={responseRoboticsClouds ? false : true}
           handleReload={() => {
             setResponseRoboticsClouds(undefined);
             setReload(!reload);
