@@ -155,6 +155,8 @@ export default function SidebarListItem({
                   instance: null,
                   fleet: null,
                 });
+                setSidebarState({ ...sidebarState, isOpen: false });
+                navigate(url);
                 break;
               case "roboticscloud":
                 setSelectedState({
@@ -163,20 +165,37 @@ export default function SidebarListItem({
                   instance: null,
                   fleet: null,
                 });
+                setSidebarState({ ...sidebarState, isOpen: false });
+                navigate(url);
                 break;
               case "instance":
-                setSelectedState({
-                  ...selectedState,
-                  instance: data,
-                  fleet: null,
-                });
+                if (data?.instanceCloudState === "ConnectionHub_Ready") {
+                  setSelectedState({
+                    ...selectedState,
+                    instance: data,
+                    fleet: null,
+                  });
+                  setSidebarState({ ...sidebarState, isOpen: false });
+                  navigate(url);
+                } else {
+                  toast.error(
+                    "Instance is not selectable now. Please try again later."
+                  );
+                }
                 break;
               case "fleet":
-                setSelectedState({ ...selectedState, fleet: data });
+                if (data?.fleetStatus === "Ready") {
+                  setSelectedState({ ...selectedState, fleet: data });
+                  setSidebarState({ ...sidebarState, isOpen: false });
+                  navigate(url);
+                } else {
+                  toast.error(
+                    "Fleet is not selectable now. Please try again later."
+                  );
+                }
+
                 break;
             }
-            setSidebarState({ ...sidebarState, isOpen: false });
-            navigate(url);
           }}
           className={`flex items-center justify-center px-4 rounded-r-lg transition-300 ${
             selected

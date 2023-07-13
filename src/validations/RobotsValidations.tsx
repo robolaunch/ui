@@ -7,7 +7,11 @@ export const ImportRobotSetSidebarState = Yup.object().shape({
 });
 
 export const CreateRobotFormStep1Validations = Yup.object().shape({
-  robotName: Yup.string().required("Robot name is required"),
+  robotName: Yup.string()
+    .required("Robot name is required.")
+    .min(3, "Minimum 3 characters.")
+    .max(12, "Maximum 12 characters.")
+    .lowercase("Must be lowercase."),
   physicalInstanceName: Yup.string().when("isVirtualRobot", {
     is: false,
     then: Yup.string().required("Physical Instance is required"),

@@ -2,7 +2,8 @@ import * as Yup from "yup";
 
 export const createFleetSchema = Yup.object().shape({
   name: Yup.string()
-    .required("Name is required")
-    .min(8, "Min 8 Character")
-    .matches(/^[a-z]*$/, "Only lowercase english characters"),
+    .required("Fleet name is required.")
+    .min(3, "Minimum 3 characters.")
+    .max(12, "Maximum 12 characters.")
+    .lowercase("Must be lowercase."),
 });
