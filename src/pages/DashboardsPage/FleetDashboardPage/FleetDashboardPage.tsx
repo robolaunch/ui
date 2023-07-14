@@ -35,72 +35,15 @@ export default function FleetDashboardPage(): ReactElement {
       pagesState?.organization?.organizationName !==
       `org_${url?.organizationName}`
     ) {
-      getOrganization(
-        {
-          organizationName: url?.organizationName as string,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseRobots,
-          setPages: true,
-        }
-      );
+      handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
-      getRoboticsCloud(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: url?.roboticsCloudName as string,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseRobots,
-          setPages: true,
-        }
-      );
+      handleGetRoboticsCloud();
     } else if (pagesState?.instance?.name !== url?.instanceName) {
-      getInstance(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: pagesState?.roboticsCloud?.name,
-          instanceName: url?.instanceName as string,
-          region: pagesState?.roboticsCloud?.region,
-          details: false,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseRobots,
-          setPages: true,
-        }
-      );
+      handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      getFleet(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: pagesState?.roboticsCloud?.name,
-          instanceId: pagesState?.instance?.instanceId,
-          region: pagesState?.roboticsCloud?.region,
-          fleetName: url?.fleetName as string,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseRobots,
-          setPages: true,
-        }
-      );
+      handleGetFleet();
     } else {
-      getRobots(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: pagesState?.roboticsCloud?.name,
-          instanceId: pagesState?.instance?.instanceId,
-          region: pagesState?.roboticsCloud?.region,
-          fleetName: pagesState?.fleet?.name,
-        },
-        {
-          ifErrorNavigateTo404: !responseRobots,
-          setResponse: setResponseRobots,
-        }
-      );
+      handleGetRobots();
     }
 
     const timer =
@@ -109,19 +52,7 @@ export default function FleetDashboardPage(): ReactElement {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        getRobots(
-          {
-            organizationId: pagesState?.organization?.organizationId,
-            roboticsCloudName: pagesState?.roboticsCloud?.name,
-            instanceId: pagesState?.instance?.instanceId,
-            region: pagesState?.roboticsCloud?.region,
-            fleetName: pagesState?.fleet?.name,
-          },
-          {
-            ifErrorNavigateTo404: !responseRobots,
-            setResponse: setResponseRobots,
-          }
-        );
+        pagesState?.fleet && handleGetRobots();
       }, 10000);
 
     return () => {
@@ -129,6 +60,10 @@ export default function FleetDashboardPage(): ReactElement {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagesState, url, reload]);
+
+  useEffect(() => {
+    setResponseRobots(undefined);
+  }, [url]);
 
   const data: any = useMemo(
     () =>
@@ -275,6 +210,83 @@ export default function FleetDashboardPage(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  function handleGetOrganization() {
+    getOrganization(
+      {
+        organizationName: url?.organizationName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRobots,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetRoboticsCloud() {
+    getRoboticsCloud(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRobots,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetInstance() {
+    getInstance(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceName: url?.instanceName as string,
+        region: pagesState?.roboticsCloud?.region,
+        details: false,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRobots,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetFleet() {
+    getFleet(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: url?.fleetName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRobots,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetRobots() {
+    getRobots(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobots,
+        setResponse: setResponseRobots,
+      }
+    );
+  }
 
   return (
     <DashboardLayout

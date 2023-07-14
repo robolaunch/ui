@@ -46,7 +46,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       selectedState?.organization &&
       selectedState?.roboticsCloud &&
       setInterval(() => {
-        handleGetInstances();
+        pagesState?.roboticsCloud && handleGetInstances();
       }, 20000);
 
     return () => {
@@ -55,6 +55,10 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagesState, url, reload]);
+
+  useEffect(() => {
+    setResponseInstances(undefined);
+  }, [url]);
 
   const data: any = useMemo(
     () =>
