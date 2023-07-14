@@ -85,7 +85,7 @@ export default function RegionsWidget({
         <Geographies geography={world}>
           {({ geographies }) =>
             geographies.map((geo) => (
-              <Geography key={geo.rsmKey} geography={geo} fill="#666" />
+              <Geography key={geo.rsmKey} geography={geo} fill="#AAA" />
             ))
           }
         </Geographies>

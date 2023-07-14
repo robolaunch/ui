@@ -1,5 +1,8 @@
 import React, { ReactElement } from "react";
-import { stringCapitalization } from "../../helpers/GeneralFunctions";
+import {
+  stringCapitalization,
+  stringSlugify,
+} from "../../helpers/GeneralFunctions";
 import { Link, useParams } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import {
@@ -96,9 +99,17 @@ export default function Breadcrumb(): ReactElement {
                 }
               })()}
               <span className="mt-0.5">
-                {stringCapitalization({
-                  str: item?.breadcrumb?.props?.children,
-                })}
+                {item?.breadcrumb?.props?.children === "Home"
+                  ? item?.breadcrumb?.props?.children
+                  : item?.breadcrumb?.props?.children === "Billing"
+                  ? item?.breadcrumb?.props?.children
+                  : item?.breadcrumb?.props?.children === "User role management"
+                  ? "User Role Management"
+                  : item?.breadcrumb?.props?.children === "Profile"
+                  ? item?.breadcrumb?.props?.children
+                  : item?.breadcrumb?.props?.children === "Marketplace"
+                  ? item?.breadcrumb?.props?.children
+                  : stringSlugify(item?.breadcrumb?.props?.children)}
               </span>
             </Link>
             <span className="mt-[0.1rem] scale-[1.32]">

@@ -22,7 +22,7 @@ export default function ResourcesWidget({
       <ul className="h-full flex flex-col justify-evenly">
         {data?.map((item: any, index: number) => {
           return (
-            <Fragment>
+            <Fragment key={index}>
               <li className="flex justify-between" key={item?.title}>
                 <div className="flex items-center gap-2">
                   {item?.icon}
