@@ -34,13 +34,13 @@ export default function SidebarListItem({
           selectedState?.organization?.organizationName ===
           data?.organizationName
         ) {
-          setSelectedState({
-            ...selectedState,
-            organization: null,
-            roboticsCloud: null,
-            instance: null,
-            fleet: null,
-          });
+          // setSelectedState({
+          //   ...selectedState,
+          //   organization: null,
+          //   roboticsCloud: null,
+          //   instance: null,
+          //   fleet: null,
+          // });
         } else {
           setSelectedState({
             ...selectedState,
@@ -49,17 +49,17 @@ export default function SidebarListItem({
             instance: null,
             fleet: null,
           });
-          setSidebarState({ ...sidebarState, page: "roboticscloud" });
+          // setSidebarState({ ...sidebarState, page: "roboticscloud" });
         }
         break;
       case "roboticscloud":
         if (selectedState?.roboticsCloud?.name === data?.name) {
-          setSelectedState({
-            ...selectedState,
-            roboticsCloud: null,
-            instance: null,
-            fleet: null,
-          });
+          // setSelectedState({
+          //   ...selectedState,
+          //   roboticsCloud: null,
+          //   instance: null,
+          //   fleet: null,
+          // });
         } else {
           setSelectedState({
             ...selectedState,
@@ -67,20 +67,20 @@ export default function SidebarListItem({
             instance: null,
             fleet: null,
           });
-          setSidebarState({ ...sidebarState, page: "instance" });
+          // setSidebarState({ ...sidebarState, page: "instance" });
         }
         break;
       case "instance":
         if (data?.instanceCloudState === "ConnectionHub_Ready") {
           if (selectedState?.instance?.name === data?.name) {
-            setSelectedState({
-              ...selectedState,
-              instance: null,
-              fleet: null,
-            });
+            // setSelectedState({
+            //   ...selectedState,
+            //   instance: null,
+            //   fleet: null,
+            // });
           } else {
             setSelectedState({ ...selectedState, instance: data, fleet: null });
-            setSidebarState({ ...sidebarState, page: "fleet" });
+            // setSidebarState({ ...sidebarState, page: "fleet" });
           }
         } else {
           toast.error(
@@ -94,10 +94,10 @@ export default function SidebarListItem({
           data?.physicalInstance?.length === 0
         ) {
           if (selectedState?.fleet?.name === data?.name) {
-            setSelectedState({ ...selectedState, fleet: null });
+            // setSelectedState({ ...selectedState, fleet: null });
           } else {
             setSelectedState({ ...selectedState, fleet: data });
-            setSidebarState({ ...sidebarState, page: "robot" });
+            // setSidebarState({ ...sidebarState, page: "robot" });
           }
         } else {
           toast.error("Fleet is not selectable now. Please try again later.");
