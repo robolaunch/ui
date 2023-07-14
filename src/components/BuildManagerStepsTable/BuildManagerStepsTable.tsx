@@ -39,7 +39,6 @@ export default function BuildManagerStepsTable({
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          console.log("x", rowData);
           return (
             <InfoCell
               title={rowData?.name}

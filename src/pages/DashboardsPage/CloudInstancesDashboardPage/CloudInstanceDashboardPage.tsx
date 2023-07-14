@@ -271,36 +271,31 @@ export default function CloudInstanceDashboardPage(): ReactElement {
             {
               icon: <FaServer size={16} />,
               title: "Architecture",
-              value:
-                pagesState?.instance?.cloudInstanceResource?.architecture || "",
+              value: pagesState?.instance?.cloudInstanceResource?.architecture,
             },
             {
               icon: <FaLinux size={16} />,
               title: "Operating System",
               value:
-                pagesState?.instance?.cloudInstanceResource?.operatingSystem ||
-                "",
+                pagesState?.instance?.cloudInstanceResource?.operatingSystem,
             },
             {
               icon: <FaUbuntu size={16} />,
               title: "OS Distro",
               value:
                 pagesState?.instance?.cloudInstanceResource
-                  ?.operatingSystemDistro || "",
+                  ?.operatingSystemDistro,
             },
             {
               icon: <RiCpuLine size={16} />,
               title: "Kernel Version",
-              value:
-                pagesState?.instance?.cloudInstanceResource?.kernelVersion ||
-                "",
+              value: pagesState?.instance?.cloudInstanceResource?.kernelVersion,
             },
             {
               icon: <SiKubernetes size={16} />,
               title: "K8S Version",
               value:
-                pagesState?.instance?.cloudInstanceResource
-                  ?.kubernetesVersion || "",
+                pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
             },
           ]}
         />

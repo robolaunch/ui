@@ -647,7 +647,6 @@ export default ({ children }: any) => {
         robotName: values?.robotName,
       })
     ).then((responseRobotBuildManager: any) => {
-      console.log("x", responseRobotBuildManager);
       if (
         Array.isArray(responseRobotBuildManager?.payload?.data) &&
         Array.isArray(

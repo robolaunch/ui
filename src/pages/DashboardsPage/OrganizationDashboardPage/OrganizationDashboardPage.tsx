@@ -63,6 +63,18 @@ export default function OrganizationDashboardPage(): ReactElement {
           name: rc,
           organization: url?.organizationName,
           region: rc?.region,
+          country:
+            rc.region === "eu-central-1"
+              ? "Frankfurt (Germany)"
+              : rc?.region === "eu-west-2"
+              ? "London (UK)"
+              : rc?.region === "us-east-1"
+              ? "N. Virginia (US)"
+              : rc?.region === "us-east-2"
+              ? "Ohio (US)"
+              : rc?.region === "us-west-1"
+              ? "N. California (US)"
+              : rc?.region === "ap-northeast-1" && "Tokyo (Japan)",
           state: "Ready",
           users: rc?.actions,
         };
@@ -114,6 +126,16 @@ export default function OrganizationDashboardPage(): ReactElement {
         align: "left",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.region} />;
+        },
+      },
+      {
+        key: "country",
+        header: "Country",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.country} />;
         },
       },
       {

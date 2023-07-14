@@ -50,7 +50,7 @@ export default function CloudInstancesList({
         organizationId: selectedState?.organization?.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud?.name,
         region: selectedState?.roboticsCloud?.region,
-        details: false,
+        details: true,
       },
       {
         setResponse: setResponseInstances,

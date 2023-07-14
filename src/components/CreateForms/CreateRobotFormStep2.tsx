@@ -181,7 +181,7 @@ export default function CreateRobotFormStep2({
                   formik={formik}
                   workspace={workspace}
                   workspaceIndex={workspaceIndex}
-                  workspaceState={responseRobot?.robotClusters.map(
+                  workspaceState={responseRobot?.robotClusters?.map(
                     (cluster: any) => cluster.robotStatus
                   )}
                   disabled={formik.isSubmitting || isImportRobot}

@@ -19,7 +19,7 @@ export default function PrivateProvider(): ReactElement {
       <img
         src="/images/rocket.svg"
         alt="robolaunch"
-        className="fixed pb-1 w-14"
+        className="fixed pb-1 w-14 animate-pulse"
       />
     </div>
   );

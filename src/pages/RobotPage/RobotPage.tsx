@@ -92,7 +92,7 @@ export default function RobotPage(): ReactElement {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesState]);
+  }, [pagesState, responseRobot, responseBuildManager, responseLaunchManagers]);
 
   function handleGetOrganization() {
     getOrganization(
@@ -235,8 +235,7 @@ export default function RobotPage(): ReactElement {
     return () => {
       ros.close();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseRobot]);
+  }, [responseRobot, urls?.ros]);
 
   useEffect(() => {
     if (ros) {

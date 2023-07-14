@@ -51,29 +51,7 @@ export default function SidebarContentLayout(): ReactElement {
   function buttonTextGenerator() {
     switch (sidebarState?.isCreateMode) {
       case true:
-        return `Cancel ${(() => {
-          if (sidebarState?.page === "roboticscloud") {
-            return "Robotics Cloud";
-          }
-          if (sidebarState?.page === "instance") {
-            if (sidebarState?.instanceTab === "Cloud Instances") {
-              return "Cloud Instance";
-            } else {
-              return "Physical Instance";
-            }
-          }
-          if (
-            sidebarState?.page === "robot" ||
-            sidebarState?.page === "workspacesmanager" ||
-            sidebarState?.page === "buildsmanager" ||
-            sidebarState?.page === "launchsmanager"
-          ) {
-            return "Robot";
-          }
-          return stringCapitalization({
-            str: sidebarState?.page as string,
-          });
-        })()} creation`;
+        return "Cancel";
       case false:
         return `${
           sidebarState?.instanceTab === "Physical Instances" &&
