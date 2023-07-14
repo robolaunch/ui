@@ -13,6 +13,7 @@ import StateCell from "../../../components/Cells/StateCell";
 import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
+import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -171,7 +172,14 @@ export default function OrganizationDashboardPage(): ReactElement {
           }
         />
       }
-      widget2={<></>}
+      widget2={
+        <RegionsWidget
+          title="Robotics Cloud"
+          responseData={
+            responseRoboticsClouds?.map((item: any) => item.region) || []
+          }
+        />
+      }
       widget3={
         <CountWidget
           data={{

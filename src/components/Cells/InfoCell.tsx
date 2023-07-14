@@ -23,7 +23,7 @@ export default function InfoCell({
   const titleComponent = <span className="text-sm font-semibold">{title}</span>;
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2.5">
       {onClick ? (
         <div className="cursor-pointer" onClick={() => onClick && onClick()}>
           {iconComponent}
@@ -33,7 +33,7 @@ export default function InfoCell({
       ) : (
         <span className="cursor-default">{iconComponent}</span>
       )}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col">
         {onClick ? (
           <div className="cursor-pointer" onClick={() => onClick && onClick()}>
             {titleComponent}

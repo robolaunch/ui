@@ -137,6 +137,9 @@ export default function FleetDashboardPage(): ReactElement {
           key: robot?.name,
           name: robot,
           organization: url?.organizationName,
+          roboticsCloud: url?.roboticsCloudName,
+          instance: url?.instanceName,
+          fleet: url?.fleetName,
           virtualState: robot?.robotClusters[0]?.robotStatus || undefined,
           physicalState: robot?.robotClusters[1]?.robotStatus || undefined,
           robotServices: {
@@ -180,11 +183,41 @@ export default function FleetDashboardPage(): ReactElement {
       {
         key: "organization",
         header: "Organization",
-        sortable: true,
-        filter: true,
+        sortable: false,
+        filter: false,
         align: "left",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.organization} />;
+        },
+      },
+      {
+        key: "roboticsCloud",
+        header: "Robotics Cloud",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.roboticsCloud} />;
+        },
+      },
+      {
+        key: "instance",
+        header: "Cloud Instance",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.instance} />;
+        },
+      },
+      {
+        key: "fleet",
+        header: "Fleet",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.fleet} />;
         },
       },
       {

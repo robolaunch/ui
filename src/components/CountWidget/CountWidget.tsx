@@ -15,7 +15,7 @@ export default function CountWidget({
   return (
     <Widget
       title={`Count Widget`}
-      subtitle={`${title} Base Count`}
+      subtitle={`${title} Count`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
       <ReactApexChart
