@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";
@@ -13,6 +12,11 @@ import useFunctions from "../../../hooks/useFunctions";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
+import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
+import { SiKubernetes } from "react-icons/si";
+import { BsFillCpuFill } from "react-icons/bs";
+import { RiCpuLine } from "react-icons/ri";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
@@ -57,6 +61,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           roboticsCloudName: pagesState?.roboticsCloud?.name,
           instanceName: url?.instanceName as string,
           region: pagesState?.roboticsCloud?.region,
+          details: true,
         },
         {
           isSetState: true,
@@ -111,6 +116,8 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           key: fleet?.name,
           name: fleet,
           organization: url?.organizationName,
+          roboticsCloud: url?.roboticsCloudName,
+          instance: url?.instanceName,
           state: fleet?.fleetStatus,
           actions: fleet,
         };
@@ -141,9 +148,29 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         header: "Organization",
         sortable: false,
         filter: false,
-        align: "lehrefft",
+        align: "left",
         body: () => {
           return <BasicCell text={url?.organizationName as string} />;
+        },
+      },
+      {
+        key: "roboticsCloud",
+        header: "Robotics Cloud",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.roboticsCloud} />;
+        },
+      },
+      {
+        key: "instance",
+        header: "Cloud Instance",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.instance} />;
         },
       },
       {
@@ -178,6 +205,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     [url, selectedState, reload]
   );
 
+  useEffect(() => {
+    console.log(pagesState?.instance);
+  }, [pagesState?.instance]);
+
   return (
     <DashboardLayout
       widget1={
@@ -202,7 +233,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       }
       widget2={
         <UsagesWidget
-          title={`Cloud Instances`}
+          title={`Cloud Instance`}
           datas={[
             {
               title: `CPU (${
@@ -218,36 +249,60 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               percentage:
                 pagesState?.instance?.cloudInstanceResource?.memoryUsage || 0,
             },
+            {
+              title: `Storage (${
+                pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
+              } GB)`,
+              percentage:
+                (
+                  (pagesState?.instance?.cloudInstanceResource?.storageUsage /
+                    100) *
+                    pagesState?.instance?.cloudInstanceResource?.storageTotal ||
+                  undefined
+                )?.toFixed() || 0,
+            },
           ]}
         />
       }
       widget3={
-        <CountWidget
-          data={{
-            series: [
-              responseFleets?.filter(
-                (fleet: any) => fleet?.fleetStatus === "CheckingRemoteNamespace"
-              ).length || 0,
-              responseFleets?.filter(
-                (fleet: any) => fleet?.fleetStatus === "CreatingNamespace"
-              ).length || 0,
-              responseFleets?.filter(
-                (fleet: any) => fleet?.fleetStatus === "CreatingDiscoveryServer"
-              ).length || 0,
-              responseFleets?.filter(
-                (fleet: any) => fleet?.fleetStatus === "Ready"
-              ).length || 0,
-              0,
-            ],
-            categories: [
-              ["Checking"],
-              ["Creating NS"],
-              ["Creating DS"],
-              ["Ready"],
-              ["Deleting"],
-            ],
-          }}
-          title="Robotics Cloud"
+        <ResourcesWidget
+          title={pagesState?.instance?.name || ""}
+          data={[
+            {
+              icon: <FaServer size={16} />,
+              title: "Architecture",
+              value:
+                pagesState?.instance?.cloudInstanceResource?.architecture || "",
+            },
+            {
+              icon: <FaLinux size={16} />,
+              title: "Operating System",
+              value:
+                pagesState?.instance?.cloudInstanceResource?.operatingSystem ||
+                "",
+            },
+            {
+              icon: <FaUbuntu size={16} />,
+              title: "OS Distro",
+              value:
+                pagesState?.instance?.cloudInstanceResource
+                  ?.operatingSystemDistro || "",
+            },
+            {
+              icon: <RiCpuLine size={16} />,
+              title: "Kernel Version",
+              value:
+                pagesState?.instance?.cloudInstanceResource?.kernelVersion ||
+                "",
+            },
+            {
+              icon: <SiKubernetes size={16} />,
+              title: "K8S Version",
+              value:
+                pagesState?.instance?.cloudInstanceResource
+                  ?.kubernetesVersion || "",
+            },
+          ]}
         />
       }
       table={
@@ -257,7 +312,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           data={data}
           columns={columns}
           loading={Array.isArray(responseFleets) ? false : true}
-          handleReload={() => setReload(!reload)}
+          handleReload={() => {
+            setResponseFleets(undefined);
+            setReload(!reload);
+          }}
         />
       }
     />

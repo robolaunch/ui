@@ -27,6 +27,7 @@ export interface IgetInstances {
   organizationId: string;
   roboticsCloudName: string;
   region: string;
+  details: boolean;
 }
 
 export interface IgetPhysicalInstances {
@@ -41,6 +42,7 @@ export interface IgetInstance {
   roboticsCloudName: string;
   instanceName: string;
   region: string;
+  details: boolean;
 }
 
 export interface IgetFleets {

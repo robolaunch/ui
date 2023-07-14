@@ -14,8 +14,8 @@ export default function UsagesWidget({
 }: IUsagesWidget): ReactElement {
   return (
     <Widget
-      title={`Usages Widget`}
-      subtitle={`${title} Base Usages`}
+      title={`Hardware Resources & Usages Widget`}
+      subtitle={`${title} Usages`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
       <div className="w-full h-full flex items-center justify-center gap-10 p-10 lg:p-6 xl:p-2">

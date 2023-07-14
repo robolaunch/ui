@@ -27,36 +27,45 @@ export const createCloudInstance = createAsyncThunk(
 
 export const getInstances = createAsyncThunk(
   "instance/getInstances",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    region: string;
+    details: boolean;
+  }) => {
     const response = await createInstanceApi.getAllInstancesOfRoboticsCloud({
-      name: values?.name,
-      organizationId: values?.organizationId,
-      roboticsClouds: [
-        { name: values?.roboticsCloudName, region: values?.region },
-      ],
-    });
-    return response.data;
-  }
-);
-
-export const getInstanceState = createAsyncThunk(
-  "instance/getInstancestate",
-  async (values: any) => {
-    const response = await createInstanceApi.getCloudState({
-      name: values?.name,
+      name: "instance/getInstances",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
           name: values?.roboticsCloudName,
-          cloudInstances: [
-            { instanceId: values?.instanceId, region: "eu-central-1" },
-          ],
+          region: values?.region,
+          details: values?.details,
         },
       ],
     });
     return response.data;
   }
 );
+
+// export const getInstanceState = createAsyncThunk(
+//   "instance/getInstancestate",
+//   async (values: any) => {
+//     const response = await createInstanceApi.getCloudState({
+//       name: values?.name,
+//       organizationId: values?.organizationId,
+//       roboticsClouds: [
+//         {
+//           name: values?.roboticsCloudName,
+//           cloudInstances: [
+//             { instanceId: values?.instanceId, region: values?.region },
+//           ],
+//         },
+//       ],
+//     });
+//     return response.data;
+//   }
+// );
 
 export const stopInstance = createAsyncThunk(
   "instance/stopInstance",
@@ -241,14 +250,14 @@ export const instanceSlice = createSlice({
       .addCase(terminateInstance.rejected, () => {
         toast.error("Something went wrong of terminating instance");
       })
-      .addCase(getInstanceState.fulfilled, (_, action: any) => {
-        if (!action?.payload?.success) {
-          toast.error(action?.payload?.message);
-        }
-      })
-      .addCase(getInstanceState.rejected, () => {
-        toast.error("Something went wrong of getting instance state");
-      })
+      // .addCase(getInstanceState.fulfilled, (_, action: any) => {
+      //   if (!action?.payload?.success) {
+      //     toast.error(action?.payload?.message);
+      //   }
+      // })
+      // .addCase(getInstanceState.rejected, () => {
+      //   toast.error("Something went wrong of getting instance state");
+      // })
       .addCase(addPhysicalInstance.fulfilled, () => {
         toast.success("Physical instance added successfully");
       })

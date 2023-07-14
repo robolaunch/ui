@@ -220,6 +220,7 @@ export default ({ children }: any) => {
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
+        details: values?.details,
       })
     ).then((responseInstances: any) => {
       if (
@@ -298,6 +299,7 @@ export default ({ children }: any) => {
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
+        details: values?.details,
       })
     ).then((responseInstances: any) => {
       if (

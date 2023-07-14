@@ -62,6 +62,14 @@ export default function SidebarContentLayout(): ReactElement {
               return "Physical Instance";
             }
           }
+          if (
+            sidebarState?.page === "robot" ||
+            sidebarState?.page === "workspacesmanager" ||
+            sidebarState?.page === "buildsmanager" ||
+            sidebarState?.page === "launchsmanager"
+          ) {
+            return "Robot";
+          }
           return stringCapitalization({
             str: sidebarState?.page as string,
           });

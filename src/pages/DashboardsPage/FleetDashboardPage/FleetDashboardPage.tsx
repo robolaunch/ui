@@ -64,6 +64,7 @@ export default function FleetDashboardPage(): ReactElement {
           roboticsCloudName: pagesState?.roboticsCloud?.name,
           instanceName: url?.instanceName as string,
           region: pagesState?.roboticsCloud?.region,
+          details: false,
         },
         {
           isSetState: true,

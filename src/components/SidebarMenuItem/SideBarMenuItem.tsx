@@ -8,12 +8,14 @@ interface ISideBarMenuItem {
   type: string;
   description?: string;
   loading?: boolean;
+  disabled?: boolean;
 }
 
 export default function SideBarMenuItem({
   type,
   description,
   loading,
+  disabled,
 }: ISideBarMenuItem) {
   const [isHover, setIsHover] = useState<boolean>(false);
   const { theme } = useTheme();
@@ -88,9 +90,9 @@ export default function SideBarMenuItem({
 
   return (
     <div
-      onClick={() => !loading && handleClick()}
+      onClick={() => !loading && !disabled && handleClick()}
       className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft ${
-        loading && "!cursor-not-allowed"
+        (loading || disabled) && "!cursor-not-allowed"
       }`}
       onMouseEnter={() => !loading && setIsHover(true)}
       onMouseLeave={() => !loading && setIsHover(false)}
@@ -110,7 +112,7 @@ export default function SideBarMenuItem({
           alt="Robolaunch"
         />
       )}
-      {isHover && (
+      {isHover && !loading && (
         <SidebarMenuItemToolTip
           title={
             type === "organization"

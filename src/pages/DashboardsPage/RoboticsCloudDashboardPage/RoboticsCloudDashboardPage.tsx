@@ -34,57 +34,18 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       pagesState?.organization?.organizationName !==
       `org_${url?.organizationName}`
     ) {
-      getOrganization(
-        {
-          organizationName: url?.organizationName as string,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseInstances,
-          setPages: true,
-        }
-      );
+      handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
-      getRoboticsCloud(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: url?.roboticsCloudName as string,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseInstances,
-          setPages: true,
-        }
-      );
+      handleGetRoboticsCloud();
     } else {
-      getInstances(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-          roboticsCloudName: url?.roboticsCloudName as string,
-          region: pagesState?.roboticsCloud?.region,
-        },
-        {
-          setResponse: setResponseInstances,
-          ifErrorNavigateTo404: !responseInstances,
-        }
-      );
+      handleGetInstances();
     }
 
     const timer =
       selectedState?.organization &&
       selectedState?.roboticsCloud &&
       setInterval(() => {
-        getInstances(
-          {
-            organizationId: pagesState?.organization?.organizationId,
-            roboticsCloudName: url?.roboticsCloudName as string,
-            region: pagesState?.roboticsCloud?.region,
-          },
-          {
-            setResponse: setResponseInstances,
-            ifErrorNavigateTo404: !responseInstances,
-          }
-        );
+        handleGetInstances();
       }, 20000);
 
     return () => {
@@ -101,6 +62,13 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           key: instance?.name,
           name: instance,
           organization: url?.organizationName,
+          architecture: instance?.cloudInstanceResource?.architecture,
+          OSResources: {
+            os: instance?.cloudInstanceResource?.operatingSystem,
+            distro: instance?.cloudInstanceResource?.operatingSystemDistro,
+          },
+          kernel: instance?.cloudInstanceResource?.kernelVersion,
+          k8s: instance?.cloudInstanceResource?.kubernetesVersion,
           usages: instance?.cloudInstanceResource,
           providerState: instance?.instanceState,
           robolaunchState: instance?.instanceCloudState,
@@ -128,19 +96,66 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           );
         },
       },
+
       {
         key: "organization",
         header: "Organization",
-        sortable: true,
-        filter: true,
+        sortable: false,
+        filter: false,
         align: "left",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.organization} />;
         },
       },
       {
+        key: "architecture",
+        header: "architecture",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.architecture} />;
+        },
+      },
+
+      {
+        key: "OSResources",
+        header: "OS Resources",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          console.log(rowData?.OSResources);
+          return (
+            <BasicCell
+              text={`${rowData?.OSResources?.distro} (${rowData?.OSResources?.os})`}
+            />
+          );
+        },
+      },
+      {
+        key: "kernel",
+        header: "kernel",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={rowData?.kernel} />;
+        },
+      },
+      {
+        key: "k8s",
+        header: "Kubernetes",
+        sortable: false,
+        filter: false,
+        align: "left",
+        body: (rowData: any) => {
+          return <BasicCell text={`Kubernetes ${rowData?.k8s}`} />;
+        },
+      },
+      {
         key: "usages",
-        header: "Resources & Usages",
+        header: "Usages",
         sortable: false,
         filter: false,
         align: "left",
@@ -214,9 +229,47 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     [selectedState, reload, url, responseInstances]
   );
 
-  useEffect(() => {
-    console.log(responseInstances);
-  }, [responseInstances]);
+  function handleGetOrganization() {
+    getOrganization(
+      {
+        organizationName: url?.organizationName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseInstances,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetRoboticsCloud() {
+    getRoboticsCloud(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseInstances,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetInstances() {
+    getInstances(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: url?.roboticsCloudName as string,
+        region: pagesState?.roboticsCloud?.region,
+        details: true,
+      },
+      {
+        setResponse: setResponseInstances,
+        ifErrorNavigateTo404: !responseInstances,
+      }
+    );
+  }
 
   return (
     <DashboardLayout

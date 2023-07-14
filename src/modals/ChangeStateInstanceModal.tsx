@@ -56,7 +56,11 @@ export default function ChangeInstanceModal({
       onHide={() => handleCloseModal()}
     >
       <div className="w-full flex flex-col gap-8">
-        <p className="text-sm">Details</p>
+        <p className="text-sm">
+          {data?.state === "running"
+            ? "Are you sure you want to stop this instance ?"
+            : "Are you sure you want to start this instance ?"}
+        </p>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-44 !h-11"

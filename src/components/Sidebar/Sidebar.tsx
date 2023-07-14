@@ -48,22 +48,50 @@ export default function Sidebar(): ReactElement {
                   type="robot"
                   description="You can access all your robots here."
                   loading={isLoading}
+                  disabled={
+                    sidebarState?.isCreateMode &&
+                    (sidebarState?.page === "robot" ||
+                      sidebarState?.page === "workspacesmanager" ||
+                      sidebarState?.page === "buildsmanager" ||
+                      sidebarState?.page === "launchsmanager")
+                  }
                 />
                 <SideBarMenuItem
                   type="workspacesmanager"
                   description="You can access all your workspaces here."
                   loading={isLoading}
+                  disabled={
+                    sidebarState?.isCreateMode &&
+                    (sidebarState?.page === "robot" ||
+                      sidebarState?.page === "workspacesmanager" ||
+                      sidebarState?.page === "buildsmanager" ||
+                      sidebarState?.page === "launchsmanager")
+                  }
                 />
 
                 <SideBarMenuItem
                   type="buildsmanager"
                   description="You can access all your builds here."
                   loading={isLoading}
+                  disabled={
+                    sidebarState?.isCreateMode &&
+                    (sidebarState?.page === "robot" ||
+                      sidebarState?.page === "workspacesmanager" ||
+                      sidebarState?.page === "buildsmanager" ||
+                      sidebarState?.page === "launchsmanager")
+                  }
                 />
                 <SideBarMenuItem
                   type="launchsmanager"
                   description="You can access all your launches here."
                   loading={isLoading}
+                  disabled={
+                    sidebarState?.isCreateMode &&
+                    (sidebarState?.page === "robot" ||
+                      sidebarState?.page === "workspacesmanager" ||
+                      sidebarState?.page === "buildsmanager" ||
+                      sidebarState?.page === "launchsmanager")
+                  }
                 />
               </Fragment>
             ) : (

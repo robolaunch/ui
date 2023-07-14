@@ -6,6 +6,7 @@ interface WidgetLayoutProps {
   subtitle?: string | ReactElement | ReactElement[];
   children?: ReactElement | ReactElement[];
   options?: ReactElement;
+  className?: string;
 }
 
 export default function WidgetLayout({
@@ -14,10 +15,11 @@ export default function WidgetLayout({
   subtitle,
   children,
   options,
+  className,
 }: WidgetLayoutProps): ReactElement {
   return (
     <div
-      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-full animate__animated animate__fadeIn border border-layer-light-200"
+      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-[21rem] animate__animated animate__fadeIn border border-layer-light-200"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",
@@ -37,7 +39,7 @@ export default function WidgetLayout({
         </div>
         <div>{options}</div>
       </div>
-      <div id="widgetBody" className="h-full px-8 pb-2 ">
+      <div id="widgetBody" className={`h-full px-8 pb-2 ${className}`}>
         {children}
       </div>
     </div>
