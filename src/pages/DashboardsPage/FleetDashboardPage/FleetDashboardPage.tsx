@@ -312,43 +312,44 @@ export default function FleetDashboardPage(): ReactElement {
       }
       widget2={<></>}
       widget3={
-        <CountWidget
-          data={{
-            series: [
-              responseRobots?.filter(
-                (robot: any) =>
-                  robot?.robotClusters[0]?.robotStatus ===
-                    "CreatingEnvironment" ||
-                  robot?.robotClusters[0]?.robotStatus ===
-                    "CreatingDevelopmentSuite"
-              )?.length || 0,
-              responseRobots?.filter(
-                (robot: any) =>
-                  robot?.robotClusters[0]?.robotStatus === "BuildingRobot"
-              )?.length || 0,
-              responseRobots?.filter(
-                (robot: any) =>
-                  robot?.robotClusters[0]?.robotStatus === "Launching"
-              )?.length || 0,
-              responseRobots?.filter(
-                (robot: any) =>
-                  robot?.robotClusters[0]?.robotStatus === "EnvironmentReady"
-              )?.length || 0,
-              responseRobots?.filter(
-                (robot: any) =>
-                  robot?.robotClusters[0]?.robotStatus === "Deleting"
-              )?.length || 0,
-            ],
-            categories: [
-              "Creating",
-              "Building",
-              "Launching",
-              "Ready",
-              "Deleting",
-            ],
-          }}
-          title="Robot"
-        />
+        // <CountWidget
+        //   data={{
+        //     series: [
+        //       responseRobots?.filter(
+        //         (robot: any) =>
+        //           robot?.robotClusters[0]?.robotStatus ===
+        //             "CreatingEnvironment" ||
+        //           robot?.robotClusters[0]?.robotStatus ===
+        //             "CreatingDevelopmentSuite"
+        //       )?.length || 0,
+        //       responseRobots?.filter(
+        //         (robot: any) =>
+        //           robot?.robotClusters[0]?.robotStatus === "BuildingRobot"
+        //       )?.length || 0,
+        //       responseRobots?.filter(
+        //         (robot: any) =>
+        //           robot?.robotClusters[0]?.robotStatus === "Launching"
+        //       )?.length || 0,
+        //       responseRobots?.filter(
+        //         (robot: any) =>
+        //           robot?.robotClusters[0]?.robotStatus === "EnvironmentReady"
+        //       )?.length || 0,
+        //       responseRobots?.filter(
+        //         (robot: any) =>
+        //           robot?.robotClusters[0]?.robotStatus === "Deleting"
+        //       )?.length || 0,
+        //     ],
+        //     categories: [
+        //       "Creating",
+        //       "Building",
+        //       "Launching",
+        //       "Ready",
+        //       "Deleting",
+        //     ],
+        //   }}
+        //   title="Robot"
+        // />
+        <></>
       }
       table={
         <GeneralTable

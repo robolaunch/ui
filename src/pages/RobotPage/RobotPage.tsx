@@ -1,14 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
-import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import { useParams } from "react-router-dom";
-import StreamContext from "../../contexts/StreamContext";
 import CodeEditor from "./CodeEditor/CodeEditor";
-import Workspaces from "./Workspaces/Workspaces";
 import Overview from "./Overview/Overview";
 import ROSLIB from "roslib";
 import { useAppSelector } from "../../hooks/redux";
@@ -304,8 +301,6 @@ export default function RobotPage(): ReactElement {
                   </BarcodeManagementContext>
                 </TaskManagementContext>
               );
-            case "ROS Workspaces":
-              return <Workspaces />;
             case "Code Editor":
               return (
                 <CodeEditor
@@ -341,21 +336,6 @@ export default function RobotPage(): ReactElement {
               );
             case "Settings":
               return <div>Settings</div>;
-            case "Development Suite":
-              return (
-                <StreamContext
-                  vdiIngressEndpoint={
-                    urls?.vdi || responseRobot?.vdiIngressEndpoint
-                  }
-                >
-                  <DevelopmentSuite
-                    ros={ros}
-                    ideIngressEndpoint={
-                      urls?.ide || responseRobot?.ideIngressEndpoint
-                    }
-                  />
-                </StreamContext>
-              );
             case "Loading":
               return (
                 <div>

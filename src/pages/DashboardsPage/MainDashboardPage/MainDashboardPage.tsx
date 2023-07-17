@@ -127,13 +127,14 @@ export default function MainDashboardPage(): ReactElement {
       }
       widget2={<></>}
       widget3={
-        <CountWidget
-          data={{
-            series: [0, responseOrganizations?.length || 0, 0],
-            categories: [["Creating"], ["Ready"], ["Deleting"]],
-          }}
-          title="Account"
-        />
+        // <CountWidget
+        //   data={{
+        //     series: [0, responseOrganizations?.length || 0, 0],
+        //     categories: [["Creating"], ["Ready"], ["Deleting"]],
+        //   }}
+        //   title="Account"
+        // />
+        <></>
       }
       table={
         <GeneralTable

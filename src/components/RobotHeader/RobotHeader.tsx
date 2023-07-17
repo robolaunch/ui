@@ -13,7 +13,6 @@ import {
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { BiJoystickButton } from "react-icons/bi";
-import { RxDashboard } from "react-icons/rx";
 import Button from "../Button/Button";
 
 interface IRobotHeader {
@@ -76,18 +75,6 @@ export default function RobotHeader({
       icon: <BsCameraVideoFill size={14} />,
       state: responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
-    },
-    {
-      name: "Development Suite",
-      icon: <RxDashboard size={14} />,
-      state:
-        responseRobot?.ideIngressEndpoint && responseRobot?.vdiIngressEndpoint
-          ? true
-          : false,
-      disabled:
-        responseRobot?.ideIngressEndpoint && responseRobot?.vdiIngressEndpoint
-          ? false
-          : true,
     },
     {
       name: "Code Editor",

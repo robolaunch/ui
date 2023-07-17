@@ -1,8 +1,5 @@
 import React, { ReactElement } from "react";
-import {
-  stringCapitalization,
-  stringSlugify,
-} from "../../helpers/GeneralFunctions";
+import { stringSlugify } from "../../helpers/GeneralFunctions";
 import { Link, useParams } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import {
