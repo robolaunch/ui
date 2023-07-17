@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Widget from "../../layouts/WidgetLayout";
 import { GoGraph } from "react-icons/go";
-// import ReactApexChart from "react-apexcharts";
+import ReactApexChart from "react-apexcharts";
 
 interface ICountWidget {
   data: any[] | undefined;
@@ -14,11 +14,12 @@ export default function CountWidget({ data }: ICountWidget): ReactElement {
       subtitle={` Count`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      {/* <ReactApexChart
+      <ReactApexChart
         series={data?.map((item) => item?.value) || []}
         options={{
           chart: {
             width: "100%",
+            height: "100%",
             type: "pie",
           },
           labels: data?.map((item) => item?.label) || [],
@@ -38,8 +39,8 @@ export default function CountWidget({ data }: ICountWidget): ReactElement {
           ],
         }}
         type="pie"
-        height={250}
-      /> */}
+        height={"100%"}
+      />
     </Widget>
   );
 }

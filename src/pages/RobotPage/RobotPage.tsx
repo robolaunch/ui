@@ -7,17 +7,24 @@ import Teleoperation from "./Teleoperation/Teleoperation";
 import { useParams } from "react-router-dom";
 import CodeEditor from "./CodeEditor/CodeEditor";
 import Overview from "./Overview/Overview";
-import ROSLIB from "roslib";
 import { useAppSelector } from "../../hooks/redux";
 import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
 import usePages from "../../hooks/usePages";
+import RosConnector from "../../components/RosConnector/RosConnector";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const [topicList, setTopicList] = useState<any>([]);
   const [ros, setRos] = useState<any>(null);
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [responseBuildManager, setResponseBuildManager] =
+    useState<any>(undefined);
+  const [responseLaunchManagers, setResponseLaunchManagers] =
+    useState<any>(undefined);
+  const { urls } = useAppSelector((state) => state.robot);
+  const { pagesState } = usePages();
   const url = useParams();
 
   const {
@@ -29,14 +36,6 @@ export default function RobotPage(): ReactElement {
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
-
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const [responseBuildManager, setResponseBuildManager] =
-    useState<any>(undefined);
-  const [responseLaunchManagers, setResponseLaunchManagers] =
-    useState<any>(undefined);
-
-  const { pagesState } = usePages();
 
   useEffect(() => {
     if (
@@ -206,53 +205,6 @@ export default function RobotPage(): ReactElement {
     );
   }
 
-  const { urls } = useAppSelector((state) => state.robot);
-
-  useEffect(() => {
-    const ros = new ROSLIB.Ros({
-      url:
-        urls?.ros ||
-        responseRobot?.bridgeIngressEndpoint ||
-        "ws://localhost:9090",
-    });
-
-    setRos(ros);
-
-    ros?.on("connection", function () {
-      console.log("Connected to websocket server.");
-    });
-    ros?.on("error", function (error) {
-      console.error("Error connecting to websocket server: ", error);
-    });
-    ros?.on("close", function () {
-      console.log("Connection to websocket server closed.");
-    });
-
-    return () => {
-      ros.close();
-    };
-  }, [responseRobot, urls?.ros]);
-
-  useEffect(() => {
-    if (ros) {
-      const getTopics = new ROSLIB.Service({
-        ros: ros,
-        name: "/rosapi/topics",
-        serviceType: "rosapi/Topics",
-      });
-      // @ts-ignore
-      const request = new ROSLIB.ServiceRequest();
-      getTopics.callService(request, function (result) {
-        result.topics.map((topic: string, key: number) =>
-          setTopicList((prev: any) => [
-            ...prev,
-            { name: topic, type: result.types[key] },
-          ])
-        );
-      });
-    }
-  }, [ros]);
-
   function handleChangeActiveTab(tab: string) {
     setActiveTab(tab);
   }
@@ -267,6 +219,12 @@ export default function RobotPage(): ReactElement {
 
   return (
     <div className="grid grid-cols-1 gap-6">
+      <RosConnector
+        responseRobot={responseRobot}
+        ros={ros}
+        setRos={setRos}
+        setTopicList={setTopicList}
+      />
       <div className="col-span-1">
         <RobotHeader
           responseRobot={responseRobot}

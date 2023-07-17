@@ -19,6 +19,7 @@ import CirclePercentageBar from "../../../components/CirclePercentageBar/CircleP
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
+import CountWidget from "../../../components/CountWidget/CountWidget";
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
@@ -286,6 +287,8 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     );
   }
 
+  console.log(responseInstances);
+
   return (
     <DashboardLayout
       widget1={
@@ -318,27 +321,41 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         />
       }
       widget3={
-        // <CountWidget
-        //   data={{
-        //     series: [
-        //       responseInstances?.filter(
-        //         (instance: any) => instance?.instanceState === "pending"
-        //       )?.length || 0,
-        //       responseInstances?.filter(
-        //         (instance: any) => instance?.instanceState === "running"
-        //       )?.length || 0,
-        //       responseInstances?.filter(
-        //         (instance: any) => instance?.instanceState === "stopping"
-        //       )?.length || 0,
-        //       responseInstances?.filter(
-        //         (instance: any) => instance?.instanceState === "stopped"
-        //       )?.length || 0,
-        //     ],
-        //     categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
-        //   }}
-        //   title="Robotics Cloud"
-        // />
-        <></>
+        <CountWidget
+          data={
+            responseInstances
+              ? [
+                  {
+                    label: "Preparing",
+                    value:
+                      responseInstances?.filter(
+                        (item: any) =>
+                          item?.instanceCloudState !== "ConnectionHub_Ready"
+                      ).length || 0,
+                    color: "orange",
+                  },
+                  {
+                    label: "Ready",
+                    value:
+                      responseInstances?.filter(
+                        (item: any) =>
+                          item?.instanceCloudState === "ConnectionHub_Ready"
+                      ).length || 0,
+                    color: "#cb77ff",
+                  },
+                  {
+                    label: "Error",
+                    value:
+                      responseInstances?.filter(
+                        (item: any) =>
+                          item?.instanceCloudState === "ConnectionHub_Error"
+                      ).length || 0,
+                    color: "red",
+                  },
+                ]
+              : []
+          }
+        />
       }
       table={
         <GeneralTable

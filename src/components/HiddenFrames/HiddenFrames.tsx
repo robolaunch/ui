@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 interface IHiddenFrames {
-  type: "vdi" | "ros";
+  type: "vdi" | "ros" | "ide";
   url: string;
   onLoad: () => void;
 }

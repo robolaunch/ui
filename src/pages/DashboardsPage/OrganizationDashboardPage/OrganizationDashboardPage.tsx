@@ -205,24 +205,23 @@ export default function OrganizationDashboardPage(): ReactElement {
       widget3={
         <CountWidget
           data={
-            // responseRoboticsClouds
-            //   ? Array?.from(
-            //       new Set(
-            //         responseRoboticsClouds?.map((item: any) => item.region) ||
-            //           []
-            //       )
-            //     )?.map((item: any, index: number) => {
-            //       return {
-            //         label: item,
-            //         value: responseRoboticsClouds?.filter(
-            //           (rc: any) => rc.region === item
-            //         )?.length,
-            //         color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
-            //       };
-            //     })
-            //   :
-
-            []
+            responseRoboticsClouds
+              ? Array?.from(
+                  new Set(
+                    responseRoboticsClouds?.map((item: any) => item?.region) ||
+                      []
+                  )
+                )?.map((item: any, index: number) => {
+                  return {
+                    label: item || "",
+                    value:
+                      responseRoboticsClouds?.filter(
+                        (rc: any) => rc?.region === item
+                      )?.length || 0,
+                    color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
+                  };
+                })
+              : []
           }
         />
       }
