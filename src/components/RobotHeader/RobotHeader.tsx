@@ -2,14 +2,8 @@ import React, { Fragment, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiFillCode, AiOutlineTeam } from "react-icons/ai";
-import { BsCameraVideoFill, BsFillCpuFill } from "react-icons/bs";
-import { FaMemory } from "react-icons/fa";
-import {
-  MdDashboard,
-  MdOutlineStorage,
-  MdMap,
-  MdScreenShare,
-} from "react-icons/md";
+import { BsCameraVideoFill } from "react-icons/bs";
+import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { BiJoystickButton } from "react-icons/bi";
@@ -36,21 +30,6 @@ export default function RobotHeader({
   activeTab,
 }: IRobotHeader): ReactElement {
   const url = useParams();
-
-  const resources = {
-    virtual: {
-      cpu: `${responseCurrentInstance?.cloudInstanceResource?.cpuTotal} CPU`,
-      gpu: "1T4 GPU",
-      ram: `${responseCurrentInstance?.cloudInstanceResource?.memoryTotal} GB`,
-      storage: `${responseRobot?.storageAmount} GB`,
-    },
-    physical: {
-      cpu: "Null",
-      gpu: "Null",
-      ram: "Null",
-      storage: "Null",
-    },
-  };
 
   const tabs = [
     {
