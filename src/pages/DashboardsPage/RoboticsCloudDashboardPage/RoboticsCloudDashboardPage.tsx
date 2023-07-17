@@ -319,26 +319,27 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         />
       }
       widget3={
-        <CountWidget
-          data={{
-            series: [
-              responseInstances?.filter(
-                (instance: any) => instance?.instanceState === "pending"
-              )?.length || 0,
-              responseInstances?.filter(
-                (instance: any) => instance?.instanceState === "running"
-              )?.length || 0,
-              responseInstances?.filter(
-                (instance: any) => instance?.instanceState === "stopping"
-              )?.length || 0,
-              responseInstances?.filter(
-                (instance: any) => instance?.instanceState === "stopped"
-              )?.length || 0,
-            ],
-            categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
-          }}
-          title="Robotics Cloud"
-        />
+        // <CountWidget
+        //   data={{
+        //     series: [
+        //       responseInstances?.filter(
+        //         (instance: any) => instance?.instanceState === "pending"
+        //       )?.length || 0,
+        //       responseInstances?.filter(
+        //         (instance: any) => instance?.instanceState === "running"
+        //       )?.length || 0,
+        //       responseInstances?.filter(
+        //         (instance: any) => instance?.instanceState === "stopping"
+        //       )?.length || 0,
+        //       responseInstances?.filter(
+        //         (instance: any) => instance?.instanceState === "stopped"
+        //       )?.length || 0,
+        //     ],
+        //     categories: [["Pending"], ["Running"], ["Stopping"], ["Stopped"]],
+        //   }}
+        //   title="Robotics Cloud"
+        // />
+        <></>
       }
       table={
         <GeneralTable

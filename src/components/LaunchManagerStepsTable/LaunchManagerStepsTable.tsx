@@ -15,8 +15,6 @@ export default function LaunchManagerStepsTable({
 }: ILaunchManagerStepsTable): ReactElement {
   const url = useParams();
 
-  console.log(responseLaunchManagers);
-
   const data: any = useMemo(
     () =>
       responseLaunchManagers?.map((step: any) => {

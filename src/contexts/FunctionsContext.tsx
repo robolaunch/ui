@@ -663,12 +663,6 @@ export default ({ children }: any) => {
         responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
       ) {
-        console.log(
-          "!",
-          responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
-            ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
-        );
-
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {

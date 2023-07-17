@@ -203,15 +203,16 @@ export default function OrganizationDashboardPage(): ReactElement {
         />
       }
       widget3={
-        <CountWidget
-          data={{
-            series: [0, responseRoboticsClouds?.length || 0, 0],
-            categories: [["Pending"], ["Ready"], ["Deleting"]],
-          }}
-          title={`${stringCapitalization({
-            str: url?.organizationName as string,
-          })} Organization`}
-        />
+        // <CountWidget
+        //   data={{
+        //     series: [0, responseRoboticsClouds?.length || 0, 0],
+        //     categories: [["Pending"], ["Ready"], ["Deleting"]],
+        //   }}
+        //   title={`${stringCapitalization({
+        //     str: url?.organizationName as string,
+        //   })} Organization`}
+        // />
+        <></>
       }
       table={
         <GeneralTable
