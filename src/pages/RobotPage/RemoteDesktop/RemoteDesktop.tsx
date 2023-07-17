@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
 import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
@@ -13,47 +13,9 @@ export default function RemoteDesktop({
 }: IRemoteDesktop): ReactElement {
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
-  useEffect(() => {
-    deleteAllCookies();
+  console.log(document.cookie);
 
-    return () => {
-      deleteAllCookies();
-    };
-  }, []);
-
-  function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      var domain = window.location.hostname;
-
-      // Çerezin özelliklerini al
-      var cookieProperties = cookie.split(";");
-
-      // SameSite özelliğini kontrol et
-      var hasSameSite = false;
-
-      for (var j = 0; j < cookieProperties.length; j++) {
-        var property = cookieProperties[j].trim();
-
-        if (property.indexOf("SameSite") === 0) {
-          hasSameSite = true;
-          break;
-        }
-      }
-
-      // Mevcut domaindeki ve SameSite özelliğine sahip çerezleri sil
-      if (hasSameSite || domain === "") {
-        document.cookie =
-          name +
-          "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=" +
-          domain;
-      }
-    }
-  }
+  console.log(document.cookie.split(";"));
 
   return (
     <CardLayout
