@@ -151,15 +151,17 @@ export default function CreateRobotFormStep3({
           buildManagerName: values?.buildManagerName,
           robotBuildSteps: values?.robotBuildSteps,
         })
-      );
-
-      if (isImportRobot) {
-        toast.success("Robot updated successfully");
-        return window.location.reload();
-      }
-
-      formik.setSubmitting(false);
-      handleCreateRobotNextStep();
+      ).then(() => {
+        if (isImportRobot) {
+          toast.success("Robot updated successfully. Redirecting...");
+          formik.setSubmitting(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 4000);
+        } else {
+          handleCreateRobotNextStep();
+        }
+      });
     },
   });
 

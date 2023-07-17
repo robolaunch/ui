@@ -75,7 +75,8 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "WaitingForMulticast" ||
         state === "WaitingForCredentials" ||
         state === "ConfiguringEnvironment" ||
-        state === "CreatingDevelopmentSuite" ? (
+        state === "CreatingDevelopmentSuite" ||
+        state === "BuildingRobot" ? (
         <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
       ) : (
         <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />

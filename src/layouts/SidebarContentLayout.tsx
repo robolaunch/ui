@@ -200,10 +200,8 @@ export default function SidebarContentLayout(): ReactElement {
             handleResetRobotForm();
           }
       }
-
       setSidebarState((prev: any) => ({
         ...prev,
-
         isCreateMode: true,
       }));
     }

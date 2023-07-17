@@ -205,7 +205,8 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     percentage={Number(
                       (
                         (rowData?.usages?.storageTotal / 100) *
-                        rowData?.usages?.storageUsage
+                        (rowData?.usages?.storageTotal -
+                          rowData?.usages?.storageUsage)
                       ).toFixed()
                     )}
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}

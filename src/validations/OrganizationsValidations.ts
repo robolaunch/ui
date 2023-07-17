@@ -4,7 +4,7 @@ export const createOrganizationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Organization name is required.")
     .min(3, "Minimum 3 characters.")
-    .max(12, "Maximum 12 characters.")
+    .max(16, "Maximum 16 characters.")
     .lowercase("Must be lowercase."),
 });
 
