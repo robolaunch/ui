@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Widget from "../../layouts/WidgetLayout";
 import { GoGraph } from "react-icons/go";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
 
 interface ICountWidget {
   data: any[] | undefined;
