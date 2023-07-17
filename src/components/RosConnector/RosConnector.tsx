@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useAppSelector } from "../../hooks/redux";
 import ROSLIB from "roslib";
-import HiddenFrames from "../HiddenFrames/HiddenFrames";
 
 interface IRosConnector {
+  isSettedCookie: boolean;
   ros: any;
   setRos: any;
   responseRobot: any;
@@ -11,13 +11,13 @@ interface IRosConnector {
 }
 
 export default function RosConnector({
+  isSettedCookie,
   ros,
   setRos,
   responseRobot,
   setTopicList,
 }: IRosConnector) {
   const { urls } = useAppSelector((state) => state.robot);
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
   useEffect(() => {
     if (isSettedCookie) {
@@ -32,6 +32,7 @@ export default function RosConnector({
 
       ros?.on("connection", function () {
         console.log("Connected to websocket server.");
+        console.info("ROSBRIDGE URL: ", urls?.ros);
       });
       ros?.on("error", function (error) {
         console.warn("Error connecting to websocket server: ", error);
@@ -45,7 +46,7 @@ export default function RosConnector({
       ros?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseRobot, urls?.ros]);
+  }, [responseRobot, urls?.ros, isSettedCookie]);
 
   useEffect(() => {
     getTopics();
@@ -80,15 +81,5 @@ export default function RosConnector({
     }
   }
 
-  return (
-    <Fragment>
-      <HiddenFrames
-        url={responseRobot?.ideIngressEndpoint}
-        type="ide"
-        onLoad={() => {
-          setIsSettedCookie(true);
-        }}
-      />
-    </Fragment>
-  );
+  return <></>;
 }

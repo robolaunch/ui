@@ -13,6 +13,7 @@ import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
 import usePages from "../../hooks/usePages";
 import RosConnector from "../../components/RosConnector/RosConnector";
+import HiddenFrames from "../../components/HiddenFrames/HiddenFrames";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -26,6 +27,8 @@ export default function RobotPage(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
   const { pagesState } = usePages();
   const url = useParams();
+
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
   const {
     getOrganization,
@@ -220,6 +223,7 @@ export default function RobotPage(): ReactElement {
   return (
     <div className="grid grid-cols-1 gap-6">
       <RosConnector
+        isSettedCookie={isSettedCookie}
         responseRobot={responseRobot}
         ros={ros}
         setRos={setRos}
@@ -303,6 +307,11 @@ export default function RobotPage(): ReactElement {
           }
         })()}
       </div>
+      <HiddenFrames
+        type="ide"
+        url={urls?.ide || responseRobot?.ideIngressEndpoint}
+        onLoad={() => setIsSettedCookie(true)}
+      />
     </div>
   );
 }
