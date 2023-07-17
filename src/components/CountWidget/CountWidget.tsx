@@ -4,28 +4,25 @@ import { GoGraph } from "react-icons/go";
 import ReactApexChart from "react-apexcharts";
 
 interface ICountWidget {
-  title: string;
-  data: any;
+  data: any[] | undefined;
 }
 
-export default function CountWidget({
-  title,
-  data,
-}: ICountWidget): ReactElement {
+export default function CountWidget({ data }: ICountWidget): ReactElement {
   return (
     <Widget
       title={`Count Widget`}
-      subtitle={`${title} Count`}
+      subtitle={` Count`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <ReactApexChart
-        series={[44, 55, 13, 43, 22]}
+      {/* <ReactApexChart
+        series={data?.map((item) => item?.value) || []}
         options={{
           chart: {
-            width: 380,
+            width: "100%",
             type: "pie",
           },
-          labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+          labels: data?.map((item) => item?.label) || [],
+          colors: data?.map((item) => item?.color) || [],
           responsive: [
             {
               breakpoint: 480,
@@ -42,7 +39,7 @@ export default function CountWidget({
         }}
         type="pie"
         height={250}
-      />
+      /> */}
     </Widget>
   );
 }

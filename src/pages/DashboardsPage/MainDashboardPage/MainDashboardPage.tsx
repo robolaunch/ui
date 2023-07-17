@@ -17,6 +17,7 @@ import OrganizationActionCells from "../../../components/ActionCells/Organizatio
 import StateCell from "../../../components/Cells/StateCell";
 import { useKeycloak } from "@react-keycloak/web";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -126,14 +127,29 @@ export default function MainDashboardPage(): ReactElement {
       }
       widget2={<></>}
       widget3={
-        // <CountWidget
-        //   data={{
-        //     series: [0, responseOrganizations?.length || 0, 0],
-        //     categories: [["Creating"], ["Ready"], ["Deleting"]],
-        //   }}
-        //   title="Account"
-        // />
-        <></>
+        <CountWidget
+          data={
+            responseOrganizations
+              ? [
+                  {
+                    label: "Pending",
+                    value: 0,
+                    color: "orange",
+                  },
+                  {
+                    label: "Ready",
+                    value: responseOrganizations?.length || 0,
+                    color: "#AC2DFE99",
+                  },
+                  {
+                    label: "Error",
+                    value: 0,
+                    color: "red",
+                  },
+                ]
+              : []
+          }
+        />
       }
       table={
         <GeneralTable

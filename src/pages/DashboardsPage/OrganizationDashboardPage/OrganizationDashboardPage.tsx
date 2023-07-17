@@ -13,6 +13,7 @@ import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCl
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
+import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -202,16 +203,28 @@ export default function OrganizationDashboardPage(): ReactElement {
         />
       }
       widget3={
-        // <CountWidget
-        //   data={{
-        //     series: [0, responseRoboticsClouds?.length || 0, 0],
-        //     categories: [["Pending"], ["Ready"], ["Deleting"]],
-        //   }}
-        //   title={`${stringCapitalization({
-        //     str: url?.organizationName as string,
-        //   })} Organization`}
-        // />
-        <></>
+        <CountWidget
+          data={
+            // responseRoboticsClouds
+            //   ? Array?.from(
+            //       new Set(
+            //         responseRoboticsClouds?.map((item: any) => item.region) ||
+            //           []
+            //       )
+            //     )?.map((item: any, index: number) => {
+            //       return {
+            //         label: item,
+            //         value: responseRoboticsClouds?.filter(
+            //           (rc: any) => rc.region === item
+            //         )?.length,
+            //         color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
+            //       };
+            //     })
+            //   :
+
+            []
+          }
+        />
       }
       table={
         <GeneralTable
