@@ -1,52 +1,67 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
+import VSCodeFrame from "../../../components/VSCodeFrame/VSCodeFrame";
 import CardLayout from "../../../layouts/CardLayout";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 
 interface ICodeEditor {
-  ideURL: any;
+  vIdeURL: string;
+  pIdeURL: string;
 }
 
-export default function CodeEditor({ ideURL }: ICodeEditor): ReactElement {
-  const [loading, setLoading] = useState<boolean>(true);
-  const handleFullScreen = useFullScreenHandle();
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 5000);
-  }, []);
+export default function CodeEditor({
+  vIdeURL,
+  pIdeURL,
+}: ICodeEditor): ReactElement {
+  const [activeTab, setActiveTab] = useState<"Cloud IDE" | "Physical IDE">(
+    "Cloud IDE"
+  );
+
+  const tabs = [
+    {
+      name: "Cloud IDE",
+    },
+    {
+      name: "Physical IDE",
+    },
+  ];
 
   return (
-    <CardLayout loading={loading}>
-      <FullScreen className="relative" handle={handleFullScreen}>
-        <iframe
-          allow="clipboard-read"
-          className={`w-full animate__animated animate__fadeIn ${
-            handleFullScreen?.active ? "h-screen" : "h-[55rem]"
-          }`}
-          src={ideURL}
-          title="Code Editor"
-        />
-        {handleFullScreen.active ? (
-          <button
-            className="absolute bottom-3 right-3"
-            onClick={handleFullScreen.exit}
-          >
-            <BsFullscreenExit
-              size={24}
-              className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
-            />
-          </button>
-        ) : (
-          <button
-            className="absolute bottom-3 right-3"
-            onClick={handleFullScreen.enter}
-          >
-            <BsFullscreen
-              size={24}
-              className=" text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
-            />
-          </button>
-        )}
-      </FullScreen>
-    </CardLayout>
+    <div className="grid grid-cols-1 gap-6">
+      {pIdeURL && (
+        <CardLayout className="!">
+          <ul className="w-full flex justify-center gap-6  p-1 -mb-2.5 rounded">
+            {tabs.map((tab: any, index: number) => {
+              return (
+                <li
+                  className={`flex w-full items-center flex-col gap-3 cursor-pointer 
+                     ${tab?.hidden && "!hidden"}`}
+                  onClick={() => setActiveTab(tab.name)}
+                  key={index}
+                >
+                  <div
+                    className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max hover:scale-90
+                        ${
+                          tab.name === activeTab
+                            ? "text-layer-primary-500"
+                            : "text-layer-light-500"
+                        } `}
+                  >
+                    <span>{tab.name}</span>
+                  </div>
+                  <div
+                    className={`w-full h-[2px] transition-all duration-500 
+                  ${
+                    tab.name === activeTab
+                      ? "bg-layer-primary-500"
+                      : "bg-layer-light-100"
+                  } `}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </CardLayout>
+      )}
+      <VSCodeFrame srcURL={activeTab === "Cloud IDE" ? vIdeURL : pIdeURL} />;
+    </div>
   );
 }

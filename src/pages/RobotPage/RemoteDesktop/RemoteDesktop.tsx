@@ -13,10 +13,6 @@ export default function RemoteDesktop({
 }: IRemoteDesktop): ReactElement {
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
-  console.log(document.cookie);
-
-  console.log(document.cookie.split(";"));
-
   return (
     <CardLayout
       loading={!isSettedCookie}

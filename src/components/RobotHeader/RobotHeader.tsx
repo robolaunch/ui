@@ -14,6 +14,7 @@ import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import { BiJoystickButton } from "react-icons/bi";
 import Button from "../Button/Button";
+import RobotResource from "../RobotResource/RobotResource";
 
 interface IRobotHeader {
   responseCurrentOrganization: any;
@@ -181,78 +182,7 @@ export default function RobotHeader({
                 </div>
               </div>
 
-              <div className="flex flex-col items-end">
-                {responseRobot?.robotClusters?.length > 1 && (
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs text-center font-semibold">
-                      Physical Resources:
-                    </span>
-                    <div className="col-span-1 flex items-center gap-2">
-                      <BsFillCpuFill size={16} color="#666666" />
-                      <span className="text-xs font-light">
-                        {resources?.physical?.cpu}
-                      </span>
-                    </div>
-                    <div className="col-span-1 flex items-center gap-2">
-                      <BsFillCpuFill size={16} color="#666666" />
-                      <span className="text-xs font-light">
-                        {resources?.physical?.gpu}
-                      </span>
-                    </div>{" "}
-                    <div className="col-span-1 flex items-center gap-2">
-                      <FaMemory size={16} color="#666666" />
-                      <span className="text-xs font-light">
-                        {resources?.physical?.ram}
-                      </span>
-                    </div>{" "}
-                    <div className="col-span-1 flex items-center gap-2">
-                      <MdOutlineStorage size={16} color="#666666" />
-                      <span className="text-xs font-light">
-                        {resources?.physical?.storage}
-                      </span>
-                    </div>
-                  </div>
-                )}
-                <div className="flex items-center gap-3 pt-6">
-                  <span className="text-xs text-center font-semibold">
-                    Virtual Resources:
-                  </span>
-                  <div className="col-span-1 flex items-center gap-2">
-                    <BsFillCpuFill size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.virtual?.cpu || (
-                        <ContentLoader
-                          speed={1}
-                          width={92}
-                          height={12}
-                          backgroundColor="#f6f6ef"
-                          foregroundColor="#e8e8e3"
-                        >
-                          <rect width="92" height="12" />
-                        </ContentLoader>
-                      )}
-                    </span>
-                  </div>
-                  <div className="col-span-1 flex items-center gap-2">
-                    <BsFillCpuFill size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.virtual?.gpu}
-                    </span>
-                  </div>{" "}
-                  <div className="col-span-1 flex items-center gap-2">
-                    <FaMemory size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.virtual?.ram}
-                    </span>
-                  </div>{" "}
-                  <div className="col-span-1 flex items-center gap-2">
-                    <MdOutlineStorage size={16} color="#666666" />
-                    <span className="text-xs font-light">
-                      {resources?.virtual?.storage}
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <RobotResource responseRobot={responseRobot} />
             </div>
           </div>
         </div>

@@ -16,7 +16,6 @@ import usePages from "../../hooks/usePages";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
-
   const [topicList, setTopicList] = useState<any>([]);
   const [ros, setRos] = useState<any>(null);
   const url = useParams();
@@ -125,7 +124,7 @@ export default function RobotPage(): ReactElement {
         roboticsCloudName: pagesState?.roboticsCloud?.name,
         instanceName: url?.instanceName as string,
         region: pagesState?.roboticsCloud?.region,
-        details: false,
+        details: true,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -304,7 +303,8 @@ export default function RobotPage(): ReactElement {
             case "Code Editor":
               return (
                 <CodeEditor
-                  ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+                  vIdeURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+                  pIdeURL={responseRobot?.physicalIdeIngressEndpoint}
                 />
               );
             case "Visualization":
