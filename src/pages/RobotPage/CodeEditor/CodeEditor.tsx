@@ -61,7 +61,7 @@ export default function CodeEditor({
           </ul>
         </CardLayout>
       )}
-      <VSCodeFrame srcURL={activeTab === "Cloud IDE" ? vIdeURL : pIdeURL} />;
+      <VSCodeFrame srcURL={activeTab === "Cloud IDE" ? vIdeURL : pIdeURL} />
     </div>
   );
 }

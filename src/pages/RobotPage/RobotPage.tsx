@@ -269,10 +269,6 @@ export default function RobotPage(): ReactElement {
     <div className="grid grid-cols-1 gap-6">
       <div className="col-span-1">
         <RobotHeader
-          responseCurrentOrganization={pagesState?.organization}
-          responseCurrentRoboticsCloud={pagesState?.roboticsCloud}
-          responseCurrentInstance={pagesState?.instance}
-          responseCurrentFleet={pagesState?.fleet}
           responseRobot={responseRobot}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}

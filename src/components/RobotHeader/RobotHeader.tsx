@@ -11,20 +11,12 @@ import Button from "../Button/Button";
 import RobotResource from "../RobotResource/RobotResource";
 
 interface IRobotHeader {
-  responseCurrentOrganization: any;
-  responseCurrentRoboticsCloud: any;
-  responseCurrentInstance: any;
-  responseCurrentFleet: any;
   responseRobot: any;
   handleChangeActiveTab: any;
   activeTab: string;
 }
 
 export default function RobotHeader({
-  responseCurrentOrganization,
-  responseCurrentRoboticsCloud,
-  responseCurrentInstance,
-  responseCurrentFleet,
   responseRobot,
   handleChangeActiveTab,
   activeTab,

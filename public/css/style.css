@@ -1135,6 +1135,30 @@ video {
   min-height: 100vh;
 }
 
+.\!min-h-full{
+  min-height: 100% !important;
+}
+
+.\!min-h-\[20rem\]{
+  min-height: 20rem !important;
+}
+
+.\!min-h-\[40rem\]{
+  min-height: 40rem !important;
+}
+
+.\!min-h-\[60rem\]{
+  min-height: 60rem !important;
+}
+
+.\!min-h-\[50rem\]{
+  min-height: 50rem !important;
+}
+
+.\!min-h-\[52rem\]{
+  min-height: 52rem !important;
+}
+
 .\!w-24{
   width: 6rem !important;
 }

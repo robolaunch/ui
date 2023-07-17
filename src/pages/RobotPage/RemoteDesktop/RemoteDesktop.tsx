@@ -16,12 +16,12 @@ export default function RemoteDesktop({
   return (
     <CardLayout
       loading={!isSettedCookie}
-      className={`${!isSettedCookie && "h-80"}`}
+      className={`${!isSettedCookie && "!min-h-[52rem]"}`}
     >
       <Fragment>
         {isSettedCookie && (
           <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
-            <div className="grid grid-cols-12">
+            <div className="grid grid-cols-12 animate__animated animate__fadeIn">
               <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
                 <RemoteDesktopScene isControllerActive={true} />
               </div>
