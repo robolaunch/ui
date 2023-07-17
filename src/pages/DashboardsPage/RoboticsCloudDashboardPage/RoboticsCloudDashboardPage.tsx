@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import StateCell from "../../../components/Cells/StateCell";

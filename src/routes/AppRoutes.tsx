@@ -8,12 +8,12 @@ import FleetDashboardPage from "../pages/DashboardsPage/FleetDashboardPage/Fleet
 import MainDashboardPage from "../pages/DashboardsPage/MainDashboardPage/MainDashboardPage";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
-import BillingPage from "../pages/BillingPage/BillingPage";
 import { Navigate, Route, Routes } from "react-router-dom";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import PrivateProvider from "../auth/PrivateProvider";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
+// import BillingPage from "../pages/BillingPage/BillingPage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -23,7 +23,7 @@ export default function AppRoutes(): ReactElement {
           path={`/user-role-management`}
           element={<UserRoleManagementLayout />}
         />
-        <Route path={`/billing`} element={<BillingPage />} />
+        {/* <Route path={`/billing`} element={<BillingPage />} /> */}
         <Route path={`/marketplace`} element={<MarketplacePage />} />
         <Route
           path={`/marketplace/:name`}
