@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { organizationNameViewer } from "../../../helpers/GeneralFunctions";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
