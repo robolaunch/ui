@@ -309,7 +309,12 @@ export default function RobotPage(): ReactElement {
       </div>
       <HiddenFrames
         type="ide"
-        url={urls?.ide || responseRobot?.ideIngressEndpoint}
+        url={
+          urls?.ide ||
+          responseRobot?.ideIngressEndpoint ||
+          urls?.vdi ||
+          responseRobot?.vdiIngressEndpoint?.replace("wss", "https") + "health"
+        }
         onLoad={() => setIsSettedCookie(true)}
       />
     </div>

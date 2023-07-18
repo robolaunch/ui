@@ -11,10 +11,11 @@ export default function Sidebar(): ReactElement {
   const url = useParams();
 
   useEffect(() => {
+    setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 10000);
-  }, [url?.robotName]);
+  }, [url]);
 
   return (
     <Fragment>

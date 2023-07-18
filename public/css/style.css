@@ -1159,6 +1159,10 @@ video {
   min-height: 52rem !important;
 }
 
+.\!min-h-\[51rem\]{
+  min-height: 51rem !important;
+}
+
 .\!w-24{
   width: 6rem !important;
 }
