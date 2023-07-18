@@ -23,7 +23,7 @@ export default function Overview({
   const url = useParams();
 
   return (
-    <div className="grid gap-6 grid-cols-1 lg:grid-cols-12 animate__animated animate__fadeIn">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate__animated animate__fadeIn">
       <div className="col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
@@ -37,14 +37,14 @@ export default function Overview({
           }
         />
       </div>
-      <div className="col-span-5">
+      <div className="col-span-full lg:col-span-5">
         <RobotStatusWidget
           responseRobot={responseRobot}
           responseBuildManager={responseBuildManager}
           responseLaunchManagers={responseLaunchManagers}
         />
       </div>
-      <div className="col-span-3">
+      <div className="col-span-full lg:col-span-3">
         <ActivitiesWidget responseRobot={responseRobot} />
       </div>
       <div className="col-span-full">

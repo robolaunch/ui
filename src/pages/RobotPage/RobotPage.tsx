@@ -229,14 +229,14 @@ export default function RobotPage(): ReactElement {
         setRos={setRos}
         setTopicList={setTopicList}
       />
-      <div className="col-span-1">
+      <div className="col-span-full">
         <RobotHeader
           responseRobot={responseRobot}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}
         />
       </div>
-      <div className="col-span-1">
+      <div className="col-span-full">
         {(() => {
           switch (activeTab) {
             case "Overview":

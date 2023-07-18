@@ -20,7 +20,7 @@ export default function RosConnector({
   const { urls } = useAppSelector((state) => state.robot);
 
   useEffect(() => {
-    if (isSettedCookie) {
+    if (isSettedCookie && responseRobot) {
       const ros = new ROSLIB.Ros({
         url:
           urls?.ros ||

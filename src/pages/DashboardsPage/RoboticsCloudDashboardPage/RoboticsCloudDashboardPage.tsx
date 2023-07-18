@@ -119,7 +119,13 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <BasicCell text={rowData?.architecture} />;
+          return (
+            <BasicCell
+              text={
+                rowData?.architecture ? rowData?.architecture : "Pending..."
+              }
+            />
+          );
         },
       },
 
@@ -133,7 +139,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           console.log(rowData?.OSResources);
           return (
             <BasicCell
-              text={`${rowData?.OSResources?.distro} (${rowData?.OSResources?.os})`}
+              text={
+                rowData?.OSResources?.distro && rowData?.OSResources?.os
+                  ? `${rowData?.OSResources?.distro} (${rowData?.OSResources?.os})`
+                  : "Pending..."
+              }
             />
           );
         },
@@ -145,7 +155,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <BasicCell text={rowData?.kernel} />;
+          return (
+            <BasicCell
+              text={rowData?.kernel ? rowData?.kernel : "Pending..."}
+            />
+          );
         },
       },
       {
@@ -155,7 +169,11 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <BasicCell text={`Kubernetes ${rowData?.k8s}`} />;
+          return (
+            <BasicCell
+              text={rowData?.k8s ? `Kubernetes ${rowData?.k8s}` : "Pending..."}
+            />
+          );
         },
       },
       {
@@ -286,8 +304,6 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       }
     );
   }
-
-  console.log(responseInstances);
 
   return (
     <DashboardLayout

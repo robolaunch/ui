@@ -47,7 +47,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         ${states?.[`${state}`]?.color || "bg-red-500"}`}
         />
         <span className="text-xs capitalize">
-          {state?.replace("_", " ")} {states?.[`${state}`]?.state}
+          {state} {states?.[`${state}`]?.state}
         </span>
       </div>
     );
