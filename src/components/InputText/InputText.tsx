@@ -30,7 +30,7 @@ export default function InputText({
   );
 
   return (
-    <div className="relative">
+    <div className="relative animate__animated animate__fadeIn">
       <label
         className={`absolute z-10 transition-all duration-300 text-layer-light-700 pointer-events-none ${
           isFocused ? "text-xs left-0 -top-6" : "text-sm left-3 top-2.5"

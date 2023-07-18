@@ -410,6 +410,7 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
     });
 
     video.current?.addEventListener("wheel", (key: any) => {
+      console.log(key);
       // 0x01;
       if (
         remoteDesktopReducer?.controller?.displayname ===
@@ -419,8 +420,8 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
         payload = new DataView(buffer);
         payload.setUint8(0, 0x02);
         payload.setUint16(1, 4, true);
-        payload.setInt16(3, key.deltaX / -120, true);
-        payload.setInt16(5, key.deltaY / -120, true);
+        payload.setInt16(3, key.deltaX / -114, true);
+        payload.setInt16(5, key.deltaY / -114, true);
         if (
           typeof buffer !== "undefined" &&
           channel.current.readyState === "open"
