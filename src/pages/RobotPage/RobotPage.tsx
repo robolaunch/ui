@@ -14,6 +14,7 @@ import useFunctions from "../../hooks/useFunctions";
 import usePages from "../../hooks/usePages";
 import RosConnector from "../../components/RosConnector/RosConnector";
 import HiddenFrames from "../../components/HiddenFrames/HiddenFrames";
+import useSidebar from "../../hooks/useSidebar";
 
 export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] = useState<string>("Overview");
@@ -27,6 +28,7 @@ export default function RobotPage(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
   const { pagesState } = usePages();
   const url = useParams();
+  const { sidebarState } = useSidebar();
 
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
@@ -59,29 +61,40 @@ export default function RobotPage(): ReactElement {
     }
 
     const timerResponseRobot = setInterval(() => {
-      responseRobot?.robotClusters?.filter(
-        (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-      )?.length && handleGetRobot();
+      !sidebarState?.isOpen &&
+        responseRobot?.robotClusters?.filter(
+          (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+        )?.length &&
+        handleGetRobot();
     }, 10000);
 
     const timerResponseBuildManager = setInterval(() => {
-      responseBuildManager?.robotClusters?.filter(
-        (robot: any) => robot?.buildManagerStatus !== "Ready"
-      )?.length && handleGetBuildManager();
+      !sidebarState?.isOpen &&
+        responseBuildManager?.robotClusters?.filter(
+          (robot: any) => robot?.buildManagerStatus !== "Ready"
+        )?.length &&
+        handleGetBuildManager();
     }, 10000);
 
     const timerResponseLaunchManagers = setInterval(() => {
-      responseLaunchManagers
-        ?.map((launchStep: any) => {
-          return launchStep?.robotClusters;
-        })
-        .flat()
-        ?.map((cluster: any) => {
-          return cluster?.launchManagerStatus;
-        })
-        ?.filter((status: any) => status !== "Running")?.length &&
+      !sidebarState?.isOpen &&
+        responseLaunchManagers
+          ?.map((launchStep: any) => {
+            return launchStep?.robotClusters;
+          })
+          .flat()
+          ?.map((cluster: any) => {
+            return cluster?.launchManagerStatus;
+          })
+          ?.filter((status: any) => status !== "Running")?.length &&
         handleGetLaunchManagers();
     }, 10000);
+
+    if (sidebarState?.isOpen) {
+      clearInterval(timerResponseRobot);
+      clearInterval(timerResponseBuildManager);
+      clearInterval(timerResponseLaunchManagers);
+    }
 
     return () => {
       clearInterval(timerResponseRobot);
@@ -89,7 +102,16 @@ export default function RobotPage(): ReactElement {
       clearInterval(timerResponseLaunchManagers);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesState, responseRobot, responseBuildManager, responseLaunchManagers]);
+  }, [
+    pagesState?.organization?.organizationName,
+    pagesState?.roboticsCloud?.name,
+    pagesState?.instance?.name,
+    pagesState?.fleet?.name,
+    sidebarState,
+    responseRobot,
+    responseBuildManager,
+    responseLaunchManagers,
+  ]);
 
   function handleGetOrganization() {
     getOrganization(

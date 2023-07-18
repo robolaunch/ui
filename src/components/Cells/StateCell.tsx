@@ -77,7 +77,11 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "ConfiguringEnvironment" ||
         state === "CreatingDevelopmentSuite" ||
         state === "BuildingRobot" ? (
-        <div className="w-2.5 h-2.5 bg-yellow-500 rounded-full" />
+        <img
+          className="w-2.5 h-2.5 scale-[3.4]"
+          alt="loading"
+          src="/svg/general/loading-yellow.svg"
+        />
       ) : (
         <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
       )}

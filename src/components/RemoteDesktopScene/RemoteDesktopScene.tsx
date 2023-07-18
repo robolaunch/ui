@@ -27,7 +27,7 @@ export default function RemoteDesktopScene({
           <video
             onContextMenu={(e) => e.preventDefault()}
             className={`
-            absolute top-0 bottom-0 ${!video && "!min-h-[48rem]"}`}
+            absolute top-0 bottom-0`}
             playsInline
             ref={video}
             autoPlay

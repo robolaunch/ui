@@ -12,7 +12,7 @@ export default function RemoteDesktop({
   vdiIngressEndpoint,
 }: IRemoteDesktop): ReactElement {
   return (
-    <CardLayout className={`!min-h-[50rem]`}>
+    <CardLayout>
       <Fragment>
         <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
           <div className="grid grid-cols-12 animate__animated animate__fadeIn">
