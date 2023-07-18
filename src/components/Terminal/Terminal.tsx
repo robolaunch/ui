@@ -3,9 +3,10 @@ import { ReactTerminal, TerminalContextProvider } from "react-terminal";
 
 interface ITerminal {
   value: string;
+  ref?: any;
 }
 
-export default function Terminal({ value }: ITerminal): ReactElement {
+export default function Terminal({ value, ref }: ITerminal): ReactElement {
   const [terminalValue, setTerminalValue] = useState<string[]>([]);
 
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function Terminal({ value }: ITerminal): ReactElement {
   return (
     <TerminalContextProvider>
       <ReactTerminal
+        ref={ref}
         prompt={">>>"}
         theme={"material-dark"}
         welcomeMessage={

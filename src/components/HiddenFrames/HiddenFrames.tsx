@@ -11,6 +11,12 @@ export default function HiddenFrames({
   url,
   onLoad,
 }: IHiddenFrames): ReactElement {
+  async function onLoadIframe() {
+    await setTimeout(async () => {
+      await onLoad();
+    }, 2000);
+  }
+
   return (
     <iframe
       title={type}
@@ -18,11 +24,7 @@ export default function HiddenFrames({
       allow="microphone; camera; usb; midi; encrypted-media; autoplay; clipboard-write; clipboard-read"
       className="hidden"
       src={url || ""}
-      onLoad={() => {
-        setTimeout(() => {
-          onLoad();
-        }, 4000);
-      }}
+      onLoad={() => onLoadIframe()}
     />
   );
 }

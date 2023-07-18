@@ -88,7 +88,6 @@ export default function RobotPage(): ReactElement {
       clearInterval(timerResponseBuildManager);
       clearInterval(timerResponseLaunchManagers);
     };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagesState, responseRobot, responseBuildManager, responseLaunchManagers]);
 
@@ -232,6 +231,7 @@ export default function RobotPage(): ReactElement {
       <div className="col-span-full">
         <RobotHeader
           responseRobot={responseRobot}
+          isSettedCookie={isSettedCookie}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}
         />
@@ -315,7 +315,11 @@ export default function RobotPage(): ReactElement {
           urls?.vdi ||
           responseRobot?.vdiIngressEndpoint?.replace("wss", "https") + "health"
         }
-        onLoad={() => setIsSettedCookie(true)}
+        onLoad={async () => {
+          if (responseRobot) {
+            await setIsSettedCookie(true);
+          }
+        }}
       />
     </div>
   );

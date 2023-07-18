@@ -305,11 +305,7 @@ export default ({ children }: any) => {
       if (
         Array.isArray(responseInstances?.payload?.data) &&
         Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-          (instance: any) => instance?.name === values?.instanceName
-        )
+        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
       ) {
         parameters?.isSetState &&
           setSelectedState((prevState: any) => {

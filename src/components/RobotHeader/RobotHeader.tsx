@@ -12,12 +12,14 @@ import RobotResource from "../RobotResource/RobotResource";
 
 interface IRobotHeader {
   responseRobot: any;
+  isSettedCookie: boolean;
   handleChangeActiveTab: any;
   activeTab: string;
 }
 
 export default function RobotHeader({
   responseRobot,
+  isSettedCookie,
   handleChangeActiveTab,
   activeTab,
 }: IRobotHeader): ReactElement {
@@ -32,32 +34,35 @@ export default function RobotHeader({
     {
       name: "Task Management",
       icon: <MdMap size={14} />,
-      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      state:
+        isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
       hidden: true,
     },
     {
       name: "Teleoperation",
       icon: <BiJoystickButton size={14} />,
-      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      state:
+        isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Visualization",
       icon: <BsCameraVideoFill size={14} />,
-      state: responseRobot?.bridgeIngressEndpoint ? true : false,
+      state:
+        isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
     {
       name: "Code Editor",
       icon: <AiFillCode size={14} />,
-      state: responseRobot?.ideIngressEndpoint ? true : false,
+      state: isSettedCookie && responseRobot?.ideIngressEndpoint ? true : false,
       disabled: responseRobot?.ideIngressEndpoint ? false : true,
     },
     {
       name: "Remote Desktop",
       icon: <MdScreenShare size={14} />,
-      state: responseRobot?.vdiIngressEndpoint ? true : false,
+      state: isSettedCookie && responseRobot?.vdiIngressEndpoint ? true : false,
       disabled: responseRobot?.vdiIngressEndpoint ? false : true,
     },
   ];
@@ -159,6 +164,7 @@ export default function RobotHeader({
         </div>
         <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
           {tabs.map((tab: any, index: number) => {
+            console.log(tab);
             return (
               <li
                 className={`flex flex-col gap-3 ${
@@ -180,7 +186,7 @@ export default function RobotHeader({
                       : "text-layer-light-500"
                   } `}
                 >
-                  {!responseRobot ? (
+                  {!isSettedCookie ? (
                     <ContentLoader
                       speed={1}
                       width={92}
