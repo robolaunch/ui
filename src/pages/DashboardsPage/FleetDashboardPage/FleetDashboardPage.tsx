@@ -12,7 +12,6 @@ import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
@@ -312,24 +311,25 @@ export default function FleetDashboardPage(): ReactElement {
       }
       widget2={<></>}
       widget3={
-        <CountWidget
-          data={
-            responseRobots
-              ? [
-                  {
-                    label: "Preparing",
-                    value: responseRobots
-                      ?.filter((robot: any) => robot?.robotClusters)
-                      ?.filter(
-                        (cluster: any) =>
-                          cluster?.robotStatus !== "EnvironmentReady"
-                      )?.length,
-                    color: "orange",
-                  },
-                ]
-              : []
-          }
-        />
+        <></>
+        // <CountWidget
+        //   data={
+        //     responseRobots
+        //       ? [
+        //           {
+        //             label: "Preparing",
+        //             value: responseRobots
+        //               ?.filter((robot: any) => robot?.robotClusters)
+        //               ?.filter(
+        //                 (cluster: any) =>
+        //                   cluster?.robotStatus !== "EnvironmentReady"
+        //               )?.length,
+        //             color: "orange",
+        //           },
+        //         ]
+        //       : []
+        //   }
+        // />
       }
       table={
         <GeneralTable

@@ -4,16 +4,18 @@ interface IInformationWidget {
   title: string;
   subtitle: string;
   component: ReactElement;
+  className?: string;
 }
 
 export default function InformationWidget({
   title,
   subtitle,
   component,
+  className,
 }: IInformationWidget): ReactElement {
   return (
     <div
-      className="w-full flex flex-col justify-around rounded-lg bg-layer-light-50 shadow-lg p-8 animate__animated animate__fadeIn border border-layer-light-200 h-[21rem]"
+      className={`w-full flex flex-col justify-around rounded-lg bg-layer-light-50 shadow-lg p-8 animate__animated animate__fadeIn border border-layer-light-200 h-[21rem] ${className}`}
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",

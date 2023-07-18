@@ -69,56 +69,59 @@ export default ({ children }: any) => {
     values: IgetOrganization,
     parameters?: IsingleGetParameters
   ) {
-    await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
-      if (
-        organizationsResponse?.payload?.data &&
-        organizationsResponse?.payload?.data?.find(
-          (organization: any) =>
-            organization?.organizationName === `org_${values?.organizationName}`
-        )
-      ) {
-        parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
-            return {
-              ...prevState,
-              organization: organizationsResponse?.payload?.data?.find(
+    await dispatch(getAllOrganizations()).then(
+      async (organizationsResponse: any) => {
+        if (
+          organizationsResponse?.payload?.data &&
+          organizationsResponse?.payload?.data?.find(
+            (organization: any) =>
+              organization?.organizationName ===
+              `org_${values?.organizationName}`
+          )
+        ) {
+          parameters?.isSetState &&
+            setSelectedState((prevState: any) => {
+              return {
+                ...prevState,
+                organization: organizationsResponse?.payload?.data?.find(
+                  (organization: any) =>
+                    organization?.organizationName ===
+                    `org_${values?.organizationName}`
+                ),
+              };
+            });
+          parameters?.setResponse &&
+            (await parameters?.setResponse(
+              organizationsResponse?.payload?.data?.find(
                 (organization: any) =>
                   organization?.organizationName ===
                   `org_${values?.organizationName}`
-              ),
-            };
-          });
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            organizationsResponse?.payload?.data?.find(
-              (organization: any) =>
-                organization?.organizationName ===
-                `org_${values?.organizationName}`
-            )
-          );
-        parameters?.setPages &&
-          setPagesState((prevState: any) => {
-            return {
-              ...prevState,
-              organization: organizationsResponse?.payload?.data?.find(
-                (organization: any) =>
-                  organization?.organizationName ===
-                  `org_${values?.organizationName}`
-              ),
-            };
-          });
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
+              )
+            ));
+          parameters?.setPages &&
+            setPagesState((prevState: any) => {
+              return {
+                ...prevState,
+                organization: organizationsResponse?.payload?.data?.find(
+                  (organization: any) =>
+                    organization?.organizationName ===
+                    `org_${values?.organizationName}`
+                ),
+              };
+            });
+        } else {
+          parameters?.ifErrorNavigateTo404 && navigateTo404();
+          parameters?.setResponse && parameters?.setResponse({});
+        }
       }
-    });
+    );
   }
 
   async function getRoboticsClouds(
     values: IgetRoboticsClouds,
     parameters?: ImultipleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
       })
@@ -149,7 +152,7 @@ export default ({ children }: any) => {
     values: IgetRoboticsCloud,
     parameters?: IsingleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
       })
@@ -215,7 +218,7 @@ export default ({ children }: any) => {
     values: IgetInstances,
     parameters?: ImultipleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getAllInstances({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -251,7 +254,7 @@ export default ({ children }: any) => {
     values: IgetPhysicalInstances,
     parameters?: ImultipleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getAllPhysicalInstances({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -294,21 +297,21 @@ export default ({ children }: any) => {
     values: IgetInstance,
     parameters?: IsingleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getAllInstances({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
         details: values?.details,
       })
-    ).then((responseInstances: any) => {
+    ).then(async (responseInstances: any) => {
       if (
         Array.isArray(responseInstances?.payload?.data) &&
         Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
         responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
       ) {
         parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
+          (await setSelectedState((prevState: any) => {
             return {
               ...prevState,
               instance:
@@ -316,16 +319,16 @@ export default ({ children }: any) => {
                   (instance: any) => instance?.name === values?.instanceName
                 ) || {},
             };
-          });
+          }));
         parameters?.setResponse &&
-          parameters?.setResponse(
+          (await parameters?.setResponse(
             responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
               (instance: any) => instance?.name === values?.instanceName
             ) || {}
-          );
+          ));
 
         parameters?.setPages &&
-          setPagesState((prevState: any) => {
+          (await setPagesState((prevState: any) => {
             return {
               ...prevState,
               instance:
@@ -333,7 +336,7 @@ export default ({ children }: any) => {
                   (instance: any) => instance?.name === values?.instanceName
                 ) || {},
             };
-          });
+          }));
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -345,7 +348,7 @@ export default ({ children }: any) => {
     values: IgetFleets,
     parameters?: ImultipleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getFederatedFleets({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -388,7 +391,7 @@ export default ({ children }: any) => {
     values: IgetFleet,
     parameters?: IsingleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getFederatedFleets({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -446,7 +449,7 @@ export default ({ children }: any) => {
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getFederatedFleets({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -496,7 +499,7 @@ export default ({ children }: any) => {
     values: IgetRobots,
     parameters?: ImultipleGetParameters
   ) {
-    dispatch(
+    await dispatch(
       getRobotsDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -537,7 +540,7 @@ export default ({ children }: any) => {
     values: IgetRobot,
     parameters?: IsingleGetRobotParameters
   ) {
-    dispatch(
+    await dispatch(
       getRobotDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -637,7 +640,7 @@ export default ({ children }: any) => {
     values: IgetBuildManager,
     parameters?: IsingleGetBuildParameters
   ) {
-    dispatch(
+    await dispatch(
       getBuildManagerDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
@@ -706,7 +709,7 @@ export default ({ children }: any) => {
     values: IgetLaunchManagers,
     parameters?: ImultipleGetLaunchParameters
   ) {
-    dispatch(
+    await dispatch(
       getLaunchManagerDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,

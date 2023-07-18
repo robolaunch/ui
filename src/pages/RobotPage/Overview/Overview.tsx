@@ -7,6 +7,7 @@ import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatus
 import WorkspacesTable from "../../../components/WorkspacesTable/WorkspacesTable";
 import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
+import useWindow from "../../../hooks/useWindow";
 interface IOverview {
   responseRobot: any;
   responseBuildManager: any;
@@ -21,10 +22,11 @@ export default function Overview({
   informationWidgetAction,
 }: IOverview): ReactElement {
   const url = useParams();
+  const { width } = useWindow();
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate__animated animate__fadeIn">
-      <div className="col-span-4">
+      <div className="col-span-full lg:col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
           subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
@@ -44,9 +46,11 @@ export default function Overview({
           responseLaunchManagers={responseLaunchManagers}
         />
       </div>
-      <div className="col-span-full lg:col-span-3">
-        <ActivitiesWidget responseRobot={responseRobot} />
-      </div>
+      {width && width > 1024 && (
+        <div className="col-span-full lg:col-span-3">
+          <ActivitiesWidget responseRobot={responseRobot} />
+        </div>
+      )}
       <div className="col-span-full">
         <WorkspacesTable responseRobot={responseRobot} />
       </div>

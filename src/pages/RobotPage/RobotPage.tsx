@@ -42,38 +42,30 @@ export default function RobotPage(): ReactElement {
     getLaunchManagers,
   } = useFunctions();
 
-  async function getRobotFlow() {
+  useEffect(() => {
     if (
-      (await pagesState?.organization?.organizationName) !==
+      pagesState?.organization?.organizationName !==
       `org_${url?.organizationName as string}`
     ) {
       handleGetOrganization();
-    } else if (
-      (await pagesState?.roboticsCloud?.name) !== url?.roboticsCloudName
-    ) {
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       handleGetRoboticsCloud();
-    } else if ((await pagesState?.instance?.name) !== url?.instanceName) {
+    } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
-    } else if ((await pagesState?.fleet?.name) !== url?.fleetName) {
+    } else if (pagesState?.fleet?.name !== url?.fleetName) {
       handleGetFleet();
-    } else if (!responseRobot) {
+    } else if (
+      !responseRobot &&
+      !responseBuildManager &&
+      !responseLaunchManagers
+    ) {
       handleGetRobot();
       handleGetBuildManager();
       handleGetLaunchManagers();
     }
-  }
-
-  useEffect(() => {
-    getRobotFlow();
 
     const timerResponseRobot = setInterval(() => {
-      pagesState?.organization?.organizationName ===
-        `org_${url?.organizationName}` &&
-        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
-        pagesState?.instance?.name === url?.instanceName &&
-        pagesState?.fleet?.name === url?.fleetName &&
-        responseRobot &&
-        !sidebarState?.isOpen &&
+      !sidebarState?.isOpen &&
         responseRobot?.robotClusters?.filter(
           (robot: any) => robot?.robotStatus !== "EnvironmentReady"
         )?.length &&
@@ -81,13 +73,7 @@ export default function RobotPage(): ReactElement {
     }, 10000);
 
     const timerResponseBuildManager = setInterval(() => {
-      pagesState?.organization?.organizationName ===
-        `org_${url?.organizationName}` &&
-        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
-        pagesState?.instance?.name === url?.instanceName &&
-        pagesState?.fleet?.name === url?.fleetName &&
-        responseBuildManager &&
-        !sidebarState?.isOpen &&
+      !sidebarState?.isOpen &&
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready"
         )?.length &&
@@ -95,13 +81,7 @@ export default function RobotPage(): ReactElement {
     }, 10000);
 
     const timerResponseLaunchManagers = setInterval(() => {
-      pagesState?.organization?.organizationName ===
-        `org_${url?.organizationName}` &&
-        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
-        pagesState?.instance?.name === url?.instanceName &&
-        pagesState?.fleet?.name === url?.fleetName &&
-        responseLaunchManagers &&
-        !sidebarState?.isOpen &&
+      !sidebarState?.isOpen &&
         responseLaunchManagers
           ?.map((launchStep: any) => {
             return launchStep?.robotClusters;
@@ -125,13 +105,11 @@ export default function RobotPage(): ReactElement {
       clearInterval(timerResponseBuildManager);
       clearInterval(timerResponseLaunchManagers);
     };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    pagesState?.organization?.organizationName,
-    pagesState?.roboticsCloud?.name,
-    pagesState?.instance?.name,
-    pagesState?.fleet?.name,
-    sidebarState,
+    pagesState,
+    sidebarState?.isOpen,
     responseRobot,
     responseBuildManager,
     responseLaunchManagers,
@@ -267,13 +245,6 @@ export default function RobotPage(): ReactElement {
 
   return (
     <div className="grid grid-cols-1 gap-6">
-      <RosConnector
-        isSettedCookie={isSettedCookie}
-        responseRobot={responseRobot}
-        ros={ros}
-        setRos={setRos}
-        setTopicList={setTopicList}
-      />
       <div className="col-span-full">
         <RobotHeader
           responseRobot={responseRobot}
@@ -366,6 +337,13 @@ export default function RobotPage(): ReactElement {
             await setIsSettedCookie(true);
           }
         }}
+      />
+      <RosConnector
+        isSettedCookie={isSettedCookie}
+        responseRobot={responseRobot}
+        ros={ros}
+        setRos={setRos}
+        setTopicList={setTopicList}
       />
     </div>
   );

@@ -254,12 +254,14 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                 pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
               } GB)`,
               percentage:
-                (
-                  (pagesState?.instance?.cloudInstanceResource?.storageUsage /
-                    100) *
-                    pagesState?.instance?.cloudInstanceResource?.storageTotal ||
-                  undefined
-                )?.toFixed() || 0,
+                Number(
+                  (
+                    (pagesState?.instance?.cloudInstanceResource?.storageTotal /
+                      100) *
+                    (pagesState?.instance?.cloudInstanceResource?.storageTotal -
+                      pagesState?.instance?.cloudInstanceResource?.storageUsage)
+                  ).toFixed()
+                ) || 0,
             },
           ]}
         />
