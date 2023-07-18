@@ -164,7 +164,6 @@ export default function RobotHeader({
         </div>
         <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
           {tabs.map((tab: any, index: number) => {
-            console.log(tab);
             return (
               <li
                 className={`flex flex-col gap-3 ${

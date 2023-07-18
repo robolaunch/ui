@@ -26,9 +26,9 @@ export default function RobotPage(): ReactElement {
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
   const { urls } = useAppSelector((state) => state.robot);
+  const { sidebarState } = useSidebar();
   const { pagesState } = usePages();
   const url = useParams();
-  const { sidebarState } = useSidebar();
 
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
@@ -42,26 +42,38 @@ export default function RobotPage(): ReactElement {
     getLaunchManagers,
   } = useFunctions();
 
-  useEffect(() => {
+  async function getRobotFlow() {
     if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
+      (await pagesState?.organization?.organizationName) !==
+      `org_${url?.organizationName as string}`
     ) {
       handleGetOrganization();
-    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
+    } else if (
+      (await pagesState?.roboticsCloud?.name) !== url?.roboticsCloudName
+    ) {
       handleGetRoboticsCloud();
-    } else if (pagesState?.instance?.name !== url?.instanceName) {
+    } else if ((await pagesState?.instance?.name) !== url?.instanceName) {
       handleGetInstance();
-    } else if (pagesState?.fleet?.name !== url?.fleetName) {
+    } else if ((await pagesState?.fleet?.name) !== url?.fleetName) {
       handleGetFleet();
     } else if (!responseRobot) {
       handleGetRobot();
       handleGetBuildManager();
       handleGetLaunchManagers();
     }
+  }
+
+  useEffect(() => {
+    getRobotFlow();
 
     const timerResponseRobot = setInterval(() => {
-      !sidebarState?.isOpen &&
+      pagesState?.organization?.organizationName ===
+        `org_${url?.organizationName}` &&
+        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
+        pagesState?.instance?.name === url?.instanceName &&
+        pagesState?.fleet?.name === url?.fleetName &&
+        responseRobot &&
+        !sidebarState?.isOpen &&
         responseRobot?.robotClusters?.filter(
           (robot: any) => robot?.robotStatus !== "EnvironmentReady"
         )?.length &&
@@ -69,7 +81,13 @@ export default function RobotPage(): ReactElement {
     }, 10000);
 
     const timerResponseBuildManager = setInterval(() => {
-      !sidebarState?.isOpen &&
+      pagesState?.organization?.organizationName ===
+        `org_${url?.organizationName}` &&
+        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
+        pagesState?.instance?.name === url?.instanceName &&
+        pagesState?.fleet?.name === url?.fleetName &&
+        responseBuildManager &&
+        !sidebarState?.isOpen &&
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready"
         )?.length &&
@@ -77,7 +95,13 @@ export default function RobotPage(): ReactElement {
     }, 10000);
 
     const timerResponseLaunchManagers = setInterval(() => {
-      !sidebarState?.isOpen &&
+      pagesState?.organization?.organizationName ===
+        `org_${url?.organizationName}` &&
+        pagesState?.roboticsCloud?.name === url?.roboticsCloudName &&
+        pagesState?.instance?.name === url?.instanceName &&
+        pagesState?.fleet?.name === url?.fleetName &&
+        responseLaunchManagers &&
+        !sidebarState?.isOpen &&
         responseLaunchManagers
           ?.map((launchStep: any) => {
             return launchStep?.robotClusters;
