@@ -16,6 +16,7 @@ import useSidebar from "../../hooks/useSidebar";
 import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
+import RobotServicesStatusViewer from "../../components/RobotServicesStatusViewer/RobotServicesStatusViewer";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -269,6 +270,11 @@ export default function RobotPage(): ReactElement {
           handleChangeActiveTab={handleChangeActiveTab}
         />
       </div>
+      <RobotServicesStatusViewer
+        vdiURL={urls?.vdi || responseRobot?.vdiIngressEndpoint}
+        rosURL={urls?.ros || responseRobot?.rosIngressEndpoint}
+        ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+      />
       <div className="col-span-full">
         {(() => {
           switch (activeTab) {
@@ -335,7 +341,9 @@ export default function RobotPage(): ReactElement {
         <div
           id="CODE_EDITOR"
           className={`${
-            activeTab === "Code Editor" ? "grid" : "absolute -top-[9999px]"
+            activeTab === "Code Editor"
+              ? "grid animate__animated animate__fadeIn"
+              : "absolute -top-[9999px]"
           } grid-cols-1 gap-6`}
         >
           {responseRobot?.physicalIdeIngressEndpoint && (
