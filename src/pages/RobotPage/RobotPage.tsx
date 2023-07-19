@@ -335,7 +335,7 @@ export default function RobotPage(): ReactElement {
         <div
           id="CODE_EDITOR"
           className={`${
-            activeTab === "Code Editor" ? "grid" : "hidden"
+            activeTab === "Code Editor" ? "grid" : "absolute -top-[9999px]"
           } grid-cols-1 gap-6`}
         >
           {responseRobot?.physicalIdeIngressEndpoint && (
