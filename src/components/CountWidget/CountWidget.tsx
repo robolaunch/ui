@@ -26,11 +26,7 @@ export default function CountWidget({ data }: ICountWidget): ReactElement {
           colors: data?.map((item) => item?.color) || [],
           responsive: [
             {
-              breakpoint: 480,
               options: {
-                chart: {
-                  width: 200,
-                },
                 legend: {
                   position: "bottom",
                 },

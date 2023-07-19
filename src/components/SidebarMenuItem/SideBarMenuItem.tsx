@@ -110,6 +110,7 @@ export default function SideBarMenuItem({
           className="w-10 animate__animated animate__fadeInLeft"
           src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
           alt="Robolaunch"
+          style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
         />
       )}
       {isHover && !loading && (

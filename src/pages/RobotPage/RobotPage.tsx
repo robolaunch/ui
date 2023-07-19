@@ -5,7 +5,6 @@ import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import { useParams } from "react-router-dom";
-import CodeEditor from "./CodeEditor/CodeEditor";
 import Overview from "./Overview/Overview";
 import { useAppSelector } from "../../hooks/redux";
 import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
@@ -13,24 +12,41 @@ import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
 import usePages from "../../hooks/usePages";
 import RosConnector from "../../components/RosConnector/RosConnector";
-import HiddenFrames from "../../components/HiddenFrames/HiddenFrames";
 import useSidebar from "../../hooks/useSidebar";
+import CardLayout from "../../layouts/CardLayout";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 
 export default function RobotPage(): ReactElement {
-  const [activeTab, setActiveTab] = useState<string>("Overview");
-  const [topicList, setTopicList] = useState<any>([]);
-  const [ros, setRos] = useState<any>(null);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
+
+  const [topicList, setTopicList] = useState<any>([]);
+  const [ros, setRos] = useState<any>(null);
+
+  const [activeTab, setActiveTab] = useState<string>("Overview");
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
+
   const { urls } = useAppSelector((state) => state.robot);
   const { sidebarState } = useSidebar();
   const { pagesState } = usePages();
   const url = useParams();
+  const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
+    "Cloud IDE" | "Physical IDE"
+  >("Cloud IDE");
 
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
+  const codeEditorTabs = [
+    {
+      name: "Cloud IDE",
+    },
+    {
+      name: "Physical IDE",
+    },
+  ];
+  const handleFullScreen = useFullScreenHandle();
 
   const {
     getOrganization,
@@ -275,13 +291,6 @@ export default function RobotPage(): ReactElement {
                   </BarcodeManagementContext>
                 </TaskManagementContext>
               );
-            case "Code Editor":
-              return (
-                <CodeEditor
-                  vIdeURL={urls?.ide || responseRobot?.ideIngressEndpoint}
-                  pIdeURL={responseRobot?.physicalIdeIngressEndpoint}
-                />
-              );
             case "Visualization":
               return (
                 <Visualization
@@ -323,21 +332,93 @@ export default function RobotPage(): ReactElement {
               );
           }
         })()}
+        <div
+          id="CODE_EDITOR"
+          className={`${
+            activeTab === "Code Editor" ? "grid" : "hidden"
+          } grid-cols-1 gap-6`}
+        >
+          {responseRobot?.physicalIdeIngressEndpoint && (
+            <CardLayout className="!">
+              <ul className="w-full flex justify-center gap-6  p-1 -mb-2.5 rounded">
+                {codeEditorTabs.map((tab: any, index: number) => {
+                  return (
+                    <li
+                      className={`flex w-full items-center flex-col gap-3 cursor-pointer 
+                     ${tab?.hidden && "!hidden"}`}
+                      onClick={() => setActiveTabCodeEditor(tab.name)}
+                      key={index}
+                    >
+                      <div
+                        className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max hover:scale-90
+                        ${
+                          tab.name === activeTabCodeEditor
+                            ? "text-layer-primary-500"
+                            : "text-layer-light-500"
+                        } `}
+                      >
+                        <span>{tab.name}</span>
+                      </div>
+                      <div
+                        className={`w-full h-[2px] transition-all duration-500 
+                  ${
+                    tab.name === activeTabCodeEditor
+                      ? "bg-layer-primary-500"
+                      : "bg-layer-light-100"
+                  } `}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </CardLayout>
+          )}
+          <CardLayout>
+            <FullScreen className="relative" handle={handleFullScreen}>
+              <iframe
+                allow="clipboard-read"
+                className={`w-full animate__animated animate__fadeIn ${
+                  handleFullScreen?.active ? "h-screen" : "h-[55rem]"
+                }`}
+                src={
+                  activeTabCodeEditor === "Cloud IDE"
+                    ? urls?.ide || responseRobot?.ideIngressEndpoint
+                    : responseRobot?.physicalIdeIngressEndpoint
+                }
+                title="Code Editor"
+                onLoad={async () => {
+                  if (await responseRobot) {
+                    await setTimeout(() => {
+                      setIsSettedCookie(true);
+                    }, 4000);
+                  }
+                }}
+              />
+              {handleFullScreen.active ? (
+                <button
+                  className="absolute bottom-3 right-3"
+                  onClick={handleFullScreen.exit}
+                >
+                  <BsFullscreenExit
+                    size={24}
+                    className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                  />
+                </button>
+              ) : (
+                <button
+                  className="absolute bottom-3 right-3"
+                  onClick={handleFullScreen.enter}
+                >
+                  <BsFullscreen
+                    size={24}
+                    className=" text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                  />
+                </button>
+              )}
+            </FullScreen>
+          </CardLayout>
+        </div>
       </div>
-      <HiddenFrames
-        type="ide"
-        url={
-          urls?.ide ||
-          responseRobot?.ideIngressEndpoint ||
-          urls?.vdi ||
-          responseRobot?.vdiIngressEndpoint?.replace("wss", "https") + "health"
-        }
-        onLoad={async () => {
-          if (responseRobot) {
-            await setIsSettedCookie(true);
-          }
-        }}
-      />
       <RosConnector
         isSettedCookie={isSettedCookie}
         responseRobot={responseRobot}
