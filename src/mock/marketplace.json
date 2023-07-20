@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Robolaunch Robot",
+    "organization": "KAE Organization",
+    "type": "Virtual Robot",
+    "rosDistro": "galactic",
+    "star": true,
+    "starCount": 684,
+    "access": "public",
+    "ownership": false
+  },
+  {
+    "title": "Test Robot",
+    "type": "Hybrid Robot",
+    "organization": "ProvEdge Organization",
+    "rosDistro": "humble",
+    "star": false,
+    "starCount": 16,
+    "access": "public",
+    "ownership": true
+  },
+  {
+    "title": "Test #2 Robot",
+    "type": "Hybrid Robot",
+    "organization": "Robolaunch Organization",
+    "rosDistro": "foxy",
+    "star": true,
+    "starCount": 128,
+    "access": "organization",
+    "ownership": false
+  },
+  {
+    "title": "Robolaunch Robot",
+    "organization": "Robolaunch Organization",
+    "type": "Virtual Robot",
+    "rosDistro": "galactic",
+    "star": true,
+    "starCount": 512,
+    "access": "private",
+    "ownership": true
+  },
+  {
+    "title": "Robolaunch Robot",
+    "organization": "KAE Organization",
+    "type": "Virtual Robot",
+    "rosDistro": "galactic",
+    "star": true,
+    "starCount": 684,
+    "access": "public",
+    "ownership": true
+  },
+  {
+    "title": "Test Robot",
+    "type": "Hybrid Robot",
+    "organization": "ProvEdge Organization",
+    "rosDistro": "humble",
+    "star": false,
+    "starCount": 16,
+    "access": "organization",
+    "ownership": false
+  },
+  {
+    "title": "Test #2 Robot",
+    "type": "Hybrid Robot",
+    "organization": "Robolaunch Organization",
+    "rosDistro": "foxy",
+    "star": true,
+    "starCount": 128,
+    "access": "public",
+    "ownership": false
+  },
+  {
+    "title": "Robolaunch Robot",
+    "organization": "KAE Organization",
+    "type": "Virtual Robot",
+    "rosDistro": "galactic",
+    "star": false,
+    "starCount": 512,
+    "access": "private",
+    "ownership": false
+  },
+  {
+    "title": "Robolaunch Robot",
+    "organization": "KAE Organization",
+    "type": "Virtual Robot",
+    "rosDistro": "galactic",
+    "star": true,
+    "starCount": 684,
+    "access": "public",
+    "ownership": true
+  }
+]
