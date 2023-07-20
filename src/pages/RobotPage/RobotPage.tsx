@@ -270,11 +270,11 @@ export default function RobotPage(): ReactElement {
           handleChangeActiveTab={handleChangeActiveTab}
         />
       </div>
-      <RobotServicesStatusViewer
+      {/* <RobotServicesStatusViewer
         vdiURL={urls?.vdi || responseRobot?.vdiIngressEndpoint}
         rosURL={urls?.ros || responseRobot?.rosIngressEndpoint}
         ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
-      />
+      /> */}
       <div className="col-span-full">
         {(() => {
           switch (activeTab) {

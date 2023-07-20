@@ -15,8 +15,8 @@ export default function TimeCounter({
     <div className="flex gap-5">
       {Array.apply(null, Array(3))?.map((_, index: number) => {
         return (
-          <div className="flex flex-col items-center">
-            <span className="text-xl" key={index}>
+          <div key={index} className="flex flex-col items-center">
+            <span className="text-xl">
               {index === 0 ? hour : index === 1 ? minute : second}
             </span>
             <span className="text-xs">

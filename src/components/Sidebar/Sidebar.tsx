@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import useSidebar from "../../hooks/useSidebar";
 import PrivateSidebar from "../PrivateSidebar/PrivateSidebar";
 import TrialSidebar from "../TrialSidebar/TrialSidebar";
+import { envTrialApp } from "../../helpers/envProvider";
 
 export default function Sidebar(): ReactElement {
   const { sidebarState } = useSidebar();
-
-  console.log(Boolean(process.env.REACT_APP_TRIAL_ENABLED));
 
   return (
     <Fragment>
@@ -21,11 +20,7 @@ export default function Sidebar(): ReactElement {
             alt="Robolaunch"
           />
         </Link>
-        {Boolean(process.env.REACT_APP_TRIAL_ENABLED) ? (
-          <TrialSidebar />
-        ) : (
-          <PrivateSidebar />
-        )}
+        {envTrialApp ? <TrialSidebar /> : <PrivateSidebar />}
       </div>
       {sidebarState?.isOpen && <SidebarContentLayout />}
     </Fragment>

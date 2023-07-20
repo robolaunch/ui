@@ -42,8 +42,8 @@ export default function TrialStateViewer({
       <div className="h-full flex flex-col items-center justify-center gap-4">
         {states?.map((item: any, index: number) => {
           return (
-            <Fragment>
-              <div key={index} className="w-full flex justify-between">
+            <Fragment key={index}>
+              <div className="w-full flex justify-between">
                 <div className="flex items-center gap-2">
                   <img
                     className="w-5 h-5"
