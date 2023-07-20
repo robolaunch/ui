@@ -10,7 +10,7 @@ import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePag
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import { Navigate, Route, Routes } from "react-router-dom";
 import ProfilePage from "../pages/Profile/ProfilePage";
-import PrivateProvider from "../auth/PrivateProvider";
+import PrivateProvider from "../providers/PrivateProvider";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
 // import BillingPage from "../pages/BillingPage/BillingPage";
