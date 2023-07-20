@@ -94,8 +94,8 @@ export default function SideBarMenuItem({
       className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft ${
         (loading || disabled) && "!cursor-not-allowed"
       }`}
-      onMouseEnter={() => !loading && setIsHover(true)}
-      onMouseLeave={() => !loading && setIsHover(false)}
+      onMouseEnter={() => !loading && !disabled && setIsHover(true)}
+      onMouseLeave={() => !loading && !disabled && setIsHover(false)}
     >
       {loading ? (
         <img

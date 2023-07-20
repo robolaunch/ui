@@ -22,7 +22,7 @@ export default function MarketplaceRobotTemplateItem({
   template,
 }: IMarketplaceRobotTemplateItem): ReactElement {
   return (
-    <CardLayout className="col-span-3 p-6 hover:scale-[1.032] transition-all duration-500 cursor-pointer !flex !flex-col gap-4">
+    <CardLayout className="col-span-3 p-6 hover:scale-[1.014] transition-all duration-500 cursor-pointer !flex !flex-col gap-4">
       <Link to={stringSlugify(template?.title)}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">

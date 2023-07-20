@@ -35,6 +35,8 @@ export default function SidebarStaticItem({
               ? "Billing"
               : to === "/user-role-management"
               ? "User Role Management"
+              : to === "/trial"
+              ? "Trial"
               : to
           }
           description={
@@ -44,6 +46,8 @@ export default function SidebarStaticItem({
               ? "You can access all your bills here"
               : to === "/user-role-management"
               ? "You can access all users here."
+              : to === "/trial"
+              ? "You can access all your demo applications here."
               : to
           }
         />

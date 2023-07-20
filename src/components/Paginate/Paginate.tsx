@@ -31,7 +31,7 @@ export default function Paginate({
 
   return (
     <div
-      className={`w-full flex justify-center items-center gap-3 pt-14 ${className}`}
+      className={`w-full flex justify-center items-center gap-3 pt-6 ${className}`}
       style={{ ...style }}
     >
       <MdOutlineKeyboardArrowLeft
@@ -43,7 +43,7 @@ export default function Paginate({
           <span
             onClick={() => setCurrentPage(index)}
             key={index}
-            className={`w-8 h-8 flex items-center justify-center rounded-lg  transition-all duration-300 cursor-pointer ${
+            className={`w-6 h-6 flex items-center justify-center rounded-lg  transition-all duration-300 cursor-pointer text-sm ${
               currentPage === index
                 ? "bg-layer-primary-500 text-layer-light-50"
                 : "hover:bg-layer-primary-50 hover:border hover:border-layer-primary-200"

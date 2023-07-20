@@ -63,6 +63,9 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
       ) : state === "stopping" ||
         state === "pending" ||
+        state === "Pending" ||
+        state === "creating" ||
+        state === "Creating" ||
         state === "CreatingNamespace" ||
         state === "CheckingRemoteNamespace" ||
         state === "CreatingDiscoveryServer" ||

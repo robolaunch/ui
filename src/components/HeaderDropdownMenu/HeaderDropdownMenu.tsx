@@ -58,9 +58,11 @@ export default function HeaderDropdownMenu(): ReactElement {
               </div>
             </li>
           </Link>
-          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
-            <li className={liClassName}>Account Settings</li>
-          </Link>
+          {!process.env.REACT_APP_TRIAL_ENABLED && (
+            <Link onClick={() => setIsOpen(false)} to={`/profile`}>
+              <li className={liClassName}>Account Settings</li>
+            </Link>
+          )}
           <li
             className={liClassName}
             onClick={() => {
