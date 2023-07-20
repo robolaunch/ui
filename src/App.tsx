@@ -5,15 +5,20 @@ import ThemeContext from "./contexts/ThemeContext";
 import "animate.css";
 import { Toaster } from "sonner";
 import VersionViewer from "./components/VersionViewer/VersionViewer";
+import TrialRoutes from "./routes/TrialRoutes";
 
-function App() {
+export default function App() {
   return (
     <ThemeContext>
       <Toaster richColors position="top-center" />
-      <AppRoutes />
+
+      {Boolean(process.env.REACT_APP_TRIAL_ENABLED) ? (
+        <TrialRoutes />
+      ) : (
+        <AppRoutes />
+      )}
+
       <VersionViewer />
     </ThemeContext>
   );
 }
-
-export default App;
