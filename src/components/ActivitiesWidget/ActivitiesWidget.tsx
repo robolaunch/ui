@@ -66,19 +66,6 @@ export default function ActivitiesWidget({
               </li>
             );
           })}
-        <li className="grid grid-cols-12 gap-2 -mt-5">
-          <span className="col-span-1 text-xs font-medium" />
-
-          <div className="col-span-2 justify-center">
-            <img
-              className="w-14 h-14 scale-95"
-              src="/svg/general/loading.svg"
-              alt="loading"
-            />
-          </div>
-
-          <span className="col-span-9 text-xs font-light" />
-        </li>
       </ul>
     </WidgetLayout>
   );

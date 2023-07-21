@@ -16,7 +16,6 @@ import useSidebar from "../../hooks/useSidebar";
 import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
-import RobotServicesStatusViewer from "../../components/RobotServicesStatusViewer/RobotServicesStatusViewer";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -398,7 +397,7 @@ export default function RobotPage(): ReactElement {
                   if (await responseRobot) {
                     await setTimeout(() => {
                       setIsSettedCookie(true);
-                    }, 4000);
+                    }, 1500);
                   }
                 }}
               />

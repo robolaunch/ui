@@ -106,6 +106,8 @@ export default function Breadcrumb(): ReactElement {
                   ? item?.breadcrumb?.props?.children
                   : item?.breadcrumb?.props?.children === "Marketplace"
                   ? item?.breadcrumb?.props?.children
+                  : item?.breadcrumb?.props?.children === "Trial"
+                  ? item?.breadcrumb?.props?.children
                   : stringSlugify(item?.breadcrumb?.props?.children)}
               </span>
             </Link>

@@ -89,7 +89,7 @@ export default function TrialSidebar(): ReactElement {
           ) : (
             <Fragment>
               <SidebarStaticItem
-                to="/"
+                to="/trial"
                 imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
               />
               <SidebarStaticItem

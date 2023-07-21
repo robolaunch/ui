@@ -30,7 +30,7 @@ export default function WidgetLayout({
       <div className="flex justify-between items-center p-4 border-b border-layer-light-100">
         {icon}
         <div className="flex flex-col gap-1 items-center">
-          <span className="font-medium text-sm text-layer-dark-500 ">
+          <span className="font-medium text-sm text-layer-dark-500">
             {title}
           </span>
           <span className="text-xs font-light text-layer-dark-400">
