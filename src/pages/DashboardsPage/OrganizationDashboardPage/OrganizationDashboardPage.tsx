@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { stringCapitalization } from "../../../helpers/GeneralFunctions";
+import { stringCapitalization } from "../../../functions/GeneralFunctions";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import BasicCell from "../../../components/Cells/BasicCell";
 import { useParams } from "react-router-dom";

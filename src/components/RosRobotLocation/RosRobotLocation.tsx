@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import handleRostoDomMouseCoordinatesConverter from "../../helpers/handleRostoDomMouseCoordinatesConverter";
+import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
 import ROSLIB from "roslib";
 import { FaLocationArrow } from "react-icons/fa";
 

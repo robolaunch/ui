@@ -1,5 +1,5 @@
 import { createInstanceSchema } from "../../validations/InstancesValidations";
-import { createCloudInstance } from "../../resources/InstanceSlice";
+import { createCloudInstance } from "../../toolkit/InstanceSlice";
 import React, { ReactElement } from "react";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";

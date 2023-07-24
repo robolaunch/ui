@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteFederatedFleet } from "../resources/FleetSlice";
+import { deleteFederatedFleet } from "../toolkit/FleetSlice";
 
 interface IDeleteFleetModalModal {
   data: any;

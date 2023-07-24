@@ -4,7 +4,7 @@ import Button from "../components/Button/Button";
 import {
   moveAdminAsUserFromOrganization,
   moveUserAsAdminToOrganization,
-} from "../resources/OrganizationSlice";
+} from "../toolkit/OrganizationSlice";
 import { useAppDispatch } from "../hooks/redux";
 
 interface IChangeRoleModal {

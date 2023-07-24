@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import handleRostoDomMouseCoordinatesConverter from "../../helpers/handleRostoDomMouseCoordinatesConverter";
+import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
 import ROSLIB from "roslib";
 import { TaskManagementContext } from "../../contexts/TaskManagementContext";
 

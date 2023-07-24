@@ -8,7 +8,7 @@ import InputSelect from "../../../components/InputSelect/InputSelect";
 import MarketplaceSingleItemSidebar from "../../../components/MarketplaceSingleItemSidebar/MarketplaceSingleItemSidebar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/redux";
-import { getMarkeplaceItem } from "../../../resources/MarketplaceSlice";
+import { getMarkeplaceItem } from "../../../toolkit/MarketplaceSlice";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 
 export default function MarketplaceSingleItemPage(): ReactElement {

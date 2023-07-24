@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import axiosInterceptorGithub from "../utils/axios.interceptor.github";
+import axiosInterceptorGithub from "../middlewares/axios.interceptor.github";
 
 export const getGithubAccessTokenwithCode = createAsyncThunk(
   "github/getGithubAccessTokenwithCode",

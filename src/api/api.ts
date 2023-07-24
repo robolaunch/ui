@@ -1,4 +1,4 @@
-import axiosInterceptorOpenApi from "../utils/axios.interceptor.openapi";
+import axiosInterceptorOpenApi from "../middlewares/axios.interceptor.openapi";
 import {
   Configuration,
   OrganizationRepositoryImplApi,

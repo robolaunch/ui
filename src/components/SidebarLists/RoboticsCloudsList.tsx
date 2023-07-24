@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { organizationNameViewer } from "../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import SidebarListItem from "./SidebarListItem";
 import useSidebar from "../../hooks/useSidebar";

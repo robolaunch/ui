@@ -5,7 +5,7 @@ import InputError from "../InputError/InputError";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { getPhysicalInstances } from "../../resources/InstanceSlice";
+import { getPhysicalInstances } from "../../toolkit/InstanceSlice";
 
 interface ICreateRobotTypes {
   formik: any;

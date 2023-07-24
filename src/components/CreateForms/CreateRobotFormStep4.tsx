@@ -12,7 +12,7 @@ import useSidebar from "../../hooks/useSidebar";
 import {
   createLaunchManager,
   deleteLaunchManager,
-} from "../../resources/RobotSlice";
+} from "../../toolkit/RobotSlice";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
@@ -22,7 +22,7 @@ import { Editor } from "@monaco-editor/react";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { organizationNameViewer } from "../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { useParams } from "react-router-dom";
 import InfoTip from "../InfoTip/InfoTip";

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { organizationNameViewer } from "../../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../../functions/GeneralFunctions";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";

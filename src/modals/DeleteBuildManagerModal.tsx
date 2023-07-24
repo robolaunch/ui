@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteBuildManager } from "../resources/RobotSlice";
+import { deleteBuildManager } from "../toolkit/RobotSlice";
 import useSidebar from "../hooks/useSidebar";
 import { useParams } from "react-router-dom";
 import useCreateRobot from "../hooks/useCreateRobot";

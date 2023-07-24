@@ -6,7 +6,7 @@ import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import useSidebar from "../../hooks/useSidebar";
 import { useAppDispatch } from "../../hooks/redux";
-import { createFederatedFleet } from "../../resources/FleetSlice";
+import { createFederatedFleet } from "../../toolkit/FleetSlice";
 import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateFleetForm(): ReactElement {

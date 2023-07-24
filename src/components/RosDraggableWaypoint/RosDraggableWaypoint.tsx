@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
 import Draggable from "react-draggable";
-import handleRostoDomMouseCoordinatesConverter from "../../helpers/handleRostoDomMouseCoordinatesConverter";
+import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
 import { TbArrowBigUpLinesFilled, TbMapPinFilled } from "react-icons/tb";
-import handleDomRosMouseCoordinatesConverter from "../../helpers/handleDomtoRosMouseCoordinatesConverter";
+import handleDomRosMouseCoordinatesConverter from "../../functions/handleDomtoRosMouseCoordinatesConverter";
 import { FaFlagCheckered } from "react-icons/fa";
 import { CgFlagAlt } from "react-icons/cg";
 

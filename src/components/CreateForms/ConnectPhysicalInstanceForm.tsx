@@ -5,7 +5,7 @@ import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import useSidebar from "../../hooks/useSidebar";
 import { useAppDispatch } from "../../hooks/redux";
-import { addPhysicalInstance } from "../../resources/InstanceSlice";
+import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
 import { Editor } from "@monaco-editor/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "sonner";

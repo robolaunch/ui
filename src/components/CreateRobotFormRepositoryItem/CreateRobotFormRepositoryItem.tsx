@@ -12,7 +12,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import {
   getGithubRepositoryBranches,
   getGithubUserRepositories,
-} from "../../resources/GithubSlice";
+} from "../../toolkit/GithubSlice";
 import useGithub from "../../hooks/useGithub";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";

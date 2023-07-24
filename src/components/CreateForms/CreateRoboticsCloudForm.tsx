@@ -6,7 +6,7 @@ import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import useSidebar from "../../hooks/useSidebar";
 import { useAppDispatch } from "../../hooks/redux";
-import { createRoboticsCloud } from "../../resources/RoboticsCloudSlice";
+import { createRoboticsCloud } from "../../toolkit/RoboticsCloudSlice";
 import { toast } from "sonner";
 import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";

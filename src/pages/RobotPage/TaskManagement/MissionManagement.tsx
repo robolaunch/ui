@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import handleDomRosMouseCoordinatesConverter from "../../../helpers/handleDomtoRosMouseCoordinatesConverter";
+import handleDomRosMouseCoordinatesConverter from "../../../functions/handleDomtoRosMouseCoordinatesConverter";
 import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
 import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
 import RosMapImportExport from "../../../components/RosMapImportExport/RosMapImportExport";

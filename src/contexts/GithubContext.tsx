@@ -7,7 +7,7 @@ import { useAppDispatch } from "../hooks/redux";
 import {
   getGithubAccessTokenwithCode,
   getGithubAccessTokenwithRefreshToken,
-} from "../resources/GithubSlice";
+} from "../toolkit/GithubSlice";
 import { useNavigate } from "react-router-dom";
 export const GithubContext: any = createContext<any>(null);
 

@@ -6,7 +6,7 @@ import InputError from "../components/InputError/InputError";
 import InputText from "../components/InputText/InputText";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteOrganization } from "../resources/OrganizationSlice";
+import { deleteOrganization } from "../toolkit/OrganizationSlice";
 
 interface IDeleteOrganizationModal {
   data: any;

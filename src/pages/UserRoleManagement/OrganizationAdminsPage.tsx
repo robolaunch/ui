@@ -4,7 +4,7 @@ import InfoCell from "../../components/Cells/InfoCell";
 import UserActionCells from "../../components/ActionCells/UserActionCells";
 import BasicCell from "../../components/Cells/BasicCell";
 import { useAppDispatch } from "../../hooks/redux";
-import { getOrganizationAdmins } from "../../resources/OrganizationSlice";
+import { getOrganizationAdmins } from "../../toolkit/OrganizationSlice";
 
 interface IOrganizationAdminsPage {
   activePage: any;

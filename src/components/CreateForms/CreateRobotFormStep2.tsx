@@ -6,7 +6,7 @@ import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/Create
 import useSidebar from "../../hooks/useSidebar";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
-import { createRobot } from "../../resources/RobotSlice";
+import { createRobot } from "../../toolkit/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";

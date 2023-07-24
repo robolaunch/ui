@@ -1,5 +1,5 @@
 import React, { ReactElement, useContext, useState } from "react";
-import handleRostoDomMouseCoordinatesConverter from "../../helpers/handleRostoDomMouseCoordinatesConverter";
+import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
 import { TaskManagementContext } from "../../contexts/TaskManagementContext";
 
 interface IRosBarcodeMapItem {

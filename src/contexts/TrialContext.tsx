@@ -1,15 +1,15 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleTimeConverter } from "../helpers/GeneralFunctions";
+import { handleTimeConverter } from "../functions/GeneralFunctions";
 import { useAppDispatch } from "../hooks/redux";
-import { createTrial, getIP } from "../resources/TrialSlice";
-import { getOrganizations } from "../resources/OrganizationSlice";
-import { getRoboticsClouds } from "../resources/RoboticsCloudSlice";
-import { getInstances } from "../resources/InstanceSlice";
+import { createTrial, getIP } from "../toolkit/TrialSlice";
+import { getOrganizations } from "../toolkit/OrganizationSlice";
+import { getRoboticsClouds } from "../toolkit/RoboticsCloudSlice";
+import { getInstances } from "../toolkit/InstanceSlice";
 import {
   createFederatedFleet,
   getFederatedFleets,
-} from "../resources/FleetSlice";
+} from "../toolkit/FleetSlice";
 import { ITrialState } from "../interfaces/useTrialInterfaces";
 
 export const TrialContext: any = createContext<any>(null);

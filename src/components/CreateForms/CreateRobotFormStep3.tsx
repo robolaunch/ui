@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { createBuildManager } from "../../resources/RobotSlice";
+import { createBuildManager } from "../../toolkit/RobotSlice";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useFunctions from "../../hooks/useFunctions";

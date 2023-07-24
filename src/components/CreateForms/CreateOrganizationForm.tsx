@@ -5,7 +5,7 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import { useAppDispatch } from "../../hooks/redux";
-import { createOrganization } from "../../resources/OrganizationSlice";
+import { createOrganization } from "../../toolkit/OrganizationSlice";
 import useSidebar from "../../hooks/useSidebar";
 import InfoTip from "../InfoTip/InfoTip";
 

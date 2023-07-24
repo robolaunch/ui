@@ -1,6 +1,6 @@
 import React from "react";
 import useSidebar from "../../hooks/useSidebar";
-import { organizationNameViewer } from "../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 
 export default function FilteredTags() {
   const { selectedState } = useSidebar();

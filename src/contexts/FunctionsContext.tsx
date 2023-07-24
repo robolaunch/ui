@@ -24,12 +24,12 @@ import {
   getRobots as getRobotsDispatch,
   getBuildManagers as getBuildManagerDispatch,
   getLaunchManagers as getLaunchManagerDispatch,
-} from "../resources/RobotSlice";
-import { getRoboticsClouds as getRoboticsCloudDispatch } from "../resources/RoboticsCloudSlice";
-import { getOrganizations as getAllOrganizations } from "../resources/OrganizationSlice";
-import { getPhysicalInstances as getAllPhysicalInstances } from "../resources/InstanceSlice";
-import { getInstances as getAllInstances } from "../resources/InstanceSlice";
-import { getFederatedFleets } from "../resources/FleetSlice";
+} from "../toolkit/RobotSlice";
+import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
+import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
+import { getPhysicalInstances as getAllPhysicalInstances } from "../toolkit/InstanceSlice";
+import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
+import { getFederatedFleets } from "../toolkit/FleetSlice";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";

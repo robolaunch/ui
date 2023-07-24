@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
-import { organizationNameViewer } from "../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";

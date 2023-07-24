@@ -1,7 +1,7 @@
 import { useKeycloak } from "@react-keycloak/web";
 import React, { useEffect, createContext, useRef, useReducer } from "react";
 import { toast } from "sonner";
-import GuacamoleKeyboard from "../tools/GuacamoleKeyboard/guacamole-keyboard.ts";
+import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 export const StreamContext: any = createContext<any>(null);

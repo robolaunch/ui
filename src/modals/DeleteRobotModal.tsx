@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteRobot } from "../resources/RobotSlice";
+import { deleteRobot } from "../toolkit/RobotSlice";
 
 interface IDeleteRobotModalModal {
   data: any;

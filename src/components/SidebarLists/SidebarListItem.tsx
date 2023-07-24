@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { organizationNameViewer } from "../../helpers/GeneralFunctions";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { useNavigate } from "react-router-dom";
 import useSidebar from "../../hooks/useSidebar";
 import { toast } from "sonner";

@@ -2,7 +2,7 @@ import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { terminateInstance } from "../resources/InstanceSlice";
+import { terminateInstance } from "../toolkit/InstanceSlice";
 
 interface ITerminateInstanceModal {
   data: any;

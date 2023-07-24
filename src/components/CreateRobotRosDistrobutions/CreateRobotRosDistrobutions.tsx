@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 import { toast } from "sonner";
-import { stringSlugify } from "../../helpers/GeneralFunctions";
+import { stringSlugify } from "../../functions/GeneralFunctions";
 import { MdVerified } from "react-icons/md";
 import InputError from "../InputError/InputError";
 

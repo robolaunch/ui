@@ -4,7 +4,7 @@ import MarketplaceRobotTemplateItem from "../MarketplaceRobotTemplateItem/Market
 import Paginate from "../Paginate/Paginate";
 import { useAppDispatch } from "../../hooks/redux";
 import useTrial from "../../hooks/useTrial";
-import { getMarkeplaceItems } from "../../resources/MarketplaceSlice";
+import { getMarkeplaceItems } from "../../toolkit/MarketplaceSlice";
 
 export default function MarketplaceGrid(): ReactElement {
   const [marketplaceItems, setMarketplaceItems] = useState<any>(undefined);

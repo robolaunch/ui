@@ -9,7 +9,7 @@ import {
   deleteAdminFromOrganization,
   deleteGuestFromOrganization,
   deleteUserFromOrganization,
-} from "../resources/OrganizationSlice";
+} from "../toolkit/OrganizationSlice";
 import { useAppDispatch } from "../hooks/redux";
 
 interface IDeleteMemberFromOrganizationModal {

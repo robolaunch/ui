@@ -4,7 +4,7 @@ import { BsShieldLockFill } from "react-icons/bs";
 import { MdPublic } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { stringSlugify } from "../../helpers/GeneralFunctions";
+import { stringSlugify } from "../../functions/GeneralFunctions";
 interface IMarketplaceRobotTemplateItem {
   robot: any;
 }

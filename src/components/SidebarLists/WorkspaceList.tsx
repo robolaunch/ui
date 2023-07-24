@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/redux";
 import useSidebar from "../../hooks/useSidebar";
-import { getFederatedRobot } from "../../resources/RobotSlice";
+import { getFederatedRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useParams } from "react-router-dom";
 import CreateRobotFormStep1 from "../CreateForms/CreateRobotFormStep1";
