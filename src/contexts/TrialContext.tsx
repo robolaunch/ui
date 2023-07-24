@@ -6,7 +6,10 @@ import { createTrial, getIP } from "../resources/TrialSlice";
 import { getOrganizations } from "../resources/OrganizationSlice";
 import { getRoboticsClouds } from "../resources/RoboticsCloudSlice";
 import { getInstances } from "../resources/InstanceSlice";
-import { getFederatedFleets } from "../resources/FleetSlice";
+import {
+  createFederatedFleet,
+  getFederatedFleets,
+} from "../resources/FleetSlice";
 import { ITrialState } from "../interfaces/useTrialInterfaces";
 
 export const TrialContext: any = createContext<any>(null);
@@ -15,6 +18,7 @@ export const TrialContext: any = createContext<any>(null);
 export default ({ children }: any) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [reload, setReload] = useState<boolean>(false);
   const [trialState, setTrialState] = useState<ITrialState>({
     ip: null,
     time: {
@@ -41,40 +45,30 @@ export default ({ children }: any) => {
       handleGetTrialRoboticsCloud();
     } else if (!trialState?.instance) {
       handleGetTrialInstance();
-    } else if (!trialState?.fleet) {
+    } else if (
+      trialState?.instance?.instanceCloudState === "ConnectionHub_Ready" &&
+      !trialState?.fleet
+    ) {
       handleGetTrialFleet();
     }
 
-    const timerOrganization = setInterval(() => {
-      !trialState?.organization && handleGetTrialOrganization();
-    }, 15000);
-
-    const timerRoboticsCloud = setInterval(() => {
-      !trialState.organization &&
-        !trialState.roboticsCloud &&
-        handleGetTrialRoboticsCloud();
-    }, 15000);
-
     const timerInstance = setInterval(() => {
-      !trialState.organization &&
-        !trialState.roboticsCloud &&
-        !trialState.instance &&
+      trialState.organization &&
+        trialState.roboticsCloud &&
         trialState?.instance?.instanceCloudState !== "ConnectionHub_Ready" &&
         handleGetTrialInstance();
     }, 15000);
 
     const timerFleet = setInterval(() => {
-      !trialState.organization &&
-        !trialState.roboticsCloud &&
-        !trialState.instance &&
-        !trialState.fleet &&
+      trialState.organization &&
+        trialState.roboticsCloud &&
+        trialState?.instance?.instanceCloudState === "ConnectionHub_Ready" &&
+        trialState.fleet &&
         trialState?.fleet?.fleetStatus !== "Ready" &&
         handleGetTrialFleet();
     }, 15000);
 
     return () => {
-      clearInterval(timerOrganization);
-      clearInterval(timerRoboticsCloud);
       clearInterval(timerInstance);
       clearInterval(timerFleet);
     };
@@ -86,6 +80,7 @@ export default ({ children }: any) => {
     trialState?.instance,
     trialState?.fleet,
     trialState?.ip,
+    reload,
   ]);
   // all get requests
 
@@ -116,7 +111,7 @@ export default ({ children }: any) => {
   }, [navigate, trialState?.time]);
 
   async function handleGetIp() {
-    dispatch(getIP()).then((res: any) => {
+    await dispatch(getIP()).then((res: any) => {
       setTrialState((prevState: any) => ({
         ...prevState,
         ip: res?.payload?.ip || null,
@@ -124,14 +119,24 @@ export default ({ children }: any) => {
     });
   }
 
+  async function handleCreateTrial() {
+    await dispatch(
+      createTrial({
+        ipAddress: trialState?.ip as string,
+      })
+    ).then((res: any) => {
+      console.log("trial created");
+      setTimeout(() => {
+        setReload(!reload);
+        console.log("trial created and reloaded");
+      }, 10000);
+    });
+  }
+
   async function handleGetTrialOrganization() {
-    dispatch(getOrganizations()).then((res: any) => {
+    await dispatch(getOrganizations()).then(async (res: any) => {
       if (res?.payload?.data?.length === 0) {
-        dispatch(
-          createTrial({
-            ipAddress: trialState?.ip as string,
-          })
-        );
+        await handleCreateTrial();
       } else {
         setTrialState((prevState: any) => ({
           ...prevState,
@@ -142,7 +147,7 @@ export default ({ children }: any) => {
   }
 
   async function handleGetTrialRoboticsCloud() {
-    dispatch(
+    await dispatch(
       getRoboticsClouds({
         organizationId: trialState?.organization?.organizationId,
       })
@@ -155,7 +160,7 @@ export default ({ children }: any) => {
   }
 
   async function handleGetTrialInstance() {
-    dispatch(
+    await dispatch(
       getInstances({
         organizationId: trialState?.organization?.organizationId,
         roboticsCloudName: trialState?.roboticsCloud?.name,
@@ -179,7 +184,7 @@ export default ({ children }: any) => {
   }
 
   async function handleGetTrialFleet() {
-    dispatch(
+    await dispatch(
       getFederatedFleets({
         organizationId: trialState?.organization?.organizationId,
         roboticsCloudName: trialState?.roboticsCloud?.name,
@@ -187,12 +192,37 @@ export default ({ children }: any) => {
         instanceId: trialState?.instance?.instanceId,
       })
     ).then((res: any) => {
-      setTrialState((prevState: any) => ({
-        ...prevState,
-        fleet:
-          res?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
-            ?.robolaunchFederatedFleets?.[0] || null,
-      }));
+      if (
+        res?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+          ?.robolaunchFederatedFleets?.length === 0
+      ) {
+        handleCreateTrialFleet();
+      } else {
+        setTrialState((prevState: any) => ({
+          ...prevState,
+          fleet:
+            res?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+              ?.robolaunchFederatedFleets?.[0] || null,
+        }));
+      }
+    });
+  }
+
+  async function handleCreateTrialFleet() {
+    await dispatch(
+      createFederatedFleet({
+        organizationId: trialState?.organization?.organizationId,
+        roboticsCloudName: trialState?.roboticsCloud?.name,
+        instanceId: trialState?.instance?.instanceId,
+        region: trialState?.roboticsCloud?.region,
+        robolaunchFederatedFleetsName: "trial-fleet",
+      })
+    ).then(() => {
+      console.log("fleet created");
+      setTimeout(() => {
+        setReload(!reload);
+        console.log("fleet created and reloaded");
+      }, 10000);
     });
   }
 
