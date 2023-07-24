@@ -8,6 +8,7 @@ import {
   RobotLaunchManagerApi,
   CreateInstanceApi,
   CombinedFunctionsApi,
+  MarketplaceOperationsApi,
 } from "./openapi";
 
 const apiConfig: Configuration = new Configuration({
@@ -58,3 +59,10 @@ export const trialApi: CombinedFunctionsApi = new CombinedFunctionsApi(
   process.env.REACT_APP_BACKEND_URL,
   axiosInterceptorOpenApi
 );
+
+export const marketplaceApi: MarketplaceOperationsApi =
+  new MarketplaceOperationsApi(
+    apiConfig,
+    process.env.REACT_APP_BACKEND_URL,
+    axiosInterceptorOpenApi
+  );

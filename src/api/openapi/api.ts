@@ -409,6 +409,12 @@ export interface CloudInstance {
      * @memberof CloudInstance
      */
     'cloudInstanceResource'?: CloudInstanceResource;
+    /**
+     * 
+     * @type {string}
+     * @memberof CloudInstance
+     */
+    'demoRemainingTime'?: string;
 }
 /**
  * 
@@ -576,6 +582,164 @@ export type Logic = typeof Logic[keyof typeof Logic];
 /**
  * 
  * @export
+ * @interface Marketplace
+ */
+export interface Marketplace {
+    /**
+     * 
+     * @type {string}
+     * @memberof Marketplace
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Marketplace
+     */
+    'repository'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Marketplace
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Marketplace
+     */
+    'rawURL'?: string;
+    /**
+     * 
+     * @type {Array<MarketplaceRobot>}
+     * @memberof Marketplace
+     */
+    'robots'?: Array<MarketplaceRobot>;
+}
+/**
+ * 
+ * @export
+ * @interface MarketplaceRobot
+ */
+export interface MarketplaceRobot {
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'acronym'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'family'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'vendor'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'type'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'version'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'deploymentType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'distro'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MarketplaceRobot
+     */
+    'hasBuild'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MarketplaceRobot
+     */
+    'hasLaunch'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof MarketplaceRobot
+     */
+    'minStorageAmount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'infoURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'robotURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'buildManagerURL'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MarketplaceRobot
+     */
+    'launchManagerURLs'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'rawInfoURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'rawRobotURL'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceRobot
+     */
+    'rawBuildManagerURL'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MarketplaceRobot
+     */
+    'rawLaunchManagerURLs'?: Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface Member
  */
 export interface Member {
@@ -694,6 +858,12 @@ export interface Organization {
      * @memberof Organization
      */
     'adminGroupId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Organization
+     */
+    'ipAddress'?: string;
     /**
      * 
      * @type {string}
@@ -906,12 +1076,6 @@ export interface Organization {
     'roboticsClouds'?: Array<RoboticsCloud>;
     /**
      * 
-     * @type {string}
-     * @memberof Organization
-     */
-    'ipAddress'?: string;
-    /**
-     * 
      * @type {Array<Member>}
      * @memberof Organization
      */
@@ -961,10 +1125,22 @@ export interface PlainResponse {
     'data'?: Array<Organization>;
     /**
      * 
+     * @type {Array<Marketplace>}
+     * @memberof PlainResponse
+     */
+    'marketplaceData'?: Array<Marketplace>;
+    /**
+     * 
      * @type {Array<RoboticsCloud>}
      * @memberof PlainResponse
      */
     'roboticsCloudData'?: Array<RoboticsCloud>;
+    /**
+     * 
+     * @type {Array<Marketplace>}
+     * @memberof PlainResponse
+     */
+    'marketpaceData'?: Array<Marketplace>;
     /**
      * 
      * @type {Array<RoboticsCloud>}
@@ -2105,6 +2281,35 @@ export const CombinedFunctionsApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addUserAttribute: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/combined/addUserAttribute`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2136,6 +2341,35 @@ export const CombinedFunctionsApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserAttribute: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/combined/getUserAttribute`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2148,12 +2382,30 @@ export const CombinedFunctionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addUserAttribute(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserAttribute(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createInfrastructure(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createInfrastructure(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserAttribute(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserAttribute(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2168,12 +2420,28 @@ export const CombinedFunctionsApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addUserAttribute(options?: any): AxiosPromise<string> {
+            return localVarFp.addUserAttribute(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createInfrastructure(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.createInfrastructure(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserAttribute(options?: any): AxiosPromise<string> {
+            return localVarFp.getUserAttribute(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2187,6 +2455,16 @@ export const CombinedFunctionsApiFactory = function (configuration?: Configurati
 export class CombinedFunctionsApi extends BaseAPI {
     /**
      * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CombinedFunctionsApi
+     */
+    public addUserAttribute(options?: AxiosRequestConfig) {
+        return CombinedFunctionsApiFp(this.configuration).addUserAttribute(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2194,6 +2472,16 @@ export class CombinedFunctionsApi extends BaseAPI {
      */
     public createInfrastructure(organization?: Organization, options?: AxiosRequestConfig) {
         return CombinedFunctionsApiFp(this.configuration).createInfrastructure(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CombinedFunctionsApi
+     */
+    public getUserAttribute(options?: AxiosRequestConfig) {
+        return CombinedFunctionsApiFp(this.configuration).getUserAttribute(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2678,6 +2966,100 @@ export class CreateInstanceApi extends BaseAPI {
 
 
 /**
+ * ExternalServicesApi - axios parameter creator
+ * @export
+ */
+export const ExternalServicesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendEmail: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/external-services/send-email`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ExternalServicesApi - functional programming interface
+ * @export
+ */
+export const ExternalServicesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ExternalServicesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sendEmail(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sendEmail(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ExternalServicesApi - factory interface
+ * @export
+ */
+export const ExternalServicesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ExternalServicesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sendEmail(options?: any): AxiosPromise<string> {
+            return localVarFp.sendEmail(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ExternalServicesApi - object-oriented interface
+ * @export
+ * @class ExternalServicesApi
+ * @extends {BaseAPI}
+ */
+export class ExternalServicesApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExternalServicesApi
+     */
+    public sendEmail(options?: AxiosRequestConfig) {
+        return ExternalServicesApiFp(this.configuration).sendEmail(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * KubernetesApi - axios parameter creator
  * @export
  */
@@ -3089,6 +3471,107 @@ export class KubernetesApi extends BaseAPI {
      */
     public getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).getPhysicalInstances(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MarketplaceOperationsApi - axios parameter creator
+ * @export
+ */
+export const MarketplaceOperationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceRobots: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/marketplace/getAssets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MarketplaceOperationsApi - functional programming interface
+ * @export
+ */
+export const MarketplaceOperationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MarketplaceOperationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMarketplaceRobots(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceRobots(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MarketplaceOperationsApi - factory interface
+ * @export
+ */
+export const MarketplaceOperationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MarketplaceOperationsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMarketplaceRobots(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getMarketplaceRobots(organization, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * MarketplaceOperationsApi - object-oriented interface
+ * @export
+ * @class MarketplaceOperationsApi
+ * @extends {BaseAPI}
+ */
+export class MarketplaceOperationsApi extends BaseAPI {
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceOperationsApi
+     */
+    public getMarketplaceRobots(organization?: Organization, options?: AxiosRequestConfig) {
+        return MarketplaceOperationsApiFp(this.configuration).getMarketplaceRobots(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
