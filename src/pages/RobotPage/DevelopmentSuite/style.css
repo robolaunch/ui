@@ -1,0 +1,85 @@
+.content-splitter * {
+  box-sizing: border-box;
+  user-select: none;
+}
+.content-splitter {
+  width: 1200px;
+  max-width: 100%;
+  margin: auto;
+  position: relative;
+}
+.content-splitter-main {
+  position: relative;
+  z-index: 1;
+}
+.content-splitter img {
+  width: 100%;
+  display: block;
+}
+.content-splitter-layer {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+}
+.content-splitter-layer img {
+  position: absolute;
+  height: 100%;
+  width: auto;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+.splitter-divider {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: #fff;
+  width: 3px;
+  transform: translateX(-50%);
+  display: block;
+  z-index: 3;
+}
+.splitter-divider span {
+  display: block;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.splitter-divider span::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 12px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-right: 10px solid #000;
+  border-bottom: 5px solid transparent;
+}
+
+.splitter-divider span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-left: 10px solid #000;
+  border-bottom: 5px solid transparent;
+}

@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 import { Editor } from "@monaco-editor/react";
 import { MdPublic } from "react-icons/md";
@@ -6,6 +6,10 @@ import { RiOrganizationChart } from "react-icons/ri";
 import { BsShieldLockFill } from "react-icons/bs";
 import InputSelect from "../../../components/InputSelect/InputSelect";
 import MarketplaceSingleItemSidebar from "../../../components/MarketplaceSingleItemSidebar/MarketplaceSingleItemSidebar";
+import { useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/redux";
+import { getMarkeplaceItem } from "../../../resources/MarketplaceSlice";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 export default function MarketplaceSingleItemPage(): ReactElement {
   const [templateItem, setTemplateItem] = useState({
@@ -29,11 +33,47 @@ url:
 `,
     deployCount: 67,
   });
+  const dispatch = useAppDispatch();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const url = useParams();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [responseItem, setResponseItem] = useState<any>(undefined);
+
+  useEffect(() => {
+    dispatch(
+      getMarkeplaceItem({
+        organizationId: "",
+        itemId: "",
+      })
+    ).then((res: any) => {
+      setResponseItem(res?.payload?.marketplaceData?.[0]?.robots?.[0] || []);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const source = `
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+## MarkdownPreview
+
+
+> todo: React component preview markdown text.
+> todo: React component preview markdown text.
+> todo: React component preview markdown text.
+
+`;
 
   return (
     <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-9 grid grid-cols-1 gap-6">
-        <CardLayout className="col-span-1 p-4">
+      <div className="col-span-9 grid grid-cols-1 gap-6 h-fit">
+        <CardLayout className="col-span-1 p-4 h-52">
           <div className="h-full flex items-center gap-4">
             <img
               className="h-36"
@@ -128,33 +168,13 @@ url:
           </div>
         </CardLayout>
 
-        <CardLayout className="col-span-1 h-fit">
-          <Editor
-            height="40rem"
-            defaultLanguage="yaml"
-            defaultValue={templateItem?.yaml}
-            options={{
-              minimap: {
-                enabled: false,
-              },
-              fontSize: 12,
-              fontFamily: "monospace",
-              lineDecorationsWidth: 10,
-              wordWrap: "on",
-              lineNumbersMinChars: 3,
-              folding: false,
-              padding: {
-                top: 6,
-                bottom: 6,
-              },
+        <CardLayout className="col-span-1 h-full px-8 py-6">
+          <MarkdownPreview
+            className="h-full"
+            source={source}
+            wrapperElement={{
+              "data-color-mode": "light",
             }}
-            theme="vs-dark"
-            onChange={(value: any) =>
-              setTemplateItem({
-                ...templateItem,
-                yaml: value,
-              })
-            }
           />
         </CardLayout>
       </div>

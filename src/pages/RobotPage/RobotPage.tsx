@@ -16,6 +16,7 @@ import useSidebar from "../../hooks/useSidebar";
 import { useParams } from "react-router-dom";
 import usePages from "../../hooks/usePages";
 import Overview from "./Overview/Overview";
+import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -313,6 +314,13 @@ export default function RobotPage(): ReactElement {
                     urls?.vdi || responseRobot?.vdiIngressEndpoint
                   }
                   handleForceUpdate={handleForceUpdate}
+                />
+              );
+            case "Development Suite":
+              return (
+                <DevelopmentSuite
+                  ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+                  vdiURL={urls?.vdi || responseRobot?.vdiIngressEndpoint}
                 />
               );
             case "Remote Desktop":

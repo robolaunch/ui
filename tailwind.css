@@ -212,3 +212,7 @@ td {
   background: linear-gradient(to right, transparent 50%, black 50%);
   background-size: calc((100% - 8px) / 2) 1px; /* Calculate the width of the dots */
 }
+
+.content-splitter {
+  width: 100% !important;
+}

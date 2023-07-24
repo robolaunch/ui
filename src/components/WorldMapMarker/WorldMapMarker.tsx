@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import { Marker } from "react-simple-maps";
 
 interface IWorldMapMarker {
@@ -9,6 +9,8 @@ export default function WorldMapMarker({
   city,
 }: IWorldMapMarker): ReactElement {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+
+  console.log(city);
 
   return (
     <Marker
@@ -22,18 +24,29 @@ export default function WorldMapMarker({
         fill="#35B8FA"
         stroke="#FFF"
         className="relative transition-300 text-lg animate__animated animate__pulse animate__infinite"
-        r={isHovered ? 36 : 12}
+        r={isHovered ? 72 : 12}
       />
       {isHovered && (
-        <text
-          className="animate__animated animate__fadeIn"
-          fontSize={28}
-          y={10}
-          textAnchor="middle"
-          fill="#000"
-        >
-          {city?.count}
-        </text>
+        <Fragment>
+          <text
+            className="animate__animated animate__fadeIn"
+            fontSize={18}
+            y={-8}
+            textAnchor="middle"
+            fill="#000"
+          >
+            {city?.awsRegion}
+          </text>
+          <text
+            className="animate__animated animate__fadeIn"
+            fontSize={18}
+            y={28}
+            textAnchor="middle"
+            fill="#000"
+          >
+            Count: {city?.count}
+          </text>
+        </Fragment>
       )}
     </Marker>
   );

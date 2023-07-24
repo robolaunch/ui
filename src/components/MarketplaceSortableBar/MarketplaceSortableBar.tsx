@@ -1,6 +1,5 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
-import InputSelect from "../InputSelect/InputSelect";
 import InputText from "../InputText/InputText";
 
 export default function MarketplaceSortableBar(): ReactElement {
@@ -18,13 +17,6 @@ export default function MarketplaceSortableBar(): ReactElement {
         </span>
       </div>
       <div className="flex gap-6">
-        <InputSelect className="!w-40" placeholder="Sort by">
-          <Fragment>
-            <option value=""></option>
-            <option value="name">Name</option>
-            <option value="organization">Organization</option>
-          </Fragment>
-        </InputSelect>
         <InputText
           className="!w-64 !text-xs"
           placeholder="Search by Template Name"

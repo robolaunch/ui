@@ -60,6 +60,12 @@ export default function RobotHeader({
       disabled: responseRobot?.ideIngressEndpoint ? false : true,
     },
     {
+      name: "Development Suite",
+      icon: <AiFillCode size={14} />,
+      state: isSettedCookie && responseRobot?.ideIngressEndpoint ? true : false,
+      disabled: responseRobot?.ideIngressEndpoint ? false : true,
+    },
+    {
       name: "Remote Desktop",
       icon: <MdScreenShare size={14} />,
       state: isSettedCookie && responseRobot?.vdiIngressEndpoint ? true : false,

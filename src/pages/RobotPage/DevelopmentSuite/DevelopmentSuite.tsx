@@ -1,66 +1,61 @@
-import React, { ReactElement } from "react";
-import SampleSplitter from "./Splitter";
-import { useResizable } from "react-resizable-layout";
-import CardLayout from "../../../layouts/CardLayout";
+import React, { ReactElement, useEffect, useState } from "react";
+import ImageSplitter from "./ImageSplitter";
+import StreamContext from "../../../contexts/StreamContext";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
+import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
+import CardLayout from "../../../layouts/CardLayout";
 
-interface IDevelopmentSuiteProps {
-  ideIngressEndpoint: string;
-  ros: any;
+interface IDevelopmentSuite {
+  ideURL: string;
+  vdiURL: string;
 }
 
 export default function DevelopmentSuite({
-  ideIngressEndpoint,
-  ros,
-}: IDevelopmentSuiteProps): ReactElement {
-  const {
-    isDragging: isIDEDragging,
-    position: ideW,
-    splitterProps: ideDragBarProps,
-  } = useResizable({
-    axis: "x",
-    initial: 900,
-    min: 50,
-    reverse: true,
-  });
+  ideURL,
+  vdiURL,
+}: IDevelopmentSuite): ReactElement {
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const cn = (...args: any[]) => args.filter(Boolean).join(" ");
+  useEffect(() => {
+    console.log(isDragging);
+  }, [isDragging]);
 
   return (
     <CardLayout>
-      <div
-        className={
-          "flex flex-col h-[55rem] bg-layer-dark-900 text-layer-light-50 overflow-hidden"
+      <ImageSplitter
+        setIsDragging={setIsDragging}
+        source={
+          <StreamContext vdiIngressEndpoint={vdiURL}>
+            <div className="grid grid-cols-12 animate__animated animate__fadeIn">
+              <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
+                <RemoteDesktopScene isControllerActive={true} />
+              </div>
+              <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
+                <RemoteDesktopTabs />
+              </div>
+            </div>
+          </StreamContext>
         }
-      >
-        <div className={"flex grow"}>
-          <div className={"flex grow"}>
-            <div className={"grow bg-darker contents"}>
-              {ideIngressEndpoint && (
-                <iframe
-                  className={`h-full w-full animate__animated animate__fadeIn`}
-                  src={ideIngressEndpoint}
-                  title="Code Editor"
-                  style={
-                    isIDEDragging
-                      ? {
-                          pointerEvents: "none",
-                        }
-                      : {}
-                  }
-                />
-              )}
-            </div>
-            <SampleSplitter isDragging={isIDEDragging} {...ideDragBarProps} />
-            <div
-              className={cn("shrink-0 contents", isIDEDragging && "dragging")}
-              style={{ width: ideW }}
-            >
-              <RemoteDesktopScene isControllerActive />
-            </div>
+        content={
+          <div
+            style={{
+              width: "calc(100vw - 100px)",
+              height: "100%",
+            }}
+          >
+            <iframe
+              allow="clipboard-read"
+              className={`w-full animate__animated animate__fadeIn h-full ${
+                isDragging && "pointer-events-none"
+              }`}
+              src={ideURL}
+              title="Code Editor"
+              style={{ minWidth: "fit-content" }}
+            />
           </div>
-        </div>
-      </div>
+        }
+        startPosition={30}
+      />
     </CardLayout>
   );
 }
