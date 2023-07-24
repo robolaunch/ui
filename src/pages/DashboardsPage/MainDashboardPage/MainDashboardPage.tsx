@@ -134,7 +134,7 @@ export default function MainDashboardPage(): ReactElement {
                   {
                     label: "Pending",
                     value: 0,
-                    color: "orange",
+                    color: "#ffa500",
                   },
                   {
                     label: "Ready",
@@ -144,7 +144,7 @@ export default function MainDashboardPage(): ReactElement {
                   {
                     label: "Error",
                     value: 0,
-                    color: "red",
+                    color: "#ff0000",
                   },
                 ]
               : []

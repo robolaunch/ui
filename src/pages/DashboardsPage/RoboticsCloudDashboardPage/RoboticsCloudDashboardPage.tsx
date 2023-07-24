@@ -348,7 +348,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                         (item: any) =>
                           item?.instanceCloudState !== "ConnectionHub_Ready"
                       ).length || 0,
-                    color: "orange",
+                    color: "#ffa500",
                   },
                   {
                     label: "Ready",
@@ -366,7 +366,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                         (item: any) =>
                           item?.instanceCloudState === "ConnectionHub_Error"
                       ).length || 0,
-                    color: "red",
+                    color: "#ff0000",
                   },
                 ]
               : []
