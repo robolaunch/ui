@@ -4,9 +4,15 @@ import { toast } from "sonner";
 
 export const createFederatedFleet = createAsyncThunk(
   "instance/createFederatedFleet",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robolaunchFederatedFleetsName: string;
+  }) => {
     const response = await kubernetesApi.createFederatedFleet({
-      name: values?.name,
+      name: "instance/createFederatedFleet",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
