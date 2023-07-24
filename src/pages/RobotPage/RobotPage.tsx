@@ -1,21 +1,21 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
 import TaskManagementContext from "../../contexts/TaskManagementContext";
+import TaskManagementLayout from "../../layouts/TaskManagementLayout";
+import RosConnector from "../../components/RosConnector/RosConnector";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
+import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import { useParams } from "react-router-dom";
-import Overview from "./Overview/Overview";
-import { useAppSelector } from "../../hooks/redux";
-import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
-import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import useFunctions from "../../hooks/useFunctions";
-import usePages from "../../hooks/usePages";
-import RosConnector from "../../components/RosConnector/RosConnector";
-import useSidebar from "../../hooks/useSidebar";
+import { useAppSelector } from "../../hooks/redux";
 import CardLayout from "../../layouts/CardLayout";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
+import useSidebar from "../../hooks/useSidebar";
+import { useParams } from "react-router-dom";
+import usePages from "../../hooks/usePages";
+import Overview from "./Overview/Overview";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);

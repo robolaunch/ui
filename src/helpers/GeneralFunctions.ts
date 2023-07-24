@@ -49,6 +49,7 @@ export function handleLogout() {
     "persist:github",
     "persist:region",
     "persist:provider",
+    "persist:trial",
   ].map((item: string) => localStorage.removeItem(item));
 }
 

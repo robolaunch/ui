@@ -29,9 +29,14 @@ export const createFederatedFleet = createAsyncThunk(
 
 export const getFederatedFleets = createAsyncThunk(
   "instance/getFederatedFleets",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    region: string;
+    instanceId: string;
+  }) => {
     const response = await kubernetesApi.getFederatedFleets({
-      name: values?.name,
+      name: "instance/getFederatedFleets",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
@@ -46,28 +51,28 @@ export const getFederatedFleets = createAsyncThunk(
   }
 );
 
-export const getFederatedFleetStatus = createAsyncThunk(
-  "instance/getFederatedFleetStatus",
-  async (values: any) => {
-    const response = await kubernetesApi.getFederatedFleetStatus({
-      name: values.name,
-      organizationId: values?.organizationId,
-      roboticsClouds: [
-        {
-          name: values?.roboticsCloudName,
-          cloudInstances: [
-            {
-              instanceId: values?.instanceId,
-              region: values?.region,
-              robolaunchFederatedFleets: [{ name: values?.fleetName }],
-            },
-          ],
-        },
-      ],
-    });
-    return response.data;
-  }
-);
+// export const getFederatedFleetStatus = createAsyncThunk(
+//   "instance/getFederatedFleetStatus",
+//   async (values: any) => {
+//     const response = await kubernetesApi.getFederatedFleetStatus({
+//       name: values.name,
+//       organizationId: values?.organizationId,
+//       roboticsClouds: [
+//         {
+//           name: values?.roboticsCloudName,
+//           cloudInstances: [
+//             {
+//               instanceId: values?.instanceId,
+//               region: values?.region,
+//               robolaunchFederatedFleets: [{ name: values?.fleetName }],
+//             },
+//           ],
+//         },
+//       ],
+//     });
+//     return response.data;
+//   }
+// );
 
 export const deleteFederatedFleet = createAsyncThunk(
   "instance/deleteFederatedFleet",
@@ -113,9 +118,9 @@ export const FleetSlice = createSlice({
       .addCase(getFederatedFleets.rejected, () => {
         toast.error("Something went wrong of getting fleets");
       })
-      .addCase(getFederatedFleetStatus.rejected, () => {
-        toast.error("Something went wrong of getting fleet status");
-      })
+      // .addCase(getFederatedFleetStatus.rejected, () => {
+      //   toast.error("Something went wrong of getting fleet status");
+      // })
       .addCase(deleteFederatedFleet.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);

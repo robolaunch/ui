@@ -8,7 +8,8 @@ import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
 import GithubReducer from "./GithubSlice";
-import instanceReducer from "./InstanceSlice";
+import InstanceReducer from "./InstanceSlice";
+import TrialReducer from "./TrialSlice";
 /* Data must be persisted in order not to lose them on page refresh. */
 /* Redux-persist basically saves the data into localStorage so the data is not lost on refresh. */
 
@@ -59,7 +60,7 @@ const persistConfigCloudInstance = {
 };
 const persistedReducerInstance = persistReducer<any, any>(
   persistConfigCloudInstance,
-  instanceReducer
+  InstanceReducer
 );
 
 const persistConfigFleet = {
@@ -82,6 +83,16 @@ const persistedReducerRobot = persistReducer<any, any>(
   RobotReducer
 );
 
+const persistConfigTrial = {
+  key: "trial",
+  version: 1,
+  storage,
+};
+const persistedReducerTrial = persistReducer<any, any>(
+  persistConfigTrial,
+  TrialReducer
+);
+
 const store = configureStore({
   reducer: {
     user: persistedReducerUser,
@@ -91,6 +102,7 @@ const store = configureStore({
     instance: persistedReducerInstance,
     fleet: persistedReducerFleet,
     robot: persistedReducerRobot,
+    trial: persistedReducerTrial,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

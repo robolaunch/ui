@@ -1,7 +1,8 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import TrialCardLayout from "../../layouts/TrialCardLayout";
 import StateCell from "../Cells/StateCell";
 import Seperator from "../Seperator/Seperator";
+import useTrial from "../../hooks/useTrial";
 
 interface ITrialStateViewer {
   layoutClassName?: string;
@@ -10,7 +11,8 @@ interface ITrialStateViewer {
 export default function TrialStateViewer({
   layoutClassName,
 }: ITrialStateViewer): ReactElement {
-  const states = [
+  const { trialState } = useTrial();
+  const [states, setStates] = useState<any>([
     {
       name: "organization",
       path: "organization",
@@ -35,7 +37,39 @@ export default function TrialStateViewer({
       state: "Pending",
       success: false,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    setStates([
+      {
+        name: "organization",
+        path: "organization",
+        state: trialState?.organization ? "Ready" : "Pending",
+        success: trialState?.organization ? true : false,
+      },
+      {
+        name: "robotics cloud",
+        path: "roboticscloud",
+        state: trialState?.roboticsCloud ? "Ready" : "Pending",
+        success: trialState?.roboticsCloud ? true : false,
+      },
+      {
+        name: "cloud instance",
+        path: "instance",
+        state: trialState?.instance?.instanceCloudState || "Pending",
+        success:
+          trialState?.instance?.instanceCloudState === "ConnectionHub_Ready"
+            ? true
+            : false,
+      },
+      {
+        name: "fleet",
+        path: "fleet",
+        state: trialState?.fleet?.fleetStatus || "Pending",
+        success: trialState?.fleet?.fleetStatus === "Ready" ? true : false,
+      },
+    ]);
+  }, [trialState]);
 
   return (
     <TrialCardLayout className={layoutClassName} title="State">
@@ -52,7 +86,15 @@ export default function TrialStateViewer({
                   />
                   <span className="capitalize text-xs">{item?.name}</span>
                 </div>
-                <StateCell state={item?.success ? "Ready" : item?.state} />
+                <StateCell
+                  state={item?.success ? "Ready" : item?.state}
+                  isRobolaunchState={
+                    trialState?.instance?.instanceCloudState &&
+                    item?.path === "instance"
+                      ? true
+                      : false
+                  }
+                />
               </div>
               {index !== states?.length - 1 && <Seperator />}
             </Fragment>

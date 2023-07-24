@@ -10,15 +10,15 @@ interface ITrialTimer {
 export default function TrialTimer({
   layoutClassName,
 }: ITrialTimer): ReactElement {
-  const { time } = useTrial();
+  const { trialState } = useTrial();
 
   return (
     <TrialCardLayout title="Trial Timer" className={layoutClassName}>
       <div className="h-full flex items-center justify-center">
         <TimeCounter
-          hour={time.viewer.h || 0}
-          minute={time.viewer.m || 0}
-          second={time.viewer.s || 0}
+          hour={trialState?.time.viewer.h || 0}
+          minute={trialState?.time.viewer.m || 0}
+          second={trialState?.time.viewer.s || 0}
         />
       </div>
     </TrialCardLayout>
