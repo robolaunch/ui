@@ -1,50 +1,22 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
-import { Editor } from "@monaco-editor/react";
-import { MdPublic } from "react-icons/md";
-import { RiOrganizationChart } from "react-icons/ri";
-import { BsShieldLockFill } from "react-icons/bs";
-import InputSelect from "../../../components/InputSelect/InputSelect";
 import MarketplaceSingleItemSidebar from "../../../components/MarketplaceSingleItemSidebar/MarketplaceSingleItemSidebar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/redux";
 import { getMarkeplaceItem } from "../../../toolkit/MarketplaceSlice";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import ContentLoader from "react-content-loader";
 
 export default function MarketplaceSingleItemPage(): ReactElement {
-  const [templateItem, setTemplateItem] = useState({
-    title: "Cloudy Robot",
-    organization: "Robolaunch Organization",
-    description:
-      "Cloudy is an open-source, 3D-printed robot designed and built by Robolaunch. With its advanced capabilities and innovative design, Cloudy is poised to become a key player in the world of robotics. Whether you're a seasoned DIY enthusiast or just getting started in the world of robotics, Cloudy has something to offer.",
-    type: "virtual",
-    rosDistro: "humble",
-    access: "public",
-    yaml: `name: cloudy_robot
-description: A robot that is cloudy
-version: 0.0.1
-license: Apache-2.0
-author: Robolaunch
-maintainer: Robolaunch
-url:
-    homepage: https://robolaunch.com
-    source:
-    tracker:
-`,
-    deployCount: 67,
-  });
   const dispatch = useAppDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const url = useParams();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [responseItem, setResponseItem] = useState<any>(undefined);
 
   useEffect(() => {
     dispatch(
       getMarkeplaceItem({
-        organizationId: "",
-        itemId: "",
+        acronym: url?.productName as string,
       })
     ).then((res: any) => {
       setResponseItem(res?.payload?.marketplaceData?.[0]?.robots?.[0] || []);
@@ -75,94 +47,153 @@ url:
       <div className="col-span-9 grid grid-cols-1 gap-6 h-fit">
         <CardLayout className="col-span-1 p-4 h-52">
           <div className="h-full flex items-center gap-4">
-            <img
-              className="h-36"
-              src={`/svg/ros/${templateItem?.rosDistro}.svg`}
-              alt={templateItem?.rosDistro}
-            />
+            {responseItem?.distro ? (
+              <img
+                className="h-40 animate__animated animate__fadeIn"
+                src={`/svg/ros/${responseItem?.distro?.toLowerCase()}.svg`}
+                alt={responseItem?.distro}
+              />
+            ) : (
+              <ContentLoader
+                speed={1}
+                width={132}
+                height={168}
+                backgroundColor="#f6f6ef"
+                foregroundColor="#e8e8e3"
+              >
+                <rect width="132" height="168" />
+              </ContentLoader>
+            )}
+
             <div className="h-full flex flex-col justify-between py-1.5">
               <div className="flex justify-between">
                 <div className="flex items-center gap-3">
                   <div className="text-lg font-medium">
-                    {templateItem.title}
+                    {responseItem?.name || (
+                      <ContentLoader
+                        speed={1}
+                        width={192}
+                        height={28}
+                        backgroundColor="#f6f6ef"
+                        foregroundColor="#e8e8e3"
+                      >
+                        <rect width="192" height="28" />
+                      </ContentLoader>
+                    )}
                   </div>
                   <div
-                    className={`text-[0.64rem] font-medium px-3 py-1 rounded-lg w-fit ${
-                      templateItem?.type === "hybrid"
-                        ? "text-layer-secondary-500 bg-layer-secondary-100"
-                        : "text-layer-primary-500 bg-layer-primary-100"
-                    } `}
+                    className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
                   >
-                    {templateItem?.type === "hybrid"
-                      ? "Hybrid Robot"
-                      : "Virtual Robot"}
+                    {responseItem?.type || (
+                      <ContentLoader
+                        speed={1}
+                        width={64}
+                        height={18}
+                        backgroundColor="#f5e5ff"
+                        foregroundColor="#fbf4ff"
+                      >
+                        <rect width="64" height="18" />
+                      </ContentLoader>
+                    )}
+                  </div>
+                  <div
+                    className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+                  >
+                    {typeof responseItem?.hasBuild === "boolean" ? (
+                      `Build Steps: ${
+                        responseItem?.hasBuild ? "Include" : "None"
+                      }`
+                    ) : (
+                      <ContentLoader
+                        speed={1}
+                        width={64}
+                        height={18}
+                        backgroundColor="#f5e5ff"
+                        foregroundColor="#fbf4ff"
+                      >
+                        <rect width="64" height="18" />
+                      </ContentLoader>
+                    )}
+                  </div>
+                  <div
+                    className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+                  >
+                    {typeof responseItem?.hasLaunch === "boolean" ? (
+                      `Launch Steps: ${
+                        responseItem?.hasLaunch ? "Include" : "None"
+                      }`
+                    ) : (
+                      <ContentLoader
+                        speed={1}
+                        width={64}
+                        height={18}
+                        backgroundColor="#f5e5ff"
+                        foregroundColor="#fbf4ff"
+                      >
+                        <rect width="64" height="18" />
+                      </ContentLoader>
+                    )}
                   </div>
                 </div>
-
-                <div className="flex items-center gap-3">
-                  {(() => {
-                    switch (templateItem?.access) {
-                      case "public":
-                        return (
-                          <MdPublic
-                            size={24}
-                            className="text-layer-secondary-500"
-                          />
-                        );
-                      case "organization":
-                        return (
-                          <RiOrganizationChart
-                            size={24}
-                            className="text-layer-secondary-500"
-                          />
-                        );
-                      case "private":
-                        return (
-                          <BsShieldLockFill
-                            size={24}
-                            className="text-layer-secondary-500"
-                          />
-                        );
-                    }
-                  })()}
-                  <InputSelect className="!text-sm !p-0 !m-0">
-                    <Fragment>
-                      <option
-                        selected={
-                          templateItem?.access === "public" ? true : false
-                        }
-                        value="public"
-                      >
-                        Public Template
-                      </option>
-                      <option
-                        selected={
-                          templateItem?.access === "organization" ? true : false
-                        }
-                        value="organization"
-                      >
-                        {templateItem?.organization} Template
-                      </option>
-                      <option
-                        selected={
-                          templateItem?.access === "private" ? true : false
-                        }
-                        value="private"
-                      >
-                        Private Template
-                      </option>
-                    </Fragment>
-                  </InputSelect>
-                </div>
               </div>
-
-              <div className="text-sm text-layer-dark-800">
-                {templateItem?.organization}
+              <div className="text-xs text-layer-dark-600">
+                {typeof responseItem?.family === "string" ? (
+                  responseItem?.family + ` (${responseItem?.acronym})`
+                ) : (
+                  <ContentLoader
+                    speed={1}
+                    width={92}
+                    height={18}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="92" height="18" />
+                  </ContentLoader>
+                )}
               </div>
-              <div className="text-xs text-layer-dark-700">ROS2 Humble</div>
+              <div className="text-xs text-layer-dark-700">
+                {typeof responseItem?.distro === "string" ? (
+                  `ROS2 ${responseItem?.distro}`
+                ) : (
+                  <ContentLoader
+                    speed={1}
+                    width={92}
+                    height={18}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="92" height="18" />
+                  </ContentLoader>
+                )}
+              </div>
 
               <div className="text-xs text-layer-dark-600">
-                {templateItem.description}
+                {typeof responseItem?.minStorageAmount === "number" ? (
+                  responseItem?.minStorageAmount + " MB Storage"
+                ) : (
+                  <ContentLoader
+                    speed={1}
+                    width={92}
+                    height={18}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="92" height="18" />
+                  </ContentLoader>
+                )}
+              </div>
+              <div className="text-xs text-layer-dark-600">
+                {responseItem?.version || (
+                  <ContentLoader
+                    speed={1}
+                    width={92}
+                    height={18}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="92" height="18" />
+                  </ContentLoader>
+                )}
               </div>
             </div>
           </div>
@@ -179,7 +210,7 @@ url:
         </CardLayout>
       </div>
 
-      <MarketplaceSingleItemSidebar item={templateItem} />
+      <MarketplaceSingleItemSidebar item={responseItem} />
     </div>
   );
 }

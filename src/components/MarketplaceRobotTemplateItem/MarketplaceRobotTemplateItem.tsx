@@ -14,7 +14,7 @@ export default function MarketplaceRobotTemplateItem({
 }: IMarketplaceRobotTemplateItem): ReactElement {
   return (
     <CardLayout className="col-span-3 p-6 hover:scale-[1.014] transition-all duration-500 cursor-pointer !flex !flex-col gap-4">
-      <Link to={stringSlugify(robot?.name)}>
+      <Link to={stringSlugify(robot?.acronym)}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">

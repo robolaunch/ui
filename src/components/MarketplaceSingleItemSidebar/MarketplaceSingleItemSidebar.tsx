@@ -11,6 +11,7 @@ import { RiOrganizationChart } from "react-icons/ri";
 import { MdPublic } from "react-icons/md";
 import Button from "../Button/Button";
 import ImportRobotModal from "../../modals/ImportRobotModal";
+import useTrial from "../../hooks/useTrial";
 
 interface IMarketplaceSingleItemSidebar {
   item: any;
@@ -22,8 +23,10 @@ export default function MarketplaceSingleItemSidebar({
   const [isShowImportRobotModal, setIsShowImportRobotModal] =
     useState<boolean>(false);
 
+  const { trialState } = useTrial();
+
   return (
-    <CardLayout className="!col-span-3 flex flex-col gap-8 p-6 !h-fit">
+    <CardLayout className="!col-span-3 flex flex-col gap-8 p-6 !h-full">
       <Fragment>
         <div className="flex flex-col gap-1">
           <span className="font-medium">Installation</span>
@@ -49,7 +52,7 @@ export default function MarketplaceSingleItemSidebar({
                 size={20}
                 className="text-layer-secondary-500"
               />
-              <span>{item?.title}</span>
+              <span>{item?.name}</span>
             </label>
           </div>
         </div>
@@ -63,7 +66,7 @@ export default function MarketplaceSingleItemSidebar({
                 size={20}
                 className="text-layer-secondary-500"
               />
-              <span>{item?.organization}</span>
+              <span>{trialState?.organization?.organizationName}</span>
             </label>
           </div>
         </div>

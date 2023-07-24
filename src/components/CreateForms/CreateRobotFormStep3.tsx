@@ -1,10 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { createBuildManager } from "../../toolkit/RobotSlice";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { createBuildManager } from "../../toolkit/RobotSlice";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
@@ -15,8 +17,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;

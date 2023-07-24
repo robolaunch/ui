@@ -615,6 +615,12 @@ export interface Marketplace {
      * @memberof Marketplace
      */
     'robots'?: Array<MarketplaceRobot>;
+    /**
+     * 
+     * @type {Array<MarketplaceRobot>}
+     * @memberof Marketplace
+     */
+    'marketplaceRobots'?: Array<MarketplaceRobot>;
 }
 /**
  * 
@@ -736,6 +742,12 @@ export interface MarketplaceRobot {
      * @memberof MarketplaceRobot
      */
     'rawLaunchManagerURLs'?: Array<string>;
+    /**
+     * 
+     * @type {TrialImage}
+     * @memberof MarketplaceRobot
+     */
+    'trialImage'?: TrialImage;
 }
 /**
  * 
@@ -1074,6 +1086,12 @@ export interface Organization {
      * @memberof Organization
      */
     'roboticsClouds'?: Array<RoboticsCloud>;
+    /**
+     * 
+     * @type {Marketplace}
+     * @memberof Organization
+     */
+    'marketplace'?: Marketplace;
     /**
      * 
      * @type {Array<Member>}
@@ -1699,6 +1717,18 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'gpuEnabledForCloudInstance'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'marketPlaceEnabled'?: boolean;
+    /**
+     * 
+     * @type {TrialImage}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'trialImage'?: TrialImage;
 }
 /**
  * 
@@ -2177,6 +2207,31 @@ export interface Team {
      * @memberof Team
      */
     'userCount'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface TrialImage
+ */
+export interface TrialImage {
+    /**
+     * 
+     * @type {string}
+     * @memberof TrialImage
+     */
+    'imageUser'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrialImage
+     */
+    'imageRepository'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrialImage
+     */
+    'imageTag'?: string;
 }
 
 /**
@@ -3487,6 +3542,39 @@ export const MarketplaceOperationsApiAxiosParamCreator = function (configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getMarketplaceRobot: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/marketplace/getAsset`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getMarketplaceRobots: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/marketplace/getAssets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3530,6 +3618,16 @@ export const MarketplaceOperationsApiFp = function(configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getMarketplaceRobot(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceRobot(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getMarketplaceRobots(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMarketplaceRobots(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -3550,6 +3648,15 @@ export const MarketplaceOperationsApiFactory = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getMarketplaceRobot(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getMarketplaceRobot(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getMarketplaceRobots(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getMarketplaceRobots(organization, options).then((request) => request(axios, basePath));
         },
@@ -3563,6 +3670,17 @@ export const MarketplaceOperationsApiFactory = function (configuration?: Configu
  * @extends {BaseAPI}
  */
 export class MarketplaceOperationsApi extends BaseAPI {
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceOperationsApi
+     */
+    public getMarketplaceRobot(organization?: Organization, options?: AxiosRequestConfig) {
+        return MarketplaceOperationsApiFp(this.configuration).getMarketplaceRobot(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {Organization} [organization] 

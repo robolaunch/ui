@@ -1159,6 +1159,10 @@ video {
   height: 13rem;
 }
 
+.\!h-full{
+  height: 100% !important;
+}
+
 .max-h-\[40rem\]{
   max-height: 40rem;
 }

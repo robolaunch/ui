@@ -15,10 +15,10 @@ export const getMarkeplaceItems = createAsyncThunk(
 
 export const getMarkeplaceItem = createAsyncThunk(
   "marketplace/getMarkeplaceItem",
-  async (values: { organizationId: string; itemId: string }) => {
-    const response = await marketplaceApi.getMarketplaceRobots({
+  async (values: { acronym: string }) => {
+    const response = await marketplaceApi.getMarketplaceRobot({
       name: "marketplace/getMarkeplaceItem",
-      organizationId: values.organizationId,
+      marketplace: { robots: [{ acronym: values.acronym }] },
     });
     return response.data;
   }
