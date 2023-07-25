@@ -3,6 +3,7 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useSidebar from "../../hooks/useSidebar";
 import { useParams } from "react-router-dom";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
 
 export default function TrialSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -93,7 +94,13 @@ export default function TrialSidebar(): ReactElement {
                 imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
               />
               <SidebarStaticItem
-                to={`/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`}
+                to={`/trial/${organizationNameViewer({
+                  organizationName:
+                    selectedState?.organization?.organizationName,
+                  capitalization: false,
+                })}/${selectedState?.roboticsCloud?.name}/${
+                  selectedState?.instance?.name
+                }/${selectedState?.fleet?.name}`}
                 imgSrc={`/svg/general/templates/templates-gray.svg`}
               />
             </Fragment>

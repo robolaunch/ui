@@ -83,8 +83,12 @@ export default function MarketplaceRobotTemplateItem({
           </ul>
           <img
             className="w-28"
-            src={`/svg/ros/${robot?.distro?.toLowerCase()}.svg`}
-            alt="ros"
+            src={
+              robot?.type === "Environment"
+                ? `/svg/apps/${robot?.family?.toLowerCase()}.svg`
+                : `/svg/apps/${robot?.distro?.toLowerCase()}.svg`
+            }
+            alt="apps"
           />
         </div>
       </Link>

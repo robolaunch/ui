@@ -85,22 +85,22 @@ export default function MarketplaceFilter(): ReactElement {
         <div className="flex flex-col text-xs gap-3 pl-6">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
-            <img className="w-10" src="/svg/ros/humble.svg" alt="humble" />
+            <img className="w-10" src="/svg/apps/humble.svg" alt="humble" />
             <span>ROS2 Humble</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="foxy">
             <InputCheckbox className="!scale-125" name="foxy" />
-            <img className="w-10" src="/svg/ros/foxy.svg" alt="foxy" />
+            <img className="w-10" src="/svg/apps/foxy.svg" alt="foxy" />
             <span>ROS2 Foxy</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="galactic">
             <InputCheckbox className="!scale-125" name="galactic" />
-            <img className="w-10" src="/svg/ros/galactic.svg" alt="galactic" />
+            <img className="w-10" src="/svg/apps/galactic.svg" alt="galactic" />
             <span>ROS2 Galactic</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="noetic">
             <InputCheckbox className="!scale-125" name="noetic" />
-            <img className="w-10" src="/svg/ros/noetic.svg" alt="noetic" />
+            <img className="w-10" src="/svg/apps/noetic.svg" alt="noetic" />
             <span>ROS1 Noetic</span>
           </label>
         </div>

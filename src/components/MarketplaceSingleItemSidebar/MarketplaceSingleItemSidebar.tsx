@@ -2,11 +2,7 @@ import React, { Fragment, ReactElement, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { VscSymbolNamespace } from "react-icons/vsc";
 import CardLayout from "../../layouts/CardLayout";
-import {
-  BsFillCloudDownloadFill,
-  BsFillCloudFill,
-  BsShieldLockFill,
-} from "react-icons/bs";
+import { BsFillCloudFill } from "react-icons/bs";
 import { RiOrganizationChart } from "react-icons/ri";
 import { MdPublic } from "react-icons/md";
 import Button from "../Button/Button";
@@ -72,75 +68,24 @@ export default function MarketplaceSingleItemSidebar({
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Template Type
+            Build Manager
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
-            {(() => {
-              switch (item?.access) {
-                case "public":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="humble">
-                      <MdPublic
-                        size={20}
-                        className="text-layer-secondary-500"
-                      />
-                      <span>Public Template</span>
-                    </label>
-                  );
-
-                case "organization":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="foxy">
-                      <RiOrganizationChart
-                        size={20}
-                        className="text-layer-secondary-500"
-                      />
-                      <span>{item?.organization} Organization</span>
-                    </label>
-                  );
-                case "private":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="foxy">
-                      <BsShieldLockFill
-                        size={20}
-                        className="text-layer-secondary-500"
-                      />
-                      <span>Private Template</span>
-                    </label>
-                  );
-              }
-            })()}
+            <label className="flex items-center gap-2" htmlFor="humble">
+              <MdPublic size={20} className="text-layer-secondary-500" />
+              <span>{item?.hasBuild ? "Include" : "None"}</span>
+            </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Robot Type
+            Launch Manager
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
-            {(() => {
-              switch (item?.type) {
-                case "virtual":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="humble">
-                      <BsFillCloudFill
-                        size={22}
-                        className="text-layer-secondary-500"
-                      />
-                      <span>Virtual Robot</span>
-                    </label>
-                  );
-                case "hybrid":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="foxy">
-                      <BsFillCloudDownloadFill
-                        size={22}
-                        className="text-layer-primary-500"
-                      />
-                      <span>Hybrid Robot</span>
-                    </label>
-                  );
-              }
-            })()}
+            <label className="flex items-center gap-2" htmlFor="humble">
+              <BsFillCloudFill size={22} className="text-layer-secondary-500" />
+              <span>{item?.hasLaunch ? "Include" : "None"}</span>
+            </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -148,57 +93,10 @@ export default function MarketplaceSingleItemSidebar({
             Ros Distro
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
-            {(() => {
-              switch (item?.rosDistro) {
-                case "noetic":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="noetic">
-                      <img
-                        className="w-10"
-                        src="/svg/ros/noetic.svg"
-                        alt="noetic"
-                      />
-                      <span>ROS1 Noetic</span>
-                    </label>
-                  );
-                case "foxy":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="foxy">
-                      <img
-                        className="w-10"
-                        src="/svg/ros/foxy.svg"
-                        alt="foxy"
-                      />
-                      <span>ROS2 Foxy</span>
-                    </label>
-                  );
-                case "galactic":
-                  return (
-                    <label
-                      className="flex items-center gap-2"
-                      htmlFor="galactic"
-                    >
-                      <img
-                        className="w-10"
-                        src="/svg/ros/galactic.svg"
-                        alt="galactic"
-                      />
-                      <span>ROS2 Galactic</span>
-                    </label>
-                  );
-                case "humble":
-                  return (
-                    <label className="flex items-center gap-2" htmlFor="humble">
-                      <img
-                        className="w-10"
-                        src="/svg/ros/humble.svg"
-                        alt="humble"
-                      />
-                      <span>ROS2 Humble</span>
-                    </label>
-                  );
-              }
-            })()}
+            <label className="flex items-center gap-2" htmlFor="noetic">
+              <BsFillCloudFill size={22} className="text-layer-secondary-500" />
+              <span>Minimum Storage: {item?.minStorageAmount} MB</span>
+            </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
@@ -235,9 +133,8 @@ export default function MarketplaceSingleItemSidebar({
         </div>
         {isShowImportRobotModal && (
           <ImportRobotModal
-            visibleModal={isShowImportRobotModal}
             handleCloseModal={() => setIsShowImportRobotModal(false)}
-            template={item}
+            item={item}
           />
         )}
       </Fragment>

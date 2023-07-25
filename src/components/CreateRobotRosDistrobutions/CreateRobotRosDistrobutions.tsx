@@ -92,7 +92,7 @@ export default function CreateRobotRosDistrobutions({
               <div className="flex flex-col items-center gap-2">
                 <img
                   className="h-12"
-                  src={`/svg/ros/${stringSlugify(item)}.svg`}
+                  src={`/svg/apps/${stringSlugify(item)}.svg`}
                   alt={item}
                   style={{
                     filter: `grayscale(${handleRosDistroFilter(item)})`,

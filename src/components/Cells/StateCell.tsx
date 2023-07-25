@@ -37,6 +37,10 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
       text: "Connection Hub Ready",
       state: "(5/5)",
     },
+    Ready: {
+      color: "bg-green-500",
+      text: "Ready",
+    },
   };
 
   if (isRobolaunchState) {
