@@ -1,45 +1,66 @@
 import { useFormik } from "formik";
 import { Dialog } from "primereact/dialog";
-import React, { Fragment, ReactElement } from "react";
-import InputError from "../components/InputError/InputError";
+import React, { ReactElement } from "react";
 import Button from "../components/Button/Button";
-import InputSelect from "../components/InputSelect/InputSelect";
-import { ImportRobotSetSidebarState } from "../validations/RobotsValidations";
-import useSidebar from "../hooks/useSidebar";
+import { useAppDispatch } from "../hooks/redux";
+import { createRobot } from "../toolkit/RobotSlice";
+import useTrial from "../hooks/useTrial";
+import { handleGetRandomString } from "../functions/GeneralFunctions";
 
 interface IImportRobotModal {
-  visibleModal: boolean;
   handleCloseModal: () => void;
-  template: any;
+  item: any;
 }
 
 export default function ImportRobotModal({
-  visibleModal,
   handleCloseModal,
-  template,
+  item,
 }: IImportRobotModal): ReactElement {
-  const { setSelectedState, setSidebarState } = useSidebar();
+  const { trialState } = useTrial();
+  const dispatch = useAppDispatch();
+
+  console.log(item);
 
   const formik = useFormik({
-    validationSchema: ImportRobotSetSidebarState,
-    initialValues: {
-      organization: "",
-      roboticsCloud: "",
-      fleet: "",
-    },
-    onSubmit: (values: any) => {
+    initialValues: {},
+    onSubmit: () => {
       formik.setSubmitting(true);
-      setSelectedState({
-        organization: values.organization,
-        roboticsCloud: values.roboticsCloud,
-        fleet: values.fleet,
-      });
-      setSidebarState({
-        isOpen: true,
-        isCreateMode: true,
-        page: "robot",
-      });
-      formik.setSubmitting(false);
+
+      dispatch(
+        createRobot({
+          organizationId: trialState?.organization?.organizationId,
+          roboticsCloudName: trialState?.roboticsCloud?.name,
+          instanceId: trialState?.instance?.instanceId,
+          region: trialState?.roboticsCloud?.region,
+          robotName: handleGetRandomString(10),
+          fleetName: trialState?.fleet?.name,
+          distributions: [item?.distro.toUpperCase()],
+          bridgeEnabled: item?.type === "Environment" ? false : true,
+          vdiEnabled: true,
+          vdiSessionCount: 3,
+          ideEnabled: true,
+          storageAmount: item?.minStorageAmount,
+          gpuEnabledForCloudInstance: true,
+          marketPlaceEnabled: true,
+          imageUser: item?.trialImage?.imageUser,
+          imageRepository: item?.trialImage?.imageRepository,
+          imageTag: item?.trialImage?.imageTag,
+          workspaces: [
+            {
+              name: "ws-1",
+              workspaceDistro: item?.distro.toUpperCase(),
+              robotRepositories: [
+                {
+                  url: item?.trialImage?.sampleRepository?.url,
+                  branch: item?.trialImage?.sampleRepository?.branch,
+                  name: "repo1",
+                },
+              ],
+            },
+          ],
+        })
+      );
+
       handleCloseModal();
     },
   });
@@ -47,7 +68,8 @@ export default function ImportRobotModal({
   return (
     <Dialog
       header="Import Robot"
-      visible={visibleModal}
+      visible={true}
+      draggable={false}
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
@@ -57,51 +79,6 @@ export default function ImportRobotModal({
       >
         <p className="text-sm">content</p>
 
-        <div className="w-full">
-          <InputSelect
-            placeholder="Organization"
-            {...formik.getFieldProps("organization")}
-          >
-            <Fragment>
-              {!formik?.values?.organization && <option value=""></option>}
-              <option value="organization1">Organization1</option>
-              <option value="organization2">Organization2</option>
-            </Fragment>
-          </InputSelect>
-          <InputError
-            touched={formik.touched.organization}
-            error={formik.errors.organization}
-          />
-        </div>
-        <div className="w-full">
-          <InputSelect
-            placeholder="Robotics Cloud"
-            {...formik.getFieldProps("roboticsCloud")}
-          >
-            <Fragment>
-              {!formik?.values?.roboticsCloud && <option value=""></option>}
-              <option value="roboticsCloud1">roboticsCloud1</option>
-              <option value="roboticsCloud2">roboticsCloud2</option>
-            </Fragment>
-          </InputSelect>
-          <InputError
-            touched={formik.touched.roboticsCloud}
-            error={formik.errors.roboticsCloud}
-          />
-        </div>
-        <div className="w-full">
-          <InputSelect placeholder="Fleet" {...formik.getFieldProps("fleet")}>
-            <Fragment>
-              {!formik?.values?.fleet && <option value=""></option>}
-              <option value="fleet1">fleet1</option>
-              <option value="fleet2">fleet2</option>
-            </Fragment>
-          </InputSelect>
-          <InputError
-            touched={formik.touched.fleet}
-            error={formik.errors.fleet}
-          />
-        </div>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-56 !h-11"
