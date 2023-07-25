@@ -2414,6 +2414,16 @@ video {
   line-height: 1rem;
 }
 
+.\!text-2xl{
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+}
+
+.\!text-4xl{
+  font-size: 2.25rem !important;
+  line-height: 2.5rem !important;
+}
+
 .\!font-semibold{
   font-weight: 600 !important;
 }
@@ -3429,11 +3439,19 @@ td{
     grid-column: span 9 / span 9;
   }
 
+  .\32xl\:col-span-12{
+    grid-column: span 12 / span 12;
+  }
+
   .\32xl\:min-h-\[40rem\]{
     min-height: 40rem;
   }
 
   .\32xl\:grid-cols-9{
     grid-template-columns: repeat(9, minmax(0, 1fr));
+  }
+
+  .\32xl\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 }

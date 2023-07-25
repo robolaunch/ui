@@ -178,7 +178,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       },
       {
         key: "robolaunchState",
-        header: "Robolaunch State",
+        header: "robolaunch State",
         sortable: false,
         filter: false,
         align: "left",

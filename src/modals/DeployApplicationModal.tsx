@@ -1,26 +1,30 @@
-import { useFormik } from "formik";
-import { Dialog } from "primereact/dialog";
-import React, { ReactElement } from "react";
+import {
+  handleGetRandomString,
+  organizationNameViewer,
+} from "../functions/GeneralFunctions";
+import { createRobot } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { createRobot } from "../toolkit/RobotSlice";
+import useSidebar from "../hooks/useSidebar";
+import React, { ReactElement } from "react";
+import { Dialog } from "primereact/dialog";
 import useTrial from "../hooks/useTrial";
-import { handleGetRandomString } from "../functions/GeneralFunctions";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
-interface IImportRobotModal {
+interface IDeployApplication {
   handleCloseModal: () => void;
   item: any;
 }
 
-export default function ImportRobotModal({
+export default function DeployApplication({
   handleCloseModal,
   item,
-}: IImportRobotModal): ReactElement {
+}: IDeployApplication): ReactElement {
+  const { selectedState } = useSidebar();
   const { trialState } = useTrial();
   const dispatch = useAppDispatch();
-
-  console.log(item);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {},
     onSubmit: () => {
@@ -59,15 +63,23 @@ export default function ImportRobotModal({
             },
           ],
         })
-      );
-
-      handleCloseModal();
+      ).then(() => {
+        navigate(
+          `/${organizationNameViewer({
+            organizationName: selectedState?.organization?.organizationName,
+            capitalization: false,
+          })}/${selectedState?.roboticsCloud?.name}/${
+            selectedState?.instance?.name
+          }/${selectedState?.fleet?.name}/`
+        );
+        handleCloseModal();
+      });
     },
   });
 
   return (
     <Dialog
-      header="Import Robot"
+      header="Deploy Application"
       visible={true}
       draggable={false}
       className="w-[30vw]"
@@ -77,14 +89,17 @@ export default function ImportRobotModal({
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-6"
       >
-        <p className="text-sm">content</p>
-
+        <p className="text-sm">
+          You are about to deploy the application <b>{item?.name}</b> to your
+          fleet <b>{trialState?.fleet?.name}</b>. Please confirm this action.
+        </p>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-56 !h-11"
             type="submit"
-            text="Import Robot"
+            text="Deploy Application"
             disabled={formik.isSubmitting || !formik.isValid}
+            loading={formik.isSubmitting}
           />
         </div>
       </form>

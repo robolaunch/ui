@@ -46,6 +46,14 @@ export const createRobot = createAsyncThunk(
                   storageAmount: values?.storageAmount,
                   gpuEnabledForCloudInstance:
                     values?.gpuEnabledForCloudInstance,
+
+                  marketPlaceEnabled: values?.marketPlaceEnabled,
+                  trialImage: {
+                    imageUser: values?.imageUser,
+                    imageRepository: values?.imageRepository,
+                    imageTag: values?.imageTag,
+                  },
+
                   robotWorkspaces: values?.workspaces,
                 },
               ],

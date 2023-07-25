@@ -25,7 +25,7 @@ export default function MarketplaceGrid(): ReactElement {
 
   return (
     <div className="col-span-full lg:col-span-8 xl:col-span-9 2xl:col-span-10 h-full">
-      <div className="grid grid-cols-3 lg:grid-cols-6 2xl:grid-cols-9 gap-6 transition-all duration-500">
+      <div className="grid grid-cols-3 lg:grid-cols-6 2xl:grid-cols-12 gap-6 transition-all duration-500">
         <MarketplaceSortableBar />
         {!Array.isArray(marketplaceItems) ? (
           <div className="col-span-full">
@@ -36,9 +36,11 @@ export default function MarketplaceGrid(): ReactElement {
             />
           </div>
         ) : (
-          marketplaceItems?.map((robot: any, index: number) => {
-            return <MarketplaceRobotTemplateItem key={index} robot={robot} />;
-          })
+          marketplaceItems
+            ?.filter((item: any) => item?.type === "Environment")
+            ?.map((robot: any, index: number) => {
+              return <MarketplaceRobotTemplateItem key={index} robot={robot} />;
+            })
         )}
       </div>
       {marketplaceItems?.length > 9 && <Paginate />}

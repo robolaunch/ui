@@ -12,6 +12,9 @@ import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
+import { envTrialApp } from "../../../helpers/envProvider";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
@@ -109,7 +112,11 @@ export default function FleetDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={rowData?.name?.fleetName}
-              titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`}
+              titleURL={
+                envTrialApp
+                  ? `/trial/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`
+                  : `/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`
+              }
             />
           );
         },
@@ -287,6 +294,10 @@ export default function FleetDashboardPage(): ReactElement {
     );
   }
 
+  useEffect(() => {
+    console.log(responseRobots);
+  }, [responseRobots]);
+
   return (
     <DashboardLayout
       widget1={
@@ -309,27 +320,44 @@ export default function FleetDashboardPage(): ReactElement {
           }
         />
       }
-      widget2={<></>}
+      widget2={
+        <RegionsWidget
+          title="Robotics Cloud"
+          responseData={[selectedState?.instance?.region]}
+        />
+      }
       widget3={
-        <></>
-        // <CountWidget
-        //   data={
-        //     responseRobots
-        //       ? [
-        //           {
-        //             label: "Preparing",
-        //             value: responseRobots
-        //               ?.filter((robot: any) => robot?.robotClusters)
-        //               ?.filter(
-        //                 (cluster: any) =>
-        //                   cluster?.robotStatus !== "EnvironmentReady"
-        //               )?.length,
-        //             color: "orange",
-        //           },
-        //         ]
-        //       : []
-        //   }
-        // />
+        <CountWidget
+          data={
+            responseRobots
+              ? [
+                  {
+                    label: "Creating",
+                    value:
+                      responseRobots.filter(
+                        (robot: any) =>
+                          robot?.robotStatus !== "EnvirontmentReady"
+                      )?.length || 0,
+                    color: "#ffa500",
+                  },
+                  {
+                    label: "Ready",
+                    value:
+                      responseRobots.filter(
+                        (robot: any) =>
+                          robot?.robotStatus === "EnvirontmentReady"
+                      )?.length || 0,
+                    color: "#AC2DFE99",
+                  },
+                  {
+                    label: "Error",
+                    value: 0,
+                    color: "#ff0000",
+                  },
+                ]
+              : []
+          }
+        />
       }
       table={
         <GeneralTable

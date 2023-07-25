@@ -2,12 +2,11 @@ import React, { Fragment, ReactElement, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { VscSymbolNamespace } from "react-icons/vsc";
 import CardLayout from "../../layouts/CardLayout";
-import { BsFillCloudFill } from "react-icons/bs";
-import { RiOrganizationChart } from "react-icons/ri";
-import { MdPublic } from "react-icons/md";
+import { BsCloudy } from "react-icons/bs";
+import { MdOutlineRocketLaunch, MdStorage } from "react-icons/md";
+import ImportRobotModal from "../../modals/DeployApplicationModal";
+import ContentLoader from "react-content-loader";
 import Button from "../Button/Button";
-import ImportRobotModal from "../../modals/ImportRobotModal";
-import useTrial from "../../hooks/useTrial";
 
 interface IMarketplaceSingleItemSidebar {
   item: any;
@@ -18,8 +17,6 @@ export default function MarketplaceSingleItemSidebar({
 }: IMarketplaceSingleItemSidebar): ReactElement {
   const [isShowImportRobotModal, setIsShowImportRobotModal] =
     useState<boolean>(false);
-
-  const { trialState } = useTrial();
 
   return (
     <CardLayout className="!col-span-3 flex flex-col gap-8 p-6 !h-full">
@@ -32,7 +29,7 @@ export default function MarketplaceSingleItemSidebar({
           <Button
             onClick={() => setIsShowImportRobotModal(true)}
             className="!h-11 text-xs"
-            text={`Deploy Robot`}
+            text={`Deploy Application`}
           />
         </div>
 
@@ -48,21 +45,68 @@ export default function MarketplaceSingleItemSidebar({
                 size={20}
                 className="text-layer-secondary-500"
               />
-              <span>{item?.name}</span>
+              <span>
+                {item?.name || (
+                  <ContentLoader
+                    speed={1}
+                    width={192}
+                    height={24}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="192" height="24" rx="4" ry="4" />
+                  </ContentLoader>
+                )}
+              </span>
             </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Organization
+            Family
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <RiOrganizationChart
+              <VscSymbolNamespace
                 size={20}
                 className="text-layer-secondary-500"
               />
-              <span>{trialState?.organization?.organizationName}</span>
+              <span>
+                {item?.family || (
+                  <ContentLoader
+                    speed={1}
+                    width={192}
+                    height={24}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="192" height="24" rx="4" ry="4" />
+                  </ContentLoader>
+                )}
+              </span>
+            </label>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <div className="text-sm font-semibold text-layer-dark-700">
+            Deployment Type
+          </div>
+          <div className="flex flex-col text-xs gap-3 pl-6">
+            <label className="flex items-center gap-2" htmlFor="humble">
+              <BsCloudy size={22} className="text-layer-secondary-500" />
+              <span>
+                {item?.deploymentType || (
+                  <ContentLoader
+                    speed={1}
+                    width={192}
+                    height={24}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="192" height="24" rx="4" ry="4" />
+                  </ContentLoader>
+                )}
+              </span>
             </label>
           </div>
         </div>
@@ -72,7 +116,10 @@ export default function MarketplaceSingleItemSidebar({
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <MdPublic size={20} className="text-layer-secondary-500" />
+              <MdOutlineRocketLaunch
+                size={22}
+                className="text-layer-secondary-500"
+              />
               <span>{item?.hasBuild ? "Include" : "None"}</span>
             </label>
           </div>
@@ -83,51 +130,57 @@ export default function MarketplaceSingleItemSidebar({
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <BsFillCloudFill size={22} className="text-layer-secondary-500" />
+              <MdOutlineRocketLaunch
+                size={22}
+                className="text-layer-secondary-500"
+              />
               <span>{item?.hasLaunch ? "Include" : "None"}</span>
             </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Ros Distro
+            Storage
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="noetic">
-              <BsFillCloudFill size={22} className="text-layer-secondary-500" />
-              <span>Minimum Storage: {item?.minStorageAmount} MB</span>
+              <MdStorage size={22} className="text-layer-secondary-500" />
+              {item?.minStorageAmount ? (
+                <span>Minimum Storage: {item?.minStorageAmount} MB</span>
+              ) : (
+                <ContentLoader
+                  speed={1}
+                  width={192}
+                  height={24}
+                  backgroundColor="#f6f6ef"
+                  foregroundColor="#e8e8e3"
+                >
+                  <rect width="192" height="24" rx="4" ry="4" />
+                </ContentLoader>
+              )}
             </label>
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Maintainers
-          </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
-            <label className="flex items-center gap-2" htmlFor="humble">
-              <VscSymbolNamespace
-                size={20}
-                className="text-layer-secondary-500"
-              />
-              <span>Maintainer #1</span>
-            </label>
-            <label className="flex items-center gap-2" htmlFor="humble">
-              <VscSymbolNamespace
-                size={20}
-                className="text-layer-secondary-500"
-              />
-              <span>Maintainer #2</span>
-            </label>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
-            Deploy Count
+            Version
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="humble">
               <FiDownload size={20} className="text-layer-secondary-500" />
-              <span>Deploy Count: {item?.deployCount}</span>
+              <span>
+                {item?.version || (
+                  <ContentLoader
+                    speed={1}
+                    width={192}
+                    height={24}
+                    backgroundColor="#f6f6ef"
+                    foregroundColor="#e8e8e3"
+                  >
+                    <rect width="192" height="24" rx="4" ry="4" />
+                  </ContentLoader>
+                )}
+              </span>
             </label>
           </div>
         </div>

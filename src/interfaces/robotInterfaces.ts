@@ -5,7 +5,7 @@ export interface IcreateRobotRequest {
   region: string;
   robotName: string;
   fleetName: string;
-  physicalInstanceName: string;
+  physicalInstanceName?: string;
   distributions: string[];
   bridgeEnabled: boolean;
   vdiEnabled: boolean;
@@ -13,6 +13,10 @@ export interface IcreateRobotRequest {
   ideEnabled: boolean;
   storageAmount: number;
   gpuEnabledForCloudInstance: boolean;
+  marketPlaceEnabled?: boolean;
+  imageUser?: string;
+  imageRepository?: string;
+  imageTag?: string;
   workspaces: IRobotWorkspace[];
 }
 

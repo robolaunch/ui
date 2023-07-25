@@ -35,6 +35,9 @@ export const trialSlice = createSlice({
           toast.error(action?.payload?.message);
         }
       })
+      .addCase(createTrial.pending, () => {
+        toast.success("Please wait while we are creating trial...");
+      })
       .addCase(createTrial.rejected, () => {
         toast.error("Something went wrong of creating trial");
       });

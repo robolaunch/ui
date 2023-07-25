@@ -4,7 +4,7 @@ import InputText from "../InputText/InputText";
 
 export default function MarketplaceSortableBar(): ReactElement {
   return (
-    <CardLayout className="col-span-3 lg:col-span-6 2xl:col-span-9 !w-full !flex !justify-between items-center p-4">
+    <CardLayout className="col-span-full !w-full !flex !justify-between items-center p-4">
       <div className="flex items-center gap-4">
         <img
           className="w-12"
@@ -13,7 +13,7 @@ export default function MarketplaceSortableBar(): ReactElement {
           alt="robolaunch"
         />
         <span className="text-layer-dark-600 font-medium">
-          Robolaunch Application Templates
+          robolaunch Application Templates
         </span>
       </div>
       <div className="flex gap-6">

@@ -49,7 +49,10 @@ export default function DeleteRobotModalModal({
       onHide={() => handleCloseModal()}
     >
       <div className="w-full flex flex-col gap-8">
-        <p className="text-sm">Details</p>
+        <p className="text-sm">
+          Are you sure you want to delete the robot named{" "}
+          <span className="font-semibold">{data?.robotName}</span>?
+        </p>
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-44 !h-11"

@@ -11,6 +11,7 @@ import {
   getFederatedFleets,
 } from "../toolkit/FleetSlice";
 import { ITrialState } from "../interfaces/useTrialInterfaces";
+import useSidebar from "../hooks/useSidebar";
 
 export const TrialContext: any = createContext<any>(null);
 
@@ -225,6 +226,22 @@ export default ({ children }: any) => {
       }, 10000);
     });
   }
+
+  const { setSelectedState } = useSidebar();
+  useEffect(() => {
+    setSelectedState({
+      organization: trialState?.organization,
+      roboticsCloud: trialState?.roboticsCloud,
+      instance: trialState?.instance,
+      fleet: trialState?.fleet,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    trialState?.organization,
+    trialState?.roboticsCloud,
+    trialState?.instance,
+    trialState?.fleet,
+  ]);
 
   return (
     <TrialContext.Provider value={{ trialState, setTrialState }}>

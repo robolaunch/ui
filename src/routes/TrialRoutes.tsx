@@ -7,6 +7,7 @@ import PageFinishTrial from "../pages/PageFinishTrial/PageFinishTrial";
 import TrialLayout from "../layouts/TrialLayout";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
+import FleetDashboardPage from "../pages/DashboardsPage/FleetDashboardPage/FleetDashboardPage";
 
 export default function TrialRoutes(): ReactElement {
   return (
@@ -15,6 +16,10 @@ export default function TrialRoutes(): ReactElement {
         <Route element={<TrialLayout />}>
           <Route path={`/trial`} element={<TrialPage />} />
           <Route path={`/trial-expired`} element={<PageFinishTrial />} />
+          <Route
+            path={`/trial/:organizationName/:roboticsCloudName/:instanceName/:fleetName/`}
+            element={<FleetDashboardPage />}
+          />
           <Route
             path={`/trial/:organizationName/:roboticsCloudName/:instanceName/:fleetName/:robotName`}
             element={<RobotPage />}

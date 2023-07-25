@@ -16,9 +16,9 @@ export default function TrialTimer({
     <TrialCardLayout title="Trial Timer" className={layoutClassName}>
       <div className="h-full flex items-center justify-center">
         <TimeCounter
-          hour={trialState?.time.viewer.h || 0}
-          minute={trialState?.time.viewer.m || 0}
-          second={trialState?.time.viewer.s || 0}
+          hour={trialState?.time.viewer.h}
+          minute={trialState?.time.viewer.m}
+          second={trialState?.time.viewer.s}
         />
       </div>
     </TrialCardLayout>

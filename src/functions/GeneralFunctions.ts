@@ -21,6 +21,12 @@ export function handleGetRandomNumbers(length: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+export function handleGetRandomString(length: number): string {
+  return [...Array(length)]
+    .map(() => String.fromCharCode(97 + Math.floor(Math.random() * 26)))
+    .join("");
+}
+
 export function organizationNameViewer({
   organizationName,
   capitalization = true,

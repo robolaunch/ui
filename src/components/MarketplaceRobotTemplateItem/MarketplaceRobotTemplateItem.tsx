@@ -19,7 +19,7 @@ export default function MarketplaceRobotTemplateItem({
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">{robot?.name}</span>
-              {robot?.organization === "Robolaunch" && (
+              {robot?.organization === "robolaunch" && (
                 <img
                   className="w-6"
                   src="/images/rocket.svg"
@@ -78,11 +78,11 @@ export default function MarketplaceRobotTemplateItem({
           <ul className="flex flex-col gap-2 text-xs text-layer-dark-500">
             <li>Vendor: {robot?.vendor}</li>
             <li>Family: {robot?.family}</li>
-            <li>ROS Version: ROS2</li>
-            <li>ROS Distro: {robot?.distro}</li>
+            <li>Type: {robot?.type}</li>
+            <li>Storage: {robot?.minStorageAmount / 1000} GB</li>
           </ul>
           <img
-            className="w-28"
+            className="w-24 border border-layer-light-100"
             src={
               robot?.type === "Environment"
                 ? `/svg/apps/${robot?.family?.toLowerCase()}.svg`
