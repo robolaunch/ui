@@ -838,6 +838,14 @@ video {
   margin: 0px;
 }
 
+.m-28{
+  margin: 7rem;
+}
+
+.m-14{
+  margin: 3.5rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -2143,6 +2151,10 @@ video {
 
 .p-8{
   padding: 2rem;
+}
+
+.p-28{
+  padding: 7rem;
 }
 
 .\!px-0{

@@ -12,7 +12,6 @@ import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import usePages from "../../../hooks/usePages";
-import { envTrialApp } from "../../../helpers/envProvider";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 
@@ -112,11 +111,7 @@ export default function FleetDashboardPage(): ReactElement {
             <InfoCell
               title={rowData?.name?.name}
               subtitle={rowData?.name?.fleetName}
-              titleURL={
-                envTrialApp
-                  ? `/trial/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`
-                  : `/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`
-              }
+              titleURL={`/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}/${rowData?.name?.name}`}
             />
           );
         },

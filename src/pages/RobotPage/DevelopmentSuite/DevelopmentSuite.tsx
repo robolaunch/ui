@@ -4,7 +4,7 @@ import StreamContext from "../../../contexts/StreamContext";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
 import CardLayout from "../../../layouts/CardLayout";
-
+import { useComponentSize } from "react-use-size/dist/useComponentSize";
 interface IDevelopmentSuite {
   ideURL: string;
   vdiURL: string;
@@ -20,13 +20,22 @@ export default function DevelopmentSuite({
     console.log(isDragging);
   }, [isDragging]);
 
+  const { ref, width } = useComponentSize();
+
+  useEffect(() => {
+    console.log(width);
+  }, [width]);
+
   return (
     <CardLayout>
       <ImageSplitter
         setIsDragging={setIsDragging}
         source={
           <StreamContext vdiIngressEndpoint={vdiURL}>
-            <div className="grid grid-cols-12 animate__animated animate__fadeIn">
+            <div
+              ref={ref}
+              className="grid grid-cols-12 animate__animated animate__fadeIn"
+            >
               <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
                 <RemoteDesktopScene isControllerActive={true} />
               </div>
@@ -39,7 +48,7 @@ export default function DevelopmentSuite({
         content={
           <div
             style={{
-              width: "calc(100vw - 100px)",
+              width: `${width}px`,
               height: "100%",
             }}
           >
