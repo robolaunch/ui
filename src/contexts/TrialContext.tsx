@@ -1,22 +1,24 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { handleTimeConverter } from "../functions/GeneralFunctions";
-import { useAppDispatch } from "../hooks/redux";
-import { createTrial, getIP } from "../toolkit/TrialSlice";
-import { getOrganizations } from "../toolkit/OrganizationSlice";
-import { getRoboticsClouds } from "../toolkit/RoboticsCloudSlice";
-import { getInstances } from "../toolkit/InstanceSlice";
 import {
   createFederatedFleet,
   getFederatedFleets,
 } from "../toolkit/FleetSlice";
+import { getRoboticsClouds } from "../toolkit/RoboticsCloudSlice";
+import { handleTimeConverter } from "../functions/GeneralFunctions";
+import React, { createContext, useEffect, useState } from "react";
+import { getOrganizations } from "../toolkit/OrganizationSlice";
 import { ITrialState } from "../interfaces/useTrialInterfaces";
-import useSidebar from "../hooks/useSidebar";
+import { getIP } from "../toolkit/TrialSlice";
+import { getInstances } from "../toolkit/InstanceSlice";
+import { useAppDispatch } from "../hooks/redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { envTrialApp } from "../helpers/envProvider";
 
 export const TrialContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const url = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [reload, setReload] = useState<boolean>(false);
@@ -38,40 +40,47 @@ export default ({ children }: any) => {
 
   // all get requests
   useEffect(() => {
-    if (!trialState?.ip) {
-      handleGetIp();
-    } else if (!trialState?.organization) {
-      handleGetTrialOrganization();
-    } else if (!trialState?.roboticsCloud) {
-      handleGetTrialRoboticsCloud();
-    } else if (!trialState?.instance) {
-      handleGetTrialInstance();
-    } else if (
-      trialState?.instance?.instanceCloudState === "ConnectionHub_Ready" &&
-      !trialState?.fleet
+    if (
+      envTrialApp &&
+      (location?.pathname === "/marketplace" || url?.productName)
     ) {
-      handleGetTrialFleet();
+      if (!trialState?.ip) {
+        handleGetIp();
+      } else if (!trialState?.organization) {
+        handleGetTrialOrganization();
+      } else if (!trialState?.roboticsCloud) {
+        handleGetTrialRoboticsCloud();
+      } else if (!trialState?.instance) {
+        handleGetTrialInstance();
+      } else if (
+        trialState?.instance?.instanceCloudState === "ConnectionHub_Ready" &&
+        !trialState?.fleet
+      ) {
+        handleGetTrialFleet();
+      }
     }
 
+    const timerOrganization = setInterval(() => {
+      !trialState?.organization && handleGetTrialOrganization();
+    }, 10000);
+
+    const timerRoboticsCloud = setInterval(() => {
+      trialState?.organization &&
+        !trialState?.roboticsCloud &&
+        handleGetTrialRoboticsCloud();
+    }, 10000);
+
     const timerInstance = setInterval(() => {
-      trialState.organization &&
-        trialState.roboticsCloud &&
+      trialState?.organization &&
+        trialState?.roboticsCloud &&
         trialState?.instance?.instanceCloudState !== "ConnectionHub_Ready" &&
         handleGetTrialInstance();
-    }, 15000);
-
-    const timerFleet = setInterval(() => {
-      trialState.organization &&
-        trialState.roboticsCloud &&
-        trialState?.instance?.instanceCloudState === "ConnectionHub_Ready" &&
-        trialState.fleet &&
-        trialState?.fleet?.fleetStatus !== "Ready" &&
-        handleGetTrialFleet();
-    }, 15000);
+    }, 10000);
 
     return () => {
+      clearInterval(timerOrganization);
+      clearInterval(timerRoboticsCloud);
       clearInterval(timerInstance);
-      clearInterval(timerFleet);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,6 +91,7 @@ export default ({ children }: any) => {
     trialState?.fleet,
     trialState?.ip,
     reload,
+    location,
   ]);
   // all get requests
 
@@ -120,30 +130,12 @@ export default ({ children }: any) => {
     });
   }
 
-  async function handleCreateTrial() {
-    await dispatch(
-      createTrial({
-        ipAddress: trialState?.ip as string,
-      })
-    ).then((res: any) => {
-      console.log("trial created");
-      setTimeout(() => {
-        setReload(!reload);
-        console.log("trial created and reloaded");
-      }, 10000);
-    });
-  }
-
   async function handleGetTrialOrganization() {
     await dispatch(getOrganizations()).then(async (res: any) => {
-      if (res?.payload?.data?.length === 0) {
-        await handleCreateTrial();
-      } else {
-        setTrialState((prevState: any) => ({
-          ...prevState,
-          organization: res?.payload?.data?.[0] || null,
-        }));
-      }
+      setTrialState((prevState: any) => ({
+        ...prevState,
+        organization: res?.payload?.data?.[0] || null,
+      }));
     });
   }
 
@@ -197,7 +189,7 @@ export default ({ children }: any) => {
         res?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
           ?.robolaunchFederatedFleets?.length === 0
       ) {
-        handleCreateTrialFleet();
+        // handleCreateTrialFleet();
       } else {
         setTrialState((prevState: any) => ({
           ...prevState,
@@ -227,24 +219,16 @@ export default ({ children }: any) => {
     });
   }
 
-  const { setSelectedState } = useSidebar();
+  function handleReload() {
+    setReload(!reload);
+  }
+
   useEffect(() => {
-    setSelectedState({
-      organization: trialState?.organization,
-      roboticsCloud: trialState?.roboticsCloud,
-      instance: trialState?.instance,
-      fleet: trialState?.fleet,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    trialState?.organization,
-    trialState?.roboticsCloud,
-    trialState?.instance,
-    trialState?.fleet,
-  ]);
+    console.log(trialState?.instance);
+  }, [trialState?.instance]);
 
   return (
-    <TrialContext.Provider value={{ trialState, setTrialState }}>
+    <TrialContext.Provider value={{ trialState, setTrialState, handleReload }}>
       {children}
     </TrialContext.Provider>
   );

@@ -88,6 +88,10 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
+              <SidebarStaticItem
+                to="/marketplace"
+                imgSrc={`/svg/general/marketplace/marketplace-blue.svg`}
+              />
               <SideBarMenuItem
                 type="organization"
                 description="You can access all your organizations here."
@@ -118,10 +122,6 @@ export default function PrivateSidebar(): ReactElement {
             imgSrc={`/svg/general/billing/billing-gray.svg`}
           /> */}
 
-        <SidebarStaticItem
-          to="/marketplace"
-          imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
-        />
         <SidebarStaticItem
           to="/user-role-management"
           imgSrc={`/svg/general/users/users-gray.svg`}

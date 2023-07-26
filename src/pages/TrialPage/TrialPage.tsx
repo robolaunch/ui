@@ -7,7 +7,7 @@ import MarketplaceGrid from "../../components/MarketplaceGrid/MarketplaceGrid";
 export default function TrialPage(): ReactElement {
   return (
     <div className="h-full w-full grid grid-cols-12 gap-6">
-      <div className="h-full w-full col-span-full lg:col-span-4 xl:col-span-3 2xl:col-span-2 grid grid-rows-6 gap-6">
+      <div className="h-full w-full col-span-full lg:col-span-4 xl:col-span-3 2xl:col-span-2 grid grid-rows-4 gap-6">
         <TrialTimer layoutClassName="row-span-1" />
         <TrialStateViewer layoutClassName="row-span-2" />
         <TrialFeedback layoutClassName="row-span-1" />

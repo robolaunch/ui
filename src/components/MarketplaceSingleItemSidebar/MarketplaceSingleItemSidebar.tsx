@@ -3,7 +3,7 @@ import { FiDownload } from "react-icons/fi";
 import { VscSymbolNamespace } from "react-icons/vsc";
 import CardLayout from "../../layouts/CardLayout";
 import { BsCloudy } from "react-icons/bs";
-import { MdOutlineRocketLaunch, MdStorage } from "react-icons/md";
+import { MdStorage } from "react-icons/md";
 import ImportRobotModal from "../../modals/DeployApplicationModal";
 import ContentLoader from "react-content-loader";
 import Button from "../Button/Button";
@@ -30,15 +30,17 @@ export default function MarketplaceSingleItemSidebar({
             onClick={() => setIsShowImportRobotModal(true)}
             className="!h-11 text-xs"
             text={`Deploy Application`}
+            disabled={!item}
+            loading={!item}
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <span className="font-medium">Template Details</span>
+          <span className="font-medium">Application Details</span>
           <div className="w-32 h-[2px] bg-primary" />
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">Title</div>
+          <div className="text-sm font-semibold text-layer-dark-700">Name</div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="humble">
               <VscSymbolNamespace
@@ -112,41 +114,13 @@ export default function MarketplaceSingleItemSidebar({
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">
-            Build Manager
-          </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
-            <label className="flex items-center gap-2" htmlFor="humble">
-              <MdOutlineRocketLaunch
-                size={22}
-                className="text-layer-secondary-500"
-              />
-              <span>{item?.hasBuild ? "Include" : "None"}</span>
-            </label>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
-            Launch Manager
-          </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
-            <label className="flex items-center gap-2" htmlFor="humble">
-              <MdOutlineRocketLaunch
-                size={22}
-                className="text-layer-secondary-500"
-              />
-              <span>{item?.hasLaunch ? "Include" : "None"}</span>
-            </label>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
             Storage
           </div>
           <div className="flex flex-col text-xs gap-3 pl-6">
             <label className="flex items-center gap-2" htmlFor="noetic">
               <MdStorage size={22} className="text-layer-secondary-500" />
               {item?.minStorageAmount ? (
-                <span>Minimum Storage: {item?.minStorageAmount} MB</span>
+                <span>Minimum Storage: {item?.minStorageAmount / 1000} GB</span>
               ) : (
                 <ContentLoader
                   speed={1}

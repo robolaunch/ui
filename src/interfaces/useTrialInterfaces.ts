@@ -16,4 +16,5 @@ export interface ITrialState {
 export interface IuseTrial {
   trialState: ITrialState;
   setTrialState: React.Dispatch<React.SetStateAction<ITrialState>>;
+  handleReload: () => void;
 }

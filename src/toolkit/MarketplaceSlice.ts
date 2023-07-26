@@ -4,10 +4,9 @@ import { toast } from "sonner";
 
 export const getMarkeplaceItems = createAsyncThunk(
   "marketplace/getMarkeplaceItems",
-  async (values: { organizationId: string }) => {
+  async () => {
     const response = await marketplaceApi.getMarketplaceRobots({
       name: "marketplace/getMarkeplaceItems",
-      organizationId: values.organizationId,
     });
     return response.data;
   }

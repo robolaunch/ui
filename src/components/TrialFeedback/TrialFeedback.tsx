@@ -13,7 +13,7 @@ export default function TrialFeedback({
     <TrialCardLayout className={layoutClassName} title="Contact & Feedback">
       <div className="h-full flex flex-col items-center justify-around gap-4">
         <div className="flex flex-col gap-6">
-          <p className="text-xs">
+          <p className="text-xs text-center">
             If you have any questions or feedback, please contact us at below
             button or email.
           </p>

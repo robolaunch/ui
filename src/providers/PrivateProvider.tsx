@@ -7,6 +7,7 @@ import PageContext from "../contexts/PagesContext";
 import PrivateLayout from "../layouts/PrivateLayout";
 import React, { ReactElement } from "react";
 import keycloak from "../api/keycloak";
+import TrialContext from "../contexts/TrialContext";
 
 export default function PrivateProvider(): ReactElement {
   const loadingPage = (
@@ -44,7 +45,9 @@ export default function PrivateProvider(): ReactElement {
           <GithubContext>
             <CreateRobotContext>
               <FunctionsContext>
-                <PrivateLayout />
+                <TrialContext>
+                  <PrivateLayout />
+                </TrialContext>
               </FunctionsContext>
             </CreateRobotContext>
           </GithubContext>

@@ -3,8 +3,6 @@ import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import { Link } from "react-router-dom";
 import useSidebar from "../../hooks/useSidebar";
 import PrivateSidebar from "../PrivateSidebar/PrivateSidebar";
-import TrialSidebar from "../TrialSidebar/TrialSidebar";
-import { envTrialApp } from "../../helpers/envProvider";
 
 export default function Sidebar(): ReactElement {
   const { sidebarState } = useSidebar();
@@ -17,10 +15,10 @@ export default function Sidebar(): ReactElement {
             draggable="false"
             className="w-14 cursor-pointer hover:scale-90 transition-all duration-500"
             src="/svg/general/rocket.svg"
-            alt="Robolaunch"
+            alt="robolaunch"
           />
         </Link>
-        {envTrialApp ? <TrialSidebar /> : <PrivateSidebar />}
+        <PrivateSidebar />
       </div>
       {sidebarState?.isOpen && <SidebarContentLayout />}
     </Fragment>

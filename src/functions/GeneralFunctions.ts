@@ -1,9 +1,13 @@
 export function stringSlugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-zA-Z0-9]+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+  if (text) {
+    return text
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/^-+/, "")
+      .replace(/-+$/, "");
+  }
+
+  return text;
 }
 
 export function stringCapitalization({ str }: { str: string }) {

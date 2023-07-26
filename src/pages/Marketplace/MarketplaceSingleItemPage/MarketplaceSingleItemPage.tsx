@@ -28,7 +28,7 @@ export default function MarketplaceSingleItemPage(): ReactElement {
       <div className="col-span-9 grid grid-cols-1 gap-6 h-fit">
         <MarketplaceSingleİtemHeader responseItem={responseItem} />
 
-        <MarketplaceSingleItemReadme />
+        <MarketplaceSingleItemReadme responseItem={responseItem} />
       </div>
 
       <MarketplaceSingleItemSidebar item={responseItem} />

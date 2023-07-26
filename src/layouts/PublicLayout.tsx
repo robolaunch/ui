@@ -37,7 +37,7 @@ const PublicLayout = () => {
           <img
             className="w-32 mx-auto"
             src="/svg/general/rocket.svg"
-            alt="Robolaunch"
+            alt="robolaunch"
           />
           <p className="text-xl font-semibold text-layer-dark-900">
             Login to robolaunch
@@ -61,7 +61,7 @@ const PublicLayout = () => {
           mouseMoveForce={motionForce}
           touchMoveForce={motionForce}
           backgroundColor="transparent"
-          alt="Robolaunch"
+          alt="robolaunch"
         />
         <h1 className="text-2xl font-semibold animate__animated animate__fadeInUp">
           Develop, Deploy and Manage at Scale!

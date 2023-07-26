@@ -14,27 +14,27 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
     },
     Instance_Readiness_In_Progress: {
       color: "bg-yellow-500",
-      text: "Instance Readiness In Progress",
+      text: "Creating Instance",
       state: "(1/5)",
     },
     Instance_Ready: {
       color: "bg-yellow-500",
-      text: "Instance Ready",
+      text: "Preparing Cloud",
       state: "(2/5)",
     },
     Cloud_Ready: {
       color: "bg-yellow-500",
-      text: "Cloud Ready",
+      text: "Preparing Robot Operator",
       state: "(3/5)",
     },
     Robot_Operator_Ready: {
       color: "bg-yellow-500",
-      text: "Robot Operator Ready",
+      text: "Preparing Connection Services",
       state: "(4/5)",
     },
     ConnectionHub_Ready: {
       color: "bg-green-500",
-      text: "Connection Hub Ready",
+      text: "Ready",
       state: "(5/5)",
     },
     Ready: {
@@ -51,7 +51,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         ${states?.[`${state}`]?.color || "bg-red-500"}`}
         />
         <span className="text-xs capitalize">
-          {state} {states?.[`${state}`]?.state}
+          {states?.[`${state}`]?.text} {states?.[`${state}`]?.state}
         </span>
       </div>
     );

@@ -26,7 +26,7 @@ export default function AppRoutes(): ReactElement {
         {/* <Route path={`/billing`} element={<BillingPage />} /> */}
         <Route path={`/marketplace`} element={<MarketplacePage />} />
         <Route
-          path={`/marketplace/:name`}
+          path={`/marketplace/:productName`}
           element={<MarketplaceSingleItemPage />}
         />
         <Route path={`/profile`} element={<ProfilePage />} />

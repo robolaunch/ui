@@ -84,9 +84,11 @@ export default function MarketplaceRobotTemplateItem({
           <img
             className="w-24 border border-layer-light-100"
             src={
-              robot?.type === "Environment"
-                ? `/svg/apps/${robot?.family?.toLowerCase()}.svg`
-                : `/svg/apps/${robot?.distro?.toLowerCase()}.svg`
+              robot
+                ? robot.type === "Environment"
+                  ? `/svg/apps/${robot.family?.toLowerCase()}.svg`
+                  : `/svg/apps/${robot.distro?.toLowerCase()}.svg`
+                : undefined
             }
             alt="apps"
           />

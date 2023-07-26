@@ -826,10 +826,6 @@ video {
   grid-row: span 2 / span 2;
 }
 
-.row-span-3{
-  grid-row: span 3 / span 3;
-}
-
 .float-right{
   float: right;
 }
@@ -1109,10 +1105,6 @@ video {
   height: 42rem;
 }
 
-.h-\[45rem\]{
-  height: 45rem;
-}
-
 .h-\[4px\]{
   height: 4px;
 }
@@ -1153,10 +1145,6 @@ video {
 
 .\!w-24{
   width: 6rem !important;
-}
-
-.\!w-28{
-  width: 7rem !important;
 }
 
 .\!w-32{
@@ -1297,12 +1285,20 @@ video {
   width: 2.25rem;
 }
 
+.w-\[22rem\]{
+  width: 22rem;
+}
+
 .w-\[28rem\]{
   width: 28rem;
 }
 
 .w-\[30vw\]{
   width: 30vw;
+}
+
+.w-\[36vw\]{
+  width: 36vw;
 }
 
 .w-\[40rem\]{
@@ -1438,13 +1434,6 @@ video {
           transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.scale-\[0\.14\]{
-  --tw-scale-x: 0.14;
-  --tw-scale-y: 0.14;
-  -webkit-transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-          transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .scale-\[1\.32\]{
   --tw-scale-x: 1.32;
   --tw-scale-y: 1.32;
@@ -1568,8 +1557,8 @@ video {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
-.grid-rows-6{
-  grid-template-rows: repeat(6, minmax(0, 1fr));
+.grid-rows-4{
+  grid-template-rows: repeat(4, minmax(0, 1fr));
 }
 
 .\!flex-col{
@@ -2414,16 +2403,6 @@ video {
   line-height: 1rem;
 }
 
-.\!text-2xl{
-  font-size: 1.5rem !important;
-  line-height: 2rem !important;
-}
-
-.\!text-4xl{
-  font-size: 2.25rem !important;
-  line-height: 2.5rem !important;
-}
-
 .\!font-semibold{
   font-weight: 600 !important;
 }
@@ -2707,6 +2686,10 @@ video {
 .text-yellow-600{
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
+}
+
+.underline{
+  text-decoration-line: underline;
 }
 
 .accent-primary{
@@ -3435,20 +3418,8 @@ td{
     grid-column: span 8 / span 8;
   }
 
-  .\32xl\:col-span-9{
-    grid-column: span 9 / span 9;
-  }
-
-  .\32xl\:col-span-12{
-    grid-column: span 12 / span 12;
-  }
-
   .\32xl\:min-h-\[40rem\]{
     min-height: 40rem;
-  }
-
-  .\32xl\:grid-cols-9{
-    grid-template-columns: repeat(9, minmax(0, 1fr));
   }
 
   .\32xl\:grid-cols-12{
