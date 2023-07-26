@@ -6,7 +6,6 @@ import { createRobot } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
-import useSidebar from "../hooks/useSidebar";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import useTrial from "../hooks/useTrial";

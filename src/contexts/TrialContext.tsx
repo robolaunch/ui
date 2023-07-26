@@ -201,6 +201,7 @@ export default ({ children }: any) => {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function handleCreateTrialFleet() {
     await dispatch(
       createFederatedFleet({
