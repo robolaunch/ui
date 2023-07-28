@@ -8,7 +8,7 @@ import { FormikProps, useFormik } from "formik";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import { useAppDispatch } from "../../hooks/redux";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import {
   createLaunchManager,
   deleteLaunchManager,
@@ -39,7 +39,7 @@ export default function CreateRobotFormStep4({
   robotClusters,
 }: ICreateRobotFormStep4): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);

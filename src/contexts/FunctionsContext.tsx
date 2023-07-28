@@ -29,23 +29,24 @@ import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/Roboti
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getPhysicalInstances as getAllPhysicalInstances } from "../toolkit/InstanceSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
-import { getFederatedFleets } from "../toolkit/FleetSlice";
+import {
+  getFederatedFleets,
+  createFederatedFleet,
+} from "../toolkit/FleetSlice";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
-import useSidebar from "../hooks/useSidebar";
+import useGeneral from "../hooks/useGeneral";
 import { toast } from "sonner";
-import usePages from "../hooks/usePages";
 
 export const FunctionsContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
-  const { setSelectedState } = useSidebar();
+  const { setSelectedState, pagesState, setPagesState } = useGeneral();
   const navigate = useNavigate();
   const { setRobotData } = useCreateRobot();
-  const { pagesState, setPagesState } = usePages();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
     await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
@@ -411,15 +412,26 @@ export default ({ children }: any) => {
               ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
           );
 
-        if (responseFederatedFleets?.payload?.data?.length === 1) {
-          parameters?.setFirstItemforTrial &&
+        if (parameters?.setFirstItemforTrial) {
+          if (responseFederatedFleets?.payload?.data?.length === 1) {
             parameters?.setFirstItemforTrial(
               responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
                 ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
             );
-        } else {
-          parameters?.setFirstItemforTrial &&
+          } else if (responseFederatedFleets?.payload?.data?.length === 0) {
+            dispatch(
+              createFederatedFleet({
+                organizationId: values?.organizationId,
+                roboticsCloudName: values?.roboticsCloudName,
+                region: values?.region,
+                instanceId: values?.instanceId,
+                robolaunchFederatedFleetsName: "trial-fleet",
+              })
+            );
             parameters?.setFirstItemforTrial(null);
+          } else {
+            parameters?.setFirstItemforTrial(null);
+          }
         }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();

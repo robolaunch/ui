@@ -11,7 +11,7 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
-import useSidebar from "../../../hooks/useSidebar";
+import useGeneral from "../../../hooks/useGeneral";
 import { useParams } from "react-router-dom";
 import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import StateCell from "../../../components/Cells/StateCell";
@@ -25,7 +25,7 @@ export default function MainDashboardPage(): ReactElement {
   >();
   const { getOrganizations } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
-  const { setSidebarState } = useSidebar();
+  const { setSidebarState } = useGeneral();
   const url = useParams();
 
   const { keycloak } = useKeycloak();

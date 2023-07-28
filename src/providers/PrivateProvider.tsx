@@ -1,9 +1,8 @@
 import CreateRobotContext from "../contexts/CreateRobotContext";
 import FunctionsContext from "../contexts/FunctionsContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import SidebarContext from "../contexts/SidebarContext";
+import GeneralContext from "../contexts/GeneralContext";
 import GithubContext from "../contexts/GithubContext";
-import PageContext from "../contexts/PagesContext";
 import PrivateLayout from "../layouts/PrivateLayout";
 import React, { ReactElement } from "react";
 import keycloak from "../api/keycloak";
@@ -39,17 +38,15 @@ export default function PrivateProvider(): ReactElement {
         prompt: "none",
       }}
     >
-      <PageContext>
-        <SidebarContext>
-          <GithubContext>
-            <CreateRobotContext>
-              <FunctionsContext>
-                <PrivateLayout />
-              </FunctionsContext>
-            </CreateRobotContext>
-          </GithubContext>
-        </SidebarContext>
-      </PageContext>
+      <GeneralContext>
+        <GithubContext>
+          <CreateRobotContext>
+            <FunctionsContext>
+              <PrivateLayout />
+            </FunctionsContext>
+          </CreateRobotContext>
+        </GithubContext>
+      </GeneralContext>
     </ReactKeycloakProvider>
   );
 }

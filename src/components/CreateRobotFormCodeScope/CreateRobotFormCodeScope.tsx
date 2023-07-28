@@ -3,7 +3,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import InputError from "../InputError/InputError";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 
 interface ICreateRobotFormCodeScope {
   virtualInstanceChecked?: boolean;
@@ -27,7 +27,7 @@ export default function CreateRobotFormCodeScope({
   error,
 }: ICreateRobotFormCodeScope): ReactElement {
   const { robotData } = useCreateRobot();
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
 
   return (
     <div>

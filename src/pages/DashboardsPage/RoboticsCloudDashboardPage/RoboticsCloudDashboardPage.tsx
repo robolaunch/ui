@@ -13,11 +13,10 @@ import StateCell from "../../../components/Cells/StateCell";
 import InfoCell from "../../../components/Cells/InfoCell";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
-import useSidebar from "../../../hooks/useSidebar";
+import useGeneral from "../../../hooks/useGeneral";
 import useFunctions from "../../../hooks/useFunctions";
 import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import usePages from "../../../hooks/usePages";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 export default function RoboticsCloudDashboardPage(): ReactElement {
@@ -25,10 +24,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     undefined
   );
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
-  const { setSidebarState, selectedState } = useSidebar();
+  const { pagesState, setSidebarState, selectedState } = useGeneral();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
-  const { pagesState } = usePages();
 
   useEffect(() => {
     if (

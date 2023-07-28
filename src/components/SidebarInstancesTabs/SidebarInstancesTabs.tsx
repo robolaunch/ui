@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 
 export default function SidebarInstancesTabs(): ReactElement {
-  const { sidebarState, setSidebarState } = useSidebar();
+  const { sidebarState, setSidebarState } = useGeneral();
 
   return (
     <ul className="h-10 w-full flex items-center">

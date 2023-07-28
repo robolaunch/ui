@@ -6,24 +6,21 @@ import BasicCell from "../../../components/Cells/BasicCell";
 import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import useSidebar from "../../../hooks/useSidebar";
+import useGeneral from "../../../hooks/useGeneral";
 import useFunctions from "../../../hooks/useFunctions";
 import StateCell from "../../../components/Cells/StateCell";
 import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import usePages from "../../../hooks/usePages";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { getOrganization, getRoboticsClouds } = useFunctions();
-  const { setSidebarState } = useSidebar();
+  const { pagesState, setSidebarState } = useGeneral();
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const url = useParams();
-
-  const { pagesState } = usePages();
 
   useEffect(() => {
     if (

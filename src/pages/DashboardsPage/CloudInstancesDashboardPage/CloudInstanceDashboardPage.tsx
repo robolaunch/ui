@@ -7,11 +7,10 @@ import StateCell from "../../../components/Cells/StateCell";
 import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import useSidebar from "../../../hooks/useSidebar";
+import useGeneral from "../../../hooks/useGeneral";
 import useFunctions from "../../../hooks/useFunctions";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import usePages from "../../../hooks/usePages";
 import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import { SiKubernetes } from "react-icons/si";
@@ -19,12 +18,11 @@ import { RiCpuLine } from "react-icons/ri";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { setSidebarState, selectedState } = useSidebar();
+  const { pagesState, setSidebarState, selectedState } = useGeneral();
   const { getOrganization, getRoboticsCloud, getInstance, getFleets } =
     useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
-  const { pagesState } = usePages();
 
   useEffect(() => {
     if (

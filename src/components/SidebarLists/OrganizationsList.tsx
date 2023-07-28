@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListItem from "./SidebarListItem";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
@@ -18,7 +18,7 @@ export default function OrganizationsList({
   const [responseOrganizations, setResponseOrganizations] = useState<
     any[] | undefined
   >(undefined);
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
   const { getOrganizations } = useFunctions();
 
   useEffect(() => {

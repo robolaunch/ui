@@ -4,20 +4,19 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
-import useSidebar from "../../../hooks/useSidebar";
+import useGeneral from "../../../hooks/useGeneral";
 import BasicCell from "../../../components/Cells/BasicCell";
 import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
 import StateCell from "../../../components/Cells/StateCell";
 import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
 import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import usePages from "../../../hooks/usePages";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { selectedState, setSidebarState } = useSidebar();
+  const { pagesState, selectedState, setSidebarState } = useGeneral();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -28,8 +27,6 @@ export default function FleetDashboardPage(): ReactElement {
     getFleet,
     getRobots,
   } = useFunctions();
-
-  const { pagesState } = usePages();
 
   useEffect(() => {
     if (

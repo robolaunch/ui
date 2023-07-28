@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/redux";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import { getFederatedRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ export default function WorkspaceList({
   setItemCount,
 }: IWorkspaceList): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
   const dispatch = useAppDispatch();
   const url = useParams();
   const { setRobotData } = useCreateRobot();

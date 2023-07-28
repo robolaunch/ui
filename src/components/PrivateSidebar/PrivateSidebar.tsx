@@ -1,13 +1,13 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import { useParams } from "react-router-dom";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { sidebarState } = useSidebar();
+  const { sidebarState } = useGeneral();
   const url = useParams();
 
   useEffect(() => {

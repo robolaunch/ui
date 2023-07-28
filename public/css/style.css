@@ -834,6 +834,18 @@ video {
   margin: 3.5rem;
 }
 
+.m-28{
+  margin: 7rem;
+}
+
+.m-44{
+  margin: 11rem;
+}
+
+.m-64{
+  margin: 16rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;

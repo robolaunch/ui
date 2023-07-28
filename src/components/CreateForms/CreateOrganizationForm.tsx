@@ -6,11 +6,11 @@ import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
 import { useAppDispatch } from "../../hooks/redux";
 import { createOrganization } from "../../toolkit/OrganizationSlice";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateOrganizationForm(): ReactElement {
-  const { sidebarState, setSidebarState }: any = useSidebar();
+  const { sidebarState, setSidebarState }: any = useGeneral();
 
   const dispatch = useAppDispatch();
 

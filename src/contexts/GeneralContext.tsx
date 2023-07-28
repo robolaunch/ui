@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
-import { ISelectedState, ISidebarState } from "../interfaces/sidebarInterfaces";
+import { ISelectedState, ISidebarState } from "../interfaces/generalInterfaces";
 import { useLocation } from "react-router-dom";
+import { IpagesState } from "../interfaces/generalInterfaces";
 
-export const SidebarContext: any = createContext<any>(null);
+export const GeneralContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
@@ -16,6 +17,13 @@ export default ({ children }: any) => {
   });
 
   const [selectedState, setSelectedState] = useState<ISelectedState>({
+    organization: null,
+    roboticsCloud: null,
+    instance: null,
+    fleet: null,
+  });
+
+  const [pagesState, setPagesState] = useState<IpagesState>({
     organization: null,
     roboticsCloud: null,
     instance: null,
@@ -105,8 +113,10 @@ export default ({ children }: any) => {
   }
 
   return (
-    <SidebarContext.Provider
+    <GeneralContext.Provider
       value={{
+        pagesState,
+        setPagesState,
         sidebarState,
         setSidebarState,
         selectedState,
@@ -116,6 +126,6 @@ export default ({ children }: any) => {
       }}
     >
       {children}
-    </SidebarContext.Provider>
+    </GeneralContext.Provider>
   );
 };

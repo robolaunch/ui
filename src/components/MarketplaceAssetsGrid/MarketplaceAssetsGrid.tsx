@@ -12,7 +12,7 @@ export default function MarketplaceAssetsGrid({
     <div className="grid xl:grid-cols-6 2xl:grid-cols-9 gap-6">
       {!Array.isArray(assets) ? (
         <img
-          className="w-20 h-20 mx-auto col-span-full m-14"
+          className="w-20 h-20 mx-auto col-span-full m-64"
           src="/svg/general/loading.svg"
           alt="loading"
         />

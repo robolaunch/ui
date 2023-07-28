@@ -21,11 +21,11 @@ import useCreateRobot from "../hooks/useCreateRobot";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
-import useSidebar from "../hooks/useSidebar";
+import useGeneral from "../hooks/useGeneral";
 import { toast } from "sonner";
 
 export default function SidebarContentLayout(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useSidebar();
+  const { sidebarState, setSidebarState, selectedState } = useGeneral();
   const [loading, setLoading] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
   const [reload, setReload] = useState<boolean>(false);

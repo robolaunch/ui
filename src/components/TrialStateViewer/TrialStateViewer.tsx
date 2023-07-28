@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../Cells/StateCell";
 import Seperator from "../Seperator/Seperator";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 
 interface ITrialStateViewer {
   responseOrganization?: any;
@@ -80,7 +80,7 @@ export default function TrialStateViewer({
     responseFleet,
   ]);
 
-  const { setSidebarState } = useSidebar();
+  const { setSidebarState } = useGeneral();
 
   function handleRedirectSidebar() {
     if (responseOrganization === null) {

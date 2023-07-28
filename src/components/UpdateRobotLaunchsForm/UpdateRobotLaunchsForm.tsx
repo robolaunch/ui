@@ -7,7 +7,7 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import useCreateRobot from "../../hooks/useCreateRobot";
 import StateCell from "../Cells/StateCell";
 import InfoTip from "../InfoTip/InfoTip";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
@@ -17,7 +17,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   const { getLaunchManagers } = useFunctions();
   const url = useParams();
   const { robotData, setRobotData } = useCreateRobot();
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
 
   useEffect(() => {
     console.log(responseRobotLaunchManagers);

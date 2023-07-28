@@ -4,7 +4,7 @@ import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
@@ -20,7 +20,7 @@ export default function CloudInstancesList({
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
   const { getInstances } = useFunctions();
 
   useEffect(

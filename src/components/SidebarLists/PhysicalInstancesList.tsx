@@ -4,7 +4,7 @@ import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
@@ -22,7 +22,7 @@ export default function PhysicalInstancesList({
   >(undefined);
 
   const { getPhysicalInstances } = useFunctions();
-  const { sidebarState, selectedState } = useSidebar();
+  const { sidebarState, selectedState } = useGeneral();
 
   useEffect(
     () => {

@@ -24,21 +24,22 @@ export default function DeployApplication({
 }: IDeployApplication): ReactElement {
   const [triggeredCreateInfrastucture, setTriggeredCreateInfrastucture] =
     useState<boolean>(false);
-  const [robotName, setRobotName] = useState<string>("");
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const [responseOrganization, setResponseOrganization] =
     useState<any>(undefined);
   const [responseRoboticsCloud, setResponseRoboticsCloud] =
     useState<any>(undefined);
   const [responseInstance, setResponseInstance] = useState<any>(undefined);
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
+  const [robotName, setRobotName] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
     useFunctions();
 
   useEffect(() => {
+    !robotName && setRobotName(item?.acronym + "-" + handleGetRandomString(5));
+
     if (!responseOrganization) {
       getOrganizations({
         setFirstItemforTrial: setResponseOrganization,
@@ -84,6 +85,44 @@ export default function DeployApplication({
         { setFirstItemforTrial: setResponseFleet }
       );
     }
+
+    const timerInstance = setInterval(() => {
+      responseInstance?.instanceCloudState !== "ConnectionHub_Ready" &&
+        getInstances(
+          {
+            organizationId: responseOrganization?.organizationId,
+            roboticsCloudName: responseRoboticsCloud?.name,
+            region: responseRoboticsCloud?.region,
+            details: true,
+          },
+          {
+            setFirstItemforTrial: setResponseInstance,
+          }
+        );
+    }, 10000);
+
+    const timerFleet = setInterval(() => {
+      responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
+        responseFleet &&
+        responseFleet?.fleetState !== "Ready" &&
+        getFleets(
+          {
+            organizationId: responseOrganization?.organizationId,
+            roboticsCloudName: responseRoboticsCloud?.name,
+            region: responseRoboticsCloud?.region,
+            instanceId: responseInstance?.instanceId,
+          },
+          {
+            setFirstItemforTrial: setResponseFleet,
+          }
+        );
+    }, 10000);
+
+    return () => {
+      clearInterval(timerInstance);
+      clearInterval(timerFleet);
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     responseOrganization,
@@ -92,17 +131,12 @@ export default function DeployApplication({
     responseFleet,
   ]);
 
-  useEffect(() => {
-    setRobotName(item?.acronym + "-" + handleGetRandomString(5));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const formik = useFormik({
     initialValues: {},
-    onSubmit: () => {
+    onSubmit: async () => {
       formik.setSubmitting(true);
 
-      dispatch(
+      await dispatch(
         createRobot({
           organizationId: responseOrganization?.organizationId,
           roboticsCloudName: responseRoboticsCloud?.name,
@@ -155,7 +189,7 @@ export default function DeployApplication({
       createTrial({
         ipAddress: "",
       })
-    ).then((res: any) => {
+    ).then(() => {
       console.log("trial created");
       setTimeout(() => {
         console.log("trial created and reloaded");
@@ -180,14 +214,13 @@ export default function DeployApplication({
           <Button
             className="!w-56 !h-11"
             type="button"
-            text="Auto Creation All"
+            text="Auto Create Infrastructure"
             disabled={
               triggeredCreateInfrastucture ||
               formik.isSubmitting ||
-              !formik.isValid ||
-              (responseOrganization &&
-                responseRoboticsCloud &&
-                responseInstance)
+              !responseOrganization ||
+              !responseRoboticsCloud ||
+              !responseInstance
             }
             onClick={() => handleCreateTrial()}
             loading={

@@ -21,7 +21,16 @@ export interface ISelectedState {
   fleet: any;
 }
 
-export interface IuseSidebar {
+export interface IpagesState {
+  organization: any;
+  roboticsCloud: any;
+  instance: any;
+  fleet: any;
+}
+
+export interface IuseGeneral {
+  pagesState: IpagesState;
+  setPagesState: React.Dispatch<React.SetStateAction<IpagesState>>;
   sidebarState: ISidebarState;
   setSidebarState: React.Dispatch<React.SetStateAction<ISidebarState>>;
   selectedState: ISelectedState;

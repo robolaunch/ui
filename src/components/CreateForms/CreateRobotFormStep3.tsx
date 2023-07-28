@@ -11,7 +11,7 @@ import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
@@ -31,7 +31,7 @@ export default function CreateRobotFormStep3({
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
-  const { handleCreateRobotNextStep, selectedState } = useSidebar();
+  const { handleCreateRobotNextStep, selectedState } = useGeneral();
   const { getRobot, getBuildManager } = useFunctions();
 
   useEffect(

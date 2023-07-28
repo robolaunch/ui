@@ -1,9 +1,9 @@
 import React from "react";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 
 export default function FilteredTags() {
-  const { selectedState } = useSidebar();
+  const { selectedState } = useGeneral();
 
   return (
     <div className="flex flex-wrap gap-2 pb-4 animate__animated animate__fadeIn">

@@ -3,10 +3,10 @@ import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1
 import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
 import CreateRobotFormStep4 from "../components/CreateForms/CreateRobotFormStep4";
-import useSidebar from "../hooks/useSidebar";
+import useGeneral from "../hooks/useGeneral";
 
 export default function CreateRobotLayout(): ReactElement {
-  const { sidebarState } = useSidebar();
+  const { sidebarState } = useGeneral();
 
   return (
     <Fragment>

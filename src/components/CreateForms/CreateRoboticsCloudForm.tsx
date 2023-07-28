@@ -4,7 +4,7 @@ import InputError from "../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../validations/RoboticsCloudsValidations";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRoboticsCloud } from "../../toolkit/RoboticsCloudSlice";
 import { toast } from "sonner";
@@ -12,7 +12,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 
 export default function CreateRoboticsCloudForm(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useSidebar();
+  const { sidebarState, setSidebarState, selectedState } = useGeneral();
   const dispatch = useAppDispatch();
 
   const formik: any = useFormik({

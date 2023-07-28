@@ -11,7 +11,7 @@ import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import Seperator from "../Seperator/Seperator";
 import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
@@ -28,7 +28,7 @@ export default function CreateRobotFormStep1({
   isImportRobot,
 }: ICreateRobotFormStep1): ReactElement {
   const { robotData, setRobotData }: any = useCreateRobot();
-  const { selectedState, handleCreateRobotNextStep } = useSidebar();
+  const { selectedState, handleCreateRobotNextStep } = useGeneral();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
   const { getRobot } = useFunctions();

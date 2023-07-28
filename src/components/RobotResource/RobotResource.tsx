@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { BsFillCpuFill } from "react-icons/bs";
-import usePages from "../../hooks/usePages";
 import ContentLoader from "react-content-loader";
 import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
+import useGeneral from "../../hooks/useGeneral";
 
 interface IRobotResource {
   responseRobot: any;
@@ -12,7 +12,7 @@ interface IRobotResource {
 export default function RobotResource({
   responseRobot,
 }: IRobotResource): ReactElement {
-  const { pagesState } = usePages();
+  const { pagesState } = useGeneral();
 
   return (
     <div className="flex flex-col items-end">

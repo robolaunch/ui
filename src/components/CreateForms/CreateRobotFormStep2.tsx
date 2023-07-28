@@ -3,7 +3,7 @@ import { FormikProps, useFormik } from "formik";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import Button from "../Button/Button";
 import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRobot } from "../../toolkit/RobotSlice";
@@ -22,7 +22,7 @@ export default function CreateRobotFormStep2({
 }: ICreateRobotFormStep2): ReactElement {
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
-    useSidebar();
+    useGeneral();
   const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
   const dispatch = useAppDispatch();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =

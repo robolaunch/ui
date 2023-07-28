@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import { useParams } from "react-router-dom";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
 
@@ -16,7 +16,7 @@ export default function SidebarContentLayout({
   loading,
   handleShowDetails,
 }: ISidebarContentHeader): ReactElement {
-  const { sidebarState } = useSidebar();
+  const { sidebarState } = useGeneral();
   const url = useParams();
 
   function titleGenerator() {

@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement } from "react";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import { Link } from "react-router-dom";
-import useSidebar from "../../hooks/useSidebar";
+import useGeneral from "../../hooks/useGeneral";
 import PrivateSidebar from "../PrivateSidebar/PrivateSidebar";
 
 export default function Sidebar(): ReactElement {
-  const { sidebarState } = useSidebar();
+  const { sidebarState } = useGeneral();
 
   return (
     <Fragment>
