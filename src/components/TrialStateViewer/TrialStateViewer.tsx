@@ -37,7 +37,7 @@ export default function TrialStateViewer({
         name: "robotics cloud",
         path: "roboticscloud",
         state:
-          responseRoboticsCloud === null
+          responseOrganization === null || responseRoboticsCloud === null
             ? "None"
             : responseRoboticsCloud === undefined
             ? "Pending"
@@ -48,13 +48,13 @@ export default function TrialStateViewer({
         name: "cloud instance",
         path: "instance",
         state:
+          responseOrganization === null ||
+          responseRoboticsCloud === null ||
           responseInstance === null
             ? "None"
             : responseInstance === undefined
             ? "Pending"
-            : responseInstance?.instanceCloudState === "ConnectionHub_Ready"
-            ? "Ready"
-            : "Creating",
+            : responseInstance?.instanceCloudState,
         success:
           responseInstance?.instanceCloudState === "ConnectionHub_Ready"
             ? true
@@ -64,6 +64,9 @@ export default function TrialStateViewer({
         name: "fleet",
         path: "fleet",
         state:
+          responseOrganization === null ||
+          responseRoboticsCloud === null ||
+          responseInstance === null ||
           responseFleet === null
             ? "None"
             : responseFleet === undefined
@@ -139,8 +142,8 @@ export default function TrialStateViewer({
                 <StateCell
                   state={item?.success ? "Ready" : item?.state}
                   isRobolaunchState={
-                    responseInstance?.instanceCloudState &&
-                    item?.path === "instance"
+                    item?.path === "instance" &&
+                    responseInstance?.instanceCloudState
                       ? true
                       : false
                   }

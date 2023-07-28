@@ -33,6 +33,7 @@ import {
   getFederatedFleets,
   createFederatedFleet,
 } from "../toolkit/FleetSlice";
+import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
 import useRobot from "../hooks/useRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +45,8 @@ export const FunctionsContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
-  const { setSelectedState, pagesState, setPagesState } = useMain();
+  const { setTrialState, setSelectedState, pagesState, setPagesState } =
+    useMain();
   const navigate = useNavigate();
   const { setRobotData } = useRobot();
 
@@ -264,7 +266,10 @@ export default ({ children }: any) => {
               ?.cloudInstances?.length || 0
           );
 
-        if (responseInstances?.payload?.data?.length === 1) {
+        if (
+          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+            ?.length === 1
+        ) {
           parameters?.setFirstItemforTrial &&
             parameters?.setFirstItemforTrial(
               responseInstances?.payload?.data[0]?.roboticsClouds[0]
@@ -413,12 +418,18 @@ export default ({ children }: any) => {
           );
 
         if (parameters?.setFirstItemforTrial) {
-          if (responseFederatedFleets?.payload?.data?.length === 1) {
+          if (
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 1
+          ) {
             parameters?.setFirstItemforTrial(
               responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
                 ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
             );
-          } else if (responseFederatedFleets?.payload?.data?.length === 0) {
+          } else if (
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 0
+          ) {
             dispatch(
               createFederatedFleet({
                 organizationId: values?.organizationId,
@@ -824,6 +835,17 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getIP() {
+    await dispatch(getCurrentIP()).then((response: any) => {
+      setTrialState((prevState: any) => {
+        return {
+          ...prevState,
+          ip: response?.payload?.ip,
+        };
+      });
+    });
+  }
+
   function navigateTo404() {
     toast.error("The current page does not exist or is not available to you.");
     navigate("/404");
@@ -846,6 +868,7 @@ export default ({ children }: any) => {
         getRobot,
         getBuildManager,
         getLaunchManagers,
+        getIP,
       }}
     >
       {children}

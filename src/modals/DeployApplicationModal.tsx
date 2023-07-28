@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import TrialStateViewer from "../components/TrialStateViewer/TrialStateViewer";
 import { createTrial } from "../toolkit/TrialSlice";
 import useFunctions from "../hooks/useFunctions";
+import useMain from "../hooks/useMain";
 
 interface IDeployApplication {
   handleCloseModal: () => void;
@@ -22,7 +23,7 @@ export default function DeployApplication({
   handleCloseModal,
   item,
 }: IDeployApplication): ReactElement {
-  const [triggeredCreateInfrastucture, setTriggeredCreateInfrastucture] =
+  const [isTriggedCreateInfra, setIsTriggedCreateInfra] =
     useState<boolean>(false);
   const [responseOrganization, setResponseOrganization] =
     useState<any>(undefined);
@@ -33,18 +34,30 @@ export default function DeployApplication({
   const [robotName, setRobotName] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { trialState } = useMain();
 
-  const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
-    useFunctions();
+  const {
+    getOrganizations,
+    getRoboticsClouds,
+    getInstances,
+    getFleets,
+    getIP,
+  } = useFunctions();
+
+  useEffect(() => {
+    !trialState?.ip && getIP();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trialState]);
 
   useEffect(() => {
     !robotName && setRobotName(item?.acronym + "-" + handleGetRandomString(5));
 
-    if (!responseOrganization) {
+    if (responseOrganization === undefined) {
       getOrganizations({
         setFirstItemforTrial: setResponseOrganization,
       });
-    } else if (responseOrganization && !responseRoboticsCloud) {
+    } else if (responseOrganization && responseRoboticsCloud === undefined) {
       getRoboticsClouds(
         {
           organizationId: responseOrganization?.organizationId,
@@ -56,7 +69,8 @@ export default function DeployApplication({
     } else if (
       responseOrganization &&
       responseRoboticsCloud &&
-      !responseInstance
+      (responseInstance === undefined ||
+        (isTriggedCreateInfra && responseInstance === null))
     ) {
       getInstances(
         {
@@ -73,7 +87,7 @@ export default function DeployApplication({
       responseOrganization &&
       responseRoboticsCloud &&
       responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
-      !responseFleet
+      responseFleet === undefined
     ) {
       getFleets(
         {
@@ -86,8 +100,29 @@ export default function DeployApplication({
       );
     }
 
+    const timerOrganization = setInterval(() => {
+      !responseOrganization &&
+        getOrganizations({
+          setFirstItemforTrial: setResponseOrganization,
+        });
+    }, 10000);
+
+    const timerRoboticsCloud = setInterval(() => {
+      responseOrganization &&
+        !responseRoboticsCloud &&
+        getRoboticsClouds(
+          {
+            organizationId: responseOrganization?.organizationId,
+          },
+          {
+            setFirstItemforTrial: setResponseRoboticsCloud,
+          }
+        );
+    }, 10000);
+
     const timerInstance = setInterval(() => {
-      responseInstance?.instanceCloudState !== "ConnectionHub_Ready" &&
+      responseInstance &&
+        responseInstance?.instanceCloudState !== "ConnectionHub_Ready" &&
         getInstances(
           {
             organizationId: responseOrganization?.organizationId,
@@ -103,8 +138,7 @@ export default function DeployApplication({
 
     const timerFleet = setInterval(() => {
       responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
-        responseFleet &&
-        responseFleet?.fleetState !== "Ready" &&
+        responseFleet?.fleetStatus !== "Ready" &&
         getFleets(
           {
             organizationId: responseOrganization?.organizationId,
@@ -119,16 +153,18 @@ export default function DeployApplication({
     }, 10000);
 
     return () => {
+      clearInterval(timerOrganization);
+      clearInterval(timerRoboticsCloud);
       clearInterval(timerInstance);
       clearInterval(timerFleet);
     };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     responseOrganization,
     responseRoboticsCloud,
     responseInstance,
     responseFleet,
+    isTriggedCreateInfra,
   ]);
 
   const formik = useFormik({
@@ -184,16 +220,14 @@ export default function DeployApplication({
   });
 
   async function handleCreateTrial() {
-    setTriggeredCreateInfrastucture(true);
     await dispatch(
       createTrial({
-        ipAddress: "",
+        ipAddress: trialState?.ip,
       })
-    ).then(() => {
-      console.log("trial created");
+    ).then(async () => {
       setTimeout(() => {
-        console.log("trial created and reloaded");
-      }, 10000);
+        setIsTriggedCreateInfra(true);
+      }, 2000);
     });
   }
 
@@ -209,26 +243,25 @@ export default function DeployApplication({
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-10"
       >
-        <TrialStateViewer handleCloseModal={handleCloseModal} />
+        <TrialStateViewer
+          responseOrganization={responseOrganization}
+          responseRoboticsCloud={responseRoboticsCloud}
+          responseInstance={responseInstance}
+          responseFleet={responseFleet}
+          handleCloseModal={handleCloseModal}
+        />
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-56 !h-11"
             type="button"
             text="Auto Create Infrastructure"
-            disabled={
-              triggeredCreateInfrastucture ||
-              formik.isSubmitting ||
-              !responseOrganization ||
-              !responseRoboticsCloud ||
-              !responseInstance
-            }
+            disabled={isTriggedCreateInfra || responseInstance || responseFleet}
             onClick={() => handleCreateTrial()}
             loading={
-              !responseOrganization ||
-              !responseRoboticsCloud ||
-              !responseInstance
-                ? triggeredCreateInfrastucture
-                : false
+              (responseInstance &&
+                responseInstance?.instanceCloudState !==
+                  "ConnectionHub_Ready") ||
+              (responseFleet && responseFleet?.fleetStatus !== "Ready")
             }
           />
           <Button

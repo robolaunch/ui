@@ -163,7 +163,7 @@ export interface IuseFunctions {
     values: IgetLaunchManagers,
     parameters?: ImultipleGetLaunchParameters
   ) => void;
-
+  getIP: () => void;
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined
   ) => void;

@@ -30,21 +30,21 @@ export default ({ children }: any) => {
     fleet: null,
   });
 
-  // const [trialState, setTrialState] = useState<any>({
-  //   ip: null,
-  //   time: {
-  //     remainingTime: null,
-  //     viewer: {
-  //       h: 0,
-  //       m: 0,
-  //       s: 0,
-  //     },
-  //   },
-  // });
+  const [trialState, setTrialState] = useState<any>({
+    ip: null,
+    time: {
+      remainingTime: null,
+      viewer: {
+        h: 0,
+        m: 0,
+        s: 0,
+      },
+    },
+  });
 
   useEffect(() => {
-    console.log(selectedState);
-  }, [selectedState]);
+    console.log(trialState);
+  }, [trialState]);
 
   useEffect(() => {
     setSidebarState({
@@ -127,6 +127,8 @@ export default ({ children }: any) => {
   return (
     <MainContext.Provider
       value={{
+        trialState,
+        setTrialState,
         pagesState,
         setPagesState,
         sidebarState,

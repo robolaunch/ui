@@ -3,85 +3,16 @@ import MarketplaceTopBar from "../../../components/MarketplaceTopBar/Marketplace
 import { useAppDispatch } from "../../../hooks/redux";
 import MarketplaceAssetsGrid from "../../../components/MarketplaceAssetsGrid/MarketplaceAssetsGrid";
 import MarketplaceFilter from "../../../components/MarketplaceFilter/MarketplaceFilter";
-// import { getMarkeplaceItems } from "../../../toolkit/MarketplaceSlice";
+import { getMarkeplaceItems } from "../../../toolkit/MarketplaceSlice";
 
 export default function MarketplacePage(): ReactElement {
   const [marketplaceAssets, setMarketplaceAssets] = useState<any>(undefined);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(getMarkeplaceItems()).then((res: any) => {
-    //   setMarketplaceAssets(res?.payload?.marketplaceData?.[0]?.robots || []);
-    // });
-
-    setTimeout(() => {
-      setMarketplaceAssets([
-        {
-          name: "Robot 1",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 1",
-          family: "Family 1",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-        {
-          name: "Robot 2",
-          type: "Environment",
-          distro: "Humble",
-          vendor: "Vendor 2",
-          family: "Family 2",
-          minStorageAmount: 100000,
-        },
-      ]);
-    }, 4000);
+    dispatch(getMarkeplaceItems()).then((res: any) => {
+      setMarketplaceAssets(res?.payload?.marketplaceData?.[0]?.robots || []);
+    });
   }, [dispatch]);
 
   return (

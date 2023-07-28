@@ -29,6 +29,8 @@ export interface IpagesState {
 }
 
 export interface IuseMain {
+  trialState: any;
+  setTrialState: React.Dispatch<React.SetStateAction<any>>;
   pagesState: IpagesState;
   setPagesState: React.Dispatch<React.SetStateAction<IpagesState>>;
   sidebarState: ISidebarState;

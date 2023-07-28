@@ -14,15 +14,18 @@ export default function MarketplaceSingleItemReadme({
   const [readMe, setReadMe] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    responseItem?.rawRobotURL && getReadMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseItem]);
+
+  async function getReadMe() {
     try {
-      responseItem?.rawRobotURL &&
-        axios?.get(responseItem?.rawRobotURL).then((res) => {
-          setReadMe(res?.data);
-        });
+      const response = await axios.get(responseItem?.rawRobotURL);
+      setReadMe(response?.data);
     } catch (error) {
       setReadMe("Readme not found");
     }
-  }, [responseItem]);
+  }
 
   return (
     <CardLayout className="col-span-1 h-full px-8 py-6">
