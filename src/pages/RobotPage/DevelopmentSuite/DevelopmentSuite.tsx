@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import ImageSplitter from "./ImageSplitter";
-import StreamContext from "../../../contexts/VDIContext";
+import React, { ReactElement, useState } from "react";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
-import CardLayout from "../../../layouts/CardLayout";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
+import StreamContext from "../../../contexts/VDIContext";
+import CardLayout from "../../../layouts/CardLayout";
+import ImageSplitter from "./ImageSplitter";
 interface IDevelopmentSuite {
   ideURL: string;
   vdiURL: string;
@@ -15,16 +15,7 @@ export default function DevelopmentSuite({
   vdiURL,
 }: IDevelopmentSuite): ReactElement {
   const [isDragging, setIsDragging] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(isDragging);
-  }, [isDragging]);
-
   const { ref, width } = useComponentSize();
-
-  useEffect(() => {
-    console.log(width);
-  }, [width]);
 
   return (
     <CardLayout>
@@ -46,24 +37,20 @@ export default function DevelopmentSuite({
           </StreamContext>
         }
         content={
-          <div
+          <iframe
+            allow="clipboard-read"
+            className={`w-full animate__animated animate__fadeIn h-full ${
+              isDragging && "pointer-events-none"
+            }`}
+            src={ideURL}
+            title="Code Editor"
             style={{
               width: `${width}px`,
               height: "100%",
             }}
-          >
-            <iframe
-              allow="clipboard-read"
-              className={`w-full animate__animated animate__fadeIn h-full ${
-                isDragging && "pointer-events-none"
-              }`}
-              src={ideURL}
-              title="Code Editor"
-              style={{ minWidth: "fit-content" }}
-            />
-          </div>
+          />
         }
-        startPosition={30}
+        startPosition={41.5}
       />
     </CardLayout>
   );

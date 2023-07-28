@@ -37,7 +37,7 @@
   position: absolute;
   top: 0;
   height: 100%;
-  background-color: #fff;
+  background-color: #ddd;
   width: 3px;
   transform: translateX(-50%);
   display: block;
@@ -45,8 +45,8 @@
 }
 .splitter-divider span {
   display: block;
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   position: absolute;
   top: 50%;
   left: 50%;

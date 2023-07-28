@@ -6,6 +6,8 @@ interface ICard {
   loading?: boolean;
   className?: string;
   style?: any;
+  onMouseEnter?: any;
+  onMouseLeave?: any;
 }
 
 export default function CardLayout({
@@ -14,6 +16,8 @@ export default function CardLayout({
   loading,
   className,
   style,
+  onMouseEnter,
+  onMouseLeave,
 }: ICard): ReactElement {
   return (
     <div
@@ -29,6 +33,8 @@ export default function CardLayout({
             }
           : style
       }
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </div>
