@@ -1,90 +1,114 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../Cells/StateCell";
 import Seperator from "../Seperator/Seperator";
-import useTrial from "../../hooks/useTrial";
 import useSidebar from "../../hooks/useSidebar";
 
 interface ITrialStateViewer {
+  responseOrganization?: any;
+  responseRoboticsCloud?: any;
+  responseInstance?: any;
+  responseFleet?: any;
   handleCloseModal?: () => void;
 }
 
 export default function TrialStateViewer({
+  responseOrganization,
+  responseRoboticsCloud,
+  responseInstance,
+  responseFleet,
   handleCloseModal,
 }: ITrialStateViewer): ReactElement {
-  const { trialState } = useTrial();
-  const [states, setStates] = useState<any>([
-    {
-      name: "organization",
-      path: "organization",
-      state: "Pending",
-      success: true,
-    },
-    {
-      name: "robotics cloud",
-      path: "roboticscloud",
-      state: "Pending",
-      success: false,
-    },
-    {
-      name: "cloud instance",
-      path: "instance",
-      state: "Pending",
-      success: false,
-    },
-  ]);
+  const [states, setStates] = useState<any>();
 
   useEffect(() => {
     setStates([
       {
         name: "organization",
         path: "organization",
-        state: trialState?.organization ? "Ready" : "None",
-        success: trialState?.organization ? true : false,
+        state:
+          responseOrganization === null
+            ? "None"
+            : responseOrganization === undefined
+            ? "Pending"
+            : "Ready",
+        success: responseOrganization ? true : false,
       },
       {
         name: "robotics cloud",
         path: "roboticscloud",
-        state: trialState?.roboticsCloud ? "Ready" : "None",
-        success: trialState?.roboticsCloud ? true : false,
+        state:
+          responseRoboticsCloud === null
+            ? "None"
+            : responseRoboticsCloud === undefined
+            ? "Pending"
+            : "Ready",
+        success: responseRoboticsCloud ? true : false,
       },
       {
         name: "cloud instance",
         path: "instance",
-        state: trialState?.instance?.instanceCloudState || "None",
+        state:
+          responseInstance === null
+            ? "None"
+            : responseInstance === undefined
+            ? "Pending"
+            : responseInstance?.instanceCloudState === "ConnectionHub_Ready"
+            ? "Ready"
+            : "Creating",
         success:
-          trialState?.instance?.instanceCloudState === "ConnectionHub_Ready"
+          responseInstance?.instanceCloudState === "ConnectionHub_Ready"
             ? true
             : false,
       },
+      {
+        name: "fleet",
+        path: "fleet",
+        state:
+          responseFleet === null
+            ? "None"
+            : responseFleet === undefined
+            ? "Pending"
+            : responseFleet?.fleetStatus === "Ready"
+            ? "Ready"
+            : "Creating",
+      },
     ]);
   }, [
-    trialState?.organization,
-    trialState?.roboticsCloud,
-    trialState?.instance,
+    responseOrganization,
+    responseRoboticsCloud,
+    responseInstance,
+    responseFleet,
   ]);
 
   const { setSidebarState } = useSidebar();
 
   function handleRedirectSidebar() {
-    if (!trialState?.organization) {
+    if (responseOrganization === null) {
       setSidebarState((prevState: any) => ({
         ...prevState,
         page: "organization",
         isOpen: true,
       }));
-    } else if (!trialState?.roboticsCloud) {
+    } else if (responseRoboticsCloud === null) {
       setSidebarState((prevState: any) => ({
         ...prevState,
         page: "roboticscloud",
         isOpen: true,
       }));
-    } else if (!trialState?.instance) {
+    } else if (responseInstance === null) {
       setSidebarState((prevState: any) => ({
         ...prevState,
         page: "instance",
         isOpen: true,
       }));
+    } else if (responseFleet === null) {
+      setSidebarState((prevState: any) => ({
+        ...prevState,
+        page: "fleet",
+        isOpen: true,
+      }));
     }
+
     handleCloseModal && handleCloseModal();
   }
 
@@ -115,7 +139,7 @@ export default function TrialStateViewer({
                 <StateCell
                   state={item?.success ? "Ready" : item?.state}
                   isRobolaunchState={
-                    trialState?.instance?.instanceCloudState &&
+                    responseInstance?.instanceCloudState &&
                     item?.path === "instance"
                       ? true
                       : false

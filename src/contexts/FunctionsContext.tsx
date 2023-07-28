@@ -48,7 +48,7 @@ export default ({ children }: any) => {
   const { pagesState, setPagesState } = usePages();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
-    dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
+    await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
       if (organizationsResponse?.payload?.data) {
         parameters?.setResponse &&
           parameters?.setResponse(organizationsResponse?.payload?.data || []);
@@ -57,6 +57,16 @@ export default ({ children }: any) => {
           parameters?.setItemCount(
             organizationsResponse?.payload?.data?.length || 0
           );
+
+        if (organizationsResponse?.payload?.data?.length === 1) {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(
+              organizationsResponse?.payload?.data[0]
+            );
+        } else {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(null);
+        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -140,6 +150,16 @@ export default ({ children }: any) => {
             responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.length ||
               0
           );
+
+        if (responseRoboticsClouds?.payload?.data?.length === 1) {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(
+              responseRoboticsClouds?.payload?.data[0]?.roboticsClouds[0]
+            );
+        } else {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(null);
+        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -242,6 +262,17 @@ export default ({ children }: any) => {
             responseInstances?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances?.length || 0
           );
+
+        if (responseInstances?.payload?.data?.length === 1) {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(
+              responseInstances?.payload?.data[0]?.roboticsClouds[0]
+                ?.cloudInstances[0]
+            );
+        } else {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(null);
+        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -379,6 +410,17 @@ export default ({ children }: any) => {
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
           );
+
+        if (responseFederatedFleets?.payload?.data?.length === 1) {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(
+              responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+                ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+            );
+        } else {
+          parameters?.setFirstItemforTrial &&
+            parameters?.setFirstItemforTrial(null);
+        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);

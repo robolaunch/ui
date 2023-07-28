@@ -63,6 +63,7 @@ export default function RosConnector({
 
   function getTopics() {
     if (ros && isSettedCookie) {
+      setTopicList([]);
       const getTopics = new ROSLIB.Service({
         ros: ros,
         name: "/rosapi/topics",

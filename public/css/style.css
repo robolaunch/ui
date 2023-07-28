@@ -818,14 +818,6 @@ video {
   grid-column: 1 / -1;
 }
 
-.row-span-1{
-  grid-row: span 1 / span 1;
-}
-
-.row-span-2{
-  grid-row: span 2 / span 2;
-}
-
 .float-right{
   float: right;
 }
@@ -836,10 +828,6 @@ video {
 
 .m-0{
   margin: 0px;
-}
-
-.m-28{
-  margin: 7rem;
 }
 
 .m-14{
@@ -1557,16 +1545,8 @@ video {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.grid-cols-3{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .grid-cols-6{
   grid-template-columns: repeat(6, minmax(0, 1fr));
-}
-
-.grid-rows-4{
-  grid-template-rows: repeat(4, minmax(0, 1fr));
 }
 
 .\!flex-col{
@@ -2151,10 +2131,6 @@ video {
 
 .p-8{
   padding: 2rem;
-}
-
-.p-28{
-  padding: 7rem;
 }
 
 .\!px-0{
@@ -3339,9 +3315,27 @@ td{
   color: rgb(194 194 194 / var(--tw-text-opacity)) !important;
 }
 
+@media (min-width: 640px){
+  .sm\:hidden{
+    display: none;
+  }
+}
+
 @media (min-width: 768px){
   .md\:col-span-5{
     grid-column: span 5 / span 5;
+  }
+
+  .md\:col-span-6{
+    grid-column: span 6 / span 6;
+  }
+
+  .md\:col-span-full{
+    grid-column: 1 / -1;
+  }
+
+  .md\:block{
+    display: block;
   }
 
   .md\:flex{
@@ -3366,6 +3360,10 @@ td{
     grid-column: span 6 / span 6;
   }
 
+  .lg\:col-span-7{
+    grid-column: span 7 / span 7;
+  }
+
   .lg\:col-span-8{
     grid-column: span 8 / span 8;
   }
@@ -3386,10 +3384,6 @@ td{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-6{
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
   .lg\:p-6{
     padding: 1.5rem;
   }
@@ -3400,8 +3394,16 @@ td{
     grid-column: span 3 / span 3;
   }
 
+  .xl\:col-span-4{
+    grid-column: span 4 / span 4;
+  }
+
   .xl\:col-span-7{
     grid-column: span 7 / span 7;
+  }
+
+  .xl\:col-span-8{
+    grid-column: span 8 / span 8;
   }
 
   .xl\:col-span-9{
@@ -3410,6 +3412,10 @@ td{
 
   .xl\:min-h-\[30rem\]{
     min-height: 30rem;
+  }
+
+  .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .xl\:p-2{
@@ -3426,15 +3432,23 @@ td{
     grid-column: span 2 / span 2;
   }
 
+  .\32xl\:col-span-3{
+    grid-column: span 3 / span 3;
+  }
+
   .\32xl\:col-span-8{
     grid-column: span 8 / span 8;
+  }
+
+  .\32xl\:col-span-9{
+    grid-column: span 9 / span 9;
   }
 
   .\32xl\:min-h-\[40rem\]{
     min-height: 40rem;
   }
 
-  .\32xl\:grid-cols-12{
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+  .\32xl\:grid-cols-9{
+    grid-template-columns: repeat(9, minmax(0, 1fr));
   }
 }

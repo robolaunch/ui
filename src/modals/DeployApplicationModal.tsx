@@ -8,10 +8,10 @@ import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import React, { ReactElement, useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import useTrial from "../hooks/useTrial";
 import { useFormik } from "formik";
 import TrialStateViewer from "../components/TrialStateViewer/TrialStateViewer";
 import { createTrial } from "../toolkit/TrialSlice";
+import useFunctions from "../hooks/useFunctions";
 
 interface IDeployApplication {
   handleCloseModal: () => void;
@@ -25,12 +25,74 @@ export default function DeployApplication({
   const [triggeredCreateInfrastucture, setTriggeredCreateInfrastucture] =
     useState<boolean>(false);
   const [robotName, setRobotName] = useState<string>("");
-  const { trialState, handleReload } = useTrial();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [responseOrganization, setResponseOrganization] =
+    useState<any>(undefined);
+  const [responseRoboticsCloud, setResponseRoboticsCloud] =
+    useState<any>(undefined);
+  const [responseInstance, setResponseInstance] = useState<any>(undefined);
+  const [responseFleet, setResponseFleet] = useState<any>(undefined);
+
+  const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
+    useFunctions();
+
   useEffect(() => {
-    handleReload();
+    if (!responseOrganization) {
+      getOrganizations({
+        setFirstItemforTrial: setResponseOrganization,
+      });
+    } else if (responseOrganization && !responseRoboticsCloud) {
+      getRoboticsClouds(
+        {
+          organizationId: responseOrganization?.organizationId,
+        },
+        {
+          setFirstItemforTrial: setResponseRoboticsCloud,
+        }
+      );
+    } else if (
+      responseOrganization &&
+      responseRoboticsCloud &&
+      !responseInstance
+    ) {
+      getInstances(
+        {
+          organizationId: responseOrganization?.organizationId,
+          roboticsCloudName: responseRoboticsCloud?.name,
+          region: responseRoboticsCloud?.region,
+          details: true,
+        },
+        {
+          setFirstItemforTrial: setResponseInstance,
+        }
+      );
+    } else if (
+      responseOrganization &&
+      responseRoboticsCloud &&
+      responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
+      !responseFleet
+    ) {
+      getFleets(
+        {
+          organizationId: responseOrganization?.organizationId,
+          roboticsCloudName: responseRoboticsCloud?.name,
+          region: responseRoboticsCloud?.region,
+          instanceId: responseInstance?.instanceId,
+        },
+        { setFirstItemforTrial: setResponseFleet }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    responseOrganization,
+    responseRoboticsCloud,
+    responseInstance,
+    responseFleet,
+  ]);
+
+  useEffect(() => {
     setRobotName(item?.acronym + "-" + handleGetRandomString(5));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -42,12 +104,12 @@ export default function DeployApplication({
 
       dispatch(
         createRobot({
-          organizationId: trialState?.organization?.organizationId,
-          roboticsCloudName: trialState?.roboticsCloud?.name,
-          instanceId: trialState?.instance?.instanceId,
-          region: trialState?.roboticsCloud?.region,
+          organizationId: responseOrganization?.organizationId,
+          roboticsCloudName: responseRoboticsCloud?.name,
+          instanceId: responseInstance?.instanceId,
+          region: responseRoboticsCloud?.region,
           robotName: robotName,
-          fleetName: trialState?.fleet?.name,
+          fleetName: responseFleet?.name,
           distributions: [item?.distro.toUpperCase()],
           bridgeEnabled: item?.type === "Environment" ? false : true,
           vdiEnabled: true,
@@ -76,11 +138,11 @@ export default function DeployApplication({
       ).then(() => {
         navigate(
           `/${organizationNameViewer({
-            organizationName: trialState?.organization?.organizationName,
+            organizationName: responseOrganization?.organizationName,
             capitalization: false,
-          })}/${trialState?.roboticsCloud?.name}/${
-            trialState?.instance?.name
-          }/${trialState?.fleet?.name}/${robotName}`
+          })}/${responseRoboticsCloud?.name}/${responseInstance?.name}/${
+            responseFleet?.name
+          }/${robotName}`
         );
         handleCloseModal();
       });
@@ -91,12 +153,11 @@ export default function DeployApplication({
     setTriggeredCreateInfrastucture(true);
     await dispatch(
       createTrial({
-        ipAddress: trialState?.ip as string,
+        ipAddress: "",
       })
     ).then((res: any) => {
       console.log("trial created");
       setTimeout(() => {
-        handleReload();
         console.log("trial created and reloaded");
       }, 10000);
     });
@@ -124,15 +185,15 @@ export default function DeployApplication({
               triggeredCreateInfrastucture ||
               formik.isSubmitting ||
               !formik.isValid ||
-              (trialState?.organization &&
-                trialState?.roboticsCloud &&
-                trialState?.instance)
+              (responseOrganization &&
+                responseRoboticsCloud &&
+                responseInstance)
             }
             onClick={() => handleCreateTrial()}
             loading={
-              !trialState?.organization ||
-              !trialState?.roboticsCloud ||
-              !trialState?.instance
+              !responseOrganization ||
+              !responseRoboticsCloud ||
+              !responseInstance
                 ? triggeredCreateInfrastucture
                 : false
             }
@@ -144,10 +205,10 @@ export default function DeployApplication({
             disabled={
               formik.isSubmitting ||
               !formik.isValid ||
-              !trialState?.organization ||
-              !trialState?.roboticsCloud ||
-              !trialState?.instance ||
-              trialState?.instance?.instanceCloudState !== "ConnectionHub_Ready"
+              !responseOrganization ||
+              !responseRoboticsCloud ||
+              !responseInstance ||
+              responseInstance?.instanceCloudState !== "ConnectionHub_Ready"
             }
             loading={formik.isSubmitting}
           />

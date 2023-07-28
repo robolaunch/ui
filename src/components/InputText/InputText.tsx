@@ -7,6 +7,7 @@ interface InputTextProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  inputPlaceholder?: string;
   onSubmitEnter?: () => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,6 +21,7 @@ export default function InputText({
   placeholder,
   disabled,
   className,
+  inputPlaceholder,
   onSubmitEnter,
   onFocus,
   onChange,
@@ -59,6 +61,7 @@ export default function InputText({
             onSubmitEnter && onSubmitEnter();
           }
         }}
+        placeholder={inputPlaceholder}
       />
     </div>
   );

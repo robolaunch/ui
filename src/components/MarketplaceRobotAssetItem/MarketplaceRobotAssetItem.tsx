@@ -5,15 +5,16 @@ import { MdPublic } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { stringSlugify } from "../../functions/GeneralFunctions";
-interface IMarketplaceRobotTemplateItem {
+
+interface IMarketplaceRobotAssetItem {
   robot: any;
 }
 
-export default function MarketplaceRobotTemplateItem({
+export default function MarketplaceRobotAssetItem({
   robot,
-}: IMarketplaceRobotTemplateItem): ReactElement {
+}: IMarketplaceRobotAssetItem): ReactElement {
   return (
-    <CardLayout className="col-span-3 p-6 hover:scale-[1.014] transition-all duration-500 cursor-pointer !flex !flex-col gap-4">
+    <CardLayout className="col-span-3 p-6 hover:scale-[1.014] transition-300 cursor-pointer !flex !flex-col gap-4">
       <Link to={stringSlugify(robot?.acronym)}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">

@@ -8,6 +8,7 @@ export interface IsingleGetParameters {
 export interface ImultipleGetParameters {
   ifErrorNavigateTo404?: boolean;
   setResponse?: any;
+  setFirstItemforTrial?: any;
   setItemCount?: any;
 }
 

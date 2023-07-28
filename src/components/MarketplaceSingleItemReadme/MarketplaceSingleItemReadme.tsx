@@ -15,9 +15,9 @@ export default function MarketplaceSingleItemReadme({
 
   useEffect(() => {
     try {
-      responseItem &&
-        axios.get(responseItem?.rawRobotURL).then((res) => {
-          setReadMe(res.data);
+      responseItem?.rawRobotURL &&
+        axios?.get(responseItem?.rawRobotURL).then((res) => {
+          setReadMe(res?.data);
         });
     } catch (error) {
       setReadMe("Readme not found");
