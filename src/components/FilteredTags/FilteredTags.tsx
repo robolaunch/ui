@@ -1,9 +1,9 @@
 import React from "react";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 
 export default function FilteredTags() {
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
 
   return (
     <div className="flex flex-wrap gap-2 pb-4 animate__animated animate__fadeIn">

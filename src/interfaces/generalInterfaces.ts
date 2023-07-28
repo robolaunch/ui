@@ -28,7 +28,7 @@ export interface IpagesState {
   fleet: any;
 }
 
-export interface IuseGeneral {
+export interface IuseMain {
   pagesState: IpagesState;
   setPagesState: React.Dispatch<React.SetStateAction<IpagesState>>;
   sidebarState: ISidebarState;

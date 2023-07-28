@@ -4,7 +4,7 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
-import useGeneral from "../../../hooks/useGeneral";
+import useMain from "../../../hooks/useMain";
 import BasicCell from "../../../components/Cells/BasicCell";
 import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
 import StateCell from "../../../components/Cells/StateCell";
@@ -16,7 +16,7 @@ import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { pagesState, selectedState, setSidebarState } = useGeneral();
+  const { pagesState, selectedState, setSidebarState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 

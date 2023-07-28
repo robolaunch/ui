@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
 import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
-import StreamContext from "../../../contexts/StreamContext.tsx";
+import StreamContext from "../../../contexts/VDIContext.tsx";
 
 interface IRemoteDesktop {
   vdiIngressEndpoint: any;

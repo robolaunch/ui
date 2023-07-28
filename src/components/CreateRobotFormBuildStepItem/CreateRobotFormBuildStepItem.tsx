@@ -10,8 +10,8 @@ import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
 import { Editor } from "@monaco-editor/react";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import useGeneral from "../../hooks/useGeneral";
+import useRobot from "../../hooks/useRobot";
+import useMain from "../../hooks/useMain";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import StateCell from "../Cells/StateCell";
@@ -35,9 +35,8 @@ export default function CreateRobotFormBuildStepItem({
   isImportRobot,
 }: ICreateRobotFormBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
-  const { selectedState } = useGeneral();
-  const { robotData } = useCreateRobot();
-  const { handleRemoveStepFromBuildStep } = useCreateRobot();
+  const { selectedState } = useMain();
+  const { robotData, handleRemoveStepFromBuildStep } = useRobot();
 
   return (
     <Accordion

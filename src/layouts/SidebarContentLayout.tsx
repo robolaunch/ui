@@ -17,19 +17,19 @@ import { stringCapitalization } from "../functions/GeneralFunctions";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
-import useCreateRobot from "../hooks/useCreateRobot";
+import useRobot from "../hooks/useRobot";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
-import useGeneral from "../hooks/useGeneral";
+import useMain from "../hooks/useMain";
 import { toast } from "sonner";
 
 export default function SidebarContentLayout(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useGeneral();
+  const { sidebarState, setSidebarState, selectedState } = useMain();
   const [loading, setLoading] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
   const [reload, setReload] = useState<boolean>(false);
-  const { handleResetRobotForm } = useCreateRobot();
+  const { handleResetRobotForm } = useRobot();
   const url = useParams();
 
   useEffect(() => {

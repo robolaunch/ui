@@ -13,7 +13,7 @@ import StateCell from "../../../components/Cells/StateCell";
 import InfoCell from "../../../components/Cells/InfoCell";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
-import useGeneral from "../../../hooks/useGeneral";
+import useMain from "../../../hooks/useMain";
 import useFunctions from "../../../hooks/useFunctions";
 import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
 import DashboardLayout from "../../../layouts/DashboardLayout";
@@ -24,7 +24,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
     undefined
   );
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
-  const { pagesState, setSidebarState, selectedState } = useGeneral();
+  const { pagesState, setSidebarState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 

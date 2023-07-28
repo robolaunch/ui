@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { useAppDispatch } from "../../hooks/redux";
 import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
 import { Editor } from "@monaco-editor/react";
@@ -13,7 +13,7 @@ import { useKeycloak } from "@react-keycloak/web";
 
 export default function ConnectPhysicalInstanceForm(): ReactElement {
   const [code, setCode] = React.useState<string>("");
-  const { sidebarState, setSidebarState, selectedState } = useGeneral();
+  const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { keycloak } = useKeycloak();
 

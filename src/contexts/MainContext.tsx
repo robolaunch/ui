@@ -3,7 +3,7 @@ import { ISelectedState, ISidebarState } from "../interfaces/generalInterfaces";
 import { useLocation } from "react-router-dom";
 import { IpagesState } from "../interfaces/generalInterfaces";
 
-export const GeneralContext: any = createContext<any>(null);
+export const MainContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
@@ -125,7 +125,7 @@ export default ({ children }: any) => {
   }
 
   return (
-    <GeneralContext.Provider
+    <MainContext.Provider
       value={{
         pagesState,
         setPagesState,
@@ -138,6 +138,6 @@ export default ({ children }: any) => {
       }}
     >
       {children}
-    </GeneralContext.Provider>
+    </MainContext.Provider>
   );
 };

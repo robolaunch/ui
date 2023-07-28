@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import SidebarListItem from "./SidebarListItem";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import useFunctions from "../../hooks/useFunctions";
 import BasicCell from "../Cells/BasicCell";
@@ -20,7 +20,7 @@ export default function RoboticsCloudsList({
   const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<
     any[] | undefined
   >(undefined);
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
   const { getRoboticsClouds } = useFunctions();
 
   useEffect(() => {

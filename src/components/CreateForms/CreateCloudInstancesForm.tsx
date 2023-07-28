@@ -3,7 +3,7 @@ import { createCloudInstance } from "../../toolkit/InstanceSlice";
 import React, { ReactElement } from "react";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
 import { BsCpu } from "react-icons/bs";
@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 
 export default function CreateCloudInstancesForm(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useGeneral();
+  const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
 
   const formik: any = useFormik({

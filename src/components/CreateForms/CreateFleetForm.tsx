@@ -4,13 +4,13 @@ import InputError from "../InputError/InputError";
 import { createFleetSchema } from "../../validations/FleetsValidations";
 import InputText from "../InputText/InputText";
 import Button from "../Button/Button";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { useAppDispatch } from "../../hooks/redux";
 import { createFederatedFleet } from "../../toolkit/FleetSlice";
 import InfoTip from "../InfoTip/InfoTip";
 
 export default function CreateFleetForm(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useGeneral();
+  const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
 
   const formik = useFormik({

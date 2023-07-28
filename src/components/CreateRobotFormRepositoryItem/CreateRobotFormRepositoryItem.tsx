@@ -14,7 +14,7 @@ import {
   getGithubUserRepositories,
 } from "../../toolkit/GithubSlice";
 import useGithub from "../../hooks/useGithub";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import InfoTip from "../InfoTip/InfoTip";
 interface ICreateRobotFormRepositoryItem {
@@ -40,7 +40,7 @@ export default function CreateRobotFormRepositoryItem({
 
   const github = useGithub();
 
-  const { handleRemoveRepositoryFromWorkspaceStep } = useCreateRobot();
+  const { handleRemoveRepositoryFromWorkspaceStep } = useRobot();
 
   useEffect(() => {
     github?.githubAuth &&

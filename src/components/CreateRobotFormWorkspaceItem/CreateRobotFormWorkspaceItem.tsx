@@ -9,7 +9,7 @@ import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
 import CreateRobotFormRepositoryItem from "../CreateRobotFormRepositoryItem/CreateRobotFormRepositoryItem";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
@@ -39,7 +39,7 @@ export default function CreateRobotFormWorkspaceItem({
     robotData,
     handleAddRepositoryToWorkspaceStep,
     handleRemoveWorkspaceStep,
-  } = useCreateRobot();
+  } = useRobot();
 
   return (
     <Accordion

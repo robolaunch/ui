@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
+import useVDI from "../../hooks/useVDI";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
@@ -24,7 +24,7 @@ export default function RemoteDesktopController({
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
 
-  const { setScreenResolution } = useRemoteDesktopStream();
+  const { setScreenResolution } = useVDI();
 
   const { keycloak } = useKeycloak();
 

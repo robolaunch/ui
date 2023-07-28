@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
@@ -16,7 +16,7 @@ export default function RobotsList({
   setItemCount,
 }: IRobotsList): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
   const { getRobots } = useFunctions();
 
   useEffect(

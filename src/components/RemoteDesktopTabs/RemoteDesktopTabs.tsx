@@ -5,11 +5,11 @@ import Button from "../Button/Button";
 import { MdStopScreenShare } from "react-icons/md";
 import { css } from "@emotion/css";
 import ScrollToBottom from "react-scroll-to-bottom";
-import useRemoteDesktopStream from "../../hooks/useRemoteDesktopStream";
+import useVDI from "../../hooks/useVDI";
 
 export default function RemoteDesktopTabs(): ReactElement {
   const [message, setMessage] = useState<string>("");
-  const { handleSendMessage, remoteDesktopReducer } = useRemoteDesktopStream();
+  const { handleSendMessage, remoteDesktopReducer } = useVDI();
 
   const { ref, height } = useComponentSize();
 

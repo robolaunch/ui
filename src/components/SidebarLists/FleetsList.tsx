@@ -3,7 +3,7 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
@@ -17,7 +17,7 @@ export default function FleetsList({
   setItemCount,
 }: IFleetsList): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { getFleets } = useFunctions();
 

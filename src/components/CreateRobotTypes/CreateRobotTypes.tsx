@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import InputError from "../InputError/InputError";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useAppDispatch } from "../../hooks/redux";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { getPhysicalInstances } from "../../toolkit/InstanceSlice";
 
 interface ICreateRobotTypes {
@@ -19,7 +19,7 @@ export default function CreateRobotTypes({
   const [responsePhysicalInstances, setResponsePhysicalInstances] =
     useState<any>(undefined);
   const dispatch = useAppDispatch();
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
 
   useEffect(() => {
     !formik.values?.isVirtualRobot &&

@@ -6,12 +6,12 @@ import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { createRobot } from "../../toolkit/RobotSlice";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import Seperator from "../Seperator/Seperator";
 import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
@@ -27,8 +27,8 @@ interface ICreateRobotFormStep1 {
 export default function CreateRobotFormStep1({
   isImportRobot,
 }: ICreateRobotFormStep1): ReactElement {
-  const { robotData, setRobotData }: any = useCreateRobot();
-  const { selectedState, handleCreateRobotNextStep } = useGeneral();
+  const { robotData, setRobotData }: any = useRobot();
+  const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
   const { getRobot } = useFunctions();

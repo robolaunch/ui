@@ -4,7 +4,7 @@ import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDes
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { handleSaveLayout } from "../../../helpers/gridStack";
-import StreamContext from "../../../contexts/StreamContext";
+import StreamContext from "../../../contexts/VDIContext";
 import { GridLayout } from "../../../layouts/GridLayout";
 import CardLayout from "../../../layouts/CardLayout";
 import { useParams } from "react-router-dom";

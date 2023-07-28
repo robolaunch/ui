@@ -9,15 +9,15 @@ import {
   IcreateBuildManagerRequest,
   IcreateLaunchManagerRequest,
   IcreateRobotRequest,
-  IdeleteBuildManagerRequest,
-  IdeleteLaunchManagerRequest,
-  IdeleteRobotRequest,
   IgetBuildManagerRequest,
   IgetBuildManagersRequest,
   IgetLaunchManagerRequest,
   IgetLaunchManagersRequest,
   IgetRobotRequest,
   IgetRobotsRequest,
+  IdeleteBuildManagerRequest,
+  IdeleteLaunchManagerRequest,
+  IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
 import { envTrialApp } from "../helpers/envProvider";
 

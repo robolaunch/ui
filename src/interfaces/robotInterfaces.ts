@@ -186,7 +186,7 @@ export interface IRobotLaunchENV {
   value: string;
 }
 
-export interface IuseCreateRobot {
+export interface IuseRobot {
   robotData: IRobotData;
   setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
   handleResetRobotForm: () => void;

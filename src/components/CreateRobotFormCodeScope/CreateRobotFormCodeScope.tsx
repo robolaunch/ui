@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import InputError from "../InputError/InputError";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import useGeneral from "../../hooks/useGeneral";
+import useRobot from "../../hooks/useRobot";
+import useMain from "../../hooks/useMain";
 
 interface ICreateRobotFormCodeScope {
   virtualInstanceChecked?: boolean;
@@ -26,8 +26,8 @@ export default function CreateRobotFormCodeScope({
   physicalInstanceOnChange,
   error,
 }: ICreateRobotFormCodeScope): ReactElement {
-  const { robotData } = useCreateRobot();
-  const { selectedState } = useGeneral();
+  const { robotData } = useRobot();
+  const { selectedState } = useMain();
 
   return (
     <div>

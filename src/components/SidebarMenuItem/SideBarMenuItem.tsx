@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
@@ -19,7 +19,7 @@ export default function SideBarMenuItem({
 }: ISideBarMenuItem) {
   const [isHover, setIsHover] = useState<boolean>(false);
   const { theme } = useTheme();
-  const { sidebarState, setSidebarState, selectedState } = useGeneral();
+  const { sidebarState, setSidebarState, selectedState } = useMain();
   const navigate = useNavigate();
   const url = useParams();
 

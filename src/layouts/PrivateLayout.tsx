@@ -3,11 +3,11 @@ import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Sidebar from "../components/Sidebar/Sidebar";
 import LoadingBar from "react-top-loading-bar";
-import useGeneral from "../hooks/useGeneral";
+import useMain from "../hooks/useMain";
 import { toast } from "sonner";
 
 export default function PrivateLayout(): ReactElement {
-  const { sidebarState, setSidebarState } = useGeneral();
+  const { sidebarState, setSidebarState } = useMain();
   const url = useLocation();
 
   function handleCloseSidebar() {

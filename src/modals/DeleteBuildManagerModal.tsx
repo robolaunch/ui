@@ -3,9 +3,9 @@ import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { deleteBuildManager } from "../toolkit/RobotSlice";
-import useGeneral from "../hooks/useGeneral";
+import useMain from "../hooks/useMain";
 import { useParams } from "react-router-dom";
-import useCreateRobot from "../hooks/useCreateRobot";
+import useRobot from "../hooks/useRobot";
 import { toast } from "sonner";
 
 interface IDeleteBuildManagerModal {
@@ -18,8 +18,8 @@ export default function DeleteBuildManagerModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const url = useParams();
-  const { selectedState } = useGeneral();
-  const { robotData } = useCreateRobot();
+  const { selectedState } = useMain();
+  const { robotData } = useRobot();
 
   function handleDeleteBuildManager() {
     setIsLoading(true);

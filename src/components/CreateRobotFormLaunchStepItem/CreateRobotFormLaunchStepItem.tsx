@@ -7,10 +7,10 @@ import { FormikProps } from "formik";
 import Accordion from "../Accordion/AccordionV2";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import { BsPlusCircle } from "react-icons/bs";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import { Editor } from "@monaco-editor/react";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
@@ -32,8 +32,8 @@ export default function CreateRobotFormLaunchStepItem({
     robotData,
     handleAddENVToLaunchStep,
     handleRemoveStepFromLaunchStep,
-  } = useCreateRobot();
-  const { selectedState } = useGeneral();
+  } = useRobot();
+  const { selectedState } = useMain();
 
   return (
     <Accordion

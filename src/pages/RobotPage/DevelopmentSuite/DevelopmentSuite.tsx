@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
-import StreamContext from "../../../contexts/StreamContext";
+import StreamContext from "../../../contexts/VDIContext";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
 import CardLayout from "../../../layouts/CardLayout";

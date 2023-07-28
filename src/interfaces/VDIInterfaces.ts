@@ -1,4 +1,4 @@
-export interface IRemoteDesktopInterface {
+export interface IVDIInterface {
   client: any;
   handleMute: () => void;
   handleSendMessage: (message: string) => void;

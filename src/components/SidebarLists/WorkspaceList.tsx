@@ -1,11 +1,10 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/redux";
-import useGeneral from "../../hooks/useGeneral";
-import { getFederatedRobot } from "../../toolkit/RobotSlice";
+import useMain from "../../hooks/useMain";
+import { getRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useParams } from "react-router-dom";
-import CreateRobotFormStep1 from "../CreateForms/CreateRobotFormStep1";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import CreateRobotFormStep2 from "../CreateForms/CreateRobotFormStep2";
 
 interface IWorkspaceList {
@@ -18,10 +17,10 @@ export default function WorkspaceList({
   setItemCount,
 }: IWorkspaceList): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const { selectedState } = useGeneral();
+  const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const url = useParams();
-  const { setRobotData } = useCreateRobot();
+  const { setRobotData } = useRobot();
 
   useEffect(
     () => {
@@ -33,13 +32,13 @@ export default function WorkspaceList({
       ) {
         setResponseRobot(undefined);
         dispatch(
-          getFederatedRobot({
+          getRobot({
             organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
             instanceId: selectedState?.instance?.instanceId,
             region: selectedState?.instance?.region,
             fleetName: selectedState?.fleet?.name,
-            robotName: url?.robotName,
+            robotName: url?.robotName as string,
           })
         ).then((response: any) => {
           if (

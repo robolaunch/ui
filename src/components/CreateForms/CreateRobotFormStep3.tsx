@@ -5,13 +5,13 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useRobot from "../../hooks/useRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
@@ -25,13 +25,12 @@ interface ICreateRobotFormStep3 {
 export default function CreateRobotFormStep3({
   isImportRobot,
 }: ICreateRobotFormStep3): ReactElement {
-  const { robotData, setRobotData, handleAddStepToBuildStep } =
-    useCreateRobot();
+  const { robotData, setRobotData, handleAddStepToBuildStep } = useRobot();
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
-  const { handleCreateRobotNextStep, selectedState } = useGeneral();
+  const { handleCreateRobotNextStep, selectedState } = useMain();
   const { getRobot, getBuildManager } = useFunctions();
 
   useEffect(

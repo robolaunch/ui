@@ -7,7 +7,7 @@ import StateCell from "../../../components/Cells/StateCell";
 import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import useGeneral from "../../../hooks/useGeneral";
+import useMain from "../../../hooks/useMain";
 import useFunctions from "../../../hooks/useFunctions";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import DashboardLayout from "../../../layouts/DashboardLayout";
@@ -18,7 +18,7 @@ import { RiCpuLine } from "react-icons/ri";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { pagesState, setSidebarState, selectedState } = useGeneral();
+  const { pagesState, setSidebarState, selectedState } = useMain();
   const { getOrganization, getRoboticsCloud, getInstance, getFleets } =
     useFunctions();
   const [reload, setReload] = useState<boolean>(false);

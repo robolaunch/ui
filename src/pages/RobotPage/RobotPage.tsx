@@ -12,7 +12,7 @@ import Teleoperation from "./Teleoperation/Teleoperation";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppSelector } from "../../hooks/redux";
 import CardLayout from "../../layouts/CardLayout";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import Overview from "./Overview/Overview";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
@@ -31,7 +31,7 @@ export default function RobotPage(): ReactElement {
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
   const { urls } = useAppSelector((state) => state.robot);
-  const { pagesState, sidebarState } = useGeneral();
+  const { pagesState, sidebarState } = useMain();
   const url = useParams();
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
     "Cloud IDE" | "Physical IDE"

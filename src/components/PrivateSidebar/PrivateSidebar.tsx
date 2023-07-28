@@ -1,14 +1,14 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { envTrialApp } from "../../helpers/envProvider";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const { sidebarState } = useGeneral();
+  const { sidebarState } = useMain();
   const url = useParams();
 
   useEffect(() => {

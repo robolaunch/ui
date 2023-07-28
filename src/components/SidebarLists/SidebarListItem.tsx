@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { useNavigate } from "react-router-dom";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 
 interface ISidebarListItem {
@@ -24,7 +24,7 @@ export default function SidebarListItem({
   notSelectable,
 }: ISidebarListItem): ReactElement {
   const { selectedState, setSelectedState, sidebarState, setSidebarState } =
-    useGeneral();
+    useMain();
   const navigate = useNavigate();
 
   const handleSelectItem = () => {

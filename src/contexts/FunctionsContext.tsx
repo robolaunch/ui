@@ -33,10 +33,10 @@ import {
   getFederatedFleets,
   createFederatedFleet,
 } from "../toolkit/FleetSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
+import useRobot from "../hooks/useRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
-import useGeneral from "../hooks/useGeneral";
+import useMain from "../hooks/useMain";
 import { toast } from "sonner";
 
 export const FunctionsContext: any = createContext<any>(null);
@@ -44,9 +44,9 @@ export const FunctionsContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
-  const { setSelectedState, pagesState, setPagesState } = useGeneral();
+  const { setSelectedState, pagesState, setPagesState } = useMain();
   const navigate = useNavigate();
-  const { setRobotData } = useCreateRobot();
+  const { setRobotData } = useRobot();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
     await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {

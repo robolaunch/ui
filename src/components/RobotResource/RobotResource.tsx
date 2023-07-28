@@ -3,7 +3,7 @@ import { BsFillCpuFill } from "react-icons/bs";
 import ContentLoader from "react-content-loader";
 import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
-import useGeneral from "../../hooks/useGeneral";
+import useMain from "../../hooks/useMain";
 
 interface IRobotResource {
   responseRobot: any;
@@ -12,7 +12,7 @@ interface IRobotResource {
 export default function RobotResource({
   responseRobot,
 }: IRobotResource): ReactElement {
-  const { pagesState } = useGeneral();
+  const { pagesState } = useMain();
 
   return (
     <div className="flex flex-col items-end">

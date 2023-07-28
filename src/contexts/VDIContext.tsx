@@ -4,15 +4,15 @@ import { toast } from "sonner";
 import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
-export const StreamContext: any = createContext<any>(null);
+export const VDIContext: any = createContext<any>(null);
 
-interface IStreamContext {
+interface IVDIContext {
   vdiIngressEndpoint: string;
   children: any;
 }
 
 // eslint-disable-next-line
-export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
+export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
   const candidate = useRef<any>(null);
@@ -453,7 +453,7 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
   }
 
   return (
-    <StreamContext.Provider
+    <VDIContext.Provider
       value={{
         remoteDesktopReducer,
         client,
@@ -465,6 +465,6 @@ export default ({ vdiIngressEndpoint, children }: IStreamContext) => {
       }}
     >
       {children}
-    </StreamContext.Provider>
+    </VDIContext.Provider>
   );
 };
