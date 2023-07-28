@@ -119,7 +119,7 @@ export default function SideBarMenuItem({
             type === "organization"
               ? "Organizations"
               : type === "roboticscloud"
-              ? "Robotics Clouds"
+              ? "Regions"
               : type === "instance"
               ? "Instances"
               : type === "fleet"

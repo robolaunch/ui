@@ -21,7 +21,7 @@ export default function SidebarContentLayout({
 
   function titleGenerator() {
     if (sidebarState?.page === "roboticscloud") {
-      return "Robotics Clouds";
+      return "Regions";
     }
     if (sidebarState?.page === "instance") {
       if (sidebarState?.instanceTab === "Cloud Instances") {

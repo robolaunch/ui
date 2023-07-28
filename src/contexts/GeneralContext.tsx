@@ -30,6 +30,18 @@ export default ({ children }: any) => {
     fleet: null,
   });
 
+  // const [trialState, setTrialState] = useState<any>({
+  //   ip: null,
+  //   time: {
+  //     remainingTime: null,
+  //     viewer: {
+  //       h: 0,
+  //       m: 0,
+  //       s: 0,
+  //     },
+  //   },
+  // });
+
   useEffect(() => {
     console.log(selectedState);
   }, [selectedState]);

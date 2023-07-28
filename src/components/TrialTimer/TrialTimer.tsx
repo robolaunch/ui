@@ -1,26 +1,10 @@
 import React, { ReactElement } from "react";
-import TrialCardLayout from "../../layouts/TrialCardLayout";
 import TimeCounter from "../TimeCounter/TimeCounter";
-import useTrial from "../../hooks/useTrial";
 
-interface ITrialTimer {
-  layoutClassName?: string;
-}
-
-export default function TrialTimer({
-  layoutClassName,
-}: ITrialTimer): ReactElement {
-  const { trialState } = useTrial();
-
+export default function TrialTimer(): ReactElement {
   return (
-    <TrialCardLayout title="Trial Timer" className={layoutClassName}>
-      <div className="h-full flex items-center justify-center">
-        <TimeCounter
-          hour={trialState?.time.viewer.h}
-          minute={trialState?.time.viewer.m}
-          second={trialState?.time.viewer.s}
-        />
-      </div>
-    </TrialCardLayout>
+    <div className="h-full flex items-center justify-center">
+      <TimeCounter hour={0} minute={0} second={0} />
+    </div>
   );
 }

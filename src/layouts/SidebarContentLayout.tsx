@@ -60,7 +60,7 @@ export default function SidebarContentLayout(): ReactElement {
             : "Create"
         } ${(() => {
           if (sidebarState?.page === "roboticscloud") {
-            return "Robotics Cloud";
+            return "Region";
           }
           if (sidebarState?.page === "instance") {
             if (sidebarState?.instanceTab === "Cloud Instances") {
@@ -94,7 +94,7 @@ export default function SidebarContentLayout(): ReactElement {
           if (!selectedState?.organization) {
             setSidebarState((prev: any) => ({ ...prev, page: "organization" }));
             return toast.error(
-              `If you want to create a robotics cloud, you need to select an organization first.`
+              `If you want to create a region, you need to select an organization first.`
             );
           }
           break;
