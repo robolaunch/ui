@@ -1,53 +1,53 @@
-import { useFrame, useThree } from "@react-three/fiber";
-import React, { useMemo, useRef, useState } from "react";
-import * as THREE from "three";
-import create from "zustand";
+import React, { useRef, useMemo, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import { create } from "zustand";
 import useBarcode from "../../hooks/useBarcode";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-const useStore = create((set: any) => ({
+const useStore = create((set) => ({
   target: null,
   setTarget: (target: any) => set({ target }),
 }));
 
 export default function Robot3D() {
-  const setTarget = useStore((state) => state.setTarget);
+  const setTarget = useStore((state: any) => state.setTarget);
   const { robotLocation } = useBarcode();
 
   const meshRef: any = useRef();
+  const [robotModel, setRobotModel] = useState(null);
 
-  const { camera } = useThree();
-  const frustum: any = useMemo(() => new THREE.Frustum(), []);
-  const [isBoxInFrustum, setIsBoxInFrustum] = useState(true);
+  useMemo(() => {
+    const loader = new GLTFLoader();
+    loader.load(
+      "/models/robot.glb",
+      (gltf: any) => {
+        console.log("Robot model loaded:", gltf);
+        setRobotModel(gltf.scene);
+      },
+      undefined,
+      (error) => {
+        console.error("Error loading the 3D model:", error);
+      }
+    );
+  }, []);
 
   useFrame(() => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !robotModel) return;
 
     meshRef.current.updateMatrixWorld();
-
-    frustum.setFromMatrix(
-      new THREE.Matrix4().multiplyMatrices(
-        camera.projectionMatrix,
-        camera.matrixWorldInverse
-      )
-    );
-    if (frustum.intersectsObject(meshRef.current)) {
-      setIsBoxInFrustum(true);
-    } else {
-      setIsBoxInFrustum(false);
-    }
   });
 
-  if (!isBoxInFrustum) {
+  if (!robotModel) {
     return null;
   }
 
   return (
-    <mesh
-      onClick={(e) => setTarget(e.object)}
-      position={[robotLocation?.x || 0, 0.125, robotLocation?.y || 0]}
-    >
-      <boxBufferGeometry args={[0.25, 0.25, 0.25]} />
-      <meshNormalMaterial />
-    </mesh>
+    <primitive
+      object={robotModel}
+      ref={meshRef}
+      onClick={(e: any) => setTarget(e.object)}
+      position={[robotLocation?.x || 0, 0, robotLocation?.y || 0]}
+      scale={[0.005, 0.005, 0.005]}
+    />
   );
 }

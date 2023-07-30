@@ -3,7 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef, useState } from "react";
 import Barcode from "react-barcode";
 import * as THREE from "three";
-import create from "zustand";
+import { create } from "zustand";
 
 const useStore = create((set: any) => ({
   target: null,
@@ -22,18 +22,16 @@ export default function Machine3D(props: any) {
   const [isBoxInFrustum, setIsBoxInFrustum] = useState(true);
 
   useFrame(() => {
-    if (!meshRef.current) return; // Geçerlilik kontrolü
+    if (!meshRef.current) return;
 
-    meshRef.current.updateMatrixWorld(); // Kutunun dünya koordinatlarındaki pozisyonunu güncelle
+    meshRef.current.updateMatrixWorld();
 
     frustum.setFromMatrix(
       new THREE.Matrix4().multiplyMatrices(
         camera.projectionMatrix,
         camera.matrixWorldInverse
       )
-    ); // Kameraların görüş açısına ait frustum'ı oluştur
-
-    // Kutunun dünya koordinatlarındaki pozisyonunu frustum ile kontrol et
+    );
     if (frustum.intersectsObject(meshRef.current)) {
       setIsBoxInFrustum(true);
     } else {
@@ -42,7 +40,7 @@ export default function Machine3D(props: any) {
   });
 
   if (!isBoxInFrustum) {
-    return null; // Render nothing if the box is outside the frustum
+    return null;
   }
 
   return (
