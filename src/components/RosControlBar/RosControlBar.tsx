@@ -1,10 +1,10 @@
 import React, { ReactElement, useContext } from "react";
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 
 export default function RosControlBar(): ReactElement {
-  const { handleStartMission }: any = useContext(TaskManagementContext);
+  const { handleStartMission }: any = useContext(MissionContext);
 
   return (
     <div className="absolute bottom-4 w-full flex items-center justify-center cursor-pointer">

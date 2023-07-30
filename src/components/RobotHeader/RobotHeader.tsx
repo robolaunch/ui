@@ -37,7 +37,6 @@ export default function RobotHeader({
       state:
         isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
-      hidden: true,
     },
     {
       name: "Teleoperation",

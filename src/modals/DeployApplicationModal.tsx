@@ -274,7 +274,9 @@ export default function DeployApplication({
               !responseOrganization ||
               !responseRoboticsCloud ||
               !responseInstance ||
-              responseInstance?.instanceCloudState !== "ConnectionHub_Ready"
+              responseInstance?.instanceCloudState !== "ConnectionHub_Ready" ||
+              !responseFleet ||
+              responseFleet?.fleetStatus !== "Ready"
             }
             loading={formik.isSubmitting}
           />

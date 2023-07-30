@@ -15,7 +15,7 @@ import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocat
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
 import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
-import { TaskManagementContext } from "../../../contexts/TaskManagementContext";
+import { MissionContext } from "../../../contexts/MissionContext";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import InputToggle from "../../../components/InputToggle/InputToggle";
@@ -51,7 +51,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
     handleAddMissions,
     handleAddWaypointToMission,
     handleStartMission,
-  }: any = useContext(TaskManagementContext);
+  }: any = useContext(MissionContext);
   const [isGrabbingMap, setIsGrabbingMap] = useState<boolean>(false);
   const mouseRef = useRef<any>(null);
   const mouse = useMouse(mouseRef, {

@@ -1,6 +1,6 @@
 import React, { ReactElement, useContext, useState } from "react";
 import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 
 interface IRosBarcodeMapItem {
   item: any;
@@ -11,7 +11,7 @@ export default function RosBarcodeMapItem({
 }: IRosBarcodeMapItem): ReactElement {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const { rosMapDetails }: any = useContext(TaskManagementContext);
+  const { rosMapDetails }: any = useContext(MissionContext);
 
   return (
     <div

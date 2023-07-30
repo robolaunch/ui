@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useContext } from "react";
 import RosDraggableWaypoint from "../RosDraggableWaypoint/RosDraggableWaypoint";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 
 export default function RosMapWaypointLayout(): ReactElement {
   const {
@@ -12,7 +12,7 @@ export default function RosMapWaypointLayout(): ReactElement {
     isDragging,
     setIsDragging,
     hoverWaypoint,
-  }: any = useContext(TaskManagementContext);
+  }: any = useContext(MissionContext);
 
   return (
     <Fragment>

@@ -4,7 +4,7 @@ import saveAs from "file-saver";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
 
-export const TaskManagementContext: any = createContext<any>(null);
+export const MissionContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children, ros }: any) => {
@@ -162,7 +162,7 @@ export default ({ children, ros }: any) => {
   }
 
   return (
-    <TaskManagementContext.Provider
+    <MissionContext.Provider
       value={{
         missions,
         setMissions,
@@ -188,6 +188,6 @@ export default ({ children, ros }: any) => {
       }}
     >
       {children}
-    </TaskManagementContext.Provider>
+    </MissionContext.Provider>
   );
 };

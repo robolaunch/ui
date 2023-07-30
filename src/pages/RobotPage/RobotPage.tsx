@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import BarcodeManagementContext from "../../contexts/BarcodeManagementContext";
-import TaskManagementContext from "../../contexts/TaskManagementContext";
+import BarcodeContext from "../../contexts/BarcodeContext";
+import TaskManagementContext from "../../contexts/MissionContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import RosConnector from "../../components/RosConnector/RosConnector";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -290,9 +290,9 @@ export default function RobotPage(): ReactElement {
             case "Task Management":
               return (
                 <TaskManagementContext ros={ros}>
-                  <BarcodeManagementContext ros={ros}>
+                  <BarcodeContext ros={ros}>
                     <TaskManagementLayout ros={ros} />
-                  </BarcodeManagementContext>
+                  </BarcodeContext>
                 </TaskManagementContext>
               );
             case "Visualization":

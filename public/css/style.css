@@ -830,18 +830,6 @@ video {
   margin: 0px;
 }
 
-.m-14{
-  margin: 3.5rem;
-}
-
-.m-28{
-  margin: 7rem;
-}
-
-.m-44{
-  margin: 11rem;
-}
-
 .m-64{
   margin: 16rem;
 }
@@ -3325,12 +3313,6 @@ td{
 .disabled\:\!text-layer-light-300:disabled{
   --tw-text-opacity: 1 !important;
   color: rgb(194 194 194 / var(--tw-text-opacity)) !important;
-}
-
-@media (min-width: 640px){
-  .sm\:hidden{
-    display: none;
-  }
 }
 
 @media (min-width: 768px){

@@ -1,10 +1,16 @@
 import React, { createContext, useEffect, useState } from "react";
 import ROSLIB from "roslib";
 
-export const BarcodeManagementContext: any = createContext<any>(null);
+export const BarcodeContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children, ros }: any) => {
+  const [robotLocation, setRobotLocation] = useState({
+    x: 5,
+    y: -4,
+    z: 0,
+  });
+
   const [barcodeItems, setBarcodeItems] = useState<any[]>([
     {
       barcodes: ["123", "321"],
@@ -33,27 +39,46 @@ export default ({ children, ros }: any) => {
   ]);
 
   useEffect(() => {
-    const a = Array.apply(null, Array(50)).map((_, index: number) => {
+    var poseTopic = new ROSLIB.Topic({
+      ros: ros,
+      name: "/robot_position",
+      messageType: "geometry_msgs/msg/PoseStamped",
+    });
+
+    poseTopic.subscribe(function (pose: any) {
+      if (
+        pose?.pose?.position?.x.toFixed(3) !== robotLocation?.x.toFixed(3) &&
+        pose?.pose?.position?.y.toFixed(3) !== robotLocation?.y.toFixed(3)
+      ) {
+        setRobotLocation(pose?.pose?.position);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const a = Array.apply(null, Array(400)).map((_, index: number) => {
       return {
-        barcodes: ["ASD", "", "DSA"],
+        barcodes: ["ASD"],
         coordinates: { x: index, y: index },
       };
     });
 
-    const b = Array.apply(null, Array(50)).map((_, index: number) => {
+    const b = Array.apply(null, Array(400)).map((_, index: number) => {
       return {
-        barcodes: ["ASD", "", "DSA"],
+        barcodes: ["ASD", "DSA"],
         coordinates: { x: -index, y: 0 },
       };
     });
 
-    const c = Array.apply(null, Array(50)).map((_, index: number) => {
+    const c = Array.apply(null, Array(400)).map((_, index: number) => {
       return {
         barcodes: ["ASD", "", "DSA"],
         coordinates: { x: 0, y: -index },
       };
     });
-    const d = Array.apply(null, Array(50)).map((_, index: number) => {
+
+    const d = Array.apply(null, Array(400)).map((_, index: number) => {
       return {
         barcodes: ["ASD", "", "DSA"],
         coordinates: { x: -index, y: -index },
@@ -183,10 +208,10 @@ export default ({ children, ros }: any) => {
   }
 
   return (
-    <BarcodeManagementContext.Provider
-      value={{ barcodeItems, setBarcodeItems }}
+    <BarcodeContext.Provider
+      value={{ robotLocation, setRobotLocation, barcodeItems, setBarcodeItems }}
     >
       {children}
-    </BarcodeManagementContext.Provider>
+    </BarcodeContext.Provider>
   );
 };

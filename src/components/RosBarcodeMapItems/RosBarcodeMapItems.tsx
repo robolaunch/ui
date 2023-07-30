@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 import RosBarcodeMapItem from "../RosBarcodeMapItem/RosBarcodeMapItem";
 import saveAs from "file-saver";
-import useBarcodeManagement from "../../hooks/useBarcodeManagement";
+import useBarcodeManagement from "../../hooks/useBarcode";
 
 interface IRosBarcodeMap {
   ros: any;

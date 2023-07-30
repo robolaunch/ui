@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
 import ROSLIB from "roslib";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 
 interface IRosWaypointLine {
   ros: any;
@@ -18,9 +18,8 @@ export default function RosWaypointLine({
 }: IRosWaypointLine): ReactElement {
   const [rosRobotPosition, setRosRobotPosition] = useState<any>();
 
-  const { activeMission, missions, rosMapDetails }: any = useContext(
-    TaskManagementContext
-  );
+  const { activeMission, missions, rosMapDetails }: any =
+    useContext(MissionContext);
 
   const robotPosition = new ROSLIB.Topic({
     ros: ros,

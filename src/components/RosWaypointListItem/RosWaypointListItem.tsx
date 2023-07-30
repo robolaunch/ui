@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { Joystick } from "react-joystick-component";
 import { CgPlayButtonR } from "react-icons/cg";
@@ -25,9 +25,8 @@ export default function RosWaypointListItem({
   waypointIndex,
   missionIndex,
 }: IWaypointListItem) {
-  const { setMissions, activeMission, handleStartMission }: any = useContext(
-    TaskManagementContext
-  );
+  const { setMissions, activeMission, handleStartMission }: any =
+    useContext(MissionContext);
   const joystickRef = useRef(null);
 
   const [joystickPosition, setJoystickPosition] = useState<{

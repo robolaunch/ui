@@ -3,12 +3,11 @@ import { BsArrowRight } from "react-icons/bs";
 import { FaFlagCheckered, FaLocationArrow } from "react-icons/fa";
 import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { CgFlagAlt } from "react-icons/cg";
-import { TaskManagementContext } from "../../contexts/TaskManagementContext";
+import { MissionContext } from "../../contexts/MissionContext";
 
 export default function RosNavigationBar(): ReactElement {
-  const { activeMission, missions, setHoverWaypoint }: any = useContext(
-    TaskManagementContext
-  );
+  const { activeMission, missions, setHoverWaypoint }: any =
+    useContext(MissionContext);
 
   return (
     <Fragment>
