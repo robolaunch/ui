@@ -14,32 +14,7 @@ export default ({ children, ros }: any) => {
     y: 0,
     z: 0,
   });
-  const [barcodeItems, setBarcodeItems] = useState<any[]>([
-    {
-      barcodes: ["123", "321"],
-      coordinates: { x: -1, y: 1 },
-    },
-    {
-      barcodes: ["ASD", "DSA"],
-      coordinates: { x: -1, y: 2 },
-    },
-    {
-      barcodes: ["ASD", "DSA"],
-      coordinates: { x: -1, y: 3 },
-    },
-    {
-      barcodes: ["ASD", "DSA"],
-      coordinates: { x: 1, y: 4 },
-    },
-    {
-      barcodes: ["ASD", "DSA"],
-      coordinates: { x: 1, y: 2 },
-    },
-    {
-      barcodes: ["ASD", "DSA"],
-      coordinates: { x: 1, y: 3 },
-    },
-  ]);
+  const [barcodeItems, setBarcodeItems] = useState<any[]>([]);
 
   useEffect(() => {
     const rosBarcode0 = new ROSLIB.Topic({
@@ -157,12 +132,7 @@ export default ({ children, ros }: any) => {
     });
 
     poseTopic.subscribe(function (pose: any) {
-      if (
-        pose?.pose?.position?.x.toFixed(3) !== robotLocation?.x.toFixed(3) &&
-        pose?.pose?.position?.y.toFixed(3) !== robotLocation?.y.toFixed(3)
-      ) {
-        setRobotLocation(pose?.pose?.position);
-      }
+      setRobotLocation(pose?.pose?.position);
     });
 
     return () => {
@@ -188,7 +158,7 @@ export default ({ children, ros }: any) => {
           Math.sqrt(
             Math.pow(barcodeItem.coordinates.x - message?.coordinates.x, 2) +
               Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2)
-          ) < 0.02
+          ) < 0.15
       );
 
       if (barcodeIndex !== -1) {
@@ -204,9 +174,10 @@ export default ({ children, ros }: any) => {
       } else {
         // Eğer barcodeItem bulunmazsa, yeni bir barcodeItem ekliyoruz.
         updatedBarcodeItems.push({
-          barcodes: Array.apply(null, Array(3)).map((_, index: number) =>
+          barcodes: Array.apply(null, Array(4)).map((_, index: number) =>
             index === message?.scannerId ? message?.barcode : ""
           ),
+
           coordinates: message?.coordinates,
         });
       }

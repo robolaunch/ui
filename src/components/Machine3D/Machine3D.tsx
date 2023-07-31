@@ -47,9 +47,9 @@ export default function Machine3D(props: any) {
     <mesh
       {...props}
       onClick={(e) => setTarget(e.object)}
-      onPointerOver={() => setHovered(true)}
-      onPointerOut={() => setHovered(false)}
-      scale={0.96}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      scale={0.6}
     >
       <boxBufferGeometry args={[1, props.barcodes?.length, 1]} />
       <meshNormalMaterial />
@@ -70,7 +70,7 @@ export default function Machine3D(props: any) {
                     <Barcode
                       fontSize={16}
                       height={24}
-                      width={0.5}
+                      width={0.51}
                       value={barcode}
                       background="transparent"
                     />
@@ -87,7 +87,7 @@ export default function Machine3D(props: any) {
           <Html
             className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
-            position={[0, 0.1, -0.505]}
+            position={[0, 0.1, -0.51]}
             transform
             occlude
           >
@@ -115,7 +115,7 @@ export default function Machine3D(props: any) {
           <Html
             className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
-            position={[0.501, 0.1, 0]}
+            position={[0.51, 0.1, 0]}
             rotation={[0, Math.PI / 2, 0]}
             transform
             occlude
@@ -144,7 +144,7 @@ export default function Machine3D(props: any) {
           <Html
             className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
             distanceFactor={1.5}
-            position={[-0.505, 0.1, 0]}
+            position={[-0.51, 0.1, 0]}
             rotation={[0, -Math.PI / 2, 0]}
             transform
             occlude

@@ -374,9 +374,9 @@ export const RobotSlice = createSlice({
   name: "robot",
   initialState: {
     urls: {
-      vdi: "",
+      vdi: "ws://localhost:8080/",
       ide: "",
-      ros: "",
+      ros: "ws://localhost:9090/",
     },
   },
   reducers: {

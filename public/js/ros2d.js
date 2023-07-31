@@ -3044,7 +3044,7 @@ var ROS2D = (function (exports, createjs, ROSLIB) {
       var divID = options.divID;
       this.width = options.width;
       this.height = options.height;
-      var background = options.background || "#111111";
+      var background = options.background || "#FFF";
 
       // create the canvas to render to
       var canvas = document.createElement("canvas");

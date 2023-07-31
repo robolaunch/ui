@@ -49,6 +49,7 @@ export default function RosRobotLocation({
         rosRobotPosition?.x &&
         rosRobotPosition?.y && (
           <div
+            id="robot-location"
             className="absolute"
             style={{
               left:

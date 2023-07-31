@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { create } from "zustand";
 import useBarcode from "../../hooks/useBarcode";
@@ -15,6 +15,10 @@ export default function Robot3D() {
 
   const meshRef: any = useRef();
   const [robotModel, setRobotModel] = useState(null);
+
+  useEffect(() => {
+    console.log(robotLocation);
+  }, [robotLocation]);
 
   useMemo(() => {
     const loader = new GLTFLoader();
@@ -46,7 +50,7 @@ export default function Robot3D() {
       object={robotModel}
       ref={meshRef}
       onClick={(e: any) => setTarget(e.object)}
-      position={[robotLocation?.x || 0, 0, robotLocation?.y || 0]}
+      position={[robotLocation?.x, 0, robotLocation?.y]}
       scale={[0.005, 0.005, 0.005]}
     />
   );
