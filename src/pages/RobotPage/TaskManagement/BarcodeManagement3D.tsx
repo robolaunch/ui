@@ -8,21 +8,9 @@ export default function App({ ros }: any) {
 
   return (
     <Scene3D>
-      {barcodeItems
-        ?.reverse()
-        ?.map((barcodeItem: any, barcodeItemIndex: number) => {
-          return (
-            <Machine3D
-              key={`${barcodeItemIndex}`}
-              position={[
-                barcodeItem?.coordinates?.x,
-                barcodeItem?.barcodes?.length / 2,
-                barcodeItem?.coordinates?.y,
-              ]}
-              barcodes={barcodeItem?.barcodes}
-            />
-          );
-        })}
+      {barcodeItems?.map((barcodeItem: any, barcodeItemIndex: number) => {
+        return <Machine3D key={barcodeItemIndex} item={barcodeItem} />;
+      })}
       <Robot3D />
     </Scene3D>
   );

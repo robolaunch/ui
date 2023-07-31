@@ -132,7 +132,11 @@ export default ({ children, ros }: any) => {
     });
 
     poseTopic.subscribe(function (pose: any) {
-      setRobotLocation(pose?.pose?.position);
+      console.log(pose);
+      setRobotLocation({
+        ...pose?.pose?.position,
+        z: quaternionToEuler(pose?.pose?.orientation),
+      });
     });
 
     return () => {
@@ -142,10 +146,34 @@ export default ({ children, ros }: any) => {
       rosBarcode3?.unsubscribe();
       poseTopic?.unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ros]);
 
-  function handleBarcodeSetters(message: any) {
+  function quaternionToEuler(q: {
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+  }) {
+    const { x, y, z, w } = q;
+
+    // Yaw (z-axis rotation)
+    const siny_cosp = 2 * (w * z + x * y);
+    const cosy_cosp = 1 - 2 * (y * y + z * z);
+    const yaw = Math.atan2(siny_cosp, cosy_cosp);
+
+    // Convert angles from radians to degrees if desired
+    // const rollDeg = roll * (180 / Math.PI);
+    // const pitchDeg = pitch * (180 / Math.PI);
+    // const yawDeg = yaw * (180 / Math.PI);
+
+    return yaw;
+  }
+
+  function handleBarcodeSetters(message: {
+    scannerId: number;
+    barcode: string;
+    coordinates: { x: number; y: number };
+  }) {
     setBarcodeItems((prevBarcodeItems: any) => {
       // Bir kopya oluşturarak önceki barcodeItems dizisini güncelleyeceğiz
       const updatedBarcodeItems = [...prevBarcodeItems];
@@ -158,26 +186,31 @@ export default ({ children, ros }: any) => {
           Math.sqrt(
             Math.pow(barcodeItem.coordinates.x - message?.coordinates.x, 2) +
               Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2)
-          ) < 0.15
+          ) < 0.32
       );
 
       if (barcodeIndex !== -1) {
-        // Eğer barcodeItem bulunursa, mevcut barcodeItem'ı kopyalayıp
-        // sadece ilgili scannerId'ye ait barcode'ı güncelliyoruz.
         updatedBarcodeItems[barcodeIndex] = {
           ...prevBarcodeItems[barcodeIndex],
-          barcodes: prevBarcodeItems[barcodeIndex].barcodes.map(
-            (barcode: any, index: number) =>
-              index === message?.scannerId ? message?.barcode : barcode
-          ),
+          barcodes: [
+            ...prevBarcodeItems[barcodeIndex].barcodes?.filter(
+              (barcode: any) => barcode.id !== message?.scannerId
+            ),
+            {
+              id: message?.scannerId,
+              barcode: message?.barcode,
+            },
+          ]?.sort((a, b) => b.id - a.id),
         };
       } else {
         // Eğer barcodeItem bulunmazsa, yeni bir barcodeItem ekliyoruz.
         updatedBarcodeItems.push({
-          barcodes: Array.apply(null, Array(4)).map((_, index: number) =>
-            index === message?.scannerId ? message?.barcode : ""
-          ),
-
+          barcodes: [
+            {
+              id: message?.scannerId,
+              barcode: message?.barcode,
+            },
+          ],
           coordinates: message?.coordinates,
         });
       }

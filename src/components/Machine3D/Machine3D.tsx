@@ -1,16 +1,20 @@
 import { Html, useCursor } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useMemo, useRef, useState } from "react";
-import Barcode from "react-barcode";
 import * as THREE from "three";
 import { create } from "zustand";
+import MachineBarcode from "../MachineBarcode/MachineBarcode";
 
-const useStore = create((set: any) => ({
-  target: null,
-  setTarget: (target: any) => set({ target }),
-}));
+interface IMachine3D {
+  item: any;
+}
 
-export default function Machine3D(props: any) {
+export default function Machine3D({ item }: IMachine3D) {
+  const useStore = create((set: any) => ({
+    target: null,
+    setTarget: (target: any) => set({ target }),
+  }));
+
   const setTarget = useStore((state) => state.setTarget);
   const [hovered, setHovered] = useState(false);
   useCursor(hovered);
@@ -39,19 +43,30 @@ export default function Machine3D(props: any) {
     }
   });
 
+  console.log(item);
+
   if (!isBoxInFrustum) {
     return null;
   }
 
   return (
     <mesh
-      {...props}
       onClick={(e) => setTarget(e.object)}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
-      scale={0.6}
+      scale={1}
+      position={[
+        item?.coordinates?.x,
+        item?.barcodes?.length / 2,
+        item?.coordinates?.y,
+      ]}
+      // position={[
+      //   barcodeItem?.coordinates?.x,
+      //   barcodeItem?.barcodes?.length / 2,
+      //   barcodeItem?.coordinates?.y,
+      // ]}
     >
-      <boxBufferGeometry args={[1, props.barcodes?.length, 1]} />
+      <boxBufferGeometry args={[0.25, item.barcodes?.length, 0.25]} />
       <meshNormalMaterial />
       {hovered && (
         <group>
@@ -62,23 +77,11 @@ export default function Machine3D(props: any) {
             position={[0, 0.1, 0.51]}
             transform
             occlude
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
-            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return (
-                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-                  {barcode ? (
-                    <Barcode
-                      fontSize={16}
-                      height={24}
-                      width={0.51}
-                      value={barcode}
-                      background="transparent"
-                    />
-                  ) : (
-                    "None"
-                  )}
-                </div>
-              );
+            {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return <MachineBarcode barcode={barcode?.barcode} />;
             })}
           </Html>
           {/* Front Face */}
@@ -90,23 +93,11 @@ export default function Machine3D(props: any) {
             position={[0, 0.1, -0.51]}
             transform
             occlude
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
-            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return (
-                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-                  {barcode ? (
-                    <Barcode
-                      fontSize={16}
-                      height={24}
-                      width={0.5}
-                      value={barcode}
-                      background="transparent"
-                    />
-                  ) : (
-                    "None"
-                  )}
-                </div>
-              );
+            {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return <MachineBarcode barcode={barcode?.barcode} />;
             })}
           </Html>
           {/* Back Face */}
@@ -119,23 +110,11 @@ export default function Machine3D(props: any) {
             rotation={[0, Math.PI / 2, 0]}
             transform
             occlude
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
-            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return (
-                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-                  {barcode ? (
-                    <Barcode
-                      fontSize={16}
-                      height={24}
-                      width={0.5}
-                      value={barcode}
-                      background="transparent"
-                    />
-                  ) : (
-                    "None"
-                  )}
-                </div>
-              );
+            {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return <MachineBarcode barcode={barcode?.barcode} />;
             })}
           </Html>
           {/* Right Face */}
@@ -148,23 +127,11 @@ export default function Machine3D(props: any) {
             rotation={[0, -Math.PI / 2, 0]}
             transform
             occlude
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
-            {props.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return (
-                <div className="flex items-center justify-center w-40 h-20 bg-yellow-400 border-[2px] border-layer-dark-800">
-                  {barcode ? (
-                    <Barcode
-                      fontSize={16}
-                      height={24}
-                      width={0.5}
-                      value={barcode}
-                      background="transparent"
-                    />
-                  ) : (
-                    "None"
-                  )}
-                </div>
-              );
+            {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
+              return <MachineBarcode barcode={barcode?.barcode} />;
             })}
           </Html>
           {/* Left Face */}

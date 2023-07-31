@@ -51,7 +51,7 @@ export default function Robot3D() {
       ref={meshRef}
       onClick={(e: any) => setTarget(e.object)}
       position={[robotLocation?.x, 0, robotLocation?.y]}
-      scale={[0.005, 0.005, 0.005]}
+      rotation={[0, robotLocation?.z, 0]}
     />
   );
 }
