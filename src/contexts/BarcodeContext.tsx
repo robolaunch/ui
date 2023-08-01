@@ -155,16 +155,9 @@ export default ({ children, ros }: any) => {
     w: number;
   }) {
     const { x, y, z, w } = q;
-
-    // Yaw (z-axis rotation)
     const siny_cosp = 2 * (w * z + x * y);
     const cosy_cosp = 1 - 2 * (y * y + z * z);
     const yaw = Math.atan2(siny_cosp, cosy_cosp);
-
-    // Convert angles from radians to degrees if desired
-    // const rollDeg = roll * (180 / Math.PI);
-    // const pitchDeg = pitch * (180 / Math.PI);
-    // const yawDeg = yaw * (180 / Math.PI);
 
     return yaw;
   }
