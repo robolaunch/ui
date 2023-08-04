@@ -10,7 +10,7 @@ export default function BarcodeManagement({ ros }: any): ReactElement {
   const handleFullScreen = useFullScreenHandle();
 
   return (
-    <CardLayout className="!relative h-[36rem]">
+    <CardLayout className="!relative h-[40rem]">
       <FullScreen className="!relative h-full" handle={handleFullScreen}>
         <Fragment>
           {activeTab === "2D" ? (
@@ -20,7 +20,6 @@ export default function BarcodeManagement({ ros }: any): ReactElement {
           )}
         </Fragment>
       </FullScreen>
-
       <BarcodeModeToggle
         handleFullScreen={handleFullScreen}
         activeTab={activeTab}

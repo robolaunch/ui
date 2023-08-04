@@ -1089,12 +1089,12 @@ video {
   height: 2px;
 }
 
-.h-\[36rem\]{
-  height: 36rem;
-}
-
 .h-\[3px\]{
   height: 3px;
+}
+
+.h-\[40rem\]{
+  height: 40rem;
 }
 
 .h-\[42rem\]{
@@ -1338,6 +1338,10 @@ video {
 .w-max{
   width: -webkit-max-content;
   width: max-content;
+}
+
+.min-w-\[10rem\]{
+  min-width: 10rem;
 }
 
 .min-w-\[8rem\]{

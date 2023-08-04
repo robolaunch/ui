@@ -3,7 +3,6 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
-import { envTrialApp } from "../../helpers/envProvider";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -89,12 +88,10 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
-              {envTrialApp && (
-                <SidebarStaticItem
-                  to="/marketplace"
-                  imgSrc={`/svg/general/marketplace/marketplace-blue.svg`}
-                />
-              )}
+              <SidebarStaticItem
+                to="/marketplace"
+                imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
+              />
               <SideBarMenuItem
                 type="organization"
                 description="You can access all your organizations here."
@@ -124,12 +121,6 @@ export default function PrivateSidebar(): ReactElement {
             to="/billing"
             imgSrc={`/svg/general/billing/billing-gray.svg`}
           /> */}
-        {!envTrialApp && (
-          <SidebarStaticItem
-            to="/marketplace"
-            imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
-          />
-        )}
         <SidebarStaticItem
           to="/user-role-management"
           imgSrc={`/svg/general/users/users-gray.svg`}

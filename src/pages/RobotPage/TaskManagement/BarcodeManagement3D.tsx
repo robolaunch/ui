@@ -7,7 +7,7 @@ export default function App({ ros }: any) {
   const { barcodeItems } = useBarcode();
 
   return (
-    <Scene3D>
+    <Scene3D ros={ros}>
       {barcodeItems?.map((barcodeItem: any, barcodeItemIndex: number) => {
         return <Machine3D key={barcodeItemIndex} item={barcodeItem} />;
       })}

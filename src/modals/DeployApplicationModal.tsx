@@ -13,6 +13,8 @@ import TrialStateViewer from "../components/TrialStateViewer/TrialStateViewer";
 import { createTrial } from "../toolkit/TrialSlice";
 import useFunctions from "../hooks/useFunctions";
 import useMain from "../hooks/useMain";
+import { envTrialApp } from "../helpers/envProvider";
+import DeployApplicationSelector from "../components/DeployApplicationSelector/DeployApplicationSelector";
 
 interface IDeployApplication {
   handleCloseModal: () => void;
@@ -53,55 +55,58 @@ export default function DeployApplication({
   useEffect(() => {
     !robotName && setRobotName(item?.acronym + "-" + handleGetRandomString(5));
 
-    if (responseOrganization === undefined) {
-      getOrganizations({
-        setFirstItemforTrial: setResponseOrganization,
-      });
-    } else if (responseOrganization && responseRoboticsCloud === undefined) {
-      getRoboticsClouds(
-        {
-          organizationId: responseOrganization?.organizationId,
-        },
-        {
-          setFirstItemforTrial: setResponseRoboticsCloud,
-        }
-      );
-    } else if (
-      responseOrganization &&
-      responseRoboticsCloud &&
-      (responseInstance === undefined ||
-        (isTriggedCreateInfra && responseInstance === null))
-    ) {
-      getInstances(
-        {
-          organizationId: responseOrganization?.organizationId,
-          roboticsCloudName: responseRoboticsCloud?.name,
-          region: responseRoboticsCloud?.region,
-          details: true,
-        },
-        {
-          setFirstItemforTrial: setResponseInstance,
-        }
-      );
-    } else if (
-      responseOrganization &&
-      responseRoboticsCloud &&
-      responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
-      responseFleet === undefined
-    ) {
-      getFleets(
-        {
-          organizationId: responseOrganization?.organizationId,
-          roboticsCloudName: responseRoboticsCloud?.name,
-          region: responseRoboticsCloud?.region,
-          instanceId: responseInstance?.instanceId,
-        },
-        { setFirstItemforTrial: setResponseFleet }
-      );
+    if (envTrialApp) {
+      if (responseOrganization === undefined) {
+        getOrganizations({
+          setFirstItemforTrial: setResponseOrganization,
+        });
+      } else if (responseOrganization && responseRoboticsCloud === undefined) {
+        getRoboticsClouds(
+          {
+            organizationId: responseOrganization?.organizationId,
+          },
+          {
+            setFirstItemforTrial: setResponseRoboticsCloud,
+          }
+        );
+      } else if (
+        responseOrganization &&
+        responseRoboticsCloud &&
+        (responseInstance === undefined ||
+          (isTriggedCreateInfra && responseInstance === null))
+      ) {
+        getInstances(
+          {
+            organizationId: responseOrganization?.organizationId,
+            roboticsCloudName: responseRoboticsCloud?.name,
+            region: responseRoboticsCloud?.region,
+            details: true,
+          },
+          {
+            setFirstItemforTrial: setResponseInstance,
+          }
+        );
+      } else if (
+        responseOrganization &&
+        responseRoboticsCloud &&
+        responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
+        responseFleet === undefined
+      ) {
+        getFleets(
+          {
+            organizationId: responseOrganization?.organizationId,
+            roboticsCloudName: responseRoboticsCloud?.name,
+            region: responseRoboticsCloud?.region,
+            instanceId: responseInstance?.instanceId,
+          },
+          { setFirstItemforTrial: setResponseFleet }
+        );
+      }
     }
 
     const timerOrganization = setInterval(() => {
       !responseOrganization &&
+        envTrialApp &&
         getOrganizations({
           setFirstItemforTrial: setResponseOrganization,
         });
@@ -109,6 +114,7 @@ export default function DeployApplication({
 
     const timerRoboticsCloud = setInterval(() => {
       responseOrganization &&
+        envTrialApp &&
         !responseRoboticsCloud &&
         getRoboticsClouds(
           {
@@ -122,6 +128,7 @@ export default function DeployApplication({
 
     const timerInstance = setInterval(() => {
       responseInstance &&
+        envTrialApp &&
         responseInstance?.instanceCloudState !== "ConnectionHub_Ready" &&
         getInstances(
           {
@@ -139,6 +146,7 @@ export default function DeployApplication({
     const timerFleet = setInterval(() => {
       responseInstance?.instanceCloudState === "ConnectionHub_Ready" &&
         responseFleet?.fleetStatus !== "Ready" &&
+        envTrialApp &&
         getFleets(
           {
             organizationId: responseOrganization?.organizationId,
@@ -243,13 +251,18 @@ export default function DeployApplication({
         onSubmit={formik.handleSubmit}
         className="w-full flex flex-col gap-10"
       >
-        <TrialStateViewer
-          responseOrganization={responseOrganization}
-          responseRoboticsCloud={responseRoboticsCloud}
-          responseInstance={responseInstance}
-          responseFleet={responseFleet}
-          handleCloseModal={handleCloseModal}
-        />
+        {envTrialApp ? (
+          <TrialStateViewer
+            responseOrganization={responseOrganization}
+            responseRoboticsCloud={responseRoboticsCloud}
+            responseInstance={responseInstance}
+            responseFleet={responseFleet}
+            handleCloseModal={handleCloseModal}
+          />
+        ) : (
+          <DeployApplicationSelector />
+        )}
+
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-56 !h-11"

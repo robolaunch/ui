@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import {
   IRobotData,
   IRobotWorkspace,
@@ -194,10 +194,6 @@ export default ({ children }: any) => {
       )
     );
   }
-
-  useEffect(() => {
-    console.log(robotData);
-  }, [robotData]);
 
   return (
     <RobotContext.Provider

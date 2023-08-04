@@ -144,8 +144,11 @@ export default ({ children, ros }: any) => {
       rosBarcode1?.unsubscribe();
       rosBarcode2?.unsubscribe();
       rosBarcode3?.unsubscribe();
+      rosBarcode4?.unsubscribe();
+      rosBarcode5?.unsubscribe();
       poseTopic?.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ros]);
 
   function quaternionToEuler(q: {
@@ -157,9 +160,8 @@ export default ({ children, ros }: any) => {
     const { x, y, z, w } = q;
     const siny_cosp = 2 * (w * z + x * y);
     const cosy_cosp = 1 - 2 * (y * y + z * z);
-    const yaw = Math.atan2(siny_cosp, cosy_cosp);
 
-    return yaw;
+    return Math.atan2(siny_cosp, cosy_cosp);
   }
 
   function handleBarcodeSetters(message: {
@@ -204,7 +206,10 @@ export default ({ children, ros }: any) => {
               barcode: message?.barcode,
             },
           ],
-          coordinates: message?.coordinates,
+          coordinates: {
+            ...message?.coordinates,
+            z: robotLocation?.z,
+          },
         });
       }
 

@@ -38,7 +38,7 @@ export default function CreateRobotFormCodeScope({
       <div className="flex gap-4">
         <div className="flex items-center gap-2">
           <span className="text-xs">
-            Virtual Instance ({selectedState?.instance?.name}):{" "}
+            Cloud Instance ({selectedState?.instance?.name}):{" "}
           </span>
           <InputCheckbox
             value={virtualInstanceChecked}

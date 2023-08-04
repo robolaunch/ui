@@ -7,10 +7,12 @@ import Machine3D from "../Machine3D/Machine3D";
 
 interface IScene3D {
   children?: ReactElement | ReactElement[];
+  ros?: any;
 }
 
 export default function Scene3D({
   children,
+  ros,
 }: IScene3D): ReactElement<IScene3D> {
   return (
     <Canvas dpr={[1, 1]} gl={{ powerPreference: "high-performance" }}>
@@ -20,16 +22,16 @@ export default function Scene3D({
         item={{
           barcodes: [""],
           coordinates: {
-            x: 1,
-            y: 1,
-            z: 1,
+            x: 0,
+            y: 0,
+            z: 0,
           },
         }}
       />
 
       <Light3D />
       <Control3D />
-      <Floor3D />
+      <Floor3D ros={ros} />
     </Canvas>
   );
 }

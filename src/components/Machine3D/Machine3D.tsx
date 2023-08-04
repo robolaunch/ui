@@ -54,11 +54,12 @@ export default function Machine3D({ item }: IMachine3D) {
       scale={1}
       position={[
         item?.coordinates?.y,
-        item?.barcodes?.length / 2,
+        item?.barcodes?.length / 3,
         item?.coordinates?.x,
       ]}
+      rotation={[0, item?.coordinates?.z || 0, 0]}
     >
-      <boxBufferGeometry args={[0.75, item.barcodes?.length, 0.75]} />
+      <boxBufferGeometry args={[0.75, item.barcodes?.length / 1.5, 0.75]} />
       <meshNormalMaterial />
       {hovered && (
         <group>
@@ -72,7 +73,9 @@ export default function Machine3D({ item }: IMachine3D) {
             onMouseEnter={() => !hovered && setHovered(true)}
           >
             {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return <MachineBarcode barcode={barcode?.barcode} />;
+              return (
+                <MachineBarcode key={barcodeIndex} barcode={barcode?.barcode} />
+              );
             })}
           </Html>
           {/* Front Face */}
@@ -87,7 +90,9 @@ export default function Machine3D({ item }: IMachine3D) {
             onMouseEnter={() => !hovered && setHovered(true)}
           >
             {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return <MachineBarcode barcode={barcode?.barcode} />;
+              return (
+                <MachineBarcode key={barcodeIndex} barcode={barcode?.barcode} />
+              );
             })}
           </Html>
           {/* Back Face */}
@@ -103,7 +108,9 @@ export default function Machine3D({ item }: IMachine3D) {
             onMouseEnter={() => !hovered && setHovered(true)}
           >
             {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return <MachineBarcode barcode={barcode?.barcode} />;
+              return (
+                <MachineBarcode key={barcodeIndex} barcode={barcode?.barcode} />
+              );
             })}
           </Html>
           {/* Right Face */}
@@ -119,7 +126,9 @@ export default function Machine3D({ item }: IMachine3D) {
             onMouseEnter={() => !hovered && setHovered(true)}
           >
             {item.barcodes?.map((barcode: any, barcodeIndex: number) => {
-              return <MachineBarcode barcode={barcode?.barcode} />;
+              return (
+                <MachineBarcode key={barcodeIndex} barcode={barcode?.barcode} />
+              );
             })}
           </Html>
           {/* Left Face */}

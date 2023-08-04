@@ -286,10 +286,6 @@ export default function FleetDashboardPage(): ReactElement {
     );
   }
 
-  useEffect(() => {
-    console.log(responseRobots);
-  }, [responseRobots]);
-
   return (
     <DashboardLayout
       widget1={
@@ -328,7 +324,8 @@ export default function FleetDashboardPage(): ReactElement {
                     value:
                       responseRobots.filter(
                         (robot: any) =>
-                          robot?.robotStatus !== "EnvirontmentReady"
+                          robot?.robotClusters?.[0]?.robotStatus !==
+                          "EnvironmentReady"
                       )?.length || 0,
                     color: "#ffa500",
                   },
@@ -337,7 +334,8 @@ export default function FleetDashboardPage(): ReactElement {
                     value:
                       responseRobots.filter(
                         (robot: any) =>
-                          robot?.robotStatus === "EnvirontmentReady"
+                          robot?.robotClusters?.[0]?.robotStatus ===
+                          "EnvironmentReady"
                       )?.length || 0,
                     color: "#AC2DFE99",
                   },
