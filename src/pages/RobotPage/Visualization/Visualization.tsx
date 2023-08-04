@@ -9,7 +9,18 @@ import ROSLIB from "roslib";
 interface IVisualization {
   ros: any;
   topicList: string[];
-  handleForceUpdate: (page: string) => void;
+  handleForceUpdate: (
+    page:
+      | "Overview"
+      | "Teleoperation"
+      | "Task Management"
+      | "Visualization"
+      | "Loading"
+      | "Settings"
+      | "Remote Desktop"
+      | "Development Suite"
+      | "Code Editor"
+  ) => void;
 }
 
 export default function Visualization({

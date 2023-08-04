@@ -17,7 +17,18 @@ interface ITeleoperation {
   ros: any;
   topicList: string[];
   vdiIngressEndpoint: string;
-  handleForceUpdate: (page: string) => void;
+  handleForceUpdate: (
+    page:
+      | "Overview"
+      | "Teleoperation"
+      | "Task Management"
+      | "Visualization"
+      | "Loading"
+      | "Settings"
+      | "Remote Desktop"
+      | "Development Suite"
+      | "Code Editor"
+  ) => void;
 }
 
 export default function Teleoperation({
