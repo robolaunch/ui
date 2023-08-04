@@ -24,8 +24,9 @@ export default function HiddenFrame({ url }: IHiddenFrame): ReactElement {
       title="iframe"
       sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-downloads"
       allow="microphone; camera; usb; midi; encrypted-media; autoplay; clipboard-write; clipboard-read"
-      className="hidden"
+      className="absolute -top-[9999px] grid-cols-1 gap-6"
       src={connection ? url || "" : ""}
+      onLoad={() => console.log("iframe loaded")}
     />
   );
 }

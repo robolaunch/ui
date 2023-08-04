@@ -99,7 +99,6 @@ export default function CreateRobotFormWorkspaceItem({
             touched={formik?.touched?.workspaces?.[workspaceIndex]?.name}
           />
         </div>
-
         <div>
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Workspace Distro:
@@ -142,7 +141,6 @@ export default function CreateRobotFormWorkspaceItem({
             }
           />
         </div>
-
         <div className="flex flex-col gap-3 p-4">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
