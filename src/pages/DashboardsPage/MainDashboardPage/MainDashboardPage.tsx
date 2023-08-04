@@ -65,9 +65,11 @@ export default function MainDashboardPage(): ReactElement {
             <InfoCell
               title={organizationNameViewer({
                 organizationName: rowData?.name?.organizationName,
+                capitalization: false,
               })}
               subtitle={`${organizationNameViewer({
                 organizationName: rowData?.name?.organizationName,
+                capitalization: false,
               })}`}
               titleURL={`/${organizationNameViewer({
                 organizationName: rowData?.name?.organizationName,

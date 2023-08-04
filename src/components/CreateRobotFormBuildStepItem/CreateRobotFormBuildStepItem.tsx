@@ -138,7 +138,7 @@ export default function CreateRobotFormBuildStepItem({
 
           <div>
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-              Command/Script Code:
+              Bash/Script Code:
               <InfoTip content="Select command or script code" />
             </div>
             <InputSelect
@@ -191,7 +191,7 @@ export default function CreateRobotFormBuildStepItem({
               disabled={formik?.isSubmitting}
             >
               <Fragment>
-                <option value="isCommandCode">Command Code</option>
+                <option value="isCommandCode">Bash Code</option>
                 <option value="isScriptCode">Script Code</option>
               </Fragment>
             </InputSelect>

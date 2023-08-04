@@ -16,6 +16,7 @@ import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import Overview from "./Overview/Overview";
 import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
+import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -433,8 +434,10 @@ export default function RobotPage(): ReactElement {
         responseRobot={responseRobot}
         ros={ros}
         setRos={setRos}
+        topicList={topicList}
         setTopicList={setTopicList}
       />
+      <HiddenFrame url={urls?.ide || responseRobot?.ideIngressEndpoint} />
     </div>
   );
 }

@@ -91,9 +91,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={`${stringCapitalization({
-                str: url?.organizationName as string,
-              })} Organization`}
+              subtitle={`${url?.organizationName} Organization`}
               titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
             />
           );

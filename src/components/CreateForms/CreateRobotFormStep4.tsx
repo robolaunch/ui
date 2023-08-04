@@ -236,8 +236,8 @@ export default function CreateRobotFormStep4({
 
         <div>
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Code:
-            <InfoTip content="Type code" />
+            Bash Code:
+            <InfoTip content="Type Bash code" />
           </div>
           <Editor
             height="140px"

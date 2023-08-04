@@ -7,6 +7,7 @@ interface IRosConnector {
   ros: any;
   setRos: any;
   responseRobot: any;
+  topicList: any;
   setTopicList: any;
 }
 
@@ -15,6 +16,7 @@ export default function RosConnector({
   ros,
   setRos,
   responseRobot,
+  topicList,
   setTopicList,
 }: IRosConnector) {
   const { urls } = useAppSelector((state) => state.robot);
@@ -32,7 +34,7 @@ export default function RosConnector({
 
       ros?.on("connection", function () {
         console.log("Connected to websocket server.");
-        console.info("ROSBRIDGE URL: ", urls?.ros);
+        console.info("ROSBRIDGE URL: ", ros);
       });
       ros?.on("error", function (error) {
         console.warn("Error connecting to websocket server: ", error);
@@ -63,7 +65,6 @@ export default function RosConnector({
 
   function getTopics() {
     if (ros && isSettedCookie) {
-      setTopicList([]);
       const getTopics = new ROSLIB.Service({
         ros: ros,
         name: "/rosapi/topics",
@@ -71,13 +72,19 @@ export default function RosConnector({
       });
       // @ts-ignore
       const request = new ROSLIB.ServiceRequest();
-      getTopics.callService(request, function (result) {
-        result?.topics?.map((topic: string, key: number) =>
-          setTopicList((prev: any) => [
-            ...prev,
-            { name: topic, type: result?.types[key] },
-          ])
+      getTopics.callService(request, async function (result) {
+        const resultTopicsList = await result?.topics?.map(
+          (topic: string, key: number) => {
+            return {
+              name: topic,
+              type: result?.types[key],
+            };
+          }
         );
+
+        if (resultTopicsList?.length !== topicList?.length) {
+          setTopicList(resultTopicsList);
+        }
       });
     }
   }

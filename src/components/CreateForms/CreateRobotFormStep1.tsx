@@ -6,19 +6,19 @@ import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { createRobot } from "../../toolkit/RobotSlice";
-import useRobot from "../../hooks/useRobot";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import useMain from "../../hooks/useMain";
-import Seperator from "../Seperator/Seperator";
 import InputText from "../InputText/InputText";
+import Seperator from "../Seperator/Seperator";
+import { useParams } from "react-router-dom";
+import useRobot from "../../hooks/useRobot";
+import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { useParams } from "react-router-dom";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;

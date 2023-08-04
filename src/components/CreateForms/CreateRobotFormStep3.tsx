@@ -120,7 +120,7 @@ export default function CreateRobotFormStep3({
           isCommandCode: Yup.boolean(),
           command: Yup.string().when("isCommandCode", {
             is: true,
-            then: Yup.string().required("Command is required"),
+            then: Yup.string().required("Bash is required"),
             otherwise: Yup.string(),
           }),
           script: Yup.string().when("isCommandCode", {

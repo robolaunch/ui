@@ -12,8 +12,6 @@ const RosCameraWidget = ({
   handleRemoveWidget,
 }: any) => {
   const [cameraData, setCameraData] = useState<string>("");
-  const [selectableTopic, setSelectableTopic] = useState<any>([]);
-
   const [selectedTopic, setSelectedTopic] = useState<string>(() => {
     try {
       return JSON.parse(localStorage.getItem(localStoragePath) || "")
@@ -23,16 +21,6 @@ const RosCameraWidget = ({
       return "None";
     }
   });
-
-  useEffect(() => {
-    setSelectableTopic([]);
-    topicList?.map((topic: any) => {
-      if (topic.type === "sensor_msgs/msg/CompressedImage") {
-        setSelectableTopic((prev: any) => [...prev, topic]);
-      }
-      return null;
-    });
-  }, [topicList]);
 
   useEffect(() => {
     setCameraData("");
@@ -48,7 +36,7 @@ const RosCameraWidget = ({
     return () => {
       cameraCompressedTopic.unsubscribe();
     };
-  }, [topicList, ros, selectedTopic]);
+  }, [ros, selectedTopic]);
 
   return (
     <RosWidgetLayout
@@ -63,14 +51,21 @@ const RosCameraWidget = ({
           value={selectedTopic}
         >
           <Fragment>
-            <option value="None">None</option>
-            {selectableTopic?.map((topic: any) => {
-              return (
-                <option key={topic.name} value={topic.name}>
-                  {topic.name}
-                </option>
-              );
-            })}
+            {selectedTopic === "None" && <option value="None">None</option>}
+
+            {topicList
+              ?.filter(
+                (topic: any) =>
+                  topic?.type === "sensor_msgs/msg/CompressedImage" ||
+                  topic?.type === "sensor_msgs/CompressedImage"
+              )
+              ?.map((topic: any) => {
+                return (
+                  <option key={topic.name} value={topic.name}>
+                    {topic.name}
+                  </option>
+                );
+              })}
           </Fragment>
         </InputSelect>
       }
@@ -78,7 +73,7 @@ const RosCameraWidget = ({
       <div className="relative w-full h-full" resource={selectedTopic}>
         <img
           className={`absolute inset-0 w-full h-full appearance-none rounded ${
-            !cameraData && "scale-50"
+            !cameraData && "scale-[0.25]"
           }`}
           src={cameraData || "/svg/general/loading.svg"}
           alt={cameraData && "Camera"}
