@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext } from "react";
+import { MissionContext } from "../../contexts/MissionContext";
 import { FaPlayCircle, FaStopCircle } from "react-icons/fa";
 import { RiArrowGoBackFill } from "react-icons/ri";
-import { MissionContext } from "../../contexts/MissionContext";
 
 export default function RosControlBar(): ReactElement {
   const { handleStartMission }: any = useContext(MissionContext);

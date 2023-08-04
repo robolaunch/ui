@@ -1,19 +1,20 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import BarcodeContext from "../../contexts/BarcodeContext";
-import TaskManagementContext from "../../contexts/MissionContext";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import RosConnector from "../../components/RosConnector/RosConnector";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
+import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
+import TaskManagementContext from "../../contexts/MissionContext";
+import { IrobotPages } from "../../interfaces/generalInterfaces";
+import CodeEditor from "../../components/CodeEditor/CodeEditor";
+import BarcodeContext from "../../contexts/BarcodeContext";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppSelector } from "../../hooks/redux";
-import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import Overview from "./Overview/Overview";
-import DevelopmentSuite from "./DevelopmentSuite/DevelopmentSuite";
-import CodeEditor from "../../components/CodeEditor/CodeEditor";
+import useMain from "../../hooks/useMain";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -25,17 +26,9 @@ export default function RobotPage(): ReactElement {
   const [topicList, setTopicList] = useState<any>([]);
   const [ros, setRos] = useState<any>(null);
 
-  const [activeTab, setActiveTab] = useState<
-    | "Overview"
-    | "Teleoperation"
-    | "Task Management"
-    | "Visualization"
-    | "Loading"
-    | "Settings"
-    | "Remote Desktop"
-    | "Development Suite"
-    | "Code Editor"
-  >("Overview");
+  const [activeTab, setActiveTab] =
+    useState<IrobotPages["activeTab"]>("Overview");
+
   const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
 
   const { urls } = useAppSelector((state) => state.robot);
@@ -241,18 +234,7 @@ export default function RobotPage(): ReactElement {
     );
   }
 
-  function handleChangeActiveTab(
-    tab:
-      | "Overview"
-      | "Teleoperation"
-      | "Task Management"
-      | "Visualization"
-      | "Loading"
-      | "Settings"
-      | "Remote Desktop"
-      | "Development Suite"
-      | "Code Editor"
-  ) {
+  function handleChangeActiveTab(tab: IrobotPages["activeTab"]) {
     setActiveTab(tab);
   }
 

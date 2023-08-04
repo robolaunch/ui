@@ -2,19 +2,19 @@ import {
   handleGetRandomString,
   organizationNameViewer,
 } from "../functions/GeneralFunctions";
+import DeployApplicationSelector from "../components/DeployApplicationSelector/DeployApplicationSelector";
+import TrialStateViewer from "../components/TrialStateViewer/TrialStateViewer";
+import React, { ReactElement, useEffect, useState } from "react";
+import { envTrialApp } from "../helpers/envProvider";
 import { createRobot } from "../toolkit/RobotSlice";
+import { createTrial } from "../toolkit/TrialSlice";
+import useFunctions from "../hooks/useFunctions";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
-import React, { ReactElement, useEffect, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import { useFormik } from "formik";
-import TrialStateViewer from "../components/TrialStateViewer/TrialStateViewer";
-import { createTrial } from "../toolkit/TrialSlice";
-import useFunctions from "../hooks/useFunctions";
 import useMain from "../hooks/useMain";
-import { envTrialApp } from "../helpers/envProvider";
-import DeployApplicationSelector from "../components/DeployApplicationSelector/DeployApplicationSelector";
+import { useFormik } from "formik";
 
 interface IDeployApplication {
   handleCloseModal: () => void;

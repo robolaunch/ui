@@ -26,6 +26,7 @@ import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { useParams } from "react-router-dom";
 import InfoTip from "../InfoTip/InfoTip";
+import * as Yup from "yup";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -51,6 +52,18 @@ export default function CreateRobotFormStep4({
       robotData?.step4?.robotLaunchSteps[
         robotDataLaunchIndex ? robotDataLaunchIndex : 0
       ],
+    validationSchema: Yup.object({
+      name: Yup.string().required("Required"),
+      workspace: Yup.string().required("Required"),
+      entryPointCmd: Yup.string().required("Required"),
+      instancesName: Yup.array().min(1, "Required"),
+      robotLmEnvs: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string().required("Required"),
+          value: Yup.string().required("Required"),
+        })
+      ),
+    }),
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
 
@@ -90,8 +103,8 @@ export default function CreateRobotFormStep4({
   });
 
   useEffect(() => {
-    console.log(robotClusters);
-  }, [robotClusters]);
+    console.log(formik?.values);
+  }, [formik?.values]);
 
   useEffect(
     () => {
@@ -320,7 +333,11 @@ export default function CreateRobotFormStep4({
             formik?.errors?.instancesName
           }
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 pb-12">
+          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            Environment Variables:
+            <InfoTip content="Type Environment Variables" />
+          </div>
           {formik?.values?.robotLmEnvs?.map((env: any, envIndex: number) => {
             return (
               <CreateRobotFormEnvItem

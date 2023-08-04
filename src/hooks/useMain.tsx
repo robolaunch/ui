@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { IuseMain } from "../interfaces/mainInterfaces";
 import { MainContext } from "../contexts/MainContext";
-import { IuseMain } from "../interfaces/generalInterfaces";
+import { useContext } from "react";
 
 const useMain = () => {
   const useMain: IuseMain = useContext(MainContext);

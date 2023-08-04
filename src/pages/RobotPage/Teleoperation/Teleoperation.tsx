@@ -3,6 +3,7 @@ import TeleoperationControlBar from "../../../components/TeleoperationControlBar
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { IrobotPages } from "../../../interfaces/generalInterfaces";
 import { handleSaveLayout } from "../../../helpers/gridStack";
 import StreamContext from "../../../contexts/VDIContext";
 import { GridLayout } from "../../../layouts/GridLayout";
@@ -17,18 +18,7 @@ interface ITeleoperation {
   ros: any;
   topicList: string[];
   vdiIngressEndpoint: string;
-  handleForceUpdate: (
-    page:
-      | "Overview"
-      | "Teleoperation"
-      | "Task Management"
-      | "Visualization"
-      | "Loading"
-      | "Settings"
-      | "Remote Desktop"
-      | "Development Suite"
-      | "Code Editor"
-  ) => void;
+  handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
 }
 
 export default function Teleoperation({

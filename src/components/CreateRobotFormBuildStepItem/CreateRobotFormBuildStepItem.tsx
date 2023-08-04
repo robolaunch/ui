@@ -1,20 +1,20 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Accordion from "../Accordion/AccordionV2";
 import {
   IRobotBuildStep,
   IRobotBuildSteps,
   IRobotWorkspace,
 } from "../../interfaces/robotInterfaces";
+import React, { Fragment, ReactElement, useState } from "react";
+import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
+import InputSelect from "../InputSelect/InputSelect";
+import InputError from "../InputError/InputError";
+import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
-import InputError from "../InputError/InputError";
-import InputSelect from "../InputSelect/InputSelect";
 import { Editor } from "@monaco-editor/react";
 import useRobot from "../../hooks/useRobot";
-import useMain from "../../hooks/useMain";
-import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
-import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import StateCell from "../Cells/StateCell";
+import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormBuildStepItem {

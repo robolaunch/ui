@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import { IrobotPages } from "../../../interfaces/generalInterfaces";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { handleSaveLayout } from "../../../helpers/gridStack";
 import { GridLayout } from "../../../layouts/GridLayout";
@@ -9,18 +10,7 @@ import ROSLIB from "roslib";
 interface IVisualization {
   ros: any;
   topicList: string[];
-  handleForceUpdate: (
-    page:
-      | "Overview"
-      | "Teleoperation"
-      | "Task Management"
-      | "Visualization"
-      | "Loading"
-      | "Settings"
-      | "Remote Desktop"
-      | "Development Suite"
-      | "Code Editor"
-  ) => void;
+  handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
 }
 
 export default function Visualization({

@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import MarketplaceSingleItemSidebar from "../../../components/MarketplaceSingleItemSidebar/MarketplaceSingleItemSidebar";
-import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/redux";
-import { getMarkeplaceItem } from "../../../toolkit/MarketplaceSlice";
 import MarketplaceSingleİtemHeader from "../../../components/MarketplaceSingleItemHeader/MarketplaceSingleItemHeader";
 import MarketplaceSingleItemReadme from "../../../components/MarketplaceSingleItemReadme/MarketplaceSingleItemReadme";
+import { getMarkeplaceItem } from "../../../toolkit/MarketplaceSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { useParams } from "react-router-dom";
 
 export default function MarketplaceSingleItemPage(): ReactElement {
   const dispatch = useAppDispatch();

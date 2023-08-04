@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
-import Draggable from "react-draggable";
 import handleRostoDomMouseCoordinatesConverter from "../../functions/handleRostoDomMouseCoordinatesConverter";
-import { TbArrowBigUpLinesFilled, TbMapPinFilled } from "react-icons/tb";
 import handleDomRosMouseCoordinatesConverter from "../../functions/handleDomtoRosMouseCoordinatesConverter";
+import { TbArrowBigUpLinesFilled, TbMapPinFilled } from "react-icons/tb";
 import { FaFlagCheckered } from "react-icons/fa";
 import { CgFlagAlt } from "react-icons/cg";
+import Draggable from "react-draggable";
 
 interface IRosDraggableWaypoint {
   waypoint: any;

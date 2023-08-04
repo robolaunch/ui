@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
@@ -20,29 +20,7 @@ export default function CodeEditor({
   >("Cloud IDE");
 
   const handleFullScreen = useFullScreenHandle();
-  const [reloadCounter, setReloadCounter] = useState<number>(0);
   const { urls } = useAppSelector((state) => state.robot);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (
-        activeTab === "Loading" ||
-        activeTab === "Settings" ||
-        activeTab === "Teleoperation" ||
-        activeTab === "Remote Desktop" ||
-        activeTab === "Visualization" ||
-        activeTab === "Overview" ||
-        activeTab === "Task Management"
-      ) {
-        console.log("reloadcounter +1");
-        setReloadCounter((prevCounter) => prevCounter + 1);
-      }
-    }, 60 * 1000); // 1 dakika
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [activeTab, responseRobot]);
 
   const codeEditorTabs = [
     {
@@ -97,10 +75,9 @@ export default function CodeEditor({
           </ul>
         </CardLayout>
       )}
-      <CardLayout>
+      <CardLayout loading={true}>
         <FullScreen className="relative" handle={handleFullScreen}>
           <iframe
-            key={reloadCounter}
             allow="clipboard-read"
             className={`w-full animate__animated animate__fadeIn ${
               handleFullScreen?.active ? "h-screen" : "h-[55rem]"

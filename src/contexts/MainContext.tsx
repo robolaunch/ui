@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
-import { ISelectedState, ISidebarState } from "../interfaces/generalInterfaces";
+import { ISelectedState, ISidebarState } from "../interfaces/mainInterfaces";
 import { useLocation } from "react-router-dom";
-import { IpagesState } from "../interfaces/generalInterfaces";
+import { IpagesState } from "../interfaces/mainInterfaces";
 
 export const MainContext: any = createContext<any>(null);
 
