@@ -22,7 +22,14 @@ export default function RosConnector({
   const { urls } = useAppSelector((state) => state.robot);
 
   useEffect(() => {
-    if (isSettedCookie && responseRobot) {
+    console.log(responseRobot?.bridgeIngressEndpoint.split(":")[0]);
+
+    if (
+      isSettedCookie &&
+      responseRobot &&
+      process.env.NODE_ENV === "production" &&
+      responseRobot?.bridgeIngressEndpoint.split(":")[0] === "wss"
+    ) {
       const ros = new ROSLIB.Ros({
         url:
           urls?.ros ||
