@@ -60,7 +60,7 @@ export default function CreateRobotFormBuildStepItem({
                 >
                   Status:
                 </span>
-                <StateCell state={buildStep?.buildStatus} />
+                <StateCell state={buildStep?.buildStatus || "Waiting"} />
               </div>
             )}
           </div>

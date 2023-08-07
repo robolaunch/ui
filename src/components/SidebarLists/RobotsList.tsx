@@ -96,7 +96,7 @@ export default function RobotsList({
                 description={
                   <div className="flex gap-2">
                     <div className="flex gap-1.5">
-                      <span className="font-medium">VR:</span>
+                      <span className="font-medium">Virtual:</span>
                       <StateCell
                         state={
                           Array.isArray(robot?.robotClusters) &&
@@ -110,8 +110,7 @@ export default function RobotsList({
                     {Array.isArray(robot?.robotClusters) &&
                       robot?.robotClusters.length > 1 && (
                         <div className="flex gap-1.5">
-                          <span className="font-medium">PR:</span>
-
+                          <span className="font-medium">Physical:</span>
                           <StateCell
                             state={
                               Array.isArray(robot?.robotClusters) &&

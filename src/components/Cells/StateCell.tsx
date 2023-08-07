@@ -71,6 +71,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "Pending" ||
         state === "creating" ||
         state === "Creating" ||
+        state === "Waiting" ||
         state === "CreatingNamespace" ||
         state === "CheckingRemoteNamespace" ||
         state === "CreatingDiscoveryServer" ||

@@ -621,6 +621,12 @@ export interface Marketplace {
      * @memberof Marketplace
      */
     'marketplaceRobots'?: Array<MarketplaceRobot>;
+    /**
+     * 
+     * @type {Array<MarketplaceRobot>}
+     * @memberof Marketplace
+     */
+    'marketplace'?: Array<MarketplaceRobot>;
 }
 /**
  * 
@@ -1729,6 +1735,12 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'trialImage'?: TrialImage;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'workspaceUpdated'?: boolean;
 }
 /**
  * 
@@ -1869,6 +1881,12 @@ export interface RobotBuildStep {
      * @memberof RobotBuildStep
      */
     'buildLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobotBuildStep
+     */
+    'buildStatus'?: string;
     /**
      * 
      * @type {string}
@@ -2107,6 +2125,25 @@ export interface RoboticsCloud {
 /**
  * 
  * @export
+ * @interface SampleRepository
+ */
+export interface SampleRepository {
+    /**
+     * 
+     * @type {string}
+     * @memberof SampleRepository
+     */
+    'url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SampleRepository
+     */
+    'branch'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ScopeRepresentation
  */
 export interface ScopeRepresentation {
@@ -2232,6 +2269,12 @@ export interface TrialImage {
      * @memberof TrialImage
      */
     'imageTag'?: string;
+    /**
+     * 
+     * @type {SampleRepository}
+     * @memberof TrialImage
+     */
+    'sampleRepository'?: SampleRepository;
 }
 
 /**
@@ -3021,18 +3064,19 @@ export class CreateInstanceApi extends BaseAPI {
 
 
 /**
- * ExternalServicesApi - axios parameter creator
+ * IPAAdminLoginApi - axios parameter creator
  * @export
  */
-export const ExternalServicesApiAxiosParamCreator = function (configuration?: Configuration) {
+export const IPAAdminLoginApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendEmail: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/external-services/send-email`;
+        addDNSRecord: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/ipa/addDNSRecord`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3046,9 +3090,12 @@ export const ExternalServicesApiAxiosParamCreator = function (configuration?: Co
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3059,57 +3106,60 @@ export const ExternalServicesApiAxiosParamCreator = function (configuration?: Co
 };
 
 /**
- * ExternalServicesApi - functional programming interface
+ * IPAAdminLoginApi - functional programming interface
  * @export
  */
-export const ExternalServicesApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ExternalServicesApiAxiosParamCreator(configuration)
+export const IPAAdminLoginApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = IPAAdminLoginApiAxiosParamCreator(configuration)
     return {
         /**
          * 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sendEmail(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sendEmail(options);
+        async addDNSRecord(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addDNSRecord(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ExternalServicesApi - factory interface
+ * IPAAdminLoginApi - factory interface
  * @export
  */
-export const ExternalServicesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ExternalServicesApiFp(configuration)
+export const IPAAdminLoginApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = IPAAdminLoginApiFp(configuration)
     return {
         /**
          * 
+         * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendEmail(options?: any): AxiosPromise<string> {
-            return localVarFp.sendEmail(options).then((request) => request(axios, basePath));
+        addDNSRecord(organization?: Organization, options?: any): AxiosPromise<void> {
+            return localVarFp.addDNSRecord(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ExternalServicesApi - object-oriented interface
+ * IPAAdminLoginApi - object-oriented interface
  * @export
- * @class ExternalServicesApi
+ * @class IPAAdminLoginApi
  * @extends {BaseAPI}
  */
-export class ExternalServicesApi extends BaseAPI {
+export class IPAAdminLoginApi extends BaseAPI {
     /**
      * 
+     * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExternalServicesApi
+     * @memberof IPAAdminLoginApi
      */
-    public sendEmail(options?: AxiosRequestConfig) {
-        return ExternalServicesApiFp(this.configuration).sendEmail(options).then((request) => request(this.axios, this.basePath));
+    public addDNSRecord(organization?: Organization, options?: AxiosRequestConfig) {
+        return IPAAdminLoginApiFp(this.configuration).addDNSRecord(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

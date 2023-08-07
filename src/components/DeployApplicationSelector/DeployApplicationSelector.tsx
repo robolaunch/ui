@@ -1,19 +1,123 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
-import Seperator from "../Seperator/Seperator";
 import InputSelect from "../InputSelect/InputSelect";
+import { useFormik } from "formik";
+import { Separator } from "react-contexify";
+import Button from "../Button/Button";
+import { useAppDispatch } from "../../hooks/redux";
+import {
+  handleGetRandomString,
+  organizationNameViewer,
+} from "../../functions/GeneralFunctions";
+import { createRobot } from "../../toolkit/RobotSlice";
+import { useNavigate } from "react-router-dom";
+import { createTrial } from "../../toolkit/TrialSlice";
+import useMain from "../../hooks/useMain";
 
-export default function DeployApplicationSelector(): ReactElement {
+interface IDeployApplicationSelector {
+  item: any;
+  handleCloseModal: () => void;
+}
+
+export default function DeployApplicationSelector({
+  item,
+  handleCloseModal,
+}: IDeployApplicationSelector): ReactElement {
   const [responseOrganizations, setResponseOrganizations] =
     useState<any>(undefined);
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const [responseInstances, setResponseInstances] = useState<any>(undefined);
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const [allEnvironments, setAllEnvironments] = useState<any>(undefined);
 
   const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
     useFunctions();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const formik = useFormik<{
+    organization:
+      | {
+          organizationId: string;
+          organizationName: string;
+        }
+      | undefined;
+    roboticscloud:
+      | {
+          name: string;
+          region: string;
+        }
+      | undefined;
+    instance:
+      | {
+          instanceId: string;
+          name: string;
+        }
+      | undefined;
+    fleet:
+      | {
+          fleetId: string;
+          name: string;
+        }
+      | undefined;
+  }>({
+    initialValues: {
+      organization: undefined,
+      roboticscloud: undefined,
+      instance: undefined,
+      fleet: undefined,
+    },
+
+    onSubmit: async () => {
+      formik.setSubmitting(true);
+
+      await dispatch(
+        createRobot({
+          organizationId: formik.values?.organization?.organizationId as string,
+          roboticsCloudName: formik.values?.roboticscloud?.name as string,
+          instanceId: formik.values?.instance?.instanceId as string,
+          region: formik?.values?.roboticscloud?.region as string,
+          robotName: item?.acronym + "-" + handleGetRandomString(5),
+          fleetName: formik.values.fleet?.name as string,
+          distributions: [item?.distro.toUpperCase()],
+          bridgeEnabled: item?.type === "Environment" ? false : true,
+          vdiEnabled: true,
+          vdiSessionCount: 3,
+          ideEnabled: true,
+          storageAmount: item?.minStorageAmount,
+          gpuEnabledForCloudInstance: true,
+          marketPlaceEnabled: true,
+          imageUser: item?.trialImage?.imageUser,
+          imageRepository: item?.trialImage?.imageRepository,
+          imageTag: item?.trialImage?.imageTag,
+          workspaces: [
+            {
+              name: "ws-1",
+              workspaceDistro: item?.distro?.toUpperCase(),
+              robotRepositories: [
+                {
+                  url: item?.trialImage?.sampleRepository?.url,
+                  branch: item?.trialImage?.sampleRepository?.branch,
+                  name: "repo1",
+                },
+              ],
+            },
+          ],
+        })
+      ).then(() => {
+        navigate(
+          `/${organizationNameViewer({
+            organizationName: formik.values?.organization
+              ?.organizationName as string,
+            capitalization: false,
+          })}/${formik.values?.roboticscloud?.name}/${
+            formik.values?.instance?.name
+          }/${formik?.values?.fleet?.name}/`
+        );
+        handleCloseModal();
+      });
+    },
+  });
 
   useEffect(() => {
     if (!responseOrganizations) {
@@ -21,28 +125,29 @@ export default function DeployApplicationSelector(): ReactElement {
         setResponse: setResponseOrganizations,
       });
     } else if (
-      !responseRoboticsClouds &&
-      !allEnvironments &&
-      allEnvironments?.[0]?.selected
+      formik.values?.organization &&
+      !formik.values?.roboticscloud &&
+      !responseRoboticsClouds
     ) {
       getRoboticsClouds(
         {
-          organizationId: responseOrganizations?.organizationId,
+          organizationId: formik.values?.organization?.organizationId,
         },
         {
           setResponse: setResponseRoboticsClouds,
         }
       );
     } else if (
-      !responseInstances &&
-      allEnvironments?.[0]?.selected &&
-      allEnvironments?.[1]?.selected
+      formik.values?.organization &&
+      formik.values?.roboticscloud &&
+      !formik.values?.instance &&
+      !responseInstances
     ) {
       getInstances(
         {
-          organizationId: responseOrganizations?.organizationId,
-          roboticsCloudName: responseRoboticsClouds?.name,
-          region: responseRoboticsClouds?.region,
+          organizationId: formik.values?.organization?.organizationId,
+          roboticsCloudName: formik.values?.roboticscloud?.name,
+          region: formik.values?.roboticscloud?.region,
           details: false,
         },
         {
@@ -50,17 +155,18 @@ export default function DeployApplicationSelector(): ReactElement {
         }
       );
     } else if (
-      !responseFleets &&
-      allEnvironments?.[0]?.selected &&
-      allEnvironments?.[1]?.selected &&
-      allEnvironments?.[2]?.selected
+      formik.values?.organization &&
+      formik.values?.roboticscloud &&
+      formik.values?.instance &&
+      !formik.values?.fleet &&
+      !responseFleets
     ) {
       getFleets(
         {
-          organizationId: responseOrganizations?.organizationId,
-          roboticsCloudName: responseRoboticsClouds?.name,
-          region: responseRoboticsClouds?.region,
-          instanceId: responseInstances?.instanceId,
+          organizationId: formik.values?.organization?.organizationId,
+          roboticsCloudName: formik.values?.roboticscloud?.name,
+          region: formik.values?.roboticscloud?.region,
+          instanceId: formik.values?.instance?.instanceId,
         },
         {
           setResponse: setResponseFleets,
@@ -74,97 +180,256 @@ export default function DeployApplicationSelector(): ReactElement {
     responseRoboticsClouds,
     responseInstances,
     responseFleets,
-    allEnvironments,
+    formik.values,
   ]);
 
   useEffect(() => {
-    setAllEnvironments([
-      {
-        name: "organization",
-        data: responseOrganizations,
-        selected: undefined,
-      },
-      {
-        name: "roboticscloud",
-        data: responseRoboticsClouds,
-        selected: undefined,
-      },
-      {
-        name: "instance",
-        data: responseInstances,
-        selected: undefined,
-      },
-      {
-        name: "fleet",
-        data: responseFleets,
-        selected: undefined,
-      },
-    ]);
-  }, [
-    responseOrganizations,
-    responseRoboticsClouds,
-    responseInstances,
-    responseFleets,
-  ]);
+    setResponseRoboticsClouds(undefined);
+    setResponseInstances(undefined);
+    setResponseFleets(undefined);
+    formik.setValues({
+      ...formik.values,
+      roboticscloud: undefined,
+      instance: undefined,
+      fleet: undefined,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.organization]);
+
+  useEffect(() => {
+    setResponseInstances(undefined);
+    setResponseFleets(undefined);
+    formik.setValues({
+      ...formik.values,
+      instance: undefined,
+      fleet: undefined,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.roboticscloud]);
+
+  useEffect(() => {
+    setResponseFleets(undefined);
+    formik.setValues({
+      ...formik.values,
+      fleet: undefined,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.instance]);
+
+  const { trialState } = useMain();
+
+  async function handleCreateTrial() {
+    await dispatch(
+      createTrial({
+        ipAddress: trialState?.ip,
+      })
+    ).then(async () => {
+      setTimeout(() => {}, 2000);
+    });
+  }
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-4 p-1">
-      {allEnvironments?.map((item: any, index: number) => {
-        return (
-          <Fragment key={index}>
-            <div className="w-full flex justify-between">
-              <div className="flex items-center gap-2">
-                <img
-                  className="w-5 h-5"
-                  src={`/svg/general/${item?.name}/${item?.name}-gray.svg`}
-                  alt="robolaunch"
-                />
-                <span className="capitalize text-xs">{item?.name}</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <InputSelect
-                  value={
-                    allEnvironments?.[index]?.selected?.name ||
-                    allEnvironments?.[index]?.selected?.organizationName
-                  }
-                  className="min-w-[10rem]"
-                  //   onChange={(e) => {
-                  //     switch (index) {
-                  //       case 0:
-                  //         setAllEnvironments((prevState: any) => {
+    <form
+      onSubmit={formik.handleSubmit}
+      className="w-full flex flex-col gap-3 p-2"
+    >
+      {/* Organization */}
+      <div className="w-full flex justify-between">
+        <div className="flex items-center gap-2">
+          <img
+            className="w-5 h-5"
+            src={`/svg/general/organization/organization-gray.svg`}
+            alt="robolaunch"
+          />
+          <span className="capitalize text-xs">Organization</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <InputSelect
+            className="min-w-[12rem]"
+            {...formik.getFieldProps(`organization`)}
+            placeholder=""
+            disabled={formik?.isSubmitting}
+            onChange={(e) => {
+              formik.setFieldValue(
+                `organization`,
+                responseOrganizations.filter(
+                  (org: any) => org.organizationName === e.target.value
+                )?.[0]
+              );
+            }}
+            value={formik.values?.organization?.organizationName || ""}
+          >
+            <Fragment>
+              {!formik?.values?.organization && <option value=""></option>}
+              {responseOrganizations?.map((org: any, index: number) => (
+                <option key={index} value={org.organizationName}>
+                  {org.organizationName.split("_")[1]}
+                </option>
+              ))}
+            </Fragment>
+          </InputSelect>
+        </div>
+      </div>
+      {/* Organization */}
 
-                  //             prevState
+      <Separator />
 
-                  //           return [
-                  //                    ...prevState,
-                  //             selected: allEnvironments?.[0]?.data?.find(
-                  //               (item: any) =>
-                  //                 item?.name === e?.target?.value ||
-                  //                 item?.organizationName === e?.target?.value
-                  //             ),
-                  //           ]
-                  //         });
-                  //         break;
-                  //     }
-                  //   }}
-                >
-                  <option value=""></option>
-                  {allEnvironments?.[index]?.data?.map(
-                    (item: any, index: number) => {
-                      return (
-                        <option key={index} value={item?.name}>
-                          {item?.name || item?.organizationName}
-                        </option>
-                      );
-                    }
-                  )}
-                </InputSelect>
-              </div>
-            </div>
-            {index !== allEnvironments?.length - 1 && <Seperator />}
-          </Fragment>
-        );
-      })}
-    </div>
+      {/* RC */}
+      <div className="w-full flex justify-between">
+        <div className="flex items-center gap-2">
+          <img
+            className="w-5 h-5"
+            src={`/svg/general/roboticscloud/roboticscloud-gray.svg`}
+            alt="robolaunch"
+          />
+          <span className="capitalize text-xs">Robotics Cloud</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <InputSelect
+            className="min-w-[12rem]"
+            {...formik.getFieldProps(`roboticscloud`)}
+            placeholder=""
+            disabled={formik?.isSubmitting}
+            onChange={(e) => {
+              formik.setFieldValue(
+                `roboticscloud`,
+                responseRoboticsClouds.filter(
+                  (rc: any) => rc.name === e.target.value
+                )?.[0]
+              );
+            }}
+            value={formik.values?.roboticscloud?.name || ""}
+          >
+            <Fragment>
+              {!formik?.values?.roboticscloud && <option value=""></option>}
+              {responseRoboticsClouds?.map((rc: any, index: number) => (
+                <option key={index} value={rc.name}>
+                  {rc.name}
+                </option>
+              ))}
+            </Fragment>
+          </InputSelect>
+        </div>
+      </div>
+      {/* RC */}
+
+      <Separator />
+
+      {/* Instance */}
+      <div className="w-full flex justify-between">
+        <div className="flex items-center gap-2">
+          <img
+            className="w-5 h-5"
+            src={`/svg/general/instance/instance-gray.svg`}
+            alt="robolaunch"
+          />
+          <span className="capitalize text-xs">Cloud Instance</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <InputSelect
+            className="min-w-[12rem]"
+            {...formik.getFieldProps(`instance`)}
+            placeholder=""
+            disabled={formik?.isSubmitting}
+            onChange={(e) => {
+              formik.setFieldValue(
+                `instance`,
+                responseInstances.filter(
+                  (instance: any) => instance.name === e.target.value
+                )?.[0]
+              );
+            }}
+            value={formik.values?.instance?.name || ""}
+          >
+            <Fragment>
+              {!formik?.values?.instance && <option value=""></option>}
+              {responseInstances
+                ?.filter(
+                  (instance: any) =>
+                    instance.instanceCloudState === "ConnectionHub_Ready"
+                )
+                ?.map((instance: any, index: number) => (
+                  <option key={index} value={instance.name}>
+                    {instance.name}
+                  </option>
+                ))}
+            </Fragment>
+          </InputSelect>
+        </div>
+      </div>
+      {/* Instance */}
+
+      <Separator />
+
+      {/* Fleet */}
+      <div className="w-full flex justify-between">
+        <div className="flex items-center gap-2">
+          <img
+            className="w-5 h-5"
+            src={`/svg/general/fleet/fleet-gray.svg`}
+            alt="robolaunch"
+          />
+          <span className="capitalize text-xs">Fleet</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <InputSelect
+            className="min-w-[12rem]"
+            {...formik.getFieldProps(`fleet`)}
+            placeholder=""
+            disabled={formik?.isSubmitting}
+            onChange={(e) => {
+              formik.setFieldValue(
+                `fleet`,
+                responseFleets.filter(
+                  (fleet: any) => fleet.name === e.target.value
+                )?.[0]
+              );
+            }}
+            value={formik.values?.fleet?.name || ""}
+          >
+            <Fragment>
+              {!formik?.values?.fleet && <option value=""></option>}
+              {responseFleets
+                ?.filter((fleet: any) => fleet.fleetStatus === "Ready")
+                ?.map((fleet: any, index: number) => (
+                  <option key={index} value={fleet.name}>
+                    {fleet.name}
+                  </option>
+                ))}
+            </Fragment>
+          </InputSelect>
+        </div>
+      </div>
+      {/* Fleet */}
+
+      <div className="flex justify-end items-center gap-4 pt-10">
+        <Button
+          className="!w-56 !h-11"
+          type="button"
+          text="Auto Create Infrastructure"
+          // disabled={isTriggedCreateInfra || responseInstance || responseFleet}
+          onClick={() => handleCreateTrial()}
+          loading={
+            (responseInstances &&
+              responseInstances?.instanceCloudState !==
+                "ConnectionHub_Ready") ||
+            (responseFleets && responseFleets?.fleetStatus !== "Ready")
+          }
+        />
+        <Button
+          className="!w-56 !h-11"
+          type="submit"
+          text="Deploy Application"
+          disabled={
+            formik.isSubmitting ||
+            (!formik.values?.organization &&
+              !formik.values?.roboticscloud &&
+              !formik.values?.instance &&
+              !formik.values?.fleet)
+          }
+          loading={formik.isSubmitting}
+        />
+      </div>
+    </form>
   );
 }

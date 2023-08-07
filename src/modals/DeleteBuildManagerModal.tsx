@@ -32,7 +32,6 @@ export default function DeleteBuildManagerModal({
         robotName: url?.robotName as string,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,
         region: selectedState?.roboticsCloud?.region,
-        buildManagerName: robotData?.step3?.buildManagerName,
       })
     ).then(() => {
       setTimeout(() => {

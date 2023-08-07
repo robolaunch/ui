@@ -43,6 +43,7 @@ export default function CreateRobotFormStep2({
           region: selectedState?.roboticsCloud?.region,
           robotName: robotData?.step1?.robotName,
           fleetName: selectedState?.fleet?.name,
+          workspaceUpdated: isImportRobot ? true : false,
           physicalInstanceName: robotData?.step1?.isVirtualRobot
             ? undefined
             : robotData?.step1?.physicalInstanceName,

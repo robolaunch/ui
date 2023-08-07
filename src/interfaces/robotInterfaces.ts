@@ -5,6 +5,7 @@ export interface IcreateRobotRequest {
   region: string;
   robotName: string;
   fleetName: string;
+  workspaceUpdated?: boolean;
   physicalInstanceName?: string;
   distributions: string[];
   bridgeEnabled: boolean;
@@ -85,7 +86,6 @@ export interface IdeleteBuildManagerRequest {
   robotName: string;
   fleetName: string;
   physicalInstanceName: string;
-  buildManagerName: string;
 }
 
 export interface IcreateLaunchManagerRequest {
