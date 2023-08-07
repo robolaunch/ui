@@ -63,38 +63,44 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
       ) : url?.robotName && robotData?.step4?.robotLaunchSteps?.length === 0 ? (
         <div className="h-full w-full flex flex-col items-center gap-4">
           <SidebarInfo
-            text="It seems that you have not configured any launch steps for this
-              robot. If you want to configure launch steps, please click on the +
-              button below."
+            text={
+              robotData?.step3?.robotBuildSteps?.length === 0
+                ? "No build steps found. If you want to add launch step before add build manager."
+                : "It seems that you have not configured any launch steps for this robot. If you want to configure launch steps, please click on the + button below."
+            }
             component={
-              <CreateRobotFormAddButton
-                onClick={() => {
-                  setRobotData((prev: any) => {
-                    return {
-                      ...prev,
-                      step4: {
-                        ...prev.step4,
-                        robotLaunchSteps: [
-                          ...prev.step4.robotLaunchSteps,
-                          {
-                            workspace: "",
-                            entryPointType: "custom",
-                            entryPointCmd: "",
-                            instancesName: [],
-                            robotLmEnvs: [
-                              // {
-                              //   name: "",
-                              //   value: "",
-                              // },
-                            ],
-                          },
-                        ],
-                      },
-                    };
-                  });
-                  setIsAddedForm(true);
-                }}
-              />
+              robotData?.step3?.robotBuildSteps?.length === 0 ? (
+                <></>
+              ) : (
+                <CreateRobotFormAddButton
+                  onClick={() => {
+                    setRobotData((prev: any) => {
+                      return {
+                        ...prev,
+                        step4: {
+                          ...prev.step4,
+                          robotLaunchSteps: [
+                            ...prev.step4.robotLaunchSteps,
+                            {
+                              workspace: "",
+                              entryPointType: "custom",
+                              entryPointCmd: "",
+                              instancesName: [],
+                              robotLmEnvs: [
+                                // {
+                                //   name: "",
+                                //   value: "",
+                                // },
+                              ],
+                            },
+                          ],
+                        },
+                      };
+                    });
+                    setIsAddedForm(true);
+                  }}
+                />
+              )
             }
           />
         </div>

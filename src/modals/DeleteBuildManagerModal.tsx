@@ -1,12 +1,11 @@
-import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
+import { deleteBuildManager } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteBuildManager } from "../toolkit/RobotSlice";
-import useMain from "../hooks/useMain";
 import { useParams } from "react-router-dom";
+import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
-import { toast } from "sonner";
+import useMain from "../hooks/useMain";
 
 interface IDeleteBuildManagerModal {
   handleCloseModal: () => void;
@@ -33,10 +32,9 @@ export default function DeleteBuildManagerModal({
         robotName: url?.robotName as string,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,
         region: selectedState?.roboticsCloud?.region,
-        buildManagerName: "",
+        buildManagerName: robotData?.step3?.buildManagerName,
       })
     ).then(() => {
-      toast.success("Build Manager deleted successfully. Redirecting...");
       setTimeout(() => {
         window.location.reload();
       }, 2500);
@@ -58,7 +56,7 @@ export default function DeleteBuildManagerModal({
         <div className="flex justify-end items-center gap-4">
           <Button
             className="!w-44 !h-11 !text-xs !bg-red-500 disabled:!bg-red-400 disabled:!cursor-not-allowed"
-            disabled={isLoading || true}
+            disabled={isLoading}
             type="submit"
             text={
               isLoading ? (

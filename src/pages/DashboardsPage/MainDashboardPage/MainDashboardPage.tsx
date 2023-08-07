@@ -107,6 +107,7 @@ export default function MainDashboardPage(): ReactElement {
 
   return (
     <DashboardLayout
+      isMainDashboard
       widget1={
         <InformationWidget
           title={`Main Dashboard`}

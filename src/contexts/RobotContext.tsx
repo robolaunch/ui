@@ -158,10 +158,10 @@ export default ({ children }: any) => {
         entryPointCmd: "",
         instancesName: [],
         robotLmEnvs: [
-          {
-            name: "",
-            value: "",
-          },
+          // {
+          //   name: "",
+          //   value: "",
+          // },
         ],
       },
     ]);

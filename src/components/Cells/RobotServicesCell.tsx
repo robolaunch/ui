@@ -16,14 +16,14 @@ export default function RobotServicesCell({
         <span className="text-xs font-medium">ROS Bridge:</span>
         <InputToggle checked={states?.isEnabledRosBridge} onChange={() => {}} />
       </div>
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <span className="text-xs font-medium">IDE:</span>
         <InputToggle checked={states?.isEnabledRosBridge} onChange={() => {}} />
-      </div>
-      <div className="flex items-center">
+      </div> */}
+      {/* <div className="flex items-center">
         <span className="text-xs font-medium">VDI:</span>
         <InputToggle checked={states?.isEnabledRosBridge} onChange={() => {}} />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -367,8 +367,6 @@ export default function CreateRobotFormStep4({
                 })
               );
 
-              toast.success("Launch Step deleted successfully");
-
               setTimeout(() => {
                 window.location.reload();
               }, 1000);

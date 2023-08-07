@@ -43,8 +43,8 @@ export default ({ children }: any) => {
   });
 
   useEffect(() => {
-    console.log(trialState);
-  }, [trialState]);
+    console.log("SelectedState", selectedState);
+  }, [selectedState]);
 
   useEffect(() => {
     setSidebarState({

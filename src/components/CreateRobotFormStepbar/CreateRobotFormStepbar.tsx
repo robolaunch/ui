@@ -16,6 +16,7 @@ export default function Stepbar({
         {steps?.map((step: any, index: number) => {
           return (
             <div
+              key={index}
               className={`flex flex-col gap-1 z-20
          ${
            index === 0

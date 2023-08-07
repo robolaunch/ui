@@ -2345,6 +2345,10 @@ video {
   padding-top: 2rem;
 }
 
+.pl-10{
+  padding-left: 2.5rem;
+}
+
 .text-center{
   text-align: center;
 }
@@ -3401,6 +3405,10 @@ td{
 
   .lg\:col-span-8{
     grid-column: span 8 / span 8;
+  }
+
+  .lg\:col-span-9{
+    grid-column: span 9 / span 9;
   }
 
   .lg\:flex{

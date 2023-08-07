@@ -48,8 +48,8 @@ export default function CreateRoboticsCloudForm(): ReactElement {
     >
       <div>
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-          Robotics Cloud Name:
-          <InfoTip content="Type a new robotics cloud name." />
+          Region Name:
+          <InfoTip content="Type a new region name." />
         </div>
         <InputText
           {...formik.getFieldProps("roboticsCloudName")}
@@ -156,7 +156,7 @@ export default function CreateRoboticsCloudForm(): ReactElement {
       <div>
         <Button
           type="submit"
-          text="Create a new Robotics Cloud"
+          text="Create a new Region"
           disabled={formik.isSubmitting || !formik.isValid}
           loading={formik.isSubmitting}
           className="!h-11"

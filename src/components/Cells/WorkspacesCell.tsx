@@ -12,25 +12,29 @@ export default function WorkspacesCell({
   const [githubWorkspaces, setGithubWorkspaces] = useState<any[]>([]);
 
   useEffect(() => {
-    workspaces?.map(async (workspace: any) => {
-      await axios
-        .get(
+    setGithubWorkspaces([]);
+    workspaces?.forEach(async (workspace: any) => {
+      try {
+        const response = await axios.get(
           workspace?.url.replace(
             "https://github.com/",
             "https://api.github.com/repos/"
           )
-        )
-        .then((response) => {
-          setGithubWorkspaces((prev) => [
-            ...prev,
-            {
-              url: workspace?.url,
-              description: response?.data?.description,
-              branch: workspace?.branch,
-              full_name: response?.data?.full_name,
-            },
-          ]);
-        });
+        );
+
+        setGithubWorkspaces((prev) => [
+          ...prev,
+          {
+            url: workspace?.url,
+            description: response?.data?.description,
+            branch: workspace?.branch,
+            full_name: response?.data?.full_name,
+          },
+        ]);
+      } catch (error) {
+        // Hata durumunda işlemi burada yönetebilirsiniz
+        console.error("Error:", error);
+      }
     });
   }, [workspaces]);
 

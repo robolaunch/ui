@@ -5,6 +5,7 @@ interface IDashboardLayout {
   widget2: ReactElement;
   widget3: ReactElement;
   table: ReactElement;
+  isMainDashboard?: boolean;
 }
 
 export default function DashboardLayout({
@@ -12,11 +13,20 @@ export default function DashboardLayout({
   widget2,
   widget3,
   table,
+  isMainDashboard,
 }: IDashboardLayout): ReactElement {
   return (
     <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-full lg:col-span-4">{widget1}</div>
-      <div className="col-span-full lg:col-span-5">{widget2}</div>
+      <div
+        className={`col-span-full ${
+          isMainDashboard ? "lg:col-span-9" : "lg:col-span-4"
+        } `}
+      >
+        {widget1}
+      </div>
+      {!isMainDashboard && (
+        <div className="col-span-full lg:col-span-5">{widget2}</div>
+      )}
       <div className="col-span-full lg:col-span-3">{widget3}</div>
       <div className="col-span-full order-last">{table}</div>
     </div>

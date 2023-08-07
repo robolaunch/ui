@@ -74,7 +74,9 @@ export default function CreateRobotFormStep1({
             region: selectedState?.roboticsCloud?.region,
             fleetName: selectedState?.fleet?.name,
             robotName: formik.values?.robotName,
-            physicalInstanceName: formik.values?.physicalInstanceName,
+            physicalInstanceName: robotData?.step1?.isVirtualRobot
+              ? undefined
+              : robotData?.step1?.physicalInstanceName,
             distributions: formik.values?.rosDistros,
             bridgeEnabled: formik.values?.isEnabledROS2Bridge,
             vdiEnabled: formik.values?.remoteDesktop?.isEnabled,
@@ -91,7 +93,11 @@ export default function CreateRobotFormStep1({
           "Robot updated successfully. Redirecting to fleet page..."
         );
         setTimeout(() => {
-          window.location.href = `/${selectedState?.organization?.organizationName}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance?.name}/${selectedState?.fleet?.name}`;
+          window.location.href = `/${
+            selectedState?.organization?.organizationName?.split("_")[1]
+          }/${selectedState?.roboticsCloud?.name}/${
+            selectedState?.instance?.name
+          }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}}`;
         }, 2000);
       } else if (!formik.values?.isVirtualRobot) {
         await dispatch(
@@ -191,9 +197,9 @@ export default function CreateRobotFormStep1({
               <Seperator />
 
               {/* Robot Services */}
-              <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
                 {/* Code Editor */}
-                <div className="flex justify-center items-center gap-1">
+                {/* <div className="flex justify-center items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                     Code Editor (IDE) :
                     <InfoTip
@@ -208,7 +214,7 @@ export default function CreateRobotFormStep1({
                       formik.setFieldValue("isEnabledIde", e);
                     }}
                   />
-                </div>
+                </div> */}
                 {/* Code Editor */}
 
                 {/* ROS2 Bridge */}
@@ -227,10 +233,41 @@ export default function CreateRobotFormStep1({
                     }}
                   />
                 </div>
+
+                {formik?.values?.remoteDesktop?.isEnabled && (
+                  <div className="flex gap-2 w-full pl-10">
+                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                      VDI: Session Count (
+                      {formik?.values?.remoteDesktop?.sessionCount} User) :
+                      <InfoTip
+                        content="
+          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
+          "
+                        rightTip
+                      />
+                    </div>
+                    <input
+                      min="1"
+                      max="10"
+                      type="range"
+                      autoComplete="off"
+                      {...formik.getFieldProps("remoteDesktop.sessionCount")}
+                      className="w-full"
+                      style={{
+                        appearance: "auto",
+                        padding: "0px",
+                        color: "#AC2DFE",
+                        accentColor: "currentcolor",
+                      }}
+                      disabled={formik.isSubmitting}
+                    />
+                  </div>
+                )}
+
                 {/* ROS2 Bridge */}
 
                 {/* Remote Desktop */}
-                <div className="flex items-center gap-1">
+                {/* <div className="flex items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                     Remote Desktop (VDI) :
                     <InfoTip
@@ -246,39 +283,10 @@ export default function CreateRobotFormStep1({
                       formik.setFieldValue("remoteDesktop.isEnabled", e);
                     }}
                   />
-                </div>
+                </div> */}
                 {/* Remote Desktop */}
               </div>
               {/* Robot Services */}
-
-              {formik?.values?.remoteDesktop?.isEnabled && (
-                <div className="flex gap-2 pt-2">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Session Count ({formik?.values?.remoteDesktop?.sessionCount}{" "}
-                    User) :
-                    <InfoTip
-                      content="
-          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
-          "
-                    />
-                  </div>
-                  <input
-                    min="1"
-                    max="10"
-                    type="range"
-                    autoComplete="off"
-                    {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                    className="w-full"
-                    style={{
-                      appearance: "auto",
-                      padding: "0px",
-                      color: "#AC2DFE",
-                      accentColor: "currentcolor",
-                    }}
-                    disabled={formik.isSubmitting}
-                  />
-                </div>
-              )}
 
               {/* Seperator */}
               <Seperator />
