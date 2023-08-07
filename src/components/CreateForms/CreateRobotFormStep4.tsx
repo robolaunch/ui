@@ -53,14 +53,14 @@ export default function CreateRobotFormStep4({
         robotDataLaunchIndex ? robotDataLaunchIndex : 0
       ],
     validationSchema: Yup.object({
-      name: Yup.string().required("Required"),
-      workspace: Yup.string().required("Required"),
-      entryPointCmd: Yup.string().required("Required"),
-      instancesName: Yup.array().min(1, "Required"),
+      name: Yup.string().required("Launch manager name is required"),
+      workspace: Yup.string().required("Workspace is required"),
+      entryPointCmd: Yup.string().required("Code is required"),
+      instancesName: Yup.array().min(1, "Instance scope is required"),
       robotLmEnvs: Yup.array().of(
         Yup.object().shape({
-          name: Yup.string().required("Required"),
-          value: Yup.string().required("Required"),
+          name: Yup.string().required("Environment name is required"),
+          value: Yup.string().required("Environment value is required"),
         })
       ),
     }),
@@ -101,10 +101,6 @@ export default function CreateRobotFormStep4({
       }, 1000);
     },
   });
-
-  useEffect(() => {
-    console.log(formik?.values);
-  }, [formik?.values]);
 
   useEffect(
     () => {

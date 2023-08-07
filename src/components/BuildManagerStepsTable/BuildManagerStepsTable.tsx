@@ -24,7 +24,7 @@ export default function BuildManagerStepsTable({
           workspace: step?.workspace,
           command: step?.command,
           log: step?.buildLog,
-          state: responseBuildManager?.robotClusters,
+          state: step?.buildStatus,
         };
       }),
     [responseBuildManager]
@@ -59,29 +59,12 @@ export default function BuildManagerStepsTable({
         key: "state",
         header: "State",
         align: "left",
-        body: () => {
+        body: (rowData: any) => {
           return (
             <div className="flex flex-col gap-2">
-              {responseBuildManager?.robotClusters?.[0]?.buildManagerStatus && (
+              {rowData?.state && (
                 <div className="flex gap-2">
-                  <span className="text-xs">CI:</span>
-                  <StateCell
-                    state={
-                      responseBuildManager?.robotClusters?.[0]
-                        ?.buildManagerStatus
-                    }
-                  />
-                </div>
-              )}
-              {responseBuildManager?.robotClusters?.[1]?.buildManagerStatus && (
-                <div className="flex gap-2">
-                  <span className="text-xs">P I:</span>
-                  <StateCell
-                    state={
-                      responseBuildManager?.robotClusters?.[1]
-                        ?.buildManagerStatus
-                    }
-                  />
+                  <StateCell state={rowData?.state} />
                 </div>
               )}
             </div>
@@ -98,7 +81,7 @@ export default function BuildManagerStepsTable({
         },
       },
     ],
-    [responseBuildManager?.robotClusters, url?.instanceName]
+    [url?.instanceName]
   );
 
   return (

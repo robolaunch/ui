@@ -15,6 +15,7 @@ export default function LogsModal({
     <Dialog
       header="Logs"
       visible={true}
+      draggable={false}
       className="w-[50vw]"
       onHide={() => handleCloseModal()}
     >

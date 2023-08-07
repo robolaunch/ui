@@ -82,10 +82,10 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                             entryPointCmd: "",
                             instancesName: [],
                             robotLmEnvs: [
-                              {
-                                name: "",
-                                value: "",
-                              },
+                              // {
+                              //   name: "",
+                              //   value: "",
+                              // },
                             ],
                           },
                         ],

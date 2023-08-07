@@ -52,26 +52,15 @@ export default function CreateRobotFormBuildStepItem({
               : `Build Step #${buildStepIndex + 1}`}
           </span>
           <div className="flex items-center gap-2 text-xs">
-            {Array.isArray(stepState) && stepState?.[0] && (
+            {buildStep?.buildStatus && (
               <div className="flex gap-1.5">
                 <span
                   title={`Launch State of Cloud Instance`}
                   className="font-medium"
                 >
-                  CI:
+                  Status:
                 </span>
-                <StateCell state={stepState?.[0]} />
-              </div>
-            )}
-            {Array.isArray(stepState) && stepState?.[1] && (
-              <div className="flex gap-1.5">
-                <span
-                  title={`Launch State of Physical Instance`}
-                  className="font-medium"
-                >
-                  PI:
-                </span>
-                <StateCell state={stepState?.[1]} />
+                <StateCell state={buildStep?.buildStatus} />
               </div>
             )}
           </div>

@@ -18,7 +18,7 @@ export default function Terminal({ value, ref }: ITerminal): ReactElement {
     <TerminalContextProvider>
       <ReactTerminal
         ref={ref}
-        prompt={">>>"}
+        prompt={">"}
         theme={"material-dark"}
         welcomeMessage={
           <Fragment>
