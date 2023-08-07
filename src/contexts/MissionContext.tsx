@@ -48,7 +48,7 @@ export default ({ children, ros }: any) => {
   });
 
   useEffect(() => {
-    rosWaypointsWeb.subscribe(function (message: any) {});
+    ros && rosWaypointsWeb.subscribe(function (message: any) {});
 
     return () => {
       rosWaypointsWeb.unsubscribe();

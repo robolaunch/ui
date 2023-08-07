@@ -114,7 +114,7 @@ export default function CreateRobotFormRepositoryItem({
         </span>
       }
     >
-      <div className="flex flex-col gap-4 px-3 py-6">
+      <div className="flex flex-col gap-2 px-5 py-2.5">
         <div>
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Repository Name:
@@ -231,22 +231,25 @@ export default function CreateRobotFormRepositoryItem({
             }
           />
         </div>
-        {formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
-          ?.length > 1 && (
-          <CreateRobotFormDeleteButton
-            disabled={disabled}
-            onClick={() => {
-              handleRemoveRepositoryFromWorkspaceStep(
-                formik,
-                workspaceIndex,
-                repositoryIndex
-              );
-            }}
-            text={`Delete ${
-              repository?.name ? repository.name : "this"
-            } Repository`}
-          />
-        )}
+
+        <CreateRobotFormDeleteButton
+          disabled={
+            formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
+              ?.length > 1
+              ? false
+              : true
+          }
+          onClick={() => {
+            handleRemoveRepositoryFromWorkspaceStep(
+              formik,
+              workspaceIndex,
+              repositoryIndex
+            );
+          }}
+          text={`Delete ${
+            repository?.name ? repository.name : "this"
+          } Repository`}
+        />
       </div>
     </Accordion>
   );

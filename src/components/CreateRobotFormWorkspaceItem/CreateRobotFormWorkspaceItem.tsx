@@ -83,7 +83,7 @@ export default function CreateRobotFormWorkspaceItem({
         </div>
       }
     >
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-2 p-4">
         <div>
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Workspace Name:
@@ -91,7 +91,6 @@ export default function CreateRobotFormWorkspaceItem({
           </div>
           <InputText
             {...formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
-            disabled={disabled}
           />
           <InputError
             // @ts-ignore
@@ -108,7 +107,6 @@ export default function CreateRobotFormWorkspaceItem({
             {...formik.getFieldProps(
               `workspaces.${workspaceIndex}.workspaceDistro`
             )}
-            disabled={disabled}
           >
             <Fragment>
               {!formik?.values?.workspaces[workspaceIndex]?.workspaceDistro && (
@@ -154,30 +152,23 @@ export default function CreateRobotFormWorkspaceItem({
                 workspaceIndex={workspaceIndex}
                 repositoryIndex={repositoryIndex}
                 repository={repository}
-                disabled={disabled}
               />
             )
           )}
-          {!isImportRobot && (
-            <CreateRobotFormAddButton
-              onClick={() =>
-                handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
-              }
-              disabled={disabled}
-            />
-          )}
-        </div>
-        {robotData?.step2?.workspaces?.length > 1 && (
-          <CreateRobotFormDeleteButton
-            disabled={disabled}
-            onClick={() => {
-              handleRemoveWorkspaceStep(formik, workspaceIndex);
-            }}
-            text={`Delete ${
-              workspace?.name ? workspace.name : "this"
-            } Workspace`}
+          <CreateRobotFormAddButton
+            onClick={() =>
+              handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
+            }
+            disabled={formik.isSubmitting}
           />
-        )}
+        </div>
+        <CreateRobotFormDeleteButton
+          disabled={robotData?.step2?.workspaces?.length > 1 ? false : true}
+          onClick={() => {
+            handleRemoveWorkspaceStep(formik, workspaceIndex);
+          }}
+          text={`Delete ${workspace?.name ? workspace.name : "this"} Workspace`}
+        />
       </div>
     </Accordion>
   );

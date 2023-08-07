@@ -49,6 +49,11 @@ export default function CreateRobotRosDistrobutions({
         {["IRON", "HUMBLE", "GALACTIC", "FOXY"]?.map(
           (item: string, index: number) => (
             <div
+              title={
+                isImportRobot
+                  ? "You can't change Ros Distrobutions because this robot is created before."
+                  : undefined
+              }
               key={index}
               className={`relative flex items-center gap-1 border-2 p-2 rounded  w-full justify-center transition-all duration-300 ${
                 formik.values.rosDistros.includes(item)
@@ -60,7 +65,7 @@ export default function CreateRobotRosDistrobutions({
               onClick={(e: any) => {
                 if (isImportRobot) {
                   return toast.error(
-                    "You can't change ros distro in update mode"
+                    "You can't change Ros Distrobutions because this robot is created before."
                   );
                 }
 

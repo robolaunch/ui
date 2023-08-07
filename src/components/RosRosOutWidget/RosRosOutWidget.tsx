@@ -25,14 +25,15 @@ export default function RosRosOutWidget({
       name: "/rosout",
       messageType: "rcl_interfaces/msg/Log",
     });
-    rosoutTopic.subscribe(function (message: any) {
-      setLogs((prev) => {
-        if (prev.length > 50) {
-          prev.shift();
-        }
-        return [...prev, message.msg];
+    ros &&
+      rosoutTopic.subscribe(function (message: any) {
+        setLogs((prev) => {
+          if (prev.length > 50) {
+            prev.shift();
+          }
+          return [...prev, message.msg];
+        });
       });
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

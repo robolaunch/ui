@@ -33,6 +33,10 @@ export default function CreateRobotStorage({
           accentColor: "currentcolor",
         }}
         disabled={formik.isSubmitting || isImportRobot}
+        title={
+          (formik.isSubmitting || isImportRobot) &&
+          "You can't change robot storage because this robot is created before."
+        }
       />
     </div>
   );

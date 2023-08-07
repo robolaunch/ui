@@ -150,6 +150,11 @@ export default function CreateRobotFormStep1({
                 {...formik.getFieldProps("robotName")}
                 className="!text-sm"
                 disabled={formik.isSubmitting || isImportRobot}
+                inputHoverText={
+                  formik.isSubmitting || isImportRobot
+                    ? "You can't change robot name because this robot is created before."
+                    : ""
+                }
               />
               <InputError
                 error={formik.errors.robotName}
@@ -263,16 +268,14 @@ export default function CreateRobotFormStep1({
                     type="range"
                     autoComplete="off"
                     {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                    className={`w-full ${
-                      isImportRobot && "cursor-not-allowed"
-                    }`}
+                    className="w-full"
                     style={{
                       appearance: "auto",
                       padding: "0px",
                       color: "#AC2DFE",
                       accentColor: "currentcolor",
                     }}
-                    disabled={formik.isSubmitting || isImportRobot}
+                    disabled={formik.isSubmitting}
                   />
                 </div>
               )}
@@ -292,7 +295,7 @@ export default function CreateRobotFormStep1({
                   onChange={(e: any) => {
                     formik.setFieldValue("gpuEnabledForCloudInstance", e);
                   }}
-                  disabled={formik.isSubmitting || isImportRobot}
+                  disabled={formik.isSubmitting}
                 />
               </div>
               {/* GPU Resource */}
@@ -302,30 +305,38 @@ export default function CreateRobotFormStep1({
               {/* Seperator */}
 
               {/* Development Mode */}
-              <div className="flex items-center gap-1">
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                  Development Mode:
-                  <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
-                </div>
-                <InputToggle
-                  checked={formik?.values?.isDevelopmentMode}
-                  onChange={(e: any) => {
-                    formik.setFieldValue("isDevelopmentMode", e);
-                  }}
-                  disabled={formik.isSubmitting || isImportRobot}
-                />
-              </div>
+              {!isImportRobot && (
+                <Fragment>
+                  <div className="flex items-center gap-1">
+                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                      Development Mode:
+                      <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
+                    </div>
+                    <InputToggle
+                      checked={formik?.values?.isDevelopmentMode}
+                      onChange={(e: any) => {
+                        formik.setFieldValue("isDevelopmentMode", e);
+                      }}
+                      disabled={formik.isSubmitting || isImportRobot}
+                    />
+                  </div>
+                  {/* Seperator */}
+                  <Seperator />
+                  {/* Seperator */}
+                </Fragment>
+              )}
               {/* Development Mode */}
-
-              {/* Seperator */}
-              <Seperator />
-              {/* Seperator */}
             </div>
 
             <Button
-              disabled={!formik.isValid || formik.isSubmitting}
+              disabled={
+                !formik.isValid ||
+                formik.isSubmitting ||
+                JSON.stringify(formik.initialValues) ===
+                  JSON.stringify(formik.values)
+              }
               type="submit"
-              className="!h-11 text-xs t-4"
+              className="!h-11 text-xs t-4 mt-8"
               text={
                 formik.isSubmitting ? (
                   <img

@@ -419,8 +419,13 @@ export default function CreateRobotFormStep3({
               )}
               <Button
                 type="submit"
-                disabled={!formik?.isValid || formik.isSubmitting}
-                className="w-full !h-11 text-xs"
+                disabled={
+                  !formik?.isValid ||
+                  formik.isSubmitting ||
+                  JSON.stringify(formik.initialValues) ===
+                    JSON.stringify(formik.values)
+                }
+                className="w-full !h-11 text-xs mt-8"
                 text={
                   formik.isSubmitting ? (
                     <img

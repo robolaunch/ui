@@ -24,14 +24,15 @@ export default function RosCmdVelWidget({
       name: "/cmd_vel",
       messageType: "geometry_msgs/msg/Twist",
     });
-    cmdvelTopic.subscribe(function (message: any) {
-      setLogs((prev: any) => {
-        if (prev.length > 50) {
-          prev.shift();
-        }
-        return [...prev, message];
+    ros &&
+      cmdvelTopic.subscribe(function (message: any) {
+        setLogs((prev: any) => {
+          if (prev.length > 50) {
+            prev.shift();
+          }
+          return [...prev, message];
+        });
       });
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

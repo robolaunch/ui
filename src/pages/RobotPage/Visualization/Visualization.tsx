@@ -82,9 +82,11 @@ export default function Visualization({
       name: "/map",
       messageType: "nav_msgs/msg/OccupancyGrid",
     });
-    map?.subscribe(function (message: any) {
-      console.log("map: ", message.info);
-    });
+
+    ros &&
+      map?.subscribe(function (message: any) {
+        console.log("map: ", message.info);
+      });
 
     return () => {
       map.unsubscribe();
@@ -98,9 +100,11 @@ export default function Visualization({
       name: "/odom_rf2o",
       messageType: "nav_msgs/msg/Odometry",
     });
-    poseTopic?.subscribe(function (message: any) {
-      // console.log("pose", message.pose.pose.position);
-    });
+
+    ros &&
+      poseTopic?.subscribe(function (message: any) {
+        // console.log("pose", message.pose.pose.position);
+      });
 
     return () => {
       poseTopic.unsubscribe();

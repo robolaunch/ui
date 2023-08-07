@@ -374,9 +374,9 @@ export const RobotSlice = createSlice({
   name: "robot",
   initialState: {
     urls: {
-      vdi: process.env.NODE_ENV === "production" ? "" : "ws://localhost:8080/",
+      vdi: process.env.NODE_ENV === "production" ? "" : "",
       ide: process.env.NODE_ENV === "production" ? "" : "",
-      ros: process.env.NODE_ENV === "production" ? "" : "ws://localhost:9090/",
+      ros: process.env.NODE_ENV === "production" ? "" : "",
     },
   },
   reducers: {

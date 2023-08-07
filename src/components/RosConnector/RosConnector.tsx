@@ -22,8 +22,6 @@ export default function RosConnector({
   const { urls } = useAppSelector((state) => state.robot);
 
   useEffect(() => {
-    console.log(responseRobot?.bridgeIngressEndpoint.split(":")[0]);
-
     if (
       isSettedCookie &&
       responseRobot &&
@@ -31,10 +29,7 @@ export default function RosConnector({
       responseRobot?.bridgeIngressEndpoint.split(":")[0] === "wss"
     ) {
       const ros = new ROSLIB.Ros({
-        url:
-          urls?.ros ||
-          responseRobot?.bridgeIngressEndpoint ||
-          "ws://localhost:9090",
+        url: urls?.ros || responseRobot?.bridgeIngressEndpoint,
       });
 
       setRos(ros);

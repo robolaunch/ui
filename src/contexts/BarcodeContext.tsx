@@ -59,85 +59,92 @@ export default ({ children, ros }: any) => {
       messageType: "geometry_msgs/msg/PoseStamped",
     });
 
-    rosBarcode0?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode0?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode0?.name.charAt(rosBarcode0?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode0?.name.charAt(rosBarcode0?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    rosBarcode1?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode1?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode1?.name.charAt(rosBarcode1?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode1?.name.charAt(rosBarcode1?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    rosBarcode2?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode2?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode2?.name.charAt(rosBarcode2?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode2?.name.charAt(rosBarcode2?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    rosBarcode3?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode3?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode3?.name.charAt(rosBarcode3?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode3?.name.charAt(rosBarcode3?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    rosBarcode4?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode4?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode4?.name.charAt(rosBarcode4?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode4?.name.charAt(rosBarcode4?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    rosBarcode5?.subscribe(function (message: any) {
-      console.log(message);
-      const messageWithScannerId = JSON.parse(message?.data);
+    ros &&
+      rosBarcode5?.subscribe(function (message: any) {
+        console.log(message);
+        const messageWithScannerId = JSON.parse(message?.data);
 
-      handleBarcodeSetters({
-        ...messageWithScannerId,
-        scannerId: Number(
-          rosBarcode5?.name.charAt(rosBarcode5?.name?.length - 1)
-        ),
+        handleBarcodeSetters({
+          ...messageWithScannerId,
+          scannerId: Number(
+            rosBarcode5?.name.charAt(rosBarcode5?.name?.length - 1)
+          ),
+        });
       });
-    });
 
-    poseTopic.subscribe(function (pose: any) {
-      console.log(pose);
-      setRobotLocation({
-        ...pose?.pose?.position,
-        z: quaternionToEuler(pose?.pose?.orientation),
+    ros &&
+      poseTopic.subscribe(function (pose: any) {
+        console.log(pose);
+        setRobotLocation({
+          ...pose?.pose?.position,
+          z: quaternionToEuler(pose?.pose?.orientation),
+        });
       });
-    });
 
     return () => {
       rosBarcode0?.unsubscribe();

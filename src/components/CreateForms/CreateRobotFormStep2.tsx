@@ -170,7 +170,7 @@ export default function CreateRobotFormStep2({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-8 animate__animated animate__fadeIn"
+        className="flex flex-col gap-4 animate__animated animate__fadeIn"
       >
         <div className="flex flex-col gap-2">
           {robotData?.step2?.workspaces?.map(
@@ -192,35 +192,35 @@ export default function CreateRobotFormStep2({
           )}
         </div>
 
-        {!isImportRobot && (
-          <CreateRobotFormAddButton
-            disabled={formik.isSubmitting || isImportRobot}
-            onClick={() => handleAddWorkspaceStep(formik)}
-          />
-        )}
+        <CreateRobotFormAddButton
+          onClick={() => handleAddWorkspaceStep(formik)}
+        />
 
-        {!isImportRobot && (
-          <Button
-            type="submit"
-            disabled={!formik?.isValid || formik.isSubmitting}
-            className="w-full !h-11 text-xs"
-            text={
-              formik.isSubmitting ? (
-                <img
-                  className="w-10 h-10"
-                  src="/svg/general/loading.svg"
-                  alt="loading"
-                />
-              ) : isImportRobot ? (
-                `Update Robot`
-              ) : robotData?.step1?.isDevelopmentMode ? (
-                `Create Robot`
-              ) : (
-                `Next Step`
-              )
-            }
-          />
-        )}
+        <Button
+          type="submit"
+          disabled={
+            !formik?.isValid ||
+            formik.isSubmitting ||
+            JSON.stringify(formik.initialValues) ===
+              JSON.stringify(formik.values)
+          }
+          className="w-full !h-11 text-xs mt-8"
+          text={
+            formik.isSubmitting ? (
+              <img
+                className="w-10 h-10"
+                src="/svg/general/loading.svg"
+                alt="loading"
+              />
+            ) : isImportRobot ? (
+              `Update Robot`
+            ) : robotData?.step1?.isDevelopmentMode ? (
+              `Create Robot`
+            ) : (
+              `Next Step`
+            )
+          }
+        />
       </form>
     </CreateRobotFormLoader>
   );

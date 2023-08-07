@@ -73,6 +73,10 @@ export default function CreateRobotTypes({
             },
           ]?.map((robotType: any, index: number) => (
             <div
+              title={
+                robotType?.disabled &&
+                "You can't change robot type because this robot is created before."
+              }
               key={index}
               className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded  w-full transition-all duration-300 ${
                 formik.values?.isVirtualRobot === robotType?.isVirtualRobot

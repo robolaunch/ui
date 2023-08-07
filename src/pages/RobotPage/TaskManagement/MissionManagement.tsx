@@ -66,16 +66,17 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
       messageType: "nav_msgs/msg/OccupancyGrid",
     });
 
-    map?.subscribe(function (message: any) {
-      setRosMapDetails({
-        resolution: {
-          x: message.info.width,
-          y: message.info.height,
-        },
-        x: message.info.origin.position.x * -2,
-        y: message.info.origin.position.y * -2,
+    ros &&
+      map?.subscribe(function (message: any) {
+        setRosMapDetails({
+          resolution: {
+            x: message.info.width,
+            y: message.info.height,
+          },
+          x: message.info.origin.position.x * -2,
+          y: message.info.origin.position.y * -2,
+        });
       });
-    });
 
     return () => {
       map?.unsubscribe();
@@ -217,9 +218,9 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
                         maxWidth: "100%",
                         pointerEvents: "none",
                       }}
-                      src={`/html/rosMap.html?ws=${ros.socket.url.slice(
+                      src={`/html/rosMap.html?ws=${ros?.socket?.url?.slice(
                         0,
-                        ros.socket.url.length - 1
+                        ros?.socket?.url?.length - 1
                       )}&costmap=${isCostMapActive ? "true" : "false"}`}
                     />
 

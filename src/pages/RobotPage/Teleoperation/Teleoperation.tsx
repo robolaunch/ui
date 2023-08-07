@@ -115,9 +115,10 @@ export default function Teleoperation({
     });
 
     if (!isRemoteDesktopStream) {
-      cameraCompressedTopic?.subscribe(function (message: any) {
-        setCameraData("data:image/jpg;base64," + message.data);
-      });
+      ros &&
+        cameraCompressedTopic?.subscribe(function (message: any) {
+          setCameraData("data:image/jpg;base64," + message.data);
+        });
     }
 
     return () => {

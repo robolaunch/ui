@@ -21,25 +21,26 @@ export default function RosWaypointLine({
   const { activeMission, missions, rosMapDetails }: any =
     useContext(MissionContext);
 
-  const robotPosition = new ROSLIB.Topic({
-    ros: ros,
-    name: "/robot_position",
-    messageType: "geometry_msgs/msg/PoseStamped",
-  });
-
   useEffect(() => {
-    robotPosition?.subscribe(function (message: any) {
-      setRosRobotPosition({
-        x: message?.pose?.position?.x,
-        y: message?.pose?.position?.y,
-        z: message?.pose?.position?.z,
-      });
+    const robotPosition = new ROSLIB.Topic({
+      ros: ros,
+      name: "/robot_position",
+      messageType: "geometry_msgs/msg/PoseStamped",
     });
+
+    ros &&
+      robotPosition?.subscribe(function (message: any) {
+        setRosRobotPosition({
+          x: message?.pose?.position?.x,
+          y: message?.pose?.position?.y,
+          z: message?.pose?.position?.z,
+        });
+      });
 
     return () => {
       robotPosition?.unsubscribe();
     };
-  });
+  }, [ros]);
 
   return (
     <Fragment>

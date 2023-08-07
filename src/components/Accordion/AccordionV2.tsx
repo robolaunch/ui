@@ -23,7 +23,7 @@ export default function Accordion({
     <Collapsible
       triggerDisabled
       open={isOpen}
-      className={`bg-layer-light-50 border border-layer-primary-100 rounded shadow animate__animated animate__fadeIn transition-all duration-500 ${className}`}
+      className={`bg-layer-light-50 border border-layer-primary-200 rounded shadow animate__animated animate__fadeIn transition-all duration-500 ${className}`}
       openedClassName={`bg-layer-light-50 rounded-md border border-layer-primary-200 !shadow ${className}`}
       trigger={
         <div

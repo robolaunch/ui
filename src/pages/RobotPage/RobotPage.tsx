@@ -48,7 +48,7 @@ export default function RobotPage(): ReactElement {
   useEffect(() => {
     if (
       pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName as string}`
+      `org_${url?.organizationName}`
     ) {
       handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {

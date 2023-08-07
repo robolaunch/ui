@@ -8,6 +8,7 @@ interface InputTextProps {
   disabled?: boolean;
   className?: string;
   inputPlaceholder?: string;
+  inputHoverText?: string | undefined;
   onSubmitEnter?: () => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,6 +23,7 @@ export default function InputText({
   disabled,
   className,
   inputPlaceholder,
+  inputHoverText,
   onSubmitEnter,
   onFocus,
   onChange,
@@ -62,6 +64,7 @@ export default function InputText({
           }
         }}
         placeholder={inputPlaceholder}
+        title={inputHoverText}
       />
     </div>
   );
