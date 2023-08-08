@@ -25,7 +25,7 @@ export default function DeployApplication({
       header="Deploy Application"
       visible={true}
       draggable={false}
-      className="w-[36vw]"
+      className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
       <DeployApplicationSelector

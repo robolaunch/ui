@@ -19,6 +19,33 @@ interface IDeployApplicationSelector {
   handleCloseModal: () => void;
 }
 
+type formikValues = {
+  organization:
+    | {
+        organizationId: string;
+        organizationName: string;
+      }
+    | undefined;
+  roboticscloud:
+    | {
+        name: string;
+        region: string;
+      }
+    | undefined;
+  instance:
+    | {
+        instanceId: string;
+        name: string;
+      }
+    | undefined;
+  fleet:
+    | {
+        fleetId: string;
+        name: string;
+      }
+    | undefined;
+};
+
 export default function DeployApplicationSelector({
   item,
   handleCloseModal,
@@ -29,38 +56,13 @@ export default function DeployApplicationSelector({
     useState<any>(undefined);
   const [responseInstances, setResponseInstances] = useState<any>(undefined);
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-
   const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
     useFunctions();
   const dispatch = useAppDispatch();
+  const { trialState } = useMain();
   const navigate = useNavigate();
 
-  const formik = useFormik<{
-    organization:
-      | {
-          organizationId: string;
-          organizationName: string;
-        }
-      | undefined;
-    roboticscloud:
-      | {
-          name: string;
-          region: string;
-        }
-      | undefined;
-    instance:
-      | {
-          instanceId: string;
-          name: string;
-        }
-      | undefined;
-    fleet:
-      | {
-          fleetId: string;
-          name: string;
-        }
-      | undefined;
-  }>({
+  const formik = useFormik<formikValues>({
     initialValues: {
       organization: undefined,
       roboticscloud: undefined,
@@ -216,15 +218,15 @@ export default function DeployApplicationSelector({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values.instance]);
 
-  const { trialState } = useMain();
-
   async function handleCreateTrial() {
     await dispatch(
       createTrial({
         ipAddress: trialState?.ip,
       })
     ).then(async () => {
-      setTimeout(() => {}, 2000);
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
     });
   }
 
@@ -407,27 +409,30 @@ export default function DeployApplicationSelector({
           className="!w-56 !h-11"
           type="button"
           text="Auto Create Infrastructure"
-          // disabled={isTriggedCreateInfra || responseInstance || responseFleet}
           onClick={() => handleCreateTrial()}
-          loading={
-            (responseInstances &&
-              responseInstances?.instanceCloudState !==
-                "ConnectionHub_Ready") ||
-            (responseFleets && responseFleets?.fleetStatus !== "Ready")
+          loading={formik.isSubmitting}
+          disabled={
+            formik.isSubmitting ||
+            (formik.values?.organization &&
+            formik.values?.roboticscloud &&
+            formik.values?.instance &&
+            formik.values?.fleet
+              ? true
+              : false)
           }
         />
         <Button
           className="!w-56 !h-11"
           type="submit"
           text="Deploy Application"
+          loading={formik.isSubmitting}
           disabled={
             formik.isSubmitting ||
-            (!formik.values?.organization &&
-              !formik.values?.roboticscloud &&
-              !formik.values?.instance &&
-              !formik.values?.fleet)
+            !formik.values?.organization ||
+            !formik.values?.roboticscloud ||
+            !formik.values?.instance ||
+            !formik.values?.fleet
           }
-          loading={formik.isSubmitting}
         />
       </div>
     </form>

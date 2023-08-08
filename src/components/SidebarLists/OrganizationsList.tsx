@@ -5,6 +5,7 @@ import useMain from "../../hooks/useMain";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import StateCell from "../Cells/StateCell";
 
 interface IOrganizationList {
   setItemCount: any;
@@ -53,7 +54,7 @@ export default function OrganizationsList({
                 organizationName: organization?.organizationName,
                 capitalization: false,
               })}
-              description={`Member Count: ${organization?.userCount}`}
+              description={<StateCell state={"Ready"} />}
               url={`/${organizationNameViewer({
                 organizationName: organization?.organizationName,
                 capitalization: false,

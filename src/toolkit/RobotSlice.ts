@@ -54,7 +54,6 @@ export const createRobot = createAsyncThunk(
                     imageRepository: values?.imageRepository,
                     imageTag: values?.imageTag,
                   },
-
                   robotWorkspaces: values?.workspaces,
                 },
               ],
