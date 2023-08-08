@@ -16,7 +16,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
     useState<any>(undefined);
   const { getLaunchManagers } = useFunctions();
   const url = useParams();
-  const { robotData, setRobotData } = useRobot();
+  const { robotData, handleAddLaunchManager } = useRobot();
   const { selectedState } = useMain();
 
   useEffect(() => {
@@ -74,29 +74,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
               ) : (
                 <CreateRobotFormAddButton
                   onClick={() => {
-                    setRobotData((prev: any) => {
-                      return {
-                        ...prev,
-                        step4: {
-                          ...prev.step4,
-                          robotLaunchSteps: [
-                            ...prev.step4.robotLaunchSteps,
-                            {
-                              workspace: "",
-                              entryPointType: "custom",
-                              entryPointCmd: "",
-                              instancesName: [],
-                              robotLmEnvs: [
-                                // {
-                                //   name: "",
-                                //   value: "",
-                                // },
-                              ],
-                            },
-                          ],
-                        },
-                      };
-                    });
+                    handleAddLaunchManager();
                     setIsAddedForm(true);
                   }}
                 />
@@ -127,7 +105,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                           title={`Launch State of Cloud Instance`}
                           className="font-medium"
                         >
-                          CI:
+                          Virtual:
                         </span>
                         <StateCell
                           state={
@@ -142,7 +120,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                             title={`Launch State of Physical Instance`}
                             className="font-medium"
                           >
-                            PI:
+                            Physical:
                           </span>
                           <StateCell
                             state={
@@ -187,29 +165,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
           ) : (
             <CreateRobotFormAddButton
               onClick={() => {
-                setRobotData((prev: any) => {
-                  return {
-                    ...prev,
-                    step4: {
-                      ...prev.step4,
-                      robotLaunchSteps: [
-                        ...prev.step4.robotLaunchSteps,
-                        {
-                          workspace: "",
-                          entryPointType: "custom",
-                          entryPointCmd: "",
-                          instancesName: [],
-                          robotLmEnvs: [
-                            {
-                              name: "",
-                              value: "",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  };
-                });
+                handleAddLaunchManager();
                 setIsAddedForm(true);
               }}
             />

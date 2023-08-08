@@ -230,6 +230,8 @@ export default function DeployApplicationSelector({
     });
   }
 
+  const { setSidebarState } = useMain();
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -245,7 +247,20 @@ export default function DeployApplicationSelector({
           />
           <span className="capitalize text-xs">Organization</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {!formik?.values?.organization && (
+            <span
+              onClick={() => {
+                handleCloseModal();
+                setSidebarState((prev: any) => {
+                  return { ...prev, isOpen: true, page: "organization" };
+                });
+              }}
+              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+            >
+              Create
+            </span>
+          )}
           <InputSelect
             className="min-w-[12rem]"
             {...formik.getFieldProps(`organization`)}
@@ -286,7 +301,20 @@ export default function DeployApplicationSelector({
           />
           <span className="capitalize text-xs">Robotics Cloud</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {!formik?.values?.roboticscloud && (
+            <span
+              onClick={() => {
+                handleCloseModal();
+                setSidebarState((prev: any) => {
+                  return { ...prev, isOpen: true, page: "roboticscloud" };
+                });
+              }}
+              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+            >
+              Create
+            </span>
+          )}
           <InputSelect
             className="min-w-[12rem]"
             {...formik.getFieldProps(`roboticscloud`)}
@@ -327,7 +355,20 @@ export default function DeployApplicationSelector({
           />
           <span className="capitalize text-xs">Cloud Instance</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {!formik?.values?.instance && (
+            <span
+              onClick={() => {
+                handleCloseModal();
+                setSidebarState((prev: any) => {
+                  return { ...prev, isOpen: true, page: "instance" };
+                });
+              }}
+              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+            >
+              Create
+            </span>
+          )}
           <InputSelect
             className="min-w-[12rem]"
             {...formik.getFieldProps(`instance`)}
@@ -373,7 +414,20 @@ export default function DeployApplicationSelector({
           />
           <span className="capitalize text-xs">Fleet</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {!formik?.values?.fleet && (
+            <span
+              onClick={() => {
+                handleCloseModal();
+                setSidebarState((prev: any) => {
+                  return { ...prev, isOpen: true, page: "fleet" };
+                });
+              }}
+              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+            >
+              Create
+            </span>
+          )}
           <InputSelect
             className="min-w-[12rem]"
             {...formik.getFieldProps(`fleet`)}

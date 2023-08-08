@@ -197,6 +197,7 @@ export interface IuseRobot {
     formik: any,
     workspaceIndex: number
   ) => void;
+  handleAddLaunchManager: () => void;
   handleRemoveRepositoryFromWorkspaceStep: (
     formik: any,
     workspaceIndex: number,

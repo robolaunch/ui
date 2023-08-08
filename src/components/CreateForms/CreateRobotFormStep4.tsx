@@ -9,10 +9,7 @@ import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
 import { useAppDispatch } from "../../hooks/redux";
 import useMain from "../../hooks/useMain";
-import {
-  createLaunchManager,
-  deleteLaunchManager,
-} from "../../toolkit/RobotSlice";
+import { createLaunchManager } from "../../toolkit/RobotSlice";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
@@ -23,10 +20,10 @@ import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFor
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { useParams } from "react-router-dom";
 import InfoTip from "../InfoTip/InfoTip";
 import * as Yup from "yup";
+import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -351,34 +348,16 @@ export default function CreateRobotFormStep4({
           />
         </div>
 
-        {isImportRobot ? (
-          <CreateRobotFormDeleteButton
-            onClick={async () => {
-              await dispatch(
-                deleteLaunchManager({
-                  organizationId: selectedState?.organization?.organizationId,
-                  roboticsCloudName: selectedState?.roboticsCloud?.name,
-                  instanceId: selectedState?.instance?.instanceId,
-                  region: selectedState?.instance?.region,
-                  robotName: robotData?.step1?.robotName,
-                  fleetName: selectedState?.fleet?.name,
-                  physicalInstanceName: robotData?.step1?.physicalInstanceName,
-                  launchManagerName: formik.values?.name,
-                })
-              );
-
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
-            }}
-            text="Delete Launch Step"
-          />
-        ) : (
+        {!isImportRobot ? (
           <Button
             type="submit"
             disabled={!formik?.isValid || formik.isSubmitting}
             className="w-full !h-11 text-xs"
             text={url?.robotName ? `Add Launch Step` : `Create Robot`}
+          />
+        ) : (
+          <RobotDeleteLaunchManagerButton
+            launchManagerName={formik.values?.name}
           />
         )}
       </form>

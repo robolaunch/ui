@@ -63,7 +63,7 @@ export default function CreateRobotFormWorkspaceItem({
                   title={`Launch State of Cloud Instance`}
                   className="font-medium"
                 >
-                  CI:
+                  V:
                 </span>
                 <StateCell state={workspaceState?.[0]} />
               </div>
@@ -74,7 +74,7 @@ export default function CreateRobotFormWorkspaceItem({
                   title={`Launch State of Physical Instance`}
                   className="font-medium"
                 >
-                  PI:
+                  P:
                 </span>
                 <StateCell state={workspaceState?.[1]} />
               </div>
