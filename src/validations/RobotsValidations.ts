@@ -41,7 +41,7 @@ export const CreateRobotFormStep2Validations = Yup.object().shape({
         Yup.object().shape({
           name: Yup.string().required("Repository Name is required"),
           url: Yup.string().required("Repository URL is required"),
-          branch: Yup.string().required("Repository Branch is required"),
+          branch: Yup.string().required("Branch is required"),
         })
       ),
     })

@@ -45,10 +45,6 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
     );
   }
 
-  useEffect(() => {
-    console.log(responseRobotLaunchManagers);
-  }, [responseRobotLaunchManagers]);
-
   return (
     <Fragment>
       {!responseRobotLaunchManagers ? (

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import {
@@ -17,6 +18,7 @@ import useGithub from "../../hooks/useGithub";
 import useRobot from "../../hooks/useRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import InfoTip from "../InfoTip/InfoTip";
+import axios from "axios";
 interface ICreateRobotFormRepositoryItem {
   formik: FormikProps<IRobotWorkspaces>;
   repository: IRobotWorkspace;
@@ -100,6 +102,65 @@ export default function CreateRobotFormRepositoryItem({
     ]
   );
 
+  useEffect(() => {
+    if (
+      formik.initialValues.workspaces[workspaceIndex].robotRepositories[
+        repositoryIndex
+      ].url !==
+      formik.values.workspaces[workspaceIndex].robotRepositories[
+        repositoryIndex
+      ].url
+    ) {
+      formik.setFieldValue(
+        `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
+        ""
+      );
+    }
+
+    const branchURL = handleGetRepositoryBranchURL(
+      formik?.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
+        repositoryIndex
+      ]?.url
+    );
+
+    if (
+      formik?.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
+        repositoryIndex
+      ]?.url &&
+      branchURL
+    ) {
+      try {
+        setResponseBranches([]);
+        axios
+          .get(branchURL)
+          .then((res: any) => {
+            branchURL?.includes("https://api.github.com/repos/") &&
+              setResponseBranches(res.data?.map((branch: any) => branch?.name));
+          })
+          .catch((error: any) => {
+            console.error("Error fetching branches:", error);
+          });
+      } catch (error) {
+        console.error("Error in axios request:", error);
+      }
+    }
+  }, [
+    formik.values.workspaces?.[workspaceIndex]?.robotRepositories?.[
+      repositoryIndex
+    ]?.url,
+  ]);
+
+  function handleGetRepositoryBranchURL(URL: string) {
+    if (URL?.includes("https://github.com")) {
+      return (
+        URL.replace("https://github.com/", "https://api.github.com/repos/") +
+        (URL.endsWith("/") ? "branches" : "/branches")
+      );
+    } else if (URL?.includes("https://gitlab.com")) {
+      return;
+    }
+  }
+
   return (
     <Accordion
       key={repositoryIndex}
@@ -139,97 +200,109 @@ export default function CreateRobotFormRepositoryItem({
             }
           />
         </div>
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Repository URL:
-            <InfoTip content="Type a repository URL." />
-          </div>
-          {github?.githubAuth ? (
-            <InputSelect
-              {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
-              )}
-              placeholder="Repository"
-              disabled={disabled}
-            >
-              <Fragment>
-                {!formik?.values?.workspaces?.[workspaceIndex]
-                  ?.robotRepositories?.[repositoryIndex]?.url && (
-                  <option value=""></option>
+        <div className="flex gap-2 w-full">
+          <div className="w-full">
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Repository URL:
+              <InfoTip content="Type a repository URL." />
+            </div>
+            {github?.githubAuth ? (
+              <InputSelect
+                {...formik.getFieldProps(
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
                 )}
-                {responseRepositories?.map((repo: any, index: number) => (
-                  <option key={index} value={repo?.html_url}>
-                    {repo?.owner?.login} - {repo?.name}
-                  </option>
-                ))}
-              </Fragment>
-            </InputSelect>
-          ) : (
-            <InputText
-              {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
-              )}
-              disabled={disabled}
-            />
-          )}
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[
-                repositoryIndex
-              ]?.url
-            }
-            touched={
-              formik?.touched?.workspaces?.[workspaceIndex]
-                ?.robotRepositories?.[repositoryIndex]?.url
-            }
-          />
-        </div>
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Repository Branch Name:
-            <InfoTip content="Type a repository branch name." />
-          </div>
-          {github?.githubAuth ? (
-            <InputSelect
-              {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
-              )}
-              placeholder="Repository Branch"
-              disabled={disabled}
-            >
-              <Fragment>
-                {!formik?.values?.workspaces?.[workspaceIndex]
-                  ?.robotRepositories?.[repositoryIndex]?.branch && (
-                  <option value=""></option>
+                placeholder="Repository"
+                disabled={disabled}
+              >
+                <Fragment>
+                  {!formik?.values?.workspaces?.[workspaceIndex]
+                    ?.robotRepositories?.[repositoryIndex]?.url && (
+                    <option value=""></option>
+                  )}
+                  {responseRepositories?.map((repo: any, index: number) => (
+                    <option key={index} value={repo?.html_url}>
+                      {repo?.owner?.login} - {repo?.name}
+                    </option>
+                  ))}
+                </Fragment>
+              </InputSelect>
+            ) : (
+              <InputText
+                {...formik.getFieldProps(
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
                 )}
-                {responseBranches?.map((branch: any, index: number) => (
-                  <option key={index} value={branch?.name}>
-                    {branch?.name}
-                  </option>
-                ))}
-              </Fragment>
-            </InputSelect>
-          ) : (
-            <InputText
-              {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
-              )}
-              disabled={disabled}
+                disabled={disabled}
+              />
+            )}
+            <InputError
+              error={
+                // @ts-ignore
+                formik?.errors?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.url
+              }
+              touched={
+                formik?.touched?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.url
+              }
             />
-          )}
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[
-                repositoryIndex
-              ]?.branch
-            }
-            touched={
-              formik?.touched?.workspaces?.[workspaceIndex]
-                ?.robotRepositories?.[repositoryIndex]?.branch
-            }
-          />
+          </div>
+          <div className="w-36">
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Branch Name:
+              <InfoTip content="Type a repository branch name." rightTip />
+            </div>
+            {github?.githubAuth ? (
+              <InputSelect
+                {...formik.getFieldProps(
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                )}
+                placeholder="Repository Branch"
+                disabled={disabled}
+              >
+                <Fragment>
+                  {!formik?.values?.workspaces?.[workspaceIndex]
+                    ?.robotRepositories?.[repositoryIndex]?.branch && (
+                    <option value=""></option>
+                  )}
+                  {responseBranches?.map((branch: any, index: number) => (
+                    <option key={index} value={branch?.name}>
+                      {branch?.name}
+                    </option>
+                  ))}
+                </Fragment>
+              </InputSelect>
+            ) : (
+              <InputSelect
+                {...formik.getFieldProps(
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                )}
+                disabled={disabled}
+              >
+                <Fragment>
+                  {!formik?.values?.workspaces?.[workspaceIndex]
+                    ?.robotRepositories?.[repositoryIndex]?.branch && (
+                    <option value=""></option>
+                  )}
+                  {responseBranches?.map((branch: any, index: number) => (
+                    <option key={index} value={branch}>
+                      {branch}
+                    </option>
+                  ))}
+                </Fragment>
+              </InputSelect>
+            )}
+            <InputError
+              error={
+                // @ts-ignore
+                formik?.errors?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.branch
+              }
+              touched={
+                formik?.touched?.workspaces?.[workspaceIndex]
+                  ?.robotRepositories?.[repositoryIndex]?.branch
+              }
+            />
+          </div>
         </div>
 
         <CreateRobotFormDeleteButton
