@@ -104,12 +104,12 @@ export default function CreateRobotFormRepositoryItem({
 
   useEffect(() => {
     if (
-      formik.initialValues.workspaces[workspaceIndex].robotRepositories[
+      formik.initialValues.workspaces?.[workspaceIndex]?.robotRepositories?.[
         repositoryIndex
-      ].url !==
-      formik.values.workspaces[workspaceIndex].robotRepositories[
+      ]?.url !==
+      formik.values.workspaces?.[workspaceIndex]?.robotRepositories?.[
         repositoryIndex
-      ].url
+      ]?.url
     ) {
       formik.setFieldValue(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
@@ -236,9 +236,9 @@ export default function CreateRobotFormRepositoryItem({
             )}
             <InputError
               error={
+                //prettier-ignore
                 // @ts-ignore
-                formik?.errors?.workspaces?.[workspaceIndex]
-                  ?.robotRepositories?.[repositoryIndex]?.url
+                formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[repositoryIndex]?.url
               }
               touched={
                 formik?.touched?.workspaces?.[workspaceIndex]
@@ -293,9 +293,9 @@ export default function CreateRobotFormRepositoryItem({
             )}
             <InputError
               error={
+                //prettier-ignore
                 // @ts-ignore
-                formik?.errors?.workspaces?.[workspaceIndex]
-                  ?.robotRepositories?.[repositoryIndex]?.branch
+                formik?.errors?.workspaces?.[workspaceIndex]?.robotRepositories?.[repositoryIndex]?.branch
               }
               touched={
                 formik?.touched?.workspaces?.[workspaceIndex]
