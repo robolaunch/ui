@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import StateCell from "../Cells/StateCell";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IRobotConnectionsViewer {
   ide: any;
@@ -44,18 +45,20 @@ export default function RobotConnectionsViewer({
 
   return (
     <div className="flex gap-6">
-      <div className="flex gap-1">
-        <span>ROS: </span>
-        <StateCell
-          state={
-            isRosConnected === true
-              ? "Connected"
-              : isRosConnected === false
-              ? "Warning"
-              : "Waiting"
-          }
-        />
-      </div>
+      {!envOnPremise && (
+        <div className="flex gap-1">
+          <span>ROS: </span>
+          <StateCell
+            state={
+              isRosConnected === true
+                ? "Connected"
+                : isRosConnected === false
+                ? "Warning"
+                : "Waiting"
+            }
+          />
+        </div>
+      )}
       <div className="flex gap-1">
         <span>IDE: </span>
         <StateCell

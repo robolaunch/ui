@@ -5,6 +5,7 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IRobotsList {
   reload: boolean;
@@ -79,7 +80,7 @@ export default function RobotsList({
               : !selectedState?.instance
               ? "Instance"
               : "Fleet"
-          } to view robots.`}
+          } to view ${envOnPremise ? "applications" : "robots"}.`}
         />
       ) : !Array.isArray(responseRobots) ? (
         <SidebarListLoader />

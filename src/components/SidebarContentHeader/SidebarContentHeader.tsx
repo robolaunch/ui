@@ -2,6 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface ISidebarContentHeader {
   itemCount?: number;
@@ -23,18 +24,28 @@ export default function SidebarContentLayout({
     if (sidebarState?.page === "roboticscloud") {
       return "Regions";
     }
+
     if (sidebarState?.page === "instance") {
       if (sidebarState?.instanceTab === "Cloud Instances") {
         return "Cloud Instances";
       }
       return "Physical Instances";
     }
+
+    if (sidebarState?.page === "fleet" && envOnPremise) {
+      return "Namespaces";
+    }
+
     switch (sidebarState?.page) {
       case "robot":
         if (url?.robotName) {
           return `${url.robotName} Robot Details`;
         }
-        return sidebarState?.isCreateMode ? "Robot Details" : "Robots";
+        return sidebarState?.isCreateMode
+          ? "Robot Details"
+          : envOnPremise
+          ? "Applications"
+          : "Robots";
       case "workspacesmanager":
         return "Robot Workspace Configuration";
       case "buildsmanager":

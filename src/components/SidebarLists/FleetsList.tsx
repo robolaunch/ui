@@ -6,6 +6,7 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IFleetsList {
   reload: boolean;
@@ -81,7 +82,7 @@ export default function FleetsList({
               : !selectedState?.roboticsCloud
               ? "Robotics Cloud"
               : "Instance"
-          } to view fleets.`}
+          } to view ${envOnPremise ? "namespaces" : "fleets"}.`}
         />
       ) : (
         <Fragment>

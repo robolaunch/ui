@@ -3,6 +3,7 @@ import useMain from "../../hooks/useMain";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface ISideBarMenuItem {
   type: string;
@@ -123,9 +124,13 @@ export default function SideBarMenuItem({
               : type === "instance"
               ? "Instances"
               : type === "fleet"
-              ? "Fleets"
+              ? envOnPremise
+                ? "Namespaces"
+                : "Fleets"
               : type === "robot"
-              ? "Robots"
+              ? envOnPremise
+                ? "Applications"
+                : "Robots"
               : type === "workspacesmanager"
               ? "Robot Workspace Managers"
               : type === "buildsmanager"

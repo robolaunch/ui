@@ -13,6 +13,7 @@ import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
+import { envOnPremise } from "../../../helpers/envProvider";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
@@ -145,7 +146,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "fleet",
-        header: "Fleet",
+        header: envOnPremise ? "Namespace" : "Fleet",
         sortable: false,
         filter: false,
         align: "left",
@@ -155,7 +156,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "robotServices",
-        header: "Robot Services",
+        header: `${envOnPremise ? "Application" : "Robot"} Services`,
         sortable: true,
         filter: true,
         align: "left",
@@ -170,7 +171,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "virtualState",
-        header: "Virtual Robot State",
+        header: `Virtual ${envOnPremise ? "Application" : "Robot"} State`,
         sortable: true,
         filter: true,
         align: "left",
@@ -180,7 +181,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "physicalState",
-        header: "Physical Robot State",
+        header: `Physical ${envOnPremise ? "Application" : "Robot"} State`,
         sortable: true,
         filter: true,
         align: "left",
@@ -352,7 +353,7 @@ export default function FleetDashboardPage(): ReactElement {
       table={
         <GeneralTable
           type="robot"
-          title="Robots"
+          title={envOnPremise ? "Applications" : "Robots"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseRobots) ? false : true}

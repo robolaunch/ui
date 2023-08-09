@@ -3,6 +3,7 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
+import { envOnPremise } from "../../helpers/envProvider";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -106,11 +107,19 @@ export default function PrivateSidebar(): ReactElement {
               />
               <SideBarMenuItem
                 type="fleet"
-                description="You can access all your fleets here."
+                description={
+                  envOnPremise
+                    ? "You can access all your namespaces here."
+                    : "You can access all your fleets here."
+                }
               />
               <SideBarMenuItem
                 type="robot"
-                description="You can access all your robots here."
+                description={
+                  envOnPremise
+                    ? "You can access all your applications here."
+                    : "You can access all your robots here."
+                }
               />
             </Fragment>
           )}

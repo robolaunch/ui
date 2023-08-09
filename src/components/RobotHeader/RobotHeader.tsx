@@ -10,6 +10,7 @@ import { BiJoystickButton } from "react-icons/bi";
 import Button from "../Button/Button";
 import RobotResource from "../RobotResource/RobotResource";
 import RobotConnectionsViewer from "../RobotConnectionsViewer/RobotConnectionsViewer";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IRobotHeader {
   responseRobot: any;
@@ -34,21 +35,24 @@ export default function RobotHeader({
       icon: <MdDashboard size={14} />,
       state: true,
     },
-    {
+
+    !envOnPremise && {
       name: "Task Management",
       icon: <MdMap size={14} />,
       state:
         isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
-    {
+
+    !envOnPremise && {
       name: "Teleoperation",
       icon: <BiJoystickButton size={14} />,
       state:
         isSettedCookie && responseRobot?.bridgeIngressEndpoint ? true : false,
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
-    {
+
+    !envOnPremise && {
       name: "Visualization",
       icon: <BsCameraVideoFill size={14} />,
       state:
@@ -155,56 +159,58 @@ export default function RobotHeader({
           </div>
         </div>
         <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
-          {tabs.map((tab: any, index: number) => {
-            return (
-              <li
-                className={`flex flex-col gap-3 ${
-                  tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
-                } ${tab?.hidden && "!hidden"}`}
-                onClick={() =>
-                  tab?.state &&
-                  !tab?.disabled &&
-                  handleChangeActiveTab(tab.name)
-                }
-                key={index}
-              >
-                <div
-                  className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max ${
-                    !tab?.disabled && "hover:scale-90"
-                  }  ${
-                    tab.name === activeTab
-                      ? "text-layer-primary-500"
-                      : "text-layer-light-500"
-                  } `}
+          {tabs
+            ?.filter((tab: any) => tab && tab)
+            .map((tab: any, index: number) => {
+              return (
+                <li
+                  className={`flex flex-col gap-3 ${
+                    tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
+                  } ${tab?.hidden && "!hidden"}`}
+                  onClick={() =>
+                    tab?.state &&
+                    !tab?.disabled &&
+                    handleChangeActiveTab(tab.name)
+                  }
+                  key={index}
                 >
-                  {!isSettedCookie ? (
-                    <ContentLoader
-                      speed={1}
-                      width={92}
-                      height={12}
-                      backgroundColor="#f6f6ef"
-                      foregroundColor="#e8e8e3"
-                    >
-                      <rect width="92" height="12" />
-                    </ContentLoader>
-                  ) : (
-                    <Fragment>
-                      {tab?.icon}
-                      <span>{tab.name}</span>
-                    </Fragment>
-                  )}
-                </div>
-                <div
-                  className={`w-full h-[2px] transition-all duration-500 
+                  <div
+                    className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max ${
+                      !tab?.disabled && "hover:scale-90"
+                    }  ${
+                      tab.name === activeTab
+                        ? "text-layer-primary-500"
+                        : "text-layer-light-500"
+                    } `}
+                  >
+                    {!isSettedCookie ? (
+                      <ContentLoader
+                        speed={1}
+                        width={92}
+                        height={12}
+                        backgroundColor="#f6f6ef"
+                        foregroundColor="#e8e8e3"
+                      >
+                        <rect width="92" height="12" />
+                      </ContentLoader>
+                    ) : (
+                      <Fragment>
+                        {tab?.icon}
+                        <span>{tab.name}</span>
+                      </Fragment>
+                    )}
+                  </div>
+                  <div
+                    className={`w-full h-[2px] transition-all duration-500 
                   ${
                     tab.name === activeTab
                       ? "bg-layer-primary-500"
                       : "bg-layer-light-100"
                   } `}
-                />
-              </li>
-            );
-          })}
+                  />
+                </li>
+              );
+            })}
         </ul>
       </Fragment>
     </CardLayout>

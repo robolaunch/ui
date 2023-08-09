@@ -15,6 +15,7 @@ import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import { SiKubernetes } from "react-icons/si";
 import { RiCpuLine } from "react-icons/ri";
+import { envOnPremise } from "../../../helpers/envProvider";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
@@ -118,7 +119,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       },
       {
         key: "state",
-        header: "Fleet State",
+        header: `${envOnPremise ? "Namespace" : "Fleet"} State`,
         sortable: false,
         filter: false,
         align: "left",
@@ -303,7 +304,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       table={
         <GeneralTable
           type="fleet"
-          title="Fleets"
+          title={envOnPremise ? "Namespaces" : "Fleets"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseFleets) ? false : true}

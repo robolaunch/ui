@@ -387,7 +387,6 @@ export default function CreateRobotFormStep3({
               <div className="flex flex-col gap-2">
                 {robotData?.step3?.robotBuildSteps?.map(
                   (buildStep: any, buildStepIndex: number) => {
-                    console.log(buildStep);
                     return (
                       <CreateRobotFormBuildStepItem
                         key={buildStepIndex}

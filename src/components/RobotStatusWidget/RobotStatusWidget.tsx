@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -32,8 +33,8 @@ export default function RobotStatusWidget({
 
   return (
     <WidgetLayout
-      title={`Robot Status`}
-      subtitle={`Robot Status`}
+      title={`${envOnPremise ? "Application" : "Robot"} Status`}
+      subtitle={`${envOnPremise ? "Application" : "Robot"} Status`}
       icon={<VscHistory size={20} className="text-layer-light-700" />}
     >
       <div className="flex items-center justify-around w-full h-full">

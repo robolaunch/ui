@@ -60,9 +60,6 @@ export default function SidebarContentLayout(): ReactElement {
             ? "Add"
             : "Create"
         } ${(() => {
-          if (sidebarState?.page === "roboticscloud") {
-            return "Region";
-          }
           if (sidebarState?.page === "instance") {
             if (sidebarState?.instanceTab === "Cloud Instances") {
               return "Cloud Instance";
@@ -70,6 +67,19 @@ export default function SidebarContentLayout(): ReactElement {
               return "Physical Instance";
             }
           }
+
+          if (sidebarState?.page === "roboticscloud") {
+            return "Region";
+          }
+
+          if (sidebarState?.page === "fleet" && envOnPremise) {
+            return "Namespace";
+          }
+
+          if (sidebarState?.page === "robot" && envOnPremise) {
+            return "Application";
+          }
+
           return stringCapitalization({
             str: sidebarState?.page as string,
           });
