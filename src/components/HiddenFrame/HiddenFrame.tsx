@@ -8,20 +8,26 @@ export default function HiddenFrame({ url }: IHiddenFrame): ReactElement {
   const [active, setActive] = useState<boolean>(true);
 
   useEffect(() => {
-    setInterval(() => {
-      url && setActive((prev) => !prev);
-    }, 30000);
+    const timer = setInterval(() => {
+      url && setActive(!active);
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, [active, url]);
 
   return (
     <Fragment>
-      <iframe
-        title="iframe"
-        allow="clipboard-read"
-        className="absolute  grid-cols-1 gap-6"
-        src={url ? url.replace("wss://", "https://") + "health" : ""}
-        onLoad={() => console.log("iframe loaded")}
-      />
+      {active && (
+        <iframe
+          title="iframe"
+          allow="clipboard-read"
+          className="absolute -top-[9999px]"
+          src={url ? url.replace("wss://", "https://") + "health" : ""}
+          onLoad={() => console.log("iframe loaded")}
+        />
+      )}
     </Fragment>
   );
 }
