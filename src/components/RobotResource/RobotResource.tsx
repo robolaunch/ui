@@ -16,7 +16,7 @@ export default function RobotResource({
 
   return (
     <div className="flex flex-col items-end">
-      <div className="flex items-center gap-3 pt-6">
+      <div className="flex items-center gap-3 pt-2">
         <span className="text-xs text-center font-semibold">
           Virtual Resources:
         </span>

@@ -9,12 +9,14 @@ import ContentLoader from "react-content-loader";
 import { BiJoystickButton } from "react-icons/bi";
 import Button from "../Button/Button";
 import RobotResource from "../RobotResource/RobotResource";
+import RobotConnectionsViewer from "../RobotConnectionsViewer/RobotConnectionsViewer";
 
 interface IRobotHeader {
   responseRobot: any;
-  isSettedCookie: boolean;
+  isSettedCookie: boolean | null;
   handleChangeActiveTab: any;
   activeTab: string;
+  ros: any;
 }
 
 export default function RobotHeader({
@@ -22,6 +24,7 @@ export default function RobotHeader({
   isSettedCookie,
   handleChangeActiveTab,
   activeTab,
+  ros,
 }: IRobotHeader): ReactElement {
   const url = useParams();
 
@@ -105,29 +108,17 @@ export default function RobotHeader({
                 {url?.organizationName} Organization
               </span>
             </span>
+
             <span className="flex gap-2 items-center">
               <IoLocationOutline size={16} />
               <span className="text-xs font-light">Ankara, Turkiye</span>
             </span>
           </div>
-          <div className="hidden md:flex text-xs font-medium text-layer-dark-400  gap-8">
+
+          <div className="hidden md:flex text-xs font-medium text-layer-dark-400 gap-8">
             <div className="h-full flex flex-col items-end gap-4">
               <div className="flex gap-2">
-                <div className="flex  items-center rounded-lg ">
-                  {/* <span>Code Editor</span>
-                  <InputToggle
-                    disabled
-                    icons={false}
-                    checked={responseRobot?.ideIngressEndpoint}
-                    onChange={() => {
-                      handleSwitchToggle({
-                        vdi: responseRobot?.vdiIngressEndpoint,
-                        ide: !responseRobot?.ideIngressEndpoint,
-                        bridge: responseRobot?.bridgeIngressEndpoint,
-                      });
-                    }}
-                  /> */}
-
+                <div className="flex  items-center rounded-lg">
                   <a
                     target="_blank"
                     rel="noreferrer"
@@ -139,36 +130,7 @@ export default function RobotHeader({
                     />
                   </a>
                 </div>
-                {/* <div className="flex  items-center rounded-lg p-2">
-                  <span>ROS2 Bridge</span>
-                  <InputToggle
-                    disabled
-                    icons={false}
-                    checked={responseRobot?.bridgeIngressEndpoint}
-                    onChange={() => {
-                      handleSwitchToggle({
-                        vdi: responseRobot?.vdiIngressEndpoint,
-                        ide: responseRobot?.ideIngressEndpoint,
-                        bridge: !responseRobot?.bridgeIngressEndpoint,
-                      });
-                    }}
-                  />
-                </div> */}
-                <div className="flex  items-center rounded-lg p-2">
-                  {/* <span>Remote Desktop</span>
-                  <InputToggle
-                    disabled
-                    icons={false}
-                    checked={responseRobot?.vdiIngressEndpoint}
-                    onChange={() => {
-                      handleSwitchToggle({
-                        vdi: !responseRobot?.vdiIngressEndpoint,
-                        ide: responseRobot?.ideIngressEndpoint,
-                        bridge: responseRobot?.bridgeIngressEndpoint,
-                      });
-                    }}
-                  /> */}
-
+                <div className="flex items-center rounded-lg p-2">
                   <a
                     target="_blank"
                     rel="noreferrer"
@@ -183,7 +145,11 @@ export default function RobotHeader({
                   </a>
                 </div>
               </div>
-
+              <RobotConnectionsViewer
+                ide={isSettedCookie}
+                vdiURL={responseRobot?.vdiIngressEndpoint}
+                ros={ros}
+              />
               <RobotResource responseRobot={responseRobot} />
             </div>
           </div>

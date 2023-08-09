@@ -29,7 +29,7 @@ export default function RobotPage(): ReactElement {
   const [activeTab, setActiveTab] =
     useState<IrobotPages["activeTab"]>("Overview");
 
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean>(false);
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   const { urls } = useAppSelector((state) => state.robot);
   const { pagesState, sidebarState } = useMain();
@@ -265,6 +265,7 @@ export default function RobotPage(): ReactElement {
           isSettedCookie={isSettedCookie}
           activeTab={activeTab}
           handleChangeActiveTab={handleChangeActiveTab}
+          ros={ros}
         />
       </div>
 

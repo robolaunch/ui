@@ -3,7 +3,7 @@ import { useAppSelector } from "../../hooks/redux";
 import ROSLIB from "roslib";
 
 interface IRosConnector {
-  isSettedCookie: boolean;
+  isSettedCookie: boolean | null;
   ros: any;
   setRos: any;
   responseRobot: any;
@@ -25,7 +25,6 @@ export default function RosConnector({
     if (
       isSettedCookie &&
       responseRobot &&
-      process.env.NODE_ENV === "production" &&
       responseRobot?.bridgeIngressEndpoint.split(":")[0] === "wss"
     ) {
       const ros = new ROSLIB.Ros({
