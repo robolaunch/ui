@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useKeycloak } from "@react-keycloak/web";
 import Gravatar from "react-gravatar";
 import { handleLogout } from "../../functions/GeneralFunctions";
-import { envTrialApp } from "../../helpers/envProvider";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -59,11 +58,9 @@ export default function HeaderDropdownMenu(): ReactElement {
               </div>
             </li>
           </Link>
-          {!envTrialApp && (
-            <Link onClick={() => setIsOpen(false)} to={`/profile`}>
-              <li className={liClassName}>Account Settings</li>
-            </Link>
-          )}
+          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
+            <li className={liClassName}>Account Settings</li>
+          </Link>
           <li
             className={liClassName}
             onClick={() => {

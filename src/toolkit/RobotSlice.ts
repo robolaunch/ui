@@ -19,7 +19,6 @@ import {
   IdeleteLaunchManagerRequest,
   IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
-import { envTrialApp } from "../helpers/envProvider";
 
 export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
@@ -389,11 +388,7 @@ export const RobotSlice = createSlice({
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);
         } else {
-          toast.success(
-            envTrialApp
-              ? "Application is creating..."
-              : action?.payload?.message
-          );
+          toast.success(action?.payload?.message);
         }
       })
       .addCase(createRobot.rejected, () => {

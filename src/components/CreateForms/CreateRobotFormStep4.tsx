@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import InfoTip from "../InfoTip/InfoTip";
 import * as Yup from "yup";
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -109,10 +110,10 @@ export default function CreateRobotFormStep4({
         !isImportRobot && handleGetBuildManager();
       }, 10000);
 
+      console.log(responseBuildManager);
       if (
         !responseBuildManager?.robotClusters?.filter(
-          (robotCluster: any) =>
-            robotCluster?.buildManagerStatus !== "EnvironmentReady"
+          (robotCluster: any) => robotCluster?.buildManagerStatus !== "Ready"
         )?.length &&
         !isImportRobot
       ) {
@@ -169,7 +170,7 @@ export default function CreateRobotFormStep4({
       }
     );
   }
-
+  console.log(responseBuildManager);
   return (
     <CreateRobotFormLoader
       isLoading={
@@ -326,7 +327,7 @@ export default function CreateRobotFormStep4({
             formik?.errors?.instancesName
           }
         />
-        <div className="flex flex-col gap-2 pb-12">
+        <div className="flex flex-col gap-2">
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Environment Variables:
             <InfoTip content="Type Environment Variables" />
@@ -348,18 +349,25 @@ export default function CreateRobotFormStep4({
           />
         </div>
 
-        {!isImportRobot ? (
-          <Button
-            type="submit"
-            disabled={!formik?.isValid || formik.isSubmitting}
-            className="w-full !h-11 text-xs"
-            text={url?.robotName ? `Add Launch Step` : `Create Robot`}
-          />
-        ) : (
-          <RobotDeleteLaunchManagerButton
-            launchManagerName={formik.values?.name}
-          />
-        )}
+        <div className="flex gap-2 mt-10">
+          {!isImportRobot ? (
+            <Fragment>
+              {!url?.robotName && (
+                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+              )}
+              <Button
+                type="submit"
+                disabled={!formik?.isValid || formik.isSubmitting}
+                className="w-full !h-11 text-xs"
+                text={url?.robotName ? `Add Launch Step` : `Create Robot`}
+              />
+            </Fragment>
+          ) : (
+            <RobotDeleteLaunchManagerButton
+              launchManagerName={formik.values?.name}
+            />
+          )}
+        </div>
       </form>
     </CreateRobotFormLoader>
   );

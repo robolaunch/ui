@@ -18,7 +18,7 @@ export default function RobotDeleteBuildManagerButton({
       <Button
         type="button"
         disabled={disabled}
-        className="w-full !h-11 text-xs !bg-transparent hover:!bg-red-100 !text-red-500 !border !border-red-500 focus:!ring-red-300 mt-8"
+        className="w-full !h-11 text-xs !bg-transparent hover:!bg-red-100 !text-red-500 !border !border-red-500 focus:!ring-red-300"
         text={
           submitting ? (
             <img

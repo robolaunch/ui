@@ -85,6 +85,14 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
             <InfoTip content="Launch Steps" />
           </div>
           {responseRobotLaunchManagers?.map((step: any, index: number) => {
+            console.log(
+              "xxxxxxx",
+              step.robotClusters.filter(
+                (cluster: any) =>
+                  cluster?.name === robotData.step1.physicalInstanceName &&
+                  cluster.launchManagerStatus
+              )
+            );
             return (
               <UpdateLaunchAccordion
                 id={index}
@@ -96,21 +104,38 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                     </span>
 
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="flex gap-1.5">
-                        <span
-                          title={`Launch State of Cloud Instance`}
-                          className="font-medium"
-                        >
-                          Virtual:
-                        </span>
-                        <StateCell
-                          state={
-                            step?.robotClusters?.[0]?.launchManagerStatus ||
-                            "Pending"
-                          }
-                        />
-                      </div>
-                      {step?.robotClusters?.[1]?.launchManagerStatus && (
+                      {step.robotClusters.filter(
+                        (cluster: any) =>
+                          cluster?.name !==
+                            robotData.step1.physicalInstanceName &&
+                          cluster.launchManagerStatus
+                      )?.[0]?.launchManagerStatus && (
+                        <div className="flex gap-1.5">
+                          <span
+                            title={`Launch State of Cloud Instance`}
+                            className="font-medium"
+                          >
+                            Virtual:
+                          </span>
+                          <StateCell
+                            state={
+                              step.robotClusters.filter(
+                                (cluster: any) =>
+                                  cluster?.name !==
+                                    robotData.step1.physicalInstanceName &&
+                                  cluster.launchManagerStatus
+                              )?.[0]?.launchManagerStatus || "Pending"
+                            }
+                          />
+                        </div>
+                      )}
+
+                      {step.robotClusters.filter(
+                        (cluster: any) =>
+                          cluster?.name ===
+                            robotData.step1.physicalInstanceName &&
+                          cluster.launchManagerStatus
+                      )?.[0]?.launchManagerStatus && (
                         <div className="flex gap-1.5">
                           <span
                             title={`Launch State of Physical Instance`}
@@ -120,8 +145,12 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                           </span>
                           <StateCell
                             state={
-                              step?.robotClusters[1]?.launchManagerStatus ||
-                              "Pending"
+                              step.robotClusters.filter(
+                                (cluster: any) =>
+                                  cluster?.name ===
+                                    robotData.step1.physicalInstanceName &&
+                                  cluster.launchManagerStatus
+                              )?.[0]?.launchManagerStatus || "Pending"
                             }
                           />
                         </div>

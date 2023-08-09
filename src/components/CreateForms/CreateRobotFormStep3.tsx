@@ -17,6 +17,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -410,12 +411,14 @@ export default function CreateRobotFormStep3({
               disabled={formik?.isSubmitting}
             />
 
-            <div className="w-full flex gap-2">
-              {isImportRobot && (
+            <div className="w-full flex gap-2 mt-10">
+              {isImportRobot ? (
                 <RobotDeleteBuildManagerButton
                   disabled={formik?.isSubmitting}
                   submitting={formik?.isSubmitting}
                 />
+              ) : (
+                <CreateRobotFormCancelButton disabled={formik?.isSubmitting} />
               )}
               <Button
                 type="submit"
@@ -425,7 +428,7 @@ export default function CreateRobotFormStep3({
                   JSON.stringify(formik.initialValues) ===
                     JSON.stringify(formik.values)
                 }
-                className="w-full !h-11 text-xs mt-8"
+                className="w-full !h-11 text-xs"
                 text={
                   formik.isSubmitting ? (
                     <img

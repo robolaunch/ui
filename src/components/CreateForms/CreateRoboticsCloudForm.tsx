@@ -10,6 +10,7 @@ import { createRoboticsCloud } from "../../toolkit/RoboticsCloudSlice";
 import { toast } from "sonner";
 import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
+import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
 export default function CreateRoboticsCloudForm(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -153,7 +154,8 @@ export default function CreateRoboticsCloudForm(): ReactElement {
         </div>
       )}
 
-      <div>
+      <div className="flex gap-2">
+        <CreateFormCancelButton disabled={formik.isSubmitting} />
         <Button
           type="submit"
           text="Create a new Region"

@@ -12,6 +12,7 @@ import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoade
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -197,31 +198,36 @@ export default function CreateRobotFormStep2({
           onClick={() => handleAddWorkspaceStep(formik)}
         />
 
-        <Button
-          type="submit"
-          disabled={
-            !formik?.isValid ||
-            formik.isSubmitting ||
-            JSON.stringify(formik.initialValues) ===
-              JSON.stringify(formik.values)
-          }
-          className="w-full !h-11 text-xs mt-8"
-          text={
-            formik.isSubmitting ? (
-              <img
-                className="w-10 h-10"
-                src="/svg/general/loading.svg"
-                alt="loading"
-              />
-            ) : isImportRobot ? (
-              `Update Robot`
-            ) : robotData?.step1?.isDevelopmentMode ? (
-              `Create Robot`
-            ) : (
-              `Next Step`
-            )
-          }
-        />
+        <div className="flex gap-2 mt-10">
+          {!isImportRobot && (
+            <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+          )}
+          <Button
+            type="submit"
+            disabled={
+              !formik?.isValid ||
+              formik.isSubmitting ||
+              JSON.stringify(formik.initialValues) ===
+                JSON.stringify(formik.values)
+            }
+            className="w-full !h-11 text-xs"
+            text={
+              formik.isSubmitting ? (
+                <img
+                  className="w-10 h-10"
+                  src="/svg/general/loading.svg"
+                  alt="loading"
+                />
+              ) : isImportRobot ? (
+                `Update Robot`
+              ) : robotData?.step1?.isDevelopmentMode ? (
+                `Create Robot`
+              ) : (
+                `Next Step`
+              )
+            }
+          />
+        </div>
       </form>
     </CreateRobotFormLoader>
   );

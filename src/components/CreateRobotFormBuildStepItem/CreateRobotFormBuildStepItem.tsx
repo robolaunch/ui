@@ -51,8 +51,8 @@ export default function CreateRobotFormBuildStepItem({
               ? buildStep?.name + ` (Build Step #${buildStepIndex + 1})`
               : `Build Step #${buildStepIndex + 1}`}
           </span>
-          <div className="flex items-center gap-2 text-xs">
-            {buildStep?.buildStatus && (
+          {isImportRobot && (
+            <div className="flex items-center gap-2 text-xs">
               <div className="flex gap-1.5">
                 <span
                   title={`Launch State of Cloud Instance`}
@@ -62,8 +62,8 @@ export default function CreateRobotFormBuildStepItem({
                 </span>
                 <StateCell state={buildStep?.buildStatus || "Waiting"} />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       }
     >

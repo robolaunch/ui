@@ -77,7 +77,28 @@ export default function RobotHeader({
       <Fragment>
         <div className="h-28 flex items-center justify-between">
           <div className="h-full flex flex-col justify-around">
-            <span className="text-lg font-medium">{url?.robotName}</span>
+            <div className="flex gap-2 items-center">
+              <span className="text-lg font-medium">{url?.robotName}</span>
+
+              <div
+                className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+              >
+                {responseRobot?.robotClusters?.length === 1
+                  ? "Virtual Robot"
+                  : (responseRobot?.robotClusters?.length === 2 &&
+                      "Physical Robot") || (
+                      <ContentLoader
+                        speed={1}
+                        width={64}
+                        height={18}
+                        backgroundColor="#f5e5ff"
+                        foregroundColor="#fbf4ff"
+                      >
+                        <rect width="64" height="18" />
+                      </ContentLoader>
+                    )}
+              </div>
+            </div>
             <span className="flex gap-2 items-center">
               <AiOutlineTeam size={16} />
               <span className="text-xs font-light">

@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import { createOrganization } from "../../toolkit/OrganizationSlice";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
+import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
 export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useMain();
@@ -51,13 +52,16 @@ export default function CreateOrganizationForm(): ReactElement {
         <InputError error={formik.errors.name} touched={formik.errors.name} />
       </div>
 
-      <Button
-        type="submit"
-        text="Create a new organization"
-        disabled={formik.isSubmitting || !formik.isValid}
-        loading={formik.isSubmitting}
-        className="!h-11"
-      />
+      <div className="flex gap-2">
+        <CreateFormCancelButton disabled={formik.isSubmitting} />
+        <Button
+          type="submit"
+          text="Create a new organization"
+          disabled={formik.isSubmitting || !formik.isValid}
+          loading={formik.isSubmitting}
+          className="!h-11"
+        />
+      </div>
     </form>
   );
 }

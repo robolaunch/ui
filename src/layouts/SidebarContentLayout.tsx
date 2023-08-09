@@ -23,6 +23,7 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import { envOnPremise } from "../helpers/envProvider";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -224,7 +225,7 @@ export default function SidebarContentLayout(): ReactElement {
   return (
     <div
       className={`fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast z-[32] border-r border-layer-light-200 rounded-r-lg ${
-        url?.robotName ? "px-8 pt-8 pb-2" : "p-8"
+        url?.robotName || sidebarState?.isCreateMode ? "px-8 pt-8 pb-2" : "p-8"
       }`}
     >
       <SidebarContentHeader
@@ -333,17 +334,45 @@ export default function SidebarContentLayout(): ReactElement {
           })()}
         </div>
       </div>
+      {(() => {
+        if (url.robotName) {
+          return;
+        }
 
-      {!url?.robotName && (
-        <Button
-          className={`${
-            sidebarState?.isCreateMode &&
-            "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
-          }`}
-          text={buttonTextGenerator()}
-          onClick={() => handleCreateButton()}
-        />
-      )}
+        if (sidebarState?.isCreateMode) {
+          return;
+        }
+
+        if (
+          envOnPremise &&
+          sidebarState?.page !== "fleet" &&
+          sidebarState?.page !== "robot"
+        ) {
+          return;
+        }
+
+        if (
+          sidebarState?.isCreateMode &&
+          (sidebarState?.page === "robot" ||
+            sidebarState?.page === "workspacesmanager" ||
+            sidebarState?.page === "buildsmanager" ||
+            sidebarState?.page === "launchsmanager")
+        ) {
+          return;
+        }
+
+        return (
+          <Button
+            className={`${
+              sidebarState?.isCreateMode
+                ? "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
+                : ""
+            }`}
+            text={buttonTextGenerator()}
+            onClick={() => handleCreateButton()}
+          />
+        );
+      })()}
     </div>
   );
 }

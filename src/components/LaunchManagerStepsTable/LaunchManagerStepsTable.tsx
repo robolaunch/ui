@@ -70,13 +70,13 @@ export default function LaunchManagerStepsTable({
             <div className="flex flex-col gap-2">
               {rowData?.state?.[0] && (
                 <div className="flex gap-2">
-                  <span className="text-xs">CI:</span>
+                  <span className="text-xs">Cloud Robot:</span>
                   <StateCell state={rowData?.state?.[0]} />
                 </div>
               )}
               {rowData?.state?.[1] && (
                 <div className="flex gap-2">
-                  <span className="text-xs">P I:</span>
+                  <span className="text-xs">Physical Robot:</span>
                   <StateCell state={rowData?.state?.[1]} />
                 </div>
               )}
@@ -100,7 +100,7 @@ export default function LaunchManagerStepsTable({
   return (
     <GeneralTable
       type="launchsmanager"
-      title="Launch Manager Steps"
+      title="Launch Managers"
       data={data}
       columns={columns}
       loading={Array.isArray(responseLaunchManagers) ? false : true}

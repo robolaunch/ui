@@ -48,25 +48,6 @@ export const getInstances = createAsyncThunk(
   }
 );
 
-// export const getInstanceState = createAsyncThunk(
-//   "instance/getInstancestate",
-//   async (values: any) => {
-//     const response = await createInstanceApi.getCloudState({
-//       name: values?.name,
-//       organizationId: values?.organizationId,
-//       roboticsClouds: [
-//         {
-//           name: values?.roboticsCloudName,
-//           cloudInstances: [
-//             { instanceId: values?.instanceId, region: values?.region },
-//           ],
-//         },
-//       ],
-//     });
-//     return response.data;
-//   }
-// );
-
 export const stopInstance = createAsyncThunk(
   "instance/stopInstance",
   async (values: any) => {

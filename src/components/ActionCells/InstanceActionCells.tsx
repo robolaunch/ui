@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IInstanceActionCells {
   data: any;
@@ -22,24 +23,39 @@ export default function InstanceActionCells({
     <Fragment>
       <div className="card flex gap-4 float-right">
         <Button
-          className={`!w-8 !h-8 !bg-transparent !border ${
+          className={`!w-8 !h-8 !bg-transparent !border disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-layer-primary-500"
               : "!border-layer-dark-100"
           }`}
           text={
             data?.state === "running" ? (
-              <BiStopCircle size={20} className="text-layer-primary-500" />
+              <BiStopCircle
+                size={20}
+                className={`${
+                  envOnPremise
+                    ? "text-layer-light-500"
+                    : "text-layer-primary-500"
+                }`}
+              />
             ) : data?.state === "stopped" ? (
-              <BiPlayCircle size={20} className="text-layer-primary-500" />
+              <BiPlayCircle
+                size={20}
+                className={`${
+                  envOnPremise
+                    ? "text-layer-light-500"
+                    : "text-layer-primary-500"
+                }`}
+              />
             ) : (
               <img src="/svg/general/loading.svg" alt="loading" />
             )
           }
           disabled={
-            data?.state === "running" || data?.state === "stopped"
+            envOnPremise ||
+            (data?.state === "running" || data?.state === "stopped"
               ? false
-              : true
+              : true)
           }
           onClick={
             data?.state === "running" || data?.state === "stopped"
@@ -48,18 +64,23 @@ export default function InstanceActionCells({
           }
         />
         <Button
-          className={`!w-8 !h-8 !bg-transparent !border  ${
+          className={`!w-8 !h-8 !bg-transparent !border disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-red-600"
               : "!border-layer-dark-100"
           }`}
           text={
             data?.state === "running" || data?.state === "stopped" ? (
-              <BiTrash className="text-red-600" />
+              <BiTrash
+                className={`${
+                  envOnPremise ? "text-layer-light-500" : "text-red-600"
+                }`}
+              />
             ) : (
               <img src="/svg/general/loading.svg" alt="loading" />
             )
           }
+          disabled={envOnPremise}
           onClick={() => setIsTerminateModalVisible(true)}
         />
       </div>

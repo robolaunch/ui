@@ -41,6 +41,8 @@ export default function BuildManagerStepsTable({
     ]
   );
 
+  console.log(responseBuildManager);
+
   const columns: any = useMemo(
     () => [
       {
@@ -74,7 +76,8 @@ export default function BuildManagerStepsTable({
           return <TickCell tick={rowData?.isRanCloud} />;
         },
       },
-      {
+
+      responseBuildManager?.robotClusters?.length > 1 && {
         key: "isRanPhysical",
         header: "Process Scope (Physical Instance)",
         align: "center",
@@ -106,13 +109,13 @@ export default function BuildManagerStepsTable({
         },
       },
     ],
-    [url?.instanceName]
+    [responseBuildManager, url?.instanceName]
   );
 
   return (
     <GeneralTable
       type="buildsmanager"
-      title="Build Manager Steps"
+      title="Build Managers"
       data={data}
       columns={columns}
       loading={!responseBuildManager}

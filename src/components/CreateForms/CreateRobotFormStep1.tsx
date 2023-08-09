@@ -19,6 +19,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -144,7 +145,7 @@ export default function CreateRobotFormStep1({
         >
           <form
             onSubmit={formik.handleSubmit}
-            className="flex flex-col gap-3 animate__animated animate__fadeIn"
+            className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
           >
             {/* RobotName */}
             <div>
@@ -328,37 +329,38 @@ export default function CreateRobotFormStep1({
                       disabled={formik.isSubmitting || isImportRobot}
                     />
                   </div>
-                  {/* Seperator */}
-                  <Seperator />
-                  {/* Seperator */}
                 </Fragment>
               )}
               {/* Development Mode */}
             </div>
-
-            <Button
-              disabled={
-                !formik.isValid ||
-                formik.isSubmitting ||
-                JSON.stringify(formik.initialValues) ===
-                  JSON.stringify(formik.values)
-              }
-              type="submit"
-              className="!h-11 text-xs t-4 mt-8"
-              text={
-                formik.isSubmitting ? (
-                  <img
-                    className="w-10 h-10"
-                    src="/svg/general/loading.svg"
-                    alt="loading"
-                  />
-                ) : isImportRobot ? (
-                  "Update Robot"
-                ) : (
-                  `Next Step`
-                )
-              }
-            />
+            <div className="flex gap-2 mt-10 ">
+              {!isImportRobot && (
+                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+              )}
+              <Button
+                disabled={
+                  !formik.isValid ||
+                  formik.isSubmitting ||
+                  JSON.stringify(formik.initialValues) ===
+                    JSON.stringify(formik.values)
+                }
+                type="submit"
+                className="!h-11 text-xs"
+                text={
+                  formik.isSubmitting ? (
+                    <img
+                      className="w-10 h-10"
+                      src="/svg/general/loading.svg"
+                      alt="loading"
+                    />
+                  ) : isImportRobot ? (
+                    "Update Robot"
+                  ) : (
+                    `Next Step`
+                  )
+                }
+              />
+            </div>
           </form>
         </CreateRobotFormLoader>
       }

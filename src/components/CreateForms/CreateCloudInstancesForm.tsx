@@ -10,6 +10,7 @@ import { BsCpu } from "react-icons/bs";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
+import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
 export default function CreateCloudInstancesForm(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -109,7 +110,8 @@ export default function CreateCloudInstancesForm(): ReactElement {
         <InputError error={formik?.errors?.instanceType} touched={true} />
       </div>
 
-      <div>
+      <div className="flex gap-2">
+        <CreateFormCancelButton disabled={formik.isSubmitting} />
         <Button
           type="submit"
           text="Create a new Cloud Instance"

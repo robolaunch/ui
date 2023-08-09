@@ -1,2 +1,2 @@
-export const envTrialApp =
-  process.env.REACT_APP_TRIAL_ENABLED === "true" ? true : false;
+export const envOnPremise: boolean =
+  process.env.REACT_APP_ON_PREMISE === "true" ? true : false;

@@ -10,7 +10,7 @@ export default function Terminal({ value, ref }: ITerminal): ReactElement {
   const [terminalValue, setTerminalValue] = useState<string[]>([]);
 
   useEffect(() => {
-    const lines = value.split("\n");
+    const lines = value?.split("\n");
     setTerminalValue(lines);
   }, [value]);
 
@@ -22,7 +22,7 @@ export default function Terminal({ value, ref }: ITerminal): ReactElement {
         theme={"material-dark"}
         welcomeMessage={
           <Fragment>
-            {terminalValue.map((line: string, index: number) => {
+            {terminalValue?.map((line: string, index: number) => {
               return (
                 <p key={index} className="!text-xs">
                   {line}
