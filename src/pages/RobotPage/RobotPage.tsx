@@ -15,6 +15,7 @@ import { useAppSelector } from "../../hooks/redux";
 import { useParams } from "react-router-dom";
 import Overview from "./Overview/Overview";
 import useMain from "../../hooks/useMain";
+import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -353,6 +354,7 @@ export default function RobotPage(): ReactElement {
         topicList={topicList}
         setTopicList={setTopicList}
       />
+      <HiddenFrame url={responseRobot?.vdiIngressEndpoint} />
     </div>
   );
 }

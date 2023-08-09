@@ -1,32 +1,27 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 
 interface IHiddenFrame {
   url: string;
 }
 
 export default function HiddenFrame({ url }: IHiddenFrame): ReactElement {
-  const [connection, setConnection] = useState<boolean>(true);
+  const [active, setActive] = useState<boolean>(true);
 
   useEffect(() => {
     setInterval(() => {
-      setConnection(false);
-      console.log("frame active");
-
-      setTimeout(() => {
-        setConnection(true);
-        console.log("frame deactive");
-      }, 5000);
-    }, 100000);
-  }, []);
+      url && setActive((prev) => !prev);
+    }, 30000);
+  }, [active, url]);
 
   return (
-    <iframe
-      title="iframe"
-      sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-top-navigation allow-downloads"
-      allow="microphone; camera; usb; midi; encrypted-media; autoplay; clipboard-write; clipboard-read"
-      className="absolute -top-[9999px] grid-cols-1 gap-6"
-      src={connection ? url || "" : ""}
-      onLoad={() => console.log("iframe loaded")}
-    />
+    <Fragment>
+      <iframe
+        title="iframe"
+        allow="clipboard-read"
+        className="absolute  grid-cols-1 gap-6"
+        src={url ? url.replace("wss://", "https://") + "health" : ""}
+        onLoad={() => console.log("iframe loaded")}
+      />
+    </Fragment>
   );
 }

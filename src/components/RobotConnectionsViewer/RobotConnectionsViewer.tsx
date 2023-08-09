@@ -47,7 +47,7 @@ export default function RobotConnectionsViewer({
     <div className="flex gap-6">
       {!envOnPremise && (
         <div className="flex gap-1">
-          <span>ROS: </span>
+          <span className="text-xs font-semibold">ROS: </span>
           <StateCell
             state={
               isRosConnected === true
@@ -60,7 +60,7 @@ export default function RobotConnectionsViewer({
         </div>
       )}
       <div className="flex gap-1">
-        <span>IDE: </span>
+        <span className="text-xs font-semibold">IDE: </span>
         <StateCell
           state={
             ide === true ? "Connected" : ide === false ? "Warning" : "Waiting"
@@ -68,7 +68,7 @@ export default function RobotConnectionsViewer({
         />
       </div>
       <div className="flex gap-1">
-        <span>VDI: </span>
+        <span className="text-xs font-semibold">VDI: </span>
         <StateCell
           state={
             isVDIConnected === true
