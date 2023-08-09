@@ -91,9 +91,9 @@ export default function RobotHeader({
                 className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
               >
                 {responseRobot?.robotClusters?.length === 1
-                  ? "Virtual Robot"
+                  ? `Virtual ${envOnPremise ? "Application" : "Robot"}`
                   : (responseRobot?.robotClusters?.length === 2 &&
-                      "Physical Robot") || (
+                      `Physical ${envOnPremise ? "Application" : "Robot"}`) || (
                       <ContentLoader
                         speed={1}
                         width={64}

@@ -13,6 +13,7 @@ import { createRobot } from "../../toolkit/RobotSlice";
 import { useNavigate } from "react-router-dom";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface IDeployApplicationSelector {
   item: any;
@@ -412,7 +413,9 @@ export default function DeployApplicationSelector({
             src={`/svg/general/fleet/fleet-gray.svg`}
             alt="robolaunch"
           />
-          <span className="capitalize text-xs">Fleet</span>
+          <span className="capitalize text-xs">
+            {envOnPremise ? "Namespace" : "Fleet"}
+          </span>
         </div>
         <div className="flex items-center gap-3">
           {!formik?.values?.fleet && (
