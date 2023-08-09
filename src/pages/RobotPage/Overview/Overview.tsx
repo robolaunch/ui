@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import Button from "../../../components/Button/Button";
@@ -67,14 +67,20 @@ export default function Overview({
       <div className="col-span-full">
         <WorkspacesTable responseRobot={responseRobot} />
       </div>
-      <div className="col-span-full">
-        <BuildManagerStepsTable responseBuildManager={responseBuildManager} />
-      </div>
-      <div className="col-span-full">
-        <LaunchManagerStepsTable
-          responseLaunchManagers={responseLaunchManagers}
-        />
-      </div>
+      {!envOnPremise && (
+        <Fragment>
+          <div className="col-span-full">
+            <BuildManagerStepsTable
+              responseBuildManager={responseBuildManager}
+            />
+          </div>
+          <div className="col-span-full">
+            <LaunchManagerStepsTable
+              responseLaunchManagers={responseLaunchManagers}
+            />
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 }
