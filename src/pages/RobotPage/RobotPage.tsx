@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 import Overview from "./Overview/Overview";
 import useMain from "../../hooks/useMain";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
+import { envOnPremise } from "../../helpers/envProvider";
 
 export default function RobotPage(): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
@@ -280,7 +281,9 @@ export default function RobotPage(): ReactElement {
                   responseBuildManager={responseBuildManager}
                   responseLaunchManagers={responseLaunchManagers}
                   informationWidgetAction={() => {
-                    setActiveTab("Teleoperation");
+                    setActiveTab(
+                      envOnPremise ? "Development Suite" : "Teleoperation"
+                    );
                   }}
                 />
               );

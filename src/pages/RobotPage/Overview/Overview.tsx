@@ -8,6 +8,7 @@ import WorkspacesTable from "../../../components/WorkspacesTable/WorkspacesTable
 import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import useWindow from "../../../hooks/useWindow";
+import { envOnPremise } from "../../../helpers/envProvider";
 interface IOverview {
   responseRobot: any;
   responseBuildManager: any;
@@ -29,13 +30,25 @@ export default function Overview({
       <div className="col-span-full lg:col-span-4">
         <InformationWidget
           title={url?.robotName || ""}
-          subtitle="From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
+          subtitle={
+            envOnPremise
+              ? "From this page, you can see all the details of the application, control the application, control the environments running on the application or develop the application's software."
+              : "From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
+          }
           component={
-            <Button
-              text="Teleoperation of Robot"
-              className="!w-44 !h-10 !text-xs"
-              onClick={informationWidgetAction}
-            />
+            envOnPremise ? (
+              <Button
+                text="Development Suite"
+                className="!w-44 !h-10 !text-xs"
+                onClick={informationWidgetAction}
+              />
+            ) : (
+              <Button
+                text="Teleoperation of Robot"
+                className="!w-44 !h-10 !text-xs"
+                onClick={informationWidgetAction}
+              />
+            )
           }
         />
       </div>
