@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from "react";
+import HiddenVDIFrame from "../../components/HiddenVDIFrame/HiddenVDIFrame";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import RosConnector from "../../components/RosConnector/RosConnector";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
@@ -10,25 +11,20 @@ import BarcodeContext from "../../contexts/BarcodeContext";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import { useAppSelector } from "../../hooks/redux";
-import Overview from "./Overview/Overview";
-import HiddenVDIFrame from "../../components/HiddenVDIFrame/HiddenVDIFrame";
 import { envOnPremise } from "../../helpers/envProvider";
+import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
+import Overview from "./Overview/Overview";
 
 export default function RobotPage(): ReactElement {
   const {
     activeTab,
     setActiveTab,
     responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
     ros,
-    setRos,
     topicList,
-    setTopicList,
+    setIsSettedCookie,
   } = useRobot();
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   const { urls } = useAppSelector((state) => state.robot);
 
@@ -58,13 +54,7 @@ export default function RobotPage(): ReactElement {
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="col-span-full">
-        <RobotHeader
-          responseRobot={responseRobot}
-          isSettedCookie={isSettedCookie}
-          activeTab={activeTab}
-          handleChangeActiveTab={handleChangeActiveTab}
-          ros={ros}
-        />
+        <RobotHeader handleChangeActiveTab={handleChangeActiveTab} />
       </div>
 
       <div className="col-span-full">
@@ -73,9 +63,6 @@ export default function RobotPage(): ReactElement {
             case "Overview":
               return (
                 <Overview
-                  responseRobot={responseRobot}
-                  responseBuildManager={responseBuildManager}
-                  responseLaunchManagers={responseLaunchManagers}
                   informationWidgetAction={() => {
                     setActiveTab(
                       envOnPremise ? "Development Suite" : "Teleoperation"
@@ -85,20 +72,14 @@ export default function RobotPage(): ReactElement {
               );
             case "Task Management":
               return (
-                <TaskManagementContext ros={ros}>
-                  <BarcodeContext ros={ros}>
-                    <TaskManagementLayout ros={ros} />
+                <TaskManagementContext>
+                  <BarcodeContext>
+                    <TaskManagementLayout />
                   </BarcodeContext>
                 </TaskManagementContext>
               );
             case "Visualization":
-              return (
-                <Visualization
-                  ros={ros}
-                  topicList={topicList}
-                  handleForceUpdate={handleForceUpdate}
-                />
-              );
+              return <Visualization handleForceUpdate={handleForceUpdate} />;
             case "Teleoperation":
               return (
                 <Teleoperation
@@ -145,15 +126,8 @@ export default function RobotPage(): ReactElement {
           setIsSettedCookie={setIsSettedCookie}
         />
       </div>
-      <RosConnector
-        isSettedCookie={isSettedCookie}
-        responseRobot={responseRobot}
-        ros={ros}
-        setRos={setRos}
-        topicList={topicList}
-        setTopicList={setTopicList}
-      />
-      <HiddenVDIFrame url={responseRobot?.vdiIngressEndpoint} />
+      <RosConnector />
+      <HiddenVDIFrame />
     </div>
   );
 }

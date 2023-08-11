@@ -6,16 +6,13 @@ import { GridLayout } from "../../../layouts/GridLayout";
 import { useParams } from "react-router-dom";
 import { GridStack } from "gridstack";
 import ROSLIB from "roslib";
+import useRobot from "../../../hooks/useRobot";
 
 interface IVisualization {
-  ros: any;
-  topicList: string[];
   handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
 }
 
 export default function Visualization({
-  ros,
-  topicList,
   handleForceUpdate,
 }: IVisualization): ReactElement {
   const [grid, setGrid] = useState<any>();
@@ -24,6 +21,8 @@ export default function Visualization({
   const gridLayout =
     JSON.parse(localStorage.getItem(localStoragePath) || JSON.stringify([])) ||
     [];
+
+  const { ros, topicList } = useRobot();
 
   useEffect(() => {
     const grid: any = GridStack.init({

@@ -9,21 +9,18 @@ import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/B
 import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import useWindow from "../../../hooks/useWindow";
 import { envOnPremise } from "../../../helpers/envProvider";
+import useRobot from "../../../hooks/useRobot";
 interface IOverview {
-  responseRobot: any;
-  responseBuildManager: any;
-  responseLaunchManagers: any;
   informationWidgetAction: () => void;
 }
 
 export default function Overview({
-  responseRobot,
-  responseBuildManager,
-  responseLaunchManagers,
   informationWidgetAction,
 }: IOverview): ReactElement {
   const url = useParams();
   const { width } = useWindow();
+  const { responseRobot, responseBuildManager, responseLaunchManagers } =
+    useRobot();
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate__animated animate__fadeIn">

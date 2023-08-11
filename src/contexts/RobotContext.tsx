@@ -28,6 +28,7 @@ export default ({ children }: any) => {
   } = useFunctions();
   const { pagesState, sidebarState } = useMain();
   const url = useParams();
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (
@@ -230,6 +231,8 @@ export default ({ children }: any) => {
         setRos,
         topicList,
         setTopicList,
+        isSettedCookie,
+        setIsSettedCookie,
       }}
     >
       {children}

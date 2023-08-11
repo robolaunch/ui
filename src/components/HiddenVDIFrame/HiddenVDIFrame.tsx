@@ -1,18 +1,41 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import useRobot from "../../hooks/useRobot";
 
-interface IHiddenVDIFrame {
-  url: string;
-}
+export default function HiddenVDIFrame(): ReactElement {
+  const [iframeKey, setIframeKey] = useState<number>(0);
+  const { responseRobot } = useRobot();
 
-export default function HiddenVDIFrame({ url }: IHiddenVDIFrame): ReactElement {
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIframeKey(iframeKey + 1);
+    }, 60000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [iframeKey]);
+
   return (
     <Fragment>
-      {url && (
+      {responseRobot?.ideIngressEndpoint && (
         <iframe
+          key={iframeKey}
           title="iframe"
           allow="clipboard-read"
           className="absolute -top-[9999px]"
-          src={url?.replace("wss://", "https://") + "health"}
+          src={responseRobot?.ideIngressEndpoint}
+        />
+      )}
+      {responseRobot?.vdiIngressEndpoint && (
+        <iframe
+          key={iframeKey + 1}
+          title="iframe"
+          allow="clipboard-read"
+          className="absolute -top-[9999px]"
+          src={
+            responseRobot?.vdiIngressEndpoint?.replace("wss://", "https://") +
+            "health"
+          }
         />
       )}
     </Fragment>

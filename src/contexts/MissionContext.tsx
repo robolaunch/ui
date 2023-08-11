@@ -3,11 +3,14 @@ import randomstring from "randomstring";
 import saveAs from "file-saver";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
+import useRobot from "../hooks/useRobot";
 
 export const MissionContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
-export default ({ children, ros }: any) => {
+export default ({ children }: any) => {
+  const { ros } = useRobot();
+
   const [missions, setMissions] = useState<any>([
     // {
     //   id: randomstring.generate(8),

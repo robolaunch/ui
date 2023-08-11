@@ -1,25 +1,19 @@
 import React, { Fragment, useEffect } from "react";
 import { useAppSelector } from "../../hooks/redux";
 import ROSLIB from "roslib";
+import useRobot from "../../hooks/useRobot";
 
-interface IRosConnector {
-  isSettedCookie: boolean | null;
-  ros: any;
-  setRos: any;
-  responseRobot: any;
-  topicList: any;
-  setTopicList: any;
-}
-
-export default function RosConnector({
-  isSettedCookie,
-  ros,
-  setRos,
-  responseRobot,
-  topicList,
-  setTopicList,
-}: IRosConnector) {
+export default function RosConnector() {
   const { urls } = useAppSelector((state) => state.robot);
+
+  const {
+    isSettedCookie,
+    ros,
+    setRos,
+    responseRobot,
+    topicList,
+    setTopicList,
+  } = useRobot();
 
   useEffect(() => {
     if (

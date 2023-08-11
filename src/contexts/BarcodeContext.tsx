@@ -1,10 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
 import ROSLIB from "roslib";
+import useRobot from "../hooks/useRobot";
 
 export const BarcodeContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
-export default ({ children, ros }: any) => {
+export default ({ children }: any) => {
+  const { ros } = useRobot();
   const [robotLocation, setRobotLocation] = useState<{
     x: number;
     y: number;

@@ -2,14 +2,11 @@ import React, { Fragment, ReactElement, useState } from "react";
 import MissionManagement from "../pages/RobotPage/TaskManagement/MissionManagement";
 import BarcodeManagement from "../pages/RobotPage/TaskManagement/BarcodeManagement";
 import CardLayout from "./CardLayout";
+import useRobot from "../hooks/useRobot";
 
-interface ITaskManagementLayout {
-  ros: any;
-}
+export default function TaskManagementLayout(): ReactElement {
+  const { ros } = useRobot();
 
-export default function TaskManagementLayout({
-  ros,
-}: ITaskManagementLayout): ReactElement {
   const [activeTab, setActiveTab] = useState<
     "Mission Management" | "Barcode Management"
   >("Mission Management");

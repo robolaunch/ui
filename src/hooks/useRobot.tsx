@@ -11,6 +11,8 @@ interface IuseRobot {
   setRos: any;
   topicList: any;
   setTopicList: any;
+  isSettedCookie: boolean | null;
+  setIsSettedCookie: any;
 }
 
 const useRobot = () => {

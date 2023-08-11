@@ -9,23 +9,18 @@ import RobotResource from "../RobotResource/RobotResource";
 import RobotConnectionsViewer from "../RobotConnectionsViewer/RobotConnectionsViewer";
 import { envOnPremise } from "../../helpers/envProvider";
 import RobotHeaderTabs from "../RobotHeaderTabs/RobotHeaderTabs";
+import useRobot from "../../hooks/useRobot";
 
 interface IRobotHeader {
-  responseRobot: any;
-  isSettedCookie: boolean | null;
   handleChangeActiveTab: any;
-  activeTab: string;
-  ros: any;
 }
 
 export default function RobotHeader({
-  responseRobot,
-  isSettedCookie,
   handleChangeActiveTab,
-  activeTab,
-  ros,
 }: IRobotHeader): ReactElement {
   const url = useParams();
+
+  const { ros, responseRobot, isSettedCookie, activeTab } = useRobot();
 
   return (
     <CardLayout className="pt-6 px-8 !pb-0">
