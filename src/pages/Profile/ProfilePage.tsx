@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import ProfileHeader from "../../components/ProfileHeader/ProfileHeader";
 import ProfileConnectedApps from "../../components/ProfileConnectedApps/ProfileConnectedApps";
 import ProfileInfo from "../../components/ProfileInfo/ProfileInfo";
