@@ -21,7 +21,6 @@ export default function BuildManagerStepsTable({
   const data: any = useMemo(
     () =>
       responseBuildManager?.robotBuildSteps?.map((step: any) => {
-        console.log(step);
         return {
           key: step?.name,
           name: step?.name,
@@ -40,8 +39,6 @@ export default function BuildManagerStepsTable({
       url?.instanceName,
     ]
   );
-
-  console.log(responseBuildManager);
 
   const columns: any = useMemo(
     () => [

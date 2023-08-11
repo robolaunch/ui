@@ -13,6 +13,7 @@ import ProfilePage from "../pages/Profile/ProfilePage";
 import PrivateProvider from "../providers/PrivateProvider";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
+import RobotContext from "../contexts/RobotContext";
 // import BillingPage from "../pages/BillingPage/BillingPage";
 
 export default function AppRoutes(): ReactElement {
@@ -55,7 +56,11 @@ export default function AppRoutes(): ReactElement {
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName/:robotName`}
-          element={<RobotPage />}
+          element={
+            <RobotContext>
+              <RobotPage />
+            </RobotContext>
+          }
         />
         {/* Dashboard Pages */}
 

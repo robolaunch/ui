@@ -9,6 +9,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState } = useMain();
+  const { width } = useWindowDimensions();
   const url = useLocation();
 
   function handleCloseSidebar() {
@@ -32,8 +33,6 @@ export default function PrivateLayout(): ReactElement {
     setTimeout(() => setProgress(100), 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
-
-  const { width } = useWindowDimensions();
 
   return (
     <Fragment>
