@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import HiddenVDIFrame from "../../components/HiddenVDIFrame/HiddenVDIFrame";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import RosConnector from "../../components/RosConnector/RosConnector";
@@ -17,14 +17,7 @@ import useRobot from "../../hooks/useRobot";
 import Overview from "./Overview/Overview";
 
 export default function RobotPage(): ReactElement {
-  const {
-    activeTab,
-    setActiveTab,
-    responseRobot,
-    ros,
-    topicList,
-    setIsSettedCookie,
-  } = useRobot();
+  const { activeTab, setActiveTab, responseRobot } = useRobot();
 
   const { urls } = useAppSelector((state) => state.robot);
 
@@ -83,8 +76,6 @@ export default function RobotPage(): ReactElement {
             case "Teleoperation":
               return (
                 <Teleoperation
-                  ros={ros}
-                  topicList={topicList}
                   vdiIngressEndpoint={
                     urls?.vdi || responseRobot?.vdiIngressEndpoint
                   }
@@ -120,11 +111,7 @@ export default function RobotPage(): ReactElement {
               );
           }
         })()}
-        <CodeEditor
-          activeTab={activeTab}
-          responseRobot={responseRobot}
-          setIsSettedCookie={setIsSettedCookie}
-        />
+        <CodeEditor />
       </div>
       <RosConnector />
       <HiddenVDIFrame />

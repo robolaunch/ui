@@ -3,23 +3,17 @@ import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { useAppSelector } from "../../hooks/redux";
+import useRobot from "../../hooks/useRobot";
 
-interface ICodeEditor {
-  activeTab: string;
-  responseRobot: any;
-  setIsSettedCookie: any;
-}
-
-export default function CodeEditor({
-  activeTab,
-  responseRobot,
-  setIsSettedCookie,
-}: ICodeEditor): ReactElement {
+export default function CodeEditor(): ReactElement {
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
     "Cloud IDE" | "Physical IDE"
   >("Cloud IDE");
 
   const handleFullScreen = useFullScreenHandle();
+
+  const { activeTab, responseRobot, setIsSettedCookie } = useRobot();
+
   const { urls } = useAppSelector((state) => state.robot);
 
   const codeEditorTabs = [

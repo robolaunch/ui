@@ -13,17 +13,14 @@ import "gridstack/dist/gridstack-extra.css";
 import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import ROSLIB from "roslib";
+import useRobot from "../../../hooks/useRobot";
 
 interface ITeleoperation {
-  ros: any;
-  topicList: string[];
   vdiIngressEndpoint: string;
   handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
 }
 
 export default function Teleoperation({
-  ros,
-  topicList,
   vdiIngressEndpoint,
   handleForceUpdate,
 }: ITeleoperation): ReactElement {
@@ -39,6 +36,7 @@ export default function Teleoperation({
   const [selectableTopic, setSelectableTopic] = useState<any>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const handleFullScreen = useFullScreenHandle();
+  const { ros, topicList } = useRobot();
 
   // GRID
   useEffect(() => {
