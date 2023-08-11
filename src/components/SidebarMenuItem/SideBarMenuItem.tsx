@@ -4,6 +4,7 @@ import useTheme from "../../hooks/useTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
 import { envOnPremise } from "../../helpers/envProvider";
+import { isDesktop } from "react-device-detect";
 
 interface ISideBarMenuItem {
   type: string;
@@ -101,20 +102,20 @@ export default function SideBarMenuItem({
       {loading ? (
         <img
           draggable="false"
-          className="w-10 animate__animated animate__fadeInLeft"
+          className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
           src={`/svg/general/loading.svg`}
           alt="robolaunch"
         />
       ) : (
         <img
           draggable="false"
-          className="w-10 animate__animated animate__fadeInLeft"
+          className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
           src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
         />
       )}
-      {isHover && !loading && (
+      {isHover && isDesktop && !loading && (
         <SidebarMenuItemToolTip
           title={
             type === "organization"

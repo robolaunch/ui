@@ -191,7 +191,7 @@ export const instanceSlice = createSlice({
         }
       })
       .addCase(createCloudInstance.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of creating instance");
       })
       .addCase(getInstances.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {

@@ -34,7 +34,7 @@ import {
   createFederatedFleet,
 } from "../toolkit/FleetSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
-import useRobot from "../hooks/useRobot";
+import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -48,7 +48,7 @@ export default ({ children }: any) => {
   const { setTrialState, setSelectedState, pagesState, setPagesState } =
     useMain();
   const navigate = useNavigate();
-  const { setRobotData } = useRobot();
+  const { setRobotData } = useCreateRobot();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
     await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {

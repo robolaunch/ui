@@ -3,7 +3,7 @@ import { deleteLaunchManager } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { Dialog } from "primereact/dialog";
-import useRobot from "../hooks/useRobot";
+import useCreateRobot from "../hooks/useCreateRobot";
 import useMain from "../hooks/useMain";
 
 interface IDeleteLaunchManagerModal {
@@ -18,7 +18,7 @@ export default function DeleteLaunchManagerModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { selectedState } = useMain();
-  const { robotData } = useRobot();
+  const { robotData } = useCreateRobot();
 
   async function handleDeleteLaunchManager() {
     setIsLoading(true);

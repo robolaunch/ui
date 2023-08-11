@@ -13,7 +13,7 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
@@ -28,7 +28,7 @@ interface ICreateRobotFormStep1 {
 export default function CreateRobotFormStep1({
   isImportRobot,
 }: ICreateRobotFormStep1): ReactElement {
-  const { robotData, setRobotData }: any = useRobot();
+  const { robotData, setRobotData }: any = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();

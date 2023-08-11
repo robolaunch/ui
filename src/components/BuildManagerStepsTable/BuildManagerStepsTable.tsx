@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import BasicCell from "../Cells/BasicCell";
 import StateCell from "../Cells/StateCell";
 import LogsCell from "../Cells/LogsCell";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import TickCell from "../TickCell/TickCell";
 
 interface IBuildManagerStepsTable {
@@ -16,7 +16,7 @@ export default function BuildManagerStepsTable({
   responseBuildManager,
 }: IBuildManagerStepsTable): ReactElement {
   const url = useParams();
-  const { robotData } = useRobot();
+  const { robotData } = useCreateRobot();
 
   const data: any = useMemo(
     () =>

@@ -9,24 +9,24 @@ export const MissionContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children, ros }: any) => {
   const [missions, setMissions] = useState<any>([
-    {
-      id: randomstring.generate(8),
-      name: "Mission 1",
-      active: true,
-      waypoints: [],
-    },
-    {
-      id: randomstring.generate(8),
-      name: "Mission 2",
-      active: true,
-      waypoints: [],
-    },
-    {
-      id: randomstring.generate(8),
-      name: "Mission 3",
-      active: true,
-      waypoints: [],
-    },
+    // {
+    //   id: randomstring.generate(8),
+    //   name: "Mission 1",
+    //   active: true,
+    //   waypoints: [],
+    // },
+    // {
+    //   id: randomstring.generate(8),
+    //   name: "Mission 2",
+    //   active: true,
+    //   waypoints: [],
+    // },
+    // {
+    //   id: randomstring.generate(8),
+    //   name: "Mission 3",
+    //   active: true,
+    //   waypoints: [],
+    // },
   ]);
 
   const [isDragging, setIsDragging] = useState<boolean>(false);

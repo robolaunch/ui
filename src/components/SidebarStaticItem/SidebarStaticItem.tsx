@@ -25,7 +25,12 @@ export default function SidebarStaticItem({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <img draggable="false" className="w-10" src={imgSrc} alt="Robolaunch" />
+      <img
+        draggable="false"
+        className="w-9 lg:w-10"
+        src={imgSrc}
+        alt="Robolaunch"
+      />
       {isHover && (
         <SidebarMenuItemToolTip
           title={

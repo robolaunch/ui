@@ -5,7 +5,7 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
@@ -26,7 +26,8 @@ interface ICreateRobotFormStep3 {
 export default function CreateRobotFormStep3({
   isImportRobot,
 }: ICreateRobotFormStep3): ReactElement {
-  const { robotData, setRobotData, handleAddStepToBuildStep } = useRobot();
+  const { robotData, setRobotData, handleAddStepToBuildStep } =
+    useCreateRobot();
   const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =

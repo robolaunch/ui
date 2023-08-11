@@ -7,7 +7,7 @@ import { FormikProps } from "formik";
 import Accordion from "../Accordion/AccordionV2";
 import InputError from "../InputError/InputError";
 import InputSelect from "../InputSelect/InputSelect";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import { BsPlusCircle } from "react-icons/bs";
 import useMain from "../../hooks/useMain";
@@ -32,7 +32,7 @@ export default function CreateRobotFormLaunchStepItem({
     robotData,
     handleAddENVToLaunchStep,
     handleRemoveStepFromLaunchStep,
-  } = useRobot();
+  } = useCreateRobot();
   const { selectedState } = useMain();
 
   return (

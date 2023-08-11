@@ -3,7 +3,7 @@ import {
   IRobotLaunchStep,
   IRobotWorkspace,
 } from "../../interfaces/robotInterfaces";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps, useFormik } from "formik";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
@@ -37,7 +37,8 @@ export default function CreateRobotFormStep4({
   robotDataLaunchIndex,
   robotClusters,
 }: ICreateRobotFormStep4): ReactElement {
-  const { robotData, setRobotData, handleAddENVToLaunchStep } = useRobot();
+  const { robotData, setRobotData, handleAddENVToLaunchStep } =
+    useCreateRobot();
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =

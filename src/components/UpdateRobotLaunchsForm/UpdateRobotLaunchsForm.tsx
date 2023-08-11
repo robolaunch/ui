@@ -4,7 +4,7 @@ import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import StateCell from "../Cells/StateCell";
 import InfoTip from "../InfoTip/InfoTip";
 import useMain from "../../hooks/useMain";
@@ -16,7 +16,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
     useState<any>(undefined);
   const { getLaunchManagers } = useFunctions();
   const url = useParams();
-  const { robotData, handleAddLaunchManager } = useRobot();
+  const { robotData, handleAddLaunchManager } = useCreateRobot();
   const { selectedState } = useMain();
 
   useEffect(() => {

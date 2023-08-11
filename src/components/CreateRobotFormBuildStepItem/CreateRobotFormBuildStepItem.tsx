@@ -12,7 +12,7 @@ import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import { Editor } from "@monaco-editor/react";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import StateCell from "../Cells/StateCell";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
@@ -36,7 +36,7 @@ export default function CreateRobotFormBuildStepItem({
 }: ICreateRobotFormBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
   const { selectedState } = useMain();
-  const { robotData, handleRemoveStepFromBuildStep } = useRobot();
+  const { robotData, handleRemoveStepFromBuildStep } = useCreateRobot();
 
   return (
     <Accordion

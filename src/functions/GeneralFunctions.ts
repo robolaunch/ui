@@ -60,6 +60,8 @@ export function handleLogout() {
     "persist:region",
     "persist:provider",
     "persist:trial",
+    "persist:marketplace",
+    "persist:instance",
   ].map((item: string) => localStorage.removeItem(item));
 }
 

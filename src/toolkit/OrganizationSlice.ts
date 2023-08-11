@@ -134,7 +134,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(createOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of creating organization");
       })
       .addCase(getOrganizations.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -142,7 +142,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(getOrganizations.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of getting organizations");
       })
       .addCase(getOrganizationUsers.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -150,7 +150,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(getOrganizationUsers.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of getting users");
       })
       .addCase(getOrganizationAdmins.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -158,7 +158,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(getOrganizationAdmins.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wron of getting admins");
       })
       .addCase(getOrganizationGuests.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -166,7 +166,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(getOrganizationGuests.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of getting guests");
       })
       .addCase(moveAdminAsUserFromOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -176,7 +176,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(moveAdminAsUserFromOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of moving admin as user");
       })
       .addCase(moveUserAsAdminToOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -186,7 +186,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(moveUserAsAdminToOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of moving user as admin");
       })
       .addCase(deleteUserFromOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -196,7 +196,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(deleteUserFromOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of deleting user from organization");
       })
       .addCase(deleteAdminFromOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -206,7 +206,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(deleteAdminFromOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of deleting admin from organization");
       })
       .addCase(deleteGuestFromOrganization.fulfilled, (_, action: any) => {
         if (action?.payload?.success) {
@@ -216,7 +216,7 @@ export const organizationSlice = createSlice({
         }
       })
       .addCase(deleteGuestFromOrganization.rejected, () => {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong of deleting guest from organization");
       });
   },
 });

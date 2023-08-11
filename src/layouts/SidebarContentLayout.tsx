@@ -17,7 +17,7 @@ import { stringCapitalization } from "../functions/GeneralFunctions";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
-import useRobot from "../hooks/useRobot";
+import useCreateRobot from "../hooks/useCreateRobot";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
@@ -30,7 +30,7 @@ export default function SidebarContentLayout(): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
   const [reload, setReload] = useState<boolean>(false);
-  const { handleResetRobotForm } = useRobot();
+  const { handleResetRobotForm } = useCreateRobot();
   const url = useParams();
 
   useEffect(() => {
@@ -234,7 +234,7 @@ export default function SidebarContentLayout(): ReactElement {
 
   return (
     <div
-      className={`fixed flex flex-col justify-between left-20 w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast z-[32] border-r border-layer-light-200 rounded-r-lg ${
+      className={`fixed flex flex-col justify-between left-16 lg:left-20 w-fill-available md:w-[40rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__fast z-[32] border-r border-layer-light-200 rounded-r-xl ${
         url?.robotName || sidebarState?.isCreateMode ? "px-8 pt-8 pb-2" : "p-8"
       }`}
     >

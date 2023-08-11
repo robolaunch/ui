@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import InputError from "../InputError/InputError";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 
@@ -26,7 +26,7 @@ export default function CreateRobotFormCodeScope({
   physicalInstanceOnChange,
   error,
 }: ICreateRobotFormCodeScope): ReactElement {
-  const { robotData } = useRobot();
+  const { robotData } = useCreateRobot();
   const { selectedState } = useMain();
 
   return (

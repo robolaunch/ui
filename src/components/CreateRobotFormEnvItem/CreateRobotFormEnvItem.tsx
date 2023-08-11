@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import InfoTip from "../InfoTip/InfoTip";
 
@@ -19,7 +19,7 @@ export default function CreteRobotFormEnvItem({
 }: ICreateRobotFormEnvItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
-  const { handleRemoveENVFromLaunchStep } = useRobot();
+  const { handleRemoveENVFromLaunchStep } = useCreateRobot();
 
   return (
     <Accordion

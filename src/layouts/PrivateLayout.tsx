@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import LoadingBar from "react-top-loading-bar";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState } = useMain();
@@ -32,16 +33,18 @@ export default function PrivateLayout(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
+  const { width } = useWindowDimensions();
+
   return (
     <Fragment>
       <div className="flex">
         <Sidebar />
         <div
-          className={`flex flex-col transition-500 ml-20 min-h-screen ${
+          className={`flex flex-col transition-500 ml-16 lg:ml-20 min-h-screen ${
             sidebarState?.isOpen && "blur-sm"
           } ${sidebarState?.isCreateMode && "pointer-events-none"}`}
           style={{
-            width: "calc(100% - 5rem)",
+            width: `calc(100% - ${width > 1024 ? "5" : "4"}rem)`,
           }}
           onClick={() => handleCloseSidebar()}
         >

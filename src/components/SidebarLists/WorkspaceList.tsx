@@ -4,7 +4,7 @@ import useMain from "../../hooks/useMain";
 import { getRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useParams } from "react-router-dom";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormStep2 from "../CreateForms/CreateRobotFormStep2";
 
 interface IWorkspaceList {
@@ -20,7 +20,7 @@ export default function WorkspaceList({
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const url = useParams();
-  const { setRobotData } = useRobot();
+  const { setRobotData } = useCreateRobot();
 
   useEffect(
     () => {

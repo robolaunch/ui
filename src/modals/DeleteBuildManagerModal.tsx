@@ -4,7 +4,7 @@ import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { useParams } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
-import useRobot from "../hooks/useRobot";
+import useCreateRobot from "../hooks/useCreateRobot";
 import useMain from "../hooks/useMain";
 
 interface IDeleteBuildManagerModal {
@@ -18,7 +18,7 @@ export default function DeleteBuildManagerModal({
   const dispatch = useAppDispatch();
   const url = useParams();
   const { selectedState } = useMain();
-  const { robotData } = useRobot();
+  const { robotData } = useCreateRobot();
 
   function handleDeleteBuildManager() {
     setIsLoading(true);

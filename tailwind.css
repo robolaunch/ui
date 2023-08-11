@@ -216,3 +216,8 @@ td {
 .content-splitter {
   width: 100% !important;
 }
+
+.w-fill-available {
+  width: -webkit-fill-available;
+  width: -moz-fit-content;
+}

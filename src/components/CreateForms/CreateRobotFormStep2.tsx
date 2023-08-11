@@ -4,7 +4,7 @@ import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import Button from "../Button/Button";
 import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
 import useMain from "../../hooks/useMain";
-import useRobot from "../../hooks/useRobot";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRobot } from "../../toolkit/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
@@ -24,7 +24,7 @@ export default function CreateRobotFormStep2({
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useMain();
-  const { robotData, setRobotData, handleAddWorkspaceStep } = useRobot();
+  const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
   const dispatch = useAppDispatch();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);

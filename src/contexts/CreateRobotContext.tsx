@@ -5,7 +5,7 @@ import {
   IRobotWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
 
-export const RobotContext: any = createContext<any>(null);
+export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
@@ -222,7 +222,7 @@ export default ({ children }: any) => {
   }
 
   return (
-    <RobotContext.Provider
+    <CreateRobotContext.Provider
       value={{
         robotData,
         setRobotData,
@@ -241,6 +241,6 @@ export default ({ children }: any) => {
       }}
     >
       {children}
-    </RobotContext.Provider>
+    </CreateRobotContext.Provider>
   );
 };
