@@ -39,7 +39,7 @@ export default function OrganizationActionCells({
           text={
             <BiPencil
               className={`${
-                envOnPremise ? "text-layer-light-500" : "text-red-600"
+                envOnPremise ? "text-layer-light-500" : "text-layer-primary-500"
               }`}
             />
           }

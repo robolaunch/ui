@@ -118,7 +118,7 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.98] ${
+      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.98] select-none ${
         selected
           ? "bg-layer-light-100 border-layer-light-400 shadow"
           : "bg-layer-light-50 border-layer-light-200 shadow-sm"

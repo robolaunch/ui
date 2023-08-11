@@ -9,7 +9,7 @@ export default function Sidebar(): ReactElement {
 
   return (
     <Fragment>
-      <div className="fixed flex flex-col items-center gap-4 h-screen w-16 lg:w-20 py-2 bg-layer-light-50 shadow-2xl z-40 border-r border-layer-light-200 animate__animated animate__fadeInLeft">
+      <div className="fixed flex flex-col items-center gap-4 h-screen w-16 lg:w-20 py-2 bg-layer-light-50 shadow-2xl z-40 border-r border-layer-light-200 select-none animate__animated animate__fadeInLeft ">
         <Link to={`/`}>
           <img
             draggable="false"

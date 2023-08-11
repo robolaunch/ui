@@ -93,7 +93,7 @@ export default function SideBarMenuItem({
   return (
     <div
       onClick={() => !loading && !disabled && handleClick()}
-      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft ${
+      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 select-none animate__animated animate__fadeInLeft ${
         (loading || disabled) && "!cursor-not-allowed"
       }`}
       onMouseEnter={() => !loading && !disabled && setIsHover(true)}

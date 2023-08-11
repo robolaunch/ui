@@ -18,7 +18,7 @@ export default function SidebarStaticItem({
   return (
     <Link
       to={to}
-      className={`transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft relative ${
+      className={`transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft relative select-none ${
         location?.pathname?.includes(to) &&
         "bg-layer-light-100 transition-all duration-500"
       }`}
