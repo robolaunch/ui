@@ -8,13 +8,7 @@ import { GridStack } from "gridstack";
 import ROSLIB from "roslib";
 import useRobot from "../../../hooks/useRobot";
 
-interface IVisualization {
-  handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
-}
-
-export default function Visualization({
-  handleForceUpdate,
-}: IVisualization): ReactElement {
+export default function Visualization(): ReactElement {
   const [grid, setGrid] = useState<any>();
   const url = useParams();
   const localStoragePath = `visualization_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
@@ -22,7 +16,7 @@ export default function Visualization({
     JSON.parse(localStorage.getItem(localStoragePath) || JSON.stringify([])) ||
     [];
 
-  const { ros, topicList } = useRobot();
+  const { ros, topicList, handleForceUpdate } = useRobot();
 
   useEffect(() => {
     const grid: any = GridStack.init({

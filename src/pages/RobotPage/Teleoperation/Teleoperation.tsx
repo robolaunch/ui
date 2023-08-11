@@ -17,12 +17,10 @@ import useRobot from "../../../hooks/useRobot";
 
 interface ITeleoperation {
   vdiIngressEndpoint: string;
-  handleForceUpdate: (page: IrobotPages["activeTab"]) => void;
 }
 
 export default function Teleoperation({
   vdiIngressEndpoint,
-  handleForceUpdate,
 }: ITeleoperation): ReactElement {
   const [grid, setGrid] = useState<any>();
   const url = useParams();
@@ -36,7 +34,7 @@ export default function Teleoperation({
   const [selectableTopic, setSelectableTopic] = useState<any>([]);
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const handleFullScreen = useFullScreenHandle();
-  const { ros, topicList } = useRobot();
+  const { ros, topicList, handleForceUpdate } = useRobot();
 
   // GRID
   useEffect(() => {

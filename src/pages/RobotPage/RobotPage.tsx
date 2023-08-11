@@ -25,25 +25,6 @@ export default function RobotPage(): ReactElement {
     setActiveTab(tab);
   }
 
-  function handleForceUpdate(
-    page:
-      | "Overview"
-      | "Teleoperation"
-      | "Task Management"
-      | "Visualization"
-      | "Loading"
-      | "Settings"
-      | "Remote Desktop"
-      | "Development Suite"
-      | "Code Editor"
-  ) {
-    setActiveTab("Loading");
-
-    setTimeout(() => {
-      setActiveTab(page);
-    }, 500);
-  }
-
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="col-span-full">
@@ -72,14 +53,13 @@ export default function RobotPage(): ReactElement {
                 </TaskManagementContext>
               );
             case "Visualization":
-              return <Visualization handleForceUpdate={handleForceUpdate} />;
+              return <Visualization />;
             case "Teleoperation":
               return (
                 <Teleoperation
                   vdiIngressEndpoint={
                     urls?.vdi || responseRobot?.vdiIngressEndpoint
                   }
-                  handleForceUpdate={handleForceUpdate}
                 />
               );
             case "Development Suite":

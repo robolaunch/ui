@@ -13,6 +13,7 @@ interface IuseRobot {
   setTopicList: any;
   isSettedCookie: boolean | null;
   setIsSettedCookie: any;
+  handleForceUpdate: any;
 }
 
 const useRobot = () => {

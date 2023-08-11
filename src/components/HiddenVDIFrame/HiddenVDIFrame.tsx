@@ -24,6 +24,7 @@ export default function HiddenVDIFrame(): ReactElement {
           allow="clipboard-read"
           className="absolute -top-[9999px]"
           src={responseRobot?.ideIngressEndpoint}
+          onLoad={() => console.log("IDE LOADED")}
         />
       )}
       {responseRobot?.vdiIngressEndpoint && (
@@ -36,6 +37,7 @@ export default function HiddenVDIFrame(): ReactElement {
             responseRobot?.vdiIngressEndpoint?.replace("wss://", "https://") +
             "health"
           }
+          onLoad={() => console.log("VDI LOADED")}
         />
       )}
     </Fragment>

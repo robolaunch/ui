@@ -219,6 +219,25 @@ export default ({ children }: any) => {
     );
   }
 
+  function handleForceUpdate(
+    page:
+      | "Overview"
+      | "Teleoperation"
+      | "Task Management"
+      | "Visualization"
+      | "Loading"
+      | "Settings"
+      | "Remote Desktop"
+      | "Development Suite"
+      | "Code Editor"
+  ) {
+    setActiveTab("Loading");
+
+    setTimeout(() => {
+      setActiveTab(page);
+    }, 500);
+  }
+
   return (
     <RobotContext.Provider
       value={{
@@ -233,6 +252,7 @@ export default ({ children }: any) => {
         setTopicList,
         isSettedCookie,
         setIsSettedCookie,
+        handleForceUpdate,
       }}
     >
       {children}
