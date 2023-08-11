@@ -3,7 +3,6 @@ import TeleoperationControlBar from "../../../components/TeleoperationControlBar
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { IrobotPages } from "../../../interfaces/generalInterfaces";
 import { handleSaveLayout } from "../../../helpers/gridStack";
 import StreamContext from "../../../contexts/VDIContext";
 import { GridLayout } from "../../../layouts/GridLayout";

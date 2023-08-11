@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { IrobotPages } from "../../../interfaces/generalInterfaces";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";
 import { handleSaveLayout } from "../../../helpers/gridStack";
 import { GridLayout } from "../../../layouts/GridLayout";
