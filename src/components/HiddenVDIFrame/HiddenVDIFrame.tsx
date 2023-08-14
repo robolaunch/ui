@@ -8,7 +8,7 @@ export default function HiddenVDIFrame(): ReactElement {
   useEffect(() => {
     const timer = setInterval(() => {
       setIframeKey(iframeKey + 1);
-    }, 60000);
+    }, 30000);
 
     return () => {
       clearInterval(timer);
@@ -25,19 +25,6 @@ export default function HiddenVDIFrame(): ReactElement {
           className="absolute -top-[9999px]"
           src={responseRobot?.ideIngressEndpoint}
           onLoad={() => console.log("IDE LOADED")}
-        />
-      )}
-      {responseRobot?.vdiIngressEndpoint && (
-        <iframe
-          key={iframeKey + 1}
-          title="iframe"
-          allow="clipboard-read"
-          className="absolute -top-[9999px]"
-          src={
-            responseRobot?.vdiIngressEndpoint?.replace("wss://", "https://") +
-            "health"
-          }
-          onLoad={() => console.log("VDI LOADED")}
         />
       )}
     </Fragment>
