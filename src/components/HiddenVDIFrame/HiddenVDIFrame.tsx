@@ -8,7 +8,7 @@ export default function HiddenVDIFrame(): ReactElement {
   useEffect(() => {
     const timer = setInterval(() => {
       setIframeKey(iframeKey + 1);
-    }, 30000);
+    }, 5 * 60 * 1000);
 
     return () => {
       clearInterval(timer);
