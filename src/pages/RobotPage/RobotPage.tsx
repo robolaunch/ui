@@ -70,13 +70,7 @@ export default function RobotPage(): ReactElement {
                 />
               );
             case "Remote Desktop":
-              return (
-                <RemoteDesktop
-                  vdiIngressEndpoint={
-                    urls?.vdi || responseRobot?.vdiIngressEndpoint
-                  }
-                />
-              );
+              return <RemoteDesktop />;
             case "Settings":
               return <div>Settings</div>;
             case "Loading":

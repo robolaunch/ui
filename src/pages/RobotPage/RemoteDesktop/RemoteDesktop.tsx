@@ -4,15 +4,11 @@ import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
 import StreamContext from "../../../contexts/VDIContext.tsx";
 import useRobot from "../../../hooks/useRobot.tsx";
+import { useAppSelector } from "../../../hooks/redux.ts";
 
-interface IRemoteDesktop {
-  vdiIngressEndpoint: any;
-}
-
-export default function RemoteDesktop({
-  vdiIngressEndpoint,
-}: IRemoteDesktop): ReactElement {
-  const { isSettedCookie } = useRobot();
+export default function RemoteDesktop(): ReactElement {
+  const { isSettedCookie, responseRobot } = useRobot();
+  const { urls } = useAppSelector((state) => state.robot);
 
   return (
     <CardLayout
@@ -21,7 +17,9 @@ export default function RemoteDesktop({
     >
       <Fragment>
         {isSettedCookie && (
-          <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
+          <StreamContext
+            vdiIngressEndpoint={urls?.vdi || responseRobot?.vdiIngressEndpoint}
+          >
             <div className="grid grid-cols-12 animate__animated animate__fadeIn">
               <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
                 <RemoteDesktopScene isControllerActive={true} />
