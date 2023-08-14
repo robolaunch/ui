@@ -3,7 +3,7 @@ import useRobot from "../../hooks/useRobot";
 
 export default function HiddenVDIFrame(): ReactElement {
   const [iframeKey, setIframeKey] = useState<number>(0);
-  const { responseRobot } = useRobot();
+  const { responseRobot, setIsSettedCookie, isSettedCookie } = useRobot();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +24,11 @@ export default function HiddenVDIFrame(): ReactElement {
           allow="clipboard-read"
           className="absolute -top-[9999px]"
           src={responseRobot?.ideIngressEndpoint}
-          onLoad={() => console.log("IDE LOADED")}
+          onLoad={() => {
+            setTimeout(() => {
+              !isSettedCookie && setIsSettedCookie(true);
+            }, 2000);
+          }}
         />
       )}
     </Fragment>

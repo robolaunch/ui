@@ -3,6 +3,7 @@ import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDeskt
 import CardLayout from "../../../layouts/CardLayout";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
 import StreamContext from "../../../contexts/VDIContext.tsx";
+import useRobot from "../../../hooks/useRobot.tsx";
 
 interface IRemoteDesktop {
   vdiIngressEndpoint: any;
@@ -11,19 +12,26 @@ interface IRemoteDesktop {
 export default function RemoteDesktop({
   vdiIngressEndpoint,
 }: IRemoteDesktop): ReactElement {
+  const { isSettedCookie } = useRobot();
+
   return (
-    <CardLayout>
+    <CardLayout
+      className="lg:min-h-[20rem] xl:min-h-[30rem] 2xl:min-h-[40rem]"
+      loading={!isSettedCookie}
+    >
       <Fragment>
-        <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
-          <div className="grid grid-cols-12 animate__animated animate__fadeIn">
-            <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
-              <RemoteDesktopScene isControllerActive={true} />
+        {isSettedCookie && (
+          <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
+            <div className="grid grid-cols-12 animate__animated animate__fadeIn">
+              <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
+                <RemoteDesktopScene isControllerActive={true} />
+              </div>
+              <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
+                <RemoteDesktopTabs />
+              </div>
             </div>
-            <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
-              <RemoteDesktopTabs />
-            </div>
-          </div>
-        </StreamContext>
+          </StreamContext>
+        )}
       </Fragment>
     </CardLayout>
   );
