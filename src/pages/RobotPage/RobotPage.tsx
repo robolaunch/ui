@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import HiddenVDIFrame from "../../components/HiddenVDIFrame/HiddenVDIFrame";
 import TaskManagementLayout from "../../layouts/TaskManagementLayout";
 import RosConnector from "../../components/RosConnector/RosConnector";
 import RobotHeader from "../../components/RobotHeader/RobotHeader";
@@ -94,7 +93,7 @@ export default function RobotPage(): ReactElement {
         <CodeEditor />
       </div>
       <RosConnector />
-      <HiddenVDIFrame />
+      {/* <HiddenVDIFrame /> */}
     </div>
   );
 }
