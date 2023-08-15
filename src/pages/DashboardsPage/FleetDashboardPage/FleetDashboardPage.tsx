@@ -14,6 +14,7 @@ import DashboardLayout from "../../../layouts/DashboardLayout";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { envOnPremise } from "../../../helpers/envProvider";
+import EnvironmentActionCells from "../../../components/ActionCells/EnvironmentActionCells";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
@@ -27,6 +28,7 @@ export default function FleetDashboardPage(): ReactElement {
     getInstance,
     getFleet,
     getRobots,
+    getEnvironments,
   } = useFunctions();
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function FleetDashboardPage(): ReactElement {
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
       handleGetFleet();
     } else {
-      handleGetRobots();
+      envOnPremise ? handleGetEnvironments() : handleGetRobots();
     }
 
     const timer =
@@ -51,7 +53,9 @@ export default function FleetDashboardPage(): ReactElement {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        pagesState?.fleet && handleGetRobots();
+        pagesState?.fleet && envOnPremise
+          ? handleGetEnvironments()
+          : handleGetRobots();
       }, 10000);
 
     return () => {
@@ -74,8 +78,8 @@ export default function FleetDashboardPage(): ReactElement {
           roboticsCloud: url?.roboticsCloudName,
           instance: url?.instanceName,
           fleet: url?.fleetName,
-          virtualState: robot?.robotClusters[0]?.robotStatus || undefined,
-          physicalState: robot?.robotClusters[1]?.robotStatus || undefined,
+          virtualState: robot?.robotClusters?.[0]?.robotStatus || undefined,
+          physicalState: robot?.robotClusters?.[1]?.robotStatus || undefined,
           robotServices: {
             isEnabledRosBridge: robot?.bridgeEnabled,
             isEnabledIDE: robot?.ideEnabled,
@@ -88,8 +92,8 @@ export default function FleetDashboardPage(): ReactElement {
             region: selectedState?.roboticsCloud?.region,
             fleetName: url?.fleetName,
             robotName: robot?.name,
-            virtualState: robot?.robotClusters[0] || undefined,
-            physicalState: robot?.robotClusters[1] || undefined,
+            virtualState: robot?.robotClusters?.[0] || undefined,
+            physicalState: robot?.robotClusters?.[1] || undefined,
           },
         };
       }),
@@ -154,7 +158,7 @@ export default function FleetDashboardPage(): ReactElement {
           return <BasicCell text={rowData?.fleet} />;
         },
       },
-      {
+      !envOnPremise && {
         key: "robotServices",
         header: `${envOnPremise ? "Application" : "Robot"} Services`,
         sortable: true,
@@ -173,13 +177,13 @@ export default function FleetDashboardPage(): ReactElement {
         key: "virtualState",
         header: `Virtual ${envOnPremise ? "Application" : "Robot"} State`,
         sortable: true,
-        filter: true,
+        filter: false,
         align: "left",
         body: (rowData: any) => {
           return <StateCell state={rowData?.virtualState} />;
         },
       },
-      {
+      !envOnPremise && {
         key: "physicalState",
         header: `Physical ${envOnPremise ? "Application" : "Robot"} State`,
         sortable: true,
@@ -197,7 +201,12 @@ export default function FleetDashboardPage(): ReactElement {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return (
+          return envOnPremise ? (
+            <EnvironmentActionCells
+              data={rowData?.actions}
+              reload={() => setReload(!reload)}
+            />
+          ) : (
             <RobotActionCells
               data={rowData?.actions}
               reload={() => setReload(!reload)}
@@ -273,6 +282,22 @@ export default function FleetDashboardPage(): ReactElement {
 
   function handleGetRobots() {
     getRobots(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobots,
+        setResponse: setResponseRobots,
+      }
+    );
+  }
+
+  function handleGetEnvironments() {
+    getEnvironments(
       {
         organizationId: pagesState?.organization?.organizationId,
         roboticsCloudName: pagesState?.roboticsCloud?.name,

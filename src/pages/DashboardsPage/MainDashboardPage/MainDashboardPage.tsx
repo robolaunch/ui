@@ -15,7 +15,6 @@ import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
 import StateCell from "../../../components/Cells/StateCell";
-import { useKeycloak } from "@react-keycloak/web";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 
@@ -27,9 +26,6 @@ export default function MainDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { setSidebarState } = useMain();
   const url = useParams();
-
-  const { keycloak } = useKeycloak();
-  console.log(keycloak);
 
   useEffect(() => {
     getOrganizations({

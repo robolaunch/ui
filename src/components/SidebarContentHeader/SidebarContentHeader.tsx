@@ -42,7 +42,9 @@ export default function SidebarContentLayout({
           return `${url.robotName} Robot Details`;
         }
         return sidebarState?.isCreateMode
-          ? "Robot Details"
+          ? envOnPremise
+            ? "Application Details"
+            : "Robot Details"
           : envOnPremise
           ? "Applications"
           : "Robots";

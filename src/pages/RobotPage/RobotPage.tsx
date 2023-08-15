@@ -87,7 +87,7 @@ export default function RobotPage(): ReactElement {
         })()}
         <CodeEditor />
       </div>
-      <RosConnector />
+      {!envOnPremise && <RosConnector />}
       <HiddenFrame />
     </div>
   );

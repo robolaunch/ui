@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
 import {
   IgetBuildManager,
+  IgetEnvironments,
   IgetFleet,
   IgetFleets,
   IgetInstance,
@@ -34,11 +35,19 @@ import {
   createFederatedFleet,
 } from "../toolkit/FleetSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
+import {
+  getEnvironments as getEnvironmentsDispatch,
+  getEnvironment as getEnvironmentDispatch,
+} from "../toolkit/EnvironmentSlice";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import {
+  IgetEnvironmentRequest,
+  IsingleGetEnviromentParameters,
+} from "../interfaces/environmentInterfaces";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -835,6 +844,150 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getEnvironments(
+    values: IgetEnvironments,
+    parameters?: ImultipleGetParameters
+  ) {
+    await dispatch(
+      getEnvironmentsDispatch({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        region: values?.region,
+        instanceId: values?.instanceId,
+        fleetName: values?.fleetName,
+      })
+    ).then((responseEnvironments: any) => {
+      if (
+        Array.isArray(responseEnvironments?.payload?.data) &&
+        Array.isArray(responseEnvironments?.payload?.data[0]?.roboticsClouds) &&
+        Array.isArray(
+          responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
+          ?.cloudInstances[0]?.environments
+      ) {
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.environments || []
+          );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.environments?.length || 0
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
+      }
+    });
+  }
+
+  async function getEnvironment(
+    values: IgetEnvironmentRequest,
+    parameters?: IsingleGetEnviromentParameters
+  ) {
+    await dispatch(
+      getEnvironmentDispatch({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        region: values?.region,
+        instanceId: values?.instanceId,
+        fleetName: values?.fleetName,
+        environmentName: values?.environmentName,
+      })
+    ).then((responseEnvironment: any) => {
+      if (
+        Array.isArray(responseEnvironment?.payload?.data) &&
+        Array.isArray(responseEnvironment?.payload?.data[0]?.roboticsClouds) &&
+        Array.isArray(
+          responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responseEnvironment?.payload?.data[0].roboticsClouds[0]
+          ?.cloudInstances[0]?.environments
+      ) {
+        console.log(
+          responseEnvironment?.payload?.data[0].roboticsClouds[0]
+            ?.cloudInstances[0]?.environments
+        );
+        parameters?.setRobotData &&
+          setRobotData((prevState: any) => {
+            return {
+              ...prevState,
+              step1: {
+                ...prevState.step1,
+                robotName:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.name,
+                isVirtualRobot: responseEnvironment?.payload?.data[0]
+                  ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                  ?.physicalInstance
+                  ? false
+                  : true,
+                physicalInstanceName:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.physicalInstance,
+                robotStorage:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.storageAmount,
+                isEnabledIde:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.ideEnabled,
+                isEnabledROS2Bridge:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
+                remoteDesktop: {
+                  isEnabled:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.vdiEnabled,
+                  sessionCount:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.vdiSessionCount,
+                },
+                rosDistros:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.distributions,
+                gpuEnabledForCloudInstance:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.vdiGpuResource > 0
+                    ? true
+                    : false,
+                isDevelopmentMode: false,
+                domainName:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.domainName,
+                application:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.application,
+                devspace:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.devspace,
+              },
+              step2: {
+                workspaces:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.robotWorkspaces,
+              },
+            };
+          });
+
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments?.find(
+              (robot: any) => robot?.name === values?.environmentName
+            ) || {}
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
   async function getIP() {
     await dispatch(getCurrentIP()).then((response: any) => {
       setTrialState((prevState: any) => {
@@ -868,6 +1021,8 @@ export default ({ children }: any) => {
         getRobot,
         getBuildManager,
         getLaunchManagers,
+        getEnvironments,
+        getEnvironment,
         getIP,
       }}
     >

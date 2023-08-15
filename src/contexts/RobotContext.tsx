@@ -3,6 +3,7 @@ import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import useMain from "../hooks/useMain";
 import { useParams } from "react-router-dom";
+import { envOnPremise } from "../helpers/envProvider";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -23,6 +24,7 @@ export default ({ children }: any) => {
     getInstance,
     getFleet,
     getRobot,
+    getEnvironment,
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
@@ -47,17 +49,21 @@ export default ({ children }: any) => {
       !responseBuildManager &&
       !responseLaunchManagers
     ) {
-      handleGetRobot();
-      handleGetBuildManager();
-      handleGetLaunchManagers();
+      envOnPremise ? handleGetEnvironment() : handleGetRobot();
+      !envOnPremise && handleGetBuildManager();
+      !envOnPremise && handleGetLaunchManagers();
     }
 
     const timerResponseRobot = setInterval(() => {
-      !sidebarState?.isOpen &&
+      if (
+        !sidebarState?.isOpen &&
+        Array.isArray(responseRobot?.robotClusters) &&
         responseRobot?.robotClusters?.filter(
           (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-        )?.length &&
-        handleGetRobot();
+        )?.length
+      ) {
+        envOnPremise ? handleGetEnvironment() : handleGetRobot();
+      }
     }, 10000);
 
     const timerResponseBuildManager = setInterval(() => {
@@ -65,6 +71,7 @@ export default ({ children }: any) => {
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready"
         )?.length &&
+        !envOnPremise &&
         handleGetBuildManager();
     }, 10000);
 
@@ -79,6 +86,7 @@ export default ({ children }: any) => {
             return cluster?.launchManagerStatus;
           })
           ?.filter((status: any) => status !== "Running")?.length &&
+        !envOnPremise &&
         handleGetLaunchManagers();
     }, 10000);
 
@@ -178,6 +186,24 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         setRobotData: true,
         setResponse: setResponseRobot,
+      }
+    );
+  }
+
+  function handleGetEnvironment() {
+    getEnvironment(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        fleetName: pagesState?.fleet?.name,
+        environmentName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobot,
+        setResponse: setResponseRobot,
+        setRobotData: true,
       }
     );
   }

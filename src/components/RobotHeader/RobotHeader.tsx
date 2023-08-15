@@ -82,7 +82,7 @@ export default function RobotHeader({
                     target="_blank"
                     rel="noreferrer"
                     href={`https://${
-                      responseRobot?.vdiIngressEndpoint.split("//")[1]
+                      responseRobot?.vdiIngressEndpoint?.split("//")[1]
                     }`}
                   >
                     <Button

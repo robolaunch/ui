@@ -13,6 +13,9 @@ import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidat
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import { envOnPremise } from "../../helpers/envProvider";
+import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
+import { createEnvironment } from "../../toolkit/EnvironmentSlice";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -32,50 +35,82 @@ export default function CreateRobotFormStep2({
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
-    validationSchema: CreateRobotFormStep2Validations,
+    validationSchema: envOnPremise
+      ? CreateEnvironmentFormStep2Validations
+      : CreateRobotFormStep2Validations,
     initialValues: robotData?.step2,
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
-      await dispatch(
-        createRobot({
-          organizationId: selectedState?.organization?.organizationId,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
-          instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.roboticsCloud?.region,
-          robotName: robotData?.step1?.robotName,
-          fleetName: selectedState?.fleet?.name,
-          workspaceUpdated: isImportRobot ? true : false,
-          physicalInstanceName: robotData?.step1?.isVirtualRobot
-            ? undefined
-            : robotData?.step1?.physicalInstanceName,
-          distributions: robotData?.step1?.rosDistros,
-          bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
-          vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
-          vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-          ideEnabled: robotData?.step1?.isEnabledIde,
-          storageAmount: robotData?.step1?.robotStorage,
-          gpuEnabledForCloudInstance:
-            robotData?.step1?.gpuEnabledForCloudInstance,
-          workspaces: values?.workspaces,
-        })
-      );
-      formik.setSubmitting(false);
 
-      if (isImportRobot) {
-        toast.success("Robot updated successfully");
-        return window.location.reload();
-      }
-
-      if (robotData?.step1?.isDevelopmentMode) {
-        setSidebarState((prevState: any) => {
-          return {
-            ...prevState,
-            isCreateMode: false,
-            page: "robot",
-          };
+      if (envOnPremise) {
+        dispatch(
+          createEnvironment({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            region: selectedState?.roboticsCloud?.region,
+            instanceId: selectedState?.instance?.instanceId,
+            fleetName: selectedState?.fleet?.name,
+            environmentName: robotData?.step1?.robotName,
+            domainName: robotData?.step1?.domainName,
+            storageAmount: robotData?.step1?.robotStorage,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+            applicationName: robotData?.step1?.application?.name,
+            applicationVersion: robotData?.step1?.application?.version,
+            devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
+            devspaceDesktop: robotData?.step1?.devspace?.desktop,
+            devspaceVersion: robotData?.step1?.devspace?.version,
+            workspaces: values?.workspaces,
+          })
+        ).then(async () => {
+          await handleSubmit();
         });
       } else {
-        handleCreateRobotNextStep();
+        await dispatch(
+          createRobot({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.roboticsCloud?.region,
+            robotName: robotData?.step1?.robotName,
+            fleetName: selectedState?.fleet?.name,
+            workspaceUpdated: isImportRobot ? true : false,
+            physicalInstanceName: robotData?.step1?.isVirtualRobot
+              ? undefined
+              : robotData?.step1?.physicalInstanceName,
+            distributions: robotData?.step1?.rosDistros,
+            bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
+            vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+            ideEnabled: robotData?.step1?.isEnabledIde,
+            storageAmount: robotData?.step1?.robotStorage,
+            gpuEnabledForCloudInstance:
+              robotData?.step1?.gpuEnabledForCloudInstance,
+            workspaces: values?.workspaces,
+          })
+        ).then(async () => {
+          await handleSubmit();
+        });
+      }
+
+      async function handleSubmit() {
+        formik.setSubmitting(false);
+
+        if (isImportRobot) {
+          toast.success("Robot updated successfully");
+          return window.location.reload();
+        }
+
+        if (robotData?.step1?.isDevelopmentMode) {
+          setSidebarState((prevState: any) => {
+            return {
+              ...prevState,
+              isCreateMode: false,
+              page: "robot",
+            };
+          });
+        } else {
+          handleCreateRobotNextStep();
+        }
       }
     },
   });
@@ -146,6 +181,16 @@ export default function CreateRobotFormStep2({
       }
     );
   }
+
+  useEffect(() => {
+    console.log(
+      !formik?.isValid,
+      formik.isSubmitting,
+      JSON.stringify(formik.initialValues) === JSON.stringify(formik.values),
+      formik?.initialValues,
+      formik?.values
+    );
+  }, [formik]);
 
   return (
     <CreateRobotFormLoader
@@ -221,7 +266,11 @@ export default function CreateRobotFormStep2({
               ) : isImportRobot ? (
                 `Update Robot`
               ) : robotData?.step1?.isDevelopmentMode ? (
-                `Create Robot`
+                envOnPremise ? (
+                  `Create Application`
+                ) : (
+                  `Create Robot`
+                )
               ) : (
                 `Next Step`
               )

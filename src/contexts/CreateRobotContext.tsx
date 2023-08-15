@@ -4,6 +4,7 @@ import {
   IRobotWorkspace,
   IRobotWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
+import { envOnPremise } from "../helpers/envProvider";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
@@ -23,7 +24,17 @@ export default ({ children }: any) => {
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,
-      isDevelopmentMode: false,
+      isDevelopmentMode: envOnPremise ? true : false,
+      domainName: "",
+      application: {
+        name: "",
+        version: "",
+      },
+      devspace: {
+        ubuntuDistro: "",
+        desktop: "",
+        version: "",
+      },
     },
     step2: {
       workspaces: [

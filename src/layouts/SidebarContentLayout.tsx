@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
 import { envOnPremise } from "../helpers/envProvider";
+import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -312,7 +313,12 @@ export default function SidebarContentLayout(): ReactElement {
                     />
                   );
                 }
-                return (
+                return envOnPremise ? (
+                  <EnvironmentsList
+                    reload={reload}
+                    setItemCount={setItemCount}
+                  />
+                ) : (
                   <RobotsList reload={reload} setItemCount={setItemCount} />
                 );
               case "workspacesmanager":

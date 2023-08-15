@@ -15,6 +15,7 @@ import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRo
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import InfoTip from "../InfoTip/InfoTip";
 import StateCell from "../Cells/StateCell";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -98,47 +99,49 @@ export default function CreateRobotFormWorkspaceItem({
             touched={formik?.touched?.workspaces?.[workspaceIndex]?.name}
           />
         </div>
-        <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-            Workspace Distro:
-            <InfoTip content="Select a workspace ros2 distro." />
+
+        {!envOnPremise && (
+          <div>
+            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              Workspace Distro:
+              <InfoTip content="Select a workspace ros2 distro." />
+            </div>
+            <InputSelect
+              {...formik.getFieldProps(
+                `workspaces.${workspaceIndex}.workspaceDistro`
+              )}
+            >
+              <Fragment>
+                {!formik?.values?.workspaces[workspaceIndex]
+                  ?.workspaceDistro && <option value=""></option>}
+                {robotData.step1.rosDistros?.map(
+                  (rosDistro: string, index: number) => {
+                    return (
+                      <option
+                        key={index}
+                        value={rosDistro}
+                        className="capitalize"
+                      >
+                        {stringCapitalization({
+                          str: rosDistro,
+                        })}
+                      </option>
+                    );
+                  }
+                )}
+              </Fragment>
+            </InputSelect>
+            <InputError
+              error={
+                // @ts-ignore
+                formik?.errors?.workspaces?.[workspaceIndex]?.workspaceDistro
+              }
+              touched={
+                formik?.touched?.workspaces?.[workspaceIndex]?.workspaceDistro
+              }
+            />
           </div>
-          <InputSelect
-            {...formik.getFieldProps(
-              `workspaces.${workspaceIndex}.workspaceDistro`
-            )}
-          >
-            <Fragment>
-              {!formik?.values?.workspaces[workspaceIndex]?.workspaceDistro && (
-                <option value=""></option>
-              )}
-              {robotData.step1.rosDistros?.map(
-                (rosDistro: string, index: number) => {
-                  return (
-                    <option
-                      key={index}
-                      value={rosDistro}
-                      className="capitalize"
-                    >
-                      {stringCapitalization({
-                        str: rosDistro,
-                      })}
-                    </option>
-                  );
-                }
-              )}
-            </Fragment>
-          </InputSelect>
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.workspaces?.[workspaceIndex]?.workspaceDistro
-            }
-            touched={
-              formik?.touched?.workspaces?.[workspaceIndex]?.workspaceDistro
-            }
-          />
-        </div>
+        )}
         <div className="flex flex-col gap-3 p-4">
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories

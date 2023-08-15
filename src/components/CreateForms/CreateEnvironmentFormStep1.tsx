@@ -1,12 +1,7 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
-import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
-import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { createRobot } from "../../toolkit/RobotSlice";
-import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
@@ -20,6 +15,8 @@ import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
+import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -61,8 +58,9 @@ export default function CreateEnvironmentFormStep1({
   }
 
   const formik = useFormik({
-    validationSchema: CreateRobotFormStep1Validations,
+    validationSchema: CreateEnvironmentsFormStep1Validations,
     initialValues: robotData?.step1,
+
     onSubmit: async () => {
       formik.setSubmitting(true);
 
@@ -100,18 +98,6 @@ export default function CreateEnvironmentFormStep1({
             selectedState?.instance?.name
           }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}}`;
         }, 2000);
-      } else if (!formik.values?.isVirtualRobot) {
-        await dispatch(
-          addPhysicalInstanceToFleet({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region,
-            robolaunchPhysicalInstancesName:
-              formik.values?.physicalInstanceName,
-            robolaunchFederatedFleetsName: selectedState?.fleet?.name,
-          })
-        );
       }
 
       formik.setSubmitting(false);
@@ -150,7 +136,7 @@ export default function CreateEnvironmentFormStep1({
             {/* RobotName */}
             <div>
               <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-                Robot Name:
+                Environment Name:
                 <InfoTip content="Type a new robot name." />
               </div>
               <InputText
@@ -170,24 +156,12 @@ export default function CreateEnvironmentFormStep1({
             </div>
             {/* RobotName */}
 
-            <Seperator />
+            {/* Environment Selector */}
+            <EnvironmentSelector formik={formik} />
+            {/* Environment Selector */}
 
-            {/* RobotType */}
-            <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
-            {/* RobotType */}
-
-            <Seperator />
-
-            {/* ROS Distro */}
-            <CreateRobotRosDistrobutions
-              formik={formik}
-              isImportRobot={isImportRobot}
-            />
-            {/* ROS Distro */}
-
+            {formik.values.application?.name && <Seperator />}
             <div className="flex flex-col gap-4">
-              <Seperator />
-
               {/* Robot Storage */}
               <CreateRobotStorage
                 formik={formik}
@@ -199,139 +173,33 @@ export default function CreateEnvironmentFormStep1({
 
               {/* Robot Services */}
               <div className="flex items-center gap-4">
-                {/* Code Editor */}
-                {/* <div className="flex justify-center items-center gap-1">
+                <div className="flex gap-2 w-full">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Code Editor (IDE) :
+                    VDI: Session Count (
+                    {formik?.values?.remoteDesktop?.sessionCount} User) :
                     <InfoTip
-                      content="
-          The IDE is a web-based code editor that allows you to write code for your robot. The IDE is accessible from any device with a web browser, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
+                      content="Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
+                      rightTip
                     />
                   </div>
-                  <InputToggle
-                    checked={formik?.values?.isEnabledIde}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("isEnabledIde", e);
+                  <input
+                    min="1"
+                    max="10"
+                    type="range"
+                    autoComplete="off"
+                    {...formik.getFieldProps("remoteDesktop.sessionCount")}
+                    className="w-full"
+                    style={{
+                      appearance: "auto",
+                      padding: "0px",
+                      color: "#AC2DFE",
+                      accentColor: "currentcolor",
                     }}
-                  />
-                </div> */}
-                {/* Code Editor */}
-
-                {/* ROS2 Bridge */}
-                <div className="flex items-center gap-1">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    ROS2 (Bridge) :
-                    <InfoTip
-                      content="
-          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot."
-                    />
-                  </div>
-                  <InputToggle
-                    checked={formik?.values?.isEnabledROS2Bridge}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("isEnabledROS2Bridge", e);
-                    }}
+                    disabled={formik.isSubmitting}
                   />
                 </div>
-
-                {formik?.values?.remoteDesktop?.isEnabled && (
-                  <div className="flex gap-2 w-full pl-10">
-                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                      VDI: Session Count (
-                      {formik?.values?.remoteDesktop?.sessionCount} User) :
-                      <InfoTip
-                        content="
-          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
-          "
-                        rightTip
-                      />
-                    </div>
-                    <input
-                      min="1"
-                      max="10"
-                      type="range"
-                      autoComplete="off"
-                      {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                      className="w-full"
-                      style={{
-                        appearance: "auto",
-                        padding: "0px",
-                        color: "#AC2DFE",
-                        accentColor: "currentcolor",
-                      }}
-                      disabled={formik.isSubmitting}
-                    />
-                  </div>
-                )}
-
-                {/* ROS2 Bridge */}
-
-                {/* Remote Desktop */}
-                {/* <div className="flex items-center gap-1">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Remote Desktop (VDI) :
-                    <InfoTip
-                      rightTip
-                      content="
-          Remote Desktop allows you to connect to your robot's desktop from any device with a web browser. This allows you to use your robot's desktop from anywhere, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
-                    />
-                  </div>
-                  <InputToggle
-                    checked={formik?.values?.remoteDesktop?.isEnabled}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("remoteDesktop.isEnabled", e);
-                    }}
-                  />
-                </div> */}
-                {/* Remote Desktop */}
               </div>
               {/* Robot Services */}
-
-              {/* Seperator */}
-              <Seperator />
-              {/* Seperator */}
-
-              {/* GPU Resource */}
-              <div className="flex items-center gap-1">
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                  GPU Usage Enabled for Cloud Instance:
-                  <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
-                </div>
-                <InputToggle
-                  checked={formik?.values?.gpuEnabledForCloudInstance}
-                  onChange={(e: any) => {
-                    formik.setFieldValue("gpuEnabledForCloudInstance", e);
-                  }}
-                  disabled={formik.isSubmitting}
-                />
-              </div>
-              {/* GPU Resource */}
-
-              {/* Seperator */}
-              <Seperator />
-              {/* Seperator */}
-
-              {/* Development Mode */}
-              {!isImportRobot && (
-                <Fragment>
-                  <div className="flex items-center gap-1">
-                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                      Development Mode:
-                      <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
-                    </div>
-                    <InputToggle
-                      checked={formik?.values?.isDevelopmentMode}
-                      onChange={(e: any) => {
-                        formik.setFieldValue("isDevelopmentMode", e);
-                      }}
-                      disabled={formik.isSubmitting || isImportRobot}
-                    />
-                  </div>
-                </Fragment>
-              )}
-              {/* Development Mode */}
             </div>
             <div className="flex gap-2 mt-10 ">
               {!isImportRobot && (

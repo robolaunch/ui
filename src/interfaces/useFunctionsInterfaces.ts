@@ -1,3 +1,8 @@
+import {
+  IgetEnvironmentRequest,
+  IsingleGetEnviromentParameters,
+} from "./environmentInterfaces";
+
 export interface IsingleGetParameters {
   isSetState?: boolean;
   ifErrorNavigateTo404?: boolean;
@@ -85,6 +90,15 @@ export interface IgetRobot {
   robotName: string;
 }
 
+export interface IgetBuildManager {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  fleetName: string;
+  robotName: string;
+}
+
 export interface IgetLaunchManagers {
   organizationId: string;
   roboticsCloudName: string;
@@ -93,13 +107,13 @@ export interface IgetLaunchManagers {
   fleetName: string;
   robotName: string;
 }
-export interface IgetBuildManager {
+
+export interface IgetEnvironments {
   organizationId: string;
   roboticsCloudName: string;
   instanceId: string;
   region: string;
   fleetName: string;
-  robotName: string;
 }
 
 export interface IsingleGetRobotParameters {
@@ -162,6 +176,14 @@ export interface IuseFunctions {
   getLaunchManagers: (
     values: IgetLaunchManagers,
     parameters?: ImultipleGetLaunchParameters
+  ) => void;
+  getEnvironments: (
+    values: IgetEnvironments,
+    parameters?: ImultipleGetParameters
+  ) => void;
+  getEnvironment: (
+    values: IgetEnvironmentRequest,
+    parameters?: IsingleGetEnviromentParameters
   ) => void;
   getIP: () => void;
   handleSetterCurrentOrganization: (
