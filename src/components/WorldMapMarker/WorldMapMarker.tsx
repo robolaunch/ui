@@ -10,8 +10,6 @@ export default function WorldMapMarker({
 }: IWorldMapMarker): ReactElement {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  console.log(city);
-
   return (
     <Marker
       onMouseEnter={() => setIsHovered(true)}

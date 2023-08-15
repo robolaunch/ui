@@ -9,6 +9,7 @@ import {
   CreateInstanceApi,
   CombinedFunctionsApi,
   MarketplaceOperationsApi,
+  EnvironmentApi,
 } from "./openapi";
 
 const apiConfig: Configuration = new Configuration({
@@ -66,3 +67,9 @@ export const marketplaceApi: MarketplaceOperationsApi =
     process.env.REACT_APP_BACKEND_URL,
     axiosInterceptorOpenApi
   );
+
+export const environmentApi: EnvironmentApi = new EnvironmentApi(
+  apiConfig,
+  process.env.REACT_APP_BACKEND_URL,
+  axiosInterceptorOpenApi
+);

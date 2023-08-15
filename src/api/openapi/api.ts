@@ -26,6 +26,25 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface Application
+ */
+export interface Application {
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'version'?: string;
+}
+/**
+ * 
+ * @export
  * @interface Client
  */
 export interface Client {
@@ -393,6 +412,12 @@ export interface CloudInstance {
     'robolaunchFederatedRobots'?: Array<RobolaunchFederatedRobot>;
     /**
      * 
+     * @type {Array<Environment>}
+     * @memberof CloudInstance
+     */
+    'environments'?: Array<Environment>;
+    /**
+     * 
      * @type {string}
      * @memberof CloudInstance
      */
@@ -510,6 +535,260 @@ export const DecisionStrategy = {
 export type DecisionStrategy = typeof DecisionStrategy[keyof typeof DecisionStrategy];
 
 
+/**
+ * 
+ * @export
+ * @interface Devspace
+ */
+export interface Devspace {
+    /**
+     * 
+     * @type {string}
+     * @memberof Devspace
+     */
+    'ubuntuDistro'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Devspace
+     */
+    'desktop'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Devspace
+     */
+    'version'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Environment
+ */
+export interface Environment {
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'domainName'?: string;
+    /**
+     * 
+     * @type {Application}
+     * @memberof Environment
+     */
+    'application'?: Application;
+    /**
+     * 
+     * @type {Devspace}
+     * @memberof Environment
+     */
+    'devspace'?: Devspace;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'fleetName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'cloudRegion'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'cloudInstanceId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'physicalInstance'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'organizationName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'buildManagerName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'launchManagerName'?: string;
+    /**
+     * 
+     * @type {Array<RobotWorkspace>}
+     * @memberof Environment
+     */
+    'robotWorkspaces'?: Array<RobotWorkspace>;
+    /**
+     * 
+     * @type {Array<RobotBuildStep>}
+     * @memberof Environment
+     */
+    'robotBuildSteps'?: Array<RobotBuildStep>;
+    /**
+     * 
+     * @type {Array<RobotLaunchStep>}
+     * @memberof Environment
+     */
+    'robotLaunchSteps'?: Array<RobotLaunchStep>;
+    /**
+     * 
+     * @type {Array<RobotCluster>}
+     * @memberof Environment
+     */
+    'robotClusters'?: Array<RobotCluster>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof Environment
+     */
+    'distributions'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'bridgeEnabled'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'vdiEnabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    'vdiSessionCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    'vdiGpuResource'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiWebRtcPort'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'vdiPrivileged'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiServiceType'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'ideEnabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    'ideGpuResource'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'idePrivileged'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideServiceType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'rosBridgeDistro'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    'storageAmount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'physicalIdeIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'bridgeIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'gpuEnabledForCloudInstance'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'marketPlaceEnabled'?: boolean;
+    /**
+     * 
+     * @type {TrialImage}
+     * @memberof Environment
+     */
+    'trialImage'?: TrialImage;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'workspaceUpdated'?: boolean;
+}
 /**
  * 
  * @export
@@ -1159,6 +1438,12 @@ export interface PlainResponse {
      * @memberof PlainResponse
      */
     'roboticsCloudData'?: Array<RoboticsCloud>;
+    /**
+     * 
+     * @type {Array<Environment>}
+     * @memberof PlainResponse
+     */
+    'environmentData'?: Array<Environment>;
     /**
      * 
      * @type {Array<Marketplace>}
@@ -2278,100 +2563,6 @@ export interface TrialImage {
 }
 
 /**
- * AwsApi - axios parameter creator
- * @export
- */
-export const AwsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteDnsRecordExt: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/aws/deleteDnsRecordExt`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * AwsApi - functional programming interface
- * @export
- */
-export const AwsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AwsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async deleteDnsRecordExt(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDnsRecordExt(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * AwsApi - factory interface
- * @export
- */
-export const AwsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AwsApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteDnsRecordExt(options?: any): AxiosPromise<void> {
-            return localVarFp.deleteDnsRecordExt(options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * AwsApi - object-oriented interface
- * @export
- * @class AwsApi
- * @extends {BaseAPI}
- */
-export class AwsApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AwsApi
-     */
-    public deleteDnsRecordExt(options?: AxiosRequestConfig) {
-        return AwsApiFp(this.configuration).deleteDnsRecordExt(options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
  * CombinedFunctionsApi - axios parameter creator
  * @export
  */
@@ -2629,6 +2820,39 @@ export const CreateInstanceApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createOnPremiseCloudInstance: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/cloud/createOnPremiseCloudInstance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createRoboticsCloud: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/cloud/createRoboticsCloud`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2847,6 +3071,16 @@ export const CreateInstanceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async createOnPremiseCloudInstance(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOnPremiseCloudInstance(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async createRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createRoboticsCloud(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2919,6 +3153,15 @@ export const CreateInstanceApiFactory = function (configuration?: Configuration,
          */
         createInstance(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.createInstance(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOnPremiseCloudInstance(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createOnPremiseCloudInstance(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3002,6 +3245,17 @@ export class CreateInstanceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof CreateInstanceApi
      */
+    public createOnPremiseCloudInstance(organization?: Organization, options?: AxiosRequestConfig) {
+        return CreateInstanceApiFp(this.configuration).createOnPremiseCloudInstance(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CreateInstanceApi
+     */
     public createRoboticsCloud(organization?: Organization, options?: AxiosRequestConfig) {
         return CreateInstanceApiFp(this.configuration).createRoboticsCloud(organization, options).then((request) => request(this.axios, this.basePath));
     }
@@ -3064,10 +3318,10 @@ export class CreateInstanceApi extends BaseAPI {
 
 
 /**
- * IPAAdminLoginApi - axios parameter creator
+ * EnvironmentApi - axios parameter creator
  * @export
  */
-export const IPAAdminLoginApiAxiosParamCreator = function (configuration?: Configuration) {
+export const EnvironmentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3075,8 +3329,140 @@ export const IPAAdminLoginApiAxiosParamCreator = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addDNSRecord: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/ipa/addDNSRecord`;
+        createEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/createEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/deleteEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/getEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironments: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/getEnvironments`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobolaunchReadyEnvironments: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/getRobolaunchReadyEnvironments`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3106,11 +3492,11 @@ export const IPAAdminLoginApiAxiosParamCreator = function (configuration?: Confi
 };
 
 /**
- * IPAAdminLoginApi - functional programming interface
+ * EnvironmentApi - functional programming interface
  * @export
  */
-export const IPAAdminLoginApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = IPAAdminLoginApiAxiosParamCreator(configuration)
+export const EnvironmentApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EnvironmentApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -3118,19 +3504,59 @@ export const IPAAdminLoginApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addDNSRecord(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addDNSRecord(organization, options);
+        async createEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEnvironments(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEnvironments(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRobolaunchReadyEnvironments(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRobolaunchReadyEnvironments(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * IPAAdminLoginApi - factory interface
+ * EnvironmentApi - factory interface
  * @export
  */
-export const IPAAdminLoginApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = IPAAdminLoginApiFp(configuration)
+export const EnvironmentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EnvironmentApiFp(configuration)
     return {
         /**
          * 
@@ -3138,28 +3564,108 @@ export const IPAAdminLoginApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addDNSRecord(organization?: Organization, options?: any): AxiosPromise<void> {
-            return localVarFp.addDNSRecord(organization, options).then((request) => request(axios, basePath));
+        createEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createEnvironment(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteEnvironment(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getEnvironment(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEnvironments(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getEnvironments(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRobolaunchReadyEnvironments(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getRobolaunchReadyEnvironments(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * IPAAdminLoginApi - object-oriented interface
+ * EnvironmentApi - object-oriented interface
  * @export
- * @class IPAAdminLoginApi
+ * @class EnvironmentApi
  * @extends {BaseAPI}
  */
-export class IPAAdminLoginApi extends BaseAPI {
+export class EnvironmentApi extends BaseAPI {
     /**
      * 
      * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof IPAAdminLoginApi
+     * @memberof EnvironmentApi
      */
-    public addDNSRecord(organization?: Organization, options?: AxiosRequestConfig) {
-        return IPAAdminLoginApiFp(this.configuration).addDNSRecord(organization, options).then((request) => request(this.axios, this.basePath));
+    public createEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).createEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public deleteEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).deleteEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public getEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).getEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public getEnvironments(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).getEnvironments(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public getRobolaunchReadyEnvironments(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).getRobolaunchReadyEnvironments(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

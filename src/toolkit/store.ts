@@ -11,8 +11,7 @@ import GithubReducer from "./GithubSlice";
 import InstanceReducer from "./InstanceSlice";
 import TrialReducer from "./TrialSlice";
 import MarketplaceReducer from "./MarketplaceSlice";
-/* Data must be persisted in order not to lose them on page refresh. */
-/* Redux-persist basically saves the data into localStorage so the data is not lost on refresh. */
+import EnvironmentReducer from "./EnvironmentSlice";
 
 const persistConfigUser = {
   key: "user",
@@ -105,6 +104,17 @@ const persistedReducerMarketplace = persistReducer<any, any>(
   MarketplaceReducer
 );
 
+const persistConfigEnvironment = {
+  key: "environment",
+  version: 1,
+  storage,
+};
+
+const persistedReducerEnvironment = persistReducer<any, any>(
+  persistConfigEnvironment,
+  EnvironmentReducer
+);
+
 const store = configureStore({
   reducer: {
     user: persistedReducerUser,
@@ -116,6 +126,7 @@ const store = configureStore({
     robot: persistedReducerRobot,
     trial: persistedReducerTrial,
     marketplace: persistedReducerMarketplace,
+    environment: persistedReducerEnvironment,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

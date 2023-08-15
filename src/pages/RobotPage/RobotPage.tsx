@@ -14,7 +14,7 @@ import { envOnPremise } from "../../helpers/envProvider";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 import Overview from "./Overview/Overview";
-import HiddenVDIFrame from "../../components/HiddenVDIFrame/HiddenVDIFrame";
+import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 
 export default function RobotPage(): ReactElement {
   const { activeTab, setActiveTab, responseRobot } = useRobot();
@@ -88,7 +88,7 @@ export default function RobotPage(): ReactElement {
         <CodeEditor />
       </div>
       <RosConnector />
-      <HiddenVDIFrame />
+      <HiddenFrame />
     </div>
   );
 }
