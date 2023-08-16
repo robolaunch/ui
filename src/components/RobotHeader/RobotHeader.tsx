@@ -4,12 +4,12 @@ import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineTeam } from "react-icons/ai";
 import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
-import Button from "../Button/Button";
 import RobotResource from "../RobotResource/RobotResource";
 import RobotConnectionsViewer from "../RobotConnectionsViewer/RobotConnectionsViewer";
 import { envOnPremise } from "../../helpers/envProvider";
 import RobotHeaderTabs from "../RobotHeaderTabs/RobotHeaderTabs";
 import useRobot from "../../hooks/useRobot";
+import RobotServiceButtons from "../RobotServiceButtons/RobotServiceButtons";
 
 interface IRobotHeader {
   handleChangeActiveTab: any;
@@ -29,7 +29,6 @@ export default function RobotHeader({
           <div className="h-full flex flex-col justify-around">
             <div className="flex gap-2 items-center">
               <span className="text-lg font-medium">{url?.robotName}</span>
-
               <div
                 className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
               >
@@ -55,43 +54,14 @@ export default function RobotHeader({
                 {url?.organizationName} Organization
               </span>
             </span>
-
             <span className="flex gap-2 items-center">
               <IoLocationOutline size={16} />
               <span className="text-xs font-light">Ankara, Turkiye</span>
             </span>
           </div>
-
           <div className="hidden md:flex text-xs font-medium text-layer-dark-400 gap-8">
             <div className="h-full flex flex-col items-end gap-4">
-              <div className="flex gap-2">
-                <div className="flex  items-center rounded-lg">
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={responseRobot?.ideIngressEndpoint}
-                  >
-                    <Button
-                      text={"Code Editor"}
-                      className="!h-9 text-xs px-4"
-                    />
-                  </a>
-                </div>
-                <div className="flex items-center rounded-lg p-2">
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://${
-                      responseRobot?.vdiIngressEndpoint?.split("//")[1]
-                    }`}
-                  >
-                    <Button
-                      text={"Remote Desktop"}
-                      className="!h-9 text-xs px-4"
-                    />
-                  </a>
-                </div>
-              </div>
+              <RobotServiceButtons />
               <RobotConnectionsViewer
                 ide={isSettedCookie}
                 vdiURL={responseRobot?.vdiIngressEndpoint}

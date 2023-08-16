@@ -4,7 +4,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   text: any;
   onClick?: () => void;
-  loading?: boolean;
+  loading?: boolean | null;
   disabled?: boolean;
   className?: string;
 }

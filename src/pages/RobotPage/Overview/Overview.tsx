@@ -35,12 +35,32 @@ export default function Overview({
           component={
             envOnPremise ? (
               <Button
+                disabled={
+                  responseRobot?.robotClusters?.filter(
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  )?.length
+                }
+                loading={
+                  responseRobot?.robotClusters?.filter(
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  )?.length
+                }
                 text="Development Suite"
                 className="!w-44 !h-10 !text-xs"
                 onClick={informationWidgetAction}
               />
             ) : (
               <Button
+                disabled={
+                  responseRobot?.robotClusters?.filter(
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  )?.length
+                }
+                loading={
+                  responseRobot?.robotClusters?.filter(
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  )?.length
+                }
                 text="Teleoperation of Robot"
                 className="!w-44 !h-10 !text-xs"
                 onClick={informationWidgetAction}

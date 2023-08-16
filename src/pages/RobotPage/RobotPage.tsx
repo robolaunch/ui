@@ -17,7 +17,7 @@ import Overview from "./Overview/Overview";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 
 export default function RobotPage(): ReactElement {
-  const { activeTab, setActiveTab, responseRobot } = useRobot();
+  const { activeTab, setActiveTab, responseRobot, isSettedCookie } = useRobot();
 
   const { urls } = useAppSelector((state) => state.robot);
 
@@ -38,9 +38,10 @@ export default function RobotPage(): ReactElement {
               return (
                 <Overview
                   informationWidgetAction={() => {
-                    setActiveTab(
-                      envOnPremise ? "Development Suite" : "Teleoperation"
-                    );
+                    isSettedCookie &&
+                      setActiveTab(
+                        envOnPremise ? "Development Suite" : "Teleoperation"
+                      );
                   }}
                 />
               );

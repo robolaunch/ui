@@ -19,6 +19,7 @@ import {
   IdeleteLaunchManagerRequest,
   IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
+import { isProduction } from "../helpers/envProvider";
 
 export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
@@ -371,9 +372,9 @@ export const RobotSlice = createSlice({
   name: "robot",
   initialState: {
     urls: {
-      vdi: process.env.NODE_ENV === "production" ? "" : "",
-      ide: process.env.NODE_ENV === "production" ? "" : "",
-      ros: process.env.NODE_ENV === "production" ? "" : "",
+      vdi: isProduction ? "" : "",
+      ide: isProduction ? "" : "",
+      ros: isProduction ? "" : "",
     },
   },
   reducers: {

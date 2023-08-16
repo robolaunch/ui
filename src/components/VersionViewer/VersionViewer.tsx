@@ -1,23 +1,24 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import packageJSON from "../../../package.json";
+import { envFrontendUrl, isProduction } from "../../helpers/envProvider";
 
-export default function VersionViewer() {
+export default function VersionViewer(): ReactElement {
+  const developmentURL = `http://localhost:3000${
+    window.location.href?.split("robolaunch.cloud")[1] || ""
+  }`;
+
+  const productionURL = `${envFrontendUrl}${
+    window.location.href?.split("3000")[1] || ""
+  }`;
+
   return (
     <div
       onClick={() => {
-        if (process.env.NODE_ENV === "development") {
-          window.location.href = `${process.env.REACT_APP_FRONTEND_URL}${
-            window.location.href?.split("3000")[1] || ""
-          }`;
-        } else if (process.env.NODE_ENV === "production") {
-          window.location.href = `http://localhost:3000${
-            window.location.href?.split("robolaunch.cloud")[1] || ""
-          }`;
-        }
+        window.location.href = isProduction ? developmentURL : productionURL;
       }}
       className="fixed bottom-0 right-1 z-50 text-[0.64rem] text-layer-light-700 cursor-crosshair"
     >
-      {process.env.NODE_ENV === "production" ? "P" : "D"} {packageJSON?.version}
+      {isProduction ? "P" : "D"} {packageJSON?.version}
     </div>
   );
 }

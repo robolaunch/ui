@@ -85,6 +85,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
         state === "WaitingForCredentials" ||
         state === "ConfiguringEnvironment" ||
         state === "CreatingDevelopmentSuite" ||
+        state === "ConfiguringWorkspaces" ||
         state === "BuildingRobot" ? (
         <img
           className="w-2.5 h-2.5 scale-[3.4]"
