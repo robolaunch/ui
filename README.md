@@ -1,20 +1,15 @@
 # <img src="https://raw.githubusercontent.com/robolaunch/trademark/main/logos/svg/rocket.svg" width="40" height="40" align="top"> robolaunch UI
 
-[EDIT THIS: You can put badges to the README using [shields.io](https://shields.io/). Explain the repository's purpose shortly.]
-
 <div align="center">
   <p align="center">
     <a href="https://github.com/robolaunch/template/releases">
-      <img src="https://img.shields.io/badge/nodejs-18.15.0-green" alt="release">
+      <img src="https://img.shields.io/badge/nodejs-18.15.0-green" alt="node">
     </a>
     <a href="https://github.com/robolaunch/template/releases">
-      <img src="https://img.shields.io/badge/release-v0.1.0-blue" alt="release">
+      <img src="https://img.shields.io/badge/release-v0.12.5-blue" alt="release">
     </a>
-    <a href="https://github.com/robolaunch/template/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/robolaunch/template" alt="license">
-    </a>
-    <a href="https://github.com/robolaunch/template/issues">
-      <img src="https://img.shields.io/github/issues/robolaunch/template" alt="issues">
+        <a href="#">
+      <img src="https://img.shields.io/badge/language-typescript-blue" alt="language">
     </a>
     <a href="https://github.com/robolaunch/template/actions">
       <img src="https://img.shields.io/badge/build-passing-dgreen" alt="build">
