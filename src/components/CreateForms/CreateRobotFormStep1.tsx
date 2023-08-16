@@ -20,6 +20,7 @@ import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import { envOnPremise } from "../../helpers/envProvider";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -32,12 +33,12 @@ export default function CreateRobotFormStep1({
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
-  const { getRobot } = useFunctions();
+  const { getRobot, getEnvironment } = useFunctions();
   const url = useParams();
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      handleGetRobot();
+      envOnPremise ? handleGetEnvironment() : handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -56,6 +57,24 @@ export default function CreateRobotFormStep1({
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobot,
         setRobotData: setRobotData,
+      }
+    );
+  }
+
+  function handleGetEnvironment() {
+    getEnvironment(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.roboticsCloud?.region,
+        fleetName: selectedState?.fleet?.name,
+        environmentName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobot,
+        setResponse: setResponseRobot,
+        setRobotData: true,
       }
     );
   }

@@ -17,8 +17,8 @@ export default function CreateRobotRosDistrobutions({
   function handleRosDistroFilter(item: string) {
     if (item === "HUMBLE" || item === "IRON") {
       if (
-        formik.values.rosDistros.includes("GALACTIC") ||
-        formik.values.rosDistros.includes("FOXY")
+        formik.values.rosDistros?.includes("GALACTIC") ||
+        formik.values.rosDistros?.includes("FOXY")
       ) {
         return 1;
       }
@@ -26,8 +26,8 @@ export default function CreateRobotRosDistrobutions({
       return 0;
     } else {
       if (
-        formik.values.rosDistros.includes("IRON") ||
-        formik.values.rosDistros.includes("HUMBLE")
+        formik.values.rosDistros?.includes("IRON") ||
+        formik.values.rosDistros?.includes("HUMBLE")
       ) {
         return 1;
       }
@@ -56,7 +56,7 @@ export default function CreateRobotRosDistrobutions({
               }
               key={index}
               className={`relative flex items-center gap-1 border-2 p-2 rounded  w-full justify-center transition-all duration-300 ${
-                formik.values.rosDistros.includes(item)
+                formik.values.rosDistros?.includes(item)
                   ? isImportRobot
                     ? "border-layer-primary-300"
                     : "border-layer-primary-600 shadow"
@@ -78,13 +78,14 @@ export default function CreateRobotRosDistrobutions({
                   );
                 } else if (
                   (item === "HUMBLE" || item === "IRON") &&
-                  (rosDistros.includes("GALACTIC") ||
-                    rosDistros.includes("FOXY"))
+                  (rosDistros?.includes("GALACTIC") ||
+                    rosDistros?.includes("FOXY"))
                 ) {
                   toast.error("You can't select Humble with Galactic or Foxy");
                 } else if (
                   (item === "GALACTIC" || item === "FOXY") &&
-                  (rosDistros.includes("IRON") || rosDistros.includes("HUMBLE"))
+                  (rosDistros.includes("IRON") ||
+                    rosDistros?.includes("HUMBLE"))
                 ) {
                   toast.error(
                     "You can't select Galactic or Foxy with Humble or Iron"
@@ -114,7 +115,7 @@ export default function CreateRobotRosDistrobutions({
                     : item === "IRON" && "Iron"}
                 </span>
               </div>
-              {formik.values.rosDistros.includes(item) && (
+              {formik.values.rosDistros?.includes(item) && (
                 <div className="absolute inset-0 flex items-start justify-end p-2">
                   <MdVerified
                     size={16}

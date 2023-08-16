@@ -16,6 +16,7 @@ import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRo
 import { envOnPremise } from "../../helpers/envProvider";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import { useParams } from "react-router-dom";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -31,8 +32,9 @@ export default function CreateRobotFormStep2({
   const dispatch = useAppDispatch();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
-  const { getRobot, getFleet } = useFunctions();
+  const { getRobot, getFleet, getEnvironment } = useFunctions();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const url = useParams();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
     validationSchema: envOnPremise
@@ -126,7 +128,7 @@ export default function CreateRobotFormStep2({
   useEffect(
     () => {
       if (isImportRobot) {
-        handleGetRobot();
+        envOnPremise ? handleGetEnvironment() : handleGetRobot();
         setTimeout(() => {
           setIsLoadingImportRobot(false);
         }, 2000);
@@ -162,6 +164,23 @@ export default function CreateRobotFormStep2({
         ifErrorNavigateTo404: false,
         setRobotData: true,
         setResponse: setResponseRobot,
+      }
+    );
+  }
+  function handleGetEnvironment() {
+    getEnvironment(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.roboticsCloud?.region,
+        fleetName: selectedState?.fleet?.name,
+        environmentName: url?.robotName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobot,
+        setResponse: setResponseRobot,
+        setRobotData: true,
       }
     );
   }

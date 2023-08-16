@@ -37,34 +37,32 @@ export default function PrivateSidebar(): ReactElement {
                   description="You can go back to the previous page here."
                 />
               )}
-
+              <SideBarMenuItem
+                type="robot"
+                description="You can access all your robots here."
+                loading={isLoading}
+                disabled={
+                  sidebarState?.isCreateMode &&
+                  (sidebarState?.page === "robot" ||
+                    sidebarState?.page === "workspacesmanager" ||
+                    sidebarState?.page === "buildsmanager" ||
+                    sidebarState?.page === "launchsmanager")
+                }
+              />
+              <SideBarMenuItem
+                type="workspacesmanager"
+                description="You can access all your workspaces here."
+                loading={isLoading}
+                disabled={
+                  sidebarState?.isCreateMode &&
+                  (sidebarState?.page === "robot" ||
+                    sidebarState?.page === "workspacesmanager" ||
+                    sidebarState?.page === "buildsmanager" ||
+                    sidebarState?.page === "launchsmanager")
+                }
+              />
               {!envOnPremise && (
                 <Fragment>
-                  <SideBarMenuItem
-                    type="robot"
-                    description="You can access all your robots here."
-                    loading={isLoading}
-                    disabled={
-                      sidebarState?.isCreateMode &&
-                      (sidebarState?.page === "robot" ||
-                        sidebarState?.page === "workspacesmanager" ||
-                        sidebarState?.page === "buildsmanager" ||
-                        sidebarState?.page === "launchsmanager")
-                    }
-                  />
-                  <SideBarMenuItem
-                    type="workspacesmanager"
-                    description="You can access all your workspaces here."
-                    loading={isLoading}
-                    disabled={
-                      sidebarState?.isCreateMode &&
-                      (sidebarState?.page === "robot" ||
-                        sidebarState?.page === "workspacesmanager" ||
-                        sidebarState?.page === "buildsmanager" ||
-                        sidebarState?.page === "launchsmanager")
-                    }
-                  />
-
                   <SideBarMenuItem
                     type="buildsmanager"
                     description="You can access all your builds here."
