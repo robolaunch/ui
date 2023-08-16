@@ -320,7 +320,7 @@ export default function FleetDashboardPage(): ReactElement {
           subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
           component={
             <Button
-              text="Create a new Robot"
+              text={`Create a new ${envOnPremise ? "Application" : "Robot"}`}
               className="!w-44 !h-10 !text-xs"
               onClick={() => {
                 setSidebarState((prevState: any): any => ({
@@ -377,7 +377,7 @@ export default function FleetDashboardPage(): ReactElement {
       }
       table={
         <GeneralTable
-          type="robot"
+          type={envOnPremise ? "application" : "robot"}
           title={envOnPremise ? "Applications" : "Robots"}
           data={data}
           columns={columns}

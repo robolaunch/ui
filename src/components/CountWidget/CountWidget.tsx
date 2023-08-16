@@ -10,8 +10,8 @@ interface ICountWidget {
 export default function CountWidget({ data }: ICountWidget): ReactElement {
   return (
     <Widget
-      title={`Count Widget`}
-      subtitle={` Count`}
+      title={`State Counter`}
+      subtitle={`State Counter`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
       <ReactApexChart
