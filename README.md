@@ -22,11 +22,7 @@
   </p>
 </div>
 
-robolaunch Template helps organization members to have a generic project template before opening a repository. [Use this repository as a template](https://github.com/robolaunch/template/generate) for the new [robolaunch Organization](https://github.com/robolaunch) repository and specialize it according to project's needs.
-
 ## Table of Contents
-
-[EDIT THIS: Add your headers to table of contents.]
 
 - [Overview](#overview)
 - [Quick Start](#quick-start)
@@ -35,35 +31,35 @@ robolaunch Template helps organization members to have a generic project templat
 
 ## Overview
 
-[EDIT THIS: Give more insight about the project. Provide a feature list.]
-
-The aim of this project is to maintain a generic template for robolaunch projects. Members of robolaunch organization can fork this repository and start developing their projects following conventions such as:
-
-- Following a code of conduct
-- Having a contributing guide
-- Having a style guide
-- Applying Apache 2.0 license
-- Having a README template
-- Having issue & pull request templates
-- Using worklows for testing & build
+robolaunch is a Cloud-Native Robotics Platform that provides the end-to-end infrastructure, software stack and tools for developing, simulating, deploying and operating ROS/ROS2 robots at scale.
 
 ## Quick Start
 
-[EDIT THIS: Explain how starters can try the project's functionality.]
+To use robolaunch-ui, you must first have Node.js installed on your computer. You can then follow the steps below:
 
-After [using this project as template](https://github.com/robolaunch/template/generate), you can:
+### Step 1
 
-- Update generic fields at README, specialize it to the project
-- Create first release to stage new features
-- Add custom workflows for CI/CD
-- Specialize issue & PR templates if needed
+Clone or download robolaunch-ui repository. You can start here;
 
-## Aims & Roadmap
+```bash
+git clone https://github.com/robolaunch/ui
+```
 
-[EDIT THIS: Add roadmap items for the project.]
+### Step 2
 
-- Extending the open source conventions
-- Enforcing conventional commit messages
+Run this command to download the packages the project depends on.
+
+```bash
+npm install
+```
+
+### Step 3
+
+Run the following command to start the project
+
+```bash
+npm start
+```
 
 ## Contributing
 
