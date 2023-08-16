@@ -97,7 +97,11 @@ export default function RobotHeaderTabs({
                     : "text-layer-light-500"
                 } `}
               >
-                {!isSettedCookie ? (
+                {responseRobot &&
+                Array.isArray(responseRobot?.robotClusters) &&
+                responseRobot?.robotClusters?.filter(
+                  (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                )?.length ? (
                   <ContentLoader
                     speed={1}
                     width={92}

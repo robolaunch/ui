@@ -110,7 +110,11 @@ export default function SideBarMenuItem({
         <img
           draggable="false"
           className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
-          src={`/svg/general/${type}/${type}-${colorSwitcher()}.svg`}
+          src={`/svg/general/${
+            type === "robot" && envOnPremise ? "application" : type
+          }/${
+            type === "robot" && envOnPremise ? "application" : type
+          }-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
         />

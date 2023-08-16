@@ -57,29 +57,6 @@ export const getFederatedFleets = createAsyncThunk(
   }
 );
 
-// export const getFederatedFleetStatus = createAsyncThunk(
-//   "instance/getFederatedFleetStatus",
-//   async (values: any) => {
-//     const response = await kubernetesApi.getFederatedFleetStatus({
-//       name: values.name,
-//       organizationId: values?.organizationId,
-//       roboticsClouds: [
-//         {
-//           name: values?.roboticsCloudName,
-//           cloudInstances: [
-//             {
-//               instanceId: values?.instanceId,
-//               region: values?.region,
-//               robolaunchFederatedFleets: [{ name: values?.fleetName }],
-//             },
-//           ],
-//         },
-//       ],
-//     });
-//     return response.data;
-//   }
-// );
-
 export const deleteFederatedFleet = createAsyncThunk(
   "instance/deleteFederatedFleet",
   async (values: any) => {
@@ -121,12 +98,14 @@ export const FleetSlice = createSlice({
       .addCase(createFederatedFleet.rejected, () => {
         toast.error("Something went wrong of creating fleet");
       })
-      .addCase(getFederatedFleets.rejected, () => {
-        toast.error("Something went wrong of getting fleets");
+      .addCase(getFederatedFleets.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
       })
-      // .addCase(getFederatedFleetStatus.rejected, () => {
-      //   toast.error("Something went wrong of getting fleet status");
-      // })
+      .addCase(getFederatedFleets.rejected, () => {
+        toast.error(`Something went wrong of getting fleets`);
+      })
       .addCase(deleteFederatedFleet.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
           toast.error(action?.payload?.message);

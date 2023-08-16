@@ -20,8 +20,6 @@ export default function DeleteEnvironmentModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  console.log(data);
-
   function handleDeleteRobotModal() {
     setIsLoading(true);
 

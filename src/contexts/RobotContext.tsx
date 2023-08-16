@@ -49,7 +49,12 @@ export default ({ children }: any) => {
       !responseBuildManager &&
       !responseLaunchManagers
     ) {
-      envOnPremise ? handleGetEnvironment() : handleGetRobot();
+      if (envOnPremise === true) {
+        handleGetEnvironment();
+      } else {
+        handleGetRobot();
+      }
+
       !envOnPremise && handleGetBuildManager();
       !envOnPremise && handleGetLaunchManagers();
     }

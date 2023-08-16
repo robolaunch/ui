@@ -255,6 +255,7 @@ export default function CreateRobotFormStep2({
               JSON.stringify(formik.initialValues) ===
                 JSON.stringify(formik.values)
             }
+            loading={formik.isSubmitting}
             className="w-full !h-11 text-xs"
             text={
               formik.isSubmitting ? (

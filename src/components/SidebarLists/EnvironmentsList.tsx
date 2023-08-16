@@ -5,7 +5,6 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envOnPremise } from "../../helpers/envProvider";
 
 interface IEnvironmentsList {
   reload: boolean;
@@ -81,12 +80,12 @@ export default function EnvironmentsList({
               : !selectedState?.instance
               ? "Instance"
               : "Fleet"
-          } to view ${envOnPremise ? "applications" : "robots"}.`}
+          } to view applications.`}
         />
       ) : !Array.isArray(responseEnvironments) ? (
         <SidebarListLoader />
       ) : responseEnvironments?.length === 0 ? (
-        <SidebarInfo text={`Create a Robot.`} />
+        <SidebarInfo text={`Create a Application.`} />
       ) : (
         <Fragment>
           {responseEnvironments?.map((environment: any, index: number) => {
