@@ -2,16 +2,16 @@
 
 <div align="center">
   <p align="center">
-    <a href="https://github.com/robolaunch/template/releases">
+    <a href="https://github.com/nodejs">
       <img src="https://img.shields.io/badge/nodejs-18.15.0-dgreen" alt="node">
     </a>
-    <a href="https://github.com/robolaunch/template/releases">
+    <a href="https://github.com/robolaunch/ui/releases">
       <img src="https://img.shields.io/badge/release-v0.12.5-red" alt="release">
     </a>
         <a href="#">
       <img src="https://img.shields.io/badge/language-typescript-blue" alt="language">
     </a>
-    <a href="https://github.com/robolaunch/template/actions">
+    <a href="https://github.com/robolaunch/ui/actions">
       <img src="https://img.shields.io/badge/build-passing-dgreen" alt="build">
     </a>
   </p>
