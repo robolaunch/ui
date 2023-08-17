@@ -542,32 +542,32 @@ export default ({ children }: any) => {
             ?.cloudInstances
         ) &&
         responseNamespaces?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
+          ?.cloudInstances[0]?.robolaunchNamespaces
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets || []
+              ?.cloudInstances[0]?.robolaunchNamespaces || []
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
+              ?.cloudInstances[0]?.robolaunchNamespaces?.length || 0
           );
 
         if (parameters?.setFirstItemforTrial) {
           if (
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 1
+              ?.cloudInstances[0]?.robolaunchNamespaces?.length === 1
           ) {
             parameters?.setFirstItemforTrial(
               responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+                ?.cloudInstances[0]?.robolaunchNamespaces[0]
             );
           } else if (
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 0
+              ?.cloudInstances[0]?.robolaunchNamespaces?.length === 0
           ) {
             dispatch(
               createFederatedFleet({
@@ -613,21 +613,21 @@ export default ({ children }: any) => {
             ?.cloudInstances
         ) &&
         responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
+          ?.cloudInstances[0]?.robolaunchNamespaces
       ) {
         parameters?.isSetState &&
           setSelectedState((prevState: any) => {
             return {
               ...prevState,
               fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
                   (fleet: any) => fleet?.name === values?.namespaceName
                 ) || {},
             };
           });
         parameters?.setResponse &&
           parameters?.setResponse(
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
               (fleet: any) => fleet?.name === values?.namespaceName
             ) || {}
           );
@@ -637,7 +637,7 @@ export default ({ children }: any) => {
             return {
               ...prevState,
               fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
                   (fleet: any) => fleet?.name === values?.namespaceName
                 ) || {},
             };
