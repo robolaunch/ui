@@ -23,8 +23,10 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
-import { envOnPremise } from "../helpers/envProvider";
+import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
 import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
+import NamespacesList from "../components/SidebarLists/NamespacesList";
+import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -73,11 +75,11 @@ export default function SidebarContentLayout(): ReactElement {
             return "Region";
           }
 
-          if (sidebarState?.page === "fleet" && envOnPremise) {
+          if (sidebarState?.page === "fleet" && envOnPremiseRobot) {
             return "Namespace";
           }
 
-          if (sidebarState?.page === "robot" && envOnPremise) {
+          if (sidebarState?.page === "robot" && envOnPremiseRobot) {
             return "Application";
           }
 
@@ -295,12 +297,30 @@ export default function SidebarContentLayout(): ReactElement {
                   );
                 }
               case "fleet":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateFleetForm />;
+                switch (envOnPremiseFleet) {
+                  case true:
+                    if (sidebarState?.isCreateMode) {
+                      return <CreateNamespaceForm />;
+                    }
+
+                    return (
+                      <NamespacesList
+                        reload={reload}
+                        setItemCount={setItemCount}
+                      />
+                    );
+                  case false:
+                    if (sidebarState?.isCreateMode) {
+                      return <CreateFleetForm />;
+                    }
+
+                    return (
+                      <FleetsList reload={reload} setItemCount={setItemCount} />
+                    );
                 }
-                return (
-                  <FleetsList reload={reload} setItemCount={setItemCount} />
-                );
+
+                break;
+
               case "robot":
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
@@ -313,7 +333,7 @@ export default function SidebarContentLayout(): ReactElement {
                     />
                   );
                 }
-                return envOnPremise ? (
+                return envOnPremiseRobot ? (
                   <EnvironmentsList
                     reload={reload}
                     setItemCount={setItemCount}
@@ -360,7 +380,7 @@ export default function SidebarContentLayout(): ReactElement {
         }
 
         if (
-          envOnPremise &&
+          envOnPremiseRobot &&
           sidebarState?.page !== "fleet" &&
           sidebarState?.page !== "robot"
         ) {

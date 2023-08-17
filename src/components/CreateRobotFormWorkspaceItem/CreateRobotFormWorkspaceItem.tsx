@@ -15,7 +15,7 @@ import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRo
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import InfoTip from "../InfoTip/InfoTip";
 import StateCell from "../Cells/StateCell";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -100,7 +100,7 @@ export default function CreateRobotFormWorkspaceItem({
           />
         </div>
 
-        {!envOnPremise && (
+        {!envOnPremiseRobot && (
           <div>
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Workspace Distro:

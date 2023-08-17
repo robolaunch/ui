@@ -1,4 +1,10 @@
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
 import GeneralTable from "../../../components/Table/GeneralTable";
@@ -15,13 +21,22 @@ import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import { SiKubernetes } from "react-icons/si";
 import { RiCpuLine } from "react-icons/ri";
-import { envOnPremise } from "../../../helpers/envProvider";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../../helpers/envProvider";
+import NamespaceActionCells from "../../../components/ActionCells/NamespaceActionCells";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const { pagesState, setSidebarState, selectedState } = useMain();
-  const { getOrganization, getRoboticsCloud, getInstance, getFleets } =
-    useFunctions();
+  const {
+    getOrganization,
+    getRoboticsCloud,
+    getInstance,
+    getFleets,
+    getNamespaces,
+  } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -36,11 +51,13 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else {
-      handleGetFleets();
+      envOnPremiseFleet ? handleGetNamespaces() : handleGetFleets();
     }
 
     const timer = setInterval(() => {
-      pagesState?.instance && handleGetFleets();
+      pagesState?.instance && envOnPremiseFleet
+        ? handleGetNamespaces()
+        : handleGetFleets();
     }, 10000);
 
     return () => {
@@ -119,7 +136,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       },
       {
         key: "state",
-        header: `${envOnPremise ? "Namespace" : "Fleet"} State`,
+        header: `${envOnPremiseRobot ? "Namespace" : "Fleet"} State`,
         sortable: false,
         filter: false,
         align: "left",
@@ -133,15 +150,29 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         align: "right",
         body: (rowData: any) => {
           return (
-            <FleetActionCells
-              reload={() => setReload(!reload)}
-              data={{
-                organization: selectedState?.organization,
-                roboticsCloud: url?.roboticsCloudName,
-                instance: selectedState?.instance,
-                fleet: rowData?.actions,
-              }}
-            />
+            <Fragment>
+              {envOnPremiseFleet ? (
+                <NamespaceActionCells
+                  reload={() => setReload(!reload)}
+                  data={{
+                    organization: selectedState?.organization,
+                    roboticsCloud: url?.roboticsCloudName,
+                    instance: selectedState?.instance,
+                    fleet: rowData?.actions,
+                  }}
+                />
+              ) : (
+                <FleetActionCells
+                  reload={() => setReload(!reload)}
+                  data={{
+                    organization: selectedState?.organization,
+                    roboticsCloud: url?.roboticsCloudName,
+                    instance: selectedState?.instance,
+                    fleet: rowData?.actions,
+                  }}
+                />
+              )}
+            </Fragment>
           );
         },
       },
@@ -200,6 +231,21 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         roboticsCloudName: pagesState?.roboticsCloud?.name,
         instanceId: pagesState?.instance?.instanceId,
         region: pagesState?.roboticsCloud?.region,
+      },
+      {
+        ifErrorNavigateTo404: !responseFleets,
+        setResponse: setResponseFleets,
+      }
+    );
+  }
+
+  function handleGetNamespaces() {
+    getNamespaces(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
       },
       {
         ifErrorNavigateTo404: !responseFleets,
@@ -304,7 +350,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       table={
         <GeneralTable
           type="fleet"
-          title={envOnPremise ? "Namespaces" : "Fleets"}
+          title={envOnPremiseRobot ? "Namespaces" : "Fleets"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseFleets) ? false : true}

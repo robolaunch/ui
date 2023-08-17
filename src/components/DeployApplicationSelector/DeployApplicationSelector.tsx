@@ -13,7 +13,7 @@ import { createRobot } from "../../toolkit/RobotSlice";
 import { useNavigate } from "react-router-dom";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface IDeployApplicationSelector {
   item: any;
@@ -414,7 +414,7 @@ export default function DeployApplicationSelector({
             alt="robolaunch"
           />
           <span className="capitalize text-xs">
-            {envOnPremise ? "Namespace" : "Fleet"}
+            {envOnPremiseRobot ? "Namespace" : "Fleet"}
           </span>
         </div>
         <div className="flex items-center gap-3">

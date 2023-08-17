@@ -4,7 +4,7 @@ import { BiTrash, BiPencil } from "react-icons/bi";
 import { HiOutlineEye } from "react-icons/hi";
 import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
 import RenameOrganizationModal from "../../modals/RenameOrganizationModal";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 interface IOrganizationActionCells {
   data: any;
   reload: () => void;
@@ -39,24 +39,26 @@ export default function OrganizationActionCells({
           text={
             <BiPencil
               className={`${
-                envOnPremise ? "text-layer-light-500" : "text-layer-primary-500"
+                envOnPremiseRobot
+                  ? "text-layer-light-500"
+                  : "text-layer-primary-500"
               }`}
             />
           }
           onClick={() => setVisibleRenameModal(true)}
-          disabled={envOnPremise}
+          disabled={envOnPremiseRobot}
         />
         <Button
           className="!w-8 !h-8 !bg-transparent !border !border-red-600 disabled:!border-layer-light-500"
           text={
             <BiTrash
               className={`${
-                envOnPremise ? "text-layer-light-500" : "text-red-600"
+                envOnPremiseRobot ? "text-layer-light-500" : "text-red-600"
               }`}
             />
           }
           onClick={() => setVisibleDeleteModal(true)}
-          disabled={envOnPremise}
+          disabled={envOnPremiseRobot}
         />
       </div>
       {visibleRenameModal && (

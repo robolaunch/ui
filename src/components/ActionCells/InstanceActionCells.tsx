@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface IInstanceActionCells {
   data: any;
@@ -33,7 +33,7 @@ export default function InstanceActionCells({
               <BiStopCircle
                 size={20}
                 className={`${
-                  envOnPremise
+                  envOnPremiseRobot
                     ? "text-layer-light-500"
                     : "text-layer-primary-500"
                 }`}
@@ -42,7 +42,7 @@ export default function InstanceActionCells({
               <BiPlayCircle
                 size={20}
                 className={`${
-                  envOnPremise
+                  envOnPremiseRobot
                     ? "text-layer-light-500"
                     : "text-layer-primary-500"
                 }`}
@@ -52,7 +52,7 @@ export default function InstanceActionCells({
             )
           }
           disabled={
-            envOnPremise ||
+            envOnPremiseRobot ||
             (data?.state === "running" || data?.state === "stopped"
               ? false
               : true)
@@ -73,14 +73,14 @@ export default function InstanceActionCells({
             data?.state === "running" || data?.state === "stopped" ? (
               <BiTrash
                 className={`${
-                  envOnPremise ? "text-layer-light-500" : "text-red-600"
+                  envOnPremiseRobot ? "text-layer-light-500" : "text-red-600"
                 }`}
               />
             ) : (
               <img src="/svg/general/loading.svg" alt="loading" />
             )
           }
-          disabled={envOnPremise}
+          disabled={envOnPremiseRobot}
           onClick={() => setIsTerminateModalVisible(true)}
         />
       </div>

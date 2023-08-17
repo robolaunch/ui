@@ -3,7 +3,7 @@ import useMain from "../../hooks/useMain";
 import useTheme from "../../hooks/useTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { isDesktop } from "react-device-detect";
 
 interface ISideBarMenuItem {
@@ -111,9 +111,9 @@ export default function SideBarMenuItem({
           draggable="false"
           className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
           src={`/svg/general/${
-            type === "robot" && envOnPremise ? "application" : type
+            type === "robot" && envOnPremiseRobot ? "application" : type
           }/${
-            type === "robot" && envOnPremise ? "application" : type
+            type === "robot" && envOnPremiseRobot ? "application" : type
           }-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
@@ -129,11 +129,11 @@ export default function SideBarMenuItem({
               : type === "instance"
               ? "Instances"
               : type === "fleet"
-              ? envOnPremise
+              ? envOnPremiseRobot
                 ? "Namespaces"
                 : "Fleets"
               : type === "robot"
-              ? envOnPremise
+              ? envOnPremiseRobot
                 ? "Applications"
                 : "Robots"
               : type === "workspacesmanager"

@@ -13,7 +13,7 @@ import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidat
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
 import { useParams } from "react-router-dom";
@@ -37,14 +37,14 @@ export default function CreateRobotFormStep2({
   const url = useParams();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
-    validationSchema: envOnPremise
+    validationSchema: envOnPremiseRobot
       ? CreateEnvironmentFormStep2Validations
       : CreateRobotFormStep2Validations,
     initialValues: robotData?.step2,
     onSubmit: async (values: any) => {
       formik.setSubmitting(true);
 
-      if (envOnPremise) {
+      if (envOnPremiseRobot) {
         dispatch(
           createEnvironment({
             organizationId: selectedState?.organization?.organizationId,
@@ -128,7 +128,7 @@ export default function CreateRobotFormStep2({
   useEffect(
     () => {
       if (isImportRobot) {
-        envOnPremise ? handleGetEnvironment() : handleGetRobot();
+        envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
         setTimeout(() => {
           setIsLoadingImportRobot(false);
         }, 2000);
@@ -286,7 +286,7 @@ export default function CreateRobotFormStep2({
               ) : isImportRobot ? (
                 `Update Robot`
               ) : robotData?.step1?.isDevelopmentMode ? (
-                envOnPremise ? (
+                envOnPremiseRobot ? (
                   `Create Application`
                 ) : (
                   `Create Robot`

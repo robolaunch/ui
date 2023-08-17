@@ -1,18 +1,17 @@
 import React, { Fragment, ReactElement, useState } from "react";
 import Button from "../Button/Button";
 import { BiTrash } from "react-icons/bi";
-import DeleteRoboticsCloudModal from "../../modals/DeleteRoboticsCloudModal";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
 
-interface IRoboticsCloudActionCells {
+interface INamespaceActionCells {
   data: any;
   reload: () => void;
 }
 
-export default function RoboticsCloudActionCells({
+export default function NamespaceActionCells({
   data,
   reload,
-}: IRoboticsCloudActionCells): ReactElement {
+}: INamespaceActionCells): ReactElement {
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false);
 
@@ -20,21 +19,14 @@ export default function RoboticsCloudActionCells({
     <Fragment>
       <div className="card flex gap-4 float-right">
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-red-600 disabled:!border-layer-light-500"
-          text={
-            <BiTrash
-              className={`${
-                envOnPremiseRobot ? "text-layer-light-500" : "text-red-600"
-              }`}
-            />
-          }
+          className={`!w-8 !h-8 !bg-transparent !border !border-red-600`}
+          text={<BiTrash className="text-red-600" />}
           onClick={() => setIsDeleteModalVisible(true)}
-          disabled={envOnPremiseRobot}
         />
       </div>
       {isDeleteModalVisible && (
-        <DeleteRoboticsCloudModal
-          data={data}
+        <DeleteNamespaceModal
+          data={data || undefined}
           reload={reload}
           handleCloseModal={() => setIsDeleteModalVisible(false)}
           visibleModal={isDeleteModalVisible}

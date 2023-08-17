@@ -23,7 +23,7 @@ interface ICreateRobotFormBuildStepItem {
   stepState?: string[];
   formik: FormikProps<IRobotBuildSteps>;
   disabled?: boolean;
-  isImportRobot: boolean;
+  isImportRobot?: boolean;
 }
 
 export default function CreateRobotFormBuildStepItem({

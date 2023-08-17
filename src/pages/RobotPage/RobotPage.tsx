@@ -10,7 +10,7 @@ import BarcodeContext from "../../contexts/BarcodeContext";
 import RemoteDesktop from "./RemoteDesktop/RemoteDesktop";
 import Visualization from "./Visualization/Visualization";
 import Teleoperation from "./Teleoperation/Teleoperation";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 import Overview from "./Overview/Overview";
@@ -40,7 +40,9 @@ export default function RobotPage(): ReactElement {
                   informationWidgetAction={() => {
                     isSettedCookie &&
                       setActiveTab(
-                        envOnPremise ? "Development Suite" : "Teleoperation"
+                        envOnPremiseRobot
+                          ? "Development Suite"
+                          : "Teleoperation"
                       );
                   }}
                 />
@@ -88,7 +90,7 @@ export default function RobotPage(): ReactElement {
         })()}
         <CodeEditor />
       </div>
-      {!envOnPremise && <RosConnector />}
+      {!envOnPremiseRobot && <RosConnector />}
       <HiddenFrame />
     </div>
   );

@@ -7,6 +7,8 @@ import {
   IgetInstance,
   IgetInstances,
   IgetLaunchManagers,
+  IgetNamespace,
+  IgetNamespaces,
   IgetOrganization,
   IgetPhysicalFleet,
   IgetPhysicalInstances,
@@ -33,6 +35,7 @@ import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
 import {
   getFederatedFleets,
   createFederatedFleet,
+  getNamespaces as getNamespacesDispatch,
 } from "../toolkit/FleetSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
 import {
@@ -509,6 +512,133 @@ export default ({ children }: any) => {
               fleet:
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
                   (fleet: any) => fleet?.name === values?.fleetName
+                ) || {},
+            };
+          });
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function getNamespaces(
+    values: IgetNamespaces,
+    parameters?: ImultipleGetParameters
+  ) {
+    await dispatch(
+      getNamespacesDispatch({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        instanceId: values?.instanceId,
+        region: values?.region,
+      })
+    ).then((responseNamespaces: any) => {
+      if (
+        Array.isArray(responseNamespaces?.payload?.data) &&
+        Array.isArray(responseNamespaces?.payload?.data[0]?.roboticsClouds) &&
+        Array.isArray(
+          responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responseNamespaces?.payload?.data[0].roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedFleets
+      ) {
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets || []
+          );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
+          );
+
+        if (parameters?.setFirstItemforTrial) {
+          if (
+            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 1
+          ) {
+            parameters?.setFirstItemforTrial(
+              responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+                ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+            );
+          } else if (
+            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 0
+          ) {
+            dispatch(
+              createFederatedFleet({
+                organizationId: values?.organizationId,
+                roboticsCloudName: values?.roboticsCloudName,
+                region: values?.region,
+                instanceId: values?.instanceId,
+                robolaunchFederatedFleetsName: "trial-fleet",
+              })
+            );
+            parameters?.setFirstItemforTrial(null);
+          } else {
+            parameters?.setFirstItemforTrial(null);
+          }
+        }
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
+      }
+    });
+  }
+
+  async function getNamespace(
+    values: IgetNamespace,
+    parameters?: IsingleGetParameters
+  ) {
+    await dispatch(
+      getNamespacesDispatch({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        instanceId: values?.instanceId,
+        region: values?.region,
+      })
+    ).then((responseFederatedFleets: any) => {
+      if (
+        Array.isArray(responseFederatedFleets?.payload?.data) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+        ) &&
+        Array.isArray(
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
+            ?.cloudInstances
+        ) &&
+        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
+          ?.cloudInstances[0]?.robolaunchFederatedFleets
+      ) {
+        parameters?.isSetState &&
+          setSelectedState((prevState: any) => {
+            return {
+              ...prevState,
+              fleet:
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                  (fleet: any) => fleet?.name === values?.namespaceName
+                ) || {},
+            };
+          });
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+              (fleet: any) => fleet?.name === values?.namespaceName
+            ) || {}
+          );
+
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              fleet:
+                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
+                  (fleet: any) => fleet?.name === values?.namespaceName
                 ) || {},
             };
           });
@@ -1016,6 +1146,8 @@ export default ({ children }: any) => {
         getInstance,
         getFleets,
         getFleet,
+        getNamespaces,
+        getNamespace,
         getPhysicalFleet,
         getRobots,
         getRobot,

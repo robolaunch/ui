@@ -3,7 +3,7 @@ import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import useMain from "../hooks/useMain";
 import { useParams } from "react-router-dom";
-import { envOnPremise } from "../helpers/envProvider";
+import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -23,6 +23,7 @@ export default ({ children }: any) => {
     getRoboticsCloud,
     getInstance,
     getFleet,
+    getNamespace,
     getRobot,
     getEnvironment,
     getBuildManager,
@@ -43,20 +44,15 @@ export default ({ children }: any) => {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      handleGetFleet();
+      envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
     } else if (
       !responseRobot &&
       !responseBuildManager &&
       !responseLaunchManagers
     ) {
-      if (envOnPremise === true) {
-        handleGetEnvironment();
-      } else {
-        handleGetRobot();
-      }
-
-      !envOnPremise && handleGetBuildManager();
-      !envOnPremise && handleGetLaunchManagers();
+      envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
+      !envOnPremiseRobot && handleGetBuildManager();
+      !envOnPremiseRobot && handleGetLaunchManagers();
     }
 
     const timerResponseRobot = setInterval(() => {
@@ -67,7 +63,7 @@ export default ({ children }: any) => {
           (robot: any) => robot?.robotStatus !== "EnvironmentReady"
         )?.length
       ) {
-        envOnPremise ? handleGetEnvironment() : handleGetRobot();
+        envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
       }
     }, 10000);
 
@@ -76,7 +72,7 @@ export default ({ children }: any) => {
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready"
         )?.length &&
-        !envOnPremise &&
+        !envOnPremiseRobot &&
         handleGetBuildManager();
     }, 10000);
 
@@ -91,7 +87,7 @@ export default ({ children }: any) => {
             return cluster?.launchManagerStatus;
           })
           ?.filter((status: any) => status !== "Running")?.length &&
-        !envOnPremise &&
+        !envOnPremiseRobot &&
         handleGetLaunchManagers();
     }, 10000);
 
@@ -168,6 +164,23 @@ export default ({ children }: any) => {
         instanceId: pagesState?.instance?.instanceId,
         region: pagesState?.roboticsCloud?.region,
         fleetName: url?.fleetName as string,
+      },
+      {
+        ifErrorNavigateTo404: !responseRobot,
+        isSetState: true,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetNamespace() {
+    getNamespace(
+      {
+        organizationId: pagesState?.organization?.organizationId,
+        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        instanceId: pagesState?.instance?.instanceId,
+        region: pagesState?.roboticsCloud?.region,
+        namespaceName: url?.fleetName as string,
       },
       {
         ifErrorNavigateTo404: !responseRobot,

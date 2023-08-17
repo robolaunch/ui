@@ -20,7 +20,7 @@ import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -38,7 +38,7 @@ export default function CreateRobotFormStep1({
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      envOnPremise ? handleGetEnvironment() : handleGetRobot();
+      envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

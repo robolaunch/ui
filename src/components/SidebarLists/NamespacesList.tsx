@@ -6,21 +6,20 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
 
-interface IFleetsList {
+interface INamespacesList {
   reload: boolean;
   setItemCount: any;
 }
 
-export default function FleetsList({
+export default function NamespacesList({
   reload,
   setItemCount,
-}: IFleetsList): ReactElement {
-  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+}: INamespacesList): ReactElement {
+  const [responseNamespaces, setResponseNamespaces] = useState<any>(undefined);
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
-  const { getFleets } = useFunctions();
+  const { getNamespaces } = useFunctions();
 
   useEffect(
     () => {
@@ -29,15 +28,15 @@ export default function FleetsList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
-        setResponseFleets(undefined);
-        handleGetFleets();
+        setResponseNamespaces(undefined);
+        handleGetNamespaces();
       }
 
       const timer = setInterval(() => {
         selectedState?.organization &&
           selectedState?.roboticsCloud &&
           selectedState?.instance &&
-          handleGetFleets();
+          handleGetNamespaces();
       }, 10000);
 
       return () => {
@@ -54,8 +53,8 @@ export default function FleetsList({
     ]
   );
 
-  function handleGetFleets() {
-    getFleets(
+  function handleGetNamespaces() {
+    getNamespaces(
       {
         organizationId: selectedState?.organization?.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud?.name,
@@ -64,7 +63,7 @@ export default function FleetsList({
       },
       {
         ifErrorNavigateTo404: false,
-        setResponse: setResponseFleets,
+        setResponse: setResponseNamespaces,
         setItemCount: setItemCount,
       }
     );
@@ -82,16 +81,16 @@ export default function FleetsList({
               : !selectedState?.roboticsCloud
               ? "Robotics Cloud"
               : "Instance"
-          } to view ${envOnPremiseRobot ? "namespaces" : "fleets"}.`}
+          } to view namespaces.`}
         />
       ) : (
         <Fragment>
-          {!Array.isArray(responseFleets) ? (
+          {!Array.isArray(responseNamespaces) ? (
             <SidebarListLoader />
-          ) : responseFleets.length === 0 ? (
+          ) : responseNamespaces.length === 0 ? (
             <SidebarInfo text={`Create a Fleet.`} />
           ) : (
-            responseFleets
+            responseNamespaces
               ?.filter((fleet: any) => !fleet.fleetName)
               .map((fleet: any, index: number) => {
                 return (
@@ -105,14 +104,14 @@ export default function FleetsList({
                           <span className="font-medium">VI:</span>
                           <StateCell state={fleet?.fleetStatus} />
                         </div>
-                        {responseFleets?.filter(
+                        {responseNamespaces?.filter(
                           (pFleet: any) => fleet?.name === pFleet?.fleetName
                         ).length > 0 && (
                           <div className="flex gap-1.5">
                             <span className="font-medium">PI:</span>
                             <StateCell
                               state={
-                                responseFleets?.filter(
+                                responseNamespaces?.filter(
                                   (pFleet: any) =>
                                     fleet?.name === pFleet?.fleetName
                                 )[0]?.fleetStatus
@@ -131,7 +130,7 @@ export default function FleetsList({
                     }/${fleet?.name}`}
                     data={{
                       ...fleet,
-                      physicalInstance: responseFleets?.filter(
+                      physicalInstance: responseNamespaces?.filter(
                         (pFleet: any) =>
                           fleet?.name === pFleet?.fleetName &&
                           pFleet?.fleetStatus !== "Ready"

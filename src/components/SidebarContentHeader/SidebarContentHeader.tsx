@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface ISidebarContentHeader {
   itemCount?: number;
@@ -32,7 +32,7 @@ export default function SidebarContentLayout({
       return "Physical Instances";
     }
 
-    if (sidebarState?.page === "fleet" && envOnPremise) {
+    if (sidebarState?.page === "fleet" && envOnPremiseRobot) {
       return "Namespaces";
     }
 
@@ -42,10 +42,10 @@ export default function SidebarContentLayout({
           return `${url.robotName} Robot Details`;
         }
         return sidebarState?.isCreateMode
-          ? envOnPremise
+          ? envOnPremiseRobot
             ? "Application Details"
             : "Robot Details"
-          : envOnPremise
+          : envOnPremiseRobot
           ? "Applications"
           : "Robots";
       case "workspacesmanager":

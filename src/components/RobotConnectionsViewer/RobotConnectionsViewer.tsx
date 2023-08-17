@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import StateCell from "../Cells/StateCell";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface IRobotConnectionsViewer {
   ide: any;
@@ -45,7 +45,7 @@ export default function RobotConnectionsViewer({
 
   return (
     <div className="flex gap-6">
-      {!envOnPremise && (
+      {!envOnPremiseRobot && (
         <div className="flex gap-1">
           <span className="text-xs font-semibold">ROS: </span>
           <StateCell

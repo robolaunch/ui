@@ -13,7 +13,7 @@ import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import { envOnPremise } from "../../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../../helpers/envProvider";
 import EnvironmentActionCells from "../../../components/ActionCells/EnvironmentActionCells";
 
 export default function FleetDashboardPage(): ReactElement {
@@ -44,7 +44,7 @@ export default function FleetDashboardPage(): ReactElement {
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
       handleGetFleet();
     } else {
-      envOnPremise ? handleGetEnvironments() : handleGetRobots();
+      envOnPremiseRobot ? handleGetEnvironments() : handleGetRobots();
     }
 
     const timer =
@@ -53,7 +53,7 @@ export default function FleetDashboardPage(): ReactElement {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        pagesState?.fleet && envOnPremise
+        pagesState?.fleet && envOnPremiseRobot
           ? handleGetEnvironments()
           : handleGetRobots();
       }, 10000);
@@ -150,7 +150,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "fleet",
-        header: envOnPremise ? "Namespace" : "Fleet",
+        header: envOnPremiseRobot ? "Namespace" : "Fleet",
         sortable: false,
         filter: false,
         align: "left",
@@ -158,9 +158,9 @@ export default function FleetDashboardPage(): ReactElement {
           return <BasicCell text={rowData?.fleet} />;
         },
       },
-      !envOnPremise && {
+      !envOnPremiseRobot && {
         key: "robotServices",
-        header: `${envOnPremise ? "Application" : "Robot"} Services`,
+        header: `${envOnPremiseRobot ? "Application" : "Robot"} Services`,
         sortable: true,
         filter: true,
         align: "left",
@@ -175,7 +175,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
       {
         key: "virtualState",
-        header: `Virtual ${envOnPremise ? "Application" : "Robot"} State`,
+        header: `Virtual ${envOnPremiseRobot ? "Application" : "Robot"} State`,
         sortable: true,
         filter: false,
         align: "left",
@@ -183,9 +183,9 @@ export default function FleetDashboardPage(): ReactElement {
           return <StateCell state={rowData?.virtualState} />;
         },
       },
-      !envOnPremise && {
+      !envOnPremiseRobot && {
         key: "physicalState",
-        header: `Physical ${envOnPremise ? "Application" : "Robot"} State`,
+        header: `Physical ${envOnPremiseRobot ? "Application" : "Robot"} State`,
         sortable: true,
         filter: true,
         align: "left",
@@ -201,7 +201,7 @@ export default function FleetDashboardPage(): ReactElement {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return envOnPremise ? (
+          return envOnPremiseRobot ? (
             <EnvironmentActionCells
               data={rowData?.actions}
               reload={() => setReload(!reload)}
@@ -320,7 +320,9 @@ export default function FleetDashboardPage(): ReactElement {
           subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
           component={
             <Button
-              text={`Create a new ${envOnPremise ? "Application" : "Robot"}`}
+              text={`Create a new ${
+                envOnPremiseRobot ? "Application" : "Robot"
+              }`}
               className="!w-44 !h-10 !text-xs"
               onClick={() => {
                 setSidebarState((prevState: any): any => ({
@@ -377,8 +379,8 @@ export default function FleetDashboardPage(): ReactElement {
       }
       table={
         <GeneralTable
-          type={envOnPremise ? "application" : "robot"}
-          title={envOnPremise ? "Applications" : "Robots"}
+          type={envOnPremiseRobot ? "application" : "robot"}
+          title={envOnPremiseRobot ? "Applications" : "Robots"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseRobots) ? false : true}

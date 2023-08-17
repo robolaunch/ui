@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
 import { BiJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
@@ -26,7 +26,7 @@ export default function RobotHeaderTabs({
       state: true,
     },
 
-    !envOnPremise &&
+    !envOnPremiseRobot &&
       false && {
         name: "Task Management",
         icon: <MdMap size={14} />,
@@ -35,7 +35,7 @@ export default function RobotHeaderTabs({
         disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
       },
 
-    !envOnPremise && {
+    !envOnPremiseRobot && {
       name: "Teleoperation",
       icon: <BiJoystickButton size={14} />,
       state:
@@ -43,7 +43,7 @@ export default function RobotHeaderTabs({
       disabled: responseRobot?.bridgeIngressEndpoint ? false : true,
     },
 
-    !envOnPremise && {
+    !envOnPremiseRobot && {
       name: "Visualization",
       icon: <BsCameraVideoFill size={14} />,
       state:

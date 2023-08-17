@@ -66,6 +66,21 @@ export interface IgetFleet {
   fleetName: string;
 }
 
+export interface IgetNamespaces {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+}
+
+export interface IgetNamespace {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  region: string;
+  namespaceName: string;
+}
+
 export interface IgetPhysicalFleet {
   organizationId: string;
   roboticsCloudName: string;
@@ -162,6 +177,14 @@ export interface IuseFunctions {
   ) => void;
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
   getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
+  getNamespaces: (
+    values: IgetNamespaces,
+    parameters: ImultipleGetParameters
+  ) => void;
+  getNamespace: (
+    values: IgetNamespace,
+    parameters?: IsingleGetParameters
+  ) => void;
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters

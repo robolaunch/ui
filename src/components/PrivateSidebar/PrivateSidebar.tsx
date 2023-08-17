@@ -3,7 +3,7 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -61,7 +61,7 @@ export default function PrivateSidebar(): ReactElement {
                     sidebarState?.page === "launchsmanager")
                 }
               />
-              {!envOnPremise && (
+              {!envOnPremiseRobot && (
                 <Fragment>
                   <SideBarMenuItem
                     type="buildsmanager"
@@ -111,7 +111,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="fleet"
                 description={
-                  envOnPremise
+                  envOnPremiseRobot
                     ? "You can access all your namespaces here."
                     : "You can access all your fleets here."
                 }
@@ -119,7 +119,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="robot"
                 description={
-                  envOnPremise
+                  envOnPremiseRobot
                     ? "You can access all your applications here."
                     : "You can access all your robots here."
                 }

@@ -6,7 +6,7 @@ import CardLayout from "../../layouts/CardLayout";
 import ContentLoader from "react-content-loader";
 import RobotResource from "../RobotResource/RobotResource";
 import RobotConnectionsViewer from "../RobotConnectionsViewer/RobotConnectionsViewer";
-import { envOnPremise } from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import RobotHeaderTabs from "../RobotHeaderTabs/RobotHeaderTabs";
 import useRobot from "../../hooks/useRobot";
 import RobotServiceButtons from "../RobotServiceButtons/RobotServiceButtons";
@@ -33,9 +33,11 @@ export default function RobotHeader({
                 className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
               >
                 {responseRobot?.robotClusters?.length === 1
-                  ? `Virtual ${envOnPremise ? "Application" : "Robot"}`
+                  ? `Virtual ${envOnPremiseRobot ? "Application" : "Robot"}`
                   : (responseRobot?.robotClusters?.length === 2 &&
-                      `Physical ${envOnPremise ? "Application" : "Robot"}`) || (
+                      `Physical ${
+                        envOnPremiseRobot ? "Application" : "Robot"
+                      }`) || (
                       <ContentLoader
                         speed={1}
                         width={64}

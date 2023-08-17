@@ -8,7 +8,7 @@ import WorkspacesTable from "../../../components/WorkspacesTable/WorkspacesTable
 import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import useWindow from "../../../hooks/useWindow";
-import { envOnPremise } from "../../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../../helpers/envProvider";
 import useRobot from "../../../hooks/useRobot";
 interface IOverview {
   informationWidgetAction: () => void;
@@ -28,12 +28,12 @@ export default function Overview({
         <InformationWidget
           title={url?.robotName || ""}
           subtitle={
-            envOnPremise
+            envOnPremiseRobot
               ? "From this page, you can see all the details of the application, control the application, control the environments running on the application or develop the application's software."
               : "From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
           }
           component={
-            envOnPremise ? (
+            envOnPremiseRobot ? (
               <Button
                 disabled={
                   responseRobot?.robotClusters?.filter(
@@ -84,7 +84,7 @@ export default function Overview({
       <div className="col-span-full">
         <WorkspacesTable responseRobot={responseRobot} />
       </div>
-      {!envOnPremise && (
+      {!envOnPremiseRobot && (
         <Fragment>
           <div className="col-span-full">
             <BuildManagerStepsTable
