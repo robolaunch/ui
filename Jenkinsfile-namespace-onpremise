@@ -59,14 +59,9 @@ pipeline {
     stage('Build') {
       steps {
         container('ubuntu') {
-          withCredentials([file(credentialsId: '1f68ce45-857f-416a-9df3-e46712b2d87d', variable: 'text')]) {
+          withCredentials([file(credentialsId: 'frontend-namespace-onpremise-env', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
-          withCredentials([file(credentialsId: 'b68b9f5f-0329-4ff1-b1dc-193cb986f15b', variable: 'text')]) {
-            writeFile file:'./ca.crt', text: readFile(text)
-          }
-          sh 'cp ./ca.crt /usr/local/share/ca-certificates/ca.crt'
-          sh 'update-ca-certificates'
           sh 'npm i --force'
           sh 'npm run build'
           sh "tar -zcvf ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz build"
@@ -79,11 +74,11 @@ pipeline {
     stage('Docker Build') {
       steps {
         container('docker') {
-          sh "docker build -t robolaunchio/ui-onpremise-httpd:${env.VER} ."
+          sh "docker build -t robolaunchio/ui-namespace-onpremise-httpd:${env.VER} ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
-          sh "docker push robolaunchio/ui-onpremise-httpd:${env.VER}"
+          sh "docker push robolaunchio/ui-namespace-onpremise-httpd:${env.VER}"
         }
       }
     }
