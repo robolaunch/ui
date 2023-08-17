@@ -79,7 +79,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           organization: url?.organizationName,
           roboticsCloud: url?.roboticsCloudName,
           instance: url?.instanceName,
-          state: fleet?.fleetStatus,
+          state: fleet?.fleetStatus || fleet?.namespaceStatus,
           actions: fleet,
         };
       }),

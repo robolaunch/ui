@@ -90,8 +90,9 @@ export default function SidebarListItem({
         break;
       case "fleet":
         if (
-          data?.fleetStatus === "Ready" &&
-          data?.physicalInstance?.length === 0
+          data?.namespaceStatus === "Active" ||
+          (data?.fleetStatus === "Ready" &&
+            data?.physicalInstance?.length === 0)
         ) {
           if (selectedState?.fleet?.name === data?.name) {
             setSelectedState({ ...selectedState, fleet: null });

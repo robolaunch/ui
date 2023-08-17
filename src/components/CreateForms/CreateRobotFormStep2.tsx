@@ -13,7 +13,10 @@ import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidat
 import { toast } from "sonner";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../helpers/envProvider";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
 import { useParams } from "react-router-dom";
@@ -32,7 +35,7 @@ export default function CreateRobotFormStep2({
   const dispatch = useAppDispatch();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
-  const { getRobot, getFleet, getEnvironment } = useFunctions();
+  const { getRobot, getFleet, getEnvironment, getNamespace } = useFunctions();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const url = useParams();
 
@@ -134,12 +137,14 @@ export default function CreateRobotFormStep2({
         }, 2000);
       } else {
         if (!responseFleet) {
-          handleGetFleet();
+          envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
         }
       }
 
       const timer = setInterval(() => {
-        !isImportRobot && !robotData?.step1?.isVirtualRobot && handleGetFleet();
+        if (!isImportRobot && !robotData?.step1?.isVirtualRobot) {
+          envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
+        }
       }, 10000);
 
       return () => {
@@ -201,6 +206,22 @@ export default function CreateRobotFormStep2({
     );
   }
 
+  function handleGetNamespace() {
+    getNamespace(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        namespaceName: selectedState?.fleet?.name,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponseFleet,
+      }
+    );
+  }
+
   useEffect(() => {
     console.log(
       !formik?.isValid,
@@ -211,12 +232,22 @@ export default function CreateRobotFormStep2({
     );
   }, [formik]);
 
+  useEffect(() => {
+    console.log(
+      responseFleet?.fleetStatus !== "Ready" ||
+        responseFleet?.namespaceStatus !== "Active"
+    );
+  }, [responseFleet]);
+
   return (
     <CreateRobotFormLoader
       isLoading={
         isImportRobot
           ? isLoadingImportRobot
-          : !responseFleet || responseFleet?.fleetStatus !== "Ready"
+          : !responseFleet ||
+            (envOnPremiseFleet
+              ? responseFleet?.namespaceStatus !== "Active"
+              : responseFleet?.fleetStatus !== "Ready")
       }
       loadingText={
         isImportRobot
@@ -229,7 +260,8 @@ export default function CreateRobotFormStep2({
           : [
               {
                 name: responseFleet?.name,
-                status: responseFleet?.fleetStatus,
+                status:
+                  responseFleet?.fleetStatus || responseFleet?.namespaceStatus,
               },
             ]
       }

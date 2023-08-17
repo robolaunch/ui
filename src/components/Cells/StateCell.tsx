@@ -64,6 +64,7 @@ export default function StateCell({ state, isRobolaunchState }: IStateCell) {
       state === "Connected" ||
       state === "Completed" ||
       state === "Running" ||
+      state === "Active" ||
       state === "EnvironmentReady" ? (
         <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
       ) : state === "stopping" ||

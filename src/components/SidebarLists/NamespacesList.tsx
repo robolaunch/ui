@@ -102,7 +102,7 @@ export default function NamespacesList({
                       <div className="flex gap-2">
                         <div className="flex gap-1.5">
                           <span className="font-medium">VI:</span>
-                          <StateCell state={fleet?.fleetStatus} />
+                          <StateCell state={fleet?.namespaceStatus} />
                         </div>
                         {responseNamespaces?.filter(
                           (pFleet: any) => fleet?.name === pFleet?.fleetName
