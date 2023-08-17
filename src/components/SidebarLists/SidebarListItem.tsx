@@ -185,7 +185,10 @@ export default function SidebarListItem({
                 }
                 break;
               case "fleet":
-                if (data?.fleetStatus === "Ready") {
+                if (
+                  data?.fleetStatus === "Ready" ||
+                  data?.namespaceStatus === "Active"
+                ) {
                   setSelectedState({ ...selectedState, fleet: data });
                   setSidebarState({ ...sidebarState, isOpen: false });
                   navigate(url);

@@ -13,7 +13,10 @@ import useFunctions from "../../../hooks/useFunctions";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import { envOnPremiseRobot } from "../../../helpers/envProvider";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../../helpers/envProvider";
 import EnvironmentActionCells from "../../../components/ActionCells/EnvironmentActionCells";
 
 export default function FleetDashboardPage(): ReactElement {
@@ -27,6 +30,7 @@ export default function FleetDashboardPage(): ReactElement {
     getRoboticsCloud,
     getInstance,
     getFleet,
+    getNamespace,
     getRobots,
     getEnvironments,
   } = useFunctions();
@@ -42,7 +46,7 @@ export default function FleetDashboardPage(): ReactElement {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      handleGetFleet();
+      envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
     } else {
       envOnPremiseRobot ? handleGetEnvironments() : handleGetRobots();
     }
@@ -271,6 +275,23 @@ export default function FleetDashboardPage(): ReactElement {
         instanceId: pagesState?.instance?.instanceId,
         region: pagesState?.roboticsCloud?.region,
         fleetName: url?.fleetName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRobots,
+        setPages: true,
+      }
+    );
+  }
+
+  function handleGetNamespace() {
+    getNamespace(
+      {
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.instance?.region,
+        namespaceName: url?.fleetName as string,
       },
       {
         isSetState: true,

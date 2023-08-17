@@ -44,7 +44,7 @@ export default function CreateRobotFormStep2({
       ? CreateEnvironmentFormStep2Validations
       : CreateRobotFormStep2Validations,
     initialValues: robotData?.step2,
-    onSubmit: async (values: any) => {
+    onSubmit: (values: any) => {
       formik.setSubmitting(true);
 
       if (envOnPremiseRobot) {
@@ -70,7 +70,7 @@ export default function CreateRobotFormStep2({
           await handleSubmit();
         });
       } else {
-        await dispatch(
+        dispatch(
           createRobot({
             organizationId: selectedState?.organization?.organizationId,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
@@ -233,11 +233,8 @@ export default function CreateRobotFormStep2({
   }, [formik]);
 
   useEffect(() => {
-    console.log(
-      responseFleet?.fleetStatus !== "Ready" ||
-        responseFleet?.namespaceStatus !== "Active"
-    );
-  }, [responseFleet]);
+    console.log(formik);
+  }, [formik]);
 
   return (
     <CreateRobotFormLoader
