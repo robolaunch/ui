@@ -3,7 +3,10 @@ import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import useMain from "../../hooks/useMain";
 import { useParams } from "react-router-dom";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../helpers/envProvider";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -92,10 +95,12 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
-              <SidebarStaticItem
-                to="/marketplace"
-                imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
-              />
+              {!(envOnPremiseFleet || envOnPremiseRobot) && (
+                <SidebarStaticItem
+                  to="/marketplace"
+                  imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
+                />
+              )}
               <SideBarMenuItem
                 type="organization"
                 description="You can access all your organizations here."

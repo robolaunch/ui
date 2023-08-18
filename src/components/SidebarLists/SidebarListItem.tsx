@@ -136,7 +136,9 @@ export default function SidebarListItem({
         <img
           draggable="false"
           className="w-8"
-          src={`/svg/general/${type}/${type}-${selected ? "blue" : "gray"}.svg`}
+          src={`/svg/general/${type === "robot" ? "application" : type}/${
+            type === "robot" ? "application" : type
+          }-${selected ? "blue" : "gray"}.svg`}
           alt=""
         />
         <div className="flex flex-col gap-1">
