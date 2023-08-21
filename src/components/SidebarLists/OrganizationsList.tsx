@@ -6,6 +6,7 @@ import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import StateCell from "../Cells/StateCell";
+import { IOrganization } from "../../interfaces/organizationInterfaces";
 
 interface IOrganizationList {
   setItemCount: any;
@@ -17,7 +18,7 @@ export default function OrganizationsList({
   setItemCount,
 }: IOrganizationList): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
-    any[] | undefined
+    IOrganization[] | undefined
   >(undefined);
   const { selectedState } = useMain();
   const { getOrganizations } = useFunctions();
@@ -45,28 +46,30 @@ export default function OrganizationsList({
         !responseOrganizations?.length ? (
         <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
-        responseOrganizations?.map((organization: any, index: number) => {
-          return (
-            <SidebarListItem
-              key={index}
-              type="organization"
-              name={organizationNameViewer({
-                organizationName: organization?.organizationName,
-                capitalization: false,
-              })}
-              description={<StateCell state={"Ready"} />}
-              url={`/${organizationNameViewer({
-                organizationName: organization?.organizationName,
-                capitalization: false,
-              })}`}
-              data={organization}
-              selected={
-                organization.organizationName ===
-                selectedState?.organization?.organizationName
-              }
-            />
-          );
-        })
+        responseOrganizations?.map(
+          (organization: IOrganization, index: number) => {
+            return (
+              <SidebarListItem
+                key={index}
+                type="organization"
+                name={organizationNameViewer({
+                  organizationName: organization?.organizationName,
+                  capitalization: false,
+                })}
+                description={<StateCell state={"Ready"} />}
+                url={`/${organizationNameViewer({
+                  organizationName: organization?.organizationName,
+                  capitalization: false,
+                })}`}
+                data={organization}
+                selected={
+                  organization.organizationName ===
+                  selectedState?.organization?.organizationName
+                }
+              />
+            );
+          }
+        )
       )}
     </Fragment>
   );

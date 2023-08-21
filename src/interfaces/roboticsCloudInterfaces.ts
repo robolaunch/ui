@@ -8,3 +8,8 @@ export interface ICreateRoboticsCloudRequest {
 export interface IGetRoboticsCloudsRequest {
   organizationId: string;
 }
+
+export interface IRoboticsCloud {
+  name: string;
+  region: string;
+}
