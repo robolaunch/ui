@@ -1,10 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { organizationApi } from "../api/api";
 import { toast } from "sonner";
+import {
+  IcreateOrganizationRequest,
+  IgetOrganizationAdminsRequest,
+  IgetOrganizationGuestsRequest,
+  IgetOrganizationUsersRequest,
+} from "../interfaces/organizationInterfaces";
 
 export const createOrganization = createAsyncThunk(
   "organizations/createOrganization",
-  async (values: { name: string }) => {
+  async (values: IcreateOrganizationRequest) => {
     const response = await organizationApi.createOrganization({
       name: values.name,
     });
@@ -22,7 +28,7 @@ export const getOrganizations = createAsyncThunk(
 
 export const getOrganizationUsers = createAsyncThunk(
   "organizations/getOrganizationUsers",
-  async (values: any) => {
+  async (values: IgetOrganizationUsersRequest) => {
     const response = await organizationApi.getOrganizationUsers({
       name: values.name,
       organizationId: values.organizationId,
@@ -33,7 +39,7 @@ export const getOrganizationUsers = createAsyncThunk(
 
 export const getOrganizationAdmins = createAsyncThunk(
   "organizations/getOrganizationAdmins",
-  async (values: any) => {
+  async (values: IgetOrganizationAdminsRequest) => {
     const response = await organizationApi.getOrganizationAdmins({
       name: values.name,
       organizationId: values.organizationId,
@@ -44,7 +50,7 @@ export const getOrganizationAdmins = createAsyncThunk(
 
 export const getOrganizationGuests = createAsyncThunk(
   "organizations/getOrganizationGuests",
-  async (values: any) => {
+  async (values: IgetOrganizationGuestsRequest) => {
     const response = await organizationApi.getOrganizationGuests({
       name: values.name,
       organizationId: values.organizationId,

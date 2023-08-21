@@ -14,6 +14,7 @@ import PrivateProvider from "../providers/PrivateProvider";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
 import RobotContext from "../contexts/RobotContext";
+import ProfileContext from "../contexts/ProfileContext";
 // import BillingPage from "../pages/BillingPage/BillingPage";
 
 export default function AppRoutes(): ReactElement {
@@ -30,7 +31,14 @@ export default function AppRoutes(): ReactElement {
           path={`/marketplace/:productName`}
           element={<MarketplaceSingleItemPage />}
         />
-        <Route path={`/profile`} element={<ProfilePage />} />
+        <Route
+          path={`/profile`}
+          element={
+            <ProfileContext>
+              <ProfilePage />
+            </ProfileContext>
+          }
+        />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />

@@ -4,7 +4,7 @@ import ProfileChangePassword from "../ProfileChangePassword/ProfileChangePasswor
 import ProfileEmailPreferances from "../ProfileEmailPreferances/ProfileEmailPreferances";
 import ProfileConnectedApps from "../ProfileConnectedApps/ProfileConnectedApps";
 import ProfileNotifications from "../ProfileNotifications/ProfileNotifications";
-import ProfileDeactive from "../ProfileDeactive/ProfileDeactive";
+import ProfileDeactive from "../ProfileDeactivate/ProfileDeactivate";
 
 export default function ProfileOverview(): ReactElement {
   return (

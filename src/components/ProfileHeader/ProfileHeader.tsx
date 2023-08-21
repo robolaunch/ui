@@ -2,66 +2,16 @@ import React, { ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import Gravatar from "react-gravatar";
 import { useKeycloak } from "@react-keycloak/web";
-// import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-// import { updateUrls } from "../../resources/UserSlice";
+import useProfile from "../../hooks/useProfile";
+import { ProfileActiveTab } from "../../interfaces/profileInterfaces";
 
-interface IProfileHeader {
-  className?: string;
-  activeTab: string;
-  handleChangeActiveTab: (tab: string) => void;
-}
-
-export default function ProfileHeader({
-  className,
-  activeTab,
-  handleChangeActiveTab,
-}: IProfileHeader): ReactElement {
+export default function ProfileHeader(): ReactElement {
   const { keycloak } = useKeycloak();
 
-  // const { urls } = useAppSelector((state) => state.user);
-  // const dispatch = useAppDispatch();
-
-  // const inputs = (
-  //   <div className="flex flex-col gap-5">
-  //     <label className="flex gap-2" htmlFor="">
-  //       vdi (ws://localhost:8080/) (son ek "/" olmalı)
-  //       <input
-  //         className="border border-layer-light-200"
-  //         type="text"
-  //         value={urls?.vdi}
-  //         onChange={(e) => {
-  //           dispatch(updateUrls({ ...urls, vdi: e.target.value }));
-  //         }}
-  //       />
-  //     </label>
-  //     <label className="flex gap-2" htmlFor="">
-  //       ide (http://localhost:3000/) (son ek "/" olmalı)
-  //       <input
-  //         className="border border-layer-light-200"
-  //         type="text"
-  //         value={urls?.ide}
-  //         onChange={(e) => {
-  //           dispatch(updateUrls({ ...urls, ide: e.target.value }));
-  //         }}
-  //       />
-  //     </label>
-  //     <label className="flex gap-2" htmlFor="">
-  //       ros (ws://localhost:9090) (boş bırakılmamalı. bırakılacaksa örnekteki
-  //       yazılmalı)
-  //       <input
-  //         className="border border-layer-light-200"
-  //         type="text"
-  //         value={urls?.ros}
-  //         onChange={(e) => {
-  //           dispatch(updateUrls({ ...urls, ros: e.target.value }));
-  //         }}
-  //       />
-  //     </label>
-  //   </div>
-  // );
+  const { activeTab, setActiveTab, tabs } = useProfile();
 
   return (
-    <CardLayout className={`col-span-1 flex flex-col gap-6 ${className}`}>
+    <CardLayout className={`flex flex-col gap-6 col-span-2`}>
       <div className="flex gap-6 pt-6 px-8">
         <Gravatar
           email={keycloak?.tokenParsed?.email}
@@ -80,22 +30,13 @@ export default function ProfileHeader({
             {keycloak?.tokenParsed?.email}
           </p>
         </div>
-        {/* {inputs} */}
       </div>
       <ul className="flex gap-8 px-6 pt-5 -mb-1.5 overflow-x-auto">
-        {[
-          "Overview",
-          "Profile Info",
-          "Connected Apps",
-          "Email Preferances",
-          "Notifications",
-          "Change Password",
-          "Deactive Account",
-        ].map((tab: any, index: number) => {
+        {tabs.map((tab: ProfileActiveTab, index: number) => {
           return (
             <div
               className="flex flex-col gap-3 cursor-pointer "
-              onClick={() => handleChangeActiveTab(tab)}
+              onClick={() => setActiveTab(tab)}
               key={index}
             >
               <li

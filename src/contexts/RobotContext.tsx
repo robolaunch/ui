@@ -282,6 +282,16 @@ export default ({ children }: any) => {
     }, 500);
   }
 
+  function handleForceReloadRobotPage() {
+    setResponseRobot(undefined);
+    setResponseBuildManager(undefined);
+    setResponseLaunchManagers(undefined);
+    setIsSettedCookie(null);
+    setRos(null);
+    setTopicList([]);
+    setActiveTab("Overview");
+  }
+
   return (
     <RobotContext.Provider
       value={{
@@ -297,6 +307,7 @@ export default ({ children }: any) => {
         isSettedCookie,
         setIsSettedCookie,
         handleForceUpdate,
+        handleForceReloadRobotPage,
       }}
     >
       {children}

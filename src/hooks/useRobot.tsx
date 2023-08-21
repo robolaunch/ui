@@ -14,6 +14,7 @@ interface IuseRobot {
   isSettedCookie: boolean | null;
   setIsSettedCookie: any;
   handleForceUpdate: any;
+  handleForceReloadRobotPage: any;
 }
 
 const useRobot = () => {

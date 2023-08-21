@@ -4,13 +4,13 @@ import Button from "../Button/Button";
 import { RiErrorWarningFill } from "react-icons/ri";
 import DeactiveAccountModal from "../../modals/DeactiveAccountModal";
 
-interface IProfileDeactive {
+interface IProfileDeactivate {
   className?: string;
 }
 
-export default function ProfileDeactive({
+export default function ProfileDeactivate({
   className,
-}: IProfileDeactive): ReactElement {
+}: IProfileDeactivate): ReactElement {
   const [isShowDeactiveModal, setIsShowDeactiveModal] =
     useState<boolean>(false);
 
