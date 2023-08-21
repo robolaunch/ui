@@ -5,20 +5,11 @@ import { BiJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { AiFillCode } from "react-icons/ai";
 import ContentLoader from "react-content-loader";
+import useRobot from "../../hooks/useRobot";
 
-interface IRobotHeaderTabs {
-  responseRobot: any;
-  isSettedCookie: boolean | null;
-  handleChangeActiveTab: any;
-  activeTab: string;
-}
+export default function RobotHeaderTabs(): ReactElement {
+  const { responseRobot, activeTab, isSettedCookie, setActiveTab } = useRobot();
 
-export default function RobotHeaderTabs({
-  responseRobot,
-  isSettedCookie,
-  handleChangeActiveTab,
-  activeTab,
-}: IRobotHeaderTabs): ReactElement {
   const tabs = [
     {
       name: "Overview",
@@ -84,7 +75,7 @@ export default function RobotHeaderTabs({
                 tab?.disabled ? "cursor-not-allowed" : "cursor-pointer"
               } ${tab?.hidden && "!hidden"}`}
               onClick={() =>
-                tab?.state && !tab?.disabled && handleChangeActiveTab(tab.name)
+                tab?.state && !tab?.disabled && setActiveTab(tab.name)
               }
               key={index}
             >

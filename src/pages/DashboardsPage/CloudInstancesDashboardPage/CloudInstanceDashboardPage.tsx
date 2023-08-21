@@ -5,27 +5,27 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import BasicCell from "../../../components/Cells/BasicCell";
-import StateCell from "../../../components/Cells/StateCell";
-import { useParams } from "react-router-dom";
-import InfoCell from "../../../components/Cells/InfoCell";
-import Button from "../../../components/Button/Button";
-import useMain from "../../../hooks/useMain";
-import useFunctions from "../../../hooks/useFunctions";
-import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
-import DashboardLayout from "../../../layouts/DashboardLayout";
-import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
-import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
-import { SiKubernetes } from "react-icons/si";
-import { RiCpuLine } from "react-icons/ri";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../../helpers/envProvider";
+import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import NamespaceActionCells from "../../../components/ActionCells/NamespaceActionCells";
+import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
+import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
+import BasicCell from "../../../components/Cells/BasicCell";
+import StateCell from "../../../components/Cells/StateCell";
+import InfoCell from "../../../components/Cells/InfoCell";
+import Button from "../../../components/Button/Button";
+import useFunctions from "../../../hooks/useFunctions";
+import { SiKubernetes } from "react-icons/si";
+import { useParams } from "react-router-dom";
+import useMain from "../../../hooks/useMain";
+import { RiCpuLine } from "react-icons/ri";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);

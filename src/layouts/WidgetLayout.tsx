@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-interface WidgetLayoutProps {
+interface IWidgetLayout {
   icon?: ReactElement;
   title: string;
   subtitle?: string | ReactElement | ReactElement[];
@@ -16,7 +16,7 @@ export default function WidgetLayout({
   children,
   options,
   className,
-}: WidgetLayoutProps): ReactElement {
+}: IWidgetLayout): ReactElement {
   return (
     <div
       className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-[21rem] animate__animated animate__fadeIn border border-layer-light-200"

@@ -1,8 +1,8 @@
 import React, { Fragment, ReactElement } from "react";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
-import { Link } from "react-router-dom";
-import useMain from "../../hooks/useMain";
 import PrivateSidebar from "../PrivateSidebar/PrivateSidebar";
+import useMain from "../../hooks/useMain";
+import { Link } from "react-router-dom";
 
 export default function Sidebar(): ReactElement {
   const { sidebarState } = useMain();
