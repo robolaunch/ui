@@ -9,15 +9,6 @@ export const RobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const [activeTab, setActiveTab] =
-    useState<IrobotPages["activeTab"]>("Overview");
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const [responseBuildManager, setResponseBuildManager] =
-    useState<any>(undefined);
-  const [responseLaunchManagers, setResponseLaunchManagers] =
-    useState<any>(undefined);
-  const [topicList, setTopicList] = useState<any>([]);
-  const [ros, setRos] = useState<any>(null);
   const {
     getOrganization,
     getRoboticsCloud,
@@ -29,7 +20,21 @@ export default ({ children }: any) => {
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
+
   const { pagesState, sidebarState } = useMain();
+
+  const [activeTab, setActiveTab] =
+    useState<IrobotPages["activeTab"]>("Overview");
+
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const [responseBuildManager, setResponseBuildManager] =
+    useState<any>(undefined);
+  const [responseLaunchManagers, setResponseLaunchManagers] =
+    useState<any>(undefined);
+
+  const [topicList, setTopicList] = useState<any>([]);
+  const [ros, setRos] = useState<any>(null);
+
   const url = useParams();
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
