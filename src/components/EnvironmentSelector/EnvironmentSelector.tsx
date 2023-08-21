@@ -1,9 +1,9 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { useAppDispatch } from "../../hooks/redux";
 import { getReadyEnvironments } from "../../toolkit/EnvironmentSlice";
-import InfoTip from "../InfoTip/InfoTip";
+import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import Seperator from "../Seperator/Seperator";
+import InfoTip from "../InfoTip/InfoTip";
 
 interface IEnvironmentSelector {
   formik: any;

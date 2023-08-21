@@ -1,11 +1,11 @@
 import { Fragment, ReactElement } from "react";
+import ProfileEmailPreferances from "../components/ProfileEmailPreferances/ProfileEmailPreferances";
+import ProfileChangePassword from "../components/ProfileChangePassword/ProfileChangePassword";
+import ProfileConnectedApps from "../components/ProfileConnectedApps/ProfileConnectedApps";
+import ProfileNotifications from "../components/ProfileNotifications/ProfileNotifications";
+import ProfileDeactivate from "../components/ProfileDeactivate/ProfileDeactivate";
 import ProfileOverview from "../components/ProfileOverview/ProfileOverview";
 import ProfileInfo from "../components/ProfileInfo/ProfileInfo";
-import ProfileConnectedApps from "../components/ProfileConnectedApps/ProfileConnectedApps";
-import ProfileEmailPreferances from "../components/ProfileEmailPreferances/ProfileEmailPreferances";
-import ProfileNotifications from "../components/ProfileNotifications/ProfileNotifications";
-import ProfileChangePassword from "../components/ProfileChangePassword/ProfileChangePassword";
-import ProfileDeactivate from "../components/ProfileDeactivate/ProfileDeactivate";
 import useProfile from "../hooks/useProfile";
 
 export default function ProfileSubPageLayout(): ReactElement {

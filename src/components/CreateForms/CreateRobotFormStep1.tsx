@@ -1,10 +1,13 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
+import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
@@ -13,14 +16,11 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -218,25 +218,6 @@ export default function CreateRobotFormStep1({
 
               {/* Robot Services */}
               <div className="flex items-center gap-4">
-                {/* Code Editor */}
-                {/* <div className="flex justify-center items-center gap-1">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Code Editor (IDE) :
-                    <InfoTip
-                      content="
-          The IDE is a web-based code editor that allows you to write code for your robot. The IDE is accessible from any device with a web browser, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
-                    />
-                  </div>
-                  <InputToggle
-                    checked={formik?.values?.isEnabledIde}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("isEnabledIde", e);
-                    }}
-                  />
-                </div> */}
-                {/* Code Editor */}
-
                 {/* ROS2 Bridge */}
                 <div className="flex items-center gap-1">
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
@@ -253,16 +234,16 @@ export default function CreateRobotFormStep1({
                     }}
                   />
                 </div>
+                {/* ROS2 Bridge */}
 
+                {/* Remote Desktop Session Count */}
                 {formik?.values?.remoteDesktop?.isEnabled && (
                   <div className="flex gap-2 w-full pl-10">
                     <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                       VDI: Session Count (
                       {formik?.values?.remoteDesktop?.sessionCount} User) :
                       <InfoTip
-                        content="
-          Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time.
-          "
+                        content="Session Count is the number of simultaneous remote desktop sessions that can for robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
                         rightTip
                       />
                     </div>
@@ -283,28 +264,7 @@ export default function CreateRobotFormStep1({
                     />
                   </div>
                 )}
-
-                {/* ROS2 Bridge */}
-
-                {/* Remote Desktop */}
-                {/* <div className="flex items-center gap-1">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    Remote Desktop (VDI) :
-                    <InfoTip
-                      rightTip
-                      content="
-          Remote Desktop allows you to connect to your robot's desktop from any device with a web browser. This allows you to use your robot's desktop from anywhere, and it is pre-configured with all the tools you need to develop code for your robot.
-          "
-                    />
-                  </div>
-                  <InputToggle
-                    checked={formik?.values?.remoteDesktop?.isEnabled}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("remoteDesktop.isEnabled", e);
-                    }}
-                  />
-                </div> */}
-                {/* Remote Desktop */}
+                {/* Remote Desktop Session Count */}
               </div>
               {/* Robot Services */}
 
@@ -352,6 +312,8 @@ export default function CreateRobotFormStep1({
               )}
               {/* Development Mode */}
             </div>
+
+            {/* Buttons */}
             <div className="flex gap-2 mt-10 ">
               {!isImportRobot && (
                 <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
@@ -380,6 +342,7 @@ export default function CreateRobotFormStep1({
                 }
               />
             </div>
+            {/* Buttons */}
           </form>
         </CreateRobotFormLoader>
       }

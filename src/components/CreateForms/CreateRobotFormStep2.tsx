@@ -1,25 +1,25 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { FormikProps, useFormik } from "formik";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
-import Button from "../Button/Button";
-import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
-import useMain from "../../hooks/useMain";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import { useAppDispatch } from "../../hooks/redux";
-import { createRobot } from "../../toolkit/RobotSlice";
-import useFunctions from "../../hooks/useFunctions";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
-import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
-import { toast } from "sonner";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
+import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
+import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import useCreateRobot from "../../hooks/useCreateRobot";
+import { createRobot } from "../../toolkit/RobotSlice";
+import useFunctions from "../../hooks/useFunctions";
+import { useAppDispatch } from "../../hooks/redux";
+import { FormikProps, useFormik } from "formik";
 import { useParams } from "react-router-dom";
+import useMain from "../../hooks/useMain";
+import Button from "../Button/Button";
+import { toast } from "sonner";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -291,6 +291,7 @@ export default function CreateRobotFormStep2({
           onClick={() => handleAddWorkspaceStep(formik)}
         />
 
+        {/* Buttons */}
         <div className="flex gap-2 mt-10">
           {!isImportRobot && (
             <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
@@ -326,6 +327,7 @@ export default function CreateRobotFormStep2({
             }
           />
         </div>
+        {/* Buttons */}
       </form>
     </CreateRobotFormLoader>
   );

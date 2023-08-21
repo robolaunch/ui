@@ -9,10 +9,14 @@ import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsClo
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
 import CreateCloudInstancesForm from "../components/CreateForms/CreateCloudInstancesForm";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
+import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
+import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
+import NamespacesList from "../components/SidebarLists/NamespacesList";
 import { stringCapitalization } from "../functions/GeneralFunctions";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
@@ -23,10 +27,6 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
-import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
-import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
-import NamespacesList from "../components/SidebarLists/NamespacesList";
-import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();

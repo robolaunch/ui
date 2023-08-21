@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
-import CardLayout from "../../layouts/CardLayout";
-import Gravatar from "react-gravatar";
-import { useKeycloak } from "@react-keycloak/web";
-import useProfile from "../../hooks/useProfile";
 import { ProfileActiveTab } from "../../interfaces/profileInterfaces";
+import { useKeycloak } from "@react-keycloak/web";
+import CardLayout from "../../layouts/CardLayout";
+import useProfile from "../../hooks/useProfile";
+import Gravatar from "react-gravatar";
 
 export default function ProfileHeader(): ReactElement {
   const { keycloak } = useKeycloak();

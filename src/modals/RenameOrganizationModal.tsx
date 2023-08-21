@@ -61,7 +61,9 @@ export default function RenameOrganizationModal({
             className="!w-44 !h-11"
             type="submit"
             text="Rename Organization"
-            disabled={renameFormik.isSubmitting || !renameFormik.isValid}
+            disabled={
+              renameFormik.isSubmitting || !renameFormik.isValid || true
+            }
           />
         </div>
       </form>

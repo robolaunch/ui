@@ -75,7 +75,9 @@ export default function DeleteOrganizationModal({
             className="!w-44 !h-11"
             type="submit"
             text="Delete Organization"
-            disabled={deleteFormik.isSubmitting || !deleteFormik.isValid}
+            disabled={
+              deleteFormik.isSubmitting || !deleteFormik.isValid || true
+            }
           />
         </div>
       </form>
