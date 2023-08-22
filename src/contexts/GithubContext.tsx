@@ -9,6 +9,7 @@ import {
   getGithubAccessTokenwithRefreshToken,
 } from "../toolkit/GithubSlice";
 import { useNavigate } from "react-router-dom";
+import { envKeycloakClientID } from "../helpers/envProvider";
 export const GithubContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
@@ -53,7 +54,7 @@ export default ({ children }: any) => {
   }, [githubToken]);
 
   function getGithubAppCode() {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_APP_CLIENT_ID}&state=${window.location.pathname}`;
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${envKeycloakClientID}&state=${window.location.pathname}`;
   }
 
   function getGithubAppToken() {
