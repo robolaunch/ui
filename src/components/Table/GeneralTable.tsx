@@ -9,7 +9,7 @@ import "primereact/resources/primereact.min.css";
 //icons
 import "primeicons/primeicons.css";
 
-interface GeneralTableProps {
+interface IGeneralTable {
   data: any;
   columns: any;
   loading: boolean;
@@ -25,7 +25,7 @@ export default function GeneralTable({
   title,
   type,
   handleReload,
-}: GeneralTableProps): ReactElement {
+}: IGeneralTable): ReactElement {
   return (
     <div
       className="flex flex-col pt-4 px-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn border border-layer-light-200"

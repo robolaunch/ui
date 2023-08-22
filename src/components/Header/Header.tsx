@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import NotificationDropdownMenu from "../NotificationDropdownMenu/NotificationDropdownMenu";
 import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
 // import TimerDropdownMenu from "../TimerDropdownMenu/TimerDropdownMenu";
+// import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 
 export default function Header(): ReactElement {
@@ -10,6 +11,7 @@ export default function Header(): ReactElement {
       <Breadcrumb />
       <div className="flex items-center gap-4">
         {/* <TimerDropdownMenu /> */}
+        {/* {<ThemeToggle />} */}
         <NotificationDropdownMenu />
         <HeaderDropdownMenu />
       </div>
