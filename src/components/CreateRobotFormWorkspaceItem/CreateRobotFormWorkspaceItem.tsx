@@ -14,8 +14,8 @@ import { stringCapitalization } from "../../functions/GeneralFunctions";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import InfoTip from "../InfoTip/InfoTip";
-import StateCell from "../Cells/StateCell";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
+import CreateRobotWorkspaceItemAccordionHeader from "../CreateRobotWorkspaceItemAccordionHeader/CreateRobotWorkspaceItemAccordionHeader";
 
 interface ICreateRobotFormWorkspaceItem {
   formik: FormikProps<IRobotWorkspaces>;
@@ -51,37 +51,11 @@ export default function CreateRobotFormWorkspaceItem({
         setIsShowAccordion(!isShowAccordion);
       }}
       header={
-        <div className="flex justify-between">
-          <span className="font-medium">
-            {workspace.name
-              ? workspace?.name + " Workspace"
-              : `Workspace #${workspaceIndex + 1}`}
-          </span>
-          <div className="flex items-center gap-2 text-xs">
-            {Array.isArray(workspaceState) && workspaceState?.[0] && (
-              <div className="flex gap-1.5">
-                <span
-                  title={`Launch State of Cloud Instance`}
-                  className="font-medium"
-                >
-                  V:
-                </span>
-                <StateCell state={workspaceState?.[0]} />
-              </div>
-            )}
-            {Array.isArray(workspaceState) && workspaceState?.[1] && (
-              <div className="flex gap-1.5">
-                <span
-                  title={`Launch State of Physical Instance`}
-                  className="font-medium"
-                >
-                  P:
-                </span>
-                <StateCell state={workspaceState?.[1]} />
-              </div>
-            )}
-          </div>
-        </div>
+        <CreateRobotWorkspaceItemAccordionHeader
+          workspace={workspace}
+          workspaceIndex={workspaceIndex}
+          workspaceState={workspaceState}
+        />
       }
     >
       <div className="flex flex-col gap-2 p-4">

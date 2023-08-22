@@ -13,9 +13,9 @@ import { FormikProps } from "formik/dist/types";
 import InputText from "../InputText/InputText";
 import { Editor } from "@monaco-editor/react";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import StateCell from "../Cells/StateCell";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
+import CreateRobotFormBuildStepItemAccordionHeader from "../CreateRobotFormBuildStepItemAccordionHeader/CreateRobotFormBuildStepItemAccordionHeader";
 
 interface ICreateRobotFormBuildStepItem {
   buildStepIndex: number;
@@ -45,26 +45,11 @@ export default function CreateRobotFormBuildStepItem({
       isOpen={isShowAccordion}
       handleOpen={() => setIsShowAccordion(!isShowAccordion)}
       header={
-        <div className="flex justify-between">
-          <span className="font-medium">
-            {buildStep.name
-              ? buildStep?.name + ` (Build Step #${buildStepIndex + 1})`
-              : `Build Step #${buildStepIndex + 1}`}
-          </span>
-          {isImportRobot && buildStep?.buildStatus && (
-            <div className="flex items-center gap-2 text-xs">
-              <div className="flex gap-1.5">
-                <span
-                  title={`Launch State of Cloud Instance`}
-                  className="font-medium"
-                >
-                  Status:
-                </span>
-                <StateCell state={buildStep?.buildStatus || "Waiting"} />
-              </div>
-            </div>
-          )}
-        </div>
+        <CreateRobotFormBuildStepItemAccordionHeader
+          buildStep={buildStep}
+          buildStepIndex={buildStepIndex}
+          isImportRobot={isImportRobot}
+        />
       }
     >
       <Fragment>

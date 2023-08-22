@@ -1,14 +1,14 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import LaunchFormAccordionHeader from "../LaunchFormAccordionHeader/LaunchFormAccordionHeader";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
 import CreateRobotFormStep4 from "../CreateForms/CreateRobotFormStep4";
+import useCreateRobot from "../../hooks/useCreateRobot";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import StateCell from "../Cells/StateCell";
-import InfoTip from "../InfoTip/InfoTip";
 import useMain from "../../hooks/useMain";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import InfoTip from "../InfoTip/InfoTip";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
   const [isAddedForm, setIsAddedForm] = useState<boolean>(false);
@@ -85,78 +85,16 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
             <InfoTip content="Launch Steps" />
           </div>
           {responseRobotLaunchManagers?.map((step: any, index: number) => {
-            console.log(
-              "xxxxxxx",
-              step.robotClusters.filter(
-                (cluster: any) =>
-                  cluster?.name === robotData.step1.physicalInstanceName &&
-                  cluster.launchManagerStatus
-              )
-            );
             return (
               <UpdateLaunchAccordion
                 id={index}
                 key={index}
                 header={
-                  <div className="flex justify-between animate__animated animate__fadeIn">
-                    <span className="font-medium">
-                      {step?.name || `Launch Step # ${index + 1}`}
-                    </span>
-
-                    <div className="flex items-center gap-2 text-xs">
-                      {step.robotClusters.filter(
-                        (cluster: any) =>
-                          cluster?.name !==
-                            robotData.step1.physicalInstanceName &&
-                          cluster.launchManagerStatus
-                      )?.[0]?.launchManagerStatus && (
-                        <div className="flex gap-1.5">
-                          <span
-                            title={`Launch State of Cloud Instance`}
-                            className="font-medium"
-                          >
-                            Virtual:
-                          </span>
-                          <StateCell
-                            state={
-                              step.robotClusters.filter(
-                                (cluster: any) =>
-                                  cluster?.name !==
-                                    robotData.step1.physicalInstanceName &&
-                                  cluster.launchManagerStatus
-                              )?.[0]?.launchManagerStatus || "Pending"
-                            }
-                          />
-                        </div>
-                      )}
-
-                      {step.robotClusters.filter(
-                        (cluster: any) =>
-                          cluster?.name ===
-                            robotData.step1.physicalInstanceName &&
-                          cluster.launchManagerStatus
-                      )?.[0]?.launchManagerStatus && (
-                        <div className="flex gap-1.5">
-                          <span
-                            title={`Launch State of Physical Instance`}
-                            className="font-medium"
-                          >
-                            Physical:
-                          </span>
-                          <StateCell
-                            state={
-                              step.robotClusters.filter(
-                                (cluster: any) =>
-                                  cluster?.name ===
-                                    robotData.step1.physicalInstanceName &&
-                                  cluster.launchManagerStatus
-                              )?.[0]?.launchManagerStatus || "Pending"
-                            }
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <LaunchFormAccordionHeader
+                    index={index}
+                    step={step}
+                    robotData={robotData}
+                  />
                 }
               >
                 <div className="p-4 animate__animated animate__fadeIn">
