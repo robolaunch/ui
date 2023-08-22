@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
-import useMain from "../../hooks/useMain";
 import StateCell from "../Cells/StateCell";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import useMain from "../../hooks/useMain";
 
 interface INamespacesList {
   reload: boolean;
@@ -56,8 +56,8 @@ export default function NamespacesList({
   function handleGetNamespaces() {
     getNamespaces(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId as string,
+        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
       },

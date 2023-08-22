@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../Cells/StateCell";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface IFleetsList {
   reload: boolean;
@@ -57,8 +57,8 @@ export default function FleetsList({
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId as string,
+        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
       },
@@ -100,27 +100,10 @@ export default function FleetsList({
                     type="fleet"
                     name={fleet?.name}
                     description={
-                      <div className="flex gap-2">
-                        <div className="flex gap-1.5">
-                          <span className="font-medium">VI:</span>
-                          <StateCell state={fleet?.fleetStatus} />
-                        </div>
-                        {responseFleets?.filter(
-                          (pFleet: any) => fleet?.name === pFleet?.fleetName
-                        ).length > 0 && (
-                          <div className="flex gap-1.5">
-                            <span className="font-medium">PI:</span>
-                            <StateCell
-                              state={
-                                responseFleets?.filter(
-                                  (pFleet: any) =>
-                                    fleet?.name === pFleet?.fleetName
-                                )[0]?.fleetStatus
-                              }
-                            />
-                          </div>
-                        )}
-                      </div>
+                      <FleetsListItemDesc
+                        fleet={fleet}
+                        responseFleets={responseFleets}
+                      />
                     }
                     url={`${
                       selectedState?.organization?.organizationName?.split(

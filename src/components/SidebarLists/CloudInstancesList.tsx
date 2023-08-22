@@ -5,8 +5,8 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../Cells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -47,9 +47,9 @@ export default function CloudInstancesList({
   function handleGetCloudInstances() {
     getInstances(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
-        region: selectedState?.roboticsCloud?.region,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
         details: true,
       },
       {
@@ -81,24 +81,10 @@ export default function CloudInstancesList({
                 key={index}
                 type="instance"
                 name={instance?.name}
-                description={
-                  <div className="flex gap-2">
-                    <div className="flex gap-1.5">
-                      <span className="font-medium">RS:</span>
-                      <StateCell
-                        state={instance?.instanceCloudState}
-                        isRobolaunchState
-                      />
-                    </div>
-                    <div className="flex gap-1.5">
-                      <span className="font-medium">PS:</span>
-                      <StateCell state={instance?.instanceState} />
-                    </div>
-                  </div>
-                }
+                description={<CloudInstancesListItemDesc instance={instance} />}
                 url={`/${organizationNameViewer({
                   organizationName:
-                    selectedState?.organization?.organizationName,
+                    selectedState?.organization?.organizationName!,
                   capitalization: false,
                 })}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}

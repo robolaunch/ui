@@ -68,8 +68,8 @@ export default function CreateRobotFormStep4({
 
       await dispatch(
         createLaunchManager({
-          organizationId: selectedState?.organization?.organizationId,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          organizationId: selectedState?.organization?.organizationId!,
+          roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
@@ -92,7 +92,7 @@ export default function CreateRobotFormStep4({
 
       setTimeout(() => {
         window.location.href = `/${organizationNameViewer({
-          organizationName: selectedState?.organization?.organizationName,
+          organizationName: selectedState?.organization?.organizationName!,
           capitalization: false,
         })}/${selectedState?.roboticsCloud?.name}/${
           selectedState?.instance?.name
@@ -157,8 +157,8 @@ export default function CreateRobotFormStep4({
   function handleGetBuildManager() {
     getBuildManager(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,

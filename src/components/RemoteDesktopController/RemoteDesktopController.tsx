@@ -1,10 +1,10 @@
 import React, { ReactElement, useState } from "react";
-import useVDI from "../../hooks/useVDI";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import { useKeycloak } from "@react-keycloak/web";
 import { TfiReload } from "react-icons/tfi";
+import useVDI from "../../hooks/useVDI";
 import Button from "../Button/Button";
 
 interface IRemoteDesktopController {

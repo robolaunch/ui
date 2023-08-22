@@ -1,10 +1,10 @@
 import React, { Fragment, ReactElement } from "react";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
-import { BiJoystickButton } from "react-icons/bi";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { BsCameraVideoFill } from "react-icons/bs";
-import { AiFillCode } from "react-icons/ai";
+import { BiJoystickButton } from "react-icons/bi";
 import ContentLoader from "react-content-loader";
+import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
 
 export default function RobotHeaderTabs(): ReactElement {

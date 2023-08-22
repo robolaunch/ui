@@ -1,15 +1,15 @@
-import { useFormik } from "formik";
 import React, { ReactElement } from "react";
+import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useAppDispatch } from "../../hooks/redux";
+import { useKeycloak } from "@react-keycloak/web";
 import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
-import Button from "../Button/Button";
-import useMain from "../../hooks/useMain";
-import { useAppDispatch } from "../../hooks/redux";
-import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
 import { Editor } from "@monaco-editor/react";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import useMain from "../../hooks/useMain";
+import Button from "../Button/Button";
+import { useFormik } from "formik";
 import { toast } from "sonner";
-import { useKeycloak } from "@react-keycloak/web";
 
 export default function ConnectPhysicalInstanceForm(): ReactElement {
   const [code, setCode] = React.useState<string>("");

@@ -1,23 +1,24 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
+import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
+import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import BasicCell from "../../../components/Cells/BasicCell";
+import StateCell from "../../../components/Cells/StateCell";
 import InfoCell from "../../../components/Cells/InfoCell";
+import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
-import BasicCell from "../../../components/Cells/BasicCell";
-import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
-import StateCell from "../../../components/Cells/StateCell";
-import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
-import useFunctions from "../../../hooks/useFunctions";
-import DashboardLayout from "../../../layouts/DashboardLayout";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
+
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../../helpers/envProvider";
 import EnvironmentActionCells from "../../../components/ActionCells/EnvironmentActionCells";
+import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
@@ -239,7 +240,7 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId,
+        organizationId: pagesState?.organization?.organizationId as string,
         roboticsCloudName: url?.roboticsCloudName as string,
       },
       {
@@ -253,10 +254,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         details: true,
       },
       {
@@ -270,10 +271,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
-        instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        instanceId: pagesState?.instance?.instanceId as string,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: url?.fleetName as string,
       },
       {
@@ -287,8 +288,8 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId as string,
+        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         namespaceName: url?.fleetName as string,
@@ -304,10 +305,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetRobots() {
     getRobots(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
-        instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        instanceId: pagesState?.instance?.instanceId as string,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
       },
       {
@@ -320,10 +321,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetEnvironments() {
     getEnvironments(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
       },
       {

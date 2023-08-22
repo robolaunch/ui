@@ -34,7 +34,7 @@ export default function RoboticsCloudsList({
   function handleGetRoboticsClouds() {
     getRoboticsClouds(
       {
-        organizationId: selectedState?.organization?.organizationId,
+        organizationId: selectedState?.organization?.organizationId!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -70,7 +70,7 @@ export default function RoboticsCloudsList({
                   }
                   url={`/${organizationNameViewer({
                     organizationName:
-                      selectedState?.organization?.organizationName,
+                      selectedState?.organization?.organizationName!,
                     capitalization: false,
                   })}/${roboticsCloud?.name}`}
                   data={roboticsCloud}

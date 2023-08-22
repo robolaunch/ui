@@ -72,10 +72,10 @@ export default function CreateRobotFormStep3({
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },
@@ -90,8 +90,8 @@ export default function CreateRobotFormStep3({
   function handleGetBuildManager() {
     getBuildManager(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,
@@ -143,8 +143,8 @@ export default function CreateRobotFormStep3({
       formik.setSubmitting(true);
       await dispatch(
         createBuildManager({
-          organizationId: selectedState?.organization?.organizationId,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          organizationId: selectedState?.organization?.organizationId!,
+          roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
           robotName: robotData?.step1?.robotName,

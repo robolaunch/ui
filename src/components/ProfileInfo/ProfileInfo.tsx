@@ -1,13 +1,13 @@
 import React, { Fragment, ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
-import InputText from "../InputText/InputText";
-import { useKeycloak } from "@react-keycloak/web";
-import { useFormik } from "formik";
 import InputError from "../InputError/InputError";
-import Gravatar from "react-gravatar";
-import Button from "../Button/Button";
-import { TbEdit } from "react-icons/tb";
+import { useKeycloak } from "@react-keycloak/web";
 import { MdOutlineCancel } from "react-icons/md";
+import InputText from "../InputText/InputText";
+import { TbEdit } from "react-icons/tb";
+import Button from "../Button/Button";
+import Gravatar from "react-gravatar";
+import { useFormik } from "formik";
 
 interface IProfileInfo {
   className?: string;

@@ -107,7 +107,8 @@ export default function SidebarListItem({
       case "robot":
         navigate(
           `/${organizationNameViewer({
-            organizationName: selectedState?.organization?.organizationName,
+            organizationName: selectedState?.organization
+              ?.organizationName as string,
             capitalization: false,
           })}/${selectedState?.roboticsCloud?.name}/${
             selectedState?.instance?.name
@@ -119,7 +120,7 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.98] select-none ${
+      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.985] select-none ${
         selected
           ? "bg-layer-light-100 border-layer-light-400 shadow"
           : "bg-layer-light-50 border-layer-light-200 shadow-sm"
@@ -127,7 +128,7 @@ export default function SidebarListItem({
     >
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full flex p-3 gap-4 rounded-l-lg border-r transition-300 ${
+        className={`w-full flex p-2.5 gap-4 rounded-l-lg border-r transition-300 ${
           selected
             ? "hover:bg-layer-light-200 border-layer-light-400"
             : "hover:bg-layer-light-100 border-layer-light-200"

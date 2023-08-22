@@ -1,5 +1,5 @@
-import { IOrganization } from "./organizationInterfaces";
 import { IRoboticsCloud } from "./roboticsCloudInterfaces";
+import { IOrganization } from "./organizationInterfaces";
 
 export interface ISidebarState {
   isOpen: boolean;
@@ -18,15 +18,15 @@ export interface ISidebarState {
 }
 
 export interface ISelectedState {
-  organization: IOrganization;
-  roboticsCloud: IRoboticsCloud;
+  organization: IOrganization | null;
+  roboticsCloud: IRoboticsCloud | null;
   instance: any;
   fleet: any;
 }
 
 export interface IpagesState {
-  organization: IOrganization;
-  roboticsCloud: IRoboticsCloud;
+  organization: IOrganization | null;
+  roboticsCloud: IRoboticsCloud | null;
   instance: any;
   fleet: any;
 }

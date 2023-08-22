@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
-import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
-import useMain from "../../hooks/useMain";
-import { useParams } from "react-router-dom";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
+import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
+import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
+import { useParams } from "react-router-dom";
+import useMain from "../../hooks/useMain";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);

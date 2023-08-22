@@ -196,7 +196,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId,
+        organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: url?.roboticsCloudName as string,
       },
       {
@@ -210,10 +210,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region!,
         details: true,
       },
       {
@@ -227,10 +227,10 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region!,
       },
       {
         ifErrorNavigateTo404: !responseFleets,
@@ -242,8 +242,8 @@ export default function CloudInstanceDashboardPage(): ReactElement {
   function handleGetNamespaces() {
     getNamespaces(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
       },

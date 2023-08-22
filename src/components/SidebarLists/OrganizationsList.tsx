@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import SidebarListItem from "./SidebarListItem";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import useMain from "../../hooks/useMain";
+import { IOrganization } from "../../interfaces/organizationInterfaces";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import SidebarListItem from "./SidebarListItem";
 import StateCell from "../Cells/StateCell";
-import { IOrganization } from "../../interfaces/organizationInterfaces";
+import useMain from "../../hooks/useMain";
 
 interface IOrganizationList {
   setItemCount: any;

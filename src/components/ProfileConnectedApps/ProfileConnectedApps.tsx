@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useState } from "react";
-import CardLayout from "../../layouts/CardLayout";
 import InputToggle from "../InputToggle/InputToggle";
+import CardLayout from "../../layouts/CardLayout";
 import { useKeycloak } from "@react-keycloak/web";
 
 interface IProfileConnectedApps {

@@ -1,9 +1,9 @@
 import React, { Fragment, ReactElement, useState } from "react";
-import useOnclickOutside from "react-cool-onclickoutside";
-import { Link } from "react-router-dom";
-import { useKeycloak } from "@react-keycloak/web";
-import Gravatar from "react-gravatar";
 import { handleLogout } from "../../functions/GeneralFunctions";
+import useOnclickOutside from "react-cool-onclickoutside";
+import { useKeycloak } from "@react-keycloak/web";
+import { Link } from "react-router-dom";
+import Gravatar from "react-gravatar";
 
 export default function HeaderDropdownMenu(): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);

@@ -50,9 +50,9 @@ export default function CreateRobotFormStep2({
       if (envOnPremiseRobot) {
         dispatch(
           createEnvironment({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            region: selectedState?.roboticsCloud?.region,
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            region: selectedState?.roboticsCloud?.region!,
             instanceId: selectedState?.instance?.instanceId,
             fleetName: selectedState?.fleet?.name,
             environmentName: robotData?.step1?.robotName,
@@ -72,10 +72,10 @@ export default function CreateRobotFormStep2({
       } else {
         dispatch(
           createRobot({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region,
+            region: selectedState?.roboticsCloud?.region!,
             robotName: robotData?.step1?.robotName,
             fleetName: selectedState?.fleet?.name,
             workspaceUpdated: isImportRobot ? true : false,
@@ -158,8 +158,8 @@ export default function CreateRobotFormStep2({
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,
@@ -175,10 +175,10 @@ export default function CreateRobotFormStep2({
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         environmentName: url?.robotName as string,
       },
@@ -193,8 +193,8 @@ export default function CreateRobotFormStep2({
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,
@@ -209,8 +209,8 @@ export default function CreateRobotFormStep2({
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         namespaceName: selectedState?.fleet?.name,

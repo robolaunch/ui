@@ -46,10 +46,10 @@ export default function CreateRobotFormStep1({
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId as string,
+        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
+        region: selectedState?.roboticsCloud?.region as string,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName || url?.robotName,
       },
@@ -64,10 +64,10 @@ export default function CreateRobotFormStep1({
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId as string,
+        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
+        region: selectedState?.roboticsCloud?.region as string,
         fleetName: selectedState?.fleet?.name,
         environmentName: url?.robotName as string,
       },
@@ -88,10 +88,10 @@ export default function CreateRobotFormStep1({
       if (isImportRobot) {
         await dispatch(
           createRobot({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region,
+            region: selectedState?.roboticsCloud?.region!,
             fleetName: selectedState?.fleet?.name,
             robotName: formik.values?.robotName,
             physicalInstanceName: robotData?.step1?.isVirtualRobot
@@ -268,9 +268,7 @@ export default function CreateRobotFormStep1({
               </div>
               {/* Robot Services */}
 
-              {/* Seperator */}
               <Seperator />
-              {/* Seperator */}
 
               {/* GPU Resource */}
               <div className="flex items-center gap-1">
@@ -288,9 +286,7 @@ export default function CreateRobotFormStep1({
               </div>
               {/* GPU Resource */}
 
-              {/* Seperator */}
               <Seperator />
-              {/* Seperator */}
 
               {/* Development Mode */}
               {!isImportRobot && (

@@ -133,7 +133,7 @@ export default ({ children }: any) => {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId,
+        organizationId: pagesState?.organization?.organizationId as string,
         roboticsCloudName: url?.roboticsCloudName as string,
       },
       {
@@ -147,10 +147,10 @@ export default ({ children }: any) => {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         details: true,
       },
       {
@@ -164,10 +164,10 @@ export default ({ children }: any) => {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: url?.fleetName as string,
       },
       {
@@ -181,10 +181,10 @@ export default ({ children }: any) => {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         namespaceName: url?.fleetName as string,
       },
       {
@@ -198,10 +198,10 @@ export default ({ children }: any) => {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },
@@ -216,10 +216,10 @@ export default ({ children }: any) => {
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
         environmentName: url?.robotName as string,
       },
@@ -234,10 +234,10 @@ export default ({ children }: any) => {
   function handleGetBuildManager() {
     getBuildManager(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },
@@ -252,11 +252,10 @@ export default ({ children }: any) => {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: pagesState?.roboticsCloud?.name,
+        organizationId: pagesState?.organization?.organizationId as string,
+        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
         instanceId: pagesState?.instance?.instanceId,
-
-        region: pagesState?.roboticsCloud?.region,
+        region: pagesState?.roboticsCloud?.region as string,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName as string,
       },

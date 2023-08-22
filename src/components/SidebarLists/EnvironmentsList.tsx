@@ -51,8 +51,8 @@ export default function EnvironmentsList({
   function handleGetEnvironments() {
     getEnvironments(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,
