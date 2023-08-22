@@ -7,12 +7,14 @@ import { toast } from "sonner";
 interface ISidebarListItem {
   name: string;
   description: string | ReactElement | ReactElement[];
-  type: "organization" | "roboticscloud" | "instance" | "fleet" | "robot";
+  type: Itype;
   url: string;
   data?: any;
   selected?: boolean;
   notSelectable?: boolean;
 }
+
+type Itype = "organization" | "roboticscloud" | "instance" | "fleet" | "robot";
 
 export default function SidebarListItem({
   name,

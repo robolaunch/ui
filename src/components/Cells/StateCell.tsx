@@ -1,11 +1,14 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 interface IStateCell {
   state: string | undefined;
   isRobolaunchState?: boolean;
 }
 
-export default function StateCell({ state, isRobolaunchState }: IStateCell) {
+export default function StateCell({
+  state,
+  isRobolaunchState,
+}: IStateCell): ReactElement {
   const states: any = {
     Instance_Created: {
       color: "bg-yellow-500",
