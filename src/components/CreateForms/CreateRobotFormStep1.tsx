@@ -29,7 +29,7 @@ interface ICreateRobotFormStep1 {
 export default function CreateRobotFormStep1({
   isImportRobot,
 }: ICreateRobotFormStep1): ReactElement {
-  const { robotData, setRobotData }: any = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
@@ -56,7 +56,7 @@ export default function CreateRobotFormStep1({
       {
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobot,
-        setRobotData: setRobotData,
+        setRobotData: true,
       }
     );
   }

@@ -318,7 +318,6 @@ export default function SidebarContentLayout(): ReactElement {
                       <FleetsList reload={reload} setItemCount={setItemCount} />
                     );
                 }
-
                 break;
 
               case "robot":

@@ -19,7 +19,7 @@ export default function RosConnector() {
     if (
       isSettedCookie &&
       responseRobot &&
-      responseRobot?.bridgeIngressEndpoint.split(":")[0] === "wss"
+      responseRobot?.bridgeIngressEndpoint?.split(":")[0] === "wss"
     ) {
       const ros = new ROSLIB.Ros({
         url: urls?.ros || responseRobot?.bridgeIngressEndpoint,
