@@ -3,6 +3,7 @@ import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface ISidebarListItem {
   name: string;
@@ -139,9 +140,11 @@ export default function SidebarListItem({
         <img
           draggable="false"
           className="w-8"
-          src={`/svg/general/${type === "robot" ? "application" : type}/${
-            type === "robot" ? "application" : type
-          }-${selected ? "blue" : "gray"}.svg`}
+          src={`/svg/general/${
+            envOnPremiseRobot && type === "robot" ? "application" : type
+          }/${envOnPremiseRobot && type === "robot" ? "application" : type}-${
+            selected ? "blue" : "gray"
+          }.svg`}
           alt=""
         />
         <div className="flex flex-col gap-1">
@@ -206,7 +209,7 @@ export default function SidebarListItem({
                 break;
             }
           }}
-          className={`flex items-center justify-center px-4 rounded-r-lg transition-300 ${
+          className={`flex items-center justify-center px-3.5 rounded-r-lg transition-300 ${
             selected
               ? "hover:bg-layer-light-200 border-layer-light-400"
               : "hover:bg-layer-light-100 border-layer-light-100"

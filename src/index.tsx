@@ -13,6 +13,7 @@ import "@fontsource/inter/700.css";
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
 import App from "./App";
+import "animate.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

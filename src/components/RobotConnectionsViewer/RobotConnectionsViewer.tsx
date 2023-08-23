@@ -63,7 +63,11 @@ export default function RobotConnectionsViewer({
         <span className="text-xs font-semibold">IDE: </span>
         <StateCell
           state={
-            ide === true ? "Connected" : ide === false ? "Warning" : "Waiting"
+            ide === true && isVDIConnected === true
+              ? "Connected"
+              : ide === false || isVDIConnected === false
+              ? "Warning"
+              : "Waiting"
           }
         />
       </div>

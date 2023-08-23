@@ -62,7 +62,7 @@ export default function SideBarMenuItem({
 
   function activeSwitcher() {
     if (sidebarState?.page === type) {
-      return "bg-layer-light-100 shadow";
+      return "bg-layer-light-100 ring-1 ring-layer-light-200 shadow";
     }
   }
 

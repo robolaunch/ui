@@ -1,31 +1,17 @@
+import React, { ReactElement } from "react";
+import KeycloakLoadingPage from "../components/KeycloakLoadingPage/KeycloakLoadingPage";
 import CreateRobotContext from "../contexts/CreateRobotContext";
-import FunctionsContext from "../contexts/FunctionsContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
-import MainContext from "../contexts/MainContext";
+import FunctionsContext from "../contexts/FunctionsContext";
 import GithubContext from "../contexts/GithubContext";
 import PrivateLayout from "../layouts/PrivateLayout";
-import React, { ReactElement } from "react";
+import MainContext from "../contexts/MainContext";
 import keycloak from "../api/keycloak";
 
 export default function PrivateProvider(): ReactElement {
-  const loadingPage = (
-    <div className="absolute inset-0 flex flex-col items-center justify-center z-50 animate__animated animate__fadeIn">
-      <img
-        src="/images/ring.svg"
-        alt=""
-        className="w-28 animate-spin bg-layer-light-50 rounded-full shadow"
-      />
-      <img
-        src="/images/rocket.svg"
-        alt=""
-        className="fixed pb-1 w-14 animate-pulse"
-      />
-    </div>
-  );
-
   return (
     <ReactKeycloakProvider
-      LoadingComponent={loadingPage}
+      LoadingComponent={<KeycloakLoadingPage />}
       authClient={keycloak}
       autoRefreshToken={true}
       onTokens={(tokens) => {
