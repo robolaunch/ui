@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import StateCell from "../Cells/StateCell";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
+import useRobot from "../../hooks/useRobot";
 
 interface IRobotConnectionsViewer {
   ide: any;
@@ -15,6 +16,8 @@ export default function RobotConnectionsViewer({
 }: IRobotConnectionsViewer): ReactElement {
   const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
   const [isVDIConnected, setIsVDIConnected] = useState<boolean | null>(null);
+
+  const { responseRobot } = useRobot();
 
   useEffect(() => {
     if (ros) {
@@ -45,7 +48,7 @@ export default function RobotConnectionsViewer({
 
   return (
     <div className="flex gap-6">
-      {!envOnPremiseRobot && (
+      {!envOnPremiseRobot && responseRobot?.bridgeIngressEndpoint && (
         <div className="flex gap-1">
           <span className="text-xs font-semibold">ROS: </span>
           <StateCell
