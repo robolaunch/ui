@@ -76,12 +76,12 @@ export default function DeployApplicationSelector({
 
       await dispatch(
         createRobot({
-          organizationId: formik.values?.organization?.organizationId as string,
-          roboticsCloudName: formik.values?.roboticscloud?.name as string,
-          instanceId: formik.values?.instance?.instanceId as string,
-          region: formik?.values?.roboticscloud?.region as string,
+          organizationId: formik.values?.organization?.organizationId!,
+          roboticsCloudName: formik.values?.roboticscloud?.name!,
+          instanceId: formik.values?.instance?.instanceId!,
+          region: formik?.values?.roboticscloud?.region!,
           robotName: item?.acronym + "-" + handleGetRandomString(5),
-          fleetName: formik.values.fleet?.name as string,
+          fleetName: formik.values.fleet?.name!,
           distributions: [item?.distro.toUpperCase()],
           bridgeEnabled: item?.type === "Environment" ? false : true,
           vdiEnabled: true,

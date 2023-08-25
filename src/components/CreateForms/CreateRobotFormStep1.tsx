@@ -46,10 +46,10 @@ export default function CreateRobotFormStep1({
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId as string,
-        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region as string,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName || url?.robotName,
       },
@@ -64,12 +64,12 @@ export default function CreateRobotFormStep1({
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: selectedState?.organization?.organizationId as string,
-        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region as string,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        environmentName: url?.robotName as string,
+        environmentName: url?.robotName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,

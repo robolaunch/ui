@@ -227,7 +227,7 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetOrganization() {
     getOrganization(
       {
-        organizationName: url?.organizationName as string,
+        organizationName: url?.organizationName!,
       },
       {
         isSetState: true,
@@ -240,8 +240,8 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: url?.roboticsCloudName as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: url?.roboticsCloudName!,
       },
       {
         isSetState: true,
@@ -254,10 +254,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
-        instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceName: url?.instanceName!,
+        region: pagesState?.roboticsCloud?.region!,
         details: true,
       },
       {
@@ -271,11 +271,11 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
-        instanceId: pagesState?.instance?.instanceId as string,
-        region: pagesState?.roboticsCloud?.region as string,
-        fleetName: url?.fleetName as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceId: pagesState?.instance?.instanceId!,
+        region: pagesState?.roboticsCloud?.region!,
+        fleetName: url?.fleetName!,
       },
       {
         isSetState: true,
@@ -288,11 +288,11 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: selectedState?.organization?.organizationId as string,
-        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
-        namespaceName: url?.fleetName as string,
+        namespaceName: url?.fleetName!,
       },
       {
         isSetState: true,
@@ -305,10 +305,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetRobots() {
     getRobots(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
-        instanceId: pagesState?.instance?.instanceId as string,
-        region: pagesState?.roboticsCloud?.region as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceId: pagesState?.instance?.instanceId!,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
       },
       {
@@ -321,10 +321,10 @@ export default function FleetDashboardPage(): ReactElement {
   function handleGetEnvironments() {
     getEnvironments(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
       },
       {

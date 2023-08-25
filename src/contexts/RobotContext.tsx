@@ -120,7 +120,7 @@ export default ({ children }: any) => {
   function handleGetOrganization() {
     getOrganization(
       {
-        organizationName: url?.organizationName as string,
+        organizationName: url?.organizationName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -133,8 +133,8 @@ export default ({ children }: any) => {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: url?.roboticsCloudName as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: url?.roboticsCloudName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -147,10 +147,10 @@ export default ({ children }: any) => {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
-        instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceName: url?.instanceName!,
+        region: pagesState?.roboticsCloud?.region!,
         details: true,
       },
       {
@@ -164,11 +164,11 @@ export default ({ children }: any) => {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
-        fleetName: url?.fleetName as string,
+        region: pagesState?.roboticsCloud?.region!,
+        fleetName: url?.fleetName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -181,11 +181,11 @@ export default ({ children }: any) => {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
-        namespaceName: url?.fleetName as string,
+        region: pagesState?.roboticsCloud?.region!,
+        namespaceName: url?.fleetName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -198,12 +198,12 @@ export default ({ children }: any) => {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
-        robotName: url?.robotName as string,
+        robotName: url?.robotName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -216,12 +216,12 @@ export default ({ children }: any) => {
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
-        environmentName: url?.robotName as string,
+        environmentName: url?.robotName!,
       },
       {
         ifErrorNavigateTo404: !responseRobot,
@@ -234,12 +234,12 @@ export default ({ children }: any) => {
   function handleGetBuildManager() {
     getBuildManager(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
-        robotName: url?.robotName as string,
+        robotName: url?.robotName!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -252,12 +252,12 @@ export default ({ children }: any) => {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: pagesState?.organization?.organizationId as string,
-        roboticsCloudName: pagesState?.roboticsCloud?.name as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId,
-        region: pagesState?.roboticsCloud?.region as string,
+        region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
-        robotName: url?.robotName as string,
+        robotName: url?.robotName!,
       },
       {
         ifErrorNavigateTo404: false,

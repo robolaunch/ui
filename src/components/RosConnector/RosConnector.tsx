@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import ROSLIB from "roslib";
 import useRobot from "../../hooks/useRobot";
+import ROSLIB from "roslib";
 
-export default function RosConnector() {
+export default function RosConnector(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
 
   const {
@@ -18,7 +18,6 @@ export default function RosConnector() {
   useEffect(() => {
     if (
       isSettedCookie &&
-      responseRobot &&
       responseRobot?.bridgeIngressEndpoint?.split(":")[0] === "wss"
     ) {
       const ros = new ROSLIB.Ros({
