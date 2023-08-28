@@ -20,7 +20,7 @@ export default function RosConnector(): ReactElement {
       isSettedCookie &&
       responseRobot?.bridgeIngressEndpoint?.split(":")[0] === "wss"
     ) {
-      const ros = new ROSLIB.Ros({
+      const ros: ROSLIB.Ros = new ROSLIB.Ros({
         url: urls?.ros || responseRobot?.bridgeIngressEndpoint,
       });
 
