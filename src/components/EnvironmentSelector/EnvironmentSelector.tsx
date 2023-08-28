@@ -7,10 +7,12 @@ import InfoTip from "../InfoTip/InfoTip";
 
 interface IEnvironmentSelector {
   formik: any;
+  isImportRobot: boolean;
 }
 
 export default function EnvironmentSelector({
   formik,
+  isImportRobot,
 }: IEnvironmentSelector): ReactElement {
   const [responseReadyEnvironments, setResponseReadyEnvironments] =
     useState<any>(undefined);
@@ -57,8 +59,13 @@ export default function EnvironmentSelector({
                 className={`flex justify-center items-center py-3 px-1 border-2 rounded text-xs capitalize transition-300 ${
                   formik.values?.domainName === environment &&
                   "border-layer-primary-600 shadow"
-                }`}
-                onClick={() => formik.setFieldValue("domainName", environment)}
+                }
+                ${isImportRobot && "cursor-not-allowed"}
+                `}
+                onClick={() =>
+                  !isImportRobot &&
+                  formik.setFieldValue("domainName", environment)
+                }
               >
                 {environment}
               </div>
@@ -98,23 +105,26 @@ export default function EnvironmentSelector({
                       formik.values?.devspace?.version ===
                         environment?.devspace?.version &&
                       "border-layer-primary-600 shadow"
-                    }`}
+                    }
+                    ${isImportRobot && "cursor-not-allowed"}
+                    `}
                     onClick={() => {
-                      formik.setValues({
-                        ...formik.values,
-                        domainName: environment?.domainName,
-                        application: {
-                          ...formik.values.application,
-                          name: environment?.application?.name,
-                          version: environment?.application?.version,
-                        },
-                        devspace: {
-                          ...formik.values.devspace,
-                          desktop: environment?.devspace?.desktop,
-                          ubuntuDistro: environment?.devspace?.ubuntuDistro,
-                          version: environment?.devspace?.version,
-                        },
-                      });
+                      !isImportRobot &&
+                        formik.setValues({
+                          ...formik.values,
+                          domainName: environment?.domainName,
+                          application: {
+                            ...formik.values.application,
+                            name: environment?.application?.name,
+                            version: environment?.application?.version,
+                          },
+                          devspace: {
+                            ...formik.values.devspace,
+                            desktop: environment?.devspace?.desktop,
+                            ubuntuDistro: environment?.devspace?.ubuntuDistro,
+                            version: environment?.devspace?.version,
+                          },
+                        });
                     }}
                   >
                     <span>

@@ -1,22 +1,19 @@
 import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 
-interface ICreateRobotFormIDEGpuResource {
+interface ICreateRobotFormGpuResource {
   formik: any;
 }
 
-export default function CreateRobotFormIDEGpuResource({
+export default function CreateRobotFormGpuResource({
   formik,
-}: ICreateRobotFormIDEGpuResource): ReactElement {
+}: ICreateRobotFormGpuResource): ReactElement {
   return (
     <div className="flex items-center gap-4">
       <div className="flex gap-2 w-full">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-          IDE GPU Resource: ({formik?.values?.ideGpuResource} Core) :
-          {
-            // IDE GPU Re
-          }
-          <InfoTip content="Ide GPU Re" />
+          GPU Resource: ({formik?.values?.ideGpuResource} Core) :
+          <InfoTip content="GPU Resource" />
         </div>
         <input
           min="1"

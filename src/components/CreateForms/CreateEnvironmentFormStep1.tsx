@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
-import CreateRobotFormIDEGpuResource from "../CreateRobotFormIDEGpuResource/CreateRobotFormIDEGpuResource";
+import CreateRobotFormGpuResource from "../CreateRobotFormGpuResource/CreateRobotFormGpuResource";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
@@ -159,7 +159,7 @@ export default function CreateEnvironmentFormStep1({
             {/* RobotName */}
 
             {/* Environment Selector */}
-            <EnvironmentSelector formik={formik} />
+            <EnvironmentSelector formik={formik} isImportRobot />
             {/* Environment Selector */}
 
             {formik.values.application?.name && <Seperator />}
@@ -179,8 +179,9 @@ export default function CreateEnvironmentFormStep1({
 
               <Seperator />
 
-              <CreateRobotFormIDEGpuResource formik={formik} />
+              <CreateRobotFormGpuResource formik={formik} />
             </div>
+
             <div className="flex gap-2 mt-10 ">
               {!isImportRobot && (
                 <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
@@ -202,7 +203,7 @@ export default function CreateEnvironmentFormStep1({
                       alt="loading"
                     />
                   ) : isImportRobot ? (
-                    "Update Robot"
+                    "Update Application"
                   ) : (
                     `Next Step`
                   )
