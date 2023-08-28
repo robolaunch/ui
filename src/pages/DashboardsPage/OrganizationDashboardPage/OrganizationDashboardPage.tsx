@@ -1,18 +1,18 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { stringCapitalization } from "../../../functions/GeneralFunctions";
+import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import StateCell from "../../../components/Cells/StateCell";
 import BasicCell from "../../../components/Cells/BasicCell";
-import { useParams } from "react-router-dom";
 import InfoCell from "../../../components/Cells/InfoCell";
 import Button from "../../../components/Button/Button";
-import useMain from "../../../hooks/useMain";
 import useFunctions from "../../../hooks/useFunctions";
-import StateCell from "../../../components/Cells/StateCell";
-import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
-import DashboardLayout from "../../../layouts/DashboardLayout";
-import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import CountWidget from "../../../components/CountWidget/CountWidget";
+import { useParams } from "react-router-dom";
+import useMain from "../../../hooks/useMain";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -29,7 +29,7 @@ export default function OrganizationDashboardPage(): ReactElement {
     ) {
       getOrganization(
         {
-          organizationName: url?.organizationName as string,
+          organizationName: url?.organizationName!,
         },
         {
           isSetState: true,
@@ -107,7 +107,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           return (
             <BasicCell
               text={stringCapitalization({
-                str: url?.organizationName as string,
+                str: url?.organizationName!,
               })}
             />
           );
@@ -169,7 +169,7 @@ export default function OrganizationDashboardPage(): ReactElement {
         <InformationWidget
           title={
             stringCapitalization({
-              str: url?.organizationName as string,
+              str: url?.organizationName!,
             }) || ""
           }
           subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
@@ -191,7 +191,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       }
       widget2={
         <RegionsWidget
-          title="Robotics Cloud"
+          title="Regions"
           responseData={
             responseRoboticsClouds?.map((item: any) => item.region) || []
           }

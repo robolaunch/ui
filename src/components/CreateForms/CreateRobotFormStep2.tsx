@@ -58,6 +58,7 @@ export default function CreateRobotFormStep2({
             environmentName: robotData?.step1?.robotName,
             domainName: robotData?.step1?.domainName,
             storageAmount: robotData?.step1?.robotStorage,
+            ideGpuResource: robotData?.step1?.ideGpuResource,
             vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
             applicationName: robotData?.step1?.application?.name,
             applicationVersion: robotData?.step1?.application?.version,

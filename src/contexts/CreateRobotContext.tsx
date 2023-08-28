@@ -17,6 +17,7 @@ export default ({ children }: any) => {
       physicalInstanceName: "",
       robotStorage: 40,
       isEnabledIde: true,
+      ideGpuResource: 2,
       isEnabledROS2Bridge: true,
       remoteDesktop: {
         isEnabled: true,
@@ -24,7 +25,7 @@ export default ({ children }: any) => {
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,
-      isDevelopmentMode: envOnPremiseRobot ? true : false,
+      isDevelopmentMode: envOnPremiseRobot,
       domainName: "",
       application: {
         name: "",
@@ -72,12 +73,7 @@ export default ({ children }: any) => {
           entryPointType: "custom",
           entryPointCmd: "",
           instancesName: [],
-          robotLmEnvs: [
-            // {
-            //   name: "",
-            //   value: "",
-            // },
-          ],
+          robotLmEnvs: [],
         },
       ],
     },
@@ -154,12 +150,7 @@ export default ({ children }: any) => {
               entryPointType: "custom",
               entryPointCmd: "",
               instancesName: [],
-              robotLmEnvs: [
-                // {
-                //   name: "",
-                //   value: "",
-                // },
-              ],
+              robotLmEnvs: [],
             },
           ],
         },
@@ -175,12 +166,7 @@ export default ({ children }: any) => {
         entryPointType: "custom",
         entryPointCmd: "",
         instancesName: [],
-        robotLmEnvs: [
-          // {
-          //   name: "",
-          //   value: "",
-          // },
-        ],
+        robotLmEnvs: [],
       },
     ]);
   }

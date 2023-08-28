@@ -40,12 +40,12 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       handleGetInstances();
     }
 
-    const timer =
+    const timer = setInterval(() => {
       selectedState?.organization &&
-      selectedState?.roboticsCloud &&
-      setInterval(() => {
-        pagesState?.roboticsCloud && handleGetInstances();
-      }, 20000);
+        selectedState?.roboticsCloud &&
+        pagesState?.roboticsCloud &&
+        handleGetInstances();
+    }, 20000);
 
     return () => {
       clearInterval(timer);
@@ -264,7 +264,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   function handleGetOrganization() {
     getOrganization(
       {
-        organizationName: url?.organizationName as string,
+        organizationName: url?.organizationName!,
       },
       {
         isSetState: true,
@@ -277,8 +277,8 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName as string,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: url?.roboticsCloudName!,
       },
       {
         isSetState: true,
@@ -291,9 +291,9 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
   function handleGetInstances() {
     getInstances(
       {
-        organizationId: pagesState?.organization?.organizationId,
-        roboticsCloudName: url?.roboticsCloudName as string,
-        region: pagesState?.roboticsCloud?.region,
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: url?.roboticsCloudName!,
+        region: pagesState?.roboticsCloud?.region!,
         details: true,
       },
       {

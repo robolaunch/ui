@@ -51,6 +51,7 @@ import {
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
 } from "../interfaces/environmentInterfaces";
+import { ISelectedState } from "../interfaces/mainInterfaces";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -489,7 +490,7 @@ export default ({ children }: any) => {
           ?.cloudInstances[0]?.robolaunchFederatedFleets
       ) {
         parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
+          setSelectedState((prevState: ISelectedState) => {
             return {
               ...prevState,
               fleet:

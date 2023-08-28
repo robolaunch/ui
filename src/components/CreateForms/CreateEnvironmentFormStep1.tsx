@@ -1,6 +1,10 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
@@ -8,15 +12,13 @@ import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
-import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
+import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
+import CreateRobotFormIDEGpuResource from "../CreateRobotFormIDEGpuResource/CreateRobotFormIDEGpuResource";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -29,25 +31,25 @@ export default function CreateEnvironmentFormStep1({
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
-  const { getRobot } = useFunctions();
+  const { getEnvironment } = useFunctions();
   const url = useParams();
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      handleGetRobot();
+      handleGetEnvironment();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleGetRobot() {
-    getRobot(
+  function handleGetEnvironment() {
+    getEnvironment(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName || url?.robotName,
+        environmentName: robotData?.step1?.robotName || url?.robotName,
       },
       {
         ifErrorNavigateTo404: false,
@@ -67,10 +69,10 @@ export default function CreateEnvironmentFormStep1({
       if (isImportRobot) {
         await dispatch(
           createRobot({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region,
+            region: selectedState?.roboticsCloud?.region!,
             fleetName: selectedState?.fleet?.name,
             robotName: formik.values?.robotName,
             physicalInstanceName: robotData?.step1?.isVirtualRobot
@@ -172,34 +174,12 @@ export default function CreateEnvironmentFormStep1({
               <Seperator />
 
               {/* Robot Services */}
-              <div className="flex items-center gap-4">
-                <div className="flex gap-2 w-full">
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
-                    VDI: Session Count (
-                    {formik?.values?.remoteDesktop?.sessionCount} User) :
-                    <InfoTip
-                      content="Session Count is the number of simultaneous remote desktop sessions that can be created for the robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
-                      rightTip
-                    />
-                  </div>
-                  <input
-                    min="1"
-                    max="10"
-                    type="range"
-                    autoComplete="off"
-                    {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                    className="w-full"
-                    style={{
-                      appearance: "auto",
-                      padding: "0px",
-                      color: "#AC2DFE",
-                      accentColor: "currentcolor",
-                    }}
-                    disabled={formik.isSubmitting}
-                  />
-                </div>
-              </div>
+              <CreateRobotFormVDISessionCount formik={formik} />
               {/* Robot Services */}
+
+              <Seperator />
+
+              <CreateRobotFormIDEGpuResource formik={formik} />
             </div>
             <div className="flex gap-2 mt-10 ">
               {!isImportRobot && (

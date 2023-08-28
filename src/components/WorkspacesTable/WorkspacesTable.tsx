@@ -5,6 +5,7 @@ import InfoCell from "../Cells/InfoCell";
 import StateCell from "../Cells/StateCell";
 import WorkspacesCell from "../Cells/WorkspacesCell";
 import GeneralTable from "../Table/GeneralTable";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 
 interface IWorkspacesTable {
   responseRobot: any;
@@ -45,7 +46,8 @@ export default function WorkspacesTable({
           );
         },
       },
-      {
+
+      !envOnPremiseRobot && {
         key: "distro",
         header: "distro",
         align: "center",
@@ -53,6 +55,7 @@ export default function WorkspacesTable({
           return <DistroCell distro={rowData?.distro?.toLowerCase()} />;
         },
       },
+
       {
         key: "repositories",
         header: "repositories",

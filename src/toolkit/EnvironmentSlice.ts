@@ -39,6 +39,7 @@ export const createEnvironment = createAsyncThunk(
                   vdiEnabled: true,
                   vdiSessionCount: values?.vdiSessionCount,
                   ideEnabled: true,
+                  ideGpuResource: values?.ideGpuResource,
                   storageAmount: values?.storageAmount,
                   application: {
                     name: values?.applicationName,

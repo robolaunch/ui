@@ -27,6 +27,7 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -325,6 +326,15 @@ export default function SidebarContentLayout(): ReactElement {
                   return <CreateRobotLayout />;
                 }
                 if (url?.robotName) {
+                  if (envOnPremiseRobot) {
+                    return (
+                      <UpdateEnvironmentDetailsForm
+                        reload={reload}
+                        setItemCount={setItemCount}
+                      />
+                    );
+                  }
+
                   return (
                     <UpdateRobotDetailsForm
                       reload={reload}
