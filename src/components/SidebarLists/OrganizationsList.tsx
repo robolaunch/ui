@@ -5,7 +5,7 @@ import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 import useMain from "../../hooks/useMain";
 
 interface IOrganizationList {

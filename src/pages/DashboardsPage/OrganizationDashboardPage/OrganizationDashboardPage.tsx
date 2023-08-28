@@ -1,14 +1,14 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import RoboticsCloudActionCells from "../../../components/ActionCells/RoboticsCloudActionCells";
+import RoboticsCloudActionCells from "../../../components/TableActionCells/RoboticsCloudActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { stringCapitalization } from "../../../functions/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import StateCell from "../../../components/Cells/StateCell";
-import BasicCell from "../../../components/Cells/BasicCell";
-import InfoCell from "../../../components/Cells/InfoCell";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";

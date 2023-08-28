@@ -1,13 +1,13 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import RobotActionCells from "../../../components/ActionCells/RobotActionCells";
-import RobotServicesCell from "../../../components/Cells/RobotServicesCell";
+import RobotActionCells from "../../../components/TableActionCells/RobotActionCells";
+import RobotServicesCell from "../../../components/TableInformationCells/RobotServicesCell";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import BasicCell from "../../../components/Cells/BasicCell";
-import StateCell from "../../../components/Cells/StateCell";
-import InfoCell from "../../../components/Cells/InfoCell";
+import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
 import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
@@ -17,7 +17,7 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../../helpers/envProvider";
-import EnvironmentActionCells from "../../../components/ActionCells/EnvironmentActionCells";
+import EnvironmentActionCells from "../../../components/TableActionCells/EnvironmentActionCells";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 
 export default function FleetDashboardPage(): ReactElement {

@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 import Seperator from "../Seperator/Seperator";
 import useMain from "../../hooks/useMain";
 

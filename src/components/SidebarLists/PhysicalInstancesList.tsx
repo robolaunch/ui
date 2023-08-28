@@ -5,7 +5,7 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IPhysicalInstancesList {

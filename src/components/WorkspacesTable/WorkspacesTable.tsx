@@ -1,9 +1,9 @@
 import React, { ReactElement, useMemo } from "react";
 import { useParams } from "react-router-dom";
-import DistroCell from "../Cells/DistroCell";
-import InfoCell from "../Cells/InfoCell";
-import StateCell from "../Cells/StateCell";
-import WorkspacesCell from "../Cells/WorkspacesCell";
+import DistroCell from "../TableInformationCells/DistroCell";
+import InfoCell from "../TableInformationCells/InfoCell";
+import StateCell from "../TableInformationCells/StateCell";
+import WorkspacesCell from "../TableInformationCells/WorkspacesCell";
 import GeneralTable from "../Table/GeneralTable";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import useRobot from "../../hooks/useRobot";
 

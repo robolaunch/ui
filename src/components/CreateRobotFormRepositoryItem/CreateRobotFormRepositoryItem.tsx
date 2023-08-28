@@ -271,7 +271,7 @@ export default function CreateRobotFormRepositoryItem({
                   ))}
                 </Fragment>
               </InputSelect>
-            ) : (
+            ) : responseBranches?.length > 0 ? (
               <InputSelect
                 {...formik.getFieldProps(
                   `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
@@ -290,6 +290,13 @@ export default function CreateRobotFormRepositoryItem({
                   ))}
                 </Fragment>
               </InputSelect>
+            ) : (
+              <InputText
+                {...formik.getFieldProps(
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                )}
+                disabled={disabled}
+              />
             )}
             <InputError
               error={

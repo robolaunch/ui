@@ -1,10 +1,10 @@
 import React, { ReactElement, useMemo } from "react";
 import GeneralTable from "../Table/GeneralTable";
-import InfoCell from "../Cells/InfoCell";
+import InfoCell from "../TableInformationCells/InfoCell";
 import { useParams } from "react-router-dom";
-import BasicCell from "../Cells/BasicCell";
-import StateCell from "../Cells/StateCell";
-import LogsCell from "../Cells/LogsCell";
+import BasicCell from "../TableInformationCells/BasicCell";
+import StateCell from "../TableInformationCells/StateCell";
+import LogsCell from "../TableInformationCells/LogsCell";
 
 interface ILaunchManagerStepsTable {
   responseLaunchManagers: any;

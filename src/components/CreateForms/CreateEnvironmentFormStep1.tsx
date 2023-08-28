@@ -1,4 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
+import CreateRobotFormIDEGpuResource from "../CreateRobotFormIDEGpuResource/CreateRobotFormIDEGpuResource";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
@@ -17,8 +19,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
-import CreateRobotFormIDEGpuResource from "../CreateRobotFormIDEGpuResource/CreateRobotFormIDEGpuResource";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;

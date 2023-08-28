@@ -1,9 +1,9 @@
 import React, { useMemo } from "react";
 import GeneralTable from "../../components/Table/GeneralTable";
-import InfoCell from "../../components/Cells/InfoCell";
-import OrganizationActionCells from "../../components/ActionCells/OrganizationActionCells";
+import InfoCell from "../../components/TableInformationCells/InfoCell";
+import OrganizationActionCells from "../../components/TableActionCells/OrganizationActionCells";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import BasicCell from "../../components/Cells/BasicCell";
+import BasicCell from "../../components/TableInformationCells/BasicCell";
 
 interface IOrganizationsPage {
   responseOrganizations: any;

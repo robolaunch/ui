@@ -5,14 +5,14 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import OrganizationActionCells from "../../../components/ActionCells/OrganizationActionCells";
+import OrganizationActionCells from "../../../components/TableActionCells/OrganizationActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { organizationNameViewer } from "../../../functions/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import StateCell from "../../../components/Cells/StateCell";
-import InfoCell from "../../../components/Cells/InfoCell";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import useMain from "../../../hooks/useMain";

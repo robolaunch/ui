@@ -1,8 +1,8 @@
 import React, { ReactElement, useMemo, useState } from "react";
 import GeneralTable from "../../components/Table/GeneralTable";
-import BasicCell from "../../components/Cells/BasicCell";
-import ColorCell from "../../components/Cells/ColorCell";
-import InvoiceActionCells from "../../components/ActionCells/InvoiceActionCells";
+import BasicCell from "../../components/TableInformationCells/BasicCell";
+import ColorCell from "../../components/TableInformationCells/ColorCell";
+import InvoiceActionCells from "../../components/TableActionCells/InvoiceActionCells";
 import InvoiceStatusWidget from "../../components/InvoiceStatusWidget/InvoiceStatusWidget";
 import InvoiceUtilizationWidget from "../../components/InvoiceUtilizationWidget/InvoiceUtilizationWidget";
 

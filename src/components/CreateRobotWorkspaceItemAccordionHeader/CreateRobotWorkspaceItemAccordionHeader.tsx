@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { IRobotWorkspace } from "../../interfaces/robotInterfaces";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 
 interface ICreateRobotWorkspaceItemAccordionHeader {
   workspace: IRobotWorkspace;

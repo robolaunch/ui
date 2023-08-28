@@ -3,9 +3,9 @@ import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 import useFunctions from "../../hooks/useFunctions";
-import BasicCell from "../Cells/BasicCell";
+import BasicCell from "../TableInformationCells/BasicCell";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IRoboticsCloudsList {

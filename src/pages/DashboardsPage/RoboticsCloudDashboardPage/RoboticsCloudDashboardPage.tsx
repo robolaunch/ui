@@ -6,11 +6,11 @@ import React, {
   useState,
 } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import InstanceActionCells from "../../../components/ActionCells/InstanceActionCells";
+import InstanceActionCells from "../../../components/TableActionCells/InstanceActionCells";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import BasicCell from "../../../components/Cells/BasicCell";
-import StateCell from "../../../components/Cells/StateCell";
-import InfoCell from "../../../components/Cells/InfoCell";
+import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import { useParams } from "react-router-dom";
 import Button from "../../../components/Button/Button";
 import useMain from "../../../hooks/useMain";

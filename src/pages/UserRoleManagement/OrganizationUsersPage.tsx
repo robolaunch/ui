@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import GeneralTable from "../../components/Table/GeneralTable";
-import InfoCell from "../../components/Cells/InfoCell";
-import UserActionCells from "../../components/ActionCells/UserActionCells";
-import BasicCell from "../../components/Cells/BasicCell";
+import InfoCell from "../../components/TableInformationCells/InfoCell";
+import UserActionCells from "../../components/TableActionCells/UserActionCells";
+import BasicCell from "../../components/TableInformationCells/BasicCell";
 import { useAppDispatch } from "../../hooks/redux";
 import { getOrganizationUsers } from "../../toolkit/OrganizationSlice";
 

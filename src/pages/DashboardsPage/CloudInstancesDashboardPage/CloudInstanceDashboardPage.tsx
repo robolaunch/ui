@@ -10,16 +10,16 @@ import {
   envOnPremiseRobot,
 } from "../../../helpers/envProvider";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import NamespaceActionCells from "../../../components/ActionCells/NamespaceActionCells";
+import NamespaceActionCells from "../../../components/TableActionCells/NamespaceActionCells";
 import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
-import FleetActionCells from "../../../components/ActionCells/FleetActionCells";
+import FleetActionCells from "../../../components/TableActionCells/FleetActionCells";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
-import BasicCell from "../../../components/Cells/BasicCell";
-import StateCell from "../../../components/Cells/StateCell";
-import InfoCell from "../../../components/Cells/InfoCell";
+import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import { SiKubernetes } from "react-icons/si";

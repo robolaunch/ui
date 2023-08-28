@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import StateCell from "../Cells/StateCell";
+import StateCell from "../TableInformationCells/StateCell";
 
 interface ICreateRobotFormBuildStepItemAccordionHeader {
   buildStep: any;
