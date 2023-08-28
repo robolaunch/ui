@@ -1041,10 +1041,6 @@ export default ({ children }: any) => {
         responseEnvironment?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.environments
       ) {
-        console.log(
-          responseEnvironment?.payload?.data[0].roboticsClouds[0]
-            ?.cloudInstances[0]?.environments
-        );
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {

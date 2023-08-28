@@ -49,12 +49,12 @@ export default function CreateEnvironmentFormStep1({
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        environmentName: robotData?.step1?.robotName || url?.robotName,
+        environmentName: url?.robotName!,
       },
       {
-        ifErrorNavigateTo404: false,
+        ifErrorNavigateTo404: !responseRobot,
         setResponse: setResponseRobot,
-        setRobotData: setRobotData,
+        setRobotData: true,
       }
     );
   }
@@ -159,7 +159,10 @@ export default function CreateEnvironmentFormStep1({
             {/* RobotName */}
 
             {/* Environment Selector */}
-            <EnvironmentSelector formik={formik} isImportRobot />
+            <EnvironmentSelector
+              formik={formik}
+              isImportRobot={isImportRobot}
+            />
             {/* Environment Selector */}
 
             {formik.values.application?.name && <Seperator />}

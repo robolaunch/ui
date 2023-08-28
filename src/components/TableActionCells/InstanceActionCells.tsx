@@ -3,7 +3,10 @@ import Button from "../Button/Button";
 import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../helpers/envProvider";
 
 interface IInstanceActionCells {
   data: any;
@@ -19,6 +22,8 @@ export default function InstanceActionCells({
   const [isTerminateModalVisible, setIsTerminateModalVisible] =
     useState<boolean>(false);
 
+  console.log(data);
+
   return (
     <Fragment>
       <div className="card flex gap-4 float-right">
@@ -29,7 +34,9 @@ export default function InstanceActionCells({
               : "!border-layer-dark-100"
           }`}
           text={
-            data?.state === "running" ? (
+            data?.state === "running" ||
+            envOnPremiseRobot ||
+            envOnPremiseFleet ? (
               <BiStopCircle
                 size={20}
                 className={`${
@@ -70,7 +77,10 @@ export default function InstanceActionCells({
               : "!border-layer-dark-100"
           }`}
           text={
-            data?.state === "running" || data?.state === "stopped" ? (
+            data?.state === "running" ||
+            data?.state === "stopped" ||
+            envOnPremiseRobot ||
+            envOnPremiseFleet ? (
               <BiTrash
                 className={`${
                   envOnPremiseRobot ? "text-layer-light-500" : "text-red-600"

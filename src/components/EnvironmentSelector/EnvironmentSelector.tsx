@@ -7,7 +7,7 @@ import InfoTip from "../InfoTip/InfoTip";
 
 interface IEnvironmentSelector {
   formik: any;
-  isImportRobot: boolean;
+  isImportRobot?: boolean;
 }
 
 export default function EnvironmentSelector({
@@ -26,7 +26,7 @@ export default function EnvironmentSelector({
   }, [dispatch]);
 
   useEffect(() => {
-    if (formik.values?.domainName) {
+    if (formik.initialValues?.domainName !== formik.values?.domainName) {
       formik.setFieldValue("application", {
         name: undefined,
         version: undefined,
@@ -38,7 +38,7 @@ export default function EnvironmentSelector({
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values?.domainName]);
+  }, [formik?.values?.domainName, formik?.initialValues?.domainName]);
 
   return (
     <Fragment>

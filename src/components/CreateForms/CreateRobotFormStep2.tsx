@@ -292,44 +292,44 @@ export default function CreateRobotFormStep2({
           onClick={() => handleAddWorkspaceStep(formik)}
         />
 
-        {/* Buttons */}
-        <div className="flex gap-2 mt-10">
-          {!isImportRobot && (
-            <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-          )}
-          <Button
-            type="submit"
-            disabled={
-              !formik?.isValid ||
-              formik.isSubmitting ||
-              JSON.stringify(formik.initialValues) ===
-                JSON.stringify(formik.values) ||
-              envOnPremiseRobot
-            }
-            loading={formik.isSubmitting}
-            className="w-full !h-11 text-xs"
-            text={
-              formik.isSubmitting ? (
-                <img
-                  className="w-10 h-10"
-                  src="/svg/general/loading.svg"
-                  alt="loading"
-                />
-              ) : isImportRobot ? (
-                `Update Robot`
-              ) : robotData?.step1?.isDevelopmentMode ? (
-                envOnPremiseRobot ? (
-                  `Create Application`
+        {!(envOnPremiseRobot && url?.robotName ? true : false) && (
+          <div className="flex gap-2 mt-10">
+            {!isImportRobot && (
+              <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+            )}
+            <Button
+              type="submit"
+              disabled={
+                !formik?.isValid ||
+                formik.isSubmitting ||
+                JSON.stringify(formik.initialValues) ===
+                  JSON.stringify(formik.values) ||
+                (envOnPremiseRobot && url?.robotName ? true : false)
+              }
+              loading={formik.isSubmitting}
+              className="w-full !h-11 text-xs"
+              text={
+                formik.isSubmitting ? (
+                  <img
+                    className="w-10 h-10"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
+                  />
+                ) : isImportRobot ? (
+                  `Update Robot`
+                ) : robotData?.step1?.isDevelopmentMode ? (
+                  envOnPremiseRobot ? (
+                    `Create Application`
+                  ) : (
+                    `Create Robot`
+                  )
                 ) : (
-                  `Create Robot`
+                  `Next Step`
                 )
-              ) : (
-                `Next Step`
-              )
-            }
-          />
-        </div>
-        {/* Buttons */}
+              }
+            />
+          </div>
+        )}
       </form>
     </CreateRobotFormLoader>
   );

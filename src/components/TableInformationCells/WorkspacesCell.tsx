@@ -12,8 +12,10 @@ export default function WorkspacesCell({
   const [githubWorkspaces, setGithubWorkspaces] = useState<any[]>([]);
 
   useEffect(() => {
+    const workspacesData = workspaces;
+
     setGithubWorkspaces([]);
-    workspaces?.forEach(async (workspace: any) => {
+    workspacesData?.forEach(async (workspace: any) => {
       try {
         const response = await axios.get(
           workspace?.url.replace(
@@ -32,11 +34,11 @@ export default function WorkspacesCell({
           },
         ]);
       } catch (error) {
-        // Hata durumunda işlemi burada yönetebilirsiniz
         console.error("Error:", error);
       }
     });
-  }, [workspaces]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -59,7 +61,6 @@ export default function WorkspacesCell({
                     src="/svg/apps/github.svg"
                     alt="github"
                   />
-
                   <span> {workspace?.full_name}</span>
                 </div>
                 <div className="flex gap-1 items-center">
