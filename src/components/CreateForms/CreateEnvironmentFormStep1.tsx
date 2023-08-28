@@ -174,42 +174,50 @@ export default function CreateEnvironmentFormStep1({
               <Seperator />
 
               {/* Robot Services */}
-              <CreateRobotFormVDISessionCount formik={formik} />
+              <CreateRobotFormVDISessionCount
+                formik={formik}
+                disabled={isImportRobot}
+              />
               {/* Robot Services */}
 
               <Seperator />
 
-              <CreateRobotFormGpuResource formik={formik} />
-            </div>
-
-            <div className="flex gap-2 mt-10 ">
-              {!isImportRobot && (
-                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-              )}
-              <Button
-                disabled={
-                  !formik.isValid ||
-                  formik.isSubmitting ||
-                  JSON.stringify(formik.initialValues) ===
-                    JSON.stringify(formik.values)
-                }
-                type="submit"
-                className="!h-11 text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="w-10 h-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    "Update Application"
-                  ) : (
-                    `Next Step`
-                  )
-                }
+              <CreateRobotFormGpuResource
+                formik={formik}
+                disabled={isImportRobot}
               />
             </div>
+
+            {!url.robotName && (
+              <div className="flex gap-2 mt-10 ">
+                {!isImportRobot && (
+                  <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+                )}
+                <Button
+                  disabled={
+                    !formik.isValid ||
+                    formik.isSubmitting ||
+                    JSON.stringify(formik.initialValues) ===
+                      JSON.stringify(formik.values)
+                  }
+                  type="submit"
+                  className="!h-11 text-xs"
+                  text={
+                    formik.isSubmitting ? (
+                      <img
+                        className="w-10 h-10"
+                        src="/svg/general/loading.svg"
+                        alt="loading"
+                      />
+                    ) : isImportRobot ? (
+                      "Update Application"
+                    ) : (
+                      `Next Step`
+                    )
+                  }
+                />
+              </div>
+            )}
           </form>
         </CreateRobotFormLoader>
       }

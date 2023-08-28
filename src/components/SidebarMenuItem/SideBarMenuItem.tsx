@@ -111,9 +111,13 @@ export default function SideBarMenuItem({
           draggable="false"
           className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
           src={`/svg/general/${
-            type === "robot" && envOnPremiseRobot ? "application" : type
+            envOnPremiseRobot && type === "robot"
+              ? "application"
+              : type === "back"
+              ? "back-application"
+              : type
           }/${
-            type === "robot" && envOnPremiseRobot ? "application" : type
+            envOnPremiseRobot && type === "robot" ? "application" : type
           }-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}

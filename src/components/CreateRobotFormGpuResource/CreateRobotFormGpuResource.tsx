@@ -3,10 +3,12 @@ import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormGpuResource {
   formik: any;
+  disabled?: boolean;
 }
 
 export default function CreateRobotFormGpuResource({
   formik,
+  disabled,
 }: ICreateRobotFormGpuResource): ReactElement {
   return (
     <div className="flex items-center gap-4">
@@ -28,7 +30,7 @@ export default function CreateRobotFormGpuResource({
             color: "#AC2DFE",
             accentColor: "currentcolor",
           }}
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || disabled}
         />
       </div>
     </div>

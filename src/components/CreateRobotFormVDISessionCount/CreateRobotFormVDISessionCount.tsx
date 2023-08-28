@@ -3,10 +3,12 @@ import InfoTip from "../InfoTip/InfoTip";
 
 interface ICreateRobotFormVDISessionCount {
   formik: any;
+  disabled?: boolean;
 }
 
 export default function CreateRobotFormVDISessionCount({
   formik,
+  disabled,
 }: ICreateRobotFormVDISessionCount): ReactElement {
   return (
     <div className="flex items-center gap-4">
@@ -29,7 +31,7 @@ export default function CreateRobotFormVDISessionCount({
             color: "#AC2DFE",
             accentColor: "currentcolor",
           }}
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || disabled}
         />
       </div>
     </div>

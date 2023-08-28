@@ -39,7 +39,9 @@ export default function SidebarContentLayout({
     switch (sidebarState?.page) {
       case "robot":
         if (url?.robotName) {
-          return `${url.robotName} Robot Details`;
+          return `${url.robotName} ${
+            envOnPremiseRobot ? "Application" : "Robot"
+          } Details`;
         }
         return sidebarState?.isCreateMode
           ? envOnPremiseRobot

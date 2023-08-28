@@ -303,7 +303,8 @@ export default function CreateRobotFormStep2({
               !formik?.isValid ||
               formik.isSubmitting ||
               JSON.stringify(formik.initialValues) ===
-                JSON.stringify(formik.values)
+                JSON.stringify(formik.values) ||
+              envOnPremiseRobot
             }
             loading={formik.isSubmitting}
             className="w-full !h-11 text-xs"

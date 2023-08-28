@@ -42,7 +42,9 @@ export default function PrivateSidebar(): ReactElement {
               )}
               <SideBarMenuItem
                 type="robot"
-                description="You can access all your robots here."
+                description={`You can access all your ${
+                  envOnPremiseRobot ? "applications" : "robots"
+                } here.`}
                 loading={isLoading}
                 disabled={
                   sidebarState?.isCreateMode &&
