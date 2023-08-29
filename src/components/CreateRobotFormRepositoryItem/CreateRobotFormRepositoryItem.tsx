@@ -37,12 +37,11 @@ export default function CreateRobotFormRepositoryItem({
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
   const [responseBranches, setResponseBranches] = useState<any[]>([]);
-
   const dispatch = useAppDispatch();
 
-  const github = useGithub();
-
   const { handleRemoveRepositoryFromWorkspaceStep } = useCreateRobot();
+
+  const github = useGithub();
 
   useEffect(() => {
     github?.githubAuth &&
