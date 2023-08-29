@@ -32,7 +32,6 @@ export default function CreateRobotTypes({
           region: selectedState?.instance?.region,
         })
       ).then((response: any) => {
-        console.log(response);
         setResponsePhysicalInstances(
           response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchPhysicalInstances?.filter(
             (instance: any) =>
@@ -54,7 +53,7 @@ export default function CreateRobotTypes({
 
   return (
     <Fragment>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
           <InfoTip content="Select the type of robot you want to create." />
@@ -110,7 +109,7 @@ export default function CreateRobotTypes({
       {!formik.values?.isVirtualRobot &&
       Array.isArray(responsePhysicalInstances) ? (
         responsePhysicalInstances?.length > 0 ? (
-          <div className="flex flex-col gap-1.5 pt-1">
+          <div className="flex flex-col gap-2 pt-1">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
               Physical Instances:
               <InfoTip content="Select the physical instance you want to hybrid robot to be deployed on." />
@@ -153,7 +152,7 @@ export default function CreateRobotTypes({
             />
           </div>
         ) : (
-          <div className="relative h-8">
+          <div className="relative h-8 m-2">
             <SidebarInfo text="You need to create a physical instance first" />
           </div>
         )

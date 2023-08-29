@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import useMain from "../../hooks/useMain";
-import useTheme from "../../hooks/useTheme";
-import { useNavigate, useParams } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { useNavigate, useParams } from "react-router-dom";
 import { isDesktop } from "react-device-detect";
+import useTheme from "../../hooks/useTheme";
+import useMain from "../../hooks/useMain";
 
 interface ISideBarMenuItem {
   type: string;

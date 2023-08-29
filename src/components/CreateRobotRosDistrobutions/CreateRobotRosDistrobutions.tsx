@@ -37,7 +37,7 @@ export default function CreateRobotRosDistrobutions({
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-2">
       <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
         Ros Distrobutions:
         <InfoTip

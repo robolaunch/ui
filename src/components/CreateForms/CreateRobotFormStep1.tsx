@@ -21,6 +21,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import FormInputText from "../FormInputText/FormInputText";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -167,26 +168,19 @@ export default function CreateRobotFormStep1({
             className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
           >
             {/* RobotName */}
-            <div>
-              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-                Robot Name:
-                <InfoTip content="Type a new robot name." />
-              </div>
-              <InputText
-                {...formik.getFieldProps("robotName")}
-                className="!text-sm"
-                disabled={formik.isSubmitting || isImportRobot}
-                inputHoverText={
-                  formik.isSubmitting || isImportRobot
-                    ? "You can't change robot name because this robot is created before."
-                    : ""
-                }
-              />
-              <InputError
-                error={formik.errors.robotName}
-                touched={formik.touched.robotName}
-              />
-            </div>
+            <FormInputText
+              labelText="Robot Name:"
+              InfoTipText="Type a new robot name."
+              formikProps={{ ...formik.getFieldProps("robotName") }}
+              disabled={formik.isSubmitting || isImportRobot}
+              inputHoverText={
+                formik.isSubmitting || isImportRobot
+                  ? "You can't change robot name because this robot is created before."
+                  : ""
+              }
+              validationError={formik.errors.robotName}
+              validationTouched={formik.touched.robotName}
+            />
             {/* RobotName */}
 
             <Seperator />

@@ -1,16 +1,16 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import useFunctions from "../../hooks/useFunctions";
-import SidebarListItem from "./SidebarListItem";
-import useMain from "../../hooks/useMain";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
+import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
+import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import useFunctions from "../../hooks/useFunctions";
+import SidebarListItem from "./SidebarListItem";
+import useMain from "../../hooks/useMain";
 
 interface ICloudInstancesList {
   reload: boolean;
