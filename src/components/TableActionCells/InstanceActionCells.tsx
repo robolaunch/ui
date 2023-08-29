@@ -22,8 +22,6 @@ export default function InstanceActionCells({
   const [isTerminateModalVisible, setIsTerminateModalVisible] =
     useState<boolean>(false);
 
-  console.log(data);
-
   return (
     <Fragment>
       <div className="card flex gap-4 float-right">

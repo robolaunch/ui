@@ -7,6 +7,10 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
+import {
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../../helpers/envProvider";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -62,7 +66,7 @@ export default function CloudInstancesList({
 
   return (
     <Fragment>
-      <SidebarInstancesTabs />
+      {!(envOnPremiseFleet || envOnPremiseRobot) && <SidebarInstancesTabs />}
       {!selectedState?.organization || !selectedState?.roboticsCloud ? (
         <SidebarInfo
           text={`Select an ${

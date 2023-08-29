@@ -5,20 +5,21 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
 import InstanceActionCells from "../../../components/TableActionCells/InstanceActionCells";
-import GeneralTable from "../../../components/Table/GeneralTable";
+import InformationWidget from "../../../components/InformationWidget/InformationWidget";
+import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import BasicCell from "../../../components/TableInformationCells/BasicCell";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
-import { useParams } from "react-router-dom";
-import Button from "../../../components/Button/Button";
-import useMain from "../../../hooks/useMain";
-import useFunctions from "../../../hooks/useFunctions";
-import CirclePercentageBar from "../../../components/CirclePercentageBar/CirclePercentageBar";
-import DashboardLayout from "../../../layouts/DashboardLayout";
-import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import Button from "../../../components/Button/Button";
+import useFunctions from "../../../hooks/useFunctions";
+import { useParams } from "react-router-dom";
+import useMain from "../../../hooks/useMain";
+
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
@@ -218,13 +219,25 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     size={46}
                   />
                   <CirclePercentageBar
-                    percentage={Number(
-                      (
-                        (rowData?.usages?.storageTotal / 100) *
-                        (rowData?.usages?.storageTotal -
-                          rowData?.usages?.storageUsage)
-                      ).toFixed()
-                    )}
+                    percentage={
+                      Number(
+                        (
+                          ((rowData?.usages?.storageTotal -
+                            rowData?.usages?.storageUsage) /
+                            rowData?.usages?.storageTotal) *
+                          100
+                        ).toFixed()
+                      ) < 1
+                        ? 1
+                        : Number(
+                            (
+                              ((rowData?.usages?.storageTotal -
+                                rowData?.usages?.storageUsage) /
+                                rowData?.usages?.storageTotal) *
+                              100
+                            ).toFixed()
+                          )
+                    }
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}
                     size={46}
                   />
