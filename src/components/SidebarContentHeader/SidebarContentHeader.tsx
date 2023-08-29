@@ -1,8 +1,8 @@
 import React, { Fragment, ReactElement } from "react";
-import useMain from "../../hooks/useMain";
-import { useParams } from "react-router-dom";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { useParams } from "react-router-dom";
+import useMain from "../../hooks/useMain";
 
 interface ISidebarContentHeader {
   itemCount?: number;

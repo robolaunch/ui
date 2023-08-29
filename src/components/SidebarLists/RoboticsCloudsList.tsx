@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
+import StateCell from "../TableInformationCells/StateCell";
+import BasicCell from "../TableInformationCells/BasicCell";
+import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../TableInformationCells/StateCell";
-import useFunctions from "../../hooks/useFunctions";
-import BasicCell from "../TableInformationCells/BasicCell";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IRoboticsCloudsList {
   reload: boolean;

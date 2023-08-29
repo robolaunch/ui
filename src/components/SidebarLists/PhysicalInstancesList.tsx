@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
+import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import StateCell from "../TableInformationCells/StateCell";
-import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -58,8 +58,8 @@ export default function PhysicalInstancesList({
   function handleGetPhysicalInstances() {
     getPhysicalInstances(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
       },
@@ -106,7 +106,7 @@ export default function PhysicalInstancesList({
                 }
                 url={`/${organizationNameViewer({
                   organizationName:
-                    selectedState?.organization?.organizationName,
+                    selectedState?.organization?.organizationName!,
                   capitalization: false,
                 })}/${selectedState?.roboticsCloud?.name}/${
                   instance?.name

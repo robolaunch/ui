@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import InfoTip from "../InfoTip/InfoTip";
-import { toast } from "sonner";
-import InputError from "../InputError/InputError";
+import { getPhysicalInstances } from "../../toolkit/InstanceSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import { useAppDispatch } from "../../hooks/redux";
+import InputError from "../InputError/InputError";
 import useMain from "../../hooks/useMain";
-import { getPhysicalInstances } from "../../toolkit/InstanceSlice";
+import InfoTip from "../InfoTip/InfoTip";
+import { toast } from "sonner";
 
 interface ICreateRobotTypes {
   formik: any;

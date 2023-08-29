@@ -2,10 +2,10 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { IOrganization } from "../../interfaces/organizationInterfaces";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import StateCell from "../TableInformationCells/StateCell";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
-import StateCell from "../TableInformationCells/StateCell";
 import useMain from "../../hooks/useMain";
 
 interface IOrganizationList {

@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import GeneralTable from "../../components/Table/GeneralTable";
-import InfoCell from "../../components/TableInformationCells/InfoCell";
 import UserActionCells from "../../components/TableActionCells/UserActionCells";
 import BasicCell from "../../components/TableInformationCells/BasicCell";
-import { useAppDispatch } from "../../hooks/redux";
+import InfoCell from "../../components/TableInformationCells/InfoCell";
 import { getOrganizationUsers } from "../../toolkit/OrganizationSlice";
+import GeneralTable from "../../components/Table/GeneralTable";
+import { useAppDispatch } from "../../hooks/redux";
 
 interface IOrganizationUsersPage {
   activePage: any;

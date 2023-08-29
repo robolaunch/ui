@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import GeneralTable from "../../components/Table/GeneralTable";
-import InfoCell from "../../components/TableInformationCells/InfoCell";
 import UserActionCells from "../../components/TableActionCells/UserActionCells";
-import { useAppDispatch } from "../../hooks/redux";
 import { getOrganizationGuests } from "../../toolkit/OrganizationSlice";
+import InfoCell from "../../components/TableInformationCells/InfoCell";
+import GeneralTable from "../../components/Table/GeneralTable";
+import { useAppDispatch } from "../../hooks/redux";
 
 interface IOrganizationGuestsPage {
   activePage: any;

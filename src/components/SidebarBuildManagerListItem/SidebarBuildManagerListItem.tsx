@@ -1,13 +1,13 @@
 import React, { ReactElement, useState } from "react";
-import Accordion from "../Accordion/AccordionV2";
-import Button from "../Button/Button";
-import { BsPlusCircle } from "react-icons/bs";
-import InputText from "../InputText/InputText";
-import InputError from "../InputError/InputError";
-import { FormikProps, useFormik } from "formik";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
-import InfoTip from "../InfoTip/InfoTip";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
+import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import InputError from "../InputError/InputError";
+import Accordion from "../Accordion/AccordionV2";
+import { FormikProps, useFormik } from "formik";
+import InputText from "../InputText/InputText";
+import { BsPlusCircle } from "react-icons/bs";
+import InfoTip from "../InfoTip/InfoTip";
+import Button from "../Button/Button";
 
 interface ISidebarBuildManagerListItem {
   buildManagerIndex: number;
