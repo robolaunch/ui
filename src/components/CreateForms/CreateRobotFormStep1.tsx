@@ -12,6 +12,8 @@ import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
+import InputError from "../InputError/InputError";
+import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
@@ -19,7 +21,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import FormInputText from "../FormInputText/FormInputText";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -166,19 +167,26 @@ export default function CreateRobotFormStep1({
             className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
           >
             {/* RobotName */}
-            <FormInputText
-              labelText="Robot Name:"
-              InfoTipText="Type a new robot name."
-              formikProps={{ ...formik.getFieldProps("robotName") }}
-              disabled={formik.isSubmitting || isImportRobot}
-              inputHoverText={
-                formik.isSubmitting || isImportRobot
-                  ? "You can't change robot name because this robot is created before."
-                  : ""
-              }
-              validationError={formik.errors.robotName}
-              validationTouched={formik.touched.robotName}
-            />
+            <div>
+              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                Robot Name:
+                <InfoTip content="Type a new robot name." />
+              </div>
+              <InputText
+                {...formik.getFieldProps("robotName")}
+                className="!text-sm"
+                disabled={formik.isSubmitting || isImportRobot}
+                inputHoverText={
+                  formik.isSubmitting || isImportRobot
+                    ? "You can't change robot name because this robot is created before."
+                    : ""
+                }
+              />
+              <InputError
+                error={formik.errors.robotName}
+                touched={formik.touched.robotName}
+              />
+            </div>
             {/* RobotName */}
 
             <Seperator />
