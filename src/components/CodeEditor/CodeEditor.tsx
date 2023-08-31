@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
@@ -6,6 +6,7 @@ import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 
 export default function CodeEditor(): ReactElement {
+  const [ideKey, setIdeKey] = useState<number>(0);
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
     "Cloud IDE" | "Physical IDE"
   >("Cloud IDE");
@@ -25,9 +26,15 @@ export default function CodeEditor(): ReactElement {
     },
   ];
 
+  useEffect(() => {
+    setIsSettedCookie(false);
+    setIdeKey((prev) => prev + 1);
+  }, [responseRobot?.robotClusters, setIsSettedCookie]);
+
   return (
     <div
-      id="CODE_EDITOR"
+      key={ideKey}
+      id={`CODE_EDITOR_${ideKey}`}
       className={`${
         activeTab === "Code Editor"
           ? "grid animate__animated animate__fadeIn"

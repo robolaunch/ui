@@ -3,7 +3,7 @@ import useRobot from "../../hooks/useRobot";
 import Button from "../Button/Button";
 
 export default function RobotServiceButtons(): ReactElement {
-  const { responseRobot, isSettedCookie } = useRobot();
+  const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
 
   return (
     <div className="flex gap-2">
@@ -14,8 +14,8 @@ export default function RobotServiceButtons(): ReactElement {
           href={responseRobot?.ideIngressEndpoint || "#"}
         >
           <Button
-            disabled={!isSettedCookie}
-            loading={!isSettedCookie}
+            disabled={!isSettedCookie || !isRobotReady}
+            loading={!isSettedCookie || !isRobotReady}
             text={"Code Editor"}
             className="!h-9 text-xs px-4"
           />
@@ -32,8 +32,8 @@ export default function RobotServiceButtons(): ReactElement {
           }
         >
           <Button
-            disabled={!isSettedCookie}
-            loading={!isSettedCookie}
+            disabled={!isSettedCookie || !isRobotReady}
+            loading={!isSettedCookie || !isRobotReady}
             text={"Remote Desktop"}
             className="!h-9 text-xs px-4"
           />

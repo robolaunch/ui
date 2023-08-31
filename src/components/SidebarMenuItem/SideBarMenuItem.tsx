@@ -110,13 +110,16 @@ export default function SideBarMenuItem({
         <img
           draggable="false"
           className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
-          src={`/svg/general/${
-            envOnPremiseRobot && type === "robot"
-              ? "application"
-              : type === "back"
-              ? "back-application"
-              : type
-          }/${
+          src={`/svg/general/${(() => {
+            switch (type) {
+              case "robot":
+                return envOnPremiseRobot ? "application" : "robot";
+              case "back":
+                return envOnPremiseRobot ? "back-application" : "back";
+              default:
+                return type;
+            }
+          })()}/${
             envOnPremiseRobot && type === "robot" ? "application" : type
           }-${colorSwitcher()}.svg`}
           alt="robolaunch"

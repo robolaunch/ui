@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement } from "react";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
-import PrivateSidebar from "../PrivateSidebar/PrivateSidebar";
+import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import useMain from "../../hooks/useMain";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ export default function Sidebar(): ReactElement {
             alt="robolaunch"
           />
         </Link>
-        <PrivateSidebar />
+        <SidebarMenu />
       </div>
       {sidebarState?.isOpen && <SidebarContentLayout />}
     </Fragment>

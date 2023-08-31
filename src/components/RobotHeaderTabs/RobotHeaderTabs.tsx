@@ -10,35 +10,11 @@ import useRobot from "../../hooks/useRobot";
 export default function RobotHeaderTabs(): ReactElement {
   const {
     responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
     activeTab,
     isSettedCookie,
     setActiveTab,
+    isRobotReady,
   } = useRobot();
-
-  function handleLoader() {
-    if (
-      responseRobot?.robotClusters?.filter(
-        (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-      )?.length ||
-      responseBuildManager?.robotClusters?.filter(
-        (robot: any) => robot?.buildManagerStatus !== "Ready"
-      )?.length ||
-      responseLaunchManagers
-        ?.map((launchStep: any) => {
-          return launchStep?.robotClusters;
-        })
-        .flat()
-        ?.map((cluster: any) => {
-          return cluster?.launchManagerStatus;
-        })
-        ?.filter((status: any) => status !== "Running")?.length
-    ) {
-      return true;
-    }
-    return false;
-  }
 
   const tabs = [
     {
@@ -110,21 +86,7 @@ export default function RobotHeaderTabs(): ReactElement {
           responseRobot?.vdiIngressEndpoint &&
           isSettedCookie
         ) ||
-        responseRobot?.robotClusters?.filter(
-          (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-        )?.length ||
-        responseBuildManager?.robotClusters?.filter(
-          (robot: any) => robot?.buildManagerStatus !== "Ready"
-        )?.length ||
-        responseLaunchManagers
-          ?.map((launchStep: any) => {
-            return launchStep?.robotClusters;
-          })
-          .flat()
-          ?.map((cluster: any) => {
-            return cluster?.launchManagerStatus;
-          })
-          ?.filter((status: any) => status !== "Running")?.length,
+        !isRobotReady,
 
       isHidden: false,
     },
@@ -164,7 +126,7 @@ export default function RobotHeaderTabs(): ReactElement {
                     : "text-layer-light-500"
                 }`}
               >
-                {tab?.isLoading || handleLoader() ? (
+                {tab?.isLoading || !isRobotReady ? (
                   <ContentLoader
                     speed={1}
                     width={92}

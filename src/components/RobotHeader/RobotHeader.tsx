@@ -49,7 +49,7 @@ export default function RobotHeader(): ReactElement {
             </span>
             <span className="flex gap-2 items-center">
               <IoLocationOutline size={16} />
-              <span className="text-xs font-light">Ankara, Turkiye</span>
+              <span className="text-xs font-light">Ankara, Turkey</span>
             </span>
           </div>
           <div className="hidden md:flex text-xs font-medium text-layer-dark-400 gap-8">

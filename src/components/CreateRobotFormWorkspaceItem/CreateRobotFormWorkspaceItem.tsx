@@ -66,6 +66,7 @@ export default function CreateRobotFormWorkspaceItem({
           </div>
           <InputText
             {...formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
+            disabled={disabled}
           />
           <InputError
             // @ts-ignore
