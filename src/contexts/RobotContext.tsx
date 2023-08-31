@@ -38,6 +38,9 @@ export default ({ children }: any) => {
   const url = useParams();
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
+  const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
+
+  // Main Functions
   useEffect(() => {
     if (
       pagesState?.organization?.organizationName !==
@@ -116,6 +119,32 @@ export default ({ children }: any) => {
     responseBuildManager,
     responseLaunchManagers,
   ]);
+  // Main Functions
+
+  // isRobotReady
+  useEffect(() => {
+    if (
+      responseRobot?.robotClusters?.filter(
+        (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+      )?.length ||
+      responseBuildManager?.robotClusters?.filter(
+        (robot: any) => robot?.buildManagerStatus !== "Ready"
+      )?.length ||
+      responseLaunchManagers
+        ?.map((launchStep: any) => {
+          return launchStep?.robotClusters;
+        })
+        .flat()
+        ?.map((cluster: any) => {
+          return cluster?.launchManagerStatus;
+        })
+        ?.filter((status: any) => status !== "Running")?.length
+    ) {
+      return setIsRobotReady(false);
+    }
+    return setIsRobotReady(true);
+  }, [responseRobot, responseBuildManager, responseLaunchManagers]);
+  // isRobotReady
 
   function handleGetOrganization() {
     getOrganization(
@@ -304,6 +333,7 @@ export default ({ children }: any) => {
         responseRobot,
         responseBuildManager,
         responseLaunchManagers,
+        isRobotReady,
         ros,
         setRos,
         topicList,
