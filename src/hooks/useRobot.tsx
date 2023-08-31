@@ -7,6 +7,7 @@ interface IuseRobot {
   responseRobot: any;
   responseBuildManager: any;
   responseLaunchManagers: any;
+  isRobotReady: boolean;
   ros: any;
   setRos: any;
   topicList: any;
