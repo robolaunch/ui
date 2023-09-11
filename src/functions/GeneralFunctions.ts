@@ -74,3 +74,7 @@ export function handleTimeConverter(totalSeconds: number) {
 
   return { h: hours, m: minutes, s: seconds };
 }
+
+export function handleRandomInteger(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
