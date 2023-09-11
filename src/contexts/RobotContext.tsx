@@ -315,7 +315,7 @@ export default ({ children }: any) => {
     }, 500);
   }
 
-  function handleForceReloadRobotPage() {
+  function handleResetRobot() {
     setResponseRobot(undefined);
     setResponseBuildManager(undefined);
     setResponseLaunchManagers(undefined);
@@ -341,7 +341,7 @@ export default ({ children }: any) => {
         isSettedCookie,
         setIsSettedCookie,
         handleForceUpdate,
-        handleForceReloadRobotPage,
+        handleResetRobot,
       }}
     >
       {children}
