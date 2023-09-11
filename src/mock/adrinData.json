@@ -1,0 +1,30 @@
+[
+  {
+    "description": "Informing ADriN",
+    "color": "bg-yellow-600"
+  },
+  {
+    "description": "Configuring Network QoS",
+    "color": "bg-yellow-600"
+  },
+  {
+    "description": "Healthy",
+    "color": "bg-green-600"
+  },
+  {
+    "description": "Poor Network Quality",
+    "color": "bg-red-600"
+  },
+  {
+    "description": "Reinforming ADriN",
+    "color": "bg-yellow-600"
+  },
+  {
+    "description": "Reconfiguring Network QoS",
+    "color": "bg-yellow-600"
+  },
+  {
+    "description": "Healthy",
+    "color": "bg-green-600"
+  }
+]
