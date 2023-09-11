@@ -10,7 +10,6 @@ import useMain from "../../hooks/useMain";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const { sidebarState } = useMain();
   const url = useParams();
 

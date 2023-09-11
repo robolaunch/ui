@@ -5,6 +5,7 @@ import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidat
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
+import AdrinNetworkTypes from "../AdrinNetworkTypes/AdrinNetworkTypes";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -194,6 +195,12 @@ export default function CreateRobotFormStep1({
             {/* RobotType */}
             <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
             {/* RobotType */}
+
+            <Seperator />
+
+            {/* Adrin Network Types */}
+            <AdrinNetworkTypes formik={formik} isImportRobot={isImportRobot} />
+            {/* Adrin Network Types */}
 
             <Seperator />
 

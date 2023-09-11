@@ -1,15 +1,17 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
+import AdrinNetworkStatusWidget from "../../../components/AdrinNetworkStatusWidget/AdrinNetworkStatusWidget";
+import AdrinActivitiesWidget from "../../../components/AdrinActivitiesWidget/AdrinActivitiesWidget";
+// import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
+// import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
-import Button from "../../../components/Button/Button";
-import { useParams } from "react-router-dom";
-import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
-import WorkspacesTable from "../../../components/WorkspacesTable/WorkspacesTable";
-import BuildManagerStepsTable from "../../../components/BuildManagerStepsTable/BuildManagerStepsTable";
-import LaunchManagerStepsTable from "../../../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
-import useWindow from "../../../hooks/useWindow";
+import { handleRandomInteger } from "../../../functions/GeneralFunctions";
+import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
 import { envOnPremiseRobot } from "../../../helpers/envProvider";
+import Button from "../../../components/Button/Button";
+import adrinData from "../../../mock/adrinData.json";
 import useRobot from "../../../hooks/useRobot";
+import { useParams } from "react-router-dom";
+
 interface IOverview {
   informationWidgetAction: () => void;
 }
@@ -18,13 +20,29 @@ export default function Overview({
   informationWidgetAction,
 }: IOverview): ReactElement {
   const url = useParams();
-  const { width } = useWindow();
-  const { responseRobot, responseBuildManager, responseLaunchManagers } =
-    useRobot();
+  const {
+    responseRobot,
+    //  responseBuildManager,
+    //   responseLaunchManagers
+  } = useRobot();
+
+  const [adrinState, setAdrinState] = useState<any>([]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      adrinState?.length !== adrinData?.length &&
+        setAdrinState((prevState: any) => {
+          console.log("A", [...prevState, adrinData[prevState?.length]]);
+          return [...prevState, adrinData[prevState?.length]];
+        });
+    }, handleRandomInteger(2, 5) * 1000);
+
+    return () => clearInterval(timer);
+  }, [adrinState]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate__animated animate__fadeIn">
-      <div className="col-span-full lg:col-span-4">
+    <RobotOverviewLayout
+      widget1={
         <InformationWidget
           title={url?.robotName || ""}
           subtitle={
@@ -68,36 +86,20 @@ export default function Overview({
             )
           }
         />
-      </div>
-      <div className="col-span-full lg:col-span-5">
-        <RobotStatusWidget
-          responseRobot={responseRobot}
-          responseBuildManager={responseBuildManager}
-          responseLaunchManagers={responseLaunchManagers}
-        />
-      </div>
-      {width && width > 1024 && (
-        <div className="col-span-full lg:col-span-3">
-          <ActivitiesWidget responseRobot={responseRobot} />
-        </div>
-      )}
-      <div className="col-span-full">
-        <WorkspacesTable responseRobot={responseRobot} />
-      </div>
-      {!envOnPremiseRobot && (
-        <Fragment>
-          <div className="col-span-full">
-            <BuildManagerStepsTable
-              responseBuildManager={responseBuildManager}
-            />
-          </div>
-          <div className="col-span-full">
-            <LaunchManagerStepsTable
-              responseLaunchManagers={responseLaunchManagers}
-            />
-          </div>
-        </Fragment>
-      )}
-    </div>
+      }
+      widget2={
+        // <RobotStatusWidget
+        //   responseRobot={responseRobot}
+        //   responseBuildManager={responseBuildManager}
+        //   responseLaunchManagers={responseLaunchManagers}
+        // />
+        <AdrinNetworkStatusWidget data={adrinState?.[adrinState?.length - 1]} />
+      }
+      widget3={
+        // <ActivitiesWidget responseRobot={responseRobot} />
+
+        <AdrinActivitiesWidget data={adrinState} />
+      }
+    />
   );
 }
