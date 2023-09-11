@@ -1,19 +1,20 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
 import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
 import UpdateRobotLaunchsForm from "../components/UpdateRobotLaunchsForm/UpdateRobotLaunchsForm";
 import UpdateRobotDetailsForm from "../components/UpdateRobotDetailsForm/UpdateRobotDetailsForm";
 import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
 import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRobotBuildsForm";
 import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
+import CreateCloudInstancesForm from "../components/CreateForms/CreateCloudInstancesForm";
 import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
 import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
-import CreateCloudInstancesForm from "../components/CreateForms/CreateCloudInstancesForm";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
 import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
-import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import NamespacesList from "../components/SidebarLists/NamespacesList";
@@ -27,7 +28,6 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
-import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -53,7 +53,7 @@ export default function SidebarContentLayout(): ReactElement {
     };
   }, [reload]);
 
-  function buttonTextGenerator() {
+  function buttonTextGenerator(): string {
     switch (sidebarState?.isCreateMode) {
       case true:
         return "Cancel";
@@ -222,7 +222,7 @@ export default function SidebarContentLayout(): ReactElement {
     }
   }
 
-  function handleShowDetails() {
+  function handleShowDetails(): boolean {
     if (
       !sidebarState.isCreateMode &&
       (sidebarState.page === "organization" ||
