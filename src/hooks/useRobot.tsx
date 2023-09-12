@@ -14,6 +14,8 @@ interface IuseRobot {
   setTopicList: any;
   isSettedCookie: boolean | null;
   setIsSettedCookie: any;
+  adrinState: any;
+  setAdrinState: any;
   handleForceUpdate: any;
   handleResetRobot: () => void;
 }

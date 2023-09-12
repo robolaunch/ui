@@ -4,6 +4,9 @@ export const envOnPremiseFleet: boolean =
 export const envOnPremiseRobot: boolean =
   process.env.REACT_APP_ON_PREMISE_ROBOT === "true" ? true : false;
 
+export const envAdrinIntegration: boolean =
+  process.env.REACT_APP_ADRIN_INTEGRATION === "true" ? true : false;
+
 export const envFrontendUrl: string = process.env.REACT_APP_FRONTEND_URL || "";
 
 export const isProduction: boolean =

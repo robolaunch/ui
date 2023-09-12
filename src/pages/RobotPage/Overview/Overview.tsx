@@ -1,14 +1,17 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
+import {
+  envAdrinIntegration,
+  envOnPremiseRobot,
+} from "../../../helpers/envProvider";
 import AdrinNetworkStatusWidget from "../../../components/AdrinNetworkStatusWidget/AdrinNetworkStatusWidget";
 import AdrinActivitiesWidget from "../../../components/AdrinActivitiesWidget/AdrinActivitiesWidget";
 // import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
+import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
 // import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import { handleRandomInteger } from "../../../functions/GeneralFunctions";
+import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
-import { envOnPremiseRobot } from "../../../helpers/envProvider";
 import Button from "../../../components/Button/Button";
-import adrinData from "../../../mock/adrinData.json";
 import useRobot from "../../../hooks/useRobot";
 import { useParams } from "react-router-dom";
 
@@ -22,23 +25,10 @@ export default function Overview({
   const url = useParams();
   const {
     responseRobot,
-    //  responseBuildManager,
-    //   responseLaunchManagers
+    responseBuildManager,
+    responseLaunchManagers,
+    adrinState,
   } = useRobot();
-
-  const [adrinState, setAdrinState] = useState<any>([]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      adrinState?.length !== adrinData?.length &&
-        setAdrinState((prevState: any) => {
-          console.log("A", [...prevState, adrinData[prevState?.length]]);
-          return [...prevState, adrinData[prevState?.length]];
-        });
-    }, handleRandomInteger(2, 5) * 1000);
-
-    return () => clearInterval(timer);
-  }, [adrinState]);
 
   return (
     <RobotOverviewLayout
@@ -88,17 +78,24 @@ export default function Overview({
         />
       }
       widget2={
-        // <RobotStatusWidget
-        //   responseRobot={responseRobot}
-        //   responseBuildManager={responseBuildManager}
-        //   responseLaunchManagers={responseLaunchManagers}
-        // />
-        <AdrinNetworkStatusWidget data={adrinState?.[adrinState?.length - 1]} />
+        envAdrinIntegration ? (
+          <AdrinNetworkStatusWidget
+            data={adrinState?.[adrinState?.length - 1]}
+          />
+        ) : (
+          <RobotStatusWidget
+            responseRobot={responseRobot}
+            responseBuildManager={responseBuildManager}
+            responseLaunchManagers={responseLaunchManagers}
+          />
+        )
       }
       widget3={
-        // <ActivitiesWidget responseRobot={responseRobot} />
-
-        <AdrinActivitiesWidget data={adrinState} />
+        envAdrinIntegration ? (
+          <AdrinActivitiesWidget />
+        ) : (
+          <ActivitiesWidget responseRobot={responseRobot} />
+        )
       }
     />
   );

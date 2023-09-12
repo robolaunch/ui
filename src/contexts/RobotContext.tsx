@@ -4,6 +4,8 @@ import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import adrinData from "../mock/adrinData.json";
+import { handleRandomInteger } from "../functions/GeneralFunctions";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -39,6 +41,8 @@ export default ({ children }: any) => {
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
+
+  const [adrinState, setAdrinState] = useState<any>([]);
 
   // Main Functions
   useEffect(() => {
@@ -145,6 +149,20 @@ export default ({ children }: any) => {
     return setIsRobotReady(true);
   }, [responseRobot, responseBuildManager, responseLaunchManagers]);
   // isRobotReady
+
+  // Adrin Integration
+  useEffect(() => {
+    const timer = setInterval(() => {
+      adrinState?.length !== adrinData?.length &&
+        setAdrinState((prevState: any) => {
+          console.log("A", [...prevState, adrinData[prevState?.length]]);
+          return [...prevState, adrinData[prevState?.length]];
+        });
+    }, handleRandomInteger(2, 5) * 1000);
+
+    return () => clearInterval(timer);
+  }, [adrinState]);
+  // Adrin Integration
 
   function handleGetOrganization() {
     getOrganization(
@@ -340,6 +358,8 @@ export default ({ children }: any) => {
         setTopicList,
         isSettedCookie,
         setIsSettedCookie,
+        adrinState,
+        setAdrinState,
         handleForceUpdate,
         handleResetRobot,
       }}

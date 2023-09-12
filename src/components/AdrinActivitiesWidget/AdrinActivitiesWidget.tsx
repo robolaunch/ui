@@ -1,14 +1,11 @@
 import React, { ReactElement } from "react";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
+import useRobot from "../../hooks/useRobot";
 
-interface IRobotStatusWidget {
-  data: any;
-}
+export default function AdrinActivitiesWidget(): ReactElement {
+  const { adrinState } = useRobot();
 
-export default function AdrinActivitiesWidget({
-  data,
-}: IRobotStatusWidget): ReactElement {
   return (
     <WidgetLayout
       title={`Acitivities`}
@@ -16,7 +13,7 @@ export default function AdrinActivitiesWidget({
       icon={<VscHistory size={20} className="text-layer-light-700" />}
     >
       <ul className="flex flex-col p-5 text-sm">
-        {data?.map((item: any, index: number) => {
+        {adrinState?.map((item: any, index: number) => {
           return (
             <li
               key={index}
@@ -31,7 +28,7 @@ export default function AdrinActivitiesWidget({
                 >
                   <div className="w-2 h-2 rounded-full bg-layer-light-50 " />
                 </div>
-                {data?.length - 1 !== index && (
+                {adrinState?.length - 1 !== index && (
                   <div className="w-1 h-4 bg-layer-light-200 mx-auto"></div>
                 )}
               </div>
