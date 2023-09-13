@@ -2,10 +2,9 @@ import React, { useEffect, createContext, useState } from "react";
 import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
 import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
+import adrinData from "../mock/adrinData.json";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import adrinData from "../mock/adrinData.json";
-import { handleRandomInteger } from "../functions/GeneralFunctions";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -158,7 +157,7 @@ export default ({ children }: any) => {
           console.log("A", [...prevState, adrinData[prevState?.length]]);
           return [...prevState, adrinData[prevState?.length]];
         });
-    }, handleRandomInteger(2, 5) * 1000);
+    }, 10 * 1000);
 
     return () => clearInterval(timer);
   }, [adrinState]);

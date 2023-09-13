@@ -1,4 +1,8 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import {
+  envAdrinIntegration,
+  envOnPremiseRobot,
+} from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
@@ -7,7 +11,6 @@ import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import AdrinNetworkTypes from "../AdrinNetworkTypes/AdrinNetworkTypes";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
@@ -190,19 +193,27 @@ export default function CreateRobotFormStep1({
             </div>
             {/* RobotName */}
 
-            <Seperator />
+            {/* <Seperator /> */}
 
             {/* RobotType */}
-            <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
+            {!envAdrinIntegration && (
+              <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
+            )}
             {/* RobotType */}
 
             <Seperator />
 
             {/* Adrin Network Types */}
-            <AdrinNetworkTypes formik={formik} isImportRobot={isImportRobot} />
+            {envAdrinIntegration && (
+              <Fragment>
+                <AdrinNetworkTypes
+                  formik={formik}
+                  isImportRobot={isImportRobot}
+                />
+                <Seperator />
+              </Fragment>
+            )}
             {/* Adrin Network Types */}
-
-            <Seperator />
 
             {/* ROS Distro */}
             <CreateRobotRosDistrobutions
