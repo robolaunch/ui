@@ -7,6 +7,7 @@ interface InputSelectProps {
   value?: string;
   disabled?: boolean;
   className?: string;
+  wrapClassName?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void;
 }
@@ -18,13 +19,14 @@ export default function InputSelect({
   value,
   disabled,
   className,
+  wrapClassName,
   onChange,
   onBlur,
 }: InputSelectProps): ReactElement {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className={`relative`}>
+    <div className={`relative ${wrapClassName}`}>
       <label
         className={`absolute z-10 transition-all duration-300 text-layer-light-700 pointer-events-none ${
           isFocused || value
