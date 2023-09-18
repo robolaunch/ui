@@ -77,6 +77,7 @@ export default function RegionsWidget({
 
   return (
     <Widget
+      dataTut="regions-widget"
       title={`${title} Regions`}
       subtitle={`Locations of the ${title}`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}

@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import {
-  envOnPremiseFleet,
+  // envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
@@ -96,12 +96,12 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
-              {!(envOnPremiseFleet || envOnPremiseRobot) && (
+              {/* {!(envOnPremiseFleet || envOnPremiseRobot) && (
                 <SidebarStaticItem
                   to="/marketplace"
                   imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
                 />
-              )}
+              )} */}
               <SideBarMenuItem
                 type="organization"
                 description="You can access all your organizations here."

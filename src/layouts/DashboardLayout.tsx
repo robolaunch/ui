@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 interface IDashboardLayout {
   widget1: ReactElement;
-  widget2: ReactElement;
+  widget2?: ReactElement;
   widget3: ReactElement;
   table: ReactElement;
   isMainDashboard?: boolean;

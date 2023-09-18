@@ -7,6 +7,7 @@ interface IWidgetLayout {
   children?: ReactElement | ReactElement[];
   options?: ReactElement;
   className?: string;
+  dataTut?: string;
 }
 
 export default function WidgetLayout({
@@ -16,9 +17,11 @@ export default function WidgetLayout({
   children,
   options,
   className,
+  dataTut,
 }: IWidgetLayout): ReactElement {
   return (
     <div
+      data-tut={dataTut}
       className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-[21rem] animate__animated animate__fadeIn border border-layer-light-200"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,

@@ -15,17 +15,18 @@ import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined
   );
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
-  const { pagesState, setSidebarState, selectedState } = useMain();
+  const { pagesState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -323,18 +324,17 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           title={url?.roboticsCloudName || ""}
           subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances. If you need to create a new cloud instance, you can do so by clicking the button below."
           component={
-            <Button
-              text="Create a new Cloud Instance"
-              className="!w-52 !h-10 !text-xs"
-              onClick={() => {
-                setSidebarState((prevState: any): any => ({
-                  ...prevState,
-                  isOpen: true,
-                  isCreateMode: false,
-                  page: "instance",
-                  instanceTab: "Cloud Instances",
-                }));
-              }}
+            <TourGuide
+              type="roboticscloud"
+              tourConfig={[
+                getGuideItem(
+                  '[data-tut="information-widget"]',
+                  "roboticscloud"
+                ),
+                getGuideItem('[data-tut="regions-widget"]'),
+                getGuideItem('[data-tut="counter-widget"]'),
+                getGuideItem('[data-tut="general-table"]'),
+              ]}
             />
           }
         />

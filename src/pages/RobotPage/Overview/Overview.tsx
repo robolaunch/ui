@@ -11,9 +11,10 @@ import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatus
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
-import Button from "../../../components/Button/Button";
 import useRobot from "../../../hooks/useRobot";
 import { useParams } from "react-router-dom";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import { getGuideItem } from "../../../functions/handleGuide";
 
 interface IOverview {
   informationWidgetAction: () => void;
@@ -41,39 +42,10 @@ export default function Overview({
               : "From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
           }
           component={
-            envOnPremiseRobot ? (
-              <Button
-                disabled={
-                  responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )?.length
-                }
-                loading={
-                  responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )?.length
-                }
-                text="Development Suite"
-                className="!w-44 !h-10 !text-xs"
-                onClick={informationWidgetAction}
-              />
-            ) : (
-              <Button
-                disabled={
-                  responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )?.length
-                }
-                loading={
-                  responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady"
-                  )?.length
-                }
-                text="Teleoperation of Robot"
-                className="!w-44 !h-10 !text-xs"
-                onClick={informationWidgetAction}
-              />
-            )
+            <TourGuide
+              type="instance"
+              tourConfig={[getGuideItem('[data-tut="information-widget"]')]}
+            />
           }
         />
       }

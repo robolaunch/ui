@@ -1,17 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import OrganizationReducer from "./OrganizationSlice";
 import RoboticsCloudReducer from "./RoboticsCloudSlice";
+import OrganizationReducer from "./OrganizationSlice";
+import MarketplaceReducer from "./MarketplaceSlice";
+import EnvironmentReducer from "./EnvironmentSlice";
+import storage from "redux-persist/lib/storage";
+import InstanceReducer from "./InstanceSlice";
+import GithubReducer from "./GithubSlice";
+import GuideReducer from "./GuideSlice";
+import TrialReducer from "./TrialSlice";
 import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
-import GithubReducer from "./GithubSlice";
-import InstanceReducer from "./InstanceSlice";
-import TrialReducer from "./TrialSlice";
-import MarketplaceReducer from "./MarketplaceSlice";
-import EnvironmentReducer from "./EnvironmentSlice";
 
 const persistConfigUser = {
   key: "user",
@@ -93,6 +94,17 @@ const persistedReducerTrial = persistReducer<any, any>(
   TrialReducer
 );
 
+const persistConfigGuide = {
+  key: "guide",
+  version: 1,
+  storage,
+};
+
+const persistedReducerGuide = persistReducer<any, any>(
+  persistConfigGuide,
+  GuideReducer
+);
+
 const persistConfigMarketplace = {
   key: "marketplace",
   version: 1,
@@ -127,6 +139,7 @@ const store = configureStore({
     trial: persistedReducerTrial,
     marketplace: persistedReducerMarketplace,
     environment: persistedReducerEnvironment,
+    guide: persistedReducerGuide,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

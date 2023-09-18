@@ -13,10 +13,10 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
-import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
-import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -24,7 +24,6 @@ export default function MainDashboardPage(): ReactElement {
   >();
   const { getOrganizations } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
-  const { setSidebarState } = useMain();
   const url = useParams();
 
   useEffect(() => {
@@ -109,46 +108,48 @@ export default function MainDashboardPage(): ReactElement {
           title={`Main Dashboard`}
           subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. If you need to create a new organization, you can click the button below to create a organization."
           component={
-            <Button
-              text="Create a new Organization"
-              className="!w-48 !h-10 !text-xs"
-              onClick={() => {
-                setSidebarState((prevState: any): any => ({
-                  ...prevState,
-                  isOpen: true,
-                  isCreateMode: false,
-                  page: "organization",
-                }));
-              }}
+            <TourGuide
+              type="main"
+              tourConfig={[
+                getGuideItem('[data-tut="organization-sidebar-menu-item"]'),
+                getGuideItem('[data-tut="roboticscloud-sidebar-menu-item"]'),
+                getGuideItem('[data-tut="instance-sidebar-menu-item"]'),
+                getGuideItem('[data-tut="fleet-sidebar-menu-item"]'),
+                getGuideItem('[data-tut="robot-sidebar-menu-item"]'),
+                getGuideItem('[data-tut="information-widget"]', "main"),
+                getGuideItem('[data-tut="counter-widget"]'),
+                getGuideItem('[data-tut="general-table"]'),
+              ]}
             />
           }
         />
       }
-      widget2={<></>}
       widget3={
-        <CountWidget
-          data={
-            responseOrganizations
-              ? [
-                  {
-                    label: "Pending",
-                    value: 0,
-                    color: "#ffa500",
-                  },
-                  {
-                    label: "Ready",
-                    value: responseOrganizations?.length || 0,
-                    color: "#AC2DFE99",
-                  },
-                  {
-                    label: "Error",
-                    value: 0,
-                    color: "#ff0000",
-                  },
-                ]
-              : []
-          }
-        />
+        <Fragment>
+          <CountWidget
+            data={
+              responseOrganizations
+                ? [
+                    {
+                      label: "Pending",
+                      value: 0,
+                      color: "#ffa500",
+                    },
+                    {
+                      label: "Ready",
+                      value: responseOrganizations?.length || 0,
+                      color: "#AC2DFE99",
+                    },
+                    {
+                      label: "Error",
+                      value: 0,
+                      color: "#ff0000",
+                    },
+                  ]
+                : []
+            }
+          />
+        </Fragment>
       }
       table={
         <GeneralTable

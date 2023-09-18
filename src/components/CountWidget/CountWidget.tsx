@@ -10,6 +10,7 @@ interface ICountWidget {
 export default function CountWidget({ data }: ICountWidget): ReactElement {
   return (
     <Widget
+      dataTut="counter-widget"
       title={`State Counter`}
       subtitle={`State Counter`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}

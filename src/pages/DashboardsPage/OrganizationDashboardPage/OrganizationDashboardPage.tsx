@@ -9,15 +9,16 @@ import DashboardLayout from "../../../layouts/DashboardLayout";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import BasicCell from "../../../components/TableInformationCells/BasicCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
-import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { getOrganization, getRoboticsClouds } = useFunctions();
-  const { pagesState, setSidebarState } = useMain();
+  const { pagesState } = useMain();
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const url = useParams();
@@ -174,17 +175,14 @@ export default function OrganizationDashboardPage(): ReactElement {
           }
           subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
           component={
-            <Button
-              text="Create a new Robotics Cloud"
-              className="!w-56 !h-10 !text-xs"
-              onClick={() => {
-                setSidebarState((prevState: any): any => ({
-                  ...prevState,
-                  isOpen: true,
-                  isCreateMode: false,
-                  page: "roboticscloud",
-                }));
-              }}
+            <TourGuide
+              type="organization"
+              tourConfig={[
+                getGuideItem('[data-tut="information-widget"]', "organization"),
+                getGuideItem('[data-tut="regions-widget"]'),
+                getGuideItem('[data-tut="counter-widget"]'),
+                getGuideItem('[data-tut="general-table"]'),
+              ]}
             />
           }
         />

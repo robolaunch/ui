@@ -28,6 +28,7 @@ export default function GeneralTable({
 }: IGeneralTable): ReactElement {
   return (
     <div
+      data-tut="general-table"
       className="flex flex-col pt-4 px-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn border border-layer-light-200"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >

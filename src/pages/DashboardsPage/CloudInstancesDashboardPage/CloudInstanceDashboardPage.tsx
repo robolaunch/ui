@@ -20,16 +20,17 @@ import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import BasicCell from "../../../components/TableInformationCells/BasicCell";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
-import Button from "../../../components/Button/Button";
 import useFunctions from "../../../hooks/useFunctions";
 import { SiKubernetes } from "react-icons/si";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
 import { RiCpuLine } from "react-icons/ri";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { pagesState, setSidebarState, selectedState } = useMain();
+  const { pagesState, selectedState } = useMain();
   const {
     getOrganization,
     getRoboticsCloud,
@@ -261,17 +262,14 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           title={url?.instanceName || ""}
           subtitle="This page is the Fleet page of the platform. Here, you can manage, delete, or view the details of your existing fleets. If you need to create a new fleet, you can do so by clicking the button below."
           component={
-            <Button
-              text="Create a new Fleet"
-              className="!w-40 !h-10 !text-xs"
-              onClick={() => {
-                setSidebarState((prevState: any): any => ({
-                  ...prevState,
-                  isOpen: true,
-                  isCreateMode: false,
-                  page: "fleet",
-                }));
-              }}
+            <TourGuide
+              type="instance"
+              tourConfig={[
+                getGuideItem('[data-tut="information-widget"]'),
+                getGuideItem('[data-tut="usages-widget"]'),
+                getGuideItem('[data-tut="resources-widget"]'),
+                getGuideItem('[data-tut="general-table"]'),
+              ]}
             />
           }
         />

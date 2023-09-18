@@ -14,6 +14,7 @@ export default function UsagesWidget({
 }: IUsagesWidget): ReactElement {
   return (
     <Widget
+      dataTut="usages-widget"
       title={`Hardware Resources & Usages`}
       subtitle={`${title} Usages`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}

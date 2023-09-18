@@ -9,7 +9,6 @@ import BasicCell from "../../../components/TableInformationCells/BasicCell";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
-import Button from "../../../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
 
@@ -19,10 +18,12 @@ import {
 } from "../../../helpers/envProvider";
 import EnvironmentActionCells from "../../../components/TableActionCells/EnvironmentActionCells";
 import CountWidget from "../../../components/CountWidget/CountWidget";
+import { getGuideItem } from "../../../functions/handleGuide";
+import TourGuide from "../../../components/TourGuide/TourGuide";
 
 export default function FleetDashboardPage(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { pagesState, selectedState, setSidebarState } = useMain();
+  const { pagesState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -341,19 +342,14 @@ export default function FleetDashboardPage(): ReactElement {
           title={url?.fleetName || ""}
           subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
           component={
-            <Button
-              text={`Create a new ${
-                envOnPremiseRobot ? "Application" : "Robot"
-              }`}
-              className="!w-44 !h-10 !text-xs"
-              onClick={() => {
-                setSidebarState((prevState: any): any => ({
-                  ...prevState,
-                  isOpen: true,
-                  isCreateMode: false,
-                  page: "robot",
-                }));
-              }}
+            <TourGuide
+              type="fleet"
+              tourConfig={[
+                getGuideItem('[data-tut="information-widget"]', "fleet"),
+                getGuideItem('[data-tut="regions-widget"]'),
+                getGuideItem('[data-tut="counter-widget"]'),
+                getGuideItem('[data-tut="general-table"]'),
+              ]}
             />
           }
         />

@@ -92,6 +92,7 @@ export default function SideBarMenuItem({
 
   return (
     <div
+      data-tut={type + "-sidebar-menu-item"}
       onClick={() => !loading && !disabled && handleClick()}
       className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 select-none animate__animated animate__fadeInLeft ${
         (loading || disabled) && "!cursor-not-allowed"

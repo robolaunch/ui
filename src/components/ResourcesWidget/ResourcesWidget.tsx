@@ -15,6 +15,7 @@ export default function ResourcesWidget({
 }: IResourcesWidget): ReactElement {
   return (
     <Widget
+      dataTut="resources-widget"
       title={`Software Resources`}
       subtitle={`${title} Resources`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}

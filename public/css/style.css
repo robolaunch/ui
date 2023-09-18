@@ -2153,6 +2153,14 @@ video {
   padding: 2rem;
 }
 
+.\!p-8 {
+  padding: 2rem !important;
+}
+
+.\!p-10 {
+  padding: 2.5rem !important;
+}
+
 .\!px-0 {
   padding-left: 0px !important;
   padding-right: 0px !important;
@@ -2746,6 +2754,10 @@ video {
 
 .opacity-90 {
   opacity: 0.9;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .\!shadow {

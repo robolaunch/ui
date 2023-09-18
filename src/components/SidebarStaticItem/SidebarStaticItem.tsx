@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface ISidebarStaticItem {
   to: string;
@@ -15,15 +15,26 @@ export default function SidebarStaticItem({
 
   const location = useLocation();
 
+  const navigate = useNavigate();
+
   return (
-    <Link
-      to={to}
+    <div
       className={`transition-all duration-500 p-2 rounded-md cursor-pointer hover:scale-90 animate__animated animate__fadeInLeft relative select-none ${
         location?.pathname?.includes(to) &&
         "bg-layer-light-100 transition-all duration-500"
       }`}
+      onClick={() => navigate(to)}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      data-tut={
+        to === "/marketplace"
+          ? "marketplace-sidebar-menu-item"
+          : to === "/billing"
+          ? "billing-sidebar-menu-item"
+          : to === "/user-role-management"
+          ? "user-role-management-sidebar-menu-item"
+          : "item"
+      }
     >
       <img
         draggable="false"
@@ -53,6 +64,6 @@ export default function SidebarStaticItem({
           }
         />
       )}
-    </Link>
+    </div>
   );
 }
