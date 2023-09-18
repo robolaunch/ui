@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { ITheme } from "../interfaces/themeInterfaces";
+
+interface ITheme {
+  theme: "light" | "dark";
+  setTheme: React.Dispatch<React.SetStateAction<"light" | "dark">>;
+}
 
 const useTheme = () => {
   const useTheme: ITheme = useContext(ThemeContext);
