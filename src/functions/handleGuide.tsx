@@ -1,11 +1,19 @@
 import GuideContainer from "../components/GuideContainer/GuideContainer";
+import WelcomeGuide from "../components/WelcomeGuide/WelcomeGuide";
 import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
 
 export function getGuideItem(guide: string) {
   switch (guide) {
+    case "welcome":
+      return {
+        selector: guide,
+        content: () => <WelcomeGuide />,
+      };
+
     case '[data-tut="marketplace-sidebar-menu-item"]':
       return {
         selector: guide,
+        position: "center",
         content: () => (
           <GuideContainer
             title="Marketplace"

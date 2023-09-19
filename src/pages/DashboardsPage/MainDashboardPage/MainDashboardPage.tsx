@@ -111,6 +111,7 @@ export default function MainDashboardPage(): ReactElement {
             <TourGuide
               type="main"
               tourConfig={[
+                getGuideItem("welcome"),
                 getGuideItem('[data-tut="organization-sidebar-menu-item"]'),
                 getGuideItem('[data-tut="roboticscloud-sidebar-menu-item"]'),
                 getGuideItem('[data-tut="instance-sidebar-menu-item"]'),
