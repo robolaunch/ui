@@ -173,12 +173,12 @@ export default function OrganizationDashboardPage(): ReactElement {
               str: url?.organizationName!,
             }) || ""
           }
-          subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds. If you need to create a new robotics cloud, you can do so by clicking the button below."
+          subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds."
           component={
             <TourGuide
               type="organization"
               tourConfig={[
-                getGuideItem('[data-tut="information-widget"]', "organization"),
+                getGuideItem('[data-tut="information-widget"]'),
                 getGuideItem('[data-tut="regions-widget"]'),
                 getGuideItem('[data-tut="counter-widget"]'),
                 getGuideItem('[data-tut="general-table"]'),
@@ -189,7 +189,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       }
       widget2={
         <RegionsWidget
-          title="Regions"
+          title="Provider"
           responseData={
             responseRoboticsClouds?.map((item: any) => item.region) || []
           }
@@ -221,7 +221,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       table={
         <GeneralTable
           type="roboticscloud"
-          title="Robotics Clouds"
+          title="Regions"
           data={data}
           columns={columns}
           loading={responseRoboticsClouds ? false : true}

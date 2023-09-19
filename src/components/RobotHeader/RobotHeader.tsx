@@ -10,16 +10,21 @@ import ContentLoader from "react-content-loader";
 import { AiOutlineTeam } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import useRobot from "../../hooks/useRobot";
+import useMain from "../../hooks/useMain";
 
 export default function RobotHeader(): ReactElement {
   const { ros, responseRobot, isSettedCookie } = useRobot();
+  const { selectedState } = useMain();
   const url = useParams();
 
   return (
-    <div className="col-span-full">
+    <div data-tut="robot-header" className="col-span-full">
       <CardLayout className="pt-6 px-8 !pb-0">
         <div className="h-28 flex items-center justify-between">
-          <div className="h-full flex flex-col justify-around">
+          <div
+            data-tut="robot-information"
+            className="h-full flex flex-col justify-around"
+          >
             <div className="flex gap-2 items-center">
               <span className="text-lg font-medium">{url?.robotName}</span>
               <div className="text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100">
@@ -49,7 +54,9 @@ export default function RobotHeader(): ReactElement {
             </span>
             <span className="flex gap-2 items-center">
               <IoLocationOutline size={16} />
-              <span className="text-xs font-light">Ankara, Turkey</span>
+              <span className="text-xs font-light">
+                {selectedState?.roboticsCloud?.region}
+              </span>
             </span>
           </div>
           <div className="hidden md:flex text-xs font-medium text-layer-dark-400 gap-8">

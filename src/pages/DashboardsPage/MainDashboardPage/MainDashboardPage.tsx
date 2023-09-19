@@ -106,7 +106,7 @@ export default function MainDashboardPage(): ReactElement {
       widget1={
         <InformationWidget
           title={`Main Dashboard`}
-          subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. If you need to create a new organization, you can click the button below to create a organization."
+          subtitle="This page is the main page of the platform. On this page, you can manage your existing organizations, rename them, delete them, or view the details of each organization. "
           component={
             <TourGuide
               type="main"
@@ -116,7 +116,7 @@ export default function MainDashboardPage(): ReactElement {
                 getGuideItem('[data-tut="instance-sidebar-menu-item"]'),
                 getGuideItem('[data-tut="fleet-sidebar-menu-item"]'),
                 getGuideItem('[data-tut="robot-sidebar-menu-item"]'),
-                getGuideItem('[data-tut="information-widget"]', "main"),
+                getGuideItem('[data-tut="information-widget"]'),
                 getGuideItem('[data-tut="counter-widget"]'),
                 getGuideItem('[data-tut="general-table"]'),
               ]}

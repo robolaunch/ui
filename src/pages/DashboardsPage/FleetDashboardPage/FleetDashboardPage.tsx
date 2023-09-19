@@ -340,12 +340,12 @@ export default function FleetDashboardPage(): ReactElement {
       widget1={
         <InformationWidget
           title={url?.fleetName || ""}
-          subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots. If you need to create a new robot, you can do so by clicking the button below."
+          subtitle="This page is the Robots page of the platform. Here, you can manage, delete, or view the details of your existing robots."
           component={
             <TourGuide
               type="fleet"
               tourConfig={[
-                getGuideItem('[data-tut="information-widget"]', "fleet"),
+                getGuideItem('[data-tut="information-widget"]'),
                 getGuideItem('[data-tut="regions-widget"]'),
                 getGuideItem('[data-tut="counter-widget"]'),
                 getGuideItem('[data-tut="general-table"]'),

@@ -28,17 +28,17 @@ export default function RobotOverviewLayout({
       {width && width > 1024 && (
         <div className="col-span-full lg:col-span-3">{widget3}</div>
       )}
-      <div className="col-span-full">
+      <div data-tut="robot-workspaces-table" className="col-span-full">
         <WorkspacesTable responseRobot={responseRobot} />
       </div>
       {!envOnPremiseRobot && (
         <Fragment>
-          <div className="col-span-full">
+          <div data-tut="robot-build-managers-table" className="col-span-full">
             <BuildManagerStepsTable
               responseBuildManager={responseBuildManager}
             />
           </div>
-          <div className="col-span-full">
+          <div data-tut="robot-launch-managers-table" className="col-span-full">
             <LaunchManagerStepsTable
               responseLaunchManagers={responseLaunchManagers}
             />

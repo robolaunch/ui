@@ -260,7 +260,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       widget1={
         <InformationWidget
           title={url?.instanceName || ""}
-          subtitle="This page is the Fleet page of the platform. Here, you can manage, delete, or view the details of your existing fleets. If you need to create a new fleet, you can do so by clicking the button below."
+          subtitle="This page is the Fleet page of the platform. Here, you can manage, delete, or view the details of your existing fleets."
           component={
             <TourGuide
               type="instance"

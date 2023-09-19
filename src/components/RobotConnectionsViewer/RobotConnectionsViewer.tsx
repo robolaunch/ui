@@ -47,7 +47,7 @@ export default function RobotConnectionsViewer({
   }, [ide, vdiURL]);
 
   return (
-    <div className="flex gap-6">
+    <div data-tut="robot-connections" className="flex gap-6">
       {!envOnPremiseRobot && responseRobot?.bridgeIngressEndpoint && (
         <div className="flex gap-1">
           <span className="text-xs font-semibold">ROS: </span>

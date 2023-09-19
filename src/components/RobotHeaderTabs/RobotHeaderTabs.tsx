@@ -6,6 +6,7 @@ import { BiJoystickButton } from "react-icons/bi";
 import ContentLoader from "react-content-loader";
 import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
+import { stringSlugify } from "../../functions/GeneralFunctions";
 
 export default function RobotHeaderTabs(): ReactElement {
   const {
@@ -105,12 +106,16 @@ export default function RobotHeaderTabs(): ReactElement {
   ];
 
   return (
-    <ul className="flex gap-6 px-6 pt-5 overflow-x-auto items-end">
+    <ul
+      data-tut="robot-header-tabs"
+      className="flex gap-6 px-6 pt-5 overflow-x-auto items-end"
+    >
       {tabs
         ?.filter((tab: any) => tab && tab)
         .map((tab: any, index: number) => {
           return (
             <li
+              data-tut={`robot-header-tab-${stringSlugify(tab?.name)}`}
               className={`flex flex-col gap-3 cursor-pointer ${
                 tab?.isHidden && "!hidden"
               }`}

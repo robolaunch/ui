@@ -322,15 +322,12 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       widget1={
         <InformationWidget
           title={url?.roboticsCloudName || ""}
-          subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances. If you need to create a new cloud instance, you can do so by clicking the button below."
+          subtitle="This page is the platform's Cloud Instance page. Here, you can manage, delete, or view the details of your existing cloud instances."
           component={
             <TourGuide
               type="roboticscloud"
               tourConfig={[
-                getGuideItem(
-                  '[data-tut="information-widget"]',
-                  "roboticscloud"
-                ),
+                getGuideItem('[data-tut="information-widget"]'),
                 getGuideItem('[data-tut="regions-widget"]'),
                 getGuideItem('[data-tut="counter-widget"]'),
                 getGuideItem('[data-tut="general-table"]'),

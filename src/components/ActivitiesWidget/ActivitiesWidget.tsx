@@ -39,6 +39,7 @@ export default function ActivitiesWidget({
 
   return (
     <WidgetLayout
+      dataTut="robot-activities-widget"
       title={`Acitivities`}
       subtitle={`Last Activities`}
       icon={<VscHistory size={20} className="text-layer-light-700" />}

@@ -6,7 +6,7 @@ export default function RobotServiceButtons(): ReactElement {
   const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
 
   return (
-    <div className="flex gap-2">
+    <div data-tut="robot-service-buttons" className="flex gap-2">
       <div className="flex  items-center rounded-lg">
         <a
           target="_blank"

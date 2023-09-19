@@ -33,6 +33,7 @@ export default function RobotStatusWidget({
 
   return (
     <WidgetLayout
+      dataTut="robot-status-widget"
       title={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
       subtitle={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
       icon={<VscHistory size={20} className="text-layer-light-700" />}

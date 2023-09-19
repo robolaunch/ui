@@ -78,8 +78,9 @@ export default function TourGuide({
         onRequestClose={handleCloseGuide}
         steps={tourConfig}
         isOpen={handleIsOpen()}
+        showNumber={false}
         maskClassName="opacity-50"
-        className="!p-10 text-sm"
+        className="!p-10 text-sm !bg-layer-primary-100 !text-layer-primary-900"
         rounded={5}
         accentColor={"#ac2dfe"}
         onAfterOpen={(target: any) => disableBodyScroll(target)}
