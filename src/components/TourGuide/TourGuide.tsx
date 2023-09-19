@@ -6,9 +6,10 @@ import {
   setIsShowedOrganizationGuide,
   setIsShowedRoboticsCloudGuide,
 } from "../../toolkit/GuideSlice";
-import Button from "../Button/Button";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import Button from "../Button/Button";
 import Tour from "reactour";
 
 interface ITourGuide {
@@ -80,9 +81,15 @@ export default function TourGuide({
         isOpen={handleIsOpen()}
         showNumber={false}
         maskClassName="opacity-50"
-        className="!p-10 text-sm !bg-layer-primary-100 !text-layer-primary-900"
+        className="!p-10 text-sm !bg-primary !text-white"
         rounded={5}
-        accentColor={"#ac2dfe"}
+        accentColor={"#FFFFFF"}
+        prevButton={
+          <FiArrowLeft className="text-white hover:text-layer-primary-200 scale-150 transition-500" />
+        }
+        nextButton={
+          <FiArrowRight className="text-white hover:text-layer-primary-200 scale-150 transition-500" />
+        }
         onAfterOpen={(target: any) => disableBodyScroll(target)}
         onBeforeClose={(target: any) => enableBodyScroll(target)}
       />

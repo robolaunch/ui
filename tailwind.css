@@ -73,6 +73,10 @@ td {
   @apply !text-sm;
 }
 
+.reactour__close {
+  color: white !important;
+}
+
 .flex {
   display: flex;
 }
