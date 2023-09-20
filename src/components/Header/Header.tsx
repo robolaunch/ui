@@ -1,9 +1,10 @@
 import React, { ReactElement } from "react";
-import NotificationDropdownMenu from "../NotificationDropdownMenu/NotificationDropdownMenu";
+// import NotificationDropdownMenu from "../NotificationDropdownMenu/NotificationDropdownMenu";
 import HeaderDropdownMenu from "../HeaderDropdownMenu/HeaderDropdownMenu";
 // import TimerDropdownMenu from "../TimerDropdownMenu/TimerDropdownMenu";
 // import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
+import BugFeedbackButton from "../BugFeedbackButton/BugFeedbackButton";
 
 export default function Header(): ReactElement {
   return (
@@ -12,7 +13,9 @@ export default function Header(): ReactElement {
       <div className="flex items-center gap-4">
         {/* <TimerDropdownMenu /> */}
         {/* {<ThemeToggle />} */}
-        <NotificationDropdownMenu />
+        {/* <NotificationDropdownMenu /> */}
+        <BugFeedbackButton />
+
         <HeaderDropdownMenu />
       </div>
     </div>
