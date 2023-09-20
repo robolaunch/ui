@@ -38,6 +38,7 @@ export default ({ children }: any) => {
       },
     },
     step2: {
+      configureWorkspace: false,
       workspaces: [
         {
           name: "",
