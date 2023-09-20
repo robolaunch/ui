@@ -43,7 +43,7 @@ export default function Overview({
           }
           component={
             <TourGuide
-              type="instance"
+              type="robot"
               tourConfig={
                 envOnPremiseRobot
                   ? [

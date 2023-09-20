@@ -8,6 +8,7 @@ export const GuideSlice = createSlice({
     isShowedRoboticsCloudGuide: false,
     isShowedInstanceGuide: false,
     isShowedFleetGuide: false,
+    isShowedRobotGuide: false,
     isShowedCreateRobotStep1Guide: false,
     isShowedCreateRobotStep2Guide: false,
     isShowedCreateRobotStep3Guide: false,
@@ -28,6 +29,9 @@ export const GuideSlice = createSlice({
     },
     setIsShowedFleetGuide: (state) => {
       state.isShowedFleetGuide = true;
+    },
+    setIsShowedRobotGuide: (state) => {
+      state.isShowedRobotGuide = true;
     },
     setIsShowedCreateRobotStep1Guide: (state) => {
       state.isShowedCreateRobotStep1Guide = true;
@@ -52,6 +56,7 @@ export const {
   setIsShowedRoboticsCloudGuide,
   setIsShowedInstanceGuide,
   setIsShowedFleetGuide,
+  setIsShowedRobotGuide,
   setIsShowedCreateRobotStep1Guide,
   setIsShowedCreateRobotStep2Guide,
   setIsShowedCreateRobotStep3Guide,

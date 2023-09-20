@@ -8,6 +8,7 @@ import {
   setIsShowedInstanceGuide,
   setIsShowedMainGuide,
   setIsShowedOrganizationGuide,
+  setIsShowedRobotGuide,
   setIsShowedRoboticsCloudGuide,
 } from "../../toolkit/GuideSlice";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
@@ -23,6 +24,7 @@ interface ITourGuide {
     | "roboticscloud"
     | "instance"
     | "fleet"
+    | "robot"
     | "createRobotStep1"
     | "createRobotStep2"
     | "createRobotStep3"
@@ -45,6 +47,7 @@ export default function TourGuide({
     isShowedRoboticsCloudGuide,
     isShowedInstanceGuide,
     isShowedFleetGuide,
+    isShowedRobotGuide,
     isShowedCreateRobotStep1Guide,
     isShowedCreateRobotStep2Guide,
     isShowedCreateRobotStep3Guide,
@@ -63,6 +66,8 @@ export default function TourGuide({
         return !isShowedInstanceGuide || isTourOpen;
       case "fleet":
         return !isShowedFleetGuide || isTourOpen;
+      case "robot":
+        return !isShowedRobotGuide || isTourOpen;
       case "createRobotStep1":
         return !isShowedCreateRobotStep1Guide || isTourOpen;
       case "createRobotStep2":
@@ -91,6 +96,8 @@ export default function TourGuide({
         return dispatch(setIsShowedInstanceGuide());
       case "fleet":
         return dispatch(setIsShowedFleetGuide());
+      case "robot":
+        return dispatch(setIsShowedRobotGuide());
       case "createRobotStep1":
         return dispatch(setIsShowedCreateRobotStep1Guide());
       case "createRobotStep2":
