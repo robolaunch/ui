@@ -11,7 +11,7 @@ export default function CreateRobotStorage({
   isImportRobot,
 }: ICreateRobotStorage): ReactElement {
   return (
-    <div className="flex gap-2">
+    <div data-tut="create-robot-step1-storage" className="flex gap-2">
       <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
         Robot Storage ({formik?.values?.robotStorage} GB) :
         <InfoTip

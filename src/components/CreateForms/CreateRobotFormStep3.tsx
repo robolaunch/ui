@@ -18,6 +18,8 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import TourGuide from "../TourGuide/TourGuide";
+import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -176,277 +178,308 @@ export default function CreateRobotFormStep3({
   }, [formik.values]);
 
   return (
-    <CreateRobotFormLoader
-      loadingText={
-        isImportRobot
-          ? "Loading..."
-          : "Please wait while we create your robot. This may take a few minutes."
-      }
-      isLoading={
-        !responseRobot?.robotClusters ||
-        responseRobot?.robotClusters?.filter(
-          (robotCluster: any) =>
-            robotCluster?.robotStatus !== "EnvironmentReady"
-        )?.length
-      }
-      loadingItems={responseRobot?.robotClusters?.map((item: any) => {
-        return {
-          name: item?.name,
-          status: item?.robotStatus,
-        };
-      })}
-      currentStep={
-        !responseRobot
-          ? 1
-          : responseRobot?.robotClusters?.filter(
-              (robotCluster: any) =>
-                robotCluster?.robotStatus === "CreatingEnvironment" ||
-                robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                robotCluster?.robotStatus === "ConfiguringEnvironment"
-            )?.length
-          ? 1
-          : responseRobot?.robotClusters?.filter(
-              (robotCluster: any) =>
-                robotCluster?.robotStatus === "CreatingBridge" ||
-                robotCluster?.robotStatus === "CreatingDevelopmentSuite"
-            )?.length
-          ? 2
-          : 3
-      }
-      stepbarItems={[
-        {
-          name: "Creating Environment",
-          process: [
-            {
-              name: "Creating Environment",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment"
-                  )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Creating Discovery Server",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment" ||
-                      robotCluster?.robotStatus === "CreatingDiscoveryServer"
-                  )?.length
-                ? false
-                : true,
-            },
-
-            {
-              name: "Pulling ROS2 Image",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment" ||
-                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                      robotCluster?.robotStatus === "ConfiguringEnvironment"
-                  )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Setting up ROS2 Environment",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment" ||
-                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                      robotCluster?.robotStatus === "ConfiguringEnvironment"
-                  )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Creating Directories",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment" ||
-                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                      robotCluster?.robotStatus === "ConfiguringEnvironment"
-                  )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Setting up Ubuntu",
-              isFinished: !responseRobot
-                ? false
-                : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingEnvironment" ||
-                      robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                      robotCluster?.robotStatus === "ConfiguringEnvironment"
-                  )?.length
-                ? false
-                : true,
-            },
-          ],
-        },
-        {
-          name: "Creating Development Suite",
-          process: [
-            {
-              name: "Creating ROS Bridge Suite",
-              isFinished: responseRobot?.robotClusters?.filter(
+    <Fragment>
+      <CreateRobotFormLoader
+        loadingText={
+          isImportRobot
+            ? "Loading..."
+            : "Please wait while we create your robot. This may take a few minutes."
+        }
+        isLoading={
+          !responseRobot?.robotClusters ||
+          responseRobot?.robotClusters?.filter(
+            (robotCluster: any) =>
+              robotCluster?.robotStatus !== "EnvironmentReady"
+          )?.length
+        }
+        loadingItems={responseRobot?.robotClusters?.map((item: any) => {
+          return {
+            name: item?.name,
+            status: item?.robotStatus,
+          };
+        })}
+        currentStep={
+          !responseRobot
+            ? 1
+            : responseRobot?.robotClusters?.filter(
                 (robotCluster: any) =>
-                  robotCluster?.robotStatus === "CreatingBridge"
+                  robotCluster?.robotStatus === "CreatingEnvironment" ||
+                  robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                  robotCluster?.robotStatus === "ConfiguringEnvironment"
               )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Creating Development Suite",
-              isFinished: responseRobot?.robotClusters?.filter(
+            ? 1
+            : responseRobot?.robotClusters?.filter(
                 (robotCluster: any) =>
                   robotCluster?.robotStatus === "CreatingBridge" ||
                   robotCluster?.robotStatus === "CreatingDevelopmentSuite"
               )?.length
-                ? false
-                : true,
-            },
-          ],
-        },
-        {
-          name: "Configuring Workspaces",
-          process: [
-            {
-              name: "Cloning Repositories",
-              isFinished: responseRobot?.robotClusters?.filter(
-                (robotCluster: any) =>
-                  robotCluster?.robotStatus === "ConfiguringWorkspaces"
-              )?.length
-                ? false
-                : true,
-            },
-            {
-              name: "Setting up ROS2 Workspaces",
-              isFinished: responseRobot?.robotClusters?.filter(
-                (robotCluster: any) =>
-                  robotCluster?.robotStatus === "ConfiguringWorkspaces"
-              )?.length
-                ? false
-                : true,
-            },
-          ],
-        },
-      ]}
-    >
-      <form
-        onSubmit={formik.handleSubmit}
-        className="flex flex-col gap-4 animate__animated animate__fadeIn"
+            ? 2
+            : 3
+        }
+        stepbarItems={[
+          {
+            name: "Creating Environment",
+            process: [
+              {
+                name: "Creating Environment",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment"
+                    )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Creating Discovery Server",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment" ||
+                        robotCluster?.robotStatus === "CreatingDiscoveryServer"
+                    )?.length
+                  ? false
+                  : true,
+              },
+
+              {
+                name: "Pulling ROS2 Image",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment" ||
+                        robotCluster?.robotStatus ===
+                          "CreatingDiscoveryServer" ||
+                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                    )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Setting up ROS2 Environment",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment" ||
+                        robotCluster?.robotStatus ===
+                          "CreatingDiscoveryServer" ||
+                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                    )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Creating Directories",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment" ||
+                        robotCluster?.robotStatus ===
+                          "CreatingDiscoveryServer" ||
+                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                    )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Setting up Ubuntu",
+                isFinished: !responseRobot
+                  ? false
+                  : responseRobot?.robotClusters?.filter(
+                      (robotCluster: any) =>
+                        robotCluster?.robotStatus === "CreatingEnvironment" ||
+                        robotCluster?.robotStatus ===
+                          "CreatingDiscoveryServer" ||
+                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                    )?.length
+                  ? false
+                  : true,
+              },
+            ],
+          },
+          {
+            name: "Creating Development Suite",
+            process: [
+              {
+                name: "Creating ROS Bridge Suite",
+                isFinished: responseRobot?.robotClusters?.filter(
+                  (robotCluster: any) =>
+                    robotCluster?.robotStatus === "CreatingBridge"
+                )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Creating Development Suite",
+                isFinished: responseRobot?.robotClusters?.filter(
+                  (robotCluster: any) =>
+                    robotCluster?.robotStatus === "CreatingBridge" ||
+                    robotCluster?.robotStatus === "CreatingDevelopmentSuite"
+                )?.length
+                  ? false
+                  : true,
+              },
+            ],
+          },
+          {
+            name: "Configuring Workspaces",
+            process: [
+              {
+                name: "Cloning Repositories",
+                isFinished: responseRobot?.robotClusters?.filter(
+                  (robotCluster: any) =>
+                    robotCluster?.robotStatus === "ConfiguringWorkspaces"
+                )?.length
+                  ? false
+                  : true,
+              },
+              {
+                name: "Setting up ROS2 Workspaces",
+                isFinished: responseRobot?.robotClusters?.filter(
+                  (robotCluster: any) =>
+                    robotCluster?.robotStatus === "ConfiguringWorkspaces"
+                )?.length
+                  ? false
+                  : true,
+              },
+            ],
+          },
+        ]}
       >
-        {isImportRobot && robotData?.step3?.robotBuildSteps?.length === 0 ? (
-          <div className="h-full w-full flex flex-col items-center gap-4">
-            <SidebarInfo
-              text="It seems that you have not configured any build steps for this
+        <form
+          onSubmit={formik.handleSubmit}
+          className="flex flex-col gap-4 animate__animated animate__fadeIn"
+        >
+          {isImportRobot && robotData?.step3?.robotBuildSteps?.length === 0 ? (
+            <div className="h-full w-full flex flex-col items-center gap-4">
+              <SidebarInfo
+                text="It seems that you have not configured any build steps for this
               robot. If you want to configure build steps, please click on the +
               button below."
-              component={
+                component={
+                  <CreateRobotFormAddButton
+                    onClick={() => handleAddStepToBuildStep(formik)}
+                    disabled={formik?.isSubmitting}
+                  />
+                }
+              />
+            </div>
+          ) : (
+            <Fragment>
+              <div data-tut="create-robot-step3-name">
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Build Manager Name:
+                  <InfoTip content="Type a new build manager name." />
+                </div>
+                <InputText
+                  {...formik.getFieldProps("buildManagerName")}
+                  className="!text-sm"
+                  disabled={formik?.isSubmitting}
+                />
+                <InputError
+                  error={formik.errors.buildManagerName}
+                  touched={formik.touched.buildManagerName}
+                />
+              </div>
+
+              <div data-tut="create-robot-step3-steps">
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                  Build Steps:
+                  <InfoTip content="Build Steps" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  {robotData?.step3?.robotBuildSteps?.map(
+                    (buildStep: any, buildStepIndex: number) => {
+                      return (
+                        <CreateRobotFormBuildStepItem
+                          key={buildStepIndex}
+                          formik={formik}
+                          buildStep={buildStep}
+                          buildStepIndex={buildStepIndex}
+                          stepState={responseBuildManager?.robotClusters?.map(
+                            (item: any) => item?.buildManagerStatus
+                          )}
+                          disabled={isImportRobot || formik?.isSubmitting}
+                          isImportRobot={isImportRobot || false}
+                        />
+                      );
+                    }
+                  )}
+                </div>
+              </div>
+
+              <div data-tut="create-robot-step3-build-add-button">
                 <CreateRobotFormAddButton
                   onClick={() => handleAddStepToBuildStep(formik)}
                   disabled={formik?.isSubmitting}
                 />
-              }
-            />
-          </div>
-        ) : (
-          <Fragment>
-            <div>
-              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-                Build Manager Name:
-                <InfoTip content="Type a new build manager name." />
               </div>
-              <InputText
-                {...formik.getFieldProps("buildManagerName")}
-                className="!text-sm"
-                disabled={formik?.isSubmitting}
-              />
-              <InputError
-                error={formik.errors.buildManagerName}
-                touched={formik.touched.buildManagerName}
-              />
-            </div>
 
-            <div>
-              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
-                Build Steps:
-                <InfoTip content="Build Steps" />
-              </div>
-              <div className="flex flex-col gap-2">
-                {robotData?.step3?.robotBuildSteps?.map(
-                  (buildStep: any, buildStepIndex: number) => {
-                    return (
-                      <CreateRobotFormBuildStepItem
-                        key={buildStepIndex}
-                        formik={formik}
-                        buildStep={buildStep}
-                        buildStepIndex={buildStepIndex}
-                        stepState={responseBuildManager?.robotClusters?.map(
-                          (item: any) => item?.buildManagerStatus
-                        )}
-                        disabled={isImportRobot || formik?.isSubmitting}
-                        isImportRobot={isImportRobot || false}
-                      />
-                    );
-                  }
+              <div className="w-full flex gap-2 mt-10">
+                {isImportRobot ? (
+                  <RobotDeleteBuildManagerButton
+                    disabled={formik?.isSubmitting}
+                    submitting={formik?.isSubmitting}
+                  />
+                ) : (
+                  <CreateRobotFormCancelButton
+                    disabled={formik?.isSubmitting}
+                  />
                 )}
-              </div>
-            </div>
-
-            <CreateRobotFormAddButton
-              onClick={() => handleAddStepToBuildStep(formik)}
-              disabled={formik?.isSubmitting}
-            />
-
-            <div className="w-full flex gap-2 mt-10">
-              {isImportRobot ? (
-                <RobotDeleteBuildManagerButton
-                  disabled={formik?.isSubmitting}
-                  submitting={formik?.isSubmitting}
+                <Button
+                  type="submit"
+                  disabled={
+                    !formik?.isValid ||
+                    formik.isSubmitting ||
+                    JSON.stringify(formik.initialValues) ===
+                      JSON.stringify(formik.values)
+                  }
+                  className="w-full !h-11 text-xs"
+                  text={
+                    formik.isSubmitting ? (
+                      <img
+                        className="w-10 h-10"
+                        src="/svg/general/loading.svg"
+                        alt="loading"
+                      />
+                    ) : isImportRobot ? (
+                      `Update Build Configration`
+                    ) : (
+                      `Next Step`
+                    )
+                  }
                 />
-              ) : (
-                <CreateRobotFormCancelButton disabled={formik?.isSubmitting} />
-              )}
-              <Button
-                type="submit"
-                disabled={
-                  !formik?.isValid ||
-                  formik.isSubmitting ||
-                  JSON.stringify(formik.initialValues) ===
-                    JSON.stringify(formik.values)
-                }
-                className="w-full !h-11 text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="w-10 h-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    `Update Build Configration`
-                  ) : (
-                    `Next Step`
-                  )
-                }
-              />
-            </div>
-          </Fragment>
+              </div>
+            </Fragment>
+          )}
+        </form>
+      </CreateRobotFormLoader>
+      {!isImportRobot &&
+        responseRobot?.robotClusters &&
+        responseRobot?.robotClusters?.filter(
+          (robotCluster: any) =>
+            robotCluster?.robotStatus !== "EnvironmentReady"
+        )?.length && (
+          <TourGuide
+            hiddenButton
+            type="createRobotStep3"
+            tourConfig={[
+              getGuideItem("[data-tut='create-robot-step3-name']"),
+              getGuideItem("[data-tut='create-robot-step3-steps']"),
+              getGuideItem("[data-tut='create-robot-step3-build-add-button']"),
+              getGuideItem("[data-tut='create-robot-build-step-name']"),
+              getGuideItem("[data-tut='create-robot-build-step-workspace']"),
+              getGuideItem("[data-tut='create-robot-build-step-code-type']"),
+              getGuideItem("[data-tut='create-robot-build-step-code']"),
+              getGuideItem("[data-tut='create-robot-build-step-scope']"),
+            ]}
+          />
         )}
-      </form>
-    </CreateRobotFormLoader>
+    </Fragment>
   );
 }

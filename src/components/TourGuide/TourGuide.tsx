@@ -1,5 +1,9 @@
 import React, { Fragment, ReactElement, useState } from "react";
 import {
+  setIsShowedCreateRobotStep1Guide,
+  setIsShowedCreateRobotStep2Guide,
+  setIsShowedCreateRobotStep3Guide,
+  setIsShowedCreateRobotStep4Guide,
   setIsShowedFleetGuide,
   setIsShowedInstanceGuide,
   setIsShowedMainGuide,
@@ -13,13 +17,24 @@ import Button from "../Button/Button";
 import Tour from "reactour";
 
 interface ITourGuide {
-  type: "main" | "organization" | "roboticscloud" | "instance" | "fleet";
+  type:
+    | "main"
+    | "organization"
+    | "roboticscloud"
+    | "instance"
+    | "fleet"
+    | "createRobotStep1"
+    | "createRobotStep2"
+    | "createRobotStep3"
+    | "createRobotStep4";
   tourConfig: any[];
+  hiddenButton?: boolean;
 }
 
 export default function TourGuide({
   type,
   tourConfig,
+  hiddenButton,
 }: ITourGuide): ReactElement {
   const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
 
@@ -30,6 +45,10 @@ export default function TourGuide({
     isShowedRoboticsCloudGuide,
     isShowedInstanceGuide,
     isShowedFleetGuide,
+    isShowedCreateRobotStep1Guide,
+    isShowedCreateRobotStep2Guide,
+    isShowedCreateRobotStep3Guide,
+    isShowedCreateRobotStep4Guide,
   } = useAppSelector((state) => state.guide);
 
   const handleIsOpen = () => {
@@ -44,6 +63,15 @@ export default function TourGuide({
         return !isShowedInstanceGuide || isTourOpen;
       case "fleet":
         return !isShowedFleetGuide || isTourOpen;
+      case "createRobotStep1":
+        return !isShowedCreateRobotStep1Guide || isTourOpen;
+      case "createRobotStep2":
+        return !isShowedCreateRobotStep2Guide || isTourOpen;
+      case "createRobotStep3":
+        return !isShowedCreateRobotStep3Guide || isTourOpen;
+      case "createRobotStep4":
+        return !isShowedCreateRobotStep4Guide || isTourOpen;
+
       default:
         return isTourOpen;
     }
@@ -63,18 +91,28 @@ export default function TourGuide({
         return dispatch(setIsShowedInstanceGuide());
       case "fleet":
         return dispatch(setIsShowedFleetGuide());
+      case "createRobotStep1":
+        return dispatch(setIsShowedCreateRobotStep1Guide());
+      case "createRobotStep2":
+        return dispatch(setIsShowedCreateRobotStep2Guide());
+      case "createRobotStep3":
+        return dispatch(setIsShowedCreateRobotStep3Guide());
+      case "createRobotStep4":
+        return dispatch(setIsShowedCreateRobotStep4Guide());
     }
   }
 
   return (
     <Fragment>
-      <Button
-        text="Show Guide"
-        className="!w-48 !h-10 !text-xs"
-        onClick={() => {
-          setIsTourOpen(true);
-        }}
-      />
+      {!hiddenButton && (
+        <Button
+          text="Show Guide"
+          className="!w-48 !h-10 !text-xs"
+          onClick={() => {
+            setIsTourOpen(true);
+          }}
+        />
+      )}
       <Tour
         onRequestClose={handleCloseGuide}
         steps={tourConfig}

@@ -34,7 +34,7 @@ export default function CreateRobotFormWorkspaceItem({
   disabled,
   isImportRobot,
 }: ICreateRobotFormWorkspaceItem): ReactElement {
-  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(true);
 
   const {
     robotData,
@@ -59,7 +59,7 @@ export default function CreateRobotFormWorkspaceItem({
       }
     >
       <div className="flex flex-col gap-2 p-4">
-        <div>
+        <div data-tut="create-robot-step2-workspace-name">
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Workspace Name:
             <InfoTip content="Type a workspace name." />
@@ -76,7 +76,7 @@ export default function CreateRobotFormWorkspaceItem({
         </div>
 
         {!envOnPremiseRobot && (
-          <div>
+          <div data-tut="create-robot-step2-workspace-distro">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Workspace Distro:
               <InfoTip content="Select a workspace ros2 distro." />
@@ -117,7 +117,10 @@ export default function CreateRobotFormWorkspaceItem({
             />
           </div>
         )}
-        <div className="flex flex-col gap-3 p-4">
+        <div
+          className="flex flex-col gap-3 p-4"
+          data-tut="create-robot-step2-workspace-repositories"
+        >
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
           </span>
@@ -133,20 +136,29 @@ export default function CreateRobotFormWorkspaceItem({
               />
             )
           )}
-          <CreateRobotFormAddButton
-            onClick={() =>
-              handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
-            }
-            disabled={formik.isSubmitting}
+          <div data-tut="create-robot-step2-repository-add-button">
+            <CreateRobotFormAddButton
+              onClick={() =>
+                handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
+              }
+              disabled={formik.isSubmitting}
+            />
+          </div>
+        </div>
+        <div
+          className="flex items-center"
+          data-tut="create-robot-step2-workspace-delete-button"
+        >
+          <CreateRobotFormDeleteButton
+            disabled={robotData?.step2?.workspaces?.length > 1 ? false : true}
+            onClick={() => {
+              handleRemoveWorkspaceStep(formik, workspaceIndex);
+            }}
+            text={`Delete ${
+              workspace?.name ? workspace.name : "this"
+            } Workspace`}
           />
         </div>
-        <CreateRobotFormDeleteButton
-          disabled={robotData?.step2?.workspaces?.length > 1 ? false : true}
-          onClick={() => {
-            handleRemoveWorkspaceStep(formik, workspaceIndex);
-          }}
-          text={`Delete ${workspace?.name ? workspace.name : "this"} Workspace`}
-        />
       </div>
     </Accordion>
   );

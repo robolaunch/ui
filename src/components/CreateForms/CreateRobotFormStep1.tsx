@@ -25,6 +25,8 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import TourGuide from "../TourGuide/TourGuide";
+import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -171,7 +173,7 @@ export default function CreateRobotFormStep1({
             className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
           >
             {/* RobotName */}
-            <div>
+            <div data-tut="create-robot-step1-name">
               <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
                 Robot Name:
                 <InfoTip content="Type a new robot name." />
@@ -237,13 +239,13 @@ export default function CreateRobotFormStep1({
               {/* Robot Services */}
               <div className="flex items-center gap-4">
                 {/* ROS2 Bridge */}
-                <div className="flex items-center gap-1">
+                <div
+                  data-tut="create-robot-step1-ros2-bridge"
+                  className="flex items-center gap-1"
+                >
                   <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                     ROS2 (Bridge) :
-                    <InfoTip
-                      content="
-          The ROS2 Bridge allows you to connect your robot to the ROS2 ecosystem. This allows you to use ROS2 tools to interact with your robot."
-                    />
+                    <InfoTip content="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot." />
                   </div>
                   <InputToggle
                     checked={formik?.values?.isEnabledROS2Bridge}
@@ -256,7 +258,10 @@ export default function CreateRobotFormStep1({
 
                 {/* Remote Desktop Session Count */}
                 {formik?.values?.remoteDesktop?.isEnabled && (
-                  <div className="flex gap-2 w-full pl-10">
+                  <div
+                    data-tut="create-robot-step1-vdi-session-count"
+                    className="flex gap-2 w-full pl-10"
+                  >
                     <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                       VDI: Session Count (
                       {formik?.values?.remoteDesktop?.sessionCount} User) :
@@ -289,7 +294,10 @@ export default function CreateRobotFormStep1({
               <Seperator />
 
               {/* GPU Resource */}
-              <div className="flex items-center gap-1">
+              <div
+                data-tut="create-robot-step1-gpu-resource"
+                className="flex items-center gap-1"
+              >
                 <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                   GPU Usage Enabled for Cloud Instance:
                   <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
@@ -309,7 +317,10 @@ export default function CreateRobotFormStep1({
               {/* Development Mode */}
               {!isImportRobot && (
                 <Fragment>
-                  <div className="flex items-center gap-1">
+                  <div
+                    data-tut="create-robot-step1-development-mode"
+                    className="flex items-center gap-1"
+                  >
                     <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
                       Development Mode:
                       <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
@@ -360,6 +371,20 @@ export default function CreateRobotFormStep1({
           </form>
         </CreateRobotFormLoader>
       }
+      <TourGuide
+        hiddenButton
+        type="createRobotStep1"
+        tourConfig={[
+          getGuideItem("[data-tut='create-robot-step1-name']"),
+          getGuideItem("[data-tut='create-robot-step1-type']"),
+          getGuideItem("[data-tut='create-robot-step1-ros-distrobutions']"),
+          getGuideItem("[data-tut='create-robot-step1-storage']"),
+          getGuideItem("[data-tut='create-robot-step1-ros2-bridge']"),
+          getGuideItem("[data-tut='create-robot-step1-vdi-session-count']"),
+          getGuideItem("[data-tut='create-robot-step1-gpu-resource']"),
+          getGuideItem("[data-tut='create-robot-step1-development-mode']"),
+        ]}
+      />
     </Fragment>
   );
 }

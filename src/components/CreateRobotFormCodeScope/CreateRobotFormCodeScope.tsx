@@ -30,7 +30,7 @@ export default function CreateRobotFormCodeScope({
   const { selectedState } = useMain();
 
   return (
-    <div>
+    <div data-tut="create-robot-build-step-scope">
       <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
         <span>Code Scope:</span>
         <InfoTip content="Code Scope" />

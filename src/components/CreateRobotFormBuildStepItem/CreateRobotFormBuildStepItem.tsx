@@ -34,7 +34,7 @@ export default function CreateRobotFormBuildStepItem({
   disabled,
   isImportRobot,
 }: ICreateRobotFormBuildStepItem): ReactElement {
-  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(true);
   const { selectedState } = useMain();
   const { robotData, handleRemoveStepFromBuildStep } = useCreateRobot();
 
@@ -54,7 +54,7 @@ export default function CreateRobotFormBuildStepItem({
     >
       <Fragment>
         <div className="flex flex-col gap-4 p-4">
-          <div>
+          <div data-tut="create-robot-build-step-name">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Build Step Name:
               <InfoTip content="Type a unique build step name." />
@@ -75,7 +75,7 @@ export default function CreateRobotFormBuildStepItem({
             />
           </div>
 
-          <div>
+          <div data-tut="create-robot-build-step-workspace">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Workspace:
               <InfoTip content="Select a workspace name." />
@@ -110,7 +110,7 @@ export default function CreateRobotFormBuildStepItem({
             />
           </div>
 
-          <div>
+          <div data-tut="create-robot-build-step-code-type">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Bash/Script Code:
               <InfoTip content="Select command or script code" />
@@ -171,7 +171,7 @@ export default function CreateRobotFormBuildStepItem({
             </InputSelect>
           </div>
 
-          <div>
+          <div data-tut="create-robot-build-step-code">
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Code:
               <InfoTip content="Type code" />

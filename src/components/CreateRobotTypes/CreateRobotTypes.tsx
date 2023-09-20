@@ -53,7 +53,7 @@ export default function CreateRobotTypes({
 
   return (
     <Fragment>
-      <div className="flex flex-col gap-2">
+      <div data-tut="create-robot-step1-type" className="flex flex-col gap-2">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
           <InfoTip content="Select the type of robot you want to create." />

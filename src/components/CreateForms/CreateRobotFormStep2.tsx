@@ -20,6 +20,8 @@ import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { toast } from "sonner";
+import TourGuide from "../TourGuide/TourGuide";
+import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -223,20 +225,6 @@ export default function CreateRobotFormStep2({
     );
   }
 
-  useEffect(() => {
-    console.log(
-      !formik?.isValid,
-      formik.isSubmitting,
-      JSON.stringify(formik.initialValues) === JSON.stringify(formik.values),
-      formik?.initialValues,
-      formik?.values
-    );
-  }, [formik]);
-
-  useEffect(() => {
-    console.log(formik);
-  }, [formik]);
-
   return (
     <CreateRobotFormLoader
       isLoading={
@@ -268,7 +256,10 @@ export default function CreateRobotFormStep2({
         onSubmit={formik.handleSubmit}
         className="flex flex-col gap-4 animate__animated animate__fadeIn"
       >
-        <div className="flex flex-col gap-2">
+        <div
+          data-tut="create-robot-step2-workspaces"
+          className="flex flex-col gap-2"
+        >
           {robotData?.step2?.workspaces?.map(
             (workspace: any, workspaceIndex: number) => {
               return (
@@ -288,9 +279,11 @@ export default function CreateRobotFormStep2({
           )}
         </div>
 
-        <CreateRobotFormAddButton
-          onClick={() => handleAddWorkspaceStep(formik)}
-        />
+        <div data-tut="create-robot-step2-workspace-add-button">
+          <CreateRobotFormAddButton
+            onClick={() => handleAddWorkspaceStep(formik)}
+          />
+        </div>
 
         {!(envOnPremiseRobot && url?.robotName ? true : false) && (
           <div className="flex gap-2 mt-10">
@@ -331,6 +324,35 @@ export default function CreateRobotFormStep2({
           </div>
         )}
       </form>
+      <TourGuide
+        hiddenButton
+        type="createRobotStep2"
+        tourConfig={[
+          getGuideItem("[data-tut='create-robot-step2-workspaces']"),
+          getGuideItem("[data-tut='create-robot-step2-workspace-add-button']"),
+          getGuideItem("[data-tut='create-robot-step2-workspace-name']"),
+          getGuideItem("[data-tut='create-robot-step2-workspace-distro']"),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-delete-button']"
+          ),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-repositories']"
+          ),
+          getGuideItem("[data-tut='create-robot-step2-repository-add-button']"),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-repository-name']"
+          ),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-repository-url']"
+          ),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-repository-branch']"
+          ),
+          getGuideItem(
+            "[data-tut='create-robot-step2-workspace-repository-delete-button']"
+          ),
+        ]}
+      />
     </CreateRobotFormLoader>
   );
 }

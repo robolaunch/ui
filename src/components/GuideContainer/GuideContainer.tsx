@@ -11,8 +11,8 @@ export default function GuideContainer({
 }: IGuideContainer): ReactElement {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-lg font-medium">{title}</span>
-      <p className="text-sm">{text}</p>
+      <span className="text-lg font-bold">{title}</span>
+      <p className="text-sm font-medium ">{text}</p>
     </div>
   );
 }

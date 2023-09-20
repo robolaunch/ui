@@ -34,7 +34,7 @@ export default function CreateRobotFormRepositoryItem({
   workspaceIndex,
   disabled,
 }: ICreateRobotFormRepositoryItem): ReactElement {
-  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
+  const [isShowAccordion, setIsShowAccordion] = useState<boolean>(true);
   const [responseRepositories, setResponseRepositories] = useState<any[]>([]);
   const [responseBranches, setResponseBranches] = useState<any[]>([]);
   const dispatch = useAppDispatch();
@@ -175,7 +175,7 @@ export default function CreateRobotFormRepositoryItem({
       }
     >
       <div className="flex flex-col gap-2 px-5 py-2.5">
-        <div>
+        <div data-tut="create-robot-step2-workspace-repository-name">
           <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
             Repository Name:
             <InfoTip content="Type a repository name." />
@@ -200,7 +200,10 @@ export default function CreateRobotFormRepositoryItem({
           />
         </div>
         <div className="flex gap-2 w-full">
-          <div className="w-full">
+          <div
+            data-tut="create-robot-step2-workspace-repository-url"
+            className="w-full"
+          >
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Repository URL:
               <InfoTip content="Type a repository URL." />
@@ -245,7 +248,10 @@ export default function CreateRobotFormRepositoryItem({
               }
             />
           </div>
-          <div className="w-36">
+          <div
+            data-tut="create-robot-step2-workspace-repository-branch"
+            className="w-36"
+          >
             <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
               Branch Name:
               <InfoTip content="Type a repository branch name." rightTip />
@@ -311,24 +317,29 @@ export default function CreateRobotFormRepositoryItem({
           </div>
         </div>
 
-        <CreateRobotFormDeleteButton
-          disabled={
-            formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
-              ?.length > 1
-              ? false
-              : true
-          }
-          onClick={() => {
-            handleRemoveRepositoryFromWorkspaceStep(
-              formik,
-              workspaceIndex,
-              repositoryIndex
-            );
-          }}
-          text={`Delete ${
-            repository?.name ? repository.name : "this"
-          } Repository`}
-        />
+        <div
+          data-tut="create-robot-step2-workspace-repository-delete-button"
+          className="flex items-center"
+        >
+          <CreateRobotFormDeleteButton
+            disabled={
+              formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
+                ?.length > 1
+                ? false
+                : true
+            }
+            onClick={() => {
+              handleRemoveRepositoryFromWorkspaceStep(
+                formik,
+                workspaceIndex,
+                repositoryIndex
+              );
+            }}
+            text={`Delete ${
+              repository?.name ? repository.name : "this"
+            } Repository`}
+          />
+        </div>
       </div>
     </Accordion>
   );
