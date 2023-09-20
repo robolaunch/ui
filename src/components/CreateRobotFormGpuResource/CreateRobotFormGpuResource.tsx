@@ -11,7 +11,10 @@ export default function CreateRobotFormGpuResource({
   disabled,
 }: ICreateRobotFormGpuResource): ReactElement {
   return (
-    <div className="flex items-center gap-4">
+    <div
+      data-tut="create-environment-gpu-resource"
+      className="flex items-center gap-4"
+    >
       <div className="flex gap-2 w-full">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           GPU Resource: ({formik?.values?.ideGpuResource} Core) :

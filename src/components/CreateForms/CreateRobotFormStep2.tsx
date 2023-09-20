@@ -99,29 +99,29 @@ export default function CreateRobotFormStep2({
           await handleSubmit();
         });
       }
-
-      async function handleSubmit() {
-        formik.setSubmitting(false);
-
-        if (isImportRobot) {
-          toast.success("Robot updated successfully");
-          return window.location.reload();
-        }
-
-        if (robotData?.step1?.isDevelopmentMode) {
-          setSidebarState((prevState: any) => {
-            return {
-              ...prevState,
-              isCreateMode: false,
-              page: "robot",
-            };
-          });
-        } else {
-          handleCreateRobotNextStep();
-        }
-      }
     },
   });
+
+  async function handleSubmit() {
+    formik.setSubmitting(false);
+
+    if (isImportRobot) {
+      toast.success("Robot updated successfully");
+      return window.location.reload();
+    }
+
+    if (robotData?.step1?.isDevelopmentMode) {
+      setSidebarState((prevState: any) => {
+        return {
+          ...prevState,
+          isCreateMode: false,
+          page: "robot",
+        };
+      });
+    } else {
+      handleCreateRobotNextStep();
+    }
+  }
 
   useEffect(() => {
     setRobotData({
@@ -286,72 +286,112 @@ export default function CreateRobotFormStep2({
         </div>
 
         {!(envOnPremiseRobot && url?.robotName ? true : false) && (
-          <div className="flex gap-2 mt-10">
-            {!isImportRobot && (
-              <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-            )}
-            <Button
-              type="submit"
-              disabled={
-                !formik?.isValid ||
-                formik.isSubmitting ||
-                JSON.stringify(formik.initialValues) ===
-                  JSON.stringify(formik.values) ||
-                (envOnPremiseRobot && url?.robotName ? true : false)
-              }
-              loading={formik.isSubmitting}
-              className="w-full !h-11 text-xs"
-              text={
-                formik.isSubmitting ? (
-                  <img
-                    className="w-10 h-10"
-                    src="/svg/general/loading.svg"
-                    alt="loading"
-                  />
-                ) : isImportRobot ? (
-                  `Update Robot`
-                ) : robotData?.step1?.isDevelopmentMode ? (
-                  envOnPremiseRobot ? (
-                    `Create Application`
+          <div className="flex flex-col w-full gap-6 mt-10">
+            <div className="flex gap-2">
+              {!isImportRobot && (
+                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+              )}
+              <Button
+                type="submit"
+                disabled={
+                  !formik?.isValid ||
+                  formik.isSubmitting ||
+                  JSON.stringify(formik.initialValues) ===
+                    JSON.stringify(formik.values) ||
+                  (envOnPremiseRobot && url?.robotName ? true : false)
+                }
+                loading={formik.isSubmitting}
+                className="w-full !h-11 text-xs"
+                text={
+                  formik.isSubmitting ? (
+                    <img
+                      className="w-10 h-10"
+                      src="/svg/general/loading.svg"
+                      alt="loading"
+                    />
+                  ) : isImportRobot ? (
+                    `Update Robot`
+                  ) : robotData?.step1?.isDevelopmentMode ? (
+                    envOnPremiseRobot ? (
+                      `Create Application with Workspaces`
+                    ) : (
+                      `Create Robot`
+                    )
                   ) : (
-                    `Create Robot`
+                    `Next Step`
                   )
-                ) : (
-                  `Next Step`
-                )
-              }
-            />
+                }
+              />
+            </div>
           </div>
         )}
       </form>
       <TourGuide
         hiddenButton
         type="createRobotStep2"
-        tourConfig={[
-          getGuideItem("[data-tut='create-robot-step2-workspaces']"),
-          getGuideItem("[data-tut='create-robot-step2-workspace-add-button']"),
-          getGuideItem("[data-tut='create-robot-step2-workspace-name']"),
-          getGuideItem("[data-tut='create-robot-step2-workspace-distro']"),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-delete-button']"
-          ),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-repositories']"
-          ),
-          getGuideItem("[data-tut='create-robot-step2-repository-add-button']"),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-repository-name']"
-          ),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-repository-url']"
-          ),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-repository-branch']"
-          ),
-          getGuideItem(
-            "[data-tut='create-robot-step2-workspace-repository-delete-button']"
-          ),
-        ]}
+        tourConfig={
+          envOnPremiseRobot
+            ? [
+                getGuideItem("[data-tut='create-robot-step2-workspaces']"),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-add-button']"
+                ),
+                getGuideItem("[data-tut='create-robot-step2-workspace-name']"),
+
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-delete-button']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repositories']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-repository-add-button']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-name']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-url']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-branch']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-delete-button']"
+                ),
+              ]
+            : [
+                getGuideItem("[data-tut='create-robot-step2-workspaces']"),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-add-button']"
+                ),
+                getGuideItem("[data-tut='create-robot-step2-workspace-name']"),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-distro']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-delete-button']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repositories']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-repository-add-button']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-name']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-url']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-branch']"
+                ),
+                getGuideItem(
+                  "[data-tut='create-robot-step2-workspace-repository-delete-button']"
+                ),
+              ]
+        }
       />
     </CreateRobotFormLoader>
   );

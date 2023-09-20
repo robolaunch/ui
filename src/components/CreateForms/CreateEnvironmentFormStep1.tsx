@@ -19,6 +19,10 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { getGuideItem } from "../../functions/handleGuide";
+import TourGuide from "../TourGuide/TourGuide";
+import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import InputToggle from "../InputToggle/InputToggle";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -28,7 +32,8 @@ export default function CreateEnvironmentFormStep1({
   isImportRobot,
 }: ICreateEnvironmentFormStep1): ReactElement {
   const { robotData, setRobotData }: any = useCreateRobot();
-  const { selectedState, handleCreateRobotNextStep } = useMain();
+  const { selectedState, setSidebarState, handleCreateRobotNextStep } =
+    useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const dispatch = useAppDispatch();
   const { getEnvironment } = useFunctions();
@@ -123,6 +128,50 @@ export default function CreateEnvironmentFormStep1({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values.isVirtualRobot]);
 
+  function handleCreateApplicationWithoutWorkspaces() {
+    formik.setSubmitting(true);
+    dispatch(
+      createEnvironment({
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
+        instanceId: selectedState?.instance?.instanceId,
+        fleetName: selectedState?.fleet?.name,
+        environmentName: robotData?.step1?.robotName,
+        domainName: robotData?.step1?.domainName,
+        storageAmount: robotData?.step1?.robotStorage,
+        ideGpuResource: robotData?.step1?.ideGpuResource,
+        vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+        applicationName: robotData?.step1?.application?.name,
+        applicationVersion: robotData?.step1?.application?.version,
+        devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
+        devspaceDesktop: robotData?.step1?.devspace?.desktop,
+        devspaceVersion: robotData?.step1?.devspace?.version,
+        workspaces: [
+          {
+            name: "ws1",
+            workspaceDistro: "",
+            robotRepositories: [
+              {
+                name: "repo1",
+                url: "https://github.com/robolaunch/robolaunch",
+                branch: "main",
+              },
+            ],
+          },
+        ],
+      })
+    ).then(async () => {
+      setSidebarState((prevState: any) => {
+        return {
+          ...prevState,
+          isCreateMode: false,
+          page: "robot",
+        };
+      });
+    });
+  }
+
   return (
     <Fragment>
       {
@@ -136,7 +185,7 @@ export default function CreateEnvironmentFormStep1({
             className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
           >
             {/* RobotName */}
-            <div>
+            <div data-tut="create-application-step1-name">
               <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
                 Environment Name:
                 <InfoTip content="Type a new robot name." />
@@ -189,41 +238,92 @@ export default function CreateEnvironmentFormStep1({
                 formik={formik}
                 disabled={isImportRobot}
               />
+
+              <Seperator />
+
+              <div
+                data-tut="create-robot-step1-ros2-bridge"
+                className="flex items-center gap-1"
+              >
+                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                  Configure Workspaces :
+                  <InfoTip content="Configure Workspaces" />
+                </div>
+                <InputToggle
+                  disabled={isImportRobot}
+                  checked={formik?.values?.configureWorkspace}
+                  onChange={(e: any) => {
+                    formik.setFieldValue("configureWorkspace", e);
+                  }}
+                />
+              </div>
             </div>
 
             {!url.robotName && (
               <div className="flex gap-2 mt-10 ">
                 {!isImportRobot && (
-                  <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+                  <Fragment>
+                    <CreateRobotFormCancelButton
+                      disabled={formik.isSubmitting}
+                    />
+                  </Fragment>
                 )}
-                <Button
-                  disabled={
-                    !formik.isValid ||
-                    formik.isSubmitting ||
-                    JSON.stringify(formik.initialValues) ===
-                      JSON.stringify(formik.values)
-                  }
-                  type="submit"
-                  className="!h-11 text-xs"
-                  text={
-                    formik.isSubmitting ? (
-                      <img
-                        className="w-10 h-10"
-                        src="/svg/general/loading.svg"
-                        alt="loading"
-                      />
-                    ) : isImportRobot ? (
-                      "Update Application"
-                    ) : (
-                      `Next Step`
-                    )
-                  }
-                />
+
+                {isImportRobot || formik.values.configureWorkspace ? (
+                  <Button
+                    disabled={
+                      !formik.isValid ||
+                      formik.isSubmitting ||
+                      JSON.stringify(formik.initialValues) ===
+                        JSON.stringify(formik.values)
+                    }
+                    type="submit"
+                    className="!h-11 text-xs"
+                    text={
+                      formik.isSubmitting ? (
+                        <img
+                          className="w-10 h-10"
+                          src="/svg/general/loading.svg"
+                          alt="loading"
+                        />
+                      ) : isImportRobot ? (
+                        "Update Application"
+                      ) : (
+                        `Next Step`
+                      )
+                    }
+                  />
+                ) : (
+                  <Button
+                    text={"Create Application"}
+                    className="!h-11 text-xs"
+                    disabled={
+                      !formik.isValid ||
+                      formik.isSubmitting ||
+                      JSON.stringify(formik.initialValues) ===
+                        JSON.stringify(formik.values)
+                    }
+                    onClick={handleCreateApplicationWithoutWorkspaces}
+                  />
+                )}
               </div>
             )}
           </form>
         </CreateRobotFormLoader>
       }
+      <TourGuide
+        hiddenButton
+        type="createRobotStep1"
+        tourConfig={[
+          getGuideItem("[data-tut='create-application-step1-name']"),
+          getGuideItem(
+            "[data-tut='create-application-step1-environment-selector']"
+          ),
+          getGuideItem("[data-tut='create-robot-step1-storage']"),
+          getGuideItem("[data-tut='create-environment-vdi-session-count']"),
+          getGuideItem("[data-tut='create-environment-gpu-resource']"),
+        ]}
+      />
     </Fragment>
   );
 }

@@ -138,6 +138,7 @@ export interface IRobotData {
 }
 
 export interface IRobotWorkspaces {
+  configureWorkspace: boolean;
   workspaces: IRobotWorkspace[];
 }
 

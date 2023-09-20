@@ -11,7 +11,10 @@ export default function CreateRobotFormVDISessionCount({
   disabled,
 }: ICreateRobotFormVDISessionCount): ReactElement {
   return (
-    <div className="flex items-center gap-4">
+    <div
+      data-tut="create-environment-vdi-session-count"
+      className="flex items-center gap-4"
+    >
       <div className="flex gap-2 w-full">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
           VDI: Session Count ({formik?.values?.remoteDesktop?.sessionCount}{" "}

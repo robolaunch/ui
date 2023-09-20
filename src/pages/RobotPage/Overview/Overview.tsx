@@ -44,26 +44,58 @@ export default function Overview({
           component={
             <TourGuide
               type="instance"
-              tourConfig={[
-                getGuideItem('[data-tut="robot-header"]'),
-                getGuideItem('[data-tut="robot-information"]'),
-                getGuideItem('[data-tut="robot-service-buttons"]'),
-                getGuideItem('[data-tut="robot-connections"]'),
-                getGuideItem('[data-tut="robot-resources"]'),
-                getGuideItem('[data-tut="robot-header-tabs"]'),
-                getGuideItem('[data-tut="robot-header-tab-overview"]'),
-                getGuideItem('[data-tut="robot-header-tab-teleoperation"]'),
-                getGuideItem('[data-tut="robot-header-tab-visualization"]'),
-                getGuideItem('[data-tut="robot-header-tab-code-editor"]'),
-                getGuideItem('[data-tut="robot-header-tab-development-suite"]'),
-                getGuideItem('[data-tut="robot-header-tab-remote-desktop"]'),
-                getGuideItem('[data-tut="information-widget"]'),
-                getGuideItem('[data-tut="robot-status-widget"]'),
-                getGuideItem('[data-tut="robot-activities-widget"]'),
-                getGuideItem('[data-tut="robot-workspaces-table"]'),
-                getGuideItem('[data-tut="robot-build-managers-table"]'),
-                getGuideItem('[data-tut="robot-launch-managers-table"]'),
-              ]}
+              tourConfig={
+                envOnPremiseRobot
+                  ? [
+                      getGuideItem('[data-tut="robot-header"]'),
+                      getGuideItem('[data-tut="robot-information"]'),
+                      getGuideItem('[data-tut="robot-service-buttons"]'),
+                      getGuideItem('[data-tut="robot-connections"]'),
+                      getGuideItem('[data-tut="robot-resources"]'),
+                      getGuideItem('[data-tut="robot-header-tabs"]'),
+                      getGuideItem('[data-tut="robot-header-tab-overview"]'),
+
+                      getGuideItem('[data-tut="robot-header-tab-code-editor"]'),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-development-suite"]'
+                      ),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-remote-desktop"]'
+                      ),
+                      getGuideItem('[data-tut="information-widget"]'),
+                      getGuideItem('[data-tut="robot-status-widget"]'),
+                      getGuideItem('[data-tut="robot-activities-widget"]'),
+                      getGuideItem('[data-tut="robot-workspaces-table"]'),
+                    ]
+                  : [
+                      getGuideItem('[data-tut="robot-header"]'),
+                      getGuideItem('[data-tut="robot-information"]'),
+                      getGuideItem('[data-tut="robot-service-buttons"]'),
+                      getGuideItem('[data-tut="robot-connections"]'),
+                      getGuideItem('[data-tut="robot-resources"]'),
+                      getGuideItem('[data-tut="robot-header-tabs"]'),
+                      getGuideItem('[data-tut="robot-header-tab-overview"]'),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-teleoperation"]'
+                      ),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-visualization"]'
+                      ),
+                      getGuideItem('[data-tut="robot-header-tab-code-editor"]'),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-development-suite"]'
+                      ),
+                      getGuideItem(
+                        '[data-tut="robot-header-tab-remote-desktop"]'
+                      ),
+                      getGuideItem('[data-tut="information-widget"]'),
+                      getGuideItem('[data-tut="robot-status-widget"]'),
+                      getGuideItem('[data-tut="robot-activities-widget"]'),
+                      getGuideItem('[data-tut="robot-workspaces-table"]'),
+                      getGuideItem('[data-tut="robot-build-managers-table"]'),
+                      getGuideItem('[data-tut="robot-launch-managers-table"]'),
+                    ]
+              }
             />
           }
         />

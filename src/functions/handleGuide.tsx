@@ -147,8 +147,12 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Header"
-            text="You can see the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
+            title={envOnPremiseRobot ? "Application Header" : "Robot Header"}
+            text={
+              envOnPremiseRobot
+                ? "You can see the details of the application, control the application,  control the environments running on the application or develop the application's software."
+                : "You can see the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
+            }
           />
         ),
       };
@@ -157,8 +161,14 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Information"
-            text="You can see the details of the robot."
+            title={
+              envOnPremiseRobot
+                ? "Application Information"
+                : "Robot Information"
+            }
+            text={`You can see the details of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -167,8 +177,12 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Services"
-            text="You can access the code editor and remote desktop of the robot."
+            title={
+              envOnPremiseRobot ? "Application Services" : "Robot Services"
+            }
+            text={`You can access the code editor and remote desktop of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -177,8 +191,14 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Connections"
-            text="You can see tho robot's resources."
+            title={
+              envOnPremiseRobot ? "Application Resources" : "Robot Resources"
+            }
+            text={
+              envOnPremiseRobot
+                ? "You can see tho application's resources."
+                : "You can see tho robot's resources."
+            }
           />
         ),
       };
@@ -187,8 +207,14 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Connections"
-            text="You can see the connection status of the robot."
+            title={
+              envOnPremiseRobot
+                ? "Application Connections"
+                : "Robot Connections"
+            }
+            text={`You can see the connection status of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -197,8 +223,12 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Header Tabs"
-            text="You can access the visualization, code editor, development suite and remote desktop of the robot."
+            title={`${envOnPremiseRobot ? "Application" : "Robot"} Header Tabs`}
+            text={
+              envOnPremiseRobot
+                ? "You can access the code editor, development suite and remote desktop of the application."
+                : "You can access the visualization, code editor, development suite and remote desktop of the robot."
+            }
           />
         ),
       };
@@ -209,7 +239,9 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title="Overview"
-            text="You can see the details of the robot."
+            text={`You can see the details of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -355,7 +387,7 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Robot Storage"
+            title={`${envOnPremiseRobot ? "Application" : "Robot"} Storage`}
             text="Select the storage you want to use."
           />
         ),
@@ -407,7 +439,11 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title="Workspaces"
-            text="Workspaces are the ROS2 workspaces that you want to use in your robot."
+            text={
+              envOnPremiseRobot
+                ? `If you want to use a workspace in your application, you can add it here.`
+                : `Workspaces are the ROS2 workspaces that you want to use in your robot.`
+            }
           />
         ),
       };
@@ -627,6 +663,47 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Add Environment"
             text="Click here to add an environment."
+          />
+        ),
+      };
+    case "[data-tut='create-application-step1-name']":
+      return {
+        selector: guide,
+        content: () => (
+          <GuideContainer
+            title="Application Name"
+            text="Give your application a name."
+          />
+        ),
+      };
+    case "[data-tut='create-application-step1-environment-selector']":
+      return {
+        selector: guide,
+        content: () => (
+          <GuideContainer
+            title="Application Environment"
+            text="Select the environment you want to use."
+          />
+        ),
+      };
+
+    case "[data-tut='create-environment-vdi-session-count']":
+      return {
+        selector: guide,
+        content: () => (
+          <GuideContainer
+            title="VDI Session Count"
+            text="Select the VDI Session Count you want to use."
+          />
+        ),
+      };
+    case "[data-tut='create-environment-gpu-resource']":
+      return {
+        selector: guide,
+        content: () => (
+          <GuideContainer
+            title="GPU Resource"
+            text="Select the GPU Resource you want to use."
           />
         ),
       };

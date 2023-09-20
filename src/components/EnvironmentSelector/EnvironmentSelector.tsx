@@ -42,7 +42,7 @@ export default function EnvironmentSelector({
 
   return (
     <Fragment>
-      <div>
+      <div data-tut="create-application-step1-environment-selector">
         <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
           Categories:
           <InfoTip content="Select a categories." />
