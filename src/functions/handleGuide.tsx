@@ -310,8 +310,10 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Status Widget"
-            text="You can see the status of the robot."
+            title={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
+            text={`You can see the status of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -321,7 +323,9 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title="Activities Widget"
-            text="You can see the activities of the robot."
+            text={`You can see the activities of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
@@ -331,7 +335,9 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title="Workspaces Table"
-            text="You can see the workspaces of the robot."
+            text={`You can see the workspaces of the ${
+              envOnPremiseRobot ? "application" : "robot"
+            }.`}
           />
         ),
       };
