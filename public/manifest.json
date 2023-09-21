@@ -1,7 +1,7 @@
 {
   "name": "robolaunch",
   "short_name": "robolaunch",
-  "description": "Robolaunch",
+  "description": "robolaunch",
   "icons": [
     {
       "src": "/app/144x144.png",
