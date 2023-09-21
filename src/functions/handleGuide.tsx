@@ -7,6 +7,7 @@ export function getGuideItem(guide: string) {
     case "welcome":
       return {
         selector: guide,
+        stepInteraction: false,
         content: () => <WelcomeGuide />,
       };
 

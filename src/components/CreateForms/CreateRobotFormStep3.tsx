@@ -460,11 +460,13 @@ export default function CreateRobotFormStep3({
         </form>
       </CreateRobotFormLoader>
       {!isImportRobot &&
-        responseRobot?.robotClusters &&
-        responseRobot?.robotClusters?.filter(
-          (robotCluster: any) =>
-            robotCluster?.robotStatus !== "EnvironmentReady"
-        )?.length && (
+        !(
+          !responseRobot?.robotClusters ||
+          responseRobot?.robotClusters?.filter(
+            (robotCluster: any) =>
+              robotCluster?.robotStatus !== "EnvironmentReady"
+          )?.length
+        ) && (
           <TourGuide
             hiddenButton
             type="createRobotStep3"

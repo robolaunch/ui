@@ -1335,6 +1335,10 @@ video {
   width: max-content;
 }
 
+.w-52 {
+  width: 13rem;
+}
+
 .min-w-\[12rem\] {
   min-width: 12rem;
 }

@@ -380,13 +380,12 @@ export default function CreateRobotFormStep4({
         </form>
       </CreateRobotFormLoader>
       {!isImportRobot &&
-        responseBuildManager?.robotClusters &&
-        responseBuildManager?.robotClusters?.map((item: any) => {
-          return {
-            name: item?.name,
-            status: item?.buildManagerStatus,
-          };
-        }) && (
+        !(
+          !responseBuildManager ||
+          responseBuildManager?.robotClusters?.filter(
+            (item: any) => item?.buildManagerStatus !== "Ready"
+          )?.length
+        ) && (
           <TourGuide
             hiddenButton
             type="createRobotStep4"
