@@ -28,7 +28,7 @@ export default function DashboardLayout({
         <div className="col-span-full lg:col-span-5">{widget2}</div>
       )}
       <div className="col-span-full lg:col-span-3">{widget3}</div>
-      <div className="col-span-full order-last">{table}</div>
+      <div className="order-last col-span-full">{table}</div>
     </div>
   );
 }

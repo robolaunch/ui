@@ -44,7 +44,7 @@ export default function MainDashboardPage(): ReactElement {
           actions: organization,
         };
       }),
-    [responseOrganizations]
+    [responseOrganizations],
   );
 
   const columns: any = useMemo(
@@ -97,7 +97,7 @@ export default function MainDashboardPage(): ReactElement {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   return (

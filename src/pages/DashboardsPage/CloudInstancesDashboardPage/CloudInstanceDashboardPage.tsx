@@ -84,7 +84,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
           actions: fleet,
         };
       }),
-    [url, responseFleets]
+    [url, responseFleets],
   );
 
   const columns: any = useMemo(
@@ -178,7 +178,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         },
       },
     ],
-    [url, selectedState, reload]
+    [url, selectedState, reload],
   );
 
   function handleGetOrganization() {
@@ -190,7 +190,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseFleets,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -204,7 +204,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseFleets,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -221,7 +221,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseFleets,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -236,7 +236,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       {
         ifErrorNavigateTo404: !responseFleets,
         setResponse: setResponseFleets,
-      }
+      },
     );
   }
 
@@ -251,7 +251,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       {
         ifErrorNavigateTo404: !responseFleets,
         setResponse: setResponseFleets,
-      }
+      },
     );
   }
 
@@ -303,7 +303,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                       100) *
                     (pagesState?.instance?.cloudInstanceResource?.storageTotal -
                       pagesState?.instance?.cloudInstanceResource?.storageUsage)
-                  ).toFixed()
+                  ).toFixed(),
                 ) || 0,
             },
           ]}

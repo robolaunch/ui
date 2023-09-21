@@ -36,7 +36,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           isSetState: true,
           ifErrorNavigateTo404: !responseRoboticsClouds,
           setPages: true,
-        }
+        },
       );
     } else {
       getRoboticsClouds(
@@ -46,7 +46,7 @@ export default function OrganizationDashboardPage(): ReactElement {
         {
           setResponse: setResponseRoboticsClouds,
           ifErrorNavigateTo404: !responseRoboticsClouds,
-        }
+        },
       );
     }
 
@@ -77,7 +77,7 @@ export default function OrganizationDashboardPage(): ReactElement {
           users: rc?.actions,
         };
       }),
-    [url, responseRoboticsClouds]
+    [url, responseRoboticsClouds],
   );
 
   const columns: any = useMemo(
@@ -161,7 +161,7 @@ export default function OrganizationDashboardPage(): ReactElement {
       },
     ],
 
-    [reload, url?.organizationName]
+    [reload, url?.organizationName],
   );
 
   return (
@@ -202,14 +202,14 @@ export default function OrganizationDashboardPage(): ReactElement {
               ? Array?.from(
                   new Set(
                     responseRoboticsClouds?.map((item: any) => item?.region) ||
-                      []
-                  )
+                      [],
+                  ),
                 )?.map((item: any, index: number) => {
                   return {
                     label: item || "",
                     value:
                       responseRoboticsClouds?.filter(
-                        (rc: any) => rc?.region === item
+                        (rc: any) => rc?.region === item,
                       )?.length || 0,
                     color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
                   };

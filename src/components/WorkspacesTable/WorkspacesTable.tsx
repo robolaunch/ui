@@ -26,7 +26,7 @@ export default function WorkspacesTable({
           repositories: workspace?.robotRepositories,
         };
       }),
-    [responseRobot]
+    [responseRobot],
   );
 
   const columns: any = useMemo(
@@ -76,10 +76,10 @@ export default function WorkspacesTable({
                 !responseRobot
                   ? "Loading..."
                   : responseRobot?.robotClusters?.filter(
-                      (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                      (robot: any) => robot?.robotStatus !== "EnvironmentReady",
                     )?.length
                   ? responseRobot?.robotClusters?.filter(
-                      (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                      (robot: any) => robot?.robotStatus !== "EnvironmentReady",
                     )[0]?.robotStatus
                   : "Ready"
               }
@@ -88,7 +88,7 @@ export default function WorkspacesTable({
         },
       },
     ],
-    [responseRobot, url]
+    [responseRobot, url],
   );
 
   return (

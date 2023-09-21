@@ -103,7 +103,7 @@ export default function FleetDashboardPage(): ReactElement {
           },
         };
       }),
-    [responseRobots, url, selectedState]
+    [responseRobots, url, selectedState],
   );
 
   const columns: any = useMemo(
@@ -222,7 +222,7 @@ export default function FleetDashboardPage(): ReactElement {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   function handleGetOrganization() {
@@ -234,7 +234,7 @@ export default function FleetDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseRobots,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -248,7 +248,7 @@ export default function FleetDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseRobots,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -265,7 +265,7 @@ export default function FleetDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseRobots,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -282,7 +282,7 @@ export default function FleetDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseRobots,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -299,7 +299,7 @@ export default function FleetDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseRobots,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -315,7 +315,7 @@ export default function FleetDashboardPage(): ReactElement {
       {
         ifErrorNavigateTo404: !responseRobots,
         setResponse: setResponseRobots,
-      }
+      },
     );
   }
 
@@ -331,7 +331,7 @@ export default function FleetDashboardPage(): ReactElement {
       {
         ifErrorNavigateTo404: !responseRobots,
         setResponse: setResponseRobots,
-      }
+      },
     );
   }
 
@@ -371,7 +371,7 @@ export default function FleetDashboardPage(): ReactElement {
                       responseRobots.filter(
                         (robot: any) =>
                           robot?.robotClusters?.[0]?.robotStatus !==
-                          "EnvironmentReady"
+                          "EnvironmentReady",
                       )?.length || 0,
                     color: "#ffa500",
                   },
@@ -381,7 +381,7 @@ export default function FleetDashboardPage(): ReactElement {
                       responseRobots.filter(
                         (robot: any) =>
                           robot?.robotClusters?.[0]?.robotStatus ===
-                          "EnvironmentReady"
+                          "EnvironmentReady",
                       )?.length || 0,
                     color: "#AC2DFE99",
                   },

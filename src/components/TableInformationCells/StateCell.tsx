@@ -50,7 +50,7 @@ export default function StateCell({
     return (
       <div className="flex items-center gap-1">
         <div
-          className={`w-2.5 h-2.5 rounded-full 
+          className={`h-2.5 w-2.5 rounded-full 
         ${states?.[`${state}`]?.color || "bg-red-500"}`}
         />
         <span className="text-xs capitalize">
@@ -69,7 +69,7 @@ export default function StateCell({
       state === "Running" ||
       state === "Active" ||
       state === "EnvironmentReady" ? (
-        <div className="w-2.5 h-2.5 bg-green-500 rounded-full" />
+        <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
       ) : state === "stopping" ||
         state === "pending" ||
         state === "Pending" ||
@@ -92,12 +92,12 @@ export default function StateCell({
         state === "ConfiguringWorkspaces" ||
         state === "BuildingRobot" ? (
         <img
-          className="w-2.5 h-2.5 scale-[3.4]"
+          className="h-2.5 w-2.5 scale-[3.4]"
           alt="loading"
           src="/svg/general/loading-yellow.svg"
         />
       ) : (
-        <div className="w-2.5 h-2.5 bg-red-500 rounded-full" />
+        <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
       )}
       <span className="text-xs capitalize">{state}</span>
     </div>

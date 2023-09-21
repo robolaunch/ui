@@ -13,7 +13,7 @@ export default function LaunchFormAccordionHeader({
   robotData,
 }: ILaunchFormAccordionHeader): ReactElement {
   return (
-    <div className="flex justify-between animate__animated animate__fadeIn">
+    <div className="animate__animated animate__fadeIn flex justify-between">
       <span className="font-medium">
         {step?.name || `Launch Step # ${index + 1}`}
       </span>
@@ -22,7 +22,7 @@ export default function LaunchFormAccordionHeader({
         {step.robotClusters.filter(
           (cluster: any) =>
             cluster?.name !== robotData.step1.physicalInstanceName &&
-            cluster.launchManagerStatus
+            cluster.launchManagerStatus,
         )?.[0]?.launchManagerStatus && (
           <div className="flex gap-1.5">
             <span
@@ -36,7 +36,7 @@ export default function LaunchFormAccordionHeader({
                 step.robotClusters.filter(
                   (cluster: any) =>
                     cluster?.name !== robotData.step1.physicalInstanceName &&
-                    cluster.launchManagerStatus
+                    cluster.launchManagerStatus,
                 )?.[0]?.launchManagerStatus || "Pending"
               }
             />
@@ -46,7 +46,7 @@ export default function LaunchFormAccordionHeader({
         {step.robotClusters.filter(
           (cluster: any) =>
             cluster?.name === robotData.step1.physicalInstanceName &&
-            cluster.launchManagerStatus
+            cluster.launchManagerStatus,
         )?.[0]?.launchManagerStatus && (
           <div className="flex gap-1.5">
             <span
@@ -60,7 +60,7 @@ export default function LaunchFormAccordionHeader({
                 step.robotClusters.filter(
                   (cluster: any) =>
                     cluster?.name === robotData.step1.physicalInstanceName &&
-                    cluster.launchManagerStatus
+                    cluster.launchManagerStatus,
                 )?.[0]?.launchManagerStatus || "Pending"
               }
             />

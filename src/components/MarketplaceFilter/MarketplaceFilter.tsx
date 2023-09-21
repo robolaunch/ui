@@ -13,16 +13,16 @@ import InputSelect from "../InputSelect/InputSelect";
 
 export default function MarketplaceFilter(): ReactElement {
   return (
-    <CardLayout className="!col-span-3 flex flex-col gap-8 p-6 !h-fit">
+    <CardLayout className="!col-span-3 flex !h-fit flex-col gap-8 p-6">
       <div className="flex flex-col gap-1">
         <span className="font-medium">Filter Settings</span>
-        <div className="w-28 h-[2px] bg-primary" />
+        <div className="h-[2px] w-28 bg-primary" />
       </div>
       <div className="flex flex-col gap-3">
         <div className="text-sm font-semibold text-layer-dark-700">
           Template Type
         </div>
-        <div className="flex flex-col text-xs gap-3 pl-6">
+        <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
             <img className="w-6" src="/images/rocket.svg" alt="robolaunch" />
@@ -62,7 +62,7 @@ export default function MarketplaceFilter(): ReactElement {
         <div className="text-sm font-semibold text-layer-dark-700">
           Robot Type
         </div>
-        <div className="flex flex-col text-xs gap-3 pl-6">
+        <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
             <BsFillCloudFill size={22} className="text-layer-secondary-500" />
@@ -82,7 +82,7 @@ export default function MarketplaceFilter(): ReactElement {
         <div className="text-sm font-semibold text-layer-dark-700">
           Ros Distro
         </div>
-        <div className="flex flex-col text-xs gap-3 pl-6">
+        <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
             <img className="w-10" src="/svg/apps/humble.svg" alt="humble" />
@@ -108,7 +108,7 @@ export default function MarketplaceFilter(): ReactElement {
 
       <div className="flex gap-4">
         <Button
-          className="!h-11 !bg-layer-light-50 !text-primary border border-layer-primary-500"
+          className="!h-11 border border-layer-primary-500 !bg-layer-light-50 !text-primary"
           text={"Reset Filter"}
         />
         <Button className="!h-11" text={"Apply Filter"} />

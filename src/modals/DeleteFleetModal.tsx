@@ -29,7 +29,7 @@ export default function DeleteFleetModalModal({
         instanceId: data?.instance?.instanceId,
         robolaunchFederatedFleetsName: data?.fleet?.name,
         region: data?.instance?.region,
-      })
+      }),
     ).then(() => {
       setTimeout(() => {
         reload();
@@ -45,20 +45,20 @@ export default function DeleteFleetModalModal({
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex w-full flex-col gap-8">
         <p className="text-sm">
           If you delete this fleet, delete all data associated with it.
           Including all robots, and other resources. This action cannot be
           undone. Are you sure you want to delete this fleet?
         </p>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text={
               isLoading ? (
                 <img
-                  className="w-10 h-10"
+                  className="h-10 w-10"
                   src="/svg/general/loading.svg"
                   alt="loading"
                 />

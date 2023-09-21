@@ -34,7 +34,7 @@ export const createFederatedFleet = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getFederatedFleets = createAsyncThunk(
@@ -58,7 +58,7 @@ export const getFederatedFleets = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteFederatedFleet = createAsyncThunk(
@@ -83,7 +83,7 @@ export const deleteFederatedFleet = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const createNamespace = createAsyncThunk(
@@ -106,7 +106,7 @@ export const createNamespace = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getNamespaces = createAsyncThunk(
@@ -125,7 +125,7 @@ export const getNamespaces = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteNamespace = createAsyncThunk(
@@ -148,7 +148,7 @@ export const deleteNamespace = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const FleetSlice = createSlice({

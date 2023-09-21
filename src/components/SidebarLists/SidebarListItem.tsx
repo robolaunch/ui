@@ -87,7 +87,7 @@ export default function SidebarListItem({
           }
         } else {
           toast.error(
-            "Instance is not selectable now. Please try again later."
+            "Instance is not selectable now. Please try again later.",
           );
         }
         break;
@@ -113,9 +113,8 @@ export default function SidebarListItem({
             organizationName: selectedState?.organization
               ?.organizationName as string,
             capitalization: false,
-          })}/${selectedState?.roboticsCloud?.name}/${
-            selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${data?.name}`
+          })}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
+            ?.name}/${selectedState?.fleet?.name}/${data?.name}`,
         );
     }
   };
@@ -123,18 +122,18 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`flex cursor-pointer animate__animated animate__fadeIn  border rounded-lg hover:scale-[0.985] select-none ${
+      className={`animate__animated animate__fadeIn flex cursor-pointer  select-none rounded-lg border hover:scale-[0.985] ${
         selected
-          ? "bg-layer-light-100 border-layer-light-400 shadow"
-          : "bg-layer-light-50 border-layer-light-200 shadow-sm"
+          ? "border-layer-light-400 bg-layer-light-100 shadow"
+          : "border-layer-light-200 bg-layer-light-50 shadow-sm"
       } transition-300`}
     >
       <div
         onClick={() => handleSelectItem()}
-        className={`w-full flex p-2.5 gap-4 rounded-l-lg border-r transition-300 ${
+        className={`transition-300 flex w-full gap-4 rounded-l-lg border-r p-2.5 ${
           selected
-            ? "hover:bg-layer-light-200 border-layer-light-400"
-            : "hover:bg-layer-light-100 border-layer-light-200"
+            ? "border-layer-light-400 hover:bg-layer-light-200"
+            : "border-layer-light-200 hover:bg-layer-light-100"
         } ${notSelectable && "!border-0"}`}
       >
         <img
@@ -188,7 +187,7 @@ export default function SidebarListItem({
                   navigate(url);
                 } else {
                   toast.error(
-                    "Instance is not selectable now. Please try again later."
+                    "Instance is not selectable now. Please try again later.",
                   );
                 }
                 break;
@@ -202,17 +201,17 @@ export default function SidebarListItem({
                   navigate(url);
                 } else {
                   toast.error(
-                    "Fleet is not selectable now. Please try again later."
+                    "Fleet is not selectable now. Please try again later.",
                   );
                 }
 
                 break;
             }
           }}
-          className={`flex items-center justify-center px-3.5 rounded-r-lg transition-300 ${
+          className={`transition-300 flex items-center justify-center rounded-r-lg px-3.5 ${
             selected
-              ? "hover:bg-layer-light-200 border-layer-light-400"
-              : "hover:bg-layer-light-100 border-layer-light-100"
+              ? "border-layer-light-400 hover:bg-layer-light-200"
+              : "border-layer-light-100 hover:bg-layer-light-100"
           } `}
         >
           <i

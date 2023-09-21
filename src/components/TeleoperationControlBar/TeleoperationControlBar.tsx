@@ -21,11 +21,11 @@ export default function TeleoperationControlBar({
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
   return (
-    <div className="absolute bottom-0 flex items-center justify-between px-4 w-full bg-layer-light-50 shadow-t-lg z-10 rounded-t py-3">
+    <div className="shadow-t-lg absolute bottom-0 z-10 flex w-full items-center justify-between rounded-t bg-layer-light-50 px-4 py-3">
       <div className="flex gap-2">
         <InputSelect
           disabled={isRemoteDesktopStream}
-          className="text-xs font-medium text-center h-8 p-0 min-w-[8rem]"
+          className="h-8 min-w-[8rem] p-0 text-center text-xs font-medium"
           onChange={(e) => setSelectedTopic(e.target.value)}
           value={selectedTopic}
         >
@@ -563,14 +563,14 @@ export default function TeleoperationControlBar({
         <button onClick={handleFullScreen.exit}>
           <BsFullscreenExit
             size={24}
-            className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+            className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
           />
         </button>
       ) : (
         <button onClick={handleFullScreen.enter}>
           <BsFullscreen
             size={24}
-            className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+            className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
           />
         </button>
       )}

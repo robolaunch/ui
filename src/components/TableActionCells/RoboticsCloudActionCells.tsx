@@ -18,9 +18,9 @@ export default function RoboticsCloudActionCells({
 
   return (
     <Fragment>
-      <div className="card flex gap-4 float-right">
+      <div className="card float-right flex gap-4">
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-red-600 disabled:!border-layer-light-500"
+          className="!h-8 !w-8 !border !border-red-600 !bg-transparent disabled:!border-layer-light-500"
           text={
             <BiTrash
               className={`${

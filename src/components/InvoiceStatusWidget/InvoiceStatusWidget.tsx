@@ -18,15 +18,15 @@ export default function InvoiceStatusWidget(): ReactElement {
         switch (errorCount) {
           case 0:
             return (
-              <div className="h-full flex items-center justify-center">
+              <div className="flex h-full items-center justify-center">
                 <div className="flex flex-col items-center gap-5">
-                  <div className="flex items-center justify-center text-3xl font-medium border-4 border-layer-secondary-500 rounded-full w-32 h-32">
+                  <div className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-layer-secondary-500 text-3xl font-medium">
                     <span>104$</span>
                   </div>
                   <span className="text-sm font-medium">
                     This month amount spent so far
                   </span>
-                  <span className="text-xs text-center">
+                  <span className="text-center text-xs">
                     Your organization has {errorCount} unpaid invoice.
                     <br />
                     <br />
@@ -37,11 +37,11 @@ export default function InvoiceStatusWidget(): ReactElement {
             );
           default:
             return (
-              <div className="h-full flex items-center justify-center">
+              <div className="flex h-full items-center justify-center">
                 <div className="flex flex-col items-center gap-5">
                   <BiErrorCircle size={80} className="text-red-500" />
                   <span className="text-sm font-medium">Payment Error</span>
-                  <span className="text-xs text-center">
+                  <span className="text-center text-xs">
                     Your organization has {errorCount} unpaid invoice.
                     <br />
                     <br />

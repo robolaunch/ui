@@ -17,10 +17,10 @@ export default function CreateRobotFormAddButton({
       title={description}
       onClick={disabled ? () => {} : onClick}
       size={22}
-      className={`mx-auto transition-all duration-500 cursor-pointer mt-4 animate__animated animate__fadeIn ${
+      className={`animate__animated animate__fadeIn mx-auto mt-4 cursor-pointer transition-all duration-500 ${
         disabled
           ? "text-layer-light-600 hover:cursor-not-allowed"
-          : "text-layer-primary-700 hover:text-layer-primary-500 hover:scale-90"
+          : "text-layer-primary-700 hover:scale-90 hover:text-layer-primary-500"
       }`}
     />
   );

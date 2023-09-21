@@ -55,13 +55,13 @@ export default function CreateRobotFormBuildStepItem({
       <Fragment>
         <div className="flex flex-col gap-4 p-4">
           <div data-tut="create-robot-build-step-name">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Build Step Name:
               <InfoTip content="Type a unique build step name." />
             </div>
             <InputText
               {...formik.getFieldProps(
-                `robotBuildSteps.${buildStepIndex}.name`
+                `robotBuildSteps.${buildStepIndex}.name`,
               )}
               className="!text-sm"
               disabled={formik?.isSubmitting}
@@ -76,13 +76,13 @@ export default function CreateRobotFormBuildStepItem({
           </div>
 
           <div data-tut="create-robot-build-step-workspace">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Workspace:
               <InfoTip content="Select a workspace name." />
             </div>
             <InputSelect
               {...formik.getFieldProps(
-                `robotBuildSteps.${buildStepIndex}.workspace`
+                `robotBuildSteps.${buildStepIndex}.workspace`,
               )}
               placeholder=""
               disabled={formik?.isSubmitting}
@@ -95,7 +95,7 @@ export default function CreateRobotFormBuildStepItem({
                     <option key={index} value={workspace.name}>
                       {workspace.name}
                     </option>
-                  )
+                  ),
                 )}
               </Fragment>
             </InputSelect>
@@ -111,13 +111,13 @@ export default function CreateRobotFormBuildStepItem({
           </div>
 
           <div data-tut="create-robot-build-step-code-type">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Bash/Script Code:
               <InfoTip content="Select command or script code" />
             </div>
             <InputSelect
               {...formik.getFieldProps(
-                `robotBuildSteps.${buildStepIndex}.isCommandCode`
+                `robotBuildSteps.${buildStepIndex}.isCommandCode`,
               )}
               value={
                 formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
@@ -139,7 +139,7 @@ export default function CreateRobotFormBuildStepItem({
                           };
                         }
                         return item;
-                      }
+                      },
                     ),
                   });
                 } else {
@@ -157,7 +157,7 @@ export default function CreateRobotFormBuildStepItem({
                           };
                         }
                         return item;
-                      }
+                      },
                     ),
                   });
                 }
@@ -172,7 +172,7 @@ export default function CreateRobotFormBuildStepItem({
           </div>
 
           <div data-tut="create-robot-build-step-code">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Code:
               <InfoTip content="Type code" />
             </div>
@@ -222,7 +222,7 @@ export default function CreateRobotFormBuildStepItem({
                       } else {
                         return item;
                       }
-                    }
+                    },
                   ),
                 });
               }}
@@ -262,12 +262,12 @@ export default function CreateRobotFormBuildStepItem({
                               selectedState?.instance?.name,
                             ]
                           : item.instancesName.filter(
-                              (name) => name !== selectedState?.instance?.name
+                              (name) => name !== selectedState?.instance?.name,
                             ),
                       };
                     }
                     return item;
-                  }
+                  },
                 ),
               }));
             }}
@@ -286,12 +286,12 @@ export default function CreateRobotFormBuildStepItem({
                             ]
                           : item.instancesName.filter(
                               (name) =>
-                                name !== robotData?.step1?.physicalInstanceName
+                                name !== robotData?.step1?.physicalInstanceName,
                             ),
                       };
                     }
                     return item;
-                  }
+                  },
                 ),
               }));
             }}

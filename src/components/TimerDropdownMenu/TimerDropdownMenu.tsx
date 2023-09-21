@@ -16,13 +16,13 @@ export default function TimerDropdownMenu(): ReactElement {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className="flex items-center justify-center cursor-pointer"
+        className="flex cursor-pointer items-center justify-center"
       >
         <CgTimer size={28} />
       </div>
       {isOpen && (
         <div
-          className="flex flex-col gap-1 w-[22rem] absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
+          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-14 flex w-[22rem] flex-col gap-1 rounded border border-layer-light-100 bg-layer-light-50 p-2 text-sm shadow-lg"
           ref={ref}
         >
           <TimeCounter hour={0} minute={0} second={0} />

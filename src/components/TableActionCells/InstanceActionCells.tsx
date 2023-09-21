@@ -24,9 +24,9 @@ export default function InstanceActionCells({
 
   return (
     <Fragment>
-      <div className="card flex gap-4 float-right">
+      <div className="card float-right flex gap-4">
         <Button
-          className={`!w-8 !h-8 !bg-transparent !border disabled:!border-layer-light-500 ${
+          className={`!h-8 !w-8 !border !bg-transparent disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-layer-primary-500"
               : "!border-layer-dark-100"
@@ -69,7 +69,7 @@ export default function InstanceActionCells({
           }
         />
         <Button
-          className={`!w-8 !h-8 !bg-transparent !border disabled:!border-layer-light-500 ${
+          className={`!h-8 !w-8 !border !bg-transparent disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-red-600"
               : "!border-layer-dark-100"

@@ -17,11 +17,11 @@ export default function RemoteDesktopViewersTab({
       {remoteDesktopReducer?.members?.map((member: any, index: number) => {
         return (
           <div
-            className="flex items-center justify-between text-sm p-2 animate__animated animate__fadeIn"
+            className="animate__animated animate__fadeIn flex items-center justify-between p-2 text-sm"
             key={index}
           >
             <div className="flex gap-2">
-              <div className="flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-layer-primary-300 font-semibold text-layer-primary-700">
                 {member?.displayname[0]?.toUpperCase()}
               </div>
               <div className="flex flex-col justify-between">
@@ -32,7 +32,7 @@ export default function RemoteDesktopViewersTab({
               </div>
             </div>
             <Button
-              className="!w-9 !h-9 text-xs flex items-center justify-center"
+              className="flex !h-9 !w-9 items-center justify-center text-xs"
               text={<MdStopScreenShare size={20} />}
             />
           </div>

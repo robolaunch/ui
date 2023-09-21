@@ -24,7 +24,7 @@ export default function CreateRobotFormCancelButton({
       }}
       disabled={disabled}
       type="button"
-      className="!h-11 text-xs !bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 transition-all duration-500"
+      className="!h-11 border border-layer-primary-700 !bg-layer-light-50 text-xs !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
       text="Cancel"
     />
   );

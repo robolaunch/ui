@@ -15,8 +15,8 @@ export default function CreateRobotFormGpuResource({
       data-tut="create-environment-gpu-resource"
       className="flex items-center gap-4"
     >
-      <div className="flex gap-2 w-full">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+      <div className="flex w-full gap-2">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           GPU Resource: ({formik?.values?.ideGpuResource} Core) :
           <InfoTip content="GPU Resource" />
         </div>

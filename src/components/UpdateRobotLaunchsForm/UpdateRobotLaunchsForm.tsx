@@ -30,8 +30,8 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization!.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         fleetName: selectedState?.fleet?.name,
@@ -41,23 +41,23 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobotLaunchManagers,
         setRobotData: true,
-      }
+      },
     );
   }
 
   return (
     <Fragment>
       {!responseRobotLaunchManagers ? (
-        <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-2">
           <img
-            className="w-12 mx-auto pt-10"
+            className="mx-auto w-12 pt-10"
             src="/svg/general/loading.svg"
             alt="Loading..."
           />
-          <span className="text-sm text-layer-light-900 pb-4">Loading...</span>
+          <span className="pb-4 text-sm text-layer-light-900">Loading...</span>
         </div>
       ) : url?.robotName && robotData?.step4?.robotLaunchSteps?.length === 0 ? (
-        <div className="h-full w-full flex flex-col items-center gap-4">
+        <div className="flex h-full w-full flex-col items-center gap-4">
           <SidebarInfo
             text={
               robotData?.step3?.robotBuildSteps?.length === 0
@@ -80,7 +80,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         </div>
       ) : (
         <Fragment>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 animate__animated animate__fadeIn">
+          <div className="animate__animated animate__fadeIn flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
             Launch Steps:
             <InfoTip content="Launch Steps" />
           </div>
@@ -97,7 +97,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                   />
                 }
               >
-                <div className="p-4 animate__animated animate__fadeIn">
+                <div className="animate__animated animate__fadeIn p-4">
                   <CreateRobotFormStep4
                     isImportRobot
                     key={index}
@@ -119,7 +119,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                 </span>
               }
             >
-              <div className="p-4 animate__animated animate__fadeIn">
+              <div className="animate__animated animate__fadeIn p-4">
                 <CreateRobotFormStep4
                   robotDataLaunchIndex={responseRobotLaunchManagers?.length}
                 />

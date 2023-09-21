@@ -35,7 +35,7 @@ export function FloatMenu({
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 
   return (
-    <div className="fixed block  bottom-5 left-1/2 right-1/2 z-10">
+    <div className="fixed bottom-5  left-1/2 right-1/2 z-10 block">
       <CircleMenu
         startAngle={180}
         rotationAngle={180}
@@ -43,7 +43,7 @@ export function FloatMenu({
         radius={12}
         rotationAngleInclusive={true}
         menuToggleElement={
-          <div className="flex items-center justify-center w-12 h-12 bg-layer-light-50 hover:bg-layer-light-100 rounded-full cursor-pointer border border-layer-light-200 transition-all duration-500 hover:scale-90">
+          <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-layer-light-200 bg-layer-light-50 transition-all duration-500 hover:scale-90 hover:bg-layer-light-100">
             <AiOutlinePlus
               size={24}
               className={`text-layer-dark-900 ${
@@ -58,7 +58,7 @@ export function FloatMenu({
       >
         <CircleMenuItem
           tooltip="Camera"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               widget: "RosCameraWidget",
@@ -77,7 +77,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="cmd_vel Logs"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               widget: "RosCmdVelWidget",
@@ -96,7 +96,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Topic List"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -115,7 +115,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="ros_out Logs"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -134,7 +134,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Map"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -153,7 +153,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Network"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -172,7 +172,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Resorce Usage"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -191,7 +191,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Emergency Control"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -210,7 +210,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Battery"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -229,7 +229,7 @@ export function FloatMenu({
 
         <CircleMenuItem
           tooltip="Joystick"
-          className="!border !border-layer-light-600 hover:!bg-layer-light-200 shadow-xl hover:scale-90"
+          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
           onClick={() =>
             handleAddWidget({
               grid,

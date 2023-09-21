@@ -69,7 +69,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode0?.name.charAt(rosBarcode0?.name?.length - 1)
+            rosBarcode0?.name.charAt(rosBarcode0?.name?.length - 1),
           ),
         });
       });
@@ -82,7 +82,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode1?.name.charAt(rosBarcode1?.name?.length - 1)
+            rosBarcode1?.name.charAt(rosBarcode1?.name?.length - 1),
           ),
         });
       });
@@ -95,7 +95,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode2?.name.charAt(rosBarcode2?.name?.length - 1)
+            rosBarcode2?.name.charAt(rosBarcode2?.name?.length - 1),
           ),
         });
       });
@@ -108,7 +108,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode3?.name.charAt(rosBarcode3?.name?.length - 1)
+            rosBarcode3?.name.charAt(rosBarcode3?.name?.length - 1),
           ),
         });
       });
@@ -121,7 +121,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode4?.name.charAt(rosBarcode4?.name?.length - 1)
+            rosBarcode4?.name.charAt(rosBarcode4?.name?.length - 1),
           ),
         });
       });
@@ -134,7 +134,7 @@ export default ({ children }: any) => {
         handleBarcodeSetters({
           ...messageWithScannerId,
           scannerId: Number(
-            rosBarcode5?.name.charAt(rosBarcode5?.name?.length - 1)
+            rosBarcode5?.name.charAt(rosBarcode5?.name?.length - 1),
           ),
         });
       });
@@ -189,8 +189,8 @@ export default ({ children }: any) => {
           barcodeItem.coordinates &&
           Math.sqrt(
             Math.pow(barcodeItem.coordinates.x - message?.coordinates.x, 2) +
-              Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2)
-          ) < 0.32
+              Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2),
+          ) < 0.32,
       );
 
       if (barcodeIndex !== -1) {
@@ -198,7 +198,7 @@ export default ({ children }: any) => {
           ...prevBarcodeItems[barcodeIndex],
           barcodes: [
             ...prevBarcodeItems[barcodeIndex].barcodes?.filter(
-              (barcode: any) => barcode.id !== message?.scannerId
+              (barcode: any) => barcode.id !== message?.scannerId,
             ),
             {
               id: message?.scannerId,

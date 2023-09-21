@@ -44,7 +44,7 @@ export default function DeleteMemberFromOrganizationModal({
               name: "",
               organizationId: activePage?.selectedOrganization?.organizationId,
               invitedUserId: data?.userId,
-            })
+            }),
           );
           break;
         case "organizationUsers":
@@ -53,7 +53,7 @@ export default function DeleteMemberFromOrganizationModal({
               name: "",
               organizationId: activePage?.selectedOrganization?.organizationId,
               invitedUserId: data?.userId,
-            })
+            }),
           );
           break;
         case "organizationGuests":
@@ -62,7 +62,7 @@ export default function DeleteMemberFromOrganizationModal({
               name: "",
               organizationId: activePage?.selectedOrganization?.organizationId,
               invitedUserId: data?.userId,
-            })
+            }),
           );
           break;
       }
@@ -82,7 +82,7 @@ export default function DeleteMemberFromOrganizationModal({
     >
       <form
         onSubmit={deleteFormik.handleSubmit}
-        className="w-full flex flex-col gap-8"
+        className="flex w-full flex-col gap-8"
       >
         <p className="text-sm">
           Are you sure you want to delete this user from the{" "}
@@ -104,9 +104,9 @@ export default function DeleteMemberFromOrganizationModal({
             error={deleteFormik.errors.username}
           />
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-56 !h-11"
+            className="!h-11 !w-56"
             type="submit"
             text="Delete User from Organization"
             disabled={deleteFormik.isSubmitting || !deleteFormik.isValid}

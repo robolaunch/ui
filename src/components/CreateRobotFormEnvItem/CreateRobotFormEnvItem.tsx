@@ -32,7 +32,7 @@ export default function CreteRobotFormEnvItem({
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-3">
           <div>
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Env Name:
               <InfoTip content="Type a new env name." />
             </div>
@@ -51,7 +51,7 @@ export default function CreteRobotFormEnvItem({
           <span className="mt-4">=</span>
 
           <div>
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Env Value:
               <InfoTip content="Type a new env value." />
             </div>

@@ -15,13 +15,13 @@ export default function AdrinNetworkTypes({
 }: IAdrinNetworkTypes): ReactElement {
   return (
     <Fragment>
-      <div className="w-full flex gap-6">
-        <div className="flex flex-col gap-2 w-full">
-          <div className="min-w-fit flex flex-wrap gap-1 text-xs font-medium text-layer-light-700 w-full">
+      <div className="flex w-full gap-6">
+        <div className="flex w-full flex-col gap-2">
+          <div className="flex w-full min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700">
             ADriN Regions:
             <InfoTip content="ADriN Region." />
           </div>
-          <div className="flex gap-6 w-full">
+          <div className="flex w-full gap-6">
             <InputSelect
               className="w-full text-sm text-layer-light-900"
               {...formik.getFieldProps(`adrinRegions`)}
@@ -38,8 +38,8 @@ export default function AdrinNetworkTypes({
           </div>
         </div>
 
-        <div className="flex flex-col gap-2  w-full">
-          <div className="min-w-fit flex flex-wrap gap-1 text-xs font-medium text-layer-light-700">
+        <div className="flex w-full flex-col  gap-2">
+          <div className="flex min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700">
             Communication Profile:
             <InfoTip content="ADriN Types." rightTip />
           </div>
@@ -53,11 +53,11 @@ export default function AdrinNetworkTypes({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     formik?.setFieldValue(
                       "adrinTypes",
-                      e?.target?.checked ? type : ""
+                      e?.target?.checked ? type : "",
                     );
                   }}
                 />
-              )
+              ),
             )}
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function AdrinNetworkTypes({
 
       {/*    Network Autoscale: */}
       <div className="flex items-center gap-1 pt-2">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Network Autoscale:
           <InfoTip content="Network Autoscale" />
         </div>

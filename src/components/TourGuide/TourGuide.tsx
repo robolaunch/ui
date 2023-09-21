@@ -114,7 +114,7 @@ export default function TourGuide({
       {!hiddenButton && (
         <Button
           text="Show Guide"
-          className="!w-48 !h-10 !text-xs"
+          className="!h-10 !w-48 !text-xs"
           onClick={() => {
             setIsTourOpen(true);
           }}
@@ -126,14 +126,14 @@ export default function TourGuide({
         isOpen={handleIsOpen()}
         showNumber={false}
         maskClassName="opacity-50"
-        className="!p-10 text-sm !bg-primary !text-white"
+        className="!bg-primary !p-10 text-sm !text-white"
         rounded={5}
         accentColor={"#FFFFFF"}
         prevButton={
-          <FiArrowLeft className="text-white hover:text-layer-primary-200 scale-150 transition-500" />
+          <FiArrowLeft className="transition-500 scale-150 text-white hover:text-layer-primary-200" />
         }
         nextButton={
-          <FiArrowRight className="text-white hover:text-layer-primary-200 scale-150 transition-500" />
+          <FiArrowRight className="transition-500 scale-150 text-white hover:text-layer-primary-200" />
         }
         onAfterOpen={(target: any) => disableBodyScroll(target)}
         onBeforeClose={(target: any) => enableBodyScroll(target)}

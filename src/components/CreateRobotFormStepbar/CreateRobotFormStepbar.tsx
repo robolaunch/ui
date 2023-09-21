@@ -11,13 +11,13 @@ export default function Stepbar({
   currentStep,
 }: IStepbar): ReactElement {
   return (
-    <div className="flex flex-col items-center gap-12 w-full">
-      <div className="relative w-full h-fit flex items-center justify-between text-xs">
+    <div className="flex w-full flex-col items-center gap-12">
+      <div className="relative flex h-fit w-full items-center justify-between text-xs">
         {steps?.map((step: any, index: number) => {
           return (
             <div
               key={index}
-              className={`flex flex-col gap-1 z-20
+              className={`z-20 flex flex-col gap-1
          ${
            index === 0
              ? "items-start"
@@ -29,12 +29,12 @@ export default function Stepbar({
             >
               <div
                 className={`
-              flex items-center justify-center w-7 h-7 rounded-full font-semibold border  ${
+              flex h-7 w-7 items-center justify-center rounded-full border font-semibold  ${
                 index + 1 > currentStep
-                  ? "bg-layer-primary-300 border-layer-primary-600 text-layer-primary-900"
+                  ? "border-layer-primary-600 bg-layer-primary-300 text-layer-primary-900"
                   : index + 1 < currentStep
-                  ? "bg-green-200 border-green-500 text-green-900"
-                  : "bg-layer-secondary-200 border-layer-secondary-500 text-layer-secondary-900 animate__animated animate__pulse animate__fast animate__infinite"
+                  ? "border-green-500 bg-green-200 text-green-900"
+                  : "animate__animated animate__pulse animate__fast animate__infinite border-layer-secondary-500 bg-layer-secondary-200 text-layer-secondary-900"
               }`}
               >
                 <span>{index + 1}</span>
@@ -46,10 +46,10 @@ export default function Stepbar({
         <progress
           value={currentStep - 1}
           max={steps?.length - 1}
-          className="absolute inset-0 h-0.5 w-full top-3.5 bg-layer-primary-200 appearance-none"
+          className="absolute inset-0 top-3.5 h-0.5 w-full appearance-none bg-layer-primary-200"
         />
       </div>
-      <ul className="flex flex-col items-start text-xs gap-1 border border-layer-light-100 shadow-sm px-12 py-4 rounded w-fit">
+      <ul className="flex w-fit flex-col items-start gap-1 rounded border border-layer-light-100 px-12 py-4 text-xs shadow-sm">
         {steps?.[currentStep - 1]?.process?.map(
           (process: any, index: number) => {
             return (
@@ -58,7 +58,7 @@ export default function Stepbar({
                   <BsCheck2Circle size={16} className="!text-green-500 " />
                 ) : (
                   <img
-                    className="w-4 scale-[2.25] mx-auto"
+                    className="mx-auto w-4 scale-[2.25]"
                     src="/svg/general/loading.svg"
                     alt="Loading..."
                   />
@@ -66,7 +66,7 @@ export default function Stepbar({
                 <span>{process?.name}</span>
               </li>
             );
-          }
+          },
         )}
       </ul>
     </div>

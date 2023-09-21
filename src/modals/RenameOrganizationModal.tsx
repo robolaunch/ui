@@ -40,7 +40,7 @@ export default function RenameOrganizationModal({
     >
       <form
         onSubmit={renameFormik.handleSubmit}
-        className="w-full flex flex-col gap-8"
+        className="flex w-full flex-col gap-8"
       >
         <p className="text-sm">
           Are you sure you want to rename the organization?
@@ -56,9 +56,9 @@ export default function RenameOrganizationModal({
             error={renameFormik.errors.newOrganizationName}
           />
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text="Rename Organization"
             disabled={

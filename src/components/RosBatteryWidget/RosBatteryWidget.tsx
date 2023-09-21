@@ -116,14 +116,14 @@ export default function RosBatteryWidget({
             </div>
             <div className="col-span-1 flex flex-col items-center justify-center gap-4  font-medium">
               <div
-                className="flex flex-col text-center bg-layer-light-100 py-2 rounded-lg gap-1"
+                className="flex flex-col gap-1 rounded-lg bg-layer-light-100 py-2 text-center"
                 style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">37.2 V</span>
                 {height > 100 && <span className="text-xs ">Voltage</span>}
               </div>
               <div
-                className="flex flex-col text-center bg-layer-light-100 py-2 rounded-lg gap-1 "
+                className="flex flex-col gap-1 rounded-lg bg-layer-light-100 py-2 text-center "
                 style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">5.2 V</span>

@@ -8,9 +8,12 @@ export default function HiddenFrame(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIframeKey(iframeKey + 1);
-    }, 5 * 60 * 1000); // 5 minutes
+    const timer = setInterval(
+      () => {
+        setIframeKey(iframeKey + 1);
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
 
     return () => {
       clearInterval(timer);

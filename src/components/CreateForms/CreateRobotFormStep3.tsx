@@ -56,7 +56,7 @@ export default function CreateRobotFormStep3({
       if (
         !responseRobot?.robotClusters?.filter(
           (robotCluster: any) =>
-            robotCluster?.robotStatus !== "EnvironmentReady"
+            robotCluster?.robotStatus !== "EnvironmentReady",
         )?.length &&
         !isImportRobot
       ) {
@@ -68,7 +68,7 @@ export default function CreateRobotFormStep3({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseRobot]
+    [responseRobot],
   );
 
   function handleGetRobot() {
@@ -85,7 +85,7 @@ export default function CreateRobotFormStep3({
         ifErrorNavigateTo404: false,
         setRobotData: true,
         setResponse: setResponseRobot,
-      }
+      },
     );
   }
 
@@ -103,7 +103,7 @@ export default function CreateRobotFormStep3({
         ifErrorNavigateTo404: false,
         setRobotData: true,
         setResponse: setResponseBuildManager,
-      }
+      },
     );
   }
 
@@ -116,7 +116,7 @@ export default function CreateRobotFormStep3({
             .required("Step Name is required")
             .test("unique-name", "This name is already taken", (value) => {
               const temp = formik.values.robotBuildSteps?.filter(
-                (item: any) => item.name === value && item
+                (item: any) => item.name === value && item,
               );
               return temp.length > 1 ? false : true;
             }),
@@ -134,9 +134,9 @@ export default function CreateRobotFormStep3({
           }),
           instancesName: Yup.array().min(
             1,
-            "At least one instance is required"
+            "At least one instance is required",
           ),
-        })
+        }),
       ),
     }),
 
@@ -154,7 +154,7 @@ export default function CreateRobotFormStep3({
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
           buildManagerName: values?.buildManagerName,
           robotBuildSteps: values?.robotBuildSteps,
-        })
+        }),
       ).then(() => {
         if (isImportRobot) {
           toast.success("Robot updated successfully. Redirecting...");
@@ -189,7 +189,7 @@ export default function CreateRobotFormStep3({
           !responseRobot?.robotClusters ||
           responseRobot?.robotClusters?.filter(
             (robotCluster: any) =>
-              robotCluster?.robotStatus !== "EnvironmentReady"
+              robotCluster?.robotStatus !== "EnvironmentReady",
           )?.length
         }
         loadingItems={responseRobot?.robotClusters?.map((item: any) => {
@@ -205,13 +205,13 @@ export default function CreateRobotFormStep3({
                 (robotCluster: any) =>
                   robotCluster?.robotStatus === "CreatingEnvironment" ||
                   robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                  robotCluster?.robotStatus === "ConfiguringEnvironment"
+                  robotCluster?.robotStatus === "ConfiguringEnvironment",
               )?.length
             ? 1
             : responseRobot?.robotClusters?.filter(
                 (robotCluster: any) =>
                   robotCluster?.robotStatus === "CreatingBridge" ||
-                  robotCluster?.robotStatus === "CreatingDevelopmentSuite"
+                  robotCluster?.robotStatus === "CreatingDevelopmentSuite",
               )?.length
             ? 2
             : 3
@@ -226,7 +226,7 @@ export default function CreateRobotFormStep3({
                   ? false
                   : responseRobot?.robotClusters?.filter(
                       (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment"
+                        robotCluster?.robotStatus === "CreatingEnvironment",
                     )?.length
                   ? false
                   : true,
@@ -238,7 +238,7 @@ export default function CreateRobotFormStep3({
                   : responseRobot?.robotClusters?.filter(
                       (robotCluster: any) =>
                         robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus === "CreatingDiscoveryServer"
+                        robotCluster?.robotStatus === "CreatingDiscoveryServer",
                     )?.length
                   ? false
                   : true,
@@ -253,7 +253,7 @@ export default function CreateRobotFormStep3({
                         robotCluster?.robotStatus === "CreatingEnvironment" ||
                         robotCluster?.robotStatus ===
                           "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                        robotCluster?.robotStatus === "ConfiguringEnvironment",
                     )?.length
                   ? false
                   : true,
@@ -267,7 +267,7 @@ export default function CreateRobotFormStep3({
                         robotCluster?.robotStatus === "CreatingEnvironment" ||
                         robotCluster?.robotStatus ===
                           "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                        robotCluster?.robotStatus === "ConfiguringEnvironment",
                     )?.length
                   ? false
                   : true,
@@ -281,7 +281,7 @@ export default function CreateRobotFormStep3({
                         robotCluster?.robotStatus === "CreatingEnvironment" ||
                         robotCluster?.robotStatus ===
                           "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                        robotCluster?.robotStatus === "ConfiguringEnvironment",
                     )?.length
                   ? false
                   : true,
@@ -295,7 +295,7 @@ export default function CreateRobotFormStep3({
                         robotCluster?.robotStatus === "CreatingEnvironment" ||
                         robotCluster?.robotStatus ===
                           "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment"
+                        robotCluster?.robotStatus === "ConfiguringEnvironment",
                     )?.length
                   ? false
                   : true,
@@ -309,7 +309,7 @@ export default function CreateRobotFormStep3({
                 name: "Creating ROS Bridge Suite",
                 isFinished: responseRobot?.robotClusters?.filter(
                   (robotCluster: any) =>
-                    robotCluster?.robotStatus === "CreatingBridge"
+                    robotCluster?.robotStatus === "CreatingBridge",
                 )?.length
                   ? false
                   : true,
@@ -319,7 +319,7 @@ export default function CreateRobotFormStep3({
                 isFinished: responseRobot?.robotClusters?.filter(
                   (robotCluster: any) =>
                     robotCluster?.robotStatus === "CreatingBridge" ||
-                    robotCluster?.robotStatus === "CreatingDevelopmentSuite"
+                    robotCluster?.robotStatus === "CreatingDevelopmentSuite",
                 )?.length
                   ? false
                   : true,
@@ -333,7 +333,7 @@ export default function CreateRobotFormStep3({
                 name: "Cloning Repositories",
                 isFinished: responseRobot?.robotClusters?.filter(
                   (robotCluster: any) =>
-                    robotCluster?.robotStatus === "ConfiguringWorkspaces"
+                    robotCluster?.robotStatus === "ConfiguringWorkspaces",
                 )?.length
                   ? false
                   : true,
@@ -342,7 +342,7 @@ export default function CreateRobotFormStep3({
                 name: "Setting up ROS2 Workspaces",
                 isFinished: responseRobot?.robotClusters?.filter(
                   (robotCluster: any) =>
-                    robotCluster?.robotStatus === "ConfiguringWorkspaces"
+                    robotCluster?.robotStatus === "ConfiguringWorkspaces",
                 )?.length
                   ? false
                   : true,
@@ -353,10 +353,10 @@ export default function CreateRobotFormStep3({
       >
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col gap-4 animate__animated animate__fadeIn"
+          className="animate__animated animate__fadeIn flex flex-col gap-4"
         >
           {isImportRobot && robotData?.step3?.robotBuildSteps?.length === 0 ? (
-            <div className="h-full w-full flex flex-col items-center gap-4">
+            <div className="flex h-full w-full flex-col items-center gap-4">
               <SidebarInfo
                 text="It seems that you have not configured any build steps for this
               robot. If you want to configure build steps, please click on the +
@@ -372,7 +372,7 @@ export default function CreateRobotFormStep3({
           ) : (
             <Fragment>
               <div data-tut="create-robot-step3-name">
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
                   Build Manager Name:
                   <InfoTip content="Type a new build manager name." />
                 </div>
@@ -388,7 +388,7 @@ export default function CreateRobotFormStep3({
               </div>
 
               <div data-tut="create-robot-step3-steps">
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+                <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
                   Build Steps:
                   <InfoTip content="Build Steps" />
                 </div>
@@ -402,13 +402,13 @@ export default function CreateRobotFormStep3({
                           buildStep={buildStep}
                           buildStepIndex={buildStepIndex}
                           stepState={responseBuildManager?.robotClusters?.map(
-                            (item: any) => item?.buildManagerStatus
+                            (item: any) => item?.buildManagerStatus,
                           )}
                           disabled={isImportRobot || formik?.isSubmitting}
                           isImportRobot={isImportRobot || false}
                         />
                       );
-                    }
+                    },
                   )}
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default function CreateRobotFormStep3({
                 />
               </div>
 
-              <div className="w-full flex gap-2 mt-10">
+              <div className="mt-10 flex w-full gap-2">
                 {isImportRobot ? (
                   <RobotDeleteBuildManagerButton
                     disabled={formik?.isSubmitting}
@@ -439,11 +439,11 @@ export default function CreateRobotFormStep3({
                     JSON.stringify(formik.initialValues) ===
                       JSON.stringify(formik.values)
                   }
-                  className="w-full !h-11 text-xs"
+                  className="!h-11 w-full text-xs"
                   text={
                     formik.isSubmitting ? (
                       <img
-                        className="w-10 h-10"
+                        className="h-10 w-10"
                         src="/svg/general/loading.svg"
                         alt="loading"
                       />
@@ -464,7 +464,7 @@ export default function CreateRobotFormStep3({
           !responseRobot?.robotClusters ||
           responseRobot?.robotClusters?.filter(
             (robotCluster: any) =>
-              robotCluster?.robotStatus !== "EnvironmentReady"
+              robotCluster?.robotStatus !== "EnvironmentReady",
           )?.length
         ) && (
           <TourGuide

@@ -33,8 +33,8 @@ export default function Machine3D({ item }: IMachine3D) {
     frustum.setFromMatrix(
       new THREE.Matrix4().multiplyMatrices(
         camera.projectionMatrix,
-        camera.matrixWorldInverse
-      )
+        camera.matrixWorldInverse,
+      ),
     );
     if (frustum.intersectsObject(meshRef.current)) {
       setIsBoxInFrustum(true);
@@ -65,7 +65,7 @@ export default function Machine3D({ item }: IMachine3D) {
         <group>
           {/* Front Face */}
           <Html
-            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
+            className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
             position={[0, 0.1, 0.378]}
             transform
@@ -82,7 +82,7 @@ export default function Machine3D({ item }: IMachine3D) {
 
           {/* Back Face */}
           <Html
-            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
+            className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
             position={[0, 0.1, -0.378]}
             transform
@@ -99,7 +99,7 @@ export default function Machine3D({ item }: IMachine3D) {
 
           {/* Right Face */}
           <Html
-            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
+            className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
             position={[0.378, 0.1, 0]}
             rotation={[0, Math.PI / 2, 0]}
@@ -117,7 +117,7 @@ export default function Machine3D({ item }: IMachine3D) {
 
           {/* Left Face */}
           <Html
-            className="relative inset-0 flex flex-col items-center justify-center w-full h-full"
+            className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
             position={[-0.378, 0.1, 0]}
             rotation={[0, -Math.PI / 2, 0]}

@@ -21,10 +21,10 @@ export default function OrganizationActionCells({
 
   return (
     <Fragment>
-      <div className="card flex gap-4 float-right">
+      <div className="card float-right flex gap-4">
         {onClickSee && (
           <Button
-            className="!w-8 !h-8 !bg-transparent !border !border-layer-secondary-500 !ring-layer-secondary-500"
+            className="!h-8 !w-8 !border !border-layer-secondary-500 !bg-transparent !ring-layer-secondary-500"
             text={<HiOutlineEye className="text-layer-secondary-500" />}
             onClick={() =>
               onClickSee({
@@ -35,7 +35,7 @@ export default function OrganizationActionCells({
           />
         )}
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500 disabled:!border-layer-light-500"
+          className="!h-8 !w-8 !border !border-layer-primary-500 !bg-transparent disabled:!border-layer-light-500"
           text={
             <BiPencil
               className={`${
@@ -49,7 +49,7 @@ export default function OrganizationActionCells({
           disabled={envOnPremiseRobot}
         />
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-red-600 disabled:!border-layer-light-500"
+          className="!h-8 !w-8 !border !border-red-600 !bg-transparent disabled:!border-layer-light-500"
           text={
             <BiTrash
               className={`${

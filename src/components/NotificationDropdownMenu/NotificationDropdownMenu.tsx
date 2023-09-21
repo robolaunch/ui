@@ -29,22 +29,22 @@ export default function NotificationDropdownMenu(): ReactElement {
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className="flex items-center justify-center cursor-pointer"
+        className="flex cursor-pointer items-center justify-center"
       >
         <TbNotification size={32} />
       </div>
       {isOpen && (
         <ul
-          className="flex flex-col gap-1 w-[28rem] absolute right-4 top-14 p-2 border border-layer-light-100 bg-layer-light-50 shadow-lg rounded text-sm animate__animated animate__fadeInDown animate__faster"
+          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-14 flex w-[28rem] flex-col gap-1 rounded border border-layer-light-100 bg-layer-light-50 p-2 text-sm shadow-lg"
           ref={ref}
         >
           {notifications.map((notification: any, notificationIndex: number) => {
             return (
               <li
-                className="hover:bg-layer-light-100 pl-2 pr-6 py-3 transition-all duration-200 rounded cursor-pointer"
+                className="cursor-pointer rounded py-3 pl-2 pr-6 transition-all duration-200 hover:bg-layer-light-100"
                 key={notificationIndex}
               >
-                <div className="w-full flex items-center justify-between">
+                <div className="flex w-full items-center justify-between">
                   <div id="info" className="flex flex-col gap-1">
                     <p className="text-sm font-medium text-layer-dark-600">
                       {notification?.title}
@@ -55,11 +55,11 @@ export default function NotificationDropdownMenu(): ReactElement {
                   </div>
                   <div id="control" className="flex gap-4">
                     <AiOutlineCheckCircle
-                      className="text-layer-primary-500 hover:text-layer-light-50 hover:bg-layer-primary-500 rounded-full"
+                      className="rounded-full text-layer-primary-500 hover:bg-layer-primary-500 hover:text-layer-light-50"
                       size={26}
                     />
                     <AiOutlineCloseCircle
-                      className="text-red-500 hover:text-layer-light-50 hover:bg-red-500 rounded-full"
+                      className="rounded-full text-red-500 hover:bg-red-500 hover:text-layer-light-50"
                       size={26}
                     />
                   </div>

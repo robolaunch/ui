@@ -62,7 +62,7 @@ export default function CreateRobotFormStep4({
         Yup.object().shape({
           name: Yup.string().required("Environment name is required"),
           value: Yup.string().required("Environment value is required"),
-        })
+        }),
       ),
     }),
     onSubmit: async (values: any) => {
@@ -83,22 +83,21 @@ export default function CreateRobotFormStep4({
               robotDataLaunchIndex ? robotDataLaunchIndex : 0
             ],
           ],
-        })
+        }),
       );
 
       toast.success(
         isImportRobot
           ? "Robot updated successfully"
-          : "Robot Launch Manager created successfully. Redirecting to robot page..."
+          : "Robot Launch Manager created successfully. Redirecting to robot page...",
       );
 
       setTimeout(() => {
         window.location.href = `/${organizationNameViewer({
           organizationName: selectedState?.organization?.organizationName!,
           capitalization: false,
-        })}/${selectedState?.roboticsCloud?.name}/${
-          selectedState?.instance?.name
-        }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`;
+        })}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
+          ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`;
       }, 1000);
     },
   });
@@ -116,7 +115,7 @@ export default function CreateRobotFormStep4({
       console.log(responseBuildManager);
       if (
         !responseBuildManager?.robotClusters?.filter(
-          (robotCluster: any) => robotCluster?.buildManagerStatus !== "Ready"
+          (robotCluster: any) => robotCluster?.buildManagerStatus !== "Ready",
         )?.length &&
         !isImportRobot
       ) {
@@ -128,7 +127,7 @@ export default function CreateRobotFormStep4({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseBuildManager]
+    [responseBuildManager],
   );
 
   useEffect(() => {
@@ -147,7 +146,7 @@ export default function CreateRobotFormStep4({
               } else {
                 return step;
               }
-            }
+            },
           ),
         },
       };
@@ -170,7 +169,7 @@ export default function CreateRobotFormStep4({
         ifErrorNavigateTo404: false,
         setResponse: setResponseBuildManager,
         setRobotData: true,
-      }
+      },
     );
   }
   console.log(responseBuildManager);
@@ -180,7 +179,7 @@ export default function CreateRobotFormStep4({
         isLoading={
           !responseBuildManager ||
           responseBuildManager?.robotClusters?.filter(
-            (item: any) => item?.buildManagerStatus !== "Ready"
+            (item: any) => item?.buildManagerStatus !== "Ready",
           )?.length
         }
         loadingItems={responseBuildManager?.robotClusters?.map((item: any) => {
@@ -197,10 +196,10 @@ export default function CreateRobotFormStep4({
       >
         <form
           onSubmit={formik.handleSubmit}
-          className="flex flex-col gap-4 animate__animated animate__fadeIn"
+          className="animate__animated animate__fadeIn flex flex-col gap-4"
         >
           <div data-tut="create-robot-step4-name">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Launch Manager Name:
               <InfoTip content="Type a new launch manager name." />
             </div>
@@ -217,7 +216,7 @@ export default function CreateRobotFormStep4({
           </div>
 
           <div data-tut="create-robot-step4-workspace">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Workspace:
               <InfoTip content="Select a workspace." />
             </div>
@@ -232,7 +231,7 @@ export default function CreateRobotFormStep4({
                     <option key={index} value={workspace.name}>
                       {workspace.name}
                     </option>
-                  )
+                  ),
                 )}
               </Fragment>
             </InputSelect>
@@ -246,7 +245,7 @@ export default function CreateRobotFormStep4({
           </div>
 
           <div data-tut="create-robot-step4-code">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Bash Code:
               <InfoTip content="Type Bash code" />
             </div>
@@ -291,16 +290,16 @@ export default function CreateRobotFormStep4({
             virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
             physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}
             virtualInstanceChecked={formik.values?.instancesName?.includes(
-              selectedState?.instance?.name
+              selectedState?.instance?.name,
             )}
             virtualInstanceOnChange={() => {
               formik.setValues({
                 ...formik.values,
                 instancesName: formik.values.instancesName.includes(
-                  selectedState?.instance?.name
+                  selectedState?.instance?.name,
                 )
                   ? formik.values.instancesName.filter(
-                      (item) => item !== selectedState?.instance?.name
+                      (item) => item !== selectedState?.instance?.name,
                     )
                   : [
                       ...formik.values.instancesName,
@@ -312,10 +311,10 @@ export default function CreateRobotFormStep4({
               formik.setValues({
                 ...formik.values,
                 instancesName: formik.values.instancesName.includes(
-                  robotData?.step1?.physicalInstanceName
+                  robotData?.step1?.physicalInstanceName,
                 )
                   ? formik.values.instancesName.filter(
-                      (item) => item !== robotData?.step1?.physicalInstanceName
+                      (item) => item !== robotData?.step1?.physicalInstanceName,
                     )
                   : [
                       ...formik.values.instancesName,
@@ -335,7 +334,7 @@ export default function CreateRobotFormStep4({
             data-tut="create-robot-step4-environments"
             className="flex flex-col gap-2"
           >
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Environment Variables:
               <InfoTip content="Type Environment Variables" />
             </div>
@@ -358,7 +357,7 @@ export default function CreateRobotFormStep4({
             </div>
           </div>
 
-          <div className="flex gap-2 mt-10">
+          <div className="mt-10 flex gap-2">
             {!isImportRobot ? (
               <Fragment>
                 {!url?.robotName && (
@@ -367,7 +366,7 @@ export default function CreateRobotFormStep4({
                 <Button
                   type="submit"
                   disabled={!formik?.isValid || formik.isSubmitting}
-                  className="w-full !h-11 text-xs"
+                  className="!h-11 w-full text-xs"
                   text={url?.robotName ? `Add Launch Step` : `Create Robot`}
                 />
               </Fragment>
@@ -383,7 +382,7 @@ export default function CreateRobotFormStep4({
         !(
           !responseBuildManager ||
           responseBuildManager?.robotClusters?.filter(
-            (item: any) => item?.buildManagerStatus !== "Ready"
+            (item: any) => item?.buildManagerStatus !== "Ready",
           )?.length
         ) && (
           <TourGuide
@@ -396,7 +395,7 @@ export default function CreateRobotFormStep4({
               getGuideItem("[data-tut='create-robot-build-step-scope']"),
               getGuideItem("[data-tut='create-robot-step4-environments']"),
               getGuideItem(
-                "[data-tut='create-robot-step4-environments-add-button']"
+                "[data-tut='create-robot-step4-environments-add-button']",
               ),
             ]}
           />

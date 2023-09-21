@@ -10,10 +10,10 @@ export const getGithubAccessTokenwithCode = createAsyncThunk(
       {
         code: values.code,
         githubUserId: values.githubUserId,
-      }
+      },
     );
     return response;
-  }
+  },
 );
 
 export const getGithubAccessTokenwithRefreshToken = createAsyncThunk(
@@ -29,30 +29,30 @@ export const getGithubAccessTokenwithRefreshToken = createAsyncThunk(
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-      }
+      },
     );
     return response;
-  }
+  },
 );
 
 export const getGithubUserRepositories = createAsyncThunk(
   "github/getGithubUserRepositories",
   async (_) => {
     const response = await axiosInterceptorGithub.get(
-      "https://api.github.com/user/repos"
+      "https://api.github.com/user/repos",
     );
     return response;
-  }
+  },
 );
 
 export const getGithubRepositoryBranches = createAsyncThunk(
   "github/getGithubRepositoryBranches",
   async (values: any) => {
     const response = await axiosInterceptorGithub.get(
-      `https://api.github.com/repos/${values.owner}/${values.repo}/branches`
+      `https://api.github.com/repos/${values.owner}/${values.repo}/branches`,
     );
     return response;
-  }
+  },
 );
 
 export const githubSlice = createSlice({

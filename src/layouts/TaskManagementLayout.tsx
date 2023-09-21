@@ -14,17 +14,17 @@ export default function TaskManagementLayout(): ReactElement {
   return (
     <Fragment>
       <CardLayout className="mb-5 !pb-0">
-        <ul className="flex  pt-3 text-center overflow-x-auto">
+        <ul className="flex  overflow-x-auto pt-3 text-center">
           {[{ name: "Mission Management" }, { name: "Barcode Management" }].map(
             (tab: any, index: number) => {
               return (
                 <div
-                  className="flex flex-col gap-3 cursor-pointer w-full"
+                  className="flex w-full cursor-pointer flex-col gap-3"
                   onClick={() => setActiveTab(tab?.name)}
                   key={index}
                 >
                   <li
-                    className={`text-xs font-medium px-2 transition-all duration-500 min-w-max hover:scale-90  ${
+                    className={`min-w-max px-2 text-xs font-medium transition-all duration-500 hover:scale-90  ${
                       tab.name === activeTab
                         ? "text-layer-primary-500"
                         : "text-layer-light-500"
@@ -33,7 +33,7 @@ export default function TaskManagementLayout(): ReactElement {
                     {tab.name}
                   </li>
                   <div
-                    className={`w-full h-[2px] transition-all duration-500 
+                    className={`h-[2px] w-full transition-all duration-500 
                   ${
                     tab.name === activeTab
                       ? "bg-layer-primary-500"
@@ -42,7 +42,7 @@ export default function TaskManagementLayout(): ReactElement {
                   />
                 </div>
               );
-            }
+            },
           )}
         </ul>
       </CardLayout>

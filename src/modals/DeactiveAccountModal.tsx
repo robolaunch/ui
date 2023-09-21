@@ -24,7 +24,7 @@ export default function DeactiveAccountModal({
         .required("Required")
         .equals(
           [keycloak?.tokenParsed?.preferred_username],
-          "Username is not correct"
+          "Username is not correct",
         ),
     }),
     initialValues: {
@@ -42,7 +42,7 @@ export default function DeactiveAccountModal({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full flex flex-col gap-8"
+        className="flex w-full flex-col gap-8"
       >
         <p className="text-sm">
           Please enter your username (
@@ -60,9 +60,9 @@ export default function DeactiveAccountModal({
             error={formik.errors.username}
           />
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-56 !h-11"
+            className="!h-11 !w-56"
             type="submit"
             text="Deactive Account"
             disabled={formik.isSubmitting || !formik.isValid}

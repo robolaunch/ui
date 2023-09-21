@@ -8,7 +8,7 @@ export const createRoboticsCloudSchema = Yup.object().shape({
     .lowercase("Must be lowercase.")
     .matches(
       /^[a-z0-9]+(-[a-z0-9]+)*$/,
-      "Must be lowercase with hyphen (-) only in the middle."
+      "Must be lowercase with hyphen (-) only in the middle.",
     ),
   provider: Yup.string().required("Provider is required"),
   region: Yup.string().required("Region is required"),

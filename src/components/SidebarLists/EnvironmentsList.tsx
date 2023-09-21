@@ -45,7 +45,7 @@ export default function EnvironmentsList({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [reload]
+    [reload],
   );
 
   function handleGetEnvironments() {
@@ -61,7 +61,7 @@ export default function EnvironmentsList({
         ifErrorNavigateTo404: false,
         setResponse: setResponseEnvironments,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 

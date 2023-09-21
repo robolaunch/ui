@@ -43,7 +43,7 @@ export default function BillingPage(): ReactElement {
           status: invoice?.status,
         };
       }),
-    [responseInvoices]
+    [responseInvoices],
   );
 
   const columns: any = useMemo(
@@ -134,11 +134,11 @@ export default function BillingPage(): ReactElement {
         },
       },
     ],
-    []
+    [],
   );
 
   return (
-    <div className="grid grid-cols-12 gap-6 animate__animated animate__fadeIn">
+    <div className="animate__animated animate__fadeIn grid grid-cols-12 gap-6">
       <div className="col-span-9">
         <InvoiceUtilizationWidget />
       </div>

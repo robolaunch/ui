@@ -15,20 +15,20 @@ export default function ProfileDeactivate({
     useState<boolean>(false);
 
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
+    <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">
           Profile Deactive
         </p>
 
-        <div className="flex flex-col gap-4 items-end">
-          <div className="w-full flex gap-4 items-center bg-yellow-100 border border-yellow-500 rounded-lg p-4">
+        <div className="flex flex-col items-end gap-4">
+          <div className="flex w-full items-center gap-4 rounded-lg border border-yellow-500 bg-yellow-100 p-4">
             <RiErrorWarningFill
-              className="text-yellow-600 text-2xl"
+              className="text-2xl text-yellow-600"
               size={32}
             />
             <div className="flex flex-col gap-2">
-              <div className="font-medium text-sm">
+              <div className="text-sm font-medium">
                 You Are Deactivating Your Account
               </div>
               <p className="text-xs text-layer-dark-500">
@@ -39,7 +39,7 @@ export default function ProfileDeactivate({
           </div>
           <Button
             onClick={() => setIsShowDeactiveModal(true)}
-            className="!h-10 w-40 bg-red-600 hover:!bg-red-800 !ring-red-400 transition-all duration-300 text-xs"
+            className="!h-10 w-40 bg-red-600 text-xs !ring-red-400 transition-all duration-300 hover:!bg-red-800"
             text={`Deactive Account`}
           />
         </div>

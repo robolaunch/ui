@@ -17,10 +17,10 @@ export default function InvoiceActionCells({
 
   return (
     <Fragment>
-      <div className="flex gap-3 justify-end">
+      <div className="flex justify-end gap-3">
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500
-                disabled:!border-layer-light-300 disabled:!text-layer-light-300 disabled:cursor-not-allowed
+          className="!h-8 !w-8 !border !border-layer-primary-500 !bg-transparent
+                disabled:cursor-not-allowed disabled:!border-layer-light-300 disabled:!text-layer-light-300
                 "
           text={
             <MdPayment
@@ -34,12 +34,12 @@ export default function InvoiceActionCells({
           disabled={rowData?.status}
         />
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-secondary-600 !ring-layer-secondary-200"
+          className="!h-8 !w-8 !border !border-layer-secondary-600 !bg-transparent !ring-layer-secondary-200"
           text={<TbCloudDownload className="text-layer-secondary-600" />}
         />
         <Button
           onClick={() => setIsOpenInvoiceUtilizationModal(true)}
-          className="!w-8 !h-8 !bg-transparent !border !border-red-600 !ring-red-200"
+          className="!h-8 !w-8 !border !border-red-600 !bg-transparent !ring-red-200"
           text={<AiOutlineEye className="text-red-600" />}
         />
       </div>

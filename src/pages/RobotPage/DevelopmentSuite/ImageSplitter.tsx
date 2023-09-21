@@ -41,7 +41,7 @@ const ImageSplitter = ({ ...props }: Props) => {
       onDragStart();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onDragStart]
+    [onDragStart],
   );
   const onDragMove = useCallback(
     (event: MouseEvent) => {
@@ -54,7 +54,7 @@ const ImageSplitter = ({ ...props }: Props) => {
       refPosition.current = Math.min(100, Math.max(0, p));
       setDrag({ ...drag, position: Math.min(100, Math.max(0, p)) });
     },
-    [drag]
+    [drag],
   );
 
   const onMouseUp = useCallback(() => {
@@ -73,13 +73,13 @@ const ImageSplitter = ({ ...props }: Props) => {
         dragMoveHandler.current,
         {
           passive: false,
-        }
+        },
       );
       refSplitter.current.addEventListener("mouseup", onMouseUp);
     } else {
       refSplitter.current.removeEventListener(
         "mousemove",
-        dragMoveHandler.current
+        dragMoveHandler.current,
       );
       refSplitter.current.removeEventListener("mouseup", onMouseUp);
       dragMoveHandler.current = undefined;
@@ -89,7 +89,7 @@ const ImageSplitter = ({ ...props }: Props) => {
       if (!refSplitter.current) return;
       refSplitter.current.removeEventListener(
         "mousemove",
-        dragMoveHandler.current
+        dragMoveHandler.current,
       );
       // eslint-disable-next-line react-hooks/exhaustive-deps
       refSplitter.current.removeEventListener("mouseup", onMouseUp);

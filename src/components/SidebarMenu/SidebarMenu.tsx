@@ -22,7 +22,7 @@ export default function PrivateSidebar(): ReactElement {
 
   return (
     <Fragment>
-      <div className="h-full flex flex-col justify-between">
+      <div className="flex h-full flex-col justify-between">
         <div className="flex flex-col gap-4">
           {url?.robotName ||
           (sidebarState?.isCreateMode &&

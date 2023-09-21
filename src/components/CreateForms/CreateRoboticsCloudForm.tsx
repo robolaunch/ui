@@ -28,11 +28,11 @@ export default function CreateRoboticsCloudForm(): ReactElement {
 
       dispatch(
         createRoboticsCloud({
-          organizationId: selectedState.organization.organizationId,
+          organizationId: selectedState.organization!.organizationId,
           roboticsCloudName: values.roboticsCloudName,
           provider: values.provider,
           region: values.region,
-        })
+        }),
       ).then((response: any) => {
         if (response) {
           formik.setSubmitting(false);
@@ -45,10 +45,10 @@ export default function CreateRoboticsCloudForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="animate__animated animate__fadeIn flex flex-col gap-8"
     >
       <div>
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           Region Name:
           <InfoTip content="Type a new region name." />
         </div>
@@ -64,7 +64,7 @@ export default function CreateRoboticsCloudForm(): ReactElement {
       </div>
 
       <div className="flex flex-col gap-3">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Providers:
           <InfoTip
             content="
@@ -75,7 +75,7 @@ export default function CreateRoboticsCloudForm(): ReactElement {
           {responseProviders?.map((provider: any, index: number) => (
             <div
               key={index}
-              className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-40  ${
+              className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                 formik.values.provider === provider.name
                   ? "border-layer-primary-600 shadow"
                   : "border-layer-light-100"
@@ -113,7 +113,7 @@ export default function CreateRoboticsCloudForm(): ReactElement {
 
       {formik?.values?.provider && (
         <div className="flex flex-col gap-3">
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+          <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
             Regions:
             <InfoTip
               content="
@@ -123,12 +123,12 @@ export default function CreateRoboticsCloudForm(): ReactElement {
           <div className="flex flex-wrap gap-6">
             {responseProviders
               ?.filter(
-                (provider: any) => provider.name === formik?.values?.provider
+                (provider: any) => provider.name === formik?.values?.provider,
               )[0]
               ?.regions?.map((region: any, index: number) => (
                 <div
                   key={index}
-                  className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-40  ${
+                  className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                     formik.values.region === region.name
                       ? "border-layer-primary-600 shadow"
                       : "border-layer-light-100"

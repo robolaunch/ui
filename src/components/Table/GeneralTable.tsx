@@ -29,10 +29,10 @@ export default function GeneralTable({
   return (
     <div
       data-tut="general-table"
-      className="flex flex-col pt-4 px-4 pb-0 rounded-lg shadow-lg bg-layer-light-50 animate__animated animate__fadeIn border border-layer-light-200"
+      className="animate__animated animate__fadeIn flex flex-col rounded-lg border border-layer-light-200 bg-layer-light-50 px-4 pb-0 pt-4 shadow-lg"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
-      <div className="flex pt-1 px-4 pb-8 items-center gap-3">
+      <div className="flex items-center gap-3 px-4 pb-8 pt-1">
         <img
           className="w-7"
           src={`/svg/general/${type}/${type}-gray.svg`}

@@ -46,7 +46,7 @@ export function handleAddWidget({
               topicList={topicList}
               localStoragePath={localStoragePath}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosTopicListWidget"
         ? ReactDOMServer.renderToString(
@@ -54,7 +54,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosCmdVelWidget"
         ? ReactDOMServer.renderToString(
@@ -62,7 +62,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosRosOutWidget"
         ? ReactDOMServer.renderToString(
@@ -70,7 +70,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosMapWidget"
         ? ReactDOMServer.renderToString(
@@ -78,7 +78,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosNetworkWidget"
         ? ReactDOMServer.renderToString(
@@ -86,7 +86,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosResourceUsageWidget"
         ? ReactDOMServer.renderToString(
@@ -94,7 +94,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosEmergencyControlWidget"
         ? ReactDOMServer.renderToString(
@@ -102,7 +102,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosBatteryWidget"
         ? ReactDOMServer.renderToString(
@@ -110,7 +110,7 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           )
         : widget === "RosJoystickWidget" &&
           ReactDOMServer.renderToString(
@@ -118,13 +118,13 @@ export function handleAddWidget({
               id={grid.save(true, true).children.length}
               ros={ros}
               handleRemoveWidget={handleRemoveWidget}
-            />
+            />,
           ),
   });
   window.localStorage.setItem(
     // @ts-ignore
     localStoragePath,
-    JSON.stringify(temp)
+    JSON.stringify(temp),
   );
 
   handleForceUpdate(type);
@@ -142,6 +142,6 @@ export function handleSaveLayout({
   window.localStorage.setItem(
     // @ts-ignore
     localStoragePath,
-    JSON.stringify(grid.save(true, true).children)
+    JSON.stringify(grid.save(true, true).children),
   );
 }

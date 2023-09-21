@@ -39,7 +39,7 @@ export default function PrivateLayout(): ReactElement {
       <div className="flex">
         <Sidebar />
         <div
-          className={`flex flex-col transition-500 ml-16 lg:ml-20 min-h-screen ${
+          className={`transition-500 ml-16 flex min-h-screen flex-col lg:ml-20 ${
             sidebarState?.isOpen && "blur-sm"
           } ${sidebarState?.isCreateMode && "pointer-events-none"}`}
           style={{
@@ -48,7 +48,7 @@ export default function PrivateLayout(): ReactElement {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="p-6 bg-layer-light-bg h-full">
+          <div className="h-full bg-layer-light-bg p-6">
             <Outlet />
           </div>
         </div>

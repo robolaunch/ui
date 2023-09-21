@@ -26,7 +26,7 @@ export default function CreateOrganizationForm(): ReactElement {
       dispatch(
         createOrganization({
           name: values.name,
-        })
+        }),
       ).then(async () => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
@@ -37,10 +37,10 @@ export default function CreateOrganizationForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="animate__animated animate__fadeIn flex flex-col gap-8"
     >
       <div>
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           Organization Name:
           <InfoTip content="Type a new organization name." />
         </div>

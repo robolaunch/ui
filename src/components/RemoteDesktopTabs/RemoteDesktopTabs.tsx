@@ -7,7 +7,7 @@ import RemoteDesktopReadmeTab from "../RemoteDesktopReadmeTab/RemoteDesktopReadm
 
 export default function RemoteDesktopTabs(): ReactElement {
   const [activeTab, setActiveTab] = useState<"Chat" | "Viewers" | "Readme">(
-    "Chat"
+    "Chat",
   );
 
   const { ref, height } = useComponentSize();
@@ -17,12 +17,12 @@ export default function RemoteDesktopTabs(): ReactElement {
   }
 
   return (
-    <div className="h-full flex flex-col justify-between">
+    <div className="flex h-full flex-col justify-between">
       <RemoteDesktopHeader
         activeTab={activeTab}
         handleChangeActiveTab={handleChangeActiveTab}
       />
-      <div ref={ref} className="h-full flex flex-col overflow-y-auto">
+      <div ref={ref} className="flex h-full flex-col overflow-y-auto">
         {(() => {
           switch (activeTab) {
             case "Chat":

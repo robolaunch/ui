@@ -56,7 +56,7 @@ export default function CreateRobotFormRepositoryItem({
       if (github?.githubAuth) {
         formik.setFieldValue(
           `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
-          ""
+          "",
         );
         if (
           formik?.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
@@ -85,7 +85,7 @@ export default function CreateRobotFormRepositoryItem({
                   return repo;
                 }
               })[0]?.name,
-            })
+            }),
           ).then((res: any) => {
             setResponseBranches(res?.payload?.data || []);
           });
@@ -98,7 +98,7 @@ export default function CreateRobotFormRepositoryItem({
       formik.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
         repositoryIndex
       ].url,
-    ]
+    ],
   );
 
   useEffect(() => {
@@ -112,14 +112,14 @@ export default function CreateRobotFormRepositoryItem({
     ) {
       formik.setFieldValue(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
-        ""
+        "",
       );
     }
 
     const branchURL = handleGetRepositoryBranchURL(
       formik?.values?.workspaces?.[workspaceIndex]?.robotRepositories?.[
         repositoryIndex
-      ]?.url
+      ]?.url,
     );
 
     if (
@@ -176,13 +176,13 @@ export default function CreateRobotFormRepositoryItem({
     >
       <div className="flex flex-col gap-2 px-5 py-2.5">
         <div data-tut="create-robot-step2-workspace-repository-name">
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
             Repository Name:
             <InfoTip content="Type a repository name." />
           </div>
           <InputText
             {...formik.getFieldProps(
-              `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`
+              `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`,
             )}
             disabled={disabled}
           />
@@ -199,19 +199,19 @@ export default function CreateRobotFormRepositoryItem({
             }
           />
         </div>
-        <div className="flex gap-2 w-full">
+        <div className="flex w-full gap-2">
           <div
             data-tut="create-robot-step2-workspace-repository-url"
             className="w-full"
           >
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Repository URL:
               <InfoTip content="Type a repository URL." />
             </div>
             {github?.githubAuth ? (
               <InputSelect
                 {...formik.getFieldProps(
-                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`,
                 )}
                 placeholder="Repository"
                 disabled={disabled}
@@ -231,7 +231,7 @@ export default function CreateRobotFormRepositoryItem({
             ) : (
               <InputText
                 {...formik.getFieldProps(
-                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`,
                 )}
                 disabled={disabled}
               />
@@ -252,14 +252,14 @@ export default function CreateRobotFormRepositoryItem({
             data-tut="create-robot-step2-workspace-repository-branch"
             className="w-36"
           >
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Branch Name:
               <InfoTip content="Type a repository branch name." rightTip />
             </div>
             {github?.githubAuth ? (
               <InputSelect
                 {...formik.getFieldProps(
-                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
                 )}
                 placeholder="Repository Branch"
                 disabled={disabled}
@@ -279,7 +279,7 @@ export default function CreateRobotFormRepositoryItem({
             ) : responseBranches?.length > 0 ? (
               <InputSelect
                 {...formik.getFieldProps(
-                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
                 )}
                 disabled={disabled}
               >
@@ -298,7 +298,7 @@ export default function CreateRobotFormRepositoryItem({
             ) : (
               <InputText
                 {...formik.getFieldProps(
-                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`
+                  `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
                 )}
                 disabled={disabled}
               />
@@ -332,7 +332,7 @@ export default function CreateRobotFormRepositoryItem({
               handleRemoveRepositoryFromWorkspaceStep(
                 formik,
                 workspaceIndex,
-                repositoryIndex
+                repositoryIndex,
               );
             }}
             text={`Delete ${

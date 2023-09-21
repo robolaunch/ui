@@ -109,7 +109,7 @@ export default function SidebarContentLayout(): ReactElement {
           if (!selectedState?.organization) {
             setSidebarState((prev: any) => ({ ...prev, page: "organization" }));
             return toast.error(
-              `If you want to create a region, you need to select an organization first.`
+              `If you want to create a region, you need to select an organization first.`,
             );
           }
           break;
@@ -127,7 +127,7 @@ export default function SidebarContentLayout(): ReactElement {
                   !selectedState?.organization
                     ? "organization"
                     : "robotics cloud"
-                } first.`
+                } first.`,
               );
             }
           } else if (sidebarState?.instanceTab === "Physical Instances") {
@@ -153,7 +153,7 @@ export default function SidebarContentLayout(): ReactElement {
                     : !selectedState?.roboticsCloud
                     ? "robotics cloud"
                     : "instance"
-                } first.`
+                } first.`,
               );
             }
           }
@@ -179,7 +179,7 @@ export default function SidebarContentLayout(): ReactElement {
                   : !selectedState?.roboticsCloud
                   ? "robotics cloud"
                   : "instance"
-              } first.`
+              } first.`,
             );
           }
           break;
@@ -209,7 +209,7 @@ export default function SidebarContentLayout(): ReactElement {
                   : !selectedState?.instance
                   ? "instance"
                   : "fleet"
-              } first.`
+              } first.`,
             );
           } else {
             handleResetRobotForm();
@@ -238,8 +238,8 @@ export default function SidebarContentLayout(): ReactElement {
 
   return (
     <div
-      className={`fixed flex flex-col justify-between left-16 lg:left-20 w-fill-available md:w-[38rem] h-full bg-layer-light-50 shadow-2xl animate__animated animate__fadeInLeftBig animate__faster z-[32] border-r border-layer-light-200 rounded-r-xl select-none ${
-        url?.robotName || sidebarState?.isCreateMode ? "px-8 pt-8 pb-2" : "p-6"
+      className={`w-fill-available animate__animated animate__fadeInLeftBig animate__faster fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-layer-light-200 bg-layer-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
+        url?.robotName || sidebarState?.isCreateMode ? "px-8 pb-2 pt-8" : "p-6"
       }`}
     >
       <SidebarContentHeader
@@ -251,8 +251,8 @@ export default function SidebarContentLayout(): ReactElement {
         handleShowDetails={handleShowDetails}
       />
       {handleShowDetails() && <FilteredTags />}
-      <div className={`h-full overflow-auto scrollbar-hide mb-4 p-1`}>
-        <div className="h-full flex flex-col gap-2.5">
+      <div className={`mb-4 h-full overflow-auto p-1 scrollbar-hide`}>
+        <div className="flex h-full flex-col gap-2.5">
           {(() => {
             switch (sidebarState?.page) {
               case "organization":
@@ -410,7 +410,7 @@ export default function SidebarContentLayout(): ReactElement {
           <Button
             className={
               sidebarState?.isCreateMode
-                ? "!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 mt-3 capitalize transition-all duration-500"
+                ? "mt-3 border border-layer-primary-700 !bg-layer-light-50 capitalize !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
                 : ""
             }
             text={buttonTextGenerator()}

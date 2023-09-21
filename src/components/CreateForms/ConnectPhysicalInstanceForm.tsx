@@ -31,7 +31,7 @@ export default function ConnectPhysicalInstanceForm(): ReactElement {
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
           robolaunchPhysicalInstancesName: values.name,
-        })
+        }),
       ).then((response: any) => {
         setCode(response?.payload);
         formik.setSubmitting(false);
@@ -80,7 +80,7 @@ export default function ConnectPhysicalInstanceForm(): ReactElement {
             />
           </CopyToClipboard>
           <Button
-            className="!bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 capitalize transition-all duration-500"
+            className="border border-layer-primary-700 !bg-layer-light-50 capitalize !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
             text="Done"
             onClick={() => {
               setSidebarState({ ...sidebarState, isCreateMode: false });
@@ -94,7 +94,7 @@ export default function ConnectPhysicalInstanceForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn pt-6"
+      className="animate__animated animate__fadeIn flex flex-col gap-8 pt-6"
     >
       <div>
         <InputText

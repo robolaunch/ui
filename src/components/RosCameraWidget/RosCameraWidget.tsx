@@ -47,7 +47,7 @@ const RosCameraWidget = ({
       icon={<BsCameraVideo size={24} className="text-layer-light-400" />}
       title={
         <InputSelect
-          className="text-xs font-medium text-center h-8 p-0 min-w-[8rem]"
+          className="h-8 min-w-[8rem] p-0 text-center text-xs font-medium"
           onChange={(e) => setSelectedTopic(e.target.value)}
           value={selectedTopic}
         >
@@ -58,7 +58,7 @@ const RosCameraWidget = ({
               ?.filter(
                 (topic: any) =>
                   topic?.type === "sensor_msgs/msg/CompressedImage" ||
-                  topic?.type === "sensor_msgs/CompressedImage"
+                  topic?.type === "sensor_msgs/CompressedImage",
               )
               ?.map((topic: any) => {
                 return (
@@ -71,9 +71,9 @@ const RosCameraWidget = ({
         </InputSelect>
       }
     >
-      <div className="relative w-full h-full" resource={selectedTopic}>
+      <div className="relative h-full w-full" resource={selectedTopic}>
         <img
-          className={`absolute inset-0 w-full h-full appearance-none rounded ${
+          className={`absolute inset-0 h-full w-full appearance-none rounded ${
             !cameraData && "scale-[0.25]"
           }`}
           src={cameraData || "/svg/general/loading.svg"}

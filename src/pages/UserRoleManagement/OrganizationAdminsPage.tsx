@@ -24,10 +24,10 @@ export default function OrganizationAdminsTable({
       getOrganizationAdmins({
         name: activePage?.selectedOrganization?.organizationName,
         organizationId: activePage?.selectedOrganization?.organizationId,
-      })
+      }),
     ).then((responseOrganizationsAdmins: any) => {
       setResponseOrganizationsAdmins(
-        responseOrganizationsAdmins?.payload?.data[0]?.users || []
+        responseOrganizationsAdmins?.payload?.data[0]?.users || [],
       );
     });
   }, [activePage, dispatch, refresh]);
@@ -46,7 +46,7 @@ export default function OrganizationAdminsTable({
     [
       activePage?.selectedOrganization?.organizationName,
       responseOrganizationsAdmins,
-    ]
+    ],
   );
 
   const columns: any = useMemo(
@@ -116,7 +116,7 @@ export default function OrganizationAdminsTable({
         },
       },
     ],
-    [activePage, refresh]
+    [activePage, refresh],
   );
 
   return (

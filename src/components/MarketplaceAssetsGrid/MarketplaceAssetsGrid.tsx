@@ -9,10 +9,10 @@ export default function MarketplaceAssetsGrid({
   assets,
 }: IMarketplaceAssetsGrid): ReactElement {
   return (
-    <div className="grid xl:grid-cols-6 2xl:grid-cols-9 gap-6">
+    <div className="grid gap-6 xl:grid-cols-6 2xl:grid-cols-9">
       {!Array.isArray(assets) ? (
         <img
-          className="w-20 h-20 mx-auto col-span-full m-64"
+          className="col-span-full m-64 mx-auto h-20 w-20"
           src="/svg/general/loading.svg"
           alt="loading"
         />

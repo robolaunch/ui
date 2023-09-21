@@ -51,17 +51,15 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
         };
       case "member/disconnected":
         toast.error(
-          `${
-            state?.members?.filter(
-              (member: any) => member?.id === action?.payload?.id
-            )[0]?.displayname
-          } has left the room`
+          `${state?.members?.filter(
+            (member: any) => member?.id === action?.payload?.id,
+          )[0]?.displayname} has left the room`,
         );
 
         return {
           ...state,
           members: state?.members?.filter(
-            (member: any) => member.id !== action.payload.id
+            (member: any) => member.id !== action.payload.id,
           ),
         };
 
@@ -92,17 +90,15 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
 
       case "control/locked":
         toast.success(
-          `${
-            state?.members?.filter(
-              (member: any) => member?.id === action?.payload.id
-            )[0]?.displayname
-          } has taken control`
+          `${state?.members?.filter(
+            (member: any) => member?.id === action?.payload.id,
+          )[0]?.displayname} has taken control`,
         );
 
         return {
           ...state,
           controller: state?.members?.filter(
-            (member: any) => member.id === action.payload.id
+            (member: any) => member.id === action.payload.id,
           )[0],
         };
 
@@ -139,7 +135,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
         width: 2048,
         height: 1152,
         rate: 50,
-      })
+      }),
     );
   }
 
@@ -151,7 +147,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
     };
 
     client.current = new WebSocket(
-      vdiIngressEndpoint + "ws?password=admin" || ""
+      vdiIngressEndpoint + "ws?password=admin" || "",
     );
 
     client.current.onmessage = (e: any) => {
@@ -182,7 +178,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
               event: "signal/answer",
               sdp: d.sdp,
               displayname: keycloak?.tokenParsed?.preferred_username,
-            })
+            }),
           );
         });
       }
@@ -318,7 +314,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
               JSON.stringify({
                 event: "control/clipboard",
                 text,
-              })
+              }),
             );
           }
         } catch (error) {
@@ -348,18 +344,18 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
             Math.round(
               (Number(remoteDesktopReducer?.currentResolution?.width) /
                 rect.width) *
-                (key.clientX - rect.left)
+                (key.clientX - rect.left),
             ),
-            true
+            true,
           );
           payload.setUint16(
             5,
             Math.round(
               (Number(remoteDesktopReducer?.currentResolution?.height) /
                 rect.height) *
-                (key.clientY - rect.top)
+                (key.clientY - rect.top),
             ),
-            true
+            true,
           );
           if (
             typeof buffer !== "undefined" &&
@@ -447,7 +443,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
   function handleSendMessage(message: string) {
     if (message.length > 0) {
       client.current.send(
-        JSON.stringify({ event: "chat/message", content: message })
+        JSON.stringify({ event: "chat/message", content: message }),
       );
     }
   }

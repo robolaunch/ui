@@ -69,7 +69,7 @@ export default function SideBarMenuItem({
   function handleClick() {
     if (type === "back") {
       return navigate(
-        `/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}`.trim()
+        `/${url?.organizationName}/${url?.roboticsCloudName}/${url?.instanceName}/${url?.fleetName}`.trim(),
       );
     }
 
@@ -94,7 +94,7 @@ export default function SideBarMenuItem({
     <div
       data-tut={type + "-sidebar-menu-item"}
       onClick={() => !loading && !disabled && handleClick()}
-      className={`${activeSwitcher()} relative transition-500 p-2 rounded-md cursor-pointer hover:scale-90 select-none animate__animated animate__fadeInLeft ${
+      className={`${activeSwitcher()} transition-500 animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 hover:scale-90 ${
         (loading || disabled) && "!cursor-not-allowed"
       }`}
       onMouseEnter={() => !loading && !disabled && setIsHover(true)}
@@ -103,14 +103,14 @@ export default function SideBarMenuItem({
       {loading ? (
         <img
           draggable="false"
-          className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
+          className={`animate__animated animate__fadeInLeft w-9 lg:w-10`}
           src={`/svg/general/loading.svg`}
           alt="robolaunch"
         />
       ) : (
         <img
           draggable="false"
-          className={`w-9 lg:w-10 animate__animated animate__fadeInLeft`}
+          className={`animate__animated animate__fadeInLeft w-9 lg:w-10`}
           src={`/svg/general/${(() => {
             switch (type) {
               case "robot":

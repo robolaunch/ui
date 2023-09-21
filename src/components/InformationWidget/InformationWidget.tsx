@@ -16,7 +16,7 @@ export default function InformationWidget({
   return (
     <div
       data-tut="information-widget"
-      className={`w-full flex flex-col justify-around rounded-lg bg-layer-light-50 shadow-lg p-8 animate__animated animate__fadeIn border border-layer-light-200 h-[21rem] ${className}`}
+      className={`animate__animated animate__fadeIn flex h-[21rem] w-full flex-col justify-around rounded-lg border border-layer-light-200 bg-layer-light-50 p-8 shadow-lg ${className}`}
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",
@@ -28,7 +28,7 @@ export default function InformationWidget({
         <span className="text-2xl font-semibold text-layer-dark-600 ">
           {title}
         </span>
-        <p className="text-xs text-layer-dark-500 !leading-6">{subtitle}</p>
+        <p className="text-xs !leading-6 text-layer-dark-500">{subtitle}</p>
       </div>
       {component}
     </div>

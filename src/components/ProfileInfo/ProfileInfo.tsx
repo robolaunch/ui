@@ -145,7 +145,7 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
           {isEditModeActive && (
             <div className="flex items-center justify-end gap-6">
               <span
-                className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
+                className="cursor-pointer text-xs font-medium text-layer-dark-500 hover:underline"
                 onClick={() => formik.resetForm()}
               >
                 Discard

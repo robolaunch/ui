@@ -19,7 +19,7 @@ export default function ProfileNotifications({
   });
 
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
+    <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">
           Profile Notifications
@@ -29,7 +29,7 @@ export default function ProfileNotifications({
           className="flex flex-col gap-5 px-2"
         >
           {["", "", "", "", "", ""].map((_, i: number) => (
-            <div key={i} className="flex justify-between items-center py-1">
+            <div key={i} className="flex items-center justify-between py-1">
               <div className="flex flex-col gap-1">
                 <div className="text-sm font-medium text-layer-dark-700">
                   Title #{i + 1}
@@ -41,11 +41,11 @@ export default function ProfileNotifications({
               <div className="flex gap-10">
                 <div className="flex gap-2">
                   <InputCheckbox {...formik.getFieldProps("creation")} />
-                  <span className="text-layer-dark-500 text-xs">Email</span>
+                  <span className="text-xs text-layer-dark-500">Email</span>
                 </div>
                 <div className="flex gap-2">
                   <InputCheckbox {...formik.getFieldProps("creation")} />
-                  <span className="text-layer-dark-500 text-xs">Phone</span>
+                  <span className="text-xs text-layer-dark-500">Phone</span>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function ProfileNotifications({
 
           <div className="flex items-center justify-end gap-6">
             <span
-              className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
+              className="cursor-pointer text-xs font-medium text-layer-dark-500 hover:underline"
               onClick={() => formik.resetForm()}
             >
               Discard

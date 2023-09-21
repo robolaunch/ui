@@ -25,7 +25,7 @@ export default function RobotSubPageLayout(): ReactElement {
                 informationWidgetAction={() => {
                   isSettedCookie &&
                     setActiveTab(
-                      envOnPremiseRobot ? "Development Suite" : "Teleoperation"
+                      envOnPremiseRobot ? "Development Suite" : "Teleoperation",
                     );
                 }}
               />

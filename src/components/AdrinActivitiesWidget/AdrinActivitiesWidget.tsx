@@ -17,19 +17,19 @@ export default function AdrinActivitiesWidget(): ReactElement {
           return (
             <li
               key={index}
-              className="grid grid-cols-12 gap-2 animate__animated animate__fadeIn"
+              className="animate__animated animate__fadeIn grid grid-cols-12 gap-2"
             >
               <span className="col-span-1 text-xs font-medium">
                 {item?.time}
               </span>
               <div className="col-span-2 justify-center">
                 <div
-                  className={`flex items-center justify-center w-4 h-4 rounded-full  mx-auto ${item?.color}`}
+                  className={`mx-auto flex h-4 w-4 items-center justify-center  rounded-full ${item?.color}`}
                 >
-                  <div className="w-2 h-2 rounded-full bg-layer-light-50 " />
+                  <div className="h-2 w-2 rounded-full bg-layer-light-50 " />
                 </div>
                 {adrinState?.length - 1 !== index && (
-                  <div className="w-1 h-4 bg-layer-light-200 mx-auto"></div>
+                  <div className="mx-auto h-4 w-1 bg-layer-light-200"></div>
                 )}
               </div>
               <span className="col-span-9 text-xs font-light">

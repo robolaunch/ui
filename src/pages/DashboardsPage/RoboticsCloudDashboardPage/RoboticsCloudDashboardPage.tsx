@@ -23,7 +23,7 @@ import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
-    undefined
+    undefined,
   );
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
   const { pagesState, selectedState } = useMain();
@@ -80,7 +80,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
           actions: instance,
         };
       }),
-    [url, responseInstances]
+    [url, responseInstances],
   );
 
   const columns: any = useMemo(
@@ -227,7 +227,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                             rowData?.usages?.storageUsage) /
                             rowData?.usages?.storageTotal) *
                           100
-                        ).toFixed()
+                        ).toFixed(),
                       ) < 1
                         ? 1
                         : Number(
@@ -236,7 +236,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                                 rowData?.usages?.storageUsage) /
                                 rowData?.usages?.storageTotal) *
                               100
-                            ).toFixed()
+                            ).toFixed(),
                           )
                     }
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}
@@ -272,7 +272,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedState, reload, url, responseInstances]
+    [selectedState, reload, url, responseInstances],
   );
 
   function handleGetOrganization() {
@@ -284,7 +284,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseInstances,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -298,7 +298,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         isSetState: true,
         ifErrorNavigateTo404: !responseInstances,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -313,7 +313,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
       {
         setResponse: setResponseInstances,
         ifErrorNavigateTo404: !responseInstances,
-      }
+      },
     );
   }
 
@@ -354,7 +354,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     value:
                       responseInstances?.filter(
                         (item: any) =>
-                          item?.instanceCloudState !== "ConnectionHub_Ready"
+                          item?.instanceCloudState !== "ConnectionHub_Ready",
                       ).length || 0,
                     color: "#ffa500",
                   },
@@ -363,7 +363,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     value:
                       responseInstances?.filter(
                         (item: any) =>
-                          item?.instanceCloudState === "ConnectionHub_Ready"
+                          item?.instanceCloudState === "ConnectionHub_Ready",
                       ).length || 0,
                     color: "#cb77ff",
                   },
@@ -372,7 +372,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     value:
                       responseInstances?.filter(
                         (item: any) =>
-                          item?.instanceCloudState === "ConnectionHub_Error"
+                          item?.instanceCloudState === "ConnectionHub_Error",
                       ).length || 0,
                     color: "#ff0000",
                   },

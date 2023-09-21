@@ -52,15 +52,15 @@ export default function RosWaypointListItem({
   return (
     <div
       key={waypoint?.id}
-      className="flex flex-col items-center pt-3 px-4 pb-2 gap-4 shadow-md rounded border border-layer-light-100 bg-layer-light-50"
+      className="flex flex-col items-center gap-4 rounded border border-layer-light-100 bg-layer-light-50 px-4 pb-2 pt-3 shadow-md"
     >
-      <div className="flex justify-between items-center w-full">
-        <div className="flex gap-2 items-center">
-          <span className="text-xs text-layer-light-50 flex items-center justify-center w-6 h-6 rounded-full bg-layer-secondary-500 ">
+      <div className="flex w-full items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-layer-secondary-500 text-xs text-layer-light-50 ">
             {waypointIndex + 1}
           </span>
           <div className="flex flex-col gap-1 !text-xs">
-            <div className="flex gap-1 items-center">
+            <div className="flex items-center gap-1">
               {getWaypointIcon({
                 type: waypoint?.taskType,
                 size: 20,
@@ -87,12 +87,12 @@ export default function RosWaypointListItem({
                                 };
                               }
                               return waypoint;
-                            }
+                            },
                           ),
                         };
                       }
                       return mission;
-                    })
+                    }),
                   );
                 }}
               />
@@ -173,12 +173,12 @@ export default function RosWaypointListItem({
                   waypoints: mission.waypoints.filter(
                     (waypoint: any, index: number) => {
                       return index !== waypointIndex;
-                    }
+                    },
                   ),
                 };
               }
               return mission;
-            })
+            }),
           );
         }}
         className="text-xs text-red-700"

@@ -33,7 +33,7 @@ export default function LaunchManagerStepsTable({
           ],
         };
       }),
-    [responseLaunchManagers]
+    [responseLaunchManagers],
   );
 
   const columns: any = useMemo(
@@ -94,7 +94,7 @@ export default function LaunchManagerStepsTable({
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   return (

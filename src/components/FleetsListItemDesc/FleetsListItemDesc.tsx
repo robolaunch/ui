@@ -17,14 +17,14 @@ export default function FleetsListItemDesc({
         <StateCell state={fleet?.fleetStatus} />
       </div>
       {responseFleets?.filter(
-        (pFleet: any) => fleet?.name === pFleet?.fleetName
+        (pFleet: any) => fleet?.name === pFleet?.fleetName,
       ).length > 0 && (
         <div className="flex gap-1.5">
           <span className="font-medium">PI:</span>
           <StateCell
             state={
               responseFleets?.filter(
-                (pFleet: any) => fleet?.name === pFleet?.fleetName
+                (pFleet: any) => fleet?.name === pFleet?.fleetName,
               )[0]?.fleetStatus
             }
           />

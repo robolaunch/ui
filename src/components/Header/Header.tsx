@@ -9,7 +9,7 @@ import InstallAppButton from "../InstallAppButton/InstallAppButton";
 
 export default function Header(): ReactElement {
   return (
-    <div className="w-full h-16 px-4 flex justify-between items-center bg-layer-light-50 text-layer-dark-200 shadow-md animate__animated animate__fadeInDown z-30 border-b border-layer-light-200">
+    <div className="animate__animated animate__fadeInDown z-30 flex h-16 w-full items-center justify-between border-b border-layer-light-200 bg-layer-light-50 px-4 text-layer-dark-200 shadow-md">
       <Breadcrumb />
       <div className="flex items-center gap-3">
         {/* <TimerDropdownMenu /> */}

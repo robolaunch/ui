@@ -61,7 +61,7 @@ export default function UserRoleManagementLayout(): ReactElement {
   }
 
   return (
-    <div className="grid grid-cols-10 gap-6 h-full">
+    <div className="grid h-full grid-cols-10 gap-6">
       <div className="col-span-3">
         <div className="flex flex-col gap-6">
           <InformationWidget
@@ -88,7 +88,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                   onClick={() =>
                     setVisibleInviteUserModal(!visibleInviteUserModal)
                   }
-                  className="!h-10 !bg-layer-light-50 !text-layer-primary-700 hover:!bg-layer-primary-100 border border-layer-primary-700 transition-all duration-500 hover:scale-95"
+                  className="!h-10 border border-layer-primary-700 !bg-layer-light-50 !text-layer-primary-700 transition-all duration-500 hover:scale-95 hover:!bg-layer-primary-100"
                 />
                 <CardLayout className="border border-layer-light-100">
                   <div className="flex flex-col gap-4">
@@ -101,7 +101,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                         return (
                           <li
                             key={page?.key}
-                            className={`p-2.5 cursor-pointer transition-all hover:bg-layer-light-200 text-layer-dark-900 rounded ${
+                            className={`cursor-pointer rounded p-2.5 text-layer-dark-900 transition-all hover:bg-layer-light-200 ${
                               page?.key === activePage?.page &&
                               "bg-layer-light-100 font-medium"
                             } ${
@@ -119,7 +119,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                             }
                           >
                             {page?.key !== "organizations" && (
-                              <span className="bg-primary w-2 h-2 rounded-full" />
+                              <span className="h-2 w-2 rounded-full bg-primary" />
                             )}
                             {page?.key === "organizations"
                               ? "All Organizations"

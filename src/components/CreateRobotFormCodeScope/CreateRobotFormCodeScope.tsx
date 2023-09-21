@@ -31,7 +31,7 @@ export default function CreateRobotFormCodeScope({
 
   return (
     <div data-tut="create-robot-build-step-scope">
-      <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+      <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
         <span>Code Scope:</span>
         <InfoTip content="Code Scope" />
       </div>

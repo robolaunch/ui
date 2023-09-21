@@ -23,10 +23,10 @@ export default function OrganizationGuestsTable({
       getOrganizationGuests({
         name: activePage?.selectedOrganization?.organizationName,
         organizationId: activePage?.selectedOrganization?.organizationId,
-      })
+      }),
     ).then((responseOrganizationsGuests: any) => {
       setResponseOrganizationsGuests(
-        responseOrganizationsGuests?.payload?.data[0]?.users || []
+        responseOrganizationsGuests?.payload?.data[0]?.users || [],
       );
     });
   }, [activePage, dispatch, refresh]);
@@ -44,7 +44,7 @@ export default function OrganizationGuestsTable({
     [
       activePage?.selectedOrganization?.organizationName,
       responseOrganizationsGuests,
-    ]
+    ],
   );
 
   const columns: any = useMemo(
@@ -108,7 +108,7 @@ export default function OrganizationGuestsTable({
         },
       },
     ],
-    [activePage, refresh]
+    [activePage, refresh],
   );
 
   return (

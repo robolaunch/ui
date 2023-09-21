@@ -21,7 +21,7 @@ export default function WorldMapMarker({
       <circle
         fill="#35B8FA"
         stroke="#FFF"
-        className="relative transition-300 text-lg animate__animated animate__pulse animate__infinite"
+        className="transition-300 animate__animated animate__pulse animate__infinite relative text-lg"
         r={isHovered ? 72 : 12}
       />
       {isHovered && (

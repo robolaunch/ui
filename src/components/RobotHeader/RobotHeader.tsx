@@ -19,15 +19,15 @@ export default function RobotHeader(): ReactElement {
 
   return (
     <div data-tut="robot-header" className="col-span-full">
-      <CardLayout className="pt-6 px-8 !pb-0">
-        <div className="h-28 flex items-center justify-between">
+      <CardLayout className="px-8 !pb-0 pt-6">
+        <div className="flex h-28 items-center justify-between">
           <div
             data-tut="robot-information"
-            className="h-full flex flex-col justify-around"
+            className="flex h-full flex-col justify-around"
           >
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <span className="text-lg font-medium">{url?.robotName}</span>
-              <div className="text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100">
+              <div className="w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500">
                 {responseRobot?.robotClusters?.length === 1
                   ? `Virtual ${envOnPremiseRobot ? "Application" : "Robot"}`
                   : (responseRobot?.robotClusters?.length === 2 &&
@@ -46,21 +46,21 @@ export default function RobotHeader(): ReactElement {
                     )}
               </div>
             </div>
-            <span className="flex gap-2 items-center">
+            <span className="flex items-center gap-2">
               <AiOutlineTeam size={16} />
               <span className="text-xs font-light">
                 {url?.organizationName} Organization
               </span>
             </span>
-            <span className="flex gap-2 items-center">
+            <span className="flex items-center gap-2">
               <IoLocationOutline size={16} />
               <span className="text-xs font-light">
                 {selectedState?.roboticsCloud?.region}
               </span>
             </span>
           </div>
-          <div className="hidden md:flex text-xs font-medium text-layer-dark-400 gap-8">
-            <div className="h-full flex flex-col items-end gap-4">
+          <div className="hidden gap-8 text-xs font-medium text-layer-dark-400 md:flex">
+            <div className="flex h-full flex-col items-end gap-4">
               <RobotServiceButtons />
               <RobotConnectionsViewer
                 ide={isSettedCookie}

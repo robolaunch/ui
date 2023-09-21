@@ -20,15 +20,15 @@ export default function AdrinNetworkStatusWidget({
       subtitle={`ADriN Status`}
       icon={<GiAerialSignal size={20} className="text-layer-light-700" />}
     >
-      <div className="flex items-center gap-4 justify-around w-full h-full">
+      <div className="flex h-full w-full items-center justify-around gap-4">
         <img
           src={`/svg/general/computer/computer-${
             theme === "light" && "gray"
           }.svg`}
           alt="computer"
-          className="w-7 h-7 scale-[1.3]"
+          className="h-7 w-7 scale-[1.3]"
         />
-        <div className="w-full flex items-center flex-col gap-2">
+        <div className="flex w-full flex-col items-center gap-2">
           {data?.color ? (
             <FiCheckCircle size={24} className="text-green-600" />
           ) : (
@@ -44,7 +44,7 @@ export default function AdrinNetworkStatusWidget({
           )}
 
           {data?.color ? (
-            <div className="w-full h-0.5 bg-green-600" />
+            <div className="h-0.5 w-full bg-green-600" />
           ) : (
             <ContentLoader
               speed={1}
@@ -76,9 +76,9 @@ export default function AdrinNetworkStatusWidget({
             theme === "light" && "gray"
           }.svg`}
           alt="base-station"
-          className="w-7 h-7 scale-[1.3]"
+          className="h-7 w-7 scale-[1.3]"
         />
-        <div className="w-full flex items-center flex-col gap-2 transition-500">
+        <div className="transition-500 flex w-full flex-col items-center gap-2">
           {data?.color === "bg-green-600" ? (
             <FiCheckCircle size={24} className="text-green-600" />
           ) : data?.color === "bg-yellow-600" ? (
@@ -100,7 +100,7 @@ export default function AdrinNetworkStatusWidget({
           )}
 
           {data?.color ? (
-            <div className={`w-full h-0.5 ${data?.color} transition-500`} />
+            <div className={`h-0.5 w-full ${data?.color} transition-500`} />
           ) : (
             <ContentLoader
               speed={1}
@@ -115,7 +115,7 @@ export default function AdrinNetworkStatusWidget({
 
           {data?.description ? (
             <p
-              className={`text-xs font-medium transition-500 ${
+              className={`transition-500 text-xs font-medium ${
                 data?.color === "bg-green-600"
                   ? "text-green-800"
                   : data?.color === "bg-yellow-600"
@@ -144,7 +144,7 @@ export default function AdrinNetworkStatusWidget({
         <img
           src={`/svg/general/robot/robot-${theme === "light" && "gray"}.svg`}
           alt="robot"
-          className="w-7 h-7 scale-[1.3]"
+          className="h-7 w-7 scale-[1.3]"
         />
       </div>
     </WidgetLayout>

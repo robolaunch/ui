@@ -34,7 +34,7 @@ export default function RosMapWaypointLayout(): ReactElement {
                 hoverWaypoint={hoverWaypoint}
               />
             );
-          }
+          },
         )}
     </Fragment>
   );

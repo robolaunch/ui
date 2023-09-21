@@ -27,7 +27,7 @@ export default function DeleteOrganizationModal({
       deleteOrganizationName: "",
     },
     validationSchema: deleteOrganizationSchema(
-      data?.organizationName?.split("_")[1]
+      data?.organizationName?.split("_")[1],
     ),
     onSubmit: (values) => {
       deleteFormik.setSubmitting(true);
@@ -35,7 +35,7 @@ export default function DeleteOrganizationModal({
       dispatch(
         deleteOrganization({
           organizationId: data?.organizationId,
-        })
+        }),
       ).then(async () => {
         deleteFormik.resetForm();
         handleCloseModal();
@@ -52,7 +52,7 @@ export default function DeleteOrganizationModal({
     >
       <form
         onSubmit={deleteFormik.handleSubmit}
-        className="w-full flex flex-col gap-8"
+        className="flex w-full flex-col gap-8"
       >
         <p className="text-sm">
           If you delete this organization, type the name (
@@ -70,9 +70,9 @@ export default function DeleteOrganizationModal({
             error={deleteFormik.errors.deleteOrganizationName}
           />
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text="Delete Organization"
             disabled={

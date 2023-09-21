@@ -19,7 +19,7 @@ export default function RemoteDesktopChatTab({
   });
 
   return (
-    <div className="h-full flex flex-col justify-between p-2">
+    <div className="flex h-full flex-col justify-between p-2">
       <div
         className="overflow-y-hidden"
         style={{
@@ -32,19 +32,19 @@ export default function RemoteDesktopChatTab({
               return (
                 <div
                   key={index}
-                  className="grid grid-cols-6 gap-2 pb-2 animate__animated animate__fadeIn"
+                  className="animate__animated animate__fadeIn grid grid-cols-6 gap-2 pb-2"
                 >
-                  <div className="col-span-1 flex items-center justify-center rounded-full h-10 w-10 font-semibold bg-layer-primary-300 text-layer-primary-700">
+                  <div className="col-span-1 flex h-10 w-10 items-center justify-center rounded-full bg-layer-primary-300 font-semibold text-layer-primary-700">
                     {remoteDesktopReducer?.members
                       ?.filter((member: any) => member.id === message.id)[0]
                       ?.displayname[0]?.toUpperCase()}
                   </div>
                   <div className="col-span-5 flex flex-col">
-                    <div className="flex gap-3 items-center">
+                    <div className="flex items-center gap-3">
                       <span className="text-sm font-semibold">
                         {
                           remoteDesktopReducer?.members?.filter(
-                            (member: any) => member.id === message.id
+                            (member: any) => member.id === message.id,
                           )[0]?.displayname
                         }
                       </span>
@@ -52,11 +52,11 @@ export default function RemoteDesktopChatTab({
                         {message?.time}
                       </span>
                     </div>
-                    <p className="text-xs break-words">{message?.content}</p>
+                    <p className="break-words text-xs">{message?.content}</p>
                   </div>
                 </div>
               );
-            }
+            },
           )}
         </ScrollToBottom>
       </div>

@@ -22,7 +22,7 @@ export default function ProfileEmailPreferances({
   });
 
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
+    <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">
           Email Preferances
@@ -133,7 +133,7 @@ export default function ProfileEmailPreferances({
           </div>
           <div className="flex items-center justify-end gap-6">
             <span
-              className="text-xs font-medium text-layer-dark-500 cursor-pointer hover:underline"
+              className="cursor-pointer text-xs font-medium text-layer-dark-500 hover:underline"
               onClick={() => formik.resetForm()}
             >
               Discard

@@ -5,13 +5,13 @@ export default function SidebarInstancesTabs(): ReactElement {
   const { sidebarState, setSidebarState } = useMain();
 
   return (
-    <ul className="h-10 w-full flex items-center">
+    <ul className="flex h-10 w-full items-center">
       {["Cloud Instances", "Physical Instances"].map(
         (item: any, index: number) => {
           return (
             <li
               key={index}
-              className={`w-full flex flex-col gap-3 items-center justify-center text-xs font-medium px-1 transition-all duration-500 min-w-max hover:scale-95 text-layer-light-300 cursor-pointer ${
+              className={`flex w-full min-w-max cursor-pointer flex-col items-center justify-center gap-3 px-1 text-xs font-medium text-layer-light-300 transition-all duration-500 hover:scale-95 ${
                 sidebarState?.instanceTab === item && "!text-layer-primary-500"
               }`}
               onClick={() =>
@@ -23,13 +23,13 @@ export default function SidebarInstancesTabs(): ReactElement {
             >
               <p>{item}</p>
               <span
-                className={`w-full bg-layer-light-300 h-[2px] ${
+                className={`h-[2px] w-full bg-layer-light-300 ${
                   sidebarState?.instanceTab === item && "!bg-primary"
                 } `}
               />
             </li>
           );
-        }
+        },
       )}
     </ul>
   );

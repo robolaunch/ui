@@ -9,7 +9,7 @@ export default function ColorCell({ text, color }: IColorCell): ReactElement {
   return (
     <div className="flex items-center justify-center">
       <p
-        className={`text-xs w-fit h-hit py-1 px-3 rounded-lg ${
+        className={`h-hit w-fit rounded-lg px-3 py-1 text-xs ${
           color === "green"
             ? "text-green-600"
             : color === "red"

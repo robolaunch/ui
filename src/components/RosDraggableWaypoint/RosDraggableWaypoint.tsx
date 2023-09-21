@@ -111,9 +111,9 @@ export default function RosDraggableWaypoint({
           <FaFlagCheckered
             className={`${
               waypointIndex === hoverWaypoint
-                ? "text-layer-primary-900 scale-150"
+                ? "scale-150 text-layer-primary-900"
                 : "text-layer-secondary-500"
-            } transition-all duration-300 ml-2 mt-1`}
+            } ml-2 mt-1 transition-all duration-300`}
             size={20}
           />
         ) : missions[activeMission]?.waypoints?.length > 1 &&
@@ -121,16 +121,16 @@ export default function RosDraggableWaypoint({
           <CgFlagAlt
             className={`${
               waypointIndex === hoverWaypoint
-                ? "text-layer-primary-500 scale-150"
+                ? "scale-150 text-layer-primary-500"
                 : "text-layer-primary-700"
-            } transition-all duration-300 ml-1.5 `}
+            } ml-1.5 transition-all duration-300 `}
             size={26}
           />
         ) : (
           <TbMapPinFilled
             className={`${
               waypointIndex === hoverWaypoint
-                ? "text-layer-primary-500 scale-150"
+                ? "scale-150 text-layer-primary-500"
                 : "text-layer-secondary-500"
             } transition-all duration-300`}
             size={24}
@@ -140,7 +140,7 @@ export default function RosDraggableWaypoint({
           style={{
             transform: `rotate(${waypoint?.coordinates?.z}deg)`,
           }}
-          className="absolute top-3 left-1"
+          className="absolute left-1 top-3"
         >
           <TbArrowBigUpLinesFilled className="mb-2 text-layer-secondary-800 " />
           {/* <img

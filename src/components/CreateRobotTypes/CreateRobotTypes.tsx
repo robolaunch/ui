@@ -30,15 +30,15 @@ export default function CreateRobotTypes({
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
-        })
+        }),
       ).then((response: any) => {
         setResponsePhysicalInstances(
           response?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchPhysicalInstances?.filter(
             (instance: any) =>
               instance?.federationPhase === "Connected" &&
               instance?.multicastPhase === "Connected" &&
-              instance?.phase === "Connected"
-          ) || []
+              instance?.phase === "Connected",
+          ) || [],
         );
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +54,7 @@ export default function CreateRobotTypes({
   return (
     <Fragment>
       <div data-tut="create-robot-step1-type" className="flex flex-col gap-2">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
           <InfoTip content="Select the type of robot you want to create." />
         </div>
@@ -77,7 +77,7 @@ export default function CreateRobotTypes({
                 "You can't change robot type because this robot is created before."
               }
               key={index}
-              className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded  w-full transition-all duration-300 ${
+              className={`relative flex w-full items-center justify-center gap-1 rounded border-2  p-4 transition-all duration-300 ${
                 formik.values?.isVirtualRobot === robotType?.isVirtualRobot
                   ? robotType?.disabled
                     ? "border-layer-primary-300"
@@ -91,7 +91,7 @@ export default function CreateRobotTypes({
                   ? toast.error("You can't change robot type in update mode")
                   : formik.setFieldValue(
                       "isVirtualRobot",
-                      robotType?.isVirtualRobot
+                      robotType?.isVirtualRobot,
                     );
               }}
             >
@@ -110,7 +110,7 @@ export default function CreateRobotTypes({
       Array.isArray(responsePhysicalInstances) ? (
         responsePhysicalInstances?.length > 0 ? (
           <div className="flex flex-col gap-2 pt-1">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+            <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
               Physical Instances:
               <InfoTip content="Select the physical instance you want to hybrid robot to be deployed on." />
             </div>
@@ -119,7 +119,7 @@ export default function CreateRobotTypes({
                 (instance: any, index: number) => (
                   <div
                     key={index}
-                    className={`relative flex justify-center items-center gap-1 border-2 p-4 rounded cursor-pointer w-40  ${
+                    className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                       formik.values?.physicalInstanceName === instance?.name
                         ? "border-layer-primary-600 shadow"
                         : "border-layer-light-100"
@@ -128,11 +128,11 @@ export default function CreateRobotTypes({
                     onClick={() => {
                       isImportRobot
                         ? toast.error(
-                            "You can't change physical instance in update mode"
+                            "You can't change physical instance in update mode",
                           )
                         : formik.setFieldValue(
                             "physicalInstanceName",
-                            instance?.name
+                            instance?.name,
                           );
                     }}
                   >
@@ -143,7 +143,7 @@ export default function CreateRobotTypes({
                     </div>
                     <div className="absolute inset-0 flex items-start justify-end p-2"></div>
                   </div>
-                )
+                ),
               )}
             </div>
             <InputError
@@ -152,7 +152,7 @@ export default function CreateRobotTypes({
             />
           </div>
         ) : (
-          <div className="relative h-8 m-2">
+          <div className="relative m-2 h-8">
             <SidebarInfo text="You need to create a physical instance first" />
           </div>
         )
@@ -160,7 +160,7 @@ export default function CreateRobotTypes({
         !formik.values?.isVirtualRobot && (
           <div className="relative h-8">
             <img
-              className="w-12 mx-auto"
+              className="mx-auto w-12"
               src="/svg/general/loading.svg"
               alt="Loading..."
             />

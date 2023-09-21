@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 export default function WelcomeGuide(): ReactElement {
   return (
-    <div className="flex flex-col items-center text-center gap-6">
+    <div className="flex flex-col items-center gap-6 text-center">
       <h3 className="text-2xl font-bold ">Welcome to Robolaunch</h3>
       <p>
         We're thrilled to have you on board! Let's get started with a quick tour

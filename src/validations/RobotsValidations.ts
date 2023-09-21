@@ -14,7 +14,7 @@ export const CreateRobotFormStep1Validations = Yup.object().shape({
     .lowercase("Must be lowercase.")
     .matches(
       /^[a-z0-9]+(-[a-z0-9]+)*$/,
-      "Must be lowercase with hyphen (-) only in the middle."
+      "Must be lowercase with hyphen (-) only in the middle.",
     ),
   physicalInstanceName: Yup.string().when("isVirtualRobot", {
     is: false,
@@ -42,8 +42,8 @@ export const CreateRobotFormStep2Validations = Yup.object().shape({
           name: Yup.string().required("Repository Name is required"),
           url: Yup.string().required("Repository URL is required"),
           branch: Yup.string().required("Branch is required"),
-        })
+        }),
       ),
-    })
+    }),
   ),
 });

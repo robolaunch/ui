@@ -4,7 +4,7 @@ import InputText from "../InputText/InputText";
 
 export default function MarketplaceTopBar(): ReactElement {
   return (
-    <CardLayout className="!w-full !flex !justify-between items-center p-4">
+    <CardLayout className="!flex !w-full items-center !justify-between p-4">
       <div className="flex items-center gap-4">
         <img
           className="w-12"
@@ -12,7 +12,7 @@ export default function MarketplaceTopBar(): ReactElement {
         /images/rocket.svg"
           alt="robolaunch"
         />
-        <span className="text-layer-dark-600 font-medium">
+        <span className="font-medium text-layer-dark-600">
           robolaunch Application Templates
         </span>
       </div>

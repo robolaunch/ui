@@ -23,7 +23,7 @@ export default function OrganizationsPage({
           users: organization?.userCount,
         };
       }),
-    [responseOrganizations]
+    [responseOrganizations],
   );
 
   const columns: any = useMemo(
@@ -40,9 +40,9 @@ export default function OrganizationsPage({
               title={organizationNameViewer({
                 organizationName: rowData?.name?.organizationName || "",
               })}
-              titleURL={`/user-role-management/${
-                rowData?.name?.organizationName.split("_")[1]
-              }`}
+              titleURL={`/user-role-management/${rowData?.name?.organizationName.split(
+                "_",
+              )[1]}`}
               subtitle={`Member Count: ${rowData?.name?.userCount}`}
               onClick={() =>
                 handleChangeActiveTab({
@@ -84,7 +84,7 @@ export default function OrganizationsPage({
         },
       },
     ],
-    [handleChangeActiveTab]
+    [handleChangeActiveTab],
   );
 
   return (

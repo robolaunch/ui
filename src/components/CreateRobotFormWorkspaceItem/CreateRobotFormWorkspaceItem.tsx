@@ -60,7 +60,7 @@ export default function CreateRobotFormWorkspaceItem({
     >
       <div className="flex flex-col gap-2 p-4">
         <div data-tut="create-robot-step2-workspace-name">
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
             Workspace Name:
             <InfoTip content="Type a workspace name." />
           </div>
@@ -77,13 +77,13 @@ export default function CreateRobotFormWorkspaceItem({
 
         {!envOnPremiseRobot && (
           <div data-tut="create-robot-step2-workspace-distro">
-            <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
               Workspace Distro:
               <InfoTip content="Select a workspace ros2 distro." />
             </div>
             <InputSelect
               {...formik.getFieldProps(
-                `workspaces.${workspaceIndex}.workspaceDistro`
+                `workspaces.${workspaceIndex}.workspaceDistro`,
               )}
             >
               <Fragment>
@@ -102,7 +102,7 @@ export default function CreateRobotFormWorkspaceItem({
                         })}
                       </option>
                     );
-                  }
+                  },
                 )}
               </Fragment>
             </InputSelect>
@@ -124,7 +124,7 @@ export default function CreateRobotFormWorkspaceItem({
           <span className="mx-auto text-[0.75rem] font-medium">
             Workspace Repositories
           </span>
-          <span className="w-full h-[2px] bg-primary" />
+          <span className="h-[2px] w-full bg-primary" />
           {formik.values.workspaces[workspaceIndex]?.robotRepositories?.map(
             (repository: any, repositoryIndex: number) => (
               <CreateRobotFormRepositoryItem
@@ -134,7 +134,7 @@ export default function CreateRobotFormWorkspaceItem({
                 repositoryIndex={repositoryIndex}
                 repository={repository}
               />
-            )
+            ),
           )}
           <div data-tut="create-robot-step2-repository-add-button">
             <CreateRobotFormAddButton

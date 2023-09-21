@@ -31,7 +31,7 @@ export default function DeleteRobotModalModal({
         region: data?.region,
         fleetName: data?.fleetName,
         robotName: data?.robotName,
-      })
+      }),
     ).then(async (res: any) => {
       (await res) &&
         setTimeout(() => {
@@ -48,19 +48,19 @@ export default function DeleteRobotModalModal({
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex w-full flex-col gap-8">
         <p className="text-sm">
           Are you sure you want to delete the robot named{" "}
           <span className="font-semibold">{data?.robotName}</span>?
         </p>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text={
               isLoading ? (
                 <img
-                  className="w-10 h-10"
+                  className="h-10 w-10"
                   src="/svg/general/loading.svg"
                   alt="loading"
                 />

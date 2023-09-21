@@ -31,7 +31,7 @@ export default function ChangeRoleModal({
           name: "",
           organizationId: activePage?.selectedOrganization?.organizationId,
           invitedUserId: data?.userId,
-        })
+        }),
       );
     } else {
       dispatch(
@@ -39,7 +39,7 @@ export default function ChangeRoleModal({
           name: "",
           organizationId: activePage?.selectedOrganization?.organizationId,
           invitedUserId: data?.userId,
-        })
+        }),
       );
     }
     handleRefresh && handleRefresh();
@@ -53,7 +53,7 @@ export default function ChangeRoleModal({
       className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex w-full flex-col gap-8">
         <p className="text-sm">
           This user now is{" "}
           <span className="font-semibold">
@@ -65,9 +65,9 @@ export default function ChangeRoleModal({
           </span>
           ?
         </p>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text={`Change Role to ${
               activePage?.page === "organizationAdmins" ? "Member" : "Admin"

@@ -17,7 +17,7 @@ export default function RobotServiceButtons(): ReactElement {
             disabled={!isSettedCookie || !isRobotReady}
             loading={!isSettedCookie || !isRobotReady}
             text={"Code Editor"}
-            className="!h-9 text-xs px-4"
+            className="!h-9 px-4 text-xs"
           />
         </a>
       </div>
@@ -35,7 +35,7 @@ export default function RobotServiceButtons(): ReactElement {
             disabled={!isSettedCookie || !isRobotReady}
             loading={!isSettedCookie || !isRobotReady}
             text={"Remote Desktop"}
-            className="!h-9 text-xs px-4"
+            className="!h-9 px-4 text-xs"
           />
         </a>
       </div>

@@ -60,7 +60,7 @@ export default function CreateEnvironmentFormStep1({
         ifErrorNavigateTo404: !responseRobot,
         setResponse: setResponseRobot,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -92,18 +92,18 @@ export default function CreateEnvironmentFormStep1({
             gpuEnabledForCloudInstance:
               formik.values?.gpuEnabledForCloudInstance,
             workspaces: responseRobot?.robotWorkspaces,
-          })
+          }),
         );
 
         toast.success(
-          "Robot updated successfully. Redirecting to fleet page..."
+          "Robot updated successfully. Redirecting to fleet page...",
         );
         setTimeout(() => {
-          window.location.href = `/${
-            selectedState?.organization?.organizationName?.split("_")[1]
-          }/${selectedState?.roboticsCloud?.name}/${
-            selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}}`;
+          window.location.href = `/${selectedState?.organization?.organizationName?.split(
+            "_",
+          )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
+            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
+            ?.robotName}}`;
         }, 2000);
       }
 
@@ -160,7 +160,7 @@ export default function CreateEnvironmentFormStep1({
             ],
           },
         ],
-      })
+      }),
     ).then(async () => {
       setSidebarState((prevState: any) => {
         return {
@@ -182,11 +182,11 @@ export default function CreateEnvironmentFormStep1({
         >
           <form
             onSubmit={formik.handleSubmit}
-            className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
+            className="animate__animated animate__fadeIn relative flex flex-col gap-3"
           >
             {/* RobotName */}
             <div data-tut="create-application-step1-name">
-              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
                 Environment Name:
                 <InfoTip content="Type a new robot name." />
               </div>
@@ -245,7 +245,7 @@ export default function CreateEnvironmentFormStep1({
                 data-tut="create-robot-step1-ros2-bridge"
                 className="flex items-center gap-1"
               >
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
                   Configure Workspaces :
                   <InfoTip content="Configure Workspaces" />
                 </div>
@@ -260,7 +260,7 @@ export default function CreateEnvironmentFormStep1({
             </div>
 
             {!url.robotName && (
-              <div className="flex gap-2 mt-10 ">
+              <div className="mt-10 flex gap-2 ">
                 {!isImportRobot && (
                   <Fragment>
                     <CreateRobotFormCancelButton
@@ -282,7 +282,7 @@ export default function CreateEnvironmentFormStep1({
                     text={
                       formik.isSubmitting ? (
                         <img
-                          className="w-10 h-10"
+                          className="h-10 w-10"
                           src="/svg/general/loading.svg"
                           alt="loading"
                         />
@@ -317,7 +317,7 @@ export default function CreateEnvironmentFormStep1({
         tourConfig={[
           getGuideItem("[data-tut='create-application-step1-name']"),
           getGuideItem(
-            "[data-tut='create-application-step1-environment-selector']"
+            "[data-tut='create-application-step1-environment-selector']",
           ),
           getGuideItem("[data-tut='create-robot-step1-storage']"),
           getGuideItem("[data-tut='create-environment-vdi-session-count']"),

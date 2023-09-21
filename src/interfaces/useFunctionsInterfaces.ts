@@ -153,67 +153,67 @@ export interface IuseFunctions {
   getOrganizations: (parameters?: ImultipleGetParameters) => void;
   getOrganization: (
     values: IgetOrganization,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) => void;
   getRoboticsClouds: (
     values: IgetRoboticsClouds,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) => void;
   getRoboticsCloud: (
     values: IgetRoboticsCloud,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) => void;
   getInstances: (
     values: IgetInstances,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) => void;
   getPhysicalInstances: (
     values: IgetPhysicalInstances,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) => void;
   getInstance: (
     values: IgetInstance,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) => void;
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
   getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
   getNamespaces: (
     values: IgetNamespaces,
-    parameters: ImultipleGetParameters
+    parameters: ImultipleGetParameters,
   ) => void;
   getNamespace: (
     values: IgetNamespace,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) => void;
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) => void;
   getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
 
   getBuildManager: (
     values: IgetBuildManager,
-    parameters?: IsingleGetBuildParameters
+    parameters?: IsingleGetBuildParameters,
   ) => void;
   getLaunchManagers: (
     values: IgetLaunchManagers,
-    parameters?: ImultipleGetLaunchParameters
+    parameters?: ImultipleGetLaunchParameters,
   ) => void;
   getEnvironments: (
     values: IgetEnvironments,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) => void;
   getEnvironment: (
     values: IgetEnvironmentRequest,
-    parameters?: IsingleGetEnviromentParameters
+    parameters?: IsingleGetEnviromentParameters,
   ) => void;
   getIP: () => void;
   handleSetterCurrentOrganization: (
-    urlOrganizationName: string | undefined
+    urlOrganizationName: string | undefined,
   ) => void;
   handleSetterCurrentRoboticsCloud: (
-    urlRoboticsCloudName: string | undefined
+    urlRoboticsCloudName: string | undefined,
   ) => void;
   handleSetterCurrentInstance: (urlInstanceName: string | undefined) => void;
   handleSetterCurrentFleet: (urlFleetName: string | undefined) => void;
@@ -226,14 +226,14 @@ export interface IuseFunctions {
   handleSetterResponseRobots: (setResponseRobots: any) => void;
   handleSetterResponseRobot: (
     urlRobotName: string | undefined,
-    setResponseRobot?: any
+    setResponseRobot?: any,
   ) => void;
   handleSetterResponseBuildManager: (
     urlRobotName: string | undefined,
-    setResponseBuildManager?: any
+    setResponseBuildManager?: any,
   ) => void;
   handleSetterResponseLaunchManagers: (
     urlRobotName: string | undefined,
-    setResponseLaunchManagers?: any
+    setResponseLaunchManagers?: any,
   ) => void;
 }

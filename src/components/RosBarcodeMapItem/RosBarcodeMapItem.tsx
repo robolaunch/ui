@@ -15,7 +15,7 @@ export default function RosBarcodeMapItem({
 
   return (
     <div
-      className={`absolute flex flex-col gap-1 z-50 bg-red-500 text-[2px] ${
+      className={`absolute z-50 flex flex-col gap-1 bg-red-500 text-[2px] ${
         isHovered ? "h-fit w-fit rounded" : "h-[4px] w-[4px] rounded-full"
       }`}
       style={{

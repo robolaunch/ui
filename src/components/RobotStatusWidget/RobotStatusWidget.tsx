@@ -27,7 +27,7 @@ export default function RobotStatusWidget({
         .flat()
         ?.map((cluster: any) => {
           return cluster?.launchManagerStatus;
-        }) || undefined
+        }) || undefined,
     );
   }, [responseLaunchManagers]);
 
@@ -38,18 +38,18 @@ export default function RobotStatusWidget({
       subtitle={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
       icon={<VscHistory size={20} className="text-layer-light-700" />}
     >
-      <div className="flex items-center justify-around w-full h-full">
+      <div className="flex h-full w-full items-center justify-around">
         {/* Workspace */}
         <RobotStatusWidgetItem
           title="Workspace Manager"
           loading={!responseRobot}
           state={
             responseRobot?.robotClusters?.filter(
-              (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+              (robot: any) => robot?.robotStatus !== "EnvironmentReady",
             )?.length
               ? "warning"
               : responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus === "Error"
+                  (robot: any) => robot?.robotStatus === "Error",
                 )?.length
               ? "error"
               : "success"
@@ -58,10 +58,10 @@ export default function RobotStatusWidget({
             !responseRobot
               ? "Loading..."
               : responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  (robot: any) => robot?.robotStatus !== "EnvironmentReady",
                 )?.length
               ? responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+                  (robot: any) => robot?.robotStatus !== "EnvironmentReady",
                 )[0]?.robotStatus
               : "Ready"
           }
@@ -76,11 +76,11 @@ export default function RobotStatusWidget({
             state={
               responseBuildManager?.robotClusters?.length
                 ? responseBuildManager?.robotClusters?.filter(
-                    (robot: any) => robot?.buildManagerStatus !== "Ready"
+                    (robot: any) => robot?.buildManagerStatus !== "Ready",
                   )?.length
                   ? "warning"
                   : responseBuildManager?.robotClusters?.filter(
-                      (robot: any) => robot?.buildManagerStatus === "Error"
+                      (robot: any) => robot?.buildManagerStatus === "Error",
                     )?.length
                   ? "error"
                   : "success"
@@ -91,10 +91,10 @@ export default function RobotStatusWidget({
                 ? "Loading..."
                 : responseBuildManager?.robotClusters?.length
                 ? responseBuildManager?.robotClusters?.filter(
-                    (robot: any) => robot?.buildManagerStatus !== "Ready"
+                    (robot: any) => robot?.buildManagerStatus !== "Ready",
                   )?.length
                   ? responseBuildManager?.robotClusters?.filter(
-                      (robot: any) => robot?.buildManagerStatus !== "Ready"
+                      (robot: any) => robot?.buildManagerStatus !== "Ready",
                     )[0]?.buildManagerStatus
                   : "Ready"
                 : "None"
@@ -111,11 +111,11 @@ export default function RobotStatusWidget({
             state={
               responseLaunchManagersFiltered?.length
                 ? responseLaunchManagersFiltered?.filter(
-                    (status: any) => status !== "Running"
+                    (status: any) => status !== "Running",
                   )?.length
                   ? "warning"
                   : responseLaunchManagersFiltered?.filter(
-                      (status: any) => status === "Error"
+                      (status: any) => status === "Error",
                     )?.length
                   ? "error"
                   : "success"
@@ -126,10 +126,10 @@ export default function RobotStatusWidget({
                 ? "Loading..."
                 : responseLaunchManagersFiltered?.length
                 ? responseLaunchManagersFiltered?.filter(
-                    (status: any) => status !== "Running"
+                    (status: any) => status !== "Running",
                   )?.length
                   ? responseLaunchManagersFiltered?.filter(
-                      (status: any) => status !== "Running"
+                      (status: any) => status !== "Running",
                     )[0]
                   : "Ready"
                 : "None"

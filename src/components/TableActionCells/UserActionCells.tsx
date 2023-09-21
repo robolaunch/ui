@@ -21,14 +21,14 @@ export default function UserActionCells({
 
   return (
     <Fragment>
-      <div className="card flex gap-4 float-right">
+      <div className="card float-right flex gap-4">
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-layer-primary-500"
+          className="!h-8 !w-8 !border !border-layer-primary-500 !bg-transparent"
           text={<BiPencil className="text-layer-primary-500" />}
           onClick={() => setVisibleChangeRoleModal(true)}
         />
         <Button
-          className="!w-8 !h-8 !bg-transparent !border !border-red-600"
+          className="!h-8 !w-8 !border !border-red-600 !bg-transparent"
           text={<BiTrash className="text-red-600" />}
           onClick={() => setVisibleDeleteModal(true)}
         />

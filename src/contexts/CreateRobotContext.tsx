@@ -110,7 +110,7 @@ export default ({ children }: any) => {
 
   function handleAddRepositoryToWorkspaceStep(
     formik: any,
-    workspaceIndex: number
+    workspaceIndex: number,
   ): void {
     const robotWorkspaces: IRobotWorkspace[] = [...formik.values.workspaces];
 
@@ -185,13 +185,13 @@ export default ({ children }: any) => {
   function handleRemoveRepositoryFromWorkspaceStep(
     formik: any,
     workspaceIndex: number,
-    repositoryIndex: number
+    repositoryIndex: number,
   ) {
     formik.setFieldValue(
       `workspaces.${workspaceIndex}.robotRepositories`,
       formik.values.workspaces[workspaceIndex].robotRepositories.filter(
-        (item: any, index: number) => index !== repositoryIndex
-      )
+        (item: any, index: number) => index !== repositoryIndex,
+      ),
     );
   }
 
@@ -203,7 +203,7 @@ export default ({ children }: any) => {
 
   function handleRemoveStepFromLaunchStep(
     formik: any,
-    launchStepIndex: number
+    launchStepIndex: number,
   ) {
     const temp: any = [...formik.values.robotLaunchSteps];
     temp.splice(launchStepIndex, 1);
@@ -214,8 +214,8 @@ export default ({ children }: any) => {
     formik.setFieldValue(
       `robotLmEnvs`,
       formik.values.robotLmEnvs.filter(
-        (env: any, envIndex: number) => envIndex !== index
-      )
+        (env: any, envIndex: number) => envIndex !== index,
+      ),
     );
   }
 

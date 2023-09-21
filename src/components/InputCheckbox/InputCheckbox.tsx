@@ -22,7 +22,7 @@ export default function InputCheckbox({
   return (
     <div className="flex gap-2">
       <label
-        className="min-w-fit flex flex-wrap gap-1 text-xs font-medium text-layer-light-700"
+        className="flex min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700"
         htmlFor={name}
       >
         {name}
@@ -30,7 +30,7 @@ export default function InputCheckbox({
       <input
         ref={ref}
         disabled={disabled}
-        className={`scale-150 outline-none accent-primary ${className}`}
+        className={`scale-150 accent-primary outline-none ${className}`}
         onChange={onChange}
         onBlur={onBlur}
         name={name}

@@ -6,7 +6,7 @@ import Button from "../../components/Button/Button";
 export default function Page404(): ReactElement {
   return (
     <CardLayout
-      className={`flex flex-col justify-center items-center p-12 h-full gap-8 animate__animated animate__fadeIn transition-all duration-500 `}
+      className={`animate__animated animate__fadeIn flex h-full flex-col items-center justify-center gap-8 p-12 transition-all duration-500 `}
       style={{
         backgroundImage: `url("/images/abstract2-white.jpg")`,
         backgroundRepeat: "no-repeat",
@@ -22,7 +22,7 @@ export default function Page404(): ReactElement {
         <Link to={"/"}>
           <Button
             text={"Redirect to Home Page"}
-            className="!w-fit !h-fit p-2.5 !border-2 !border-layer-primary-300 !text-xs !bg-transparent !font-semibold !text-layer-primary-600 hover:!scale-90 transition-all duration-500"
+            className="!h-fit !w-fit !border-2 !border-layer-primary-300 !bg-transparent p-2.5 !text-xs !font-semibold !text-layer-primary-600 transition-all duration-500 hover:!scale-90"
           />
         </Link>
       </Fragment>

@@ -22,7 +22,7 @@ export default function WidgetLayout({
   return (
     <div
       data-tut={dataTut}
-      className="flex flex-col shadow-lg rounded-lg bg-layer-light-50 h-[21rem] animate__animated animate__fadeIn border border-layer-light-200"
+      className="animate__animated animate__fadeIn flex h-[21rem] flex-col rounded-lg border border-layer-light-200 bg-layer-light-50 shadow-lg"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",
@@ -30,10 +30,10 @@ export default function WidgetLayout({
         backgroundSize: "cover",
       }}
     >
-      <div className="flex justify-between items-center p-4 border-b border-layer-light-100">
+      <div className="flex items-center justify-between border-b border-layer-light-100 p-4">
         {icon}
-        <div className="flex flex-col gap-1 items-center">
-          <span className="font-medium text-sm text-layer-dark-500">
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-sm font-medium text-layer-dark-500">
             {title}
           </span>
           <span className="text-xs font-light text-layer-dark-400">

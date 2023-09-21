@@ -31,7 +31,7 @@ export default function InstallAppButton(): ReactElement {
   return (
     <div
       onClick={handleInstallClick}
-      className="p-2 hover:bg-layer-light-100 rounded transition-300"
+      className="transition-300 rounded p-2 hover:bg-layer-light-100"
     >
       <TbCloudDownload size={28} />
     </div>

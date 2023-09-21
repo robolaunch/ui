@@ -12,11 +12,11 @@ export default function MarketplaceSingleİtemHeader({
   console.log(responseItem);
 
   return (
-    <CardLayout className="col-span-1 p-4 h-52">
-      <div className="h-full flex items-center gap-6">
+    <CardLayout className="col-span-1 h-52 p-4">
+      <div className="flex h-full items-center gap-6">
         {responseItem?.distro ? (
           <img
-            className="h-40 animate__animated animate__fadeIn"
+            className="animate__animated animate__fadeIn h-40"
             src={
               responseItem?.type === "Environment"
                 ? `/svg/apps/${responseItem?.family?.toLowerCase()}.svg`
@@ -35,7 +35,7 @@ export default function MarketplaceSingleİtemHeader({
             <rect width="132" height="168" />
           </ContentLoader>
         )}
-        <div className="h-full flex flex-col justify-between py-1.5">
+        <div className="flex h-full flex-col justify-between py-1.5">
           <div className="flex justify-between">
             <div className="flex items-center gap-3">
               <div className="text-lg font-medium">
@@ -52,7 +52,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
               >
                 {responseItem?.type || (
                   <ContentLoader
@@ -67,7 +67,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
               >
                 {typeof responseItem?.hasBuild === "boolean" ? (
                   `Build Steps: ${responseItem?.hasBuild ? "Include" : "None"}`
@@ -84,7 +84,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`text-[0.64rem] capitalize font-medium px-3 py-1 rounded-lg w-fit text-layer-primary-500 bg-layer-primary-100`}
+                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
               >
                 {typeof responseItem?.hasLaunch === "boolean" ? (
                   `Launch Steps: ${

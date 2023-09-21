@@ -20,8 +20,8 @@ export default function WorkspacesCell({
         const response = await axios.get(
           workspace?.url.replace(
             "https://github.com/",
-            "https://api.github.com/repos/"
-          )
+            "https://api.github.com/repos/",
+          ),
         );
 
         setGithubWorkspaces((prev) => [
@@ -46,16 +46,16 @@ export default function WorkspacesCell({
         return (
           <div
             key={index}
-            className="border border-layer-light-200 w-fit py-1.5 px-4 rounded shadow-md"
+            className="w-fit rounded border border-layer-light-200 px-4 py-1.5 shadow-md"
           >
             <div className="flex gap-2">
               <a
                 target="_blank"
                 rel="noreferrer"
                 href={workspace?.url}
-                className="flex gap-3 text-xs font-medium text-layer-secondary-700 hover:underline hover:text-layer-secondary-800 transition-300"
+                className="transition-300 flex gap-3 text-xs font-medium text-layer-secondary-700 hover:text-layer-secondary-800 hover:underline"
               >
-                <div className="flex gap-1 items-center">
+                <div className="flex items-center gap-1">
                   <img
                     className="w-3"
                     src="/svg/apps/github.svg"
@@ -63,7 +63,7 @@ export default function WorkspacesCell({
                   />
                   <span> {workspace?.full_name}</span>
                 </div>
-                <div className="flex gap-1 items-center">
+                <div className="flex items-center gap-1">
                   <GoGitBranch />
                   <span>{workspace?.branch}</span>
                 </div>

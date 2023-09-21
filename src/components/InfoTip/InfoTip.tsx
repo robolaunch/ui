@@ -16,7 +16,7 @@ export default function InfoTip({
 
   return (
     <div
-      className="relative cursor-pointer p-0 m-0"
+      className="relative m-0 cursor-pointer p-0"
       style={{
         width: size || 16,
       }}
@@ -24,7 +24,7 @@ export default function InfoTip({
     >
       {isHover && content && (
         <div
-          className={`absolute top-1 flex  p-2 text-[0.66rem] rounded text-layer-light-100 z-50 border border-layer-light-500 bg-layer-dark-500 opacity-90 animate__animated animate__fadeIn ${
+          className={`animate__animated animate__fadeIn absolute  top-1 z-50 flex rounded border border-layer-light-500 bg-layer-dark-500 p-2 text-[0.66rem] text-layer-light-100 opacity-90 ${
             rightTip ? "right-5" : "left-5"
           } ${content?.length > 42 ? "w-64" : "w-max"}`}
         >

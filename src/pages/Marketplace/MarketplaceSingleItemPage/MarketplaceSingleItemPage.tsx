@@ -16,7 +16,7 @@ export default function MarketplaceSingleItemPage(): ReactElement {
     dispatch(
       getMarkeplaceItem({
         acronym: url?.productName as string,
-      })
+      }),
     ).then((res: any) => {
       setResponseItem(res?.payload?.marketplaceData?.[0]?.robots?.[0] || []);
     });
@@ -25,7 +25,7 @@ export default function MarketplaceSingleItemPage(): ReactElement {
 
   return (
     <div className="grid grid-cols-12 gap-6">
-      <div className="col-span-9 grid grid-cols-1 gap-6 h-fit">
+      <div className="col-span-9 grid h-fit grid-cols-1 gap-6">
         <MarketplaceSingleİtemHeader responseItem={responseItem} />
 
         <MarketplaceSingleItemReadme responseItem={responseItem} />

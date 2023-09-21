@@ -11,18 +11,18 @@ export default function ProfileChangePassword({
   className,
 }: IProfileChangePassword): ReactElement {
   return (
-    <CardLayout className={`flex flex-col gap-8 p-6 h-fit ${className}`}>
+    <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
         <p className="text-lg font-bold text-layer-dark-600">Change Password</p>
 
-        <div className="flex flex-col gap-4 items-end">
-          <div className="w-full flex gap-4 items-center bg-layer-secondary-100 border border-layer-secondary-500 rounded-lg p-4">
+        <div className="flex flex-col items-end gap-4">
+          <div className="flex w-full items-center gap-4 rounded-lg border border-layer-secondary-500 bg-layer-secondary-100 p-4">
             <RiErrorWarningFill
-              className="text-layer-secondary-600 text-2xl"
+              className="text-2xl text-layer-secondary-600"
               size={32}
             />
             <div className="flex flex-col gap-2">
-              <div className="font-medium text-sm">
+              <div className="text-sm font-medium">
                 You Are Changing Your Password
               </div>
               <p className="text-xs text-layer-dark-500">
@@ -31,7 +31,7 @@ export default function ProfileChangePassword({
             </div>
           </div>
           <Button
-            className="!h-10 w-40 transition-all duration-300 text-xs"
+            className="!h-10 w-40 text-xs transition-all duration-300"
             text={`Change Password`}
           />
         </div>

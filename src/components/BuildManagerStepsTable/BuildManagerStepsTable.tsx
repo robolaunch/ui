@@ -27,7 +27,7 @@ export default function BuildManagerStepsTable({
           workspace: step?.workspace,
           isRanCloud: step?.instancesName.includes(url?.instanceName),
           isRanPhysical: step?.instancesName.includes(
-            robotData?.step1?.physicalInstanceName
+            robotData?.step1?.physicalInstanceName,
           ),
           log: step?.buildLog,
           state: step?.buildStatus,
@@ -37,7 +37,7 @@ export default function BuildManagerStepsTable({
       responseBuildManager?.robotBuildSteps,
       robotData?.step1?.physicalInstanceName,
       url?.instanceName,
-    ]
+    ],
   );
 
   const columns: any = useMemo(
@@ -106,7 +106,7 @@ export default function BuildManagerStepsTable({
         },
       },
     ],
-    [responseBuildManager, url?.instanceName]
+    [responseBuildManager, url?.instanceName],
   );
 
   return (

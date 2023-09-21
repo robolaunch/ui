@@ -22,7 +22,7 @@ export default function Button({
       type={type || "button"}
       disabled={disabled}
       onClick={() => (onClick ? onClick() : null)}
-      className={`w-full h-12 flex items-center justify-center bg-primary hover:bg-layer-primary-700 active:bg-purple-900 focus:ring-4 focus:ring-layer-primary-300 disabled:bg-layer-primary-400 font-medium text-white rounded-md transition-300 hover:scale-[0.99] text-xs ${className}`}
+      className={`transition-300 flex h-12 w-full items-center justify-center rounded-md bg-primary text-xs font-medium text-white hover:scale-[0.99] hover:bg-layer-primary-700 focus:ring-4 focus:ring-layer-primary-300 active:bg-purple-900 disabled:bg-layer-primary-400 ${className}`}
     >
       {loading ? (
         <i

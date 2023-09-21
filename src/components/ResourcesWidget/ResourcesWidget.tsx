@@ -20,7 +20,7 @@ export default function ResourcesWidget({
       subtitle={`${title} Resources`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <ul className="h-full flex flex-col justify-evenly">
+      <ul className="flex h-full flex-col justify-evenly">
         {data?.map((item: any, index: number) => {
           return (
             <Fragment key={index}>

@@ -40,7 +40,7 @@ export default function RoboticsCloudsList({
         ifErrorNavigateTo404: false,
         setResponse: setResponseRoboticsClouds,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 

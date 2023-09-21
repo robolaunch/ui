@@ -196,13 +196,13 @@ export interface IuseCreateRobot {
   handleRemoveWorkspaceStep: (formik: any, workspaceIndex: number) => void;
   handleAddRepositoryToWorkspaceStep: (
     formik: any,
-    workspaceIndex: number
+    workspaceIndex: number,
   ) => void;
   handleAddLaunchManager: () => void;
   handleRemoveRepositoryFromWorkspaceStep: (
     formik: any,
     workspaceIndex: number,
-    repositoryIndex: number
+    repositoryIndex: number,
   ) => void;
   handleAddStepToBuildStep: (formik: any) => void;
   handleRemoveStepFromBuildStep: (formik: any, buildStepIndex: number) => void;
@@ -211,6 +211,6 @@ export interface IuseCreateRobot {
   handleAddStepToLaunchStep: (formik: any) => void;
   handleRemoveStepFromLaunchStep: (
     formik: any,
-    launchStepIndex: number
+    launchStepIndex: number,
   ) => void;
 }

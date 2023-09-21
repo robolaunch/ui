@@ -51,7 +51,7 @@ export default function FleetsList({
       selectedState?.instance,
       selectedState?.organization,
       selectedState?.roboticsCloud,
-    ]
+    ],
   );
 
   function handleGetFleets() {
@@ -66,7 +66,7 @@ export default function FleetsList({
         ifErrorNavigateTo404: false,
         setResponse: setResponseFleets,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 
@@ -105,19 +105,16 @@ export default function FleetsList({
                         responseFleets={responseFleets}
                       />
                     }
-                    url={`${
-                      selectedState?.organization?.organizationName?.split(
-                        "_"
-                      )[1]
-                    }/${selectedState?.roboticsCloud?.name}/${
-                      selectedState?.instance?.name
-                    }/${fleet?.name}`}
+                    url={`${selectedState?.organization?.organizationName?.split(
+                      "_",
+                    )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
+                      ?.instance?.name}/${fleet?.name}`}
                     data={{
                       ...fleet,
                       physicalInstance: responseFleets?.filter(
                         (pFleet: any) =>
                           fleet?.name === pFleet?.fleetName &&
-                          pFleet?.fleetStatus !== "Ready"
+                          pFleet?.fleetStatus !== "Ready",
                       ),
                     }}
                     selected={fleet.name === selectedState?.fleet?.name}

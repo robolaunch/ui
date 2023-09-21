@@ -54,14 +54,14 @@ export default function RosRosOutWidget({
     >
       <div
         ref={ref}
-        className="flex flex-col gap-2 overflow-auto scrollbar-hide p-2"
+        className="flex flex-col gap-2 overflow-auto p-2 scrollbar-hide"
       >
         <ScrollToBottom className={cssScrollBottom}>
           {logs.map((log: string, key: number) => {
             return (
               <div
                 key={key}
-                className="text-xs flex font-medium py-1.5 border-y border-layer-light-100"
+                className="flex border-y border-layer-light-100 py-1.5 text-xs font-medium"
               >
                 <div className="text-layer-dark-600">{log}</div>
               </div>

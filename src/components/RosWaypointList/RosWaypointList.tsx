@@ -24,12 +24,12 @@ export default function RosWaypointList({
           const temp = [...prev];
           const [removed] = temp[activeMission].waypoints.splice(
             result.source.index,
-            1
+            1,
           );
           temp[activeMission].waypoints.splice(
             result!.destination!.index,
             0,
-            removed
+            removed,
           );
           return temp;
         });
@@ -70,10 +70,10 @@ export default function RosWaypointList({
                       )}
                     </Draggable>
                   );
-                }
+                },
               )
             ) : (
-              <div className="flex items-center justify-center text-center text-xs text-gray-500 pb-4">
+              <div className="flex items-center justify-center pb-4 text-center text-xs text-gray-500">
                 No Waypoints. If you want to add a waypoint, right click on the
                 map.
               </div>

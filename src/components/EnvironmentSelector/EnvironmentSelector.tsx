@@ -43,20 +43,20 @@ export default function EnvironmentSelector({
   return (
     <Fragment>
       <div data-tut="create-application-step1-environment-selector">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           Categories:
           <InfoTip content="Select a categories." />
         </div>
         <div className="grid grid-cols-3 gap-2">
           {Array?.from(
             new Set(
-              responseReadyEnvironments?.map((env: any) => env?.domainName)
-            )
+              responseReadyEnvironments?.map((env: any) => env?.domainName),
+            ),
           )?.map((environment: any, index: number) => {
             return (
               <div
                 key={index}
-                className={`flex justify-center items-center py-3 px-1 border-2 rounded text-xs capitalize transition-300 ${
+                className={`transition-300 flex items-center justify-center rounded border-2 px-1 py-3 text-xs capitalize ${
                   formik.values?.domainName === environment &&
                   "border-layer-primary-600 shadow"
                 }
@@ -79,20 +79,20 @@ export default function EnvironmentSelector({
 
       {formik.values?.domainName && (
         <div>
-          <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
             Ready Environments:
             <InfoTip content="Type a new robot name." />
           </div>
           <div className="grid grid-cols-2 gap-2">
             {responseReadyEnvironments
               ?.filter(
-                (env: any) => env?.domainName === formik.values?.domainName
+                (env: any) => env?.domainName === formik.values?.domainName,
               )
               ?.map((environment: any, index: number) => {
                 return (
                   <div
                     key={index}
-                    className={`flex flex-col gap-2 justify-center items-center px-1 py-3 border-2 rounded text-xs capitalize transition-300 ${
+                    className={`transition-300 flex flex-col items-center justify-center gap-2 rounded border-2 px-1 py-3 text-xs capitalize ${
                       formik.values?.domainName === environment?.domainName &&
                       formik.values?.application?.name ===
                         environment?.application?.name &&

@@ -28,7 +28,7 @@ export default function ChangeInstanceModal({
           organizationId: data?.organizationId,
           roboticsCloudName: data?.roboticsCloudName,
           instanceId: data?.instanceId,
-        })
+        }),
       );
     } else if (data?.state === "stopped") {
       dispatch(
@@ -37,7 +37,7 @@ export default function ChangeInstanceModal({
           organizationId: data?.organizationId,
           roboticsCloudName: data?.roboticsCloudName,
           instanceId: data?.instanceId,
-        })
+        }),
       );
     }
 
@@ -55,20 +55,20 @@ export default function ChangeInstanceModal({
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex w-full flex-col gap-8">
         <p className="text-sm">
           {data?.state === "running"
             ? "Are you sure you want to stop this instance ?"
             : "Are you sure you want to start this instance ?"}
         </p>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11"
+            className="!h-11 !w-44"
             type="submit"
             text={
               isLoading ? (
                 <img
-                  className="w-10 h-10"
+                  className="h-10 w-10"
                   src="/svg/general/loading.svg"
                   alt="loading"
                 />

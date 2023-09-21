@@ -82,7 +82,7 @@ export default function RegionsWidget({
       subtitle={`Locations of the ${title}`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <ComposableMap className="w-full h-full -mt-5">
+      <ComposableMap className="-mt-5 h-full w-full">
         <Geographies geography={world}>
           {({ geographies }) =>
             geographies.map((geo) => (

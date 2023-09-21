@@ -22,7 +22,7 @@ export default function Robot3D() {
       },
       (error) => {
         console.error("Error loading the 3D model:", error);
-      }
+      },
     );
   }, []);
 

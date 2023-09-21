@@ -106,16 +106,15 @@ export default function DeployApplicationSelector({
               ],
             },
           ],
-        })
+        }),
       ).then(() => {
         navigate(
           `/${organizationNameViewer({
             organizationName: formik.values?.organization
               ?.organizationName as string,
             capitalization: false,
-          })}/${formik.values?.roboticscloud?.name}/${
-            formik.values?.instance?.name
-          }/${formik?.values?.fleet?.name}/`
+          })}/${formik.values?.roboticscloud?.name}/${formik.values?.instance
+            ?.name}/${formik?.values?.fleet?.name}/`,
         );
         handleCloseModal();
       });
@@ -138,7 +137,7 @@ export default function DeployApplicationSelector({
         },
         {
           setResponse: setResponseRoboticsClouds,
-        }
+        },
       );
     } else if (
       formik.values?.organization &&
@@ -155,7 +154,7 @@ export default function DeployApplicationSelector({
         },
         {
           setResponse: setResponseInstances,
-        }
+        },
       );
     } else if (
       formik.values?.organization &&
@@ -173,7 +172,7 @@ export default function DeployApplicationSelector({
         },
         {
           setResponse: setResponseFleets,
-        }
+        },
       );
     }
 
@@ -223,7 +222,7 @@ export default function DeployApplicationSelector({
     await dispatch(
       createTrial({
         ipAddress: trialState?.ip,
-      })
+      }),
     ).then(async () => {
       setTimeout(() => {
         handleCloseModal();
@@ -236,17 +235,17 @@ export default function DeployApplicationSelector({
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="w-full flex flex-col gap-3 p-2"
+      className="flex w-full flex-col gap-3 p-2"
     >
       {/* Organization */}
-      <div className="w-full flex justify-between">
+      <div className="flex w-full justify-between">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="h-5 w-5"
             src={`/svg/general/organization/organization-gray.svg`}
             alt="robolaunch"
           />
-          <span className="capitalize text-xs">Organization</span>
+          <span className="text-xs capitalize">Organization</span>
         </div>
         <div className="flex items-center gap-3">
           {!formik?.values?.organization && (
@@ -257,7 +256,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "organization" };
                 });
               }}
-              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
             >
               Create
             </span>
@@ -271,8 +270,8 @@ export default function DeployApplicationSelector({
               formik.setFieldValue(
                 `organization`,
                 responseOrganizations.filter(
-                  (org: any) => org.organizationName === e.target.value
-                )?.[0]
+                  (org: any) => org.organizationName === e.target.value,
+                )?.[0],
               );
             }}
             value={formik.values?.organization?.organizationName || ""}
@@ -293,14 +292,14 @@ export default function DeployApplicationSelector({
       <Separator />
 
       {/* RC */}
-      <div className="w-full flex justify-between">
+      <div className="flex w-full justify-between">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="h-5 w-5"
             src={`/svg/general/roboticscloud/roboticscloud-gray.svg`}
             alt="robolaunch"
           />
-          <span className="capitalize text-xs">Robotics Cloud</span>
+          <span className="text-xs capitalize">Robotics Cloud</span>
         </div>
         <div className="flex items-center gap-3">
           {!formik?.values?.roboticscloud && (
@@ -311,7 +310,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "roboticscloud" };
                 });
               }}
-              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
             >
               Create
             </span>
@@ -325,8 +324,8 @@ export default function DeployApplicationSelector({
               formik.setFieldValue(
                 `roboticscloud`,
                 responseRoboticsClouds.filter(
-                  (rc: any) => rc.name === e.target.value
-                )?.[0]
+                  (rc: any) => rc.name === e.target.value,
+                )?.[0],
               );
             }}
             value={formik.values?.roboticscloud?.name || ""}
@@ -347,14 +346,14 @@ export default function DeployApplicationSelector({
       <Separator />
 
       {/* Instance */}
-      <div className="w-full flex justify-between">
+      <div className="flex w-full justify-between">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="h-5 w-5"
             src={`/svg/general/instance/instance-gray.svg`}
             alt="robolaunch"
           />
-          <span className="capitalize text-xs">Cloud Instance</span>
+          <span className="text-xs capitalize">Cloud Instance</span>
         </div>
         <div className="flex items-center gap-3">
           {!formik?.values?.instance && (
@@ -365,7 +364,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "instance" };
                 });
               }}
-              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
             >
               Create
             </span>
@@ -379,8 +378,8 @@ export default function DeployApplicationSelector({
               formik.setFieldValue(
                 `instance`,
                 responseInstances.filter(
-                  (instance: any) => instance.name === e.target.value
-                )?.[0]
+                  (instance: any) => instance.name === e.target.value,
+                )?.[0],
               );
             }}
             value={formik.values?.instance?.name || ""}
@@ -390,7 +389,7 @@ export default function DeployApplicationSelector({
               {responseInstances
                 ?.filter(
                   (instance: any) =>
-                    instance.instanceCloudState === "ConnectionHub_Ready"
+                    instance.instanceCloudState === "ConnectionHub_Ready",
                 )
                 ?.map((instance: any, index: number) => (
                   <option key={index} value={instance.name}>
@@ -406,14 +405,14 @@ export default function DeployApplicationSelector({
       <Separator />
 
       {/* Fleet */}
-      <div className="w-full flex justify-between">
+      <div className="flex w-full justify-between">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="h-5 w-5"
             src={`/svg/general/fleet/fleet-gray.svg`}
             alt="robolaunch"
           />
-          <span className="capitalize text-xs">
+          <span className="text-xs capitalize">
             {envOnPremiseRobot ? "Namespace" : "Fleet"}
           </span>
         </div>
@@ -426,7 +425,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "fleet" };
                 });
               }}
-              className="text-xs text-layer-light-700 cursor-pointer hover:underline "
+              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
             >
               Create
             </span>
@@ -440,8 +439,8 @@ export default function DeployApplicationSelector({
               formik.setFieldValue(
                 `fleet`,
                 responseFleets.filter(
-                  (fleet: any) => fleet.name === e.target.value
-                )?.[0]
+                  (fleet: any) => fleet.name === e.target.value,
+                )?.[0],
               );
             }}
             value={formik.values?.fleet?.name || ""}
@@ -461,9 +460,9 @@ export default function DeployApplicationSelector({
       </div>
       {/* Fleet */}
 
-      <div className="flex justify-end items-center gap-4 pt-10">
+      <div className="flex items-center justify-end gap-4 pt-10">
         <Button
-          className="!w-56 !h-11"
+          className="!h-11 !w-56"
           type="button"
           text="Auto Create Infrastructure"
           onClick={() => handleCreateTrial()}
@@ -479,7 +478,7 @@ export default function DeployApplicationSelector({
           }
         />
         <Button
-          className="!w-56 !h-11"
+          className="!h-11 !w-56"
           type="submit"
           text="Deploy Application"
           loading={formik.isSubmitting}

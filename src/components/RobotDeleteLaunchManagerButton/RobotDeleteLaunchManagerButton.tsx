@@ -14,7 +14,7 @@ export default function RobotDeleteLaunchManagerButton({
   return (
     <Fragment>
       <Button
-        className="text-xs w-full !h-11 !bg-transparent hover:!bg-red-100 !text-red-500 !border !border-red-500 focus:!ring-red-300"
+        className="!h-11 w-full !border !border-red-500 !bg-transparent text-xs !text-red-500 hover:!bg-red-100 focus:!ring-red-300"
         onClick={() => setIsShowDeleteModal(true)}
         text="Delete Launch Step"
       />

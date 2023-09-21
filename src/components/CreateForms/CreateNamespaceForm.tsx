@@ -24,11 +24,11 @@ export default function CreateNamespaceForm(): ReactElement {
       dispatch(
         createNamespace({
           namespaceName: values.name,
-          organizationId: selectedState?.organization?.organizationId,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
+          organizationId: selectedState?.organization?.organizationId!,
+          roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
-        })
+        }),
       ).then(() => {
         formik.setSubmitting(false);
         setSidebarState({ ...sidebarState, isCreateMode: false });
@@ -39,10 +39,10 @@ export default function CreateNamespaceForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="animate__animated animate__fadeIn flex flex-col gap-8"
     >
       <div>
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           Namespace Name:
           <InfoTip content="Type a new namespace name." />
         </div>

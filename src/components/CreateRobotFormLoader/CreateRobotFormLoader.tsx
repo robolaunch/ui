@@ -26,14 +26,14 @@ export default function CreateRobotFormLoader({
   return (
     <Fragment>
       {isLoading ? (
-        <div className="w-full h-full flex flex-col items-center justify-between">
-          <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+        <div className="flex h-full w-full flex-col items-center justify-between">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2">
             <img
-              className="w-12 mx-auto pt-10"
+              className="mx-auto w-12 pt-10"
               src="/svg/general/loading.svg"
               alt="Loading..."
             />
-            <span className="text-sm text-layer-light-900 pb-4">
+            <span className="pb-4 text-sm text-layer-light-900">
               {loadingText ||
                 "Please wait while we create your robot. This may take a few minutes."}
             </span>
@@ -43,12 +43,12 @@ export default function CreateRobotFormLoader({
                 currentStep={currentStep || 1}
               />
             ) : (
-              <div className="w-full flex gap-4">
+              <div className="flex w-full gap-4">
                 {loadingItems?.map((item: any, index: number) => {
                   return (
                     <div
                       key={index}
-                      className="w-full flex flex-col gap-3 justify-center items-center border border-layer-light-100 shadow rounded p-4"
+                      className="flex w-full flex-col items-center justify-center gap-3 rounded border border-layer-light-100 p-4 shadow"
                     >
                       <div className="flex items-center justify-center">
                         {item?.status === "EnvironmentReady" ||
@@ -56,7 +56,7 @@ export default function CreateRobotFormLoader({
                           <MdVerified size={20} className="!text-green-500" />
                         ) : (
                           <img
-                            className="w-12 mx-auto"
+                            className="mx-auto w-12"
                             src="/svg/general/loading.svg"
                             alt="Loading..."
                           />
@@ -64,7 +64,7 @@ export default function CreateRobotFormLoader({
                       </div>
                       {loadingItems?.length && (
                         <Fragment>
-                          <span className="font-semibold text-sm text-layer-light-900">
+                          <span className="text-sm font-semibold text-layer-light-900">
                             {item?.name}
                           </span>
                           <span className="text-sm text-layer-dark-700">

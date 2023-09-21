@@ -55,10 +55,10 @@ export default function ActivitiesWidget({
                 </span>
 
                 <div className="col-span-2 justify-center">
-                  <div className="flex items-center justify-center w-4 h-4 rounded-full bg-layer-primary-500 mx-auto">
-                    <div className="w-2 h-2 rounded-full bg-layer-light-50 " />
+                  <div className="mx-auto flex h-4 w-4 items-center justify-center rounded-full bg-layer-primary-500">
+                    <div className="h-2 w-2 rounded-full bg-layer-light-50 " />
                   </div>
-                  <div className="w-1 h-6 bg-layer-light-200 mx-auto"></div>
+                  <div className="mx-auto h-6 w-1 bg-layer-light-200"></div>
                 </div>
 
                 <span className="col-span-9 text-xs font-light">

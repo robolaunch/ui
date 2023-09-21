@@ -26,12 +26,12 @@ export default function CreateCloudInstancesForm(): ReactElement {
       formik.setSubmitting(true);
       dispatch(
         createCloudInstance({
-          organizationId: selectedState.organization.organizationId,
-          roboticsCloudName: selectedState.roboticsCloud.name,
+          organizationId: selectedState.organization!.organizationId!,
+          roboticsCloudName: selectedState.roboticsCloud!.name!,
           cloudInstanceName: values.cloudInstanceName,
           instanceType: values.instanceType,
           region: selectedState?.roboticsCloud?.region,
-        })
+        }),
       ).then((response: any) => {
         if (response) {
           formik.setSubmitting(false);
@@ -44,10 +44,10 @@ export default function CreateCloudInstancesForm(): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col gap-8 animate__animated animate__fadeIn"
+      className="animate__animated animate__fadeIn flex flex-col gap-8"
     >
       <div>
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           Cloud Instance Name:
           <InfoTip content="Type a new cloud instance name." />
         </div>
@@ -62,7 +62,7 @@ export default function CreateCloudInstancesForm(): ReactElement {
         />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Types:
           <InfoTip
             content="
@@ -70,11 +70,11 @@ export default function CreateCloudInstancesForm(): ReactElement {
               "
           />
         </div>
-        <div className="flex flex-col gap-6 w-full">
+        <div className="flex w-full flex-col gap-6">
           {responseProviders?.[0]?.types?.map((type: any, index: number) => (
             <div
               key={index}
-              className={`relative flex justify-between items-center gap-1 border-2 p-4 rounded cursor-pointer   ${
+              className={`relative flex cursor-pointer items-center justify-between gap-1 rounded border-2 p-4   ${
                 formik.values.instanceType === type.name
                   ? "border-layer-primary-600 shadow"
                   : "border-layer-light-100"
@@ -90,7 +90,7 @@ export default function CreateCloudInstancesForm(): ReactElement {
                 />
                 <div className="text-xs uppercase">{type.name}</div>
               </div>
-              <div className="flex text-layer-dark-700 gap-2.5">
+              <div className="flex gap-2.5 text-layer-dark-700">
                 <div className="flex items-center gap-1">
                   <BsCpu className="text-layer-light-600" size={14} />
                   <span className="text-xs">{type.resources.cpu} CPU</span>

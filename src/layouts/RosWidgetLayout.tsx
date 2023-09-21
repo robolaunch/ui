@@ -25,14 +25,14 @@ export default function WidgetLayout({
     <div
       item-id={id}
       id={type}
-      className={`flex flex-col h-full rounded-lg border border-layer-light-200 ${
+      className={`flex h-full flex-col rounded-lg border border-layer-light-200 ${
         isVisible ? "bg-transparent" : "bg-layer-light-50"
       }  `}
     >
-      <div className="flex justify-between items-center gap-4 p-2">
+      <div className="flex items-center justify-between gap-4 p-2">
         <div className={`${isVisible && "invisible"}`}>{icon}</div>
         <span
-          className={`text-sm font-medium text-layer-dark-300 cursor-pointer ${
+          className={`cursor-pointer text-sm font-medium text-layer-dark-300 ${
             isVisible && "hidden"
           }`}
         >
@@ -42,12 +42,12 @@ export default function WidgetLayout({
           <AiOutlineEyeInvisible
             onClick={() => setIsVisible(!isVisible)}
             size={20}
-            className="cursor-pointer text-layer-light-400 hover:text-layer-primary-400 hover:scale-90 transition-all duration-200"
+            className="cursor-pointer text-layer-light-400 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
           />
           <BiTrashAlt
             onClick={() => handleRemoveWidget(id)}
             size={20}
-            className={`cursor-pointer text-layer-light-400 hover:text-layer-primary-400 hover:scale-90 transition-all duration-200 ${
+            className={`cursor-pointer text-layer-light-400 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400 ${
               isVisible && "hidden"
             }`}
           />

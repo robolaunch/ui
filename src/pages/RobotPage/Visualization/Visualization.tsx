@@ -47,7 +47,7 @@ export default function Visualization(): ReactElement {
   function handleRemoveWidget(id: any) {
     const localGrid = JSON.parse(
       // @ts-ignore
-      localStorage.getItem(localStoragePath)
+      localStorage.getItem(localStoragePath),
     );
 
     // eslint-disable-next-line array-callback-return
@@ -62,7 +62,7 @@ export default function Visualization(): ReactElement {
     window.localStorage.setItem(
       // @ts-ignore
       localStoragePath,
-      JSON.stringify(temp)
+      JSON.stringify(temp),
     );
 
     handleForceUpdate("Visualization");
@@ -105,8 +105,8 @@ export default function Visualization(): ReactElement {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-4 animate__animated animate__fadeIn">
-      <div className="col-span-1 grid-stack min-h-[40rem] max-h-[40rem] z-0">
+    <div className="animate__animated animate__fadeIn grid grid-cols-1 gap-4">
+      <div className="grid-stack z-0 col-span-1 max-h-[40rem] min-h-[40rem]">
         <GridLayout
           gridLayout={gridLayout}
           ros={ros}
@@ -115,7 +115,7 @@ export default function Visualization(): ReactElement {
           handleRemoveWidget={handleRemoveWidget}
         />
         {gridLayout.length === 0 && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
             <div className="text-lg font-bold text-gray-400">
               No widgets added, if you want to add widgets, please click the
               button below.
@@ -123,7 +123,7 @@ export default function Visualization(): ReactElement {
           </div>
         )}
       </div>
-      <div className="fixed block bottom-5 left-1/2 right-1/2 z-10">
+      <div className="fixed bottom-5 left-1/2 right-1/2 z-10 block">
         <FloatMenu
           grid={grid}
           type="Visualization"

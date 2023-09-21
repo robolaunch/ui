@@ -20,11 +20,11 @@ export default function RemoteDesktop(): ReactElement {
           <StreamContext
             vdiIngressEndpoint={urls?.vdi || responseRobot?.vdiIngressEndpoint}
           >
-            <div className="grid grid-cols-12 animate__animated animate__fadeIn">
-              <div className="col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 bg-layer-dark-900 ">
+            <div className="animate__animated animate__fadeIn grid grid-cols-12">
+              <div className="col-span-12 bg-layer-dark-900 lg:col-span-8 xl:col-span-9 2xl:col-span-10 ">
                 <RemoteDesktopScene isControllerActive={true} />
               </div>
-              <div className="hidden lg:col-span-4 xl:col-span-3 2xl:col-span-2 lg:flex flex-col">
+              <div className="hidden flex-col lg:col-span-4 lg:flex xl:col-span-3 2xl:col-span-2">
                 <RemoteDesktopTabs />
               </div>
             </div>

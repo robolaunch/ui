@@ -41,7 +41,7 @@ export default function CreateRobotRosDistrobutions({
       data-tut="create-robot-step1-ros-distrobutions"
       className="flex flex-col gap-2"
     >
-      <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+      <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
         Ros Distrobutions:
         <InfoTip
           content="
@@ -58,7 +58,7 @@ export default function CreateRobotRosDistrobutions({
                   : undefined
               }
               key={index}
-              className={`relative flex items-center gap-1 border-2 p-2 rounded  w-full justify-center transition-all duration-300 ${
+              className={`relative flex w-full items-center justify-center gap-1 rounded  border-2 p-2 transition-all duration-300 ${
                 formik.values.rosDistros?.includes(item)
                   ? isImportRobot
                     ? "border-layer-primary-300"
@@ -68,7 +68,7 @@ export default function CreateRobotRosDistrobutions({
               onClick={(e: any) => {
                 if (isImportRobot) {
                   return toast.error(
-                    "You can't change Ros Distrobutions because this robot is created before."
+                    "You can't change Ros Distrobutions because this robot is created before.",
                   );
                 }
 
@@ -77,7 +77,7 @@ export default function CreateRobotRosDistrobutions({
                 if (rosDistros.includes(item)) {
                   formik.setFieldValue(
                     "rosDistros",
-                    rosDistros.filter((ros: string) => ros !== item)
+                    rosDistros.filter((ros: string) => ros !== item),
                   );
                 } else if (
                   (item === "HUMBLE" || item === "IRON") &&
@@ -91,7 +91,7 @@ export default function CreateRobotRosDistrobutions({
                     rosDistros?.includes("HUMBLE"))
                 ) {
                   toast.error(
-                    "You can't select Galactic or Foxy with Humble or Iron"
+                    "You can't select Galactic or Foxy with Humble or Iron",
                   );
                 } else {
                   formik.setFieldValue("rosDistros", [...rosDistros, item]);
@@ -107,7 +107,7 @@ export default function CreateRobotRosDistrobutions({
                     filter: `grayscale(${handleRosDistroFilter(item)})`,
                   }}
                 />
-                <span className="text-[0.68rem] text-layer-light-700 text-center">
+                <span className="text-center text-[0.68rem] text-layer-light-700">
                   ROS2{" "}
                   {item === "FOXY"
                     ? "Foxy"
@@ -131,7 +131,7 @@ export default function CreateRobotRosDistrobutions({
                 </div>
               )}
             </div>
-          )
+          ),
         )}
       </div>
       <InputError error={formik?.errors?.rosDistros} touched={true} />

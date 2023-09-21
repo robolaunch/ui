@@ -12,7 +12,7 @@ export default function InputError({
   return (
     <div className="flex items-center justify-center py-1">
       {touched && error && (
-        <span className="text-[0.64rem] font-medium text-red-400 italic">
+        <span className="text-[0.64rem] font-medium italic text-red-400">
           * {error}
         </span>
       )}

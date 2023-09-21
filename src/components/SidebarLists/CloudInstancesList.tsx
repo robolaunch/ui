@@ -22,7 +22,7 @@ export default function CloudInstancesList({
   setItemCount,
 }: ICloudInstancesList): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
-    undefined
+    undefined,
   );
   const { selectedState } = useMain();
   const { getInstances } = useFunctions();
@@ -45,7 +45,7 @@ export default function CloudInstancesList({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [reload]
+    [reload],
   );
 
   function handleGetCloudInstances() {
@@ -60,7 +60,7 @@ export default function CloudInstancesList({
         setResponse: setResponseInstances,
         ifErrorNavigateTo404: false,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 

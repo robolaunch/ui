@@ -19,7 +19,7 @@ export default function BarcodeManagement2D(): ReactElement {
           style={{
             backgroundRepeat: "repeat",
           }}
-          className="w-full flex items-center justify-center gap-10 "
+          className="flex w-full items-center justify-center gap-10 "
         >
           {barcodeItems?.length
             ? barcodeItems?.map(
@@ -31,14 +31,14 @@ export default function BarcodeManagement2D(): ReactElement {
                           return (
                             <div
                               key={barcodeIndex}
-                              className="flex items-center justify-center w-36 h-44"
+                              className="flex h-44 w-36 items-center justify-center"
                               style={{
                                 backgroundImage: `url(/svg/icons/washing-machine.svg)`,
                                 backgroundRepeat: "no-repeat",
                                 backgroundSize: "contain",
                               }}
                             >
-                              <div className="flex items-center justify-center w-full h-10 bg-yellow-400 border-[6px] border-layer-dark-800">
+                              <div className="flex h-10 w-full items-center justify-center border-[6px] border-layer-dark-800 bg-yellow-400">
                                 {barcode ? (
                                   <Barcode
                                     fontSize={8}
@@ -53,11 +53,11 @@ export default function BarcodeManagement2D(): ReactElement {
                               </div>
                             </div>
                           );
-                        }
+                        },
                       )}
                     </div>
                   );
-                }
+                },
               )
             : "No Barcode Item"}
         </div>

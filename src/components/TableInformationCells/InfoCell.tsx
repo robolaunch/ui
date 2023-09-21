@@ -15,7 +15,7 @@ export default function InfoCell({
   onClick,
 }: IInfoCell): ReactElement {
   const iconComponent = (
-    <div className="flex items-center justify-center font-bold h-10 w-10 text-sm bg-layer-primary-200 text-layer-primary-600 rounded-full uppercase">
+    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-layer-primary-200 text-sm font-bold uppercase text-layer-primary-600">
       {title ? title[0] : ""}
     </div>
   );

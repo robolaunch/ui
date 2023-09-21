@@ -40,7 +40,7 @@ export default function InviteUserToOrganizationModal({
     >
       <form
         onSubmit={formik.handleSubmit}
-        className="w-full flex flex-col gap-7"
+        className="flex w-full flex-col gap-7"
       >
         <p className="text-sm">
           Are you sure you want to invite this user to an organization?
@@ -115,9 +115,9 @@ export default function InviteUserToOrganizationModal({
             error={formik.errors.username}
           />
         </div>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-56 !h-11"
+            className="!h-11 !w-56"
             type="submit"
             text="Invite User to Organization"
             disabled={formik.isSubmitting || !formik.isValid}

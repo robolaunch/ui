@@ -14,7 +14,7 @@ export const getReadyEnvironments = createAsyncThunk(
       name: "environment/getReadyEnvironments",
     });
     return response.data;
-  }
+  },
 );
 
 export const createEnvironment = createAsyncThunk(
@@ -59,7 +59,7 @@ export const createEnvironment = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getEnvironments = createAsyncThunk(
@@ -82,7 +82,7 @@ export const getEnvironments = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getEnvironment = createAsyncThunk(
@@ -107,7 +107,7 @@ export const getEnvironment = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteEnvironment = createAsyncThunk(
@@ -139,7 +139,7 @@ export const deleteEnvironment = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const EnvironmentSlice = createSlice({

@@ -178,7 +178,7 @@ export default function RosWaypointLine({
                 )}
               </Fragment>
             );
-          }
+          },
         )}
     </Fragment>
   );

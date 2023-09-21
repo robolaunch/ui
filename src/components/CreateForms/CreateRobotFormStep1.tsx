@@ -63,7 +63,7 @@ export default function CreateRobotFormStep1({
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobot,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -81,7 +81,7 @@ export default function CreateRobotFormStep1({
         ifErrorNavigateTo404: !responseRobot,
         setResponse: setResponseRobot,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -112,18 +112,18 @@ export default function CreateRobotFormStep1({
             gpuEnabledForCloudInstance:
               formik.values?.gpuEnabledForCloudInstance,
             workspaces: responseRobot?.robotWorkspaces,
-          })
+          }),
         );
 
         toast.success(
-          "Robot updated successfully. Redirecting to fleet page..."
+          "Robot updated successfully. Redirecting to fleet page...",
         );
         setTimeout(() => {
-          window.location.href = `/${
-            selectedState?.organization?.organizationName?.split("_")[1]
-          }/${selectedState?.roboticsCloud?.name}/${
-            selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}}`;
+          window.location.href = `/${selectedState?.organization?.organizationName?.split(
+            "_",
+          )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
+            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
+            ?.robotName}}`;
         }, 2000);
       } else if (!formik.values?.isVirtualRobot) {
         await dispatch(
@@ -135,7 +135,7 @@ export default function CreateRobotFormStep1({
             robolaunchPhysicalInstancesName:
               formik.values?.physicalInstanceName,
             robolaunchFederatedFleetsName: selectedState?.fleet?.name,
-          })
+          }),
         );
       }
 
@@ -170,11 +170,11 @@ export default function CreateRobotFormStep1({
         >
           <form
             onSubmit={formik.handleSubmit}
-            className="flex flex-col gap-3 animate__animated animate__fadeIn relative"
+            className="animate__animated animate__fadeIn relative flex flex-col gap-3"
           >
             {/* RobotName */}
             <div data-tut="create-robot-step1-name">
-              <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700 pb-3">
+              <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
                 Robot Name:
                 <InfoTip content="Type a new robot name." />
               </div>
@@ -243,7 +243,7 @@ export default function CreateRobotFormStep1({
                   data-tut="create-robot-step1-ros2-bridge"
                   className="flex items-center gap-1"
                 >
-                  <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                  <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
                     ROS2 (Bridge) :
                     <InfoTip content="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot." />
                   </div>
@@ -260,9 +260,9 @@ export default function CreateRobotFormStep1({
                 {formik?.values?.remoteDesktop?.isEnabled && (
                   <div
                     data-tut="create-robot-step1-vdi-session-count"
-                    className="flex gap-2 w-full pl-10"
+                    className="flex w-full gap-2 pl-10"
                   >
-                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                    <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
                       VDI: Session Count (
                       {formik?.values?.remoteDesktop?.sessionCount} User) :
                       <InfoTip
@@ -298,7 +298,7 @@ export default function CreateRobotFormStep1({
                 data-tut="create-robot-step1-gpu-resource"
                 className="flex items-center gap-1"
               >
-                <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
                   GPU Usage Enabled for Cloud Instance:
                   <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
                 </div>
@@ -321,7 +321,7 @@ export default function CreateRobotFormStep1({
                     data-tut="create-robot-step1-development-mode"
                     className="flex items-center gap-1"
                   >
-                    <div className="min-w-fit flex gap-1 text-xs font-medium text-layer-light-700">
+                    <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
                       Development Mode:
                       <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
                     </div>
@@ -339,7 +339,7 @@ export default function CreateRobotFormStep1({
             </div>
 
             {/* Buttons */}
-            <div className="flex gap-2 mt-10 ">
+            <div className="mt-10 flex gap-2 ">
               {!isImportRobot && (
                 <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
               )}
@@ -355,7 +355,7 @@ export default function CreateRobotFormStep1({
                 text={
                   formik.isSubmitting ? (
                     <img
-                      className="w-10 h-10"
+                      className="h-10 w-10"
                       src="/svg/general/loading.svg"
                       alt="loading"
                     />

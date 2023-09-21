@@ -57,10 +57,10 @@ export default function Overview({
 
                       getGuideItem('[data-tut="robot-header-tab-code-editor"]'),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-development-suite"]'
+                        '[data-tut="robot-header-tab-development-suite"]',
                       ),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-remote-desktop"]'
+                        '[data-tut="robot-header-tab-remote-desktop"]',
                       ),
                       getGuideItem('[data-tut="information-widget"]'),
                       getGuideItem('[data-tut="robot-status-widget"]'),
@@ -76,17 +76,17 @@ export default function Overview({
                       getGuideItem('[data-tut="robot-header-tabs"]'),
                       getGuideItem('[data-tut="robot-header-tab-overview"]'),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-teleoperation"]'
+                        '[data-tut="robot-header-tab-teleoperation"]',
                       ),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-visualization"]'
+                        '[data-tut="robot-header-tab-visualization"]',
                       ),
                       getGuideItem('[data-tut="robot-header-tab-code-editor"]'),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-development-suite"]'
+                        '[data-tut="robot-header-tab-development-suite"]',
                       ),
                       getGuideItem(
-                        '[data-tut="robot-header-tab-remote-desktop"]'
+                        '[data-tut="robot-header-tab-remote-desktop"]',
                       ),
                       getGuideItem('[data-tut="information-widget"]'),
                       getGuideItem('[data-tut="robot-status-widget"]'),

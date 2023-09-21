@@ -116,24 +116,24 @@ export default function TrialStateViewer({
   }
 
   return (
-    <div className="h-full flex flex-col items-center justify-center gap-4">
+    <div className="flex h-full flex-col items-center justify-center gap-4">
       {states?.map((item: any, index: number) => {
         return (
           <Fragment key={index}>
-            <div className="w-full flex justify-between">
+            <div className="flex w-full justify-between">
               <div className="flex items-center gap-2">
                 <img
-                  className="w-5 h-5"
+                  className="h-5 w-5"
                   src={`/svg/general/${item?.path}/${item?.path}-gray.svg`}
                   alt="robolaunch"
                 />
-                <span className="capitalize text-xs">{item?.name}</span>
+                <span className="text-xs capitalize">{item?.name}</span>
               </div>
               <div className="flex items-center gap-4">
                 {item?.state === "None" && (
                   <span
-                    className="text-xs text-layer-dark-300 
-                    cursor-pointer underline"
+                    className="cursor-pointer text-xs 
+                    text-layer-dark-300 underline"
                     onClick={handleRedirectSidebar}
                   >
                     Create

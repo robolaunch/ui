@@ -11,7 +11,7 @@ export type Itabs = [
   "Email Preferences",
   "Notifications",
   "Change Password",
-  "Deactivate Account"
+  "Deactivate Account",
 ];
 
 export type ProfileActiveTab =

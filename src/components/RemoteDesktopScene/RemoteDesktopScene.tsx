@@ -17,15 +17,15 @@ export default function RemoteDesktopScene({
 
   return (
     <FullScreen handle={handleFullScreen}>
-      <div className="relative w-full h-full flex justify-center">
+      <div className="relative flex h-full w-full justify-center">
         <span
-          className="relative outline-none appearance-none"
+          className="relative appearance-none outline-none"
           ref={overlay}
           tabIndex={1}
         >
           <video
             onContextMenu={(e) => e.preventDefault()}
-            className={`absolute top-0 bottom-0 lg:min-h-[20rem] xl:min-h-[30rem] 2xl:min-h-[40rem]`}
+            className={`absolute bottom-0 top-0 lg:min-h-[20rem] xl:min-h-[30rem] 2xl:min-h-[40rem]`}
             playsInline
             ref={video}
             autoPlay
@@ -38,13 +38,13 @@ export default function RemoteDesktopScene({
           {isControllerActive && remoteDesktopReducer?.isMuted && (
             <div
               onClick={() => handleMute()}
-              className="absolute z-10 w-full h-full flex items-center justify-center top-0 bg-[#00000090] text-layer-light-50 cursor-pointer animate__animated animate__fadeIn"
+              className="animate__animated animate__fadeIn absolute top-0 z-10 flex h-full w-full cursor-pointer items-center justify-center bg-[#00000090] text-layer-light-50"
             >
               <GiSpeaker size={48} />
             </div>
           )}
         </span>
-        <div className="absolute left-4 bottom-4 flex items-center gap-2 text-xs text-layer-light-100">
+        <div className="absolute bottom-4 left-4 flex items-center gap-2 text-xs text-layer-light-100">
           <div
             className={`h-[8px] w-[8px] rounded ${
               remoteDesktopReducer?.controller?.displayname

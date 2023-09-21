@@ -69,7 +69,7 @@ export default function Teleoperation({
   function handleRemoveWidget(id: number) {
     const localGrid = JSON.parse(
       // @ts-ignore
-      localStorage.getItem(localStoragePath)
+      localStorage.getItem(localStoragePath),
     );
 
     // eslint-disable-next-line array-callback-return
@@ -84,7 +84,7 @@ export default function Teleoperation({
     window.localStorage.setItem(
       // @ts-ignore
       localStoragePath,
-      JSON.stringify(temp)
+      JSON.stringify(temp),
     );
 
     handleForceUpdate("Teleoperation");
@@ -125,7 +125,7 @@ export default function Teleoperation({
     if (localStorage.getItem("layout_" + localStoragePath)) {
       const { selectedTopic, isRemoteDesktopStream } = JSON.parse(
         // @ts-ignore
-        localStorage.getItem("layout_" + localStoragePath)
+        localStorage.getItem("layout_" + localStoragePath),
       );
 
       setSelectedTopic(selectedTopic);
@@ -139,7 +139,7 @@ export default function Teleoperation({
       JSON.stringify({
         selectedTopic: selectedTopic,
         isRemoteDesktopStream: isRemoteDesktopStream,
-      })
+      }),
     );
   }, [selectedTopic, isRemoteDesktopStream, localStoragePath]);
 
@@ -148,7 +148,7 @@ export default function Teleoperation({
       <Fragment>
         <FullScreen className="relative" handle={handleFullScreen}>
           <div
-            className="col-span-1 grid-stack w-full z-0 rounded bg-layer-dark-900 animate__animated animate__fadeIn"
+            className="grid-stack animate__animated animate__fadeIn z-0 col-span-1 w-full rounded bg-layer-dark-900"
             style={{
               height: handleFullScreen.active ? "100vh" : "unset",
               backgroundImage: `url(${cameraData})`,

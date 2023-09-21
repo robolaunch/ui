@@ -37,23 +37,23 @@ export default function CodeEditor(): ReactElement {
       id={`CODE_EDITOR_${ideKey}`}
       className={`${
         activeTab === "Code Editor"
-          ? "grid animate__animated animate__fadeIn"
+          ? "animate__animated animate__fadeIn grid"
           : "absolute -top-[9999px]"
       } grid-cols-1 gap-6`}
     >
       {responseRobot?.physicalIdeIngressEndpoint && (
         <CardLayout className="!">
-          <ul className="w-full flex justify-center gap-6  p-1 -mb-2.5 rounded">
+          <ul className="-mb-2.5 flex w-full justify-center  gap-6 rounded p-1">
             {codeEditorTabs.map((tab: any, index: number) => {
               return (
                 <li
-                  className={`flex w-full items-center flex-col gap-3 cursor-pointer 
+                  className={`flex w-full cursor-pointer flex-col items-center gap-3 
                      ${tab?.hidden && "!hidden"}`}
                   onClick={() => setActiveTabCodeEditor(tab.name)}
                   key={index}
                 >
                   <div
-                    className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max hover:scale-90
+                    className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500 hover:scale-90
                         ${
                           tab.name === activeTabCodeEditor
                             ? "text-layer-primary-500"
@@ -63,7 +63,7 @@ export default function CodeEditor(): ReactElement {
                     <span>{tab.name}</span>
                   </div>
                   <div
-                    className={`w-full h-[2px] transition-all duration-500 
+                    className={`h-[2px] w-full transition-all duration-500 
                   ${
                     tab.name === activeTabCodeEditor
                       ? "bg-layer-primary-500"
@@ -80,7 +80,7 @@ export default function CodeEditor(): ReactElement {
         <FullScreen className="relative" handle={handleFullScreen}>
           <iframe
             allow="clipboard-read"
-            className={`w-full animate__animated animate__fadeIn ${
+            className={`animate__animated animate__fadeIn w-full ${
               handleFullScreen?.active ? "h-screen" : "h-[55rem]"
             }`}
             src={
@@ -104,7 +104,7 @@ export default function CodeEditor(): ReactElement {
             >
               <BsFullscreenExit
                 size={24}
-                className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
               />
             </button>
           ) : (
@@ -114,7 +114,7 @@ export default function CodeEditor(): ReactElement {
             >
               <BsFullscreen
                 size={24}
-                className=" text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                className=" text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
               />
             </button>
           )}

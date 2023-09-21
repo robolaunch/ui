@@ -50,7 +50,7 @@ export default function NamespacesList({
       selectedState?.instance,
       selectedState?.organization,
       selectedState?.roboticsCloud,
-    ]
+    ],
   );
 
   function handleGetNamespaces() {
@@ -65,7 +65,7 @@ export default function NamespacesList({
         ifErrorNavigateTo404: false,
         setResponse: setResponseNamespaces,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 
@@ -105,7 +105,7 @@ export default function NamespacesList({
                           <StateCell state={fleet?.namespaceStatus} />
                         </div>
                         {responseNamespaces?.filter(
-                          (pFleet: any) => fleet?.name === pFleet?.fleetName
+                          (pFleet: any) => fleet?.name === pFleet?.fleetName,
                         ).length > 0 && (
                           <div className="flex gap-1.5">
                             <span className="font-medium">PI:</span>
@@ -113,7 +113,7 @@ export default function NamespacesList({
                               state={
                                 responseNamespaces?.filter(
                                   (pFleet: any) =>
-                                    fleet?.name === pFleet?.fleetName
+                                    fleet?.name === pFleet?.fleetName,
                                 )[0]?.fleetStatus
                               }
                             />
@@ -121,19 +121,16 @@ export default function NamespacesList({
                         )}
                       </div>
                     }
-                    url={`${
-                      selectedState?.organization?.organizationName?.split(
-                        "_"
-                      )[1]
-                    }/${selectedState?.roboticsCloud?.name}/${
-                      selectedState?.instance?.name
-                    }/${fleet?.name}`}
+                    url={`${selectedState?.organization?.organizationName?.split(
+                      "_",
+                    )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
+                      ?.instance?.name}/${fleet?.name}`}
                     data={{
                       ...fleet,
                       physicalInstance: responseNamespaces?.filter(
                         (pFleet: any) =>
                           fleet?.name === pFleet?.fleetName &&
-                          pFleet?.fleetStatus !== "Ready"
+                          pFleet?.fleetStatus !== "Ready",
                       ),
                     }}
                     selected={fleet.name === selectedState?.fleet?.name}

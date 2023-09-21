@@ -16,7 +16,7 @@ export default function VersionViewer(): ReactElement {
       onClick={() => {
         window.location.href = isProduction ? developmentURL : productionURL;
       }}
-      className="fixed bottom-0 right-1 z-50 text-[0.64rem] text-layer-light-700 cursor-crosshair"
+      className="fixed bottom-0 right-1 z-50 cursor-crosshair text-[0.64rem] text-layer-light-700"
     >
       {isProduction ? "P" : "D"} {packageJSON?.version}
     </div>

@@ -73,7 +73,7 @@ export default function RosConnector(): ReactElement {
               name: topic,
               type: result?.types[key],
             };
-          }
+          },
         );
 
         if (resultTopicsList?.length !== topicList?.length) {

@@ -30,14 +30,14 @@ export default function InputText({
   onBlur,
 }: InputTextProps): ReactElement {
   const [isFocused, setIsFocused] = useState(
-    value && value.length > 0 ? true : false
+    value && value.length > 0 ? true : false,
   );
 
   return (
-    <div className="relative animate__animated animate__fadeIn">
+    <div className="animate__animated animate__fadeIn relative">
       <label
-        className={`absolute z-10 transition-all duration-300 text-layer-light-700 pointer-events-none ${
-          isFocused ? "text-xs left-0 -top-6" : "text-sm left-3 top-2.5"
+        className={`pointer-events-none absolute z-10 text-layer-light-700 transition-all duration-300 ${
+          isFocused ? "-top-6 left-0 text-xs" : "left-3 top-2.5 text-sm"
         }`}
         htmlFor=""
       >
@@ -46,9 +46,9 @@ export default function InputText({
       <input
         autoComplete="off"
         disabled={disabled}
-        className={`w-full p-3 h-10 outline-none transition-all duration-500
-      border border-layer-light-300 rounded-md
-       focus:ring-2 focus:ring-primary disabled:cursor-not-allowed text-sm ${className}`}
+        className={`h-10 w-full rounded-md border border-layer-light-300 p-3
+      text-sm outline-none transition-all
+       duration-500 focus:ring-2 focus:ring-primary disabled:cursor-not-allowed ${className}`}
         type={type || "text"}
         name={name}
         value={value}

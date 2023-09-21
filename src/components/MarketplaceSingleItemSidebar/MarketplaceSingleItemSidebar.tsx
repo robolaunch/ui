@@ -19,11 +19,11 @@ export default function MarketplaceSingleItemSidebar({
     useState<boolean>(false);
 
   return (
-    <CardLayout className="!col-span-3 flex flex-col gap-8 p-6 !h-full">
+    <CardLayout className="!col-span-3 flex !h-full flex-col gap-8 p-6">
       <Fragment>
         <div className="flex flex-col gap-1">
           <span className="font-medium">Installation</span>
-          <div className="w-[5.5rem] h-[2px] bg-primary" />
+          <div className="h-[2px] w-[5.5rem] bg-primary" />
         </div>
         <div className="flex gap-4 transition-all duration-500">
           <Button
@@ -37,11 +37,11 @@ export default function MarketplaceSingleItemSidebar({
 
         <div className="flex flex-col gap-1">
           <span className="font-medium">Application Details</span>
-          <div className="w-32 h-[2px] bg-primary" />
+          <div className="h-[2px] w-32 bg-primary" />
         </div>
         <div className="flex flex-col gap-3">
           <div className="text-sm font-semibold text-layer-dark-700">Name</div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
+          <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <VscSymbolNamespace
                 size={20}
@@ -67,7 +67,7 @@ export default function MarketplaceSingleItemSidebar({
           <div className="text-sm font-semibold text-layer-dark-700">
             Family
           </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
+          <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <VscSymbolNamespace
                 size={20}
@@ -93,7 +93,7 @@ export default function MarketplaceSingleItemSidebar({
           <div className="text-sm font-semibold text-layer-dark-700">
             Deployment Type
           </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
+          <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <BsCloudy size={22} className="text-layer-secondary-500" />
               <span>
@@ -116,7 +116,7 @@ export default function MarketplaceSingleItemSidebar({
           <div className="text-sm font-semibold text-layer-dark-700">
             Storage
           </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
+          <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="noetic">
               <MdStorage size={22} className="text-layer-secondary-500" />
               {item?.minStorageAmount ? (
@@ -139,7 +139,7 @@ export default function MarketplaceSingleItemSidebar({
           <div className="text-sm font-semibold text-layer-dark-700">
             Version
           </div>
-          <div className="flex flex-col text-xs gap-3 pl-6">
+          <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <FiDownload size={20} className="text-layer-secondary-500" />
               <span>

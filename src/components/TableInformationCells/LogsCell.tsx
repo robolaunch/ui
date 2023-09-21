@@ -11,7 +11,7 @@ export default function LogsCell({ log }: ILogsCell): ReactElement {
   return (
     <Fragment>
       <div
-        className="text-xs cursor-pointer hover:underline "
+        className="cursor-pointer text-xs hover:underline "
         onClick={() => {
           setIsShowLogsModal(true);
         }}

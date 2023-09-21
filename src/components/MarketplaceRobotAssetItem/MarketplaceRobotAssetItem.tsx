@@ -14,7 +14,7 @@ export default function MarketplaceRobotAssetItem({
   robot,
 }: IMarketplaceRobotAssetItem): ReactElement {
   return (
-    <CardLayout className="col-span-3 p-6 hover:scale-[1.014] transition-300 cursor-pointer !flex !flex-col gap-4">
+    <CardLayout className="transition-300 col-span-3 !flex cursor-pointer !flex-col gap-4 p-6 hover:scale-[1.014]">
       <Link to={stringSlugify(robot?.acronym)}>
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">
@@ -29,7 +29,7 @@ export default function MarketplaceRobotAssetItem({
               )}
             </div>
             <span
-              className={`text-[0.60rem] font-medium w-fit ${
+              className={`w-fit text-[0.60rem] font-medium ${
                 robot?.type === "Hybrid Robot"
                   ? "text-layer-secondary-500"
                   : "text-layer-primary-500"
@@ -38,7 +38,7 @@ export default function MarketplaceRobotAssetItem({
               {robot?.type}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-[0.60rem] font-medium text-layer-secondary-500 px-1.5 rounded-lg capitalize -ml-1.5">
+          <div className="-ml-1.5 flex items-center gap-1 rounded-lg px-1.5 text-[0.60rem] font-medium capitalize text-layer-secondary-500">
             {(() => {
               switch (robot?.access) {
                 case "public":

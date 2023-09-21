@@ -10,13 +10,13 @@ export default function InvoiceUtilizationWidget(): ReactElement {
       title={`Invoice Utilization Widget`}
       subtitle={
         <div className="flex gap-4">
-          <InputSelect className="!px-1 !m-0 !h-fit border-none">
+          <InputSelect className="!m-0 !h-fit border-none !px-1">
             <option value="organizations">Organizations</option>
             <option value="roboticsClouds">Robotics Clouds</option>
             <option value="fleets">Fleets</option>
             <option value="robots">Robots</option>
           </InputSelect>
-          <InputSelect className="!px-0.5 !m-0 !h-fit border-none">
+          <InputSelect className="!m-0 !h-fit border-none !px-0.5">
             <option value="all">All Organizations</option>
             <option value="1">Organization #1</option>
             <option value="2">Organization #2</option>

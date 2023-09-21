@@ -24,15 +24,15 @@ export default function DeleteLaunchManagerModal({
     setIsLoading(true);
     await dispatch(
       deleteLaunchManager({
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        organizationId: selectedState?.organization!.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.instance?.region,
         robotName: robotData?.step1?.robotName,
         fleetName: selectedState?.fleet?.name,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,
         launchManagerName: launchManagerName,
-      })
+      }),
     ).then(() => {
       setTimeout(() => {
         window.location.reload();
@@ -48,19 +48,19 @@ export default function DeleteLaunchManagerModal({
       onHide={() => handleCloseModal()}
       draggable={false}
     >
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex w-full flex-col gap-8">
         <p className="text-sm">
           Are you sure you want to delete this launch manager?
         </p>
-        <div className="flex justify-end items-center gap-4">
+        <div className="flex items-center justify-end gap-4">
           <Button
-            className="!w-44 !h-11 !text-xs !bg-red-500 disabled:!bg-red-400 disabled:!cursor-not-allowed"
+            className="!h-11 !w-44 !bg-red-500 !text-xs disabled:!cursor-not-allowed disabled:!bg-red-400"
             disabled={isLoading}
             type="submit"
             text={
               isLoading ? (
                 <img
-                  className="w-10 h-10"
+                  className="h-10 w-10"
                   src="/svg/general/loading.svg"
                   alt="loading"
                 />

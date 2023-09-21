@@ -29,7 +29,7 @@ export default function RosMapWidget({
             style={{ minWidth: "100%", minHeight: "100%" }}
             src={`/html/rosMap.html?ws=${ros.socket.url.slice(
               0,
-              ros.socket.url.length - 1
+              ros.socket.url.length - 1,
             )}&robotLocation=true`}
           />
         )}

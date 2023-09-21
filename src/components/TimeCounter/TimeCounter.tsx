@@ -15,7 +15,7 @@ export default function TimeCounter({
     <div className="flex gap-5">
       {!second || !minute || !hour ? (
         <img
-          className="w-10 h-10"
+          className="h-10 w-10"
           src="/svg/general/loading.svg"
           alt="loading"
         />
@@ -24,7 +24,7 @@ export default function TimeCounter({
           return (
             <div
               key={index}
-              className="flex flex-col items-center animate__animated animate__fadeIn"
+              className="animate__animated animate__fadeIn flex flex-col items-center"
             >
               <span className={`text-xl`}>
                 {index === 0 ? hour : index === 1 ? minute : second}

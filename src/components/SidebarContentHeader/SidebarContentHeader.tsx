@@ -65,19 +65,19 @@ export default function SidebarContentLayout({
 
   return (
     <div
-      className={`flex gap-4 items-center ${
+      className={`flex items-center gap-4 ${
         sidebarState?.isCreateMode ? "pb-8" : " pb-4"
       }`}
     >
       <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
       {handleShowDetails() && (
         <Fragment>
-          <span className="bg-layer-primary-300 px-2.5 py-0.5 rounded-lg">
+          <span className="rounded-lg bg-layer-primary-300 px-2.5 py-0.5">
             {itemCount}
           </span>
           <i
             onClick={handleReload}
-            className={`pi pi-refresh text-lightLayer-700 hover:scale-90 active:scale-75 cursor-pointer transition-all duration-500 ${
+            className={`pi pi-refresh text-lightLayer-700 cursor-pointer transition-all duration-500 hover:scale-90 active:scale-75 ${
               loading && "animate-spin"
             }`}
             style={{ fontSize: "1rem" }}

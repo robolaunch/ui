@@ -45,7 +45,7 @@ export default function RobotsList({
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [reload]
+    [reload],
   );
 
   function handleGetRobots() {
@@ -61,7 +61,7 @@ export default function RobotsList({
         ifErrorNavigateTo404: false,
         setResponse: setResponseRobots,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 

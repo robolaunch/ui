@@ -21,7 +21,7 @@ export default function CirclePercentageBar({
 
   return (
     <div
-      className="flex flex-col gap-1 items-center"
+      className="flex flex-col items-center gap-1"
       style={{ textAlign: "center" }}
     >
       {!percentage ? (
@@ -38,7 +38,7 @@ export default function CirclePercentageBar({
       ) : (
         <Fragment>
           <svg
-            className="relative animate__animated animate_fadeIn"
+            className="animate__animated animate_fadeIn relative"
             width={size}
             height={size}
             viewBox={`0 0 ${size} ${size}`}

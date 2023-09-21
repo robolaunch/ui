@@ -111,7 +111,7 @@ export default function RobotHeaderTabs(): ReactElement {
   return (
     <ul
       data-tut="robot-header-tabs"
-      className="flex gap-6 px-6 pt-5 overflow-x-auto items-end"
+      className="flex items-end gap-6 overflow-x-auto px-6 pt-5"
     >
       {tabs
         ?.filter((tab: any) => tab && tab)
@@ -119,7 +119,7 @@ export default function RobotHeaderTabs(): ReactElement {
           return (
             <li
               data-tut={`robot-header-tab-${stringSlugify(tab?.name)}`}
-              className={`flex flex-col gap-3 cursor-pointer ${
+              className={`flex cursor-pointer flex-col gap-3 ${
                 tab?.isHidden && "!hidden"
               }`}
               onClick={() =>
@@ -128,7 +128,7 @@ export default function RobotHeaderTabs(): ReactElement {
               key={index}
             >
               <div
-                className={`flex gap-1 items-center text-xs font-medium px-2 transition-all duration-500 min-w-max  ${
+                className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500  ${
                   tab.name === activeTab
                     ? "text-layer-primary-500"
                     : "text-layer-light-500"
@@ -152,7 +152,7 @@ export default function RobotHeaderTabs(): ReactElement {
                 )}
               </div>
               <div
-                className={`w-full h-[2px] transition-all duration-500 
+                className={`h-[2px] w-full transition-all duration-500 
                   ${
                     tab.name === activeTab
                       ? "bg-layer-primary-500"
