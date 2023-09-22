@@ -1,28 +1,28 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
-import CreateRobotFormGpuResource from "../CreateRobotFormGpuResource/CreateRobotFormGpuResource";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
+import CreateRobotFormGpuResource from "../CreateRobotFormGpuResource/CreateRobotFormGpuResource";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
+import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
+import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
+import TourGuide from "../TourGuide/TourGuide";
+import InputText from "../InputText/InputText";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { getGuideItem } from "../../functions/handleGuide";
-import TourGuide from "../TourGuide/TourGuide";
-import { createEnvironment } from "../../toolkit/EnvironmentSlice";
-import InputToggle from "../InputToggle/InputToggle";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;

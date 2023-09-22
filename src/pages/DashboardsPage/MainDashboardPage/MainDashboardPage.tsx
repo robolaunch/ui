@@ -8,15 +8,15 @@ import React, {
 import OrganizationActionCells from "../../../components/TableActionCells/OrganizationActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { organizationNameViewer } from "../../../functions/GeneralFunctions";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import DashboardLayout from "../../../layouts/DashboardLayout";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import { getGuideItem } from "../../../functions/handleGuide";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import TourGuide from "../../../components/TourGuide/TourGuide";
-import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function MainDashboardPage(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<

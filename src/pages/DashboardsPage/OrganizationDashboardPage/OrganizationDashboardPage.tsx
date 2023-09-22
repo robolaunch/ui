@@ -2,18 +2,18 @@ import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import RoboticsCloudActionCells from "../../../components/TableActionCells/RoboticsCloudActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import { stringCapitalization } from "../../../functions/GeneralFunctions";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import GeneralTable from "../../../components/Table/GeneralTable";
-import DashboardLayout from "../../../layouts/DashboardLayout";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import { stringCapitalization } from "../../../functions/GeneralFunctions";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
+import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
+import TourGuide from "../../../components/TourGuide/TourGuide";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import { getGuideItem } from "../../../functions/handleGuide";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
-import TourGuide from "../../../components/TourGuide/TourGuide";
-import { getGuideItem } from "../../../functions/handleGuide";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);

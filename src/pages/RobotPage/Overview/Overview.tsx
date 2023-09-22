@@ -11,10 +11,10 @@ import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatus
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
-import useRobot from "../../../hooks/useRobot";
-import { useParams } from "react-router-dom";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { getGuideItem } from "../../../functions/handleGuide";
+import useRobot from "../../../hooks/useRobot";
+import { useParams } from "react-router-dom";
 
 interface IOverview {
   informationWidgetAction: () => void;

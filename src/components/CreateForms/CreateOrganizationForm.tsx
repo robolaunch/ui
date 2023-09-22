@@ -1,14 +1,14 @@
 import { useFormik } from "formik";
-import React, { ReactElement } from "react";
 import { createOrganizationSchema } from "../../validations/OrganizationsValidations";
+import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
+import { createOrganization } from "../../toolkit/OrganizationSlice";
+import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import InputText from "../InputText/InputText";
-import Button from "../Button/Button";
-import { useAppDispatch } from "../../hooks/redux";
-import { createOrganization } from "../../toolkit/OrganizationSlice";
+import React, { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
-import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
+import Button from "../Button/Button";
 
 export default function CreateOrganizationForm(): ReactElement {
   const { sidebarState, setSidebarState }: any = useMain();
