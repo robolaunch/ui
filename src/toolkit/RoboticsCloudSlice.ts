@@ -17,7 +17,7 @@ export const createRoboticsCloud = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getRoboticsClouds = createAsyncThunk(
@@ -28,7 +28,7 @@ export const getRoboticsClouds = createAsyncThunk(
       organizationId: values.organizationId,
     });
     return response.data;
-  }
+  },
 );
 
 export const roboticsCloudSlice = createSlice({
@@ -45,7 +45,7 @@ export const roboticsCloudSlice = createSlice({
         }
       })
       .addCase(createRoboticsCloud.rejected, () => {
-        toast.error("Something went wrong of creating robotics cloud");
+        toast.error("Something went wrong of creating region.");
       })
       .addCase(getRoboticsClouds.fulfilled, (_, action: any) => {
         if (!action?.payload?.success) {
@@ -53,7 +53,7 @@ export const roboticsCloudSlice = createSlice({
         }
       })
       .addCase(getRoboticsClouds.rejected, () => {
-        toast.error("Something went wrong of getting robotics clouds");
+        toast.error("Something went wrong of getting regions.");
       });
   },
 });

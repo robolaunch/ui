@@ -67,7 +67,14 @@ export default function EnvironmentSelector({
                   formik.setFieldValue("domainName", environment)
                 }
               >
-                {environment}
+                {(() => {
+                  switch (environment) {
+                    case "aiml":
+                      return "AI & ML";
+                    default:
+                      return environment;
+                  }
+                })()}
               </div>
             );
           })}

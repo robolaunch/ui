@@ -88,7 +88,7 @@ export default function NamespacesList({
           {!Array.isArray(responseNamespaces) ? (
             <SidebarListLoader />
           ) : responseNamespaces.length === 0 ? (
-            <SidebarInfo text={`Create a Fleet.`} />
+            <SidebarInfo text={`Create a Namespace.`} />
           ) : (
             responseNamespaces
               ?.filter((fleet: any) => !fleet.fleetName)
