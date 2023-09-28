@@ -74,7 +74,10 @@ export default function SidebarListItem({
         }
         break;
       case "instance":
-        if (data?.instanceCloudState === "ConnectionHub_Ready") {
+        if (
+          data?.instanceCloudState === "ConnectionHub_Ready" &&
+          data?.instanceState === "running"
+        ) {
           if (selectedState?.instance?.name === data?.name) {
             setSelectedState({
               ...selectedState,
