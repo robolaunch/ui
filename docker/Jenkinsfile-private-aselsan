@@ -37,7 +37,7 @@ pipeline {
     }
   }
   stages {
-    stage('Install Deps') {
+    stage('Install Node') {
       steps {
         container('ubuntu') {
           sh 'npm install -g n'
@@ -45,7 +45,7 @@ pipeline {
         }
       }
     }
-    stage('Clone') {
+    stage('Git Clone') {
       steps {
         container('ubuntu') {
           git branch: 'main', credentialsId: '7322b7d8-a45e-4594-9bd8-fa1952a7aaad', url: 'git@github.com:robolaunch/ui.git'
@@ -56,10 +56,10 @@ pipeline {
         }
       }
     }
-    stage('Build') {
+    stage('Install Depends && Build') {
       steps {
         container('ubuntu') {
-          withCredentials([file(credentialsId: 'frontend-demo-env', variable: 'text')]) {
+          withCredentials([file(credentialsId: 'frontend-private-aselsan-env', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm i --force'
@@ -71,24 +71,25 @@ pipeline {
         }
       }
     }
-    stage('Docker Build') {
+    stage('Docker Build && Push') {
       steps {
         container('docker') {
-          sh "docker build -t robolaunchio/ui-demo-httpd:${env.VER} ."
+          sh "docker build -t robolaunchio/frontend-private-aselsan-httpd:${env.VER} ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
-          sh "docker push robolaunchio/ui-demo-httpd:${env.VER}"
+          sh "docker push robolaunchio/frontend-private-aselsan-httpd:${env.VER}"
+        }
+      }
+    }
+    stage('Kubernetes Deploy') {
+      steps {
+        container('ubuntu') {
+          withCredentials([file(credentialsId: 'hetzner_prod', variable: 'config')]) {
+            sh "kubectl set image deployment.v1.apps/ui -n ui ui=robolaunchio/frontend-private-aselsan-httpd:${env.VER} --kubeconfig=$config"
+          }
         }
       }
     }
   }
-    post {
-      always {
-            emailext to: "tamer@robolaunch.cloud",
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-            attachmentsPattern: '*.html'
-      }
-    }
 }
