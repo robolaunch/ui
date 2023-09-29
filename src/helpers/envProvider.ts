@@ -7,7 +7,14 @@ export const envOnPremiseRobot: boolean =
 export const envAdrinIntegration: boolean =
   process.env.REACT_APP_ADRIN_INTEGRATION === "true" ? true : false;
 
-export const envFrontendUrl: string = process.env.REACT_APP_FRONTEND_URL || "";
+export const envCreateOrganization: boolean =
+  process.env.REACT_APP_CREATE_ORGANIZATION === "true" ? true : false;
+
+export const envCreateRegion: boolean =
+  process.env.REACT_APP_CREATE_REGION === "true" ? true : false;
+
+export const envCreateInstance: boolean =
+  process.env.REACT_APP_CREATE_INSTANCE === "true" ? true : false;
 
 export const isProduction: boolean =
   process.env.NODE_ENV === "production" ? true : false;

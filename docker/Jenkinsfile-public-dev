@@ -37,7 +37,7 @@ pipeline {
     }
   }
   stages {
-    stage('Install Deps') {
+    stage('Install Node') {
       steps {
         container('ubuntu') {
           sh 'npm install -g n'
@@ -45,7 +45,7 @@ pipeline {
         }
       }
     }
-    stage('Clone') {
+    stage('Git Clone') {
       steps {
         container('ubuntu') {
           git branch: 'main', credentialsId: '7322b7d8-a45e-4594-9bd8-fa1952a7aaad', url: 'git@github.com:robolaunch/ui.git'
@@ -56,10 +56,10 @@ pipeline {
         }
       }
     }
-    stage('Build') {
+    stage('Install Depends && Build') {
       steps {
         container('ubuntu') {
-          withCredentials([file(credentialsId: 'frontend-dev-env', variable: 'text')]) {
+          withCredentials([file(credentialsId: 'frontend-public-dev', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm i --force'
@@ -71,7 +71,7 @@ pipeline {
         }
       }
     }
-    stage('Docker Build') {
+    stage('Docker Build && Push') {
       steps {
         container('docker') {
           sh "docker build -t robolaunchio/ui-httpd:${env.VER} ."
@@ -92,12 +92,4 @@ pipeline {
       }
     }
   }
-    post {
-      always {
-            emailext to: "tamer@robolaunch.cloud",
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-            attachmentsPattern: '*.html'
-      }
-    }
 }

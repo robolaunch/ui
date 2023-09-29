@@ -7,6 +7,7 @@ import MarketplaceReducer from "./MarketplaceSlice";
 import EnvironmentReducer from "./EnvironmentSlice";
 import storage from "redux-persist/lib/storage";
 import InstanceReducer from "./InstanceSlice";
+import BarcodeReducer from "./BarcodeSlice";
 import GithubReducer from "./GithubSlice";
 import GuideReducer from "./GuideSlice";
 import TrialReducer from "./TrialSlice";
@@ -21,7 +22,7 @@ const persistConfigUser = {
 };
 const persistedReducerUser = persistReducer<any, any>(
   persistConfigUser,
-  UserReducer
+  UserReducer,
 );
 
 const persistConfigGithub = {
@@ -31,7 +32,7 @@ const persistConfigGithub = {
 };
 const persistedReducerGithub = persistReducer<any, any>(
   persistConfigGithub,
-  GithubReducer
+  GithubReducer,
 );
 
 const persistConfigOrganization = {
@@ -41,7 +42,7 @@ const persistConfigOrganization = {
 };
 const persistedReducerOrganization = persistReducer<any, any>(
   persistConfigOrganization,
-  OrganizationReducer
+  OrganizationReducer,
 );
 
 const persistConfigRoboticsCloud = {
@@ -51,7 +52,7 @@ const persistConfigRoboticsCloud = {
 };
 const persistedReducerRoboticsCloud = persistReducer<any, any>(
   persistConfigRoboticsCloud,
-  RoboticsCloudReducer
+  RoboticsCloudReducer,
 );
 
 const persistConfigCloudInstance = {
@@ -61,7 +62,7 @@ const persistConfigCloudInstance = {
 };
 const persistedReducerInstance = persistReducer<any, any>(
   persistConfigCloudInstance,
-  InstanceReducer
+  InstanceReducer,
 );
 
 const persistConfigFleet = {
@@ -71,7 +72,7 @@ const persistConfigFleet = {
 };
 const persistedReducerFleet = persistReducer<any, any>(
   persistConfigFleet,
-  FleetReducer
+  FleetReducer,
 );
 
 const persistConfigRobot = {
@@ -81,7 +82,7 @@ const persistConfigRobot = {
 };
 const persistedReducerRobot = persistReducer<any, any>(
   persistConfigRobot,
-  RobotReducer
+  RobotReducer,
 );
 
 const persistConfigTrial = {
@@ -91,7 +92,7 @@ const persistConfigTrial = {
 };
 const persistedReducerTrial = persistReducer<any, any>(
   persistConfigTrial,
-  TrialReducer
+  TrialReducer,
 );
 
 const persistConfigGuide = {
@@ -102,7 +103,7 @@ const persistConfigGuide = {
 
 const persistedReducerGuide = persistReducer<any, any>(
   persistConfigGuide,
-  GuideReducer
+  GuideReducer,
 );
 
 const persistConfigMarketplace = {
@@ -113,7 +114,7 @@ const persistConfigMarketplace = {
 
 const persistedReducerMarketplace = persistReducer<any, any>(
   persistConfigMarketplace,
-  MarketplaceReducer
+  MarketplaceReducer,
 );
 
 const persistConfigEnvironment = {
@@ -124,7 +125,18 @@ const persistConfigEnvironment = {
 
 const persistedReducerEnvironment = persistReducer<any, any>(
   persistConfigEnvironment,
-  EnvironmentReducer
+  EnvironmentReducer,
+);
+
+const persistConfigBarcode = {
+  key: "barcode",
+  version: 1,
+  storage,
+};
+
+const persistedReducerBarcode = persistReducer<any, any>(
+  persistConfigBarcode,
+  BarcodeReducer,
 );
 
 const store = configureStore({
@@ -140,6 +152,7 @@ const store = configureStore({
     marketplace: persistedReducerMarketplace,
     environment: persistedReducerEnvironment,
     guide: persistedReducerGuide,
+    barcode: persistedReducerBarcode,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

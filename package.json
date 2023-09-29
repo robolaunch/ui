@@ -2,6 +2,31 @@
   "name": "ui",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@emotion/css": "^11.10.6",
     "@fontsource/inter": "^5.0.8",
@@ -67,31 +92,6 @@
     "typescript": "^4.9.4",
     "use-react-router-breadcrumbs": "^4.0.1",
     "yup": "^0.32.11"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

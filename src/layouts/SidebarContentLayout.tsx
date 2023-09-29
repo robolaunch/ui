@@ -13,7 +13,13 @@ import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesL
 import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
-import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import {
+  envCreateInstance,
+  envCreateOrganization,
+  envCreateRegion,
+  envOnPremiseFleet,
+  envOnPremiseRobot,
+} from "../helpers/envProvider";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
 import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
@@ -388,11 +394,15 @@ export default function SidebarContentLayout(): ReactElement {
           return;
         }
 
-        if (
-          envOnPremiseRobot &&
-          sidebarState?.page !== "fleet" &&
-          sidebarState?.page !== "robot"
-        ) {
+        if (!envCreateOrganization && sidebarState?.page === "organization") {
+          return;
+        }
+
+        if (!envCreateRegion && sidebarState?.page === "roboticscloud") {
+          return;
+        }
+
+        if (!envCreateInstance && sidebarState?.page === "instance") {
           return;
         }
 

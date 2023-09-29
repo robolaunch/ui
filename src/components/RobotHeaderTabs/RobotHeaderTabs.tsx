@@ -35,10 +35,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        // hidden for now
-        true ||
-        envOnPremiseRobot ||
-        (responseRobot && !responseRobot?.bridgeEnabled),
+        envOnPremiseRobot || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Teleoperation",
