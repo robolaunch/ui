@@ -402,7 +402,11 @@ export default function SidebarContentLayout(): ReactElement {
           return;
         }
 
-        if (!envCreateInstance && sidebarState?.page === "instance") {
+        if (
+          !envCreateInstance &&
+          sidebarState?.page === "instance" &&
+          sidebarState?.instanceTab === "Cloud Instances"
+        ) {
           return;
         }
 
