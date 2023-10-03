@@ -136,7 +136,6 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          console.log(rowData?.OSResources);
           return (
             <BasicCell
               text={

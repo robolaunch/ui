@@ -4,6 +4,7 @@ import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 import {
+  envCreateInstance,
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
@@ -88,7 +89,7 @@ export default function InstanceActionCells({
               <img src="/svg/general/loading.svg" alt="loading" />
             )
           }
-          disabled={envOnPremiseRobot}
+          disabled={!envCreateInstance}
           onClick={() => setIsTerminateModalVisible(true)}
         />
       </div>
