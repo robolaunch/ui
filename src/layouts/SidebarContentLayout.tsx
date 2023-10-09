@@ -385,6 +385,7 @@ export default function SidebarContentLayout(): ReactElement {
           })()}
         </div>
       </div>
+
       {(() => {
         if (url.robotName) {
           return;
