@@ -50,6 +50,8 @@ export const createEnvironment = createAsyncThunk(
                     desktop: values?.devspaceDesktop,
                     version: values?.devspaceVersion,
                   },
+                  permittedDirectories: values?.permittedDirectories,
+                  persistentDirectories: values?.persistentDirectories,
                   robotWorkspaces: values?.workspaces,
                 },
               ],
