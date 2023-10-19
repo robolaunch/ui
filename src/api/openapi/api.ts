@@ -794,6 +794,42 @@ export interface Environment {
      * @memberof Environment
      */
     'workspaceUpdated'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'permittedDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'persistentDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideCustomPorts'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiCustomPorts'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiPodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'idePodName'?: string;
 }
 /**
  * 
@@ -2032,6 +2068,30 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'workspaceUpdated'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'permittedDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'persistentDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'ideCustomPorts'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'vdiCustomPorts'?: string;
 }
 /**
  * 
@@ -3971,6 +4031,39 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getFreeNodePort: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/getFreeNodePort`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getNamespaces: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/getNamespaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4006,6 +4099,39 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
          */
         getPhysicalInstances: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/getPhysicalInstances`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartPod: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/restartPod`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4127,6 +4253,16 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getFreeNodePort(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFreeNodePort(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getNamespaces(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNamespaces(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -4139,6 +4275,16 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
          */
         async getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPhysicalInstances(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async restartPod(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.restartPod(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -4229,6 +4375,15 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getFreeNodePort(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFreeNodePort(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getNamespaces(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getNamespaces(organization, options).then((request) => request(axios, basePath));
         },
@@ -4240,6 +4395,15 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          */
         getPhysicalInstances(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getPhysicalInstances(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartPod(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.restartPod(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4346,6 +4510,17 @@ export class KubernetesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
+    public getFreeNodePort(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getFreeNodePort(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KubernetesApi
+     */
     public getNamespaces(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).getNamespaces(organization, options).then((request) => request(this.axios, this.basePath));
     }
@@ -4359,6 +4534,17 @@ export class KubernetesApi extends BaseAPI {
      */
     public getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).getPhysicalInstances(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KubernetesApi
+     */
+    public restartPod(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).restartPod(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
