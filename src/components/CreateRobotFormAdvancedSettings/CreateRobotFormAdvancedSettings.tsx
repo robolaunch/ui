@@ -1,15 +1,17 @@
-import { ReactElement, useState } from "react";
-import Accordion from "../Accordion/AccordionV2";
 import PersistedDirectoriesInputTag from "../CreateRobotFormPersistedDirectoriesInputTag/CreateRobotFormPersistedDirectoriesInputTag";
 import CreateRobotFormGrantedDirectoriesInputTag from "../CreateRobotFormGrantedDirectoriesInputTag/CreateRobotFormGrantedDirectoriesInputTag";
 import PortSetter from "../CreateRobotFormPortSetter/CreateRobotFormPortSetter";
+import Accordion from "../Accordion/AccordionV2";
+import { ReactElement, useState } from "react";
 
 interface ICreateRobotFormAdvancedSettings {
   formik: any;
+  isImportRobot?: boolean;
 }
 
 export default function CreateRobotFormAdvancedSettings({
   formik,
+  isImportRobot,
 }: ICreateRobotFormAdvancedSettings): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -31,7 +33,11 @@ export default function CreateRobotFormAdvancedSettings({
 
           <CreateRobotFormGrantedDirectoriesInputTag />
 
-          <PortSetter formik={formik} type="ide" />
+          <PortSetter
+            isImportRobot={isImportRobot}
+            formik={formik}
+            type="ide"
+          />
 
           <PortSetter formik={formik} type="vdi" />
         </div>

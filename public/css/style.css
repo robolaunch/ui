@@ -641,6 +641,10 @@ video {
   bottom: 0px;
 }
 
+.bottom-12 {
+  bottom: 3rem;
+}
+
 .bottom-2 {
   bottom: 0.5rem;
 }
@@ -753,22 +757,6 @@ video {
   top: 3.6rem;
 }
 
-.bottom-6 {
-  bottom: 1.5rem;
-}
-
-.right-6 {
-  right: 1.5rem;
-}
-
-.bottom-12 {
-  bottom: 3rem;
-}
-
-.bottom-16 {
-  bottom: 4rem;
-}
-
 .-z-10 {
   z-index: -10;
 }
@@ -870,6 +858,10 @@ video {
   margin-right: auto;
 }
 
+.\!mt-1 {
+  margin-top: 0.25rem !important;
+}
+
 .-mb-1 {
   margin-bottom: -0.25rem;
 }
@@ -952,18 +944,6 @@ video {
 
 .mt-\[0\.1rem\] {
   margin-top: 0.1rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.\!mt-2 {
-  margin-top: 0.5rem !important;
-}
-
-.\!mt-1 {
-  margin-top: 0.25rem !important;
 }
 
 .block {
@@ -1820,6 +1800,11 @@ video {
   border-color: rgb(163 163 163 / var(--tw-border-opacity)) !important;
 }
 
+.\!border-layer-light-100 {
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(235 235 235 / var(--tw-border-opacity)) !important;
+}
+
 .\!border-layer-light-600 {
   --tw-border-opacity: 1 !important;
   border-color: rgb(133 133 133 / var(--tw-border-opacity)) !important;
@@ -1937,16 +1922,6 @@ video {
 .border-yellow-500 {
   --tw-border-opacity: 1;
   border-color: rgb(234 179 8 / var(--tw-border-opacity));
-}
-
-.\!border-layer-light-100 {
-  --tw-border-opacity: 1 !important;
-  border-color: rgb(235 235 235 / var(--tw-border-opacity)) !important;
-}
-
-.\!bg-layer-light-100 {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(235 235 235 / var(--tw-bg-opacity)) !important;
 }
 
 .\!bg-layer-light-50 {
@@ -2334,6 +2309,10 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.pb-7 {
+  padding-bottom: 1.75rem;
+}
+
 .pb-8 {
   padding-bottom: 2rem;
 }
@@ -2384,14 +2363,6 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pb-5 {
-  padding-bottom: 1.25rem;
-}
-
-.pb-7 {
-  padding-bottom: 1.75rem;
 }
 
 .text-center {
@@ -3405,11 +3376,6 @@ td {
 .hover\:text-layer-secondary-800:hover {
   --tw-text-opacity: 1;
   color: rgb(6 85 134 / var(--tw-text-opacity));
-}
-
-.hover\:text-yellow-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(202 138 4 / var(--tw-text-opacity));
 }
 
 .hover\:text-yellow-700:hover {

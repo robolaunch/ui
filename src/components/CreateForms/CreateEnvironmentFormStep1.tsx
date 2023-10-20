@@ -279,7 +279,10 @@ export default function CreateEnvironmentFormStep1({
               </div>
             </div>
 
-            <CreateRobotFormAdvancedSettings formik={formik} />
+            <CreateRobotFormAdvancedSettings
+              formik={formik}
+              isImportRobot={isImportRobot}
+            />
 
             {!url.robotName && (
               <div className="mt-10 flex gap-2 ">

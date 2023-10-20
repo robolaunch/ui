@@ -3,8 +3,8 @@ import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import { useKeycloak } from "@react-keycloak/web";
-import { TfiReload } from "react-icons/tfi";
-import useVDI from "../../hooks/useVDI";
+// import { TfiReload } from "react-icons/tfi";
+// import useVDI from "../../hooks/useVDI";
 import Button from "../Button/Button";
 import RestartService from "../RestartService/RestartService";
 
@@ -25,7 +25,7 @@ export default function RemoteDesktopController({
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
 
-  const { setScreenResolution } = useVDI();
+  // const { setScreenResolution } = useVDI();
 
   const { keycloak } = useKeycloak();
 
@@ -78,7 +78,7 @@ export default function RemoteDesktopController({
               />
             </button>
           )}
-          <TfiReload size={20} onClick={() => setScreenResolution()} />
+          {/* <TfiReload size={20} onClick={() => setScreenResolution()} /> */}
 
           <RestartService type="vdi" />
 

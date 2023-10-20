@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RestartServiceModal from "../../modals/RestartServiceModal";
-import { PiWarningLight } from "react-icons/pi";
+import { IoReloadOutline } from "react-icons/io5";
 
 interface IRestartService {
   type: string;
@@ -11,9 +11,9 @@ export default function RestartService({ type }: IRestartService) {
 
   return (
     <>
-      <PiWarningLight
+      <IoReloadOutline
         size={26}
-        className="transition-300 cursor-pointer text-yellow-600 hover:text-yellow-700"
+        className="cursor-pointer text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
         onClick={() => setIsOpenedModal(true)}
       />
 

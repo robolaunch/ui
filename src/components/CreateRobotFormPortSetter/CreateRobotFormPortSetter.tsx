@@ -9,11 +9,13 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 interface ICreateRobotFormPortSetter {
   formik: any;
   type: string;
+  isImportRobot?: boolean;
 }
 
 export default function PortSetter({
   formik,
   type,
+  isImportRobot,
 }: ICreateRobotFormPortSetter): ReactElement {
   const { selectedState } = useMain();
 
@@ -50,7 +52,7 @@ export default function PortSetter({
       <div>
         <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           {type === "ide" ? "IDE" : "VDI"} Ports:
-          <InfoTip content="Type a ports." />
+          <InfoTip content="Type a ports with name." />
         </div>
         <div className="flex flex-col">
           {formik.values?.[`${type}CustomPorts`].map(
@@ -69,6 +71,7 @@ export default function PortSetter({
       </div>
 
       <CreateRobotFormAddButton
+        disabled={isImportRobot}
         onClick={async () => {
           await formik.setFieldValue(
             `${type}CustomPorts`,

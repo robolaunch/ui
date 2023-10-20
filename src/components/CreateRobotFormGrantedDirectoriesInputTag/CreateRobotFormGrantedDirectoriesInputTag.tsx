@@ -38,7 +38,7 @@ export default function GrantedDirectoriesInputTag(): ReactElement {
     <div>
       <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
         Granted Directories:
-        <InfoTip content="Type a Granted directories." />
+        <InfoTip content="Type a granted directories." />
       </div>
 
       <div>

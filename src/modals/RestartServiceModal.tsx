@@ -1,9 +1,9 @@
 import { Dialog } from "primereact/dialog";
 import React, { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
-import useRobot from "../hooks/useRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { restartService } from "../toolkit/ServiceSlice";
+import useRobot from "../hooks/useRobot";
 import useMain from "../hooks/useMain";
 
 interface IDeleteRobotModalModal {
@@ -20,8 +20,6 @@ export default function RestartServiceModal({
   const { responseRobot } = useRobot();
   const { selectedState } = useMain();
 
-  console.log(responseRobot);
-
   const dispatch = useAppDispatch();
 
   async function handleRestartService() {
@@ -31,13 +29,13 @@ export default function RestartServiceModal({
         organizationId: selectedState.organization?.organizationId!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
         region: selectedState.roboticsCloud?.region as string,
-        fleetName: selectedState.fleet?.fleetName,
+        fleetName: selectedState.fleet?.name,
         instanceId: selectedState.instance?.instanceId,
         environmentName: responseRobot.name,
         podName:
           type === "vdi"
             ? responseRobot?.vdiPodName
-            : responseRobot?.robotPodName,
+            : responseRobot?.idePodName,
       }),
     );
     await setIsLoading(false);

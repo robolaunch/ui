@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { kubernetesApi } from "../api/api";
 
 export const getPort = createAsyncThunk(
-  "robot/getPort",
+  "port/getFreeNodePort",
   async (values: {
     organizationId: string;
     roboticsCloudName: string;
@@ -10,7 +10,7 @@ export const getPort = createAsyncThunk(
     region: string;
   }) => {
     const response = await kubernetesApi.getFreeNodePort({
-      name: "robot/getPort",
+      name: "port/getFreeNodePort",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
