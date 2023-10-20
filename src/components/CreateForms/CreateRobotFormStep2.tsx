@@ -67,7 +67,33 @@ export default function CreateRobotFormStep2({
             devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
             devspaceDesktop: robotData?.step1?.devspace?.desktop,
             devspaceVersion: robotData?.step1?.devspace?.version,
+            permittedDirectories: robotData?.step1?.permittedDirectories,
+            persistentDirectories: robotData?.step1?.persistentDirectories,
             workspaces: values?.workspaces,
+            ideCustomPorts:
+              robotData.step1.ideCustomPorts
+                ?.map(
+                  (port: {
+                    name: string;
+                    port: number;
+                    backendPort: number;
+                  }) => {
+                    return `${port.name}-${port.backendPort}:${port.port}`;
+                  },
+                )
+                ?.join("/") || "",
+            vdiCustomPorts:
+              robotData.step1.vdiCustomPorts
+                ?.map(
+                  (port: {
+                    name: string;
+                    port: number;
+                    backendPort: number;
+                  }) => {
+                    return `${port.name}-${port.backendPort}:${port.port}`;
+                  },
+                )
+                ?.join("/") || "",
           }),
         ).then(async () => {
           await handleSubmit();

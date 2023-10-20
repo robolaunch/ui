@@ -131,10 +131,41 @@ export interface IdeleteLaunchManagerRequest {
 }
 
 export interface IRobotData {
-  step1: any;
+  step1: IRobotStep1;
   step2: IRobotWorkspaces;
   step3: IRobotBuildSteps;
   step4: IRobotLaunchSteps;
+}
+
+export interface IRobotStep1 {
+  robotName: string;
+  isVirtualRobot: boolean;
+  physicalInstanceName: string;
+  robotStorage: number;
+  isEnabledIde: boolean;
+  ideGpuResource: number;
+  isEnabledROS2Bridge: boolean;
+  remoteDesktop: {
+    isEnabled: boolean;
+    sessionCount: number;
+  };
+  rosDistros: string[];
+  gpuEnabledForCloudInstance: boolean;
+  isDevelopmentMode: boolean;
+  domainName: string;
+  application: {
+    name: string;
+    version: string;
+  };
+  devspace: {
+    ubuntuDistro: string;
+    desktop: string;
+    version: string;
+  };
+  permittedDirectories: string;
+  persistentDirectories: string;
+  ideCustomPorts: any[];
+  vdiCustomPorts: any[];
 }
 
 export interface IRobotWorkspaces {

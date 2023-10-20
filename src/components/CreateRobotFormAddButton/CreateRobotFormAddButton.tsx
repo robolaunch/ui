@@ -5,12 +5,14 @@ interface ICreateRobotFormAddButton {
   onClick: () => void;
   description?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export default function CreateRobotFormAddButton({
   onClick,
   description,
   disabled,
+  className,
 }: ICreateRobotFormAddButton): ReactElement {
   return (
     <BsPlusCircle
@@ -21,7 +23,7 @@ export default function CreateRobotFormAddButton({
         disabled
           ? "text-layer-light-600 hover:cursor-not-allowed"
           : "text-layer-primary-700 hover:scale-90 hover:text-layer-primary-500"
-      }`}
+      } ${className}`}
     />
   );
 }

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from "react";
 
 interface InputTextProps {
-  type?: "text" | "password" | "email";
+  type?: "text" | "password" | "email" | "number";
   name?: string;
   value?: string;
   placeholder?: string;

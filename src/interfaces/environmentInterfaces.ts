@@ -15,6 +15,10 @@ export interface IcreateEnvironmentRequest {
   devspaceDesktop: string;
   devspaceVersion: string;
   workspaces: any;
+  permittedDirectories: string;
+  persistentDirectories: string;
+  ideCustomPorts: string;
+  vdiCustomPorts: string;
 }
 
 export interface IgetEnvironmentsRequest {

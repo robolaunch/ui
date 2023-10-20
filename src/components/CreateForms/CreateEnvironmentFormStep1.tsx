@@ -23,6 +23,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import CreateRobotFormAdvancedSettings from "../CreateRobotFormAdvancedSettings/CreateRobotFormAdvancedSettings";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -130,6 +131,7 @@ export default function CreateEnvironmentFormStep1({
 
   function handleCreateApplicationWithoutWorkspaces() {
     formik.setSubmitting(true);
+    console.log("robotdata", robotData);
     dispatch(
       createEnvironment({
         organizationId: selectedState?.organization?.organizationId!,
@@ -147,6 +149,8 @@ export default function CreateEnvironmentFormStep1({
         devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
         devspaceDesktop: robotData?.step1?.devspace?.desktop,
         devspaceVersion: robotData?.step1?.devspace?.version,
+        permittedDirectories: robotData?.step1?.permittedDirectories,
+        persistentDirectories: robotData?.step1?.persistentDirectories,
         workspaces: [
           {
             name: "ws1",
@@ -160,6 +164,22 @@ export default function CreateEnvironmentFormStep1({
             ],
           },
         ],
+        ideCustomPorts:
+          formik.values.ideCustomPorts
+            ?.map(
+              (port: { name: string; port: number; backendPort: number }) => {
+                return `${port.name}-${port.backendPort}:${port.port}`;
+              },
+            )
+            ?.join("/") || "",
+        vdiCustomPorts:
+          formik.values.vdiCustomPorts
+            ?.map(
+              (port: { name: string; port: number; backendPort: number }) => {
+                return `${port.name}-${port.backendPort}:${port.port}`;
+              },
+            )
+            ?.join("/") || "",
       }),
     ).then(async () => {
       setSidebarState((prevState: any) => {
@@ -258,6 +278,8 @@ export default function CreateEnvironmentFormStep1({
                 />
               </div>
             </div>
+
+            <CreateRobotFormAdvancedSettings formik={formik} />
 
             {!url.robotName && (
               <div className="mt-10 flex gap-2 ">

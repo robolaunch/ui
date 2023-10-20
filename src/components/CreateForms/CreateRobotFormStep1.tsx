@@ -11,12 +11,14 @@ import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import AdrinNetworkTypes from "../AdrinNetworkTypes/AdrinNetworkTypes";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
+import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
+import TourGuide from "../TourGuide/TourGuide";
 import InputText from "../InputText/InputText";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
@@ -25,8 +27,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import TourGuide from "../TourGuide/TourGuide";
-import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -57,7 +57,7 @@ export default function CreateRobotFormStep1({
         instanceId: selectedState?.instance?.instanceId,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName || url?.robotName,
+        robotName: robotData?.step1?.robotName || url?.robotName!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -111,6 +111,7 @@ export default function CreateRobotFormStep1({
             storageAmount: formik.values?.robotStorage,
             gpuEnabledForCloudInstance:
               formik.values?.gpuEnabledForCloudInstance,
+
             workspaces: responseRobot?.robotWorkspaces,
           }),
         );
@@ -337,6 +338,8 @@ export default function CreateRobotFormStep1({
               )}
               {/* Development Mode */}
             </div>
+
+            {/* <AdvancedSettings /> */}
 
             {/* Buttons */}
             <div className="mt-10 flex gap-2 ">

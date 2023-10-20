@@ -53,6 +53,8 @@ export const createEnvironment = createAsyncThunk(
                   permittedDirectories: values?.permittedDirectories,
                   persistentDirectories: values?.persistentDirectories,
                   robotWorkspaces: values?.workspaces,
+                  ideCustomPorts: values?.ideCustomPorts,
+                  vdiCustomPorts: values?.vdiCustomPorts,
                 },
               ],
             },

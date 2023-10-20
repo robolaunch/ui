@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   IRobotData,
   IRobotWorkspace,
@@ -36,6 +36,10 @@ export default ({ children }: any) => {
         desktop: "",
         version: "",
       },
+      permittedDirectories: "/home/robolaunch",
+      persistentDirectories: "/var:/etc:/opt:/usr",
+      ideCustomPorts: [],
+      vdiCustomPorts: [],
     },
     step2: {
       configureWorkspace: false,
@@ -81,6 +85,10 @@ export default ({ children }: any) => {
   };
 
   const [robotData, setRobotData] = useState<IRobotData>(initialRobotData);
+
+  useEffect(() => {
+    console.log("robotData", robotData);
+  }, [robotData]);
 
   function handleResetRobotForm() {
     setRobotData(initialRobotData);

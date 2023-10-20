@@ -72,13 +72,13 @@ export default ({ children }: any) => {
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
-            organizationsResponse?.payload?.data?.length || 0
+            organizationsResponse?.payload?.data?.length || 0,
           );
 
         if (organizationsResponse?.payload?.data?.length === 1) {
           parameters?.setFirstItemforTrial &&
             parameters?.setFirstItemforTrial(
-              organizationsResponse?.payload?.data[0]
+              organizationsResponse?.payload?.data[0],
             );
         } else {
           parameters?.setFirstItemforTrial &&
@@ -94,7 +94,7 @@ export default ({ children }: any) => {
 
   async function getOrganization(
     values: IgetOrganization,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(getAllOrganizations()).then(
       async (organizationsResponse: any) => {
@@ -103,7 +103,7 @@ export default ({ children }: any) => {
           organizationsResponse?.payload?.data?.find(
             (organization: any) =>
               organization?.organizationName ===
-              `org_${values?.organizationName}`
+              `org_${values?.organizationName}`,
           )
         ) {
           parameters?.isSetState &&
@@ -113,7 +113,7 @@ export default ({ children }: any) => {
                 organization: organizationsResponse?.payload?.data?.find(
                   (organization: any) =>
                     organization?.organizationName ===
-                    `org_${values?.organizationName}`
+                    `org_${values?.organizationName}`,
                 ),
               };
             });
@@ -122,8 +122,8 @@ export default ({ children }: any) => {
               organizationsResponse?.payload?.data?.find(
                 (organization: any) =>
                   organization?.organizationName ===
-                  `org_${values?.organizationName}`
-              )
+                  `org_${values?.organizationName}`,
+              ),
             ));
           parameters?.setPages &&
             setPagesState((prevState: any) => {
@@ -132,7 +132,7 @@ export default ({ children }: any) => {
                 organization: organizationsResponse?.payload?.data?.find(
                   (organization: any) =>
                     organization?.organizationName ===
-                    `org_${values?.organizationName}`
+                    `org_${values?.organizationName}`,
                 ),
               };
             });
@@ -140,18 +140,18 @@ export default ({ children }: any) => {
           parameters?.ifErrorNavigateTo404 && navigateTo404();
           parameters?.setResponse && parameters?.setResponse({});
         }
-      }
+      },
     );
   }
 
   async function getRoboticsClouds(
     values: IgetRoboticsClouds,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
-      })
+      }),
     ).then((responseRoboticsClouds: any) => {
       if (
         Array.isArray(responseRoboticsClouds?.payload?.data) &&
@@ -159,19 +159,19 @@ export default ({ children }: any) => {
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
-            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds || []
+            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.length ||
-              0
+              0,
           );
 
         if (responseRoboticsClouds?.payload?.data?.length === 1) {
           parameters?.setFirstItemforTrial &&
             parameters?.setFirstItemforTrial(
-              responseRoboticsClouds?.payload?.data[0]?.roboticsClouds[0]
+              responseRoboticsClouds?.payload?.data[0]?.roboticsClouds[0],
             );
         } else {
           parameters?.setFirstItemforTrial &&
@@ -187,12 +187,12 @@ export default ({ children }: any) => {
 
   async function getRoboticsCloud(
     values: IgetRoboticsCloud,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(
       getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
-      })
+      }),
     ).then((responseRoboticsClouds: any) => {
       if (
         Array.isArray(responseRoboticsClouds?.payload?.data) &&
@@ -205,7 +205,7 @@ export default ({ children }: any) => {
               roboticsCloud:
                 responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
                   (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName
+                    roboticsCloud?.name === values?.roboticsCloudName,
                 ) || {},
             };
           });
@@ -213,8 +213,8 @@ export default ({ children }: any) => {
           parameters?.setResponse(
             responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
               (roboticsCloud: any) =>
-                roboticsCloud?.name === values?.roboticsCloudName
-            ) || {}
+                roboticsCloud?.name === values?.roboticsCloudName,
+            ) || {},
           );
 
         parameters?.setPages &&
@@ -224,7 +224,7 @@ export default ({ children }: any) => {
               roboticsCloud:
                 responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
                   (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName
+                    roboticsCloud?.name === values?.roboticsCloudName,
                 ) || {},
             };
           });
@@ -239,7 +239,7 @@ export default ({ children }: any) => {
               roboticsCloud:
                 responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
                   (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName
+                    roboticsCloud?.name === values?.roboticsCloudName,
                 ) || {},
             };
           });
@@ -253,7 +253,7 @@ export default ({ children }: any) => {
 
   async function getInstances(
     values: IgetInstances,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getAllInstances({
@@ -261,7 +261,7 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
         details: values?.details,
-      })
+      }),
     ).then((responseInstances: any) => {
       if (
         Array.isArray(responseInstances?.payload?.data) &&
@@ -271,13 +271,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances || []
+              ?.cloudInstances || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances?.length || 0
+              ?.cloudInstances?.length || 0,
           );
 
         if (
@@ -287,7 +287,7 @@ export default ({ children }: any) => {
           parameters?.setFirstItemforTrial &&
             parameters?.setFirstItemforTrial(
               responseInstances?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]
+                ?.cloudInstances[0],
             );
         } else {
           parameters?.setFirstItemforTrial &&
@@ -303,7 +303,7 @@ export default ({ children }: any) => {
 
   async function getPhysicalInstances(
     values: IgetPhysicalInstances,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getAllPhysicalInstances({
@@ -311,16 +311,16 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responsePhysicalInstances: any) => {
       if (
         Array.isArray(responsePhysicalInstances?.payload?.data) &&
         Array.isArray(
-          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds
+          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchPhysicalInstances
@@ -328,13 +328,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchPhysicalInstances || []
+              ?.cloudInstances[0]?.robolaunchPhysicalInstances || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchPhysicalInstances?.length || 0
+              ?.cloudInstances[0]?.robolaunchPhysicalInstances?.length || 0,
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -346,7 +346,7 @@ export default ({ children }: any) => {
 
   async function getInstance(
     values: IgetInstance,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(
       getAllInstances({
@@ -354,7 +354,7 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
         details: values?.details,
-      })
+      }),
     ).then(async (responseInstances: any) => {
       if (
         Array.isArray(responseInstances?.payload?.data) &&
@@ -367,15 +367,15 @@ export default ({ children }: any) => {
               ...prevState,
               instance:
                 responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-                  (instance: any) => instance?.name === values?.instanceName
+                  (instance: any) => instance?.name === values?.instanceName,
                 ) || {},
             };
           }));
         parameters?.setResponse &&
           (await parameters?.setResponse(
             responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-              (instance: any) => instance?.name === values?.instanceName
-            ) || {}
+              (instance: any) => instance?.name === values?.instanceName,
+            ) || {},
           ));
 
         parameters?.setPages &&
@@ -384,7 +384,7 @@ export default ({ children }: any) => {
               ...prevState,
               instance:
                 responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
-                  (instance: any) => instance?.name === values?.instanceName
+                  (instance: any) => instance?.name === values?.instanceName,
                 ) || {},
             };
           }));
@@ -397,7 +397,7 @@ export default ({ children }: any) => {
 
   async function getFleets(
     values: IgetFleets,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getFederatedFleets({
@@ -405,16 +405,16 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responseFederatedFleets: any) => {
       if (
         Array.isArray(responseFederatedFleets?.payload?.data) &&
         Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedFleets
@@ -422,13 +422,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets || []
+              ?.cloudInstances[0]?.robolaunchFederatedFleets || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0
+              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0,
           );
 
         if (parameters?.setFirstItemforTrial) {
@@ -438,7 +438,7 @@ export default ({ children }: any) => {
           ) {
             parameters?.setFirstItemforTrial(
               responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]?.robolaunchFederatedFleets[0]
+                ?.cloudInstances[0]?.robolaunchFederatedFleets[0],
             );
           } else if (
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
@@ -451,7 +451,7 @@ export default ({ children }: any) => {
                 region: values?.region,
                 instanceId: values?.instanceId,
                 robolaunchFederatedFleetsName: "trial-fleet",
-              })
+              }),
             );
             parameters?.setFirstItemforTrial(null);
           } else {
@@ -468,7 +468,7 @@ export default ({ children }: any) => {
 
   async function getFleet(
     values: IgetFleet,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(
       getFederatedFleets({
@@ -476,16 +476,16 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responseFederatedFleets: any) => {
       if (
         Array.isArray(responseFederatedFleets?.payload?.data) &&
         Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedFleets
@@ -496,15 +496,15 @@ export default ({ children }: any) => {
               ...prevState,
               fleet:
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-                  (fleet: any) => fleet?.name === values?.fleetName
+                  (fleet: any) => fleet?.name === values?.fleetName,
                 ) || {},
             };
           });
         parameters?.setResponse &&
           parameters?.setResponse(
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-              (fleet: any) => fleet?.name === values?.fleetName
-            ) || {}
+              (fleet: any) => fleet?.name === values?.fleetName,
+            ) || {},
           );
 
         parameters?.setPages &&
@@ -513,7 +513,7 @@ export default ({ children }: any) => {
               ...prevState,
               fleet:
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-                  (fleet: any) => fleet?.name === values?.fleetName
+                  (fleet: any) => fleet?.name === values?.fleetName,
                 ) || {},
             };
           });
@@ -526,7 +526,7 @@ export default ({ children }: any) => {
 
   async function getNamespaces(
     values: IgetNamespaces,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getNamespacesDispatch({
@@ -534,14 +534,14 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responseNamespaces: any) => {
       if (
         Array.isArray(responseNamespaces?.payload?.data) &&
         Array.isArray(responseNamespaces?.payload?.data[0]?.roboticsClouds) &&
         Array.isArray(
           responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseNamespaces?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchNamespaces
@@ -549,13 +549,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces || []
+              ?.cloudInstances[0]?.robolaunchNamespaces || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces?.length || 0
+              ?.cloudInstances[0]?.robolaunchNamespaces?.length || 0,
           );
 
         if (parameters?.setFirstItemforTrial) {
@@ -565,7 +565,7 @@ export default ({ children }: any) => {
           ) {
             parameters?.setFirstItemforTrial(
               responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]?.robolaunchNamespaces[0]
+                ?.cloudInstances[0]?.robolaunchNamespaces[0],
             );
           } else if (
             responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
@@ -578,7 +578,7 @@ export default ({ children }: any) => {
                 region: values?.region,
                 instanceId: values?.instanceId,
                 robolaunchFederatedFleetsName: "trial-fleet",
-              })
+              }),
             );
             parameters?.setFirstItemforTrial(null);
           } else {
@@ -595,7 +595,7 @@ export default ({ children }: any) => {
 
   async function getNamespace(
     values: IgetNamespace,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(
       getNamespacesDispatch({
@@ -603,16 +603,16 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responseFederatedFleets: any) => {
       if (
         Array.isArray(responseFederatedFleets?.payload?.data) &&
         Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchNamespaces
@@ -623,15 +623,15 @@ export default ({ children }: any) => {
               ...prevState,
               fleet:
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-                  (fleet: any) => fleet?.name === values?.namespaceName
+                  (fleet: any) => fleet?.name === values?.namespaceName,
                 ) || {},
             };
           });
         parameters?.setResponse &&
           parameters?.setResponse(
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-              (fleet: any) => fleet?.name === values?.namespaceName
-            ) || {}
+              (fleet: any) => fleet?.name === values?.namespaceName,
+            ) || {},
           );
 
         parameters?.setPages &&
@@ -640,7 +640,7 @@ export default ({ children }: any) => {
               ...prevState,
               fleet:
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-                  (fleet: any) => fleet?.name === values?.namespaceName
+                  (fleet: any) => fleet?.name === values?.namespaceName,
                 ) || {},
             };
           });
@@ -653,7 +653,7 @@ export default ({ children }: any) => {
 
   async function getPhysicalFleet(
     values: IgetPhysicalFleet,
-    parameters?: IsingleGetParameters
+    parameters?: IsingleGetParameters,
   ) {
     await dispatch(
       getFederatedFleets({
@@ -661,16 +661,16 @@ export default ({ children }: any) => {
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
         region: values?.region,
-      })
+      }),
     ).then((responseFederatedFleets: any) => {
       if (
         Array.isArray(responseFederatedFleets?.payload?.data) &&
         Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds
+          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         //Change robolaunchFederatedFleets object
         responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
@@ -683,7 +683,7 @@ export default ({ children }: any) => {
               fleet:
                 //Change robolaunchFederatedFleets object
                 responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-                  (fleet: any) => fleet?.fleetName === values?.fleetName
+                  (fleet: any) => fleet?.fleetName === values?.fleetName,
                 ) || {},
             };
           });
@@ -691,8 +691,8 @@ export default ({ children }: any) => {
           parameters?.setResponse(
             //Change robolaunchFederatedFleets object
             responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-              (fleet: any) => fleet?.fleetName === values?.fleetName
-            ) || {}
+              (fleet: any) => fleet?.fleetName === values?.fleetName,
+            ) || {},
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -703,7 +703,7 @@ export default ({ children }: any) => {
 
   async function getRobots(
     values: IgetRobots,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getRobotsDispatch({
@@ -712,13 +712,13 @@ export default ({ children }: any) => {
         instanceId: values?.instanceId,
         region: values?.region,
         fleetName: values?.fleetName,
-      })
+      }),
     ).then((responseRobots: any) => {
       if (
         Array.isArray(responseRobots?.payload?.data) &&
         Array.isArray(responseRobots?.payload?.data[0]?.roboticsClouds) &&
         Array.isArray(
-          responseRobots?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+          responseRobots?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances,
         ) &&
         responseRobots?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
           ?.robolaunchFederatedRobots
@@ -726,13 +726,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseRobots?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots || []
+              ?.cloudInstances[0]?.robolaunchFederatedRobots || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseRobots?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots?.length || 0
+              ?.cloudInstances[0]?.robolaunchFederatedRobots?.length || 0,
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -744,7 +744,7 @@ export default ({ children }: any) => {
 
   async function getRobot(
     values: IgetRobot,
-    parameters?: IsingleGetRobotParameters
+    parameters?: IsingleGetRobotParameters,
   ) {
     await dispatch(
       getRobotDispatch({
@@ -754,16 +754,16 @@ export default ({ children }: any) => {
         region: values?.region,
         fleetName: values?.fleetName,
         robotName: values?.robotName,
-      })
+      }),
     ).then((responseFederatedRobot: any) => {
       if (
         Array.isArray(responseFederatedRobot?.payload?.data) &&
         Array.isArray(
-          responseFederatedRobot?.payload?.data[0]?.roboticsClouds
+          responseFederatedRobot?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseFederatedRobot?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots
@@ -832,8 +832,8 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.find(
-              (robot: any) => robot?.name === values?.robotName
-            ) || {}
+              (robot: any) => robot?.name === values?.robotName,
+            ) || {},
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -844,7 +844,7 @@ export default ({ children }: any) => {
 
   async function getBuildManager(
     values: IgetBuildManager,
-    parameters?: IsingleGetBuildParameters
+    parameters?: IsingleGetBuildParameters,
   ) {
     await dispatch(
       getBuildManagerDispatch({
@@ -854,20 +854,20 @@ export default ({ children }: any) => {
         region: values?.region,
         fleetName: values?.fleetName,
         robotName: values?.robotName,
-      })
+      }),
     ).then((responseRobotBuildManager: any) => {
       if (
         Array.isArray(responseRobotBuildManager?.payload?.data) &&
         Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds
+          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds,
         ) &&
         Array.isArray(
           responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         Array.isArray(
           responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots
+            ?.cloudInstances[0]?.robolaunchFederatedRobots,
         ) &&
         responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
@@ -879,7 +879,7 @@ export default ({ children }: any) => {
               step3: {
                 buildManagerName:
                   responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.buildManagerName?.split(
-                    "-"
+                    "-",
                   )[0],
                 robotBuildSteps:
                   responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
@@ -892,7 +892,7 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots[0] || {}
+              ?.cloudInstances[0]?.robolaunchFederatedRobots[0] || {},
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -913,7 +913,7 @@ export default ({ children }: any) => {
 
   async function getLaunchManagers(
     values: IgetLaunchManagers,
-    parameters?: ImultipleGetLaunchParameters
+    parameters?: ImultipleGetLaunchParameters,
   ) {
     await dispatch(
       getLaunchManagerDispatch({
@@ -923,7 +923,7 @@ export default ({ children }: any) => {
         region: values?.region,
         fleetName: values?.fleetName,
         robotName: values?.robotName,
-      })
+      }),
     ).then((responseRobotLaunchManagers: any) => {
       if (
         responseRobotLaunchManagers?.payload?.data?.[0]?.roboticsClouds?.[0]
@@ -944,11 +944,11 @@ export default ({ children }: any) => {
                         entryPointType: "custom",
                         entryPointCmd: launchStep?.entryPointCmd,
                         instancesName: launchStep?.robotClusters?.map(
-                          (instance: any) => instance?.name
+                          (instance: any) => instance?.name,
                         ),
                         robotLmEnvs: launchStep?.robotLmEnvs,
                       };
-                    }
+                    },
                   ),
               },
             };
@@ -958,7 +958,7 @@ export default ({ children }: any) => {
           parameters?.setResponse(
             responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
               ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-              ?.robotLaunchSteps || []
+              ?.robotLaunchSteps || [],
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -978,7 +978,7 @@ export default ({ children }: any) => {
 
   async function getEnvironments(
     values: IgetEnvironments,
-    parameters?: ImultipleGetParameters
+    parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
       getEnvironmentsDispatch({
@@ -987,14 +987,14 @@ export default ({ children }: any) => {
         region: values?.region,
         instanceId: values?.instanceId,
         fleetName: values?.fleetName,
-      })
+      }),
     ).then((responseEnvironments: any) => {
       if (
         Array.isArray(responseEnvironments?.payload?.data) &&
         Array.isArray(responseEnvironments?.payload?.data[0]?.roboticsClouds) &&
         Array.isArray(
           responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
           ?.cloudInstances[0]?.environments
@@ -1002,13 +1002,13 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.environments || []
+              ?.cloudInstances[0]?.environments || [],
           );
 
         parameters?.setItemCount &&
           parameters?.setItemCount(
             responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.environments?.length || 0
+              ?.cloudInstances[0]?.environments?.length || 0,
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
@@ -1020,7 +1020,7 @@ export default ({ children }: any) => {
 
   async function getEnvironment(
     values: IgetEnvironmentRequest,
-    parameters?: IsingleGetEnviromentParameters
+    parameters?: IsingleGetEnviromentParameters,
   ) {
     await dispatch(
       getEnvironmentDispatch({
@@ -1030,14 +1030,14 @@ export default ({ children }: any) => {
         instanceId: values?.instanceId,
         fleetName: values?.fleetName,
         environmentName: values?.environmentName,
-      })
+      }),
     ).then((responseEnvironment: any) => {
       if (
         Array.isArray(responseEnvironment?.payload?.data) &&
         Array.isArray(responseEnvironment?.payload?.data[0]?.roboticsClouds) &&
         Array.isArray(
           responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances
+            ?.cloudInstances,
         ) &&
         responseEnvironment?.payload?.data[0].roboticsClouds[0]
           ?.cloudInstances[0]?.environments
@@ -1094,6 +1094,33 @@ export default ({ children }: any) => {
                 devspace:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.devspace,
+                permittedDirectories:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.permittedDirectories,
+                persistentDirectories:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.persistentDirectories,
+
+                ideCustomPorts:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
+                    .split("/")
+                    .map((item: string) => {
+                      return {
+                        name: item.split("-")[0],
+                        port: item.split("-")[1].split(":")[1],
+                        backendPort: item.split("-")[1].split(":")[0],
+                      };
+                    }),
+                vdiCustomPorts:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
+                    .split("/")
+                    .map((item: string) => {
+                      return {
+                        name: item.split("-")[0],
+                        port: item.split("-")[1].split(":")[1],
+                        backendPort: item.split("-")[1].split(":")[0],
+                      };
+                    }),
               },
               step2: {
                 workspaces:
@@ -1106,8 +1133,8 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments?.find(
-              (robot: any) => robot?.name === values?.environmentName
-            ) || {}
+              (robot: any) => robot?.name === values?.environmentName,
+            ) || {},
           );
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
