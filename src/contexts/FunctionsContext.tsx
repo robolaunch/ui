@@ -819,6 +819,14 @@ export default ({ children }: any) => {
                     ? true
                     : false,
                 isDevelopmentMode: false,
+                vdiPodName:
+                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                    ?.vdiPodName,
+                idePodName:
+                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                    ?.idePodName,
               },
               step2: {
                 workspaces:

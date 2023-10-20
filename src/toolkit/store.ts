@@ -15,6 +15,18 @@ import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
 import PortReducer from "./PortSlice";
+import ServiceReducer from "./ServiceSlice";
+
+const persistConfigService = {
+  key: "service",
+  version: 1,
+  storage,
+};
+
+const persistedReducerService = persistReducer<any, any>(
+  persistConfigService,
+  ServiceReducer,
+);
 
 const persistConfigPort = {
   key: "port",
@@ -166,6 +178,7 @@ const store = configureStore({
     guide: persistedReducerGuide,
     barcode: persistedReducerBarcode,
     port: persistedReducerPort,
+    service: persistedReducerService,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

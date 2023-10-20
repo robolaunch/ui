@@ -4,6 +4,7 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
+import RestartService from "../RestartService/RestartService";
 
 export default function CodeEditor(): ReactElement {
   const [ideKey, setIdeKey] = useState<number>(0);
@@ -97,6 +98,11 @@ export default function CodeEditor(): ReactElement {
               }
             }}
           />
+
+          <div className="absolute bottom-12 right-3">
+            <RestartService type="ide" />
+          </div>
+
           {handleFullScreen.active ? (
             <button
               className="absolute bottom-3 right-3"

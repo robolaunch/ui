@@ -753,6 +753,22 @@ video {
   top: 3.6rem;
 }
 
+.bottom-6 {
+  bottom: 1.5rem;
+}
+
+.right-6 {
+  right: 1.5rem;
+}
+
+.bottom-12 {
+  bottom: 3rem;
+}
+
+.bottom-16 {
+  bottom: 4rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -3389,6 +3405,16 @@ td {
 .hover\:text-layer-secondary-800:hover {
   --tw-text-opacity: 1;
   color: rgb(6 85 134 / var(--tw-text-opacity));
+}
+
+.hover\:text-yellow-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(202 138 4 / var(--tw-text-opacity));
+}
+
+.hover\:text-yellow-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(161 98 7 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {

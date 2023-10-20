@@ -166,6 +166,8 @@ export interface IRobotStep1 {
   persistentDirectories: string;
   ideCustomPorts: any[];
   vdiCustomPorts: any[];
+  idePodName: string;
+  vdiPodName: string;
 }
 
 export interface IRobotWorkspaces {

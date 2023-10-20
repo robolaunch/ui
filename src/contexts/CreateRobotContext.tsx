@@ -40,6 +40,8 @@ export default ({ children }: any) => {
       persistentDirectories: "/var:/etc:/opt:/usr",
       ideCustomPorts: [],
       vdiCustomPorts: [],
+      idePodName: "",
+      vdiPodName: "",
     },
     step2: {
       configureWorkspace: false,

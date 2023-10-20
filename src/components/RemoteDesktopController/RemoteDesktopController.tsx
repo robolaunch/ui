@@ -6,6 +6,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { TfiReload } from "react-icons/tfi";
 import useVDI from "../../hooks/useVDI";
 import Button from "../Button/Button";
+import RestartService from "../RestartService/RestartService";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -49,9 +50,9 @@ export default function RemoteDesktopController({
   }
 
   return (
-    <div className="absolute flex flex-col items-center bottom-0 ">
+    <div className="absolute bottom-0 flex flex-col items-center ">
       <button
-        className="bg-layer-light-50 rounded-t-lg px-1 border-t-2 border-x-2 border-layer-light-200"
+        className="rounded-t-lg border-x-2 border-t-2 border-layer-light-200 bg-layer-light-50 px-1"
         onClick={() => handleIsControllerOpen()}
       >
         {isControllerOpen ? (
@@ -61,23 +62,25 @@ export default function RemoteDesktopController({
         )}
       </button>
       {isControllerOpen && (
-        <div className="w-full flex items-center justify-center rounded-t-lg gap-6 px-4 py-2 bg-layer-light-50 ">
+        <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-layer-light-50 px-4 py-2 ">
           {handleFullScreen.active ? (
             <button onClick={handleFullScreen.exit}>
               <BsFullscreenExit
                 size={24}
-                className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
               />
             </button>
           ) : (
             <button onClick={handleFullScreen.enter}>
               <BsFullscreen
                 size={24}
-                className="text-layer-light-700 hover:scale-90 hover:text-layer-primary-400 transition-all duration-200"
+                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
               />
             </button>
           )}
           <TfiReload size={20} onClick={() => setScreenResolution()} />
+
+          <RestartService type="vdi" />
 
           <VolumeControl
             isMuted={remoteDesktopReducer?.isMuted}
@@ -101,7 +104,7 @@ export default function RemoteDesktopController({
               return "Take Control";
             })()}
             onClick={() => handleControl()}
-            className="text-xs h-10 !w-40"
+            className="h-10 !w-40 text-xs"
           />
         </div>
       )}

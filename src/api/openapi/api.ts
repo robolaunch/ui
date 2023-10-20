@@ -830,6 +830,12 @@ export interface Environment {
      * @memberof Environment
      */
     'idePodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'podName'?: string;
 }
 /**
  * 
@@ -2092,6 +2098,30 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'vdiCustomPorts'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'vdiPodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'idePodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'bridgePodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'podName'?: string;
 }
 /**
  * 
