@@ -58,10 +58,9 @@ export default function InstanceActionCells({
             )
           }
           disabled={
-            envOnPremiseRobot ||
-            (data?.state === "running" || data?.state === "stopped"
+            data?.state === "running" || data?.state === "stopped"
               ? false
-              : true)
+              : true
           }
           onClick={
             data?.state === "running" || data?.state === "stopped"
