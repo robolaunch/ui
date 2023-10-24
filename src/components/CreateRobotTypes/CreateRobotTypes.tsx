@@ -53,7 +53,10 @@ export default function CreateRobotTypes({
 
   return (
     <Fragment>
-      <div data-tut="create-robot-step1-type" className="flex flex-col gap-2">
+      <div
+        data-tut="create-robot-step1-type"
+        className="flex flex-col gap-2 pb-2"
+      >
         <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Robot Type:
           <InfoTip content="Select the type of robot you want to create." />
@@ -77,7 +80,7 @@ export default function CreateRobotTypes({
                 "You can't change robot type because this robot is created before."
               }
               key={index}
-              className={`relative flex w-full items-center justify-center gap-1 rounded border-2  p-4 transition-all duration-300 ${
+              className={`relative flex w-full items-center justify-center gap-1 rounded border-2 p-3 transition-all duration-300 ${
                 formik.values?.isVirtualRobot === robotType?.isVirtualRobot
                   ? robotType?.disabled
                     ? "border-layer-primary-300"

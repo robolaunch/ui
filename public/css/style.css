@@ -3378,11 +3378,6 @@ td {
   color: rgb(6 85 134 / var(--tw-text-opacity));
 }
 
-.hover\:text-yellow-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(161 98 7 / var(--tw-text-opacity));
-}
-
 .hover\:underline:hover {
   text-decoration-line: underline;
 }

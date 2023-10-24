@@ -1111,7 +1111,7 @@ export default ({ children }: any) => {
 
                 ideCustomPorts:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
-                    .split("/")
+                    ?.split("/")
                     .map((item: string) => {
                       return {
                         name: item.split("-")[0],
@@ -1121,7 +1121,7 @@ export default ({ children }: any) => {
                     }),
                 vdiCustomPorts:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
-                    .split("/")
+                    ?.split("/")
                     .map((item: string) => {
                       return {
                         name: item.split("-")[0],
