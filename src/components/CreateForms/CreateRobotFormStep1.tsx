@@ -1,15 +1,11 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import {
-  envAdrinIntegration,
-  envOnPremiseRobot,
-} from "../../helpers/envProvider";
+import { envOnPremiseRobot } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
-import AdrinNetworkTypes from "../AdrinNetworkTypes/AdrinNetworkTypes";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -191,24 +187,10 @@ export default function CreateRobotFormStep1({
             <Seperator />
 
             {/* RobotType */}
-            {!envAdrinIntegration && (
-              <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
-            )}
+            <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
             {/* RobotType */}
 
             <Seperator />
-
-            {/* Adrin Network Types */}
-            {envAdrinIntegration && (
-              <Fragment>
-                <AdrinNetworkTypes
-                  formik={formik}
-                  isImportRobot={isImportRobot}
-                />
-                <Seperator />
-              </Fragment>
-            )}
-            {/* Adrin Network Types */}
 
             {/* ROS Distro */}
             <CreateRobotRosDistrobutions
