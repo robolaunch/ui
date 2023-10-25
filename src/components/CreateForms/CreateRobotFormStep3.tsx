@@ -6,6 +6,7 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
+import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
@@ -13,13 +14,12 @@ import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
 import InputText from "../InputText/InputText";
+import TourGuide from "../TourGuide/TourGuide";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import TourGuide from "../TourGuide/TourGuide";
-import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;

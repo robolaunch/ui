@@ -208,6 +208,8 @@ export interface IuseFunctions {
     values: IgetEnvironmentRequest,
     parameters?: IsingleGetEnviromentParameters,
   ) => void;
+  addPhysicalInstanceToFleet: () => void;
+  updateRobot: () => void;
   getIP: () => void;
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,

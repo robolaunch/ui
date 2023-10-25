@@ -3,25 +3,25 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import CreateFormWorkspaces from "../CreateFormWorkspaces/CreateFormWorkspaces";
+import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
+import TourGuide from "../TourGuide/TourGuide";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { toast } from "sonner";
-import TourGuide from "../TourGuide/TourGuide";
-import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -31,14 +31,14 @@ export default function CreateRobotFormStep2({
   isImportRobot,
 }: ICreateRobotFormStep2): ReactElement {
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useMain();
   const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
-  const dispatch = useAppDispatch();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
   const { getRobot, getFleet, getEnvironment, getNamespace } = useFunctions();
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const dispatch = useAppDispatch();
   const url = useParams();
 
   const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
@@ -286,23 +286,11 @@ export default function CreateRobotFormStep2({
           data-tut="create-robot-step2-workspaces"
           className="flex flex-col gap-2"
         >
-          {robotData?.step2?.workspaces?.map(
-            (workspace: any, workspaceIndex: number) => {
-              return (
-                <CreateRobotFormWorkspaceItem
-                  key={workspaceIndex}
-                  formik={formik}
-                  workspace={workspace}
-                  workspaceIndex={workspaceIndex}
-                  workspaceState={responseRobot?.robotClusters?.map(
-                    (cluster: any) => cluster.robotStatus,
-                  )}
-                  disabled={formik.isSubmitting || isImportRobot}
-                  isImportRobot={isImportRobot}
-                />
-              );
-            },
-          )}
+          <CreateFormWorkspaces
+            formik={formik}
+            responseRobot={responseRobot}
+            isImportRobot={isImportRobot}
+          />
         </div>
 
         <div data-tut="create-robot-step2-workspace-add-button">

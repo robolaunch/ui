@@ -11,12 +11,14 @@ import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnv
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
+import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputSelect from "../InputSelect/InputSelect";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
+import TourGuide from "../TourGuide/TourGuide";
 import InputText from "../InputText/InputText";
 import { Editor } from "@monaco-editor/react";
 import { useParams } from "react-router-dom";
@@ -25,8 +27,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import TourGuide from "../TourGuide/TourGuide";
-import { getGuideItem } from "../../functions/handleGuide";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -322,9 +322,6 @@ export default function CreateRobotFormStep4({
                     ],
               });
             }}
-            isVisiblePhysicalInstanceCheckbox={
-              robotData?.step1?.physicalInstanceName
-            }
             error={
               // @ts-ignore
               formik?.errors?.instancesName

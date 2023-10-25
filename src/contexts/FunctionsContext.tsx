@@ -27,6 +27,7 @@ import {
   getRobots as getRobotsDispatch,
   getBuildManagers as getBuildManagerDispatch,
   getLaunchManagers as getLaunchManagerDispatch,
+  createRobot as createRobotDispatch,
 } from "../toolkit/RobotSlice";
 import {
   getFederatedFleets,
@@ -42,7 +43,10 @@ import {
   getEnvironment as getEnvironmentDispatch,
 } from "../toolkit/EnvironmentSlice";
 import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
-import { getPhysicalInstances as getAllPhysicalInstances } from "../toolkit/InstanceSlice";
+import {
+  getPhysicalInstances as getAllPhysicalInstances,
+  addPhysicalInstanceToFleet as addPhysicalInstanceToFleetDispatch,
+} from "../toolkit/InstanceSlice";
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
@@ -59,10 +63,15 @@ export const FunctionsContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
-  const { setTrialState, setSelectedState, pagesState, setPagesState } =
-    useMain();
+  const {
+    setTrialState,
+    selectedState,
+    setSelectedState,
+    pagesState,
+    setPagesState,
+  } = useMain();
   const navigate = useNavigate();
-  const { setRobotData } = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
     await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
@@ -1151,6 +1160,43 @@ export default ({ children }: any) => {
     });
   }
 
+  async function addPhysicalInstanceToFleet() {
+    await dispatch(
+      addPhysicalInstanceToFleetDispatch({
+        organizationId: selectedState?.organization?.organizationId,
+        roboticsCloudName: selectedState?.roboticsCloud?.name,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.roboticsCloud?.region,
+        robolaunchFederatedFleetsName: selectedState?.fleet?.name,
+        robolaunchPhysicalInstancesName: robotData.step1.physicalInstanceName,
+      }),
+    );
+  }
+
+  async function updateRobot() {
+    await dispatch(
+      createRobotDispatch({
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceId: selectedState?.instance?.instanceId,
+        region: selectedState?.roboticsCloud?.region!,
+        fleetName: selectedState?.fleet?.name,
+        robotName: robotData.step1.robotName,
+        physicalInstanceName: robotData?.step1?.isVirtualRobot
+          ? undefined
+          : robotData?.step1?.physicalInstanceName,
+        distributions: robotData.step1.rosDistros,
+        bridgeEnabled: robotData.step1.isEnabledROS2Bridge,
+        vdiEnabled: robotData.step1.remoteDesktop.isEnabled,
+        vdiSessionCount: robotData.step1.remoteDesktop.sessionCount,
+        ideEnabled: robotData.step1.isEnabledIde,
+        storageAmount: robotData.step1.robotStorage,
+        gpuEnabledForCloudInstance: robotData.step1.gpuEnabledForCloudInstance,
+        workspaces: robotData.step2.workspaces,
+      }),
+    );
+  }
+
   async function getIP() {
     await dispatch(getCurrentIP()).then((response: any) => {
       setTrialState((prevState: any) => {
@@ -1188,6 +1234,8 @@ export default ({ children }: any) => {
         getLaunchManagers,
         getEnvironments,
         getEnvironment,
+        addPhysicalInstanceToFleet,
+        updateRobot,
         getIP,
       }}
     >

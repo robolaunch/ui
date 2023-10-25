@@ -2,17 +2,15 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
-import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import { getGuideItem } from "../../functions/handleGuide";
+import FormInputText from "../FormInputText/FormInputText";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
 import TourGuide from "../TourGuide/TourGuide";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
@@ -21,7 +19,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import FormInputText from "../FormInputText/FormInputText";
 
 interface ICreateRobotFormStep1 {
   isImportRobot?: boolean;
@@ -33,8 +30,8 @@ export default function CreateRobotFormStep1({
   const { robotData, setRobotData } = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const dispatch = useAppDispatch();
-  const { getRobot, getEnvironment } = useFunctions();
+  const { getRobot, getEnvironment, updateRobot, addPhysicalInstanceToFleet } =
+    useFunctions();
   const url = useParams();
 
   useEffect(() => {
@@ -87,29 +84,7 @@ export default function CreateRobotFormStep1({
       formik.setSubmitting(true);
 
       if (isImportRobot) {
-        await dispatch(
-          createRobot({
-            organizationId: selectedState?.organization?.organizationId!,
-            roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region!,
-            fleetName: selectedState?.fleet?.name,
-            robotName: formik.values?.robotName,
-            physicalInstanceName: robotData?.step1?.isVirtualRobot
-              ? undefined
-              : robotData?.step1?.physicalInstanceName,
-            distributions: formik.values?.rosDistros,
-            bridgeEnabled: formik.values?.isEnabledROS2Bridge,
-            vdiEnabled: formik.values?.remoteDesktop?.isEnabled,
-            vdiSessionCount: formik.values?.remoteDesktop?.sessionCount,
-            ideEnabled: formik.values?.isEnabledIde,
-            storageAmount: formik.values?.robotStorage,
-            gpuEnabledForCloudInstance:
-              formik.values?.gpuEnabledForCloudInstance,
-            workspaces: responseRobot?.robotWorkspaces,
-          }),
-        );
-
+        updateRobot();
         toast.success(
           "Robot updated successfully. Redirecting to fleet page...",
         );
@@ -120,18 +95,11 @@ export default function CreateRobotFormStep1({
             ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
             ?.robotName}}`;
         }, 2000);
-      } else if (!formik.values?.isVirtualRobot) {
-        await dispatch(
-          addPhysicalInstanceToFleet({
-            organizationId: selectedState?.organization?.organizationId,
-            roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region,
-            robolaunchPhysicalInstancesName:
-              formik.values?.physicalInstanceName,
-            robolaunchFederatedFleetsName: selectedState?.fleet?.name,
-          }),
-        );
+        return;
+      }
+
+      if (!formik.values?.isVirtualRobot) {
+        addPhysicalInstanceToFleet();
       }
 
       formik.setSubmitting(false);
