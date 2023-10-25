@@ -79,7 +79,7 @@ export default ({ children }: any) => {
           (prevState: ISidebarState): ISidebarState => ({
             ...prevState,
             page: "robot",
-          })
+          }),
         );
         break;
       case "buildsmanager":
@@ -87,7 +87,7 @@ export default ({ children }: any) => {
           (prevState: ISidebarState): ISidebarState => ({
             ...prevState,
             page: "workspacesmanager",
-          })
+          }),
         );
     }
   }
@@ -99,7 +99,7 @@ export default ({ children }: any) => {
           (prevState: ISidebarState): ISidebarState => ({
             ...prevState,
             page: "workspacesmanager",
-          })
+          }),
         );
         break;
       case "workspacesmanager":
@@ -107,7 +107,7 @@ export default ({ children }: any) => {
           (prevState: ISidebarState): ISidebarState => ({
             ...prevState,
             page: "buildsmanager",
-          })
+          }),
         );
         break;
       case "buildsmanager":
@@ -115,7 +115,7 @@ export default ({ children }: any) => {
           (prevState: ISidebarState): ISidebarState => ({
             ...prevState,
             page: "launchsmanager",
-          })
+          }),
         );
         break;
       case "launchsmanager":

@@ -1343,6 +1343,30 @@ video {
   width: max-content;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-52 {
+  width: 13rem;
+}
+
+.w-48 {
+  width: 12rem;
+}
+
+.w-44 {
+  width: 11rem;
+}
+
+.w-56 {
+  width: 14rem;
+}
+
+.w-60 {
+  width: 15rem;
+}
+
 .min-w-\[12rem\] {
   min-width: 12rem;
 }

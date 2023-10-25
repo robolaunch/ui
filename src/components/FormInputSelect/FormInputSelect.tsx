@@ -1,47 +1,44 @@
-import React, { ReactElement } from "react";
+import React, { Fragment, ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
-import InputText from "../InputText/InputText";
+import InputSelect from "../InputSelect/InputSelect";
 import InputError from "../InputError/InputError";
 
-interface IFormInputText {
+interface IFormInputSelect {
   dataTut?: string;
   labelName: string;
   labelInfoTip: string;
   inputProps?: any;
+  options: ReactElement;
   disabled?: boolean;
-  inputHoverText?: string;
   inputError: any;
   inputTouched: any;
   classNameInput?: string;
   classNameContainer?: string;
 }
 
-export default function FormInputText({
+export default function FormInputSelect({
   dataTut,
   labelName,
   labelInfoTip,
   inputProps,
+  options,
   disabled,
-  inputHoverText,
   inputError,
   inputTouched,
   classNameInput,
   classNameContainer,
-}: IFormInputText): ReactElement {
+}: IFormInputSelect): ReactElement {
   return (
     <div className={classNameContainer} data-tut={dataTut}>
       <div
         className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700 ${classNameInput}`}
       >
         {labelName}
-        <InfoTip content={labelInfoTip} />
+        <InfoTip content={labelInfoTip} rightTip />
       </div>
-      <InputText
-        {...inputProps}
-        className="!text-sm"
-        disabled={disabled}
-        inputHoverText={inputHoverText}
-      />
+      <InputSelect {...inputProps} disabled={disabled}>
+        <Fragment>{options}</Fragment>
+      </InputSelect>
       <InputError error={inputError} touched={inputTouched} />
     </div>
   );
