@@ -209,7 +209,10 @@ export interface IuseFunctions {
     parameters?: IsingleGetEnviromentParameters,
   ) => void;
   addPhysicalInstanceToFleet: () => void;
+  createRobot: () => void;
   updateRobot: () => void;
+  createEnvironment: () => void;
+  createBuildManager: () => void;
   getIP: () => void;
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,

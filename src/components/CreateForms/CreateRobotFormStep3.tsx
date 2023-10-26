@@ -5,12 +5,10 @@ import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRo
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
-import { createBuildManager } from "../../toolkit/RobotSlice";
 import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
 import InputText from "../InputText/InputText";
@@ -30,12 +28,11 @@ export default function CreateRobotFormStep3({
 }: ICreateRobotFormStep3): ReactElement {
   const { robotData, setRobotData, handleAddStepToBuildStep } =
     useCreateRobot();
-  const dispatch = useAppDispatch();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useMain();
-  const { getRobot, getBuildManager } = useFunctions();
+  const { getRobot, createBuildManager, getBuildManager } = useFunctions();
 
   useEffect(
     () => {
@@ -141,31 +138,19 @@ export default function CreateRobotFormStep3({
     }),
 
     initialValues: robotData?.step3,
-    onSubmit: async (values: any) => {
-      formik.setSubmitting(true);
-      await dispatch(
-        createBuildManager({
-          organizationId: selectedState?.organization?.organizationId!,
-          roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.instance?.region,
-          robotName: robotData?.step1?.robotName,
-          fleetName: selectedState?.fleet?.name,
-          physicalInstanceName: robotData?.step1?.physicalInstanceName,
-          buildManagerName: values?.buildManagerName,
-          robotBuildSteps: values?.robotBuildSteps,
-        }),
-      ).then(() => {
-        if (isImportRobot) {
-          toast.success("Robot updated successfully. Redirecting...");
-          formik.setSubmitting(true);
-          setTimeout(() => {
-            window.location.reload();
-          }, 4000);
-        } else {
-          handleCreateRobotNextStep();
-        }
-      });
+    onSubmit: async () => {
+      await formik.setSubmitting(true);
+      await createBuildManager();
+
+      if (isImportRobot) {
+        await toast.success("Robot updated successfully. Redirecting...");
+        await formik.setSubmitting(true);
+        await setTimeout(async () => {
+          await window.location.reload();
+        }, 4000);
+      } else {
+        await handleCreateRobotNextStep();
+      }
     },
   });
 
