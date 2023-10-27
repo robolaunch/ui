@@ -1,5 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
+import CreateRobotFormAdvancedSettings from "../CreateRobotFormAdvancedSettings/CreateRobotFormAdvancedSettings";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormGpuResource from "../CreateRobotFormGpuResource/CreateRobotFormGpuResource";
@@ -7,7 +8,6 @@ import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoade
 import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
-import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
@@ -15,7 +15,6 @@ import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import Seperator from "../Seperator/Seperator";
-import TourGuide from "../TourGuide/TourGuide";
 import InputText from "../InputText/InputText";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
@@ -23,7 +22,6 @@ import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CreateRobotFormAdvancedSettings from "../CreateRobotFormAdvancedSettings/CreateRobotFormAdvancedSettings";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -196,6 +194,7 @@ export default function CreateEnvironmentFormStep1({
     <Fragment>
       {
         <CreateRobotFormLoader
+          type="step1-app"
           loadingText="Loading..."
           loadingItems={[]}
           isLoading={isImportRobot ? !responseRobot : false}
@@ -336,19 +335,6 @@ export default function CreateEnvironmentFormStep1({
           </form>
         </CreateRobotFormLoader>
       }
-      <TourGuide
-        hiddenButton
-        type="createRobotStep1"
-        tourConfig={[
-          getGuideItem("[data-tut='create-application-step1-name']"),
-          getGuideItem(
-            "[data-tut='create-application-step1-environment-selector']",
-          ),
-          getGuideItem("[data-tut='create-robot-step1-storage']"),
-          getGuideItem("[data-tut='create-environment-vdi-session-count']"),
-          getGuideItem("[data-tut='create-environment-gpu-resource']"),
-        ]}
-      />
     </Fragment>
   );
 }

@@ -1176,7 +1176,7 @@ export default ({ children }: any) => {
   }
 
   async function createRobot() {
-    dispatch(
+    await dispatch(
       createRobotDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
@@ -1226,7 +1226,7 @@ export default ({ children }: any) => {
   }
 
   async function createEnvironment() {
-    dispatch(
+    await dispatch(
       createEnvironmentDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,

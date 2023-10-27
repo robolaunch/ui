@@ -5,19 +5,18 @@ import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRo
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
-import { getGuideItem } from "../../functions/handleGuide";
+import FormInputText from "../FormInputText/FormInputText";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
-import InputText from "../InputText/InputText";
-import TourGuide from "../TourGuide/TourGuide";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { useAppDispatch } from "../../hooks/redux";
+import { createBuildManager } from "../../toolkit/RobotSlice";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -32,7 +31,8 @@ export default function CreateRobotFormStep3({
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useMain();
-  const { getRobot, createBuildManager, getBuildManager } = useFunctions();
+  const { getRobot, getBuildManager } = useFunctions();
+  const dispatch = useAppDispatch();
 
   useEffect(
     () => {
@@ -136,21 +136,32 @@ export default function CreateRobotFormStep3({
         }),
       ),
     }),
-
     initialValues: robotData?.step3,
-    onSubmit: async () => {
-      await formik.setSubmitting(true);
-      await createBuildManager();
-
-      if (isImportRobot) {
-        await toast.success("Robot updated successfully. Redirecting...");
-        await formik.setSubmitting(true);
-        await setTimeout(async () => {
-          await window.location.reload();
-        }, 4000);
-      } else {
-        await handleCreateRobotNextStep();
-      }
+    onSubmit: async (values: any) => {
+      formik.setSubmitting(true);
+      await dispatch(
+        createBuildManager({
+          organizationId: selectedState?.organization?.organizationId!,
+          roboticsCloudName: selectedState?.roboticsCloud?.name!,
+          instanceId: selectedState?.instance?.instanceId,
+          region: selectedState?.instance?.region,
+          robotName: robotData?.step1?.robotName,
+          fleetName: selectedState?.fleet?.name,
+          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          buildManagerName: values?.buildManagerName,
+          robotBuildSteps: values?.robotBuildSteps,
+        }),
+      ).then(() => {
+        if (isImportRobot) {
+          toast.success("Robot updated successfully. Redirecting...");
+          formik.setSubmitting(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 4000);
+        } else {
+          handleCreateRobotNextStep();
+        }
+      });
     },
   });
 
@@ -165,6 +176,7 @@ export default function CreateRobotFormStep3({
   return (
     <Fragment>
       <CreateRobotFormLoader
+        type="build"
         loadingText={
           isImportRobot
             ? "Loading..."
@@ -228,7 +240,6 @@ export default function CreateRobotFormStep3({
                   ? false
                   : true,
               },
-
               {
                 name: "Pulling ROS2 Image",
                 isFinished: !responseRobot
@@ -356,21 +367,16 @@ export default function CreateRobotFormStep3({
             </div>
           ) : (
             <Fragment>
-              <div data-tut="create-robot-step3-name">
-                <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-                  Build Manager Name:
-                  <InfoTip content="Type a new build manager name." />
-                </div>
-                <InputText
-                  {...formik.getFieldProps("buildManagerName")}
-                  className="!text-sm"
-                  disabled={formik?.isSubmitting}
-                />
-                <InputError
-                  error={formik.errors.buildManagerName}
-                  touched={formik.touched.buildManagerName}
-                />
-              </div>
+              <FormInputText
+                dataTut="create-robot-step3-name"
+                labelName="Build Manager Name:"
+                labelInfoTip="Type a new build manager name."
+                inputError={formik.errors.buildManagerName}
+                inputTouched={formik.touched.buildManagerName}
+                disabled={formik?.isSubmitting}
+                inputProps={formik.getFieldProps("buildManagerName")}
+                inputHoverText="Type a new build manager name."
+              />
 
               <div data-tut="create-robot-step3-steps">
                 <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
@@ -451,21 +457,6 @@ export default function CreateRobotFormStep3({
             (robotCluster: any) =>
               robotCluster?.robotStatus !== "EnvironmentReady",
           )?.length
-        ) && (
-          <TourGuide
-            hiddenButton
-            type="createRobotStep3"
-            tourConfig={[
-              getGuideItem("[data-tut='create-robot-step3-name']"),
-              getGuideItem("[data-tut='create-robot-step3-steps']"),
-              getGuideItem("[data-tut='create-robot-step3-build-add-button']"),
-              getGuideItem("[data-tut='create-robot-build-step-name']"),
-              getGuideItem("[data-tut='create-robot-build-step-workspace']"),
-              getGuideItem("[data-tut='create-robot-build-step-code-type']"),
-              getGuideItem("[data-tut='create-robot-build-step-code']"),
-              getGuideItem("[data-tut='create-robot-build-step-scope']"),
-            ]}
-          />
         )}
     </Fragment>
   );

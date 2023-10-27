@@ -4,7 +4,9 @@ import "react-step-progress-bar/styles.css";
 import CreateRobotFormStepbar from "../CreateRobotFormStepbar/CreateRobotFormStepbar";
 import { useParams } from "react-router-dom";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import CreateFormTourSwither from "../CreateFormTourSwither/CreateFormTourSwither";
 interface ICreateRobotFormLoader {
+  type: "step1-robot" | "step1-app" | "workspace" | "build" | "launch";
   isLoading?: boolean;
   loadingItems?: any[];
   loadingText?: string;
@@ -14,6 +16,7 @@ interface ICreateRobotFormLoader {
 }
 
 export default function CreateRobotFormLoader({
+  type,
   isLoading,
   loadingItems,
   loadingText,
@@ -83,6 +86,7 @@ export default function CreateRobotFormLoader({
       ) : (
         children
       )}
+      <CreateFormTourSwither type={type} isLoading={isLoading} />
     </Fragment>
   );
 }

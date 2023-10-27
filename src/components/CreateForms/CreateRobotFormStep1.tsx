@@ -5,13 +5,14 @@ import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRo
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
+import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
-import { getGuideItem } from "../../functions/handleGuide";
 import FormInputText from "../FormInputText/FormInputText";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { createRobot } from "../../toolkit/RobotSlice";
 import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
-import TourGuide from "../TourGuide/TourGuide";
+import { useAppDispatch } from "../../hooks/redux";
 import Seperator from "../Seperator/Seperator";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
@@ -30,9 +31,9 @@ export default function CreateRobotFormStep1({
   const { robotData, setRobotData } = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const { getRobot, getEnvironment, updateRobot, addPhysicalInstanceToFleet } =
-    useFunctions();
+  const { getRobot, getEnvironment } = useFunctions();
   const url = useParams();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
@@ -84,7 +85,29 @@ export default function CreateRobotFormStep1({
       formik.setSubmitting(true);
 
       if (isImportRobot) {
-        updateRobot();
+        await dispatch(
+          createRobot({
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.roboticsCloud?.region!,
+            robotName: robotData?.step1?.robotName,
+            fleetName: selectedState?.fleet?.name,
+            physicalInstanceName: robotData?.step1?.isVirtualRobot
+              ? undefined
+              : robotData?.step1?.physicalInstanceName,
+            distributions: robotData?.step1?.rosDistros,
+            bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
+            vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+            ideEnabled: robotData?.step1?.isEnabledIde,
+            storageAmount: robotData?.step1?.robotStorage,
+            gpuEnabledForCloudInstance:
+              robotData?.step1?.gpuEnabledForCloudInstance,
+            workspaces: robotData.step2.workspaces,
+          }),
+        );
+
         toast.success(
           "Robot updated successfully. Redirecting to fleet page...",
         );
@@ -95,11 +118,18 @@ export default function CreateRobotFormStep1({
             ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
             ?.robotName}}`;
         }, 2000);
-        return;
-      }
-
-      if (!formik.values?.isVirtualRobot) {
-        addPhysicalInstanceToFleet();
+      } else if (!formik.values?.isVirtualRobot) {
+        await dispatch(
+          addPhysicalInstanceToFleet({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.roboticsCloud?.region,
+            robolaunchFederatedFleetsName: selectedState?.fleet?.name,
+            robolaunchPhysicalInstancesName:
+              robotData.step1.physicalInstanceName,
+          }),
+        );
       }
 
       formik.setSubmitting(false);
@@ -127,6 +157,7 @@ export default function CreateRobotFormStep1({
     <Fragment>
       {
         <CreateRobotFormLoader
+          type="step1-robot"
           loadingText="Loading..."
           loadingItems={[]}
           isLoading={isImportRobot ? !responseRobot : false}
@@ -316,20 +347,6 @@ export default function CreateRobotFormStep1({
           </form>
         </CreateRobotFormLoader>
       }
-      <TourGuide
-        hiddenButton
-        type="createRobotStep1"
-        tourConfig={[
-          getGuideItem("[data-tut='create-robot-step1-name']"),
-          getGuideItem("[data-tut='create-robot-step1-type']"),
-          getGuideItem("[data-tut='create-robot-step1-ros-distrobutions']"),
-          getGuideItem("[data-tut='create-robot-step1-storage']"),
-          getGuideItem("[data-tut='create-robot-step1-ros2-bridge']"),
-          getGuideItem("[data-tut='create-robot-step1-vdi-session-count']"),
-          getGuideItem("[data-tut='create-robot-step1-gpu-resource']"),
-          getGuideItem("[data-tut='create-robot-step1-development-mode']"),
-        ]}
-      />
     </Fragment>
   );
 }

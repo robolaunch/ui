@@ -11,14 +11,12 @@ import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnv
 import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
-import { getGuideItem } from "../../functions/handleGuide";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import InputSelect from "../InputSelect/InputSelect";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
-import TourGuide from "../TourGuide/TourGuide";
 import InputText from "../InputText/InputText";
 import { Editor } from "@monaco-editor/react";
 import { useParams } from "react-router-dom";
@@ -176,6 +174,7 @@ export default function CreateRobotFormStep4({
   return (
     <Fragment>
       <CreateRobotFormLoader
+        type="launch"
         isLoading={
           !responseBuildManager ||
           responseBuildManager?.robotClusters?.filter(
@@ -381,21 +380,6 @@ export default function CreateRobotFormStep4({
           responseBuildManager?.robotClusters?.filter(
             (item: any) => item?.buildManagerStatus !== "Ready",
           )?.length
-        ) && (
-          <TourGuide
-            hiddenButton
-            type="createRobotStep4"
-            tourConfig={[
-              getGuideItem("[data-tut='create-robot-step4-name']"),
-              getGuideItem("[data-tut='create-robot-step4-workspace']"),
-              getGuideItem("[data-tut='create-robot-step4-code']"),
-              getGuideItem("[data-tut='create-robot-build-step-scope']"),
-              getGuideItem("[data-tut='create-robot-step4-environments']"),
-              getGuideItem(
-                "[data-tut='create-robot-step4-environments-add-button']",
-              ),
-            ]}
-          />
         )}
     </Fragment>
   );
