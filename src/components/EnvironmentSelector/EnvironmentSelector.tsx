@@ -2,7 +2,6 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { getReadyEnvironments } from "../../toolkit/EnvironmentSlice";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import Seperator from "../Seperator/Seperator";
 import InfoTip from "../InfoTip/InfoTip";
 
 interface IEnvironmentSelector {
@@ -81,8 +80,6 @@ export default function EnvironmentSelector({
         </div>
         <InputError error={formik.errors.domainName} touched={true} />
       </div>
-
-      <Seperator />
 
       {formik.values?.domainName && (
         <div>

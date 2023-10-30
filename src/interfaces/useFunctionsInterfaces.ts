@@ -211,7 +211,10 @@ export interface IuseFunctions {
   addPhysicalInstanceToFleet: () => void;
   createRobot: () => void;
   updateRobot: () => void;
-  createEnvironment: () => void;
+  createEnvironment: (
+    thenFunc: () => void,
+    withoutWorkspaces?: boolean,
+  ) => void;
   createBuildManager: () => void;
   getIP: () => void;
   handleSetterCurrentOrganization: (

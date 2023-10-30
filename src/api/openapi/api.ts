@@ -497,6 +497,18 @@ export interface CloudInstanceResource {
     'storageTotal'?: number;
     /**
      * 
+     * @type {Array<GpuUsage>}
+     * @memberof CloudInstanceResource
+     */
+    'gpuUsage'?: Array<GpuUsage>;
+    /**
+     * 
+     * @type {Array<NetworkUsage>}
+     * @memberof CloudInstanceResource
+     */
+    'networkUsage'?: Array<NetworkUsage>;
+    /**
+     * 
      * @type {string}
      * @memberof CloudInstanceResource
      */
@@ -836,6 +848,37 @@ export interface Environment {
      * @memberof Environment
      */
     'podName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideGpuResourceType'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GpuUsage
+ */
+export interface GpuUsage {
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuUsage
+     */
+    'resourceName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuUsage
+     */
+    'allocated'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuUsage
+     */
+    'capacity'?: string;
 }
 /**
  * 
@@ -1148,6 +1191,31 @@ export interface Member {
      * @memberof Member
      */
     'admin'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface NetworkUsage
+ */
+export interface NetworkUsage {
+    /**
+     * 
+     * @type {string}
+     * @memberof NetworkUsage
+     */
+    'interfaceName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NetworkUsage
+     */
+    'trafficIn'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof NetworkUsage
+     */
+    'trafficOut'?: string;
 }
 /**
  * 
@@ -4160,6 +4228,39 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getPodLogs: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/getPodLogs`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         restartPod: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/restartPod`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4313,6 +4414,16 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getPodLogs(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPodLogs(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async restartPod(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restartPod(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -4425,6 +4536,15 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          */
         getPhysicalInstances(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getPhysicalInstances(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPodLogs(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getPodLogs(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4564,6 +4684,17 @@ export class KubernetesApi extends BaseAPI {
      */
     public getPhysicalInstances(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).getPhysicalInstances(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KubernetesApi
+     */
+    public getPodLogs(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getPodLogs(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

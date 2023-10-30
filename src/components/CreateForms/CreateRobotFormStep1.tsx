@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
@@ -162,189 +162,181 @@ export default function CreateRobotFormStep1({
           loadingItems={[]}
           isLoading={isImportRobot ? !responseRobot : false}
         >
-          <form
-            onSubmit={formik.handleSubmit}
-            className="animate__animated animate__fadeIn relative flex flex-col gap-2"
-          >
-            {/* RobotName */}
-            <FormInputText
-              dataTut="create-robot-step1-name"
-              labelName="Robot Name:"
-              labelInfoTip="Type a new robot name."
-              inputProps={formik.getFieldProps("robotName")}
-              disabled={formik.isSubmitting || isImportRobot}
-              inputHoverText={
-                formik.isSubmitting || isImportRobot
-                  ? "You can't change robot name because this robot is created before."
-                  : ""
-              }
-              inputError={formik.errors.robotName}
-              inputTouched={formik.touched.robotName}
-            />
-            {/* RobotName */}
+          {/* RobotName */}
+          <FormInputText
+            dataTut="create-robot-step1-name"
+            labelName="Robot Name:"
+            labelInfoTip="Type a new robot name."
+            inputProps={formik.getFieldProps("robotName")}
+            disabled={formik.isSubmitting || isImportRobot}
+            inputHoverText={
+              formik.isSubmitting || isImportRobot
+                ? "You can't change robot name because this robot is created before."
+                : ""
+            }
+            inputError={formik.errors.robotName}
+            inputTouched={formik.touched.robotName}
+          />
+          {/* RobotName */}
+
+          <Seperator />
+
+          {/* RobotType */}
+          <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
+          {/* RobotType */}
+
+          <Seperator />
+
+          {/* ROS Distro */}
+          <CreateRobotRosDistrobutions
+            formik={formik}
+            isImportRobot={isImportRobot}
+          />
+          {/* ROS Distro */}
+
+          <div className="flex flex-col gap-4">
+            <Seperator />
+
+            {/* Robot Storage */}
+            <CreateRobotStorage formik={formik} isImportRobot={isImportRobot} />
+            {/* Robot Storage */}
 
             <Seperator />
 
-            {/* RobotType */}
-            <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
-            {/* RobotType */}
-
-            <Seperator />
-
-            {/* ROS Distro */}
-            <CreateRobotRosDistrobutions
-              formik={formik}
-              isImportRobot={isImportRobot}
-            />
-            {/* ROS Distro */}
-
-            <div className="flex flex-col gap-4">
-              <Seperator />
-
-              {/* Robot Storage */}
-              <CreateRobotStorage
-                formik={formik}
-                isImportRobot={isImportRobot}
-              />
-              {/* Robot Storage */}
-
-              <Seperator />
-
-              {/* Robot Services */}
-              <div className="flex items-center gap-4">
-                {/* ROS2 Bridge */}
-                <div
-                  data-tut="create-robot-step1-ros2-bridge"
-                  className="flex items-center gap-1"
-                >
-                  <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
-                    ROS2 (Bridge) :
-                    <InfoTip content="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot." />
-                  </div>
-                  <InputToggle
-                    checked={formik?.values?.isEnabledROS2Bridge}
-                    onChange={(e: any) => {
-                      formik.setFieldValue("isEnabledROS2Bridge", e);
-                    }}
-                  />
-                </div>
-                {/* ROS2 Bridge */}
-
-                {/* Remote Desktop Session Count */}
-                {formik?.values?.remoteDesktop?.isEnabled && (
-                  <div
-                    data-tut="create-robot-step1-vdi-session-count"
-                    className="flex w-full gap-2 pl-10"
-                  >
-                    <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
-                      VDI: Session Count (
-                      {formik?.values?.remoteDesktop?.sessionCount} User) :
-                      <InfoTip
-                        content="Session Count is the number of simultaneous remote desktop sessions that can for robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
-                        rightTip
-                      />
-                    </div>
-                    <input
-                      min="1"
-                      max="10"
-                      type="range"
-                      autoComplete="off"
-                      {...formik.getFieldProps("remoteDesktop.sessionCount")}
-                      className="w-full"
-                      style={{
-                        appearance: "auto",
-                        padding: "0px",
-                        color: "#AC2DFE",
-                        accentColor: "currentcolor",
-                      }}
-                      disabled={formik.isSubmitting}
-                    />
-                  </div>
-                )}
-                {/* Remote Desktop Session Count */}
-              </div>
-              {/* Robot Services */}
-
-              <Seperator />
-
-              {/* GPU Resource */}
+            {/* Robot Services */}
+            <div className="flex items-center gap-4">
+              {/* ROS2 Bridge */}
               <div
-                data-tut="create-robot-step1-gpu-resource"
+                data-tut="create-robot-step1-ros2-bridge"
                 className="flex items-center gap-1"
               >
                 <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
-                  GPU Usage Enabled for Cloud Instance:
-                  <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
+                  ROS2 (Bridge) :
+                  <InfoTip content="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot." />
                 </div>
                 <InputToggle
-                  checked={formik?.values?.gpuEnabledForCloudInstance}
+                  checked={formik?.values?.isEnabledROS2Bridge}
                   onChange={(e: any) => {
-                    formik.setFieldValue("gpuEnabledForCloudInstance", e);
+                    formik.setFieldValue("isEnabledROS2Bridge", e);
                   }}
-                  disabled={formik.isSubmitting}
                 />
               </div>
-              {/* GPU Resource */}
+              {/* ROS2 Bridge */}
 
-              <Seperator />
-
-              {/* Development Mode */}
-              {!isImportRobot && (
-                <Fragment>
-                  <div
-                    data-tut="create-robot-step1-development-mode"
-                    className="flex items-center gap-1"
-                  >
-                    <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
-                      Development Mode:
-                      <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
-                    </div>
-                    <InputToggle
-                      checked={formik?.values?.isDevelopmentMode}
-                      onChange={(e: any) => {
-                        formik.setFieldValue("isDevelopmentMode", e);
-                      }}
-                      disabled={formik.isSubmitting || isImportRobot}
+              {/* Remote Desktop Session Count */}
+              {formik?.values?.remoteDesktop?.isEnabled && (
+                <div
+                  data-tut="create-robot-step1-vdi-session-count"
+                  className="flex w-full gap-2 pl-10"
+                >
+                  <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+                    VDI: Session Count (
+                    {formik?.values?.remoteDesktop?.sessionCount} User) :
+                    <InfoTip
+                      content="Session Count is the number of simultaneous remote desktop sessions that can for robot. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
+                      rightTip
                     />
                   </div>
-                </Fragment>
+                  <input
+                    min="1"
+                    max="10"
+                    type="range"
+                    autoComplete="off"
+                    {...formik.getFieldProps("remoteDesktop.sessionCount")}
+                    className="w-full"
+                    style={{
+                      appearance: "auto",
+                      padding: "0px",
+                      color: "#AC2DFE",
+                      accentColor: "currentcolor",
+                    }}
+                    disabled={formik.isSubmitting}
+                  />
+                </div>
               )}
-              {/* Development Mode */}
+              {/* Remote Desktop Session Count */}
             </div>
+            {/* Robot Services */}
 
-            {/* <AdvancedSettings /> */}
+            <Seperator />
 
-            {/* Buttons */}
-            <div className="mt-10 flex gap-2 ">
-              {!isImportRobot && (
-                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-              )}
-              <Button
-                disabled={
-                  !formik.isValid ||
-                  formik.isSubmitting ||
-                  JSON.stringify(formik.initialValues) ===
-                    JSON.stringify(formik.values)
-                }
-                type="submit"
-                className="!h-11 text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="h-10 w-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    "Update Robot"
-                  ) : (
-                    `Next Step`
-                  )
-                }
+            {/* GPU Resource */}
+            <div
+              data-tut="create-robot-step1-gpu-resource"
+              className="flex items-center gap-1"
+            >
+              <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+                GPU Usage Enabled for Cloud Instance:
+                <InfoTip content="If you want or need to GPU resource on cloud instance set active" />
+              </div>
+              <InputToggle
+                checked={formik?.values?.gpuEnabledForCloudInstance}
+                onChange={(e: any) => {
+                  formik.setFieldValue("gpuEnabledForCloudInstance", e);
+                }}
+                disabled={formik.isSubmitting}
               />
             </div>
-            {/* Buttons */}
-          </form>
+            {/* GPU Resource */}
+
+            <Seperator />
+
+            {/* Development Mode */}
+            {!isImportRobot && (
+              <Fragment>
+                <div
+                  data-tut="create-robot-step1-development-mode"
+                  className="flex items-center gap-1"
+                >
+                  <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+                    Development Mode:
+                    <InfoTip content="Leave this option turned on if you want it to be able to build and launch on the robot you want" />
+                  </div>
+                  <InputToggle
+                    checked={formik?.values?.isDevelopmentMode}
+                    onChange={(e: any) => {
+                      formik.setFieldValue("isDevelopmentMode", e);
+                    }}
+                    disabled={formik.isSubmitting || isImportRobot}
+                  />
+                </div>
+              </Fragment>
+            )}
+            {/* Development Mode */}
+          </div>
+
+          {/* <AdvancedSettings /> */}
+
+          {/* Buttons */}
+          <div className="mt-10 flex gap-2 ">
+            {!isImportRobot && (
+              <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+            )}
+            <Button
+              disabled={
+                !formik.isValid ||
+                formik.isSubmitting ||
+                JSON.stringify(formik.initialValues) ===
+                  JSON.stringify(formik.values)
+              }
+              type="submit"
+              className="!h-11 text-xs"
+              text={
+                formik.isSubmitting ? (
+                  <img
+                    className="h-10 w-10"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
+                  />
+                ) : isImportRobot ? (
+                  "Update Robot"
+                ) : (
+                  `Next Step`
+                )
+              }
+            />
+          </div>
+          {/* Buttons */}
         </CreateRobotFormLoader>
       }
     </Fragment>

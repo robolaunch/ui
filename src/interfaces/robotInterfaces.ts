@@ -144,7 +144,9 @@ export interface IRobotStep1 {
   robotStorage: number;
   isEnabledIde: boolean;
   ideGpuResource: number;
+  ideGpuResourceType: string;
   isEnabledROS2Bridge: boolean;
+  configureWorkspace: boolean;
   remoteDesktop: {
     isEnabled: boolean;
     sessionCount: number;

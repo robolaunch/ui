@@ -7,6 +7,7 @@ export interface IcreateEnvironmentRequest {
   domainName: string;
   fleetName: string;
   ideGpuResource: number;
+  ideGpuResourceType: string;
   vdiSessionCount: number;
   storageAmount: number;
   applicationName: string;

@@ -8,7 +8,7 @@ import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRo
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -192,187 +192,183 @@ export default function CreateRobotFormStep4({
             ? "Loading..."
             : `Please wait while we create your robot. This may take a few minutes.`
         }
+        formik={formik}
       >
-        <form
-          onSubmit={formik.handleSubmit}
-          className="animate__animated animate__fadeIn flex flex-col gap-4"
-        >
-          <div data-tut="create-robot-step4-name">
-            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-              Launch Manager Name:
-              <InfoTip content="Type a new launch manager name." />
-            </div>
-            <InputText
-              {...formik.getFieldProps(`name`)}
-              disabled={isImportRobot || formik?.isSubmitting}
-              className="!text-sm"
-            />
-            <InputError
-              // @ts-ignore
-              error={formik?.errors?.name}
-              touched={formik?.touched?.name}
-            />
+        <div data-tut="create-robot-step4-name">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
+            Launch Manager Name:
+            <InfoTip content="Type a new launch manager name." />
           </div>
+          <InputText
+            {...formik.getFieldProps(`name`)}
+            disabled={isImportRobot || formik?.isSubmitting}
+            className="!text-sm"
+          />
+          <InputError
+            // @ts-ignore
+            error={formik?.errors?.name}
+            touched={formik?.touched?.name}
+          />
+        </div>
 
-          <div data-tut="create-robot-step4-workspace">
-            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-              Workspace:
-              <InfoTip content="Select a workspace." />
-            </div>
-            <InputSelect
-              {...formik.getFieldProps(`workspace`)}
-              disabled={isImportRobot || formik?.isSubmitting}
-            >
-              <Fragment>
-                {!formik?.values?.workspace && <option value=""></option>}
-                {robotData?.step2?.workspaces?.map(
-                  (workspace: IRobotWorkspace, index: number) => (
-                    <option key={index} value={workspace.name}>
-                      {workspace.name}
-                    </option>
-                  ),
-                )}
-              </Fragment>
-            </InputSelect>
-            <InputError
-              error={
-                // @ts-ignore
-                formik?.errors?.workspace
-              }
-              touched={formik?.touched?.workspace}
-            />
+        <div data-tut="create-robot-step4-workspace">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
+            Workspace:
+            <InfoTip content="Select a workspace." />
           </div>
-
-          <div data-tut="create-robot-step4-code">
-            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-              Bash Code:
-              <InfoTip content="Type Bash code" />
-            </div>
-            <Editor
-              height="140px"
-              defaultLanguage="shell"
-              defaultValue={formik?.values?.entryPointCmd}
-              value={formik?.values?.entryPointCmd}
-              options={{
-                readOnly: isImportRobot || formik?.isSubmitting,
-                minimap: {
-                  enabled: false,
-                },
-                fontSize: 12,
-                fontFamily: "monospace",
-                lineDecorationsWidth: 10,
-                wordWrap: "on",
-                lineNumbersMinChars: 3,
-                folding: false,
-                padding: {
-                  top: 6,
-                  bottom: 6,
-                },
-              }}
-              theme="vs-dark"
-              onChange={(e: any) => {
-                formik.setValues({
-                  ...formik.values,
-                  entryPointCmd: e,
-                });
-              }}
-            />
-            <InputError
-              error={
-                // @ts-ignore
-                formik?.errors?.entryPointCmd
-              }
-              touched={true}
-            />
-          </div>
-          <CreateRobotFormCodeScope
-            virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
-            physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}
-            virtualInstanceChecked={formik.values?.instancesName?.includes(
-              selectedState?.instance?.name,
-            )}
-            virtualInstanceOnChange={() => {
-              formik.setValues({
-                ...formik.values,
-                instancesName: formik.values.instancesName.includes(
-                  selectedState?.instance?.name,
-                )
-                  ? formik.values.instancesName.filter(
-                      (item) => item !== selectedState?.instance?.name,
-                    )
-                  : [
-                      ...formik.values.instancesName,
-                      selectedState?.instance?.name,
-                    ],
-              });
-            }}
-            physicalInstanceOnChange={(e) => {
-              formik.setValues({
-                ...formik.values,
-                instancesName: formik.values.instancesName.includes(
-                  robotData?.step1?.physicalInstanceName,
-                )
-                  ? formik.values.instancesName.filter(
-                      (item) => item !== robotData?.step1?.physicalInstanceName,
-                    )
-                  : [
-                      ...formik.values.instancesName,
-                      robotData?.step1?.physicalInstanceName,
-                    ],
-              });
-            }}
+          <InputSelect
+            {...formik.getFieldProps(`workspace`)}
+            disabled={isImportRobot || formik?.isSubmitting}
+          >
+            <Fragment>
+              {!formik?.values?.workspace && <option value=""></option>}
+              {robotData?.step2?.workspaces?.map(
+                (workspace: IRobotWorkspace, index: number) => (
+                  <option key={index} value={workspace.name}>
+                    {workspace.name}
+                  </option>
+                ),
+              )}
+            </Fragment>
+          </InputSelect>
+          <InputError
             error={
               // @ts-ignore
-              formik?.errors?.instancesName
+              formik?.errors?.workspace
             }
+            touched={formik?.touched?.workspace}
           />
-          <div
-            data-tut="create-robot-step4-environments"
-            className="flex flex-col gap-2"
-          >
-            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-              Environment Variables:
-              <InfoTip content="Type Environment Variables" />
-            </div>
-            {formik?.values?.robotLmEnvs?.map((env: any, envIndex: number) => {
-              return (
-                <CreateRobotFormEnvItem
-                  key={envIndex}
-                  formik={formik}
-                  envIndex={envIndex}
-                  disabled={isImportRobot || formik?.isSubmitting}
-                />
-              );
-            })}
+        </div>
 
-            <div data-tut="create-robot-step4-environments-add-button">
-              <CreateRobotFormAddButton
-                onClick={() => handleAddENVToLaunchStep(formik)}
+        <div data-tut="create-robot-step4-code">
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
+            Bash Code:
+            <InfoTip content="Type Bash code" />
+          </div>
+          <Editor
+            height="140px"
+            defaultLanguage="shell"
+            defaultValue={formik?.values?.entryPointCmd}
+            value={formik?.values?.entryPointCmd}
+            options={{
+              readOnly: isImportRobot || formik?.isSubmitting,
+              minimap: {
+                enabled: false,
+              },
+              fontSize: 12,
+              fontFamily: "monospace",
+              lineDecorationsWidth: 10,
+              wordWrap: "on",
+              lineNumbersMinChars: 3,
+              folding: false,
+              padding: {
+                top: 6,
+                bottom: 6,
+              },
+            }}
+            theme="vs-dark"
+            onChange={(e: any) => {
+              formik.setValues({
+                ...formik.values,
+                entryPointCmd: e,
+              });
+            }}
+          />
+          <InputError
+            error={
+              // @ts-ignore
+              formik?.errors?.entryPointCmd
+            }
+            touched={true}
+          />
+        </div>
+        <CreateRobotFormCodeScope
+          virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
+          physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}
+          virtualInstanceChecked={formik.values?.instancesName?.includes(
+            selectedState?.instance?.name,
+          )}
+          virtualInstanceOnChange={() => {
+            formik.setValues({
+              ...formik.values,
+              instancesName: formik.values.instancesName.includes(
+                selectedState?.instance?.name,
+              )
+                ? formik.values.instancesName.filter(
+                    (item) => item !== selectedState?.instance?.name,
+                  )
+                : [
+                    ...formik.values.instancesName,
+                    selectedState?.instance?.name,
+                  ],
+            });
+          }}
+          physicalInstanceOnChange={(e) => {
+            formik.setValues({
+              ...formik.values,
+              instancesName: formik.values.instancesName.includes(
+                robotData?.step1?.physicalInstanceName,
+              )
+                ? formik.values.instancesName.filter(
+                    (item) => item !== robotData?.step1?.physicalInstanceName,
+                  )
+                : [
+                    ...formik.values.instancesName,
+                    robotData?.step1?.physicalInstanceName,
+                  ],
+            });
+          }}
+          error={
+            // @ts-ignore
+            formik?.errors?.instancesName
+          }
+        />
+        <div
+          data-tut="create-robot-step4-environments"
+          className="flex flex-col gap-2"
+        >
+          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
+            Environment Variables:
+            <InfoTip content="Type Environment Variables" />
+          </div>
+          {formik?.values?.robotLmEnvs?.map((env: any, envIndex: number) => {
+            return (
+              <CreateRobotFormEnvItem
+                key={envIndex}
+                formik={formik}
+                envIndex={envIndex}
                 disabled={isImportRobot || formik?.isSubmitting}
               />
-            </div>
-          </div>
+            );
+          })}
 
-          <div className="mt-10 flex gap-2">
-            {!isImportRobot ? (
-              <Fragment>
-                {!url?.robotName && (
-                  <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-                )}
-                <Button
-                  type="submit"
-                  disabled={!formik?.isValid || formik.isSubmitting}
-                  className="!h-11 w-full text-xs"
-                  text={url?.robotName ? `Add Launch Step` : `Create Robot`}
-                />
-              </Fragment>
-            ) : (
-              <RobotDeleteLaunchManagerButton
-                launchManagerName={formik.values?.name}
-              />
-            )}
+          <div data-tut="create-robot-step4-environments-add-button">
+            <CreateRobotFormAddButton
+              onClick={() => handleAddENVToLaunchStep(formik)}
+              disabled={isImportRobot || formik?.isSubmitting}
+            />
           </div>
-        </form>
+        </div>
+
+        <div className="mt-10 flex gap-2">
+          {!isImportRobot ? (
+            <Fragment>
+              {!url?.robotName && (
+                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+              )}
+              <Button
+                type="submit"
+                disabled={!formik?.isValid || formik.isSubmitting}
+                className="!h-11 w-full text-xs"
+                text={url?.robotName ? `Add Launch Step` : `Create Robot`}
+              />
+            </Fragment>
+          ) : (
+            <RobotDeleteLaunchManagerButton
+              launchManagerName={formik.values?.name}
+            />
+          )}
+        </div>
       </CreateRobotFormLoader>
       {!isImportRobot &&
         !(

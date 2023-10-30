@@ -27,6 +27,7 @@ export const CreateEnvironmentsFormStep1Validations = Yup.object().shape({
         .max(65535, "Maximum 65535."),
     }),
   ),
+  ideGpuResourceType: Yup.string().required("GPU Resource Type is required."),
   vdiCustomPorts: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()

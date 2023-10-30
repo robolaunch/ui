@@ -29,7 +29,7 @@ export default function FormInputText({
   classNameContainer,
 }: IFormInputText): ReactElement {
   return (
-    <div className={classNameContainer} data-tut={dataTut}>
+    <div data-tut={dataTut} className={classNameContainer}>
       <div
         className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700 ${classNameInput}`}
       >
@@ -38,7 +38,6 @@ export default function FormInputText({
       </div>
       <InputText
         {...inputProps}
-        className="!text-sm"
         disabled={disabled}
         inputHoverText={inputHoverText}
       />

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
@@ -6,7 +6,7 @@ import {
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
 import CreateFormWorkspaces from "../CreateFormWorkspaces/CreateFormWorkspaces";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
@@ -44,7 +44,7 @@ export default function CreateRobotFormStep2({
       ? CreateEnvironmentFormStep2Validations
       : CreateRobotFormStep2Validations,
     initialValues: robotData?.step2,
-    onSubmit: (values: any) => {
+    onSubmit: () => {
       formik.setSubmitting(true);
 
       if (envOnPremiseRobot) {
@@ -59,6 +59,7 @@ export default function CreateRobotFormStep2({
             domainName: robotData?.step1?.domainName,
             storageAmount: robotData?.step1?.robotStorage,
             ideGpuResource: robotData?.step1?.ideGpuResource,
+            ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
             vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
             applicationName: robotData?.step1?.application?.name,
             applicationVersion: robotData?.step1?.application?.version,
@@ -276,28 +277,26 @@ export default function CreateRobotFormStep2({
               },
             ]
       }
+      formik={formik}
     >
-      <form
-        onSubmit={formik.handleSubmit}
-        className="animate__animated animate__fadeIn flex flex-col gap-4"
+      <div
+        data-tut="create-robot-step2-workspaces"
+        className="flex flex-col gap-2"
       >
-        <div
-          data-tut="create-robot-step2-workspaces"
-          className="flex flex-col gap-2"
-        >
-          <CreateFormWorkspaces
-            formik={formik}
-            responseRobot={responseRobot}
-            isImportRobot={isImportRobot}
-          />
-        </div>
+        <CreateFormWorkspaces
+          formik={formik}
+          responseRobot={responseRobot}
+          isImportRobot={isImportRobot}
+        />
+      </div>
 
-        <div data-tut="create-robot-step2-workspace-add-button">
-          <CreateRobotFormAddButton
-            onClick={() => handleAddWorkspaceStep(formik)}
-          />
-        </div>
+      <div data-tut="create-robot-step2-workspace-add-button">
+        <CreateRobotFormAddButton
+          onClick={() => handleAddWorkspaceStep(formik)}
+        />
+      </div>
 
+      <Fragment>
         {!(envOnPremiseRobot && url?.robotName ? true : false) && (
           <div className="mt-10 flex w-full flex-col gap-6">
             <div className="flex gap-2">
@@ -338,7 +337,7 @@ export default function CreateRobotFormStep2({
             </div>
           </div>
         )}
-      </form>
+      </Fragment>
     </CreateRobotFormLoader>
   );
 }

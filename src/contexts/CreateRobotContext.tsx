@@ -18,6 +18,8 @@ export default ({ children }: any) => {
       robotStorage: 40,
       isEnabledIde: true,
       ideGpuResource: 2,
+      ideGpuResourceType: "",
+      configureWorkspace: false,
       isEnabledROS2Bridge: true,
       remoteDesktop: {
         isEnabled: true,

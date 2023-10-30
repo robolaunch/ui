@@ -1084,6 +1084,9 @@ export default ({ children }: any) => {
                 isEnabledIde:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.ideEnabled,
+                ideGpuResourceType:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.ideGpuResourceType,
                 isEnabledROS2Bridge:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
@@ -1225,7 +1228,10 @@ export default ({ children }: any) => {
     );
   }
 
-  async function createEnvironment() {
+  async function createEnvironment(
+    thenFunc: () => void,
+    withoutWorkspaces?: boolean,
+  ) {
     await dispatch(
       createEnvironmentDispatch({
         organizationId: selectedState?.organization?.organizationId!,
@@ -1237,6 +1243,7 @@ export default ({ children }: any) => {
         domainName: robotData?.step1?.domainName,
         storageAmount: robotData?.step1?.robotStorage,
         ideGpuResource: robotData?.step1?.ideGpuResource,
+        ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
         vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
         applicationName: robotData?.step1?.application?.name,
         applicationVersion: robotData?.step1?.application?.version,
@@ -1245,7 +1252,21 @@ export default ({ children }: any) => {
         devspaceVersion: robotData?.step1?.devspace?.version,
         permittedDirectories: robotData?.step1?.permittedDirectories,
         persistentDirectories: robotData?.step1?.persistentDirectories,
-        workspaces: robotData?.step2.workspaces,
+        workspaces: withoutWorkspaces
+          ? [
+              {
+                name: "ws1",
+                workspaceDistro: "",
+                robotRepositories: [
+                  {
+                    name: "repo1",
+                    url: "https://github.com/robolaunch/robolaunch",
+                    branch: "main",
+                  },
+                ],
+              },
+            ]
+          : robotData?.step2.workspaces,
         ideCustomPorts:
           robotData.step1.ideCustomPorts
             ?.map(
@@ -1263,7 +1284,9 @@ export default ({ children }: any) => {
             )
             ?.join("/") || "",
       }),
-    );
+    ).then(async () => {
+      await thenFunc();
+    });
   }
 
   async function createBuildManager() {

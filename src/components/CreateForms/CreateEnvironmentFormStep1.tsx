@@ -1,27 +1,23 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormVDISessionCount from "../CreateRobotFormVDISessionCount/CreateRobotFormVDISessionCount";
-import CreateRobotFormAdvancedSettings from "../CreateRobotFormAdvancedSettings/CreateRobotFormAdvancedSettings";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormGpuResource from "../CreateRobotFormGpuResource/CreateRobotFormGpuResource";
-import CreateRobotFormLoader from "../CreateRobotFormLoader/CreateRobotFormLoader";
+import CreateFormAdvancedSettings from "../CreateFormAdvancedSettings/CreateFormAdvancedSettings";
+import CreateFormLoader from "../CreateFormLoader/CreateFormLoader";
 import EnvironmentSelector from "../EnvironmentSelector/EnvironmentSelector";
 import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
-import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import CreateFormGpuTypes from "../CreateFormGpuTypes/CreateFormGpuTypes";
+import FormInputToggle from "../FormInputToggle/FormInputToggle";
+import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import FormInputText from "../FormInputText/FormInputText";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { createRobot } from "../../toolkit/RobotSlice";
-import InputToggle from "../InputToggle/InputToggle";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
-import InputError from "../InputError/InputError";
 import Seperator from "../Seperator/Seperator";
-import InputText from "../InputText/InputText";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
-import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
-import { toast } from "sonner";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -30,13 +26,35 @@ interface ICreateEnvironmentFormStep1 {
 export default function CreateEnvironmentFormStep1({
   isImportRobot,
 }: ICreateEnvironmentFormStep1): ReactElement {
-  const { robotData, setRobotData }: any = useCreateRobot();
+  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+
   const { selectedState, setSidebarState, handleCreateRobotNextStep } =
     useMain();
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const dispatch = useAppDispatch();
-  const { getEnvironment } = useFunctions();
+  const { getEnvironment, createEnvironment } = useFunctions();
+  const { robotData, setRobotData }: any = useCreateRobot();
   const url = useParams();
+
+  const formik = useFormik<IRobotStep1>({
+    validationSchema: CreateEnvironmentsFormStep1Validations,
+    initialValues: robotData?.step1,
+    onSubmit: async () => {
+      formik.setSubmitting(true);
+      if (formik.values.configureWorkspace) {
+        createEnvironment(() => {
+          setSidebarState((prevState: any) => {
+            return {
+              ...prevState,
+              isCreateMode: false,
+              page: "robot",
+            };
+          });
+        }, true);
+      } else {
+        formik.setSubmitting(false);
+        handleCreateRobotNextStep();
+      }
+    },
+  });
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
@@ -44,6 +62,22 @@ export default function CreateEnvironmentFormStep1({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setRobotData({
+      ...robotData,
+      step1: formik.values,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values]);
+
+  useEffect(() => {
+    if (formik.values.isVirtualRobot) {
+      formik.setFieldValue("physicalInstanceName", "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.isVirtualRobot]);
 
   function handleGetEnvironment() {
     getEnvironment(
@@ -63,277 +97,97 @@ export default function CreateEnvironmentFormStep1({
     );
   }
 
-  const formik = useFormik({
-    validationSchema: CreateEnvironmentsFormStep1Validations,
-    initialValues: robotData?.step1,
-
-    onSubmit: async () => {
-      formik.setSubmitting(true);
-
-      if (isImportRobot) {
-        await dispatch(
-          createRobot({
-            organizationId: selectedState?.organization?.organizationId!,
-            roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId,
-            region: selectedState?.roboticsCloud?.region!,
-            fleetName: selectedState?.fleet?.name,
-            robotName: formik.values?.robotName,
-            physicalInstanceName: robotData?.step1?.isVirtualRobot
-              ? undefined
-              : robotData?.step1?.physicalInstanceName,
-            distributions: formik.values?.rosDistros,
-            bridgeEnabled: formik.values?.isEnabledROS2Bridge,
-            vdiEnabled: formik.values?.remoteDesktop?.isEnabled,
-            vdiSessionCount: formik.values?.remoteDesktop?.sessionCount,
-            ideEnabled: formik.values?.isEnabledIde,
-            storageAmount: formik.values?.robotStorage,
-            gpuEnabledForCloudInstance:
-              formik.values?.gpuEnabledForCloudInstance,
-            workspaces: responseRobot?.robotWorkspaces,
-          }),
-        );
-
-        toast.success(
-          "Robot updated successfully. Redirecting to fleet page...",
-        );
-        setTimeout(() => {
-          window.location.href = `/${selectedState?.organization?.organizationName?.split(
-            "_",
-          )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
-            ?.robotName}}`;
-        }, 2000);
-      }
-
-      formik.setSubmitting(false);
-      handleCreateRobotNextStep();
-    },
-  });
-
-  useEffect(() => {
-    setRobotData({
-      ...robotData,
-      step1: formik.values,
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values]);
-
-  useEffect(() => {
-    if (formik.values.isVirtualRobot) {
-      formik.setFieldValue("physicalInstanceName", "");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values.isVirtualRobot]);
-
-  function handleCreateApplicationWithoutWorkspaces() {
-    formik.setSubmitting(true);
-    console.log("robotdata", robotData);
-    dispatch(
-      createEnvironment({
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        instanceId: selectedState?.instance?.instanceId,
-        fleetName: selectedState?.fleet?.name,
-        environmentName: robotData?.step1?.robotName,
-        domainName: robotData?.step1?.domainName,
-        storageAmount: robotData?.step1?.robotStorage,
-        ideGpuResource: robotData?.step1?.ideGpuResource,
-        vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-        applicationName: robotData?.step1?.application?.name,
-        applicationVersion: robotData?.step1?.application?.version,
-        devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
-        devspaceDesktop: robotData?.step1?.devspace?.desktop,
-        devspaceVersion: robotData?.step1?.devspace?.version,
-        permittedDirectories: robotData?.step1?.permittedDirectories,
-        persistentDirectories: robotData?.step1?.persistentDirectories,
-        workspaces: [
-          {
-            name: "ws1",
-            workspaceDistro: "",
-            robotRepositories: [
-              {
-                name: "repo1",
-                url: "https://github.com/robolaunch/robolaunch",
-                branch: "main",
-              },
-            ],
-          },
-        ],
-        ideCustomPorts:
-          formik.values.ideCustomPorts
-            ?.map(
-              (port: { name: string; port: number; backendPort: number }) => {
-                return `${port.name}-${port.backendPort}:${port.port}`;
-              },
-            )
-            ?.join("/") || "",
-        vdiCustomPorts:
-          formik.values.vdiCustomPorts
-            ?.map(
-              (port: { name: string; port: number; backendPort: number }) => {
-                return `${port.name}-${port.backendPort}:${port.port}`;
-              },
-            )
-            ?.join("/") || "",
-      }),
-    ).then(async () => {
-      setSidebarState((prevState: any) => {
-        return {
-          ...prevState,
-          isCreateMode: false,
-          page: "robot",
-        };
-      });
-    });
-  }
-
   return (
     <Fragment>
       {
-        <CreateRobotFormLoader
+        <CreateFormLoader
           type="step1-app"
           loadingText="Loading..."
           loadingItems={[]}
           isLoading={isImportRobot ? !responseRobot : false}
+          formik={formik}
         >
-          <form
-            onSubmit={formik.handleSubmit}
-            className="animate__animated animate__fadeIn relative flex flex-col gap-3"
-          >
-            {/* RobotName */}
-            <div data-tut="create-application-step1-name">
-              <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-                Environment Name:
-                <InfoTip content="Type a new robot name." />
-              </div>
-              <InputText
-                {...formik.getFieldProps("robotName")}
-                className="!text-sm"
-                disabled={formik.isSubmitting || isImportRobot}
-                inputHoverText={
-                  formik.isSubmitting || isImportRobot
-                    ? "You can't change robot name because this robot is created before."
-                    : ""
-                }
-              />
-              <InputError
-                error={formik.errors.robotName}
-                touched={formik.touched.robotName}
-              />
-            </div>
-            {/* RobotName */}
+          <FormInputText
+            labelName="Environment Name:"
+            labelInfoTip="Type a new environment name."
+            dataTut="create-application-step1-name"
+            disabled={formik.isSubmitting || isImportRobot}
+            inputHoverText="You can't change environment name because this environment is created before."
+            inputProps={formik.getFieldProps("robotName")}
+            inputError={formik.errors.robotName}
+            inputTouched={formik.touched.robotName}
+          />
 
-            {/* Environment Selector */}
-            <EnvironmentSelector
-              formik={formik}
-              isImportRobot={isImportRobot}
+          <Seperator />
+
+          <EnvironmentSelector formik={formik} isImportRobot={isImportRobot} />
+
+          <Seperator />
+
+          <CreateFormGpuTypes formik={formik} isImportRobot={isImportRobot} />
+
+          <Seperator />
+
+          <CreateRobotStorage formik={formik} isImportRobot={isImportRobot} />
+
+          <Seperator />
+
+          <CreateRobotFormVDISessionCount
+            formik={formik}
+            disabled={isImportRobot}
+          />
+
+          <Seperator />
+
+          <CreateRobotFormGpuResource
+            formik={formik}
+            disabled={isImportRobot}
+          />
+
+          <Seperator />
+
+          <FormInputToggle
+            labelName="Configure Workspaces:"
+            labelInfoTip="Configure Workspaces"
+            dataTut="create-robot-step1-ros2-bridge"
+            disabled={isImportRobot}
+            checked={formik?.values?.configureWorkspace}
+            onChange={(e: boolean) => {
+              formik.setFieldValue("configureWorkspace", e);
+            }}
+          />
+
+          <Seperator />
+
+          <CreateFormAdvancedSettings
+            formik={formik}
+            isImportRobot={isImportRobot}
+          />
+
+          <div className="mt-10 flex gap-2">
+            <CreateRobotFormCancelButton
+              disabled={formik.isSubmitting || isImportRobot}
             />
-            {/* Environment Selector */}
-
-            {formik.values.application?.name && <Seperator />}
-            <div className="flex flex-col gap-4">
-              {/* Robot Storage */}
-              <CreateRobotStorage
-                formik={formik}
-                isImportRobot={isImportRobot}
-              />
-              {/* Robot Storage */}
-
-              <Seperator />
-
-              {/* Robot Services */}
-              <CreateRobotFormVDISessionCount
-                formik={formik}
-                disabled={isImportRobot}
-              />
-              {/* Robot Services */}
-
-              <Seperator />
-
-              <CreateRobotFormGpuResource
-                formik={formik}
-                disabled={isImportRobot}
-              />
-
-              <Seperator />
-
-              <div
-                data-tut="create-robot-step1-ros2-bridge"
-                className="flex items-center gap-1"
-              >
-                <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
-                  Configure Workspaces :
-                  <InfoTip content="Configure Workspaces" />
-                </div>
-                <InputToggle
-                  disabled={isImportRobot}
-                  checked={formik?.values?.configureWorkspace}
-                  onChange={(e: any) => {
-                    formik.setFieldValue("configureWorkspace", e);
-                  }}
-                />
-              </div>
-            </div>
-
-            <CreateRobotFormAdvancedSettings
-              formik={formik}
-              isImportRobot={isImportRobot}
-            />
-
-            {!url.robotName && (
-              <div className="mt-10 flex gap-2 ">
-                {!isImportRobot && (
-                  <Fragment>
-                    <CreateRobotFormCancelButton
-                      disabled={formik.isSubmitting}
-                    />
-                  </Fragment>
-                )}
-
-                {isImportRobot || formik.values.configureWorkspace ? (
-                  <Button
-                    disabled={
-                      !formik.isValid ||
-                      formik.isSubmitting ||
-                      JSON.stringify(formik.initialValues) ===
-                        JSON.stringify(formik.values)
-                    }
-                    type="submit"
-                    className="!h-11 text-xs"
-                    text={
-                      formik.isSubmitting ? (
-                        <img
-                          className="h-10 w-10"
-                          src="/svg/general/loading.svg"
-                          alt="loading"
-                        />
-                      ) : isImportRobot ? (
-                        "Update Application"
-                      ) : (
-                        `Next Step`
-                      )
-                    }
+            <Button
+              disabled={!formik.isValid || formik.isSubmitting || isImportRobot}
+              type="submit"
+              className="!h-11 text-xs"
+              text={
+                formik.isSubmitting ? (
+                  <img
+                    className="h-10 w-10"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
                   />
+                ) : isImportRobot ? (
+                  "Update Application"
                 ) : (
-                  <Button
-                    text={"Create Application"}
-                    className="!h-11 text-xs"
-                    disabled={
-                      !formik.isValid ||
-                      formik.isSubmitting ||
-                      JSON.stringify(formik.initialValues) ===
-                        JSON.stringify(formik.values)
-                    }
-                    onClick={handleCreateApplicationWithoutWorkspaces}
-                  />
-                )}
-              </div>
-            )}
-          </form>
-        </CreateRobotFormLoader>
+                  "Create Application"
+                )
+              }
+            />
+          </div>
+        </CreateFormLoader>
       }
     </Fragment>
   );

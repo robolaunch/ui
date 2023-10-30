@@ -5,7 +5,7 @@ import CreateRobotFormStepbar from "../CreateRobotFormStepbar/CreateRobotFormSte
 import { useParams } from "react-router-dom";
 import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
 import CreateFormTourSwither from "../CreateFormTourSwither/CreateFormTourSwither";
-interface ICreateRobotFormLoader {
+interface ICreateFormLoader {
   type: "step1-robot" | "step1-app" | "workspace" | "build" | "launch";
   isLoading?: boolean;
   loadingItems?: any[];
@@ -13,9 +13,10 @@ interface ICreateRobotFormLoader {
   children?: ReactElement | ReactElement[];
   stepbarItems?: any[];
   currentStep?: number;
+  formik?: any;
 }
 
-export default function CreateRobotFormLoader({
+export default function CreateFormLoader({
   type,
   isLoading,
   loadingItems,
@@ -23,7 +24,8 @@ export default function CreateRobotFormLoader({
   children,
   stepbarItems,
   currentStep,
-}: ICreateRobotFormLoader): ReactElement {
+  formik,
+}: ICreateFormLoader): ReactElement {
   const url = useParams();
 
   return (
@@ -84,7 +86,12 @@ export default function CreateRobotFormLoader({
           {!url?.robotName && <CreateRobotFormCancelButton disabled={false} />}
         </div>
       ) : (
-        children
+        <form
+          onSubmit={formik.handleSubmit}
+          className="animate__animated animate__fadeIn relative flex flex-col gap-4"
+        >
+          {children}
+        </form>
       )}
       <CreateFormTourSwither type={type} isLoading={isLoading} />
     </Fragment>
