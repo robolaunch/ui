@@ -4,15 +4,15 @@ import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import InfoTip from "../InfoTip/InfoTip";
 
-interface IEnvironmentSelector {
+interface ICFEnvCategories {
   formik: any;
   isImportRobot?: boolean;
 }
 
-export default function EnvironmentSelector({
+export default function CFEnvCategories({
   formik,
   isImportRobot,
-}: IEnvironmentSelector): ReactElement {
+}: ICFEnvCategories): ReactElement {
   const [responseReadyEnvironments, setResponseReadyEnvironments] =
     useState<any>(undefined);
 

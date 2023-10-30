@@ -4,11 +4,11 @@ import {
   IRobotWorkspace,
 } from "../../interfaces/robotInterfaces";
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
-import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
 import useCreateRobot from "../../hooks/useCreateRobot";

@@ -3,10 +3,10 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import CreateFormWorkspaces from "../CreateFormWorkspaces/CreateFormWorkspaces";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";

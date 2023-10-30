@@ -1,9 +1,9 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import useCreateRobot from "../../hooks/useCreateRobot";

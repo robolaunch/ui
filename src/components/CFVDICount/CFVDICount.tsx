@@ -1,15 +1,15 @@
 import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 
-interface ICreateRobotFormVDISessionCount {
+interface ICFVDICount {
   formik: any;
   disabled?: boolean;
 }
 
-export default function CreateRobotFormVDISessionCount({
+export default function CFVDICount({
   formik,
   disabled,
-}: ICreateRobotFormVDISessionCount): ReactElement {
+}: ICFVDICount): ReactElement {
   return (
     <div
       data-tut="create-environment-vdi-session-count"

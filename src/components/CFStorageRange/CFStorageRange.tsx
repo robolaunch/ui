@@ -2,15 +2,15 @@ import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 
-interface ICreateRobotStorage {
+interface ICFStorageRange {
   formik: any;
   isImportRobot?: boolean;
 }
 
-export default function CreateRobotStorage({
+export default function CFStorageRange({
   formik,
   isImportRobot,
-}: ICreateRobotStorage): ReactElement {
+}: ICFStorageRange): ReactElement {
   return (
     <div data-tut="create-robot-step1-storage" className="flex gap-2">
       <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">

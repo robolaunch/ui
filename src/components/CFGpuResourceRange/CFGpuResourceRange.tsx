@@ -1,15 +1,15 @@
 import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 
-interface ICreateRobotFormGpuResource {
+interface ICFGpuResourceRange {
   formik: any;
   disabled?: boolean;
 }
 
-export default function CreateRobotFormGpuResource({
+export default function CFGpuResourceRange({
   formik,
   disabled,
-}: ICreateRobotFormGpuResource): ReactElement {
+}: ICFGpuResourceRange): ReactElement {
   return (
     <div
       data-tut="create-environment-gpu-resource"

@@ -3,9 +3,9 @@ import { MdVerified } from "react-icons/md";
 import "react-step-progress-bar/styles.css";
 import CreateRobotFormStepbar from "../CreateRobotFormStepbar/CreateRobotFormStepbar";
 import { useParams } from "react-router-dom";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
+import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateFormTourSwither from "../CreateFormTourSwither/CreateFormTourSwither";
-interface ICreateFormLoader {
+interface ICFLoader {
   type: "step1-robot" | "step1-app" | "workspace" | "build" | "launch";
   isLoading?: boolean;
   loadingItems?: any[];
@@ -16,7 +16,7 @@ interface ICreateFormLoader {
   formik?: any;
 }
 
-export default function CreateFormLoader({
+export default function CFLoader({
   type,
   isLoading,
   loadingItems,
@@ -25,7 +25,7 @@ export default function CreateFormLoader({
   stepbarItems,
   currentStep,
   formik,
-}: ICreateFormLoader): ReactElement {
+}: ICFLoader): ReactElement {
   const url = useParams();
 
   return (

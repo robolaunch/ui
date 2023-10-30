@@ -4,15 +4,15 @@ import useMain from "../../hooks/useMain";
 import InputError from "../InputError/InputError";
 import CreateFormGpuTypesGridItem from "../CreateFormGpuTypesGridItem/CreateFormGpuTypesGridItem";
 
-interface ICreateFormGpuTypes {
+interface ICFGpuTypes {
   formik: any;
   isImportRobot?: boolean;
 }
 
-export default function CreateFormGpuTypes({
+export default function CFGpuTypes({
   formik,
   isImportRobot,
-}: ICreateFormGpuTypes): ReactElement {
+}: ICFGpuTypes): ReactElement {
   const { selectedState } = useMain();
 
   return (

@@ -4,15 +4,15 @@ import PortSetter from "../CreateRobotFormPortSetter/CreateRobotFormPortSetter";
 import Accordion from "../Accordion/AccordionV2";
 import { ReactElement, useState } from "react";
 
-interface ICreateFormAdvancedSettings {
+interface ICFAdvancedSettings {
   formik: any;
   isImportRobot?: boolean;
 }
 
-export default function CreateFormAdvancedSettings({
+export default function CFAdvancedSettings({
   formik,
   isImportRobot,
-}: ICreateFormAdvancedSettings): ReactElement {
+}: ICFAdvancedSettings): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (

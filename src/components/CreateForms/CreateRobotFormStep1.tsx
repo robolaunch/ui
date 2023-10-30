@@ -1,10 +1,10 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
-import CreateRobotFormCancelButton from "../CreateRobotFormCancelButton/CreateRobotFormCancelButton";
-import CreateRobotFormLoader from "../CreateFormLoader/CreateFormLoader";
+import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
-import CreateRobotStorage from "../CreateRobotStorage/CreateRobotStorage";
+import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import FormInputText from "../FormInputText/FormInputText";
