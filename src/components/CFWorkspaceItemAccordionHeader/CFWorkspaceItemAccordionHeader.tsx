@@ -2,17 +2,17 @@ import React, { ReactElement } from "react";
 import { IRobotWorkspace } from "../../interfaces/robotInterfaces";
 import StateCell from "../TableInformationCells/StateCell";
 
-interface ICreateRobotWorkspaceItemAccordionHeader {
+interface ICFWorkspaceItemAccordionHeader {
   workspace: IRobotWorkspace;
   workspaceIndex: number;
   workspaceState: string[];
 }
 
-export default function CreateRobotWorkspaceItemAccordionHeader({
+export default function CFWorkspaceItemAccordionHeader({
   workspace,
   workspaceIndex,
   workspaceState,
-}: ICreateRobotWorkspaceItemAccordionHeader): ReactElement {
+}: ICFWorkspaceItemAccordionHeader): ReactElement {
   return (
     <div className="flex justify-between">
       <span className="font-medium">

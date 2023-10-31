@@ -1,25 +1,27 @@
-import React, { ReactElement } from "react";
-import CreateFormLabelwithInfoTip from "../CreateFormLabelwithInfoTip/CreateFormLabelwithInfoTip";
-import useMain from "../../hooks/useMain";
-import InputError from "../InputError/InputError";
 import CreateFormGpuTypesGridItem from "../CreateFormGpuTypesGridItem/CreateFormGpuTypesGridItem";
-
+import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { FormikProps } from "formik/dist/types";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import React, { ReactElement } from "react";
+import useMain from "../../hooks/useMain";
 interface ICFGpuTypes {
-  formik: any;
-  isImportRobot?: boolean;
+  formik: FormikProps<IRobotStep1>;
+  disabled?: boolean;
 }
 
 export default function CFGpuTypes({
   formik,
-  isImportRobot,
+  disabled,
 }: ICFGpuTypes): ReactElement {
   const { selectedState } = useMain();
 
   return (
-    <CreateFormLabelwithInfoTip
+    <CFInfoBar
       label="GPU Types"
-      infoTipContent="Select the GPU type to use for the job."
+      tip="Select the GPU type to use for the job."
       vertical
+      error={!!formik.errors.ideGpuResourceType}
+      touched={true}
     >
       <div className="grid grid-cols-2 gap-2">
         {selectedState.instance?.cloudInstanceResource?.gpuUsage?.filter(
@@ -32,7 +34,7 @@ export default function CFGpuTypes({
                   formik={formik}
                   index={index}
                   type={type}
-                  isImportRobot={isImportRobot}
+                  disabled={disabled}
                   key={index}
                 />
               );
@@ -44,7 +46,6 @@ export default function CFGpuTypes({
           </div>
         )}
       </div>
-      <InputError touched={true} error={formik.errors.ideGpuResourceType} />
-    </CreateFormLabelwithInfoTip>
+    </CFInfoBar>
   );
 }

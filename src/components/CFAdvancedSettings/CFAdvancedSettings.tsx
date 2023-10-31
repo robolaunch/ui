@@ -3,15 +3,17 @@ import CreateRobotFormGrantedDirectoriesInputTag from "../CreateRobotFormGranted
 import PortSetter from "../CreateRobotFormPortSetter/CreateRobotFormPortSetter";
 import Accordion from "../Accordion/AccordionV2";
 import { ReactElement, useState } from "react";
+import { FormikProps } from "formik/dist/types";
+import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 
 interface ICFAdvancedSettings {
-  formik: any;
-  isImportRobot?: boolean;
+  formik: FormikProps<IRobotStep1>;
+  disabled?: boolean;
 }
 
 export default function CFAdvancedSettings({
   formik,
-  isImportRobot,
+  disabled,
 }: ICFAdvancedSettings): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -32,7 +34,7 @@ export default function CFAdvancedSettings({
 
         <CreateRobotFormGrantedDirectoriesInputTag />
 
-        <PortSetter isImportRobot={isImportRobot} formik={formik} type="ide" />
+        <PortSetter isImportRobot={disabled} formik={formik} type="ide" />
 
         <PortSetter formik={formik} type="vdi" />
       </div>

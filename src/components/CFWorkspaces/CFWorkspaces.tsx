@@ -1,31 +1,34 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { ReactElement } from "react";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import CreateRobotFormWorkspaceItem from "../CreateRobotFormWorkspaceItem/CreateRobotFormWorkspaceItem";
+import CFWorkspaceItem from "../CFWorkspaceItem/CFWorkspaceItem";
 import { FormikProps } from "formik";
 import {
   IRobotWorkspace,
   IRobotWorkspaces,
 } from "../../interfaces/robotInterfaces";
 
-interface ICreateFormWorkspaces {
+interface ICFWorkspaces {
   formik: FormikProps<IRobotWorkspaces>;
   responseRobot: any;
   isImportRobot?: boolean;
 }
 
-export default function CreateFormWorkspaces({
+export default function CFWorkspaces({
   formik,
   responseRobot,
   isImportRobot,
-}: ICreateFormWorkspaces): ReactElement {
+}: ICFWorkspaces): ReactElement {
   const { robotData } = useCreateRobot();
 
   return (
-    <Fragment>
+    <div
+      data-tut="create-robot-step2-workspaces"
+      className="flex flex-col gap-2"
+    >
       {robotData?.step2?.workspaces?.map(
         (workspace: IRobotWorkspace, workspaceIndex: number) => {
           return (
-            <CreateRobotFormWorkspaceItem
+            <CFWorkspaceItem
               key={workspaceIndex}
               formik={formik}
               workspace={workspace}
@@ -39,6 +42,6 @@ export default function CreateFormWorkspaces({
           );
         },
       )}
-    </Fragment>
+    </div>
   );
 }

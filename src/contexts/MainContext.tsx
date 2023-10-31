@@ -1,7 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
 import { ISelectedState, ISidebarState } from "../interfaces/mainInterfaces";
-import { useLocation } from "react-router-dom";
+import React, { createContext, useEffect, useState } from "react";
 import { IpagesState } from "../interfaces/mainInterfaces";
+import { useLocation } from "react-router-dom";
 
 export const MainContext: any = createContext<any>(null);
 
@@ -54,23 +54,6 @@ export default ({ children }: any) => {
       instanceTab: "Cloud Instances",
     });
   }, [url]);
-
-  // useEffect(() => {
-  //   if (
-  //     sidebarState?.page === "organization" ||
-  //     sidebarState?.page === "roboticscloud" ||
-  //     sidebarState?.page === "instance" ||
-  //     sidebarState?.page === "fleet" ||
-  //     sidebarState?.page === "robot"
-  //   ) {
-  //     setSidebarState(
-  //       (prevState: ISidebarState): ISidebarState => ({
-  //         ...prevState,
-  //         isCreateMode: false,
-  //       })
-  //     );
-  //   }
-  // }, [sidebarState?.page]);
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {

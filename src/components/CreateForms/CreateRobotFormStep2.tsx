@@ -5,9 +5,8 @@ import {
 } from "../../helpers/envProvider";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormLoader from "../CFLoader/CFLoader";
-import CreateFormWorkspaces from "../CreateFormWorkspaces/CreateFormWorkspaces";
+import CFLoader from "../CFLoader/CFLoader";
+import CFWorkspaces from "../CFWorkspaces/CFWorkspaces";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
@@ -20,6 +19,7 @@ import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { toast } from "sonner";
+import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -32,7 +32,7 @@ export default function CreateRobotFormStep2({
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useMain();
-  const { robotData, setRobotData, handleAddWorkspaceStep } = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
   const { getRobot, getFleet, getEnvironment, getNamespace } = useFunctions();
@@ -53,7 +53,7 @@ export default function CreateRobotFormStep2({
             organizationId: selectedState?.organization?.organizationId!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             region: selectedState?.roboticsCloud?.region!,
-            instanceId: selectedState?.instance?.instanceId,
+            instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
             environmentName: robotData?.step1?.robotName,
             domainName: robotData?.step1?.domainName,
@@ -102,7 +102,7 @@ export default function CreateRobotFormStep2({
           createRobot({
             organizationId: selectedState?.organization?.organizationId!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId,
+            instanceId: selectedState?.instance?.instanceId!,
             region: selectedState?.roboticsCloud?.region!,
             robotName: robotData?.step1?.robotName,
             fleetName: selectedState?.fleet?.name,
@@ -187,8 +187,8 @@ export default function CreateRobotFormStep2({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },
@@ -205,7 +205,7 @@ export default function CreateRobotFormStep2({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         environmentName: url?.robotName as string,
@@ -223,8 +223,8 @@ export default function CreateRobotFormStep2({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
       },
       {
@@ -239,8 +239,8 @@ export default function CreateRobotFormStep2({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         namespaceName: selectedState?.fleet?.name,
       },
       {
@@ -251,7 +251,7 @@ export default function CreateRobotFormStep2({
   }
 
   return (
-    <CreateRobotFormLoader
+    <CFLoader
       type="workspace"
       isLoading={
         isImportRobot
@@ -279,22 +279,13 @@ export default function CreateRobotFormStep2({
       }
       formik={formik}
     >
-      <div
-        data-tut="create-robot-step2-workspaces"
-        className="flex flex-col gap-2"
-      >
-        <CreateFormWorkspaces
-          formik={formik}
-          responseRobot={responseRobot}
-          isImportRobot={isImportRobot}
-        />
-      </div>
+      <CFWorkspaces
+        formik={formik}
+        responseRobot={responseRobot}
+        isImportRobot={isImportRobot}
+      />
 
-      <div data-tut="create-robot-step2-workspace-add-button">
-        <CreateRobotFormAddButton
-          onClick={() => handleAddWorkspaceStep(formik)}
-        />
-      </div>
+      <CFAddWorkspaceButton formik={formik} />
 
       <Fragment>
         {!(envOnPremiseRobot && url?.robotName ? true : false) && (
@@ -338,6 +329,6 @@ export default function CreateRobotFormStep2({
           </div>
         )}
       </Fragment>
-    </CreateRobotFormLoader>
+    </CFLoader>
   );
 }

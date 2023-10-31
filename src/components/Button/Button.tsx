@@ -25,10 +25,11 @@ export default function Button({
       className={`transition-300 flex h-12 w-full items-center justify-center rounded-md bg-primary text-xs font-medium text-white hover:scale-[0.99] hover:bg-layer-primary-700 focus:ring-4 focus:ring-layer-primary-300 active:bg-purple-900 disabled:bg-layer-primary-400 ${className}`}
     >
       {loading ? (
-        <i
-          className="pi pi-spin pi-spinner"
-          style={{ fontSize: "1.25rem" }}
-        ></i>
+        <img
+          className="h-10 w-10"
+          src="/svg/general/loading.svg"
+          alt="loading"
+        />
       ) : (
         text
       )}

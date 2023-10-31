@@ -47,7 +47,7 @@ export default function CreateRobotFormStep1({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName || url?.robotName!,
@@ -65,7 +65,7 @@ export default function CreateRobotFormStep1({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         environmentName: url?.robotName!,
@@ -89,7 +89,7 @@ export default function CreateRobotFormStep1({
           createRobot({
             organizationId: selectedState?.organization?.organizationId!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId,
+            instanceId: selectedState?.instance?.instanceId!,
             region: selectedState?.roboticsCloud?.region!,
             robotName: robotData?.step1?.robotName,
             fleetName: selectedState?.fleet?.name,
@@ -198,7 +198,7 @@ export default function CreateRobotFormStep1({
             <Seperator />
 
             {/* Robot Storage */}
-            <CreateRobotStorage formik={formik} isImportRobot={isImportRobot} />
+            <CreateRobotStorage formik={formik} disabled={isImportRobot} />
             {/* Robot Storage */}
 
             <Seperator />

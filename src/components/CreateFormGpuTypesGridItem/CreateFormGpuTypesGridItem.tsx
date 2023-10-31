@@ -2,14 +2,14 @@ import React, { ReactElement } from "react";
 
 interface ICreateFormGpuTypesGridItem {
   formik: any;
-  isImportRobot?: boolean;
+  disabled?: boolean;
   type: any;
   index: number;
 }
 
 export default function CreateFormGpuTypesGridItem({
   formik,
-  isImportRobot,
+  disabled,
   type,
   index,
 }: ICreateFormGpuTypesGridItem): ReactElement {
@@ -22,9 +22,9 @@ export default function CreateFormGpuTypesGridItem({
                     ? "border-primary "
                     : "border-gray-300 "
                 }
-                ${isImportRobot ? "cursor-not-allowed" : "cursor-pointer"}`}
+                ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
       onClick={() => {
-        !isImportRobot &&
+        !disabled &&
           formik.setFieldValue("ideGpuResourceType", type?.resourceName);
       }}
     >

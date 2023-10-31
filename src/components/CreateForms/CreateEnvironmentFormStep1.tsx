@@ -1,22 +1,22 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import CFGpuResourceRange from "../CFGpuResourceRange/CFGpuResourceRange";
-import CreateFormLoader from "../CFLoader/CFLoader";
+import React, { ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
-import CFCancelButton from "../CFCancelButton/CFCancelButton";
+import CFEnvButtons from "../CFEnvButtons/CFEnvButtons";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useFunctions from "../../hooks/useFunctions";
 import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
 import CFVDICount from "../CFVDICount/CFVDICount";
 import CFEnvName from "../CFEnvName/CFEnvName";
 import Seperator from "../Seperator/Seperator";
+import CFSection from "../CFSection/CFSection";
 import { useParams } from "react-router-dom";
+import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
-import Button from "../Button/Button";
 import { useFormik } from "formik";
 
 interface ICreateEnvironmentFormStep1 {
@@ -28,8 +28,7 @@ export default function CreateEnvironmentFormStep1({
 }: ICreateEnvironmentFormStep1): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
-  const { selectedState, setSidebarState, handleCreateRobotNextStep } =
-    useMain();
+  const { selectedState, handleCreateRobotNextStep } = useMain();
   const { getEnvironment, createEnvironment } = useFunctions();
   const { robotData, setRobotData }: any = useCreateRobot();
   const url = useParams();
@@ -39,20 +38,11 @@ export default function CreateEnvironmentFormStep1({
     initialValues: robotData?.step1,
     onSubmit: async () => {
       formik.setSubmitting(true);
-      if (!formik.values.configureWorkspace) {
-        createEnvironment(async () => {
-          setSidebarState((prevState: any) => {
-            return {
-              ...prevState,
-              isCreateMode: false,
-              page: "robot",
-            };
-          });
-        }, true);
-      } else {
-        formik.setSubmitting(false);
-        handleCreateRobotNextStep();
-      }
+
+      !formik.values.configureWorkspace && createEnvironment(true);
+
+      formik.setSubmitting(false);
+      handleCreateRobotNextStep();
     },
   });
 
@@ -84,7 +74,7 @@ export default function CreateEnvironmentFormStep1({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         environmentName: url?.robotName!,
@@ -98,64 +88,51 @@ export default function CreateEnvironmentFormStep1({
   }
 
   return (
-    <CreateFormLoader
+    <CFLoader
       type="step1-app"
       loadingText="Loading..."
       loadingItems={[]}
       isLoading={isImportRobot ? !responseRobot : false}
       formik={formik}
     >
-      <CFEnvName formik={formik} isImportRobot={isImportRobot} />
+      <CFSection>
+        <CFEnvName formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <Seperator />
+      <CFSection>
+        <CFEnvCategories formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <CFEnvCategories formik={formik} isImportRobot={isImportRobot} />
+      <CFSection>
+        <CFGpuTypes formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <Seperator />
+      <CFSection>
+        <CFStorageRange formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <CFGpuTypes formik={formik} isImportRobot={isImportRobot} />
+      <CFSection>
+        <CFVDICount formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <Seperator />
+      <CFSection>
+        <CFGpuResourceRange formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <CFStorageRange formik={formik} isImportRobot={isImportRobot} />
+      <CFSection>
+        <CFConfigWorkspaces formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
 
-      <Seperator />
+      <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
 
-      <CFVDICount formik={formik} disabled={isImportRobot} />
-
-      <Seperator />
-
-      <CFGpuResourceRange formik={formik} disabled={isImportRobot} />
-
-      <Seperator />
-
-      <CFConfigWorkspaces formik={formik} isImportRobot={isImportRobot} />
-
-      <Seperator />
-
-      <CFAdvancedSettings formik={formik} isImportRobot={isImportRobot} />
-
-      <div className="mt-10 flex gap-2">
-        <CFCancelButton disabled={formik.isSubmitting || isImportRobot} />
-        <Button
-          disabled={!formik.isValid || formik.isSubmitting || isImportRobot}
-          type="submit"
-          className="!h-11 text-xs"
-          text={
-            formik.isSubmitting ? (
-              <img
-                className="h-10 w-10"
-                src="/svg/general/loading.svg"
-                alt="loading"
-              />
-            ) : formik.values.configureWorkspace ? (
-              "Next Step"
-            ) : (
-              "Create Application"
-            )
-          }
-        />
-      </div>
-    </CreateFormLoader>
+      <CFEnvButtons formik={formik} disabled={isImportRobot} />
+    </CFLoader>
   );
 }

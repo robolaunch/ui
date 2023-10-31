@@ -20,7 +20,7 @@ export default function FormInputToggle({
   checked,
 }: IFormInputToggle) {
   return (
-    <div data-tut={dataTut} className="flex items-center gap-1">
+    <div data-tut={dataTut} className="flex items-center gap-1 pb-3">
       <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
         {labelName}
         <InfoTip content={labelInfoTip} />

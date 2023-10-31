@@ -71,6 +71,7 @@ export default ({ children }: any) => {
     setSelectedState,
     pagesState,
     setPagesState,
+    setSidebarState,
   } = useMain();
   const navigate = useNavigate();
   const { robotData, setRobotData } = useCreateRobot();
@@ -1183,7 +1184,7 @@ export default ({ children }: any) => {
       createRobotDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         robotName: robotData?.step1?.robotName,
         fleetName: selectedState?.fleet?.name,
@@ -1208,7 +1209,7 @@ export default ({ children }: any) => {
       createRobotDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData.step1.robotName,
@@ -1228,16 +1229,13 @@ export default ({ children }: any) => {
     );
   }
 
-  async function createEnvironment(
-    thenFunc: () => void,
-    withoutWorkspaces?: boolean,
-  ) {
+  async function createEnvironment(withoutWorkspaces?: boolean) {
     await dispatch(
       createEnvironmentDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         region: selectedState?.roboticsCloud?.region!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         fleetName: selectedState?.fleet?.name,
         environmentName: robotData?.step1?.robotName,
         domainName: robotData?.step1?.domainName,
@@ -1285,7 +1283,13 @@ export default ({ children }: any) => {
             ?.join("/") || "",
       }),
     ).then(async () => {
-      await thenFunc();
+      setSidebarState((prevState: any) => {
+        return {
+          ...prevState,
+          isCreateMode: false,
+          page: "robot",
+        };
+      });
     });
   }
 
@@ -1294,8 +1298,8 @@ export default ({ children }: any) => {
       createBuildManagerDispatch({
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         robotName: robotData?.step1?.robotName,
         fleetName: selectedState?.fleet?.name,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,
