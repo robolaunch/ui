@@ -1,8 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import {
-  IRobotLaunchStep,
-  IRobotWorkspace,
-} from "../../interfaces/robotInterfaces";
+import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
@@ -12,19 +9,18 @@ import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import InputSelect from "../InputSelect/InputSelect";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
-import InputError from "../InputError/InputError";
 import { FormikProps, useFormik } from "formik";
-import InputText from "../InputText/InputText";
-import { Editor } from "@monaco-editor/react";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import CFLaunchName from "../CFLaunchName/CFLaunchName";
+import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
+import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -70,8 +66,8 @@ export default function CreateRobotFormStep4({
         createLaunchManager({
           organizationId: selectedState?.organization?.organizationId!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.instance?.region,
+          instanceId: selectedState?.instance?.instanceId!,
+          region: selectedState?.instance?.region!,
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
           fleetName: selectedState?.fleet?.name,
           robotName: robotData?.step1?.robotName,
@@ -158,8 +154,8 @@ export default function CreateRobotFormStep4({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },
@@ -170,7 +166,7 @@ export default function CreateRobotFormStep4({
       },
     );
   }
-  console.log(responseBuildManager);
+
   return (
     <Fragment>
       <CreateRobotFormLoader
@@ -194,94 +190,12 @@ export default function CreateRobotFormStep4({
         }
         formik={formik}
       >
-        <div data-tut="create-robot-step4-name">
-          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-            Launch Manager Name:
-            <InfoTip content="Type a new launch manager name." />
-          </div>
-          <InputText
-            {...formik.getFieldProps(`name`)}
-            disabled={isImportRobot || formik?.isSubmitting}
-            className="!text-sm"
-          />
-          <InputError
-            // @ts-ignore
-            error={formik?.errors?.name}
-            touched={formik?.touched?.name}
-          />
-        </div>
+        <CFLaunchName formik={formik} disabled={isImportRobot} />
 
-        <div data-tut="create-robot-step4-workspace">
-          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-            Workspace:
-            <InfoTip content="Select a workspace." />
-          </div>
-          <InputSelect
-            {...formik.getFieldProps(`workspace`)}
-            disabled={isImportRobot || formik?.isSubmitting}
-          >
-            <Fragment>
-              {!formik?.values?.workspace && <option value=""></option>}
-              {robotData?.step2?.workspaces?.map(
-                (workspace: IRobotWorkspace, index: number) => (
-                  <option key={index} value={workspace.name}>
-                    {workspace.name}
-                  </option>
-                ),
-              )}
-            </Fragment>
-          </InputSelect>
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.workspace
-            }
-            touched={formik?.touched?.workspace}
-          />
-        </div>
+        <CFLaunchWorkspace formik={formik} disabled={isImportRobot} />
 
-        <div data-tut="create-robot-step4-code">
-          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-            Bash Code:
-            <InfoTip content="Type Bash code" />
-          </div>
-          <Editor
-            height="140px"
-            defaultLanguage="shell"
-            defaultValue={formik?.values?.entryPointCmd}
-            value={formik?.values?.entryPointCmd}
-            options={{
-              readOnly: isImportRobot || formik?.isSubmitting,
-              minimap: {
-                enabled: false,
-              },
-              fontSize: 12,
-              fontFamily: "monospace",
-              lineDecorationsWidth: 10,
-              wordWrap: "on",
-              lineNumbersMinChars: 3,
-              folding: false,
-              padding: {
-                top: 6,
-                bottom: 6,
-              },
-            }}
-            theme="vs-dark"
-            onChange={(e: any) => {
-              formik.setValues({
-                ...formik.values,
-                entryPointCmd: e,
-              });
-            }}
-          />
-          <InputError
-            error={
-              // @ts-ignore
-              formik?.errors?.entryPointCmd
-            }
-            touched={true}
-          />
-        </div>
+        <CFLaunchCode formik={formik} disabled={isImportRobot} />
+
         <CreateRobotFormCodeScope
           virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
           physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}

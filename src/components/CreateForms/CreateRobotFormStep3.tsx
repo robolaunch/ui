@@ -183,12 +183,11 @@ export default function CreateRobotFormStep3({
             : "Please wait while we create your robot. This may take a few minutes."
         }
         isLoading={
-          // !responseRobot?.robotClusters ||
-          // responseRobot?.robotClusters?.filter(
-          //   (robotCluster: any) =>
-          //     robotCluster?.robotStatus !== "EnvironmentReady",
-          // )?.length
-          false
+          !responseRobot?.robotClusters ||
+          responseRobot?.robotClusters?.filter(
+            (robotCluster: any) =>
+              robotCluster?.robotStatus !== "EnvironmentReady",
+          )?.length
         }
         loadingItems={responseRobot?.robotClusters?.map((item: any) => {
           return {

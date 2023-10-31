@@ -3,14 +3,14 @@ import {
   IRobotBuildSteps,
 } from "../../interfaces/robotInterfaces";
 import CFBuildStepItemAccordionHeader from "../CFBuildStepItemAccordionHeader/CFBuildStepItemAccordionHeader";
+import CFDeleteBuildButton from "../CFDeleteBuildButton/CFDeleteBuildButton";
 import CFBuildStepName from "../CFBuildStepName/CFBuildStepName";
 import CFBuildWorkspace from "../CFBuildWorkspace/CFBuildWorkspace";
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import CFCodeType from "../CFCodeType/CFCodeType";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import CFCode from "../CFCode/CFCode";
-import CFDeleteBuildButton from "../CFDeleteBuildButton/CFDeleteBuildButton";
 import CFScope from "../CFScope/CFScope";
 
 interface ICFBuildStepItem {
@@ -42,24 +42,19 @@ export default function CFBuildStepItem({
         />
       }
     >
-      <Fragment>
-        <div className="flex flex-col gap-2 p-4">
-          <CFBuildStepName formik={formik} buildStepIndex={buildStepIndex} />
+      <div className="flex flex-col gap-2 p-4">
+        <CFBuildStepName formik={formik} buildStepIndex={buildStepIndex} />
 
-          <CFBuildWorkspace formik={formik} buildStepIndex={buildStepIndex} />
+        <CFBuildWorkspace formik={formik} buildStepIndex={buildStepIndex} />
 
-          <CFCodeType formik={formik} buildStepIndex={buildStepIndex} />
+        <CFCodeType formik={formik} buildStepIndex={buildStepIndex} />
 
-          <CFCode formik={formik} buildStepIndex={buildStepIndex} />
+        <CFCode formik={formik} buildStepIndex={buildStepIndex} />
 
-          <CFScope formik={formik} buildStepIndex={buildStepIndex} />
+        <CFScope formik={formik} buildStepIndex={buildStepIndex} />
 
-          <CFDeleteBuildButton
-            formik={formik}
-            buildStepIndex={buildStepIndex}
-          />
-        </div>
-      </Fragment>
+        <CFDeleteBuildButton formik={formik} buildStepIndex={buildStepIndex} />
+      </div>
     </Accordion>
   );
 }

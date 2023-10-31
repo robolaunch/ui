@@ -12,7 +12,7 @@ export default ({ children }: any) => {
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
     isOpen: true,
     isCreateMode: true,
-    page: "buildsmanager",
+    page: "launchsmanager",
     instanceTab: "Cloud Instances",
   });
 
