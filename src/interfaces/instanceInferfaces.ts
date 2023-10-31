@@ -5,6 +5,35 @@ export interface IInstance {
   instanceState: string;
   instanceType: string;
   instanceCloudState: string;
-  cloudInstanceResource: any;
+  cloudInstanceResource: IInstanceResource;
   physicalInstanceResource: any;
+}
+
+export interface IInstanceResource {
+  architecture: string;
+  cpuTotal: number;
+  cpuUsage: number;
+  gpuUsage: IGpuUsage[];
+  kernelVersion: string;
+  kubernetesVersion: string;
+  memoryTotal: number;
+  memoryUsage: number;
+  networkUsage: INetworkUsage[];
+  operatingSystem: string;
+  operatingSystemDistro: string;
+  storageTotal: number;
+  storageUsage: number;
+  virtualGpu: number;
+}
+
+export interface IGpuUsage {
+  allocated: string;
+  capacity: string;
+  resourceName: string;
+}
+
+export interface INetworkUsage {
+  interfaceName: string;
+  trafficIn: string;
+  trafficOut: string;
 }

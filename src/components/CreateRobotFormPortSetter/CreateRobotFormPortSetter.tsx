@@ -55,7 +55,7 @@ export default function PortSetter({
           <InfoTip content="Type a ports with name." />
         </div>
         <div className="flex flex-col">
-          {formik.values?.[`${type}CustomPorts`].map(
+          {formik.values?.[`${type}CustomPorts`]?.map(
             (_: any, index: number) => {
               return (
                 <CreateRobotFormPortInput
@@ -75,7 +75,7 @@ export default function PortSetter({
         onClick={async () => {
           await formik.setFieldValue(
             `${type}CustomPorts`,
-            formik.values?.[`${type}CustomPorts`].concat({
+            formik.values?.[`${type}CustomPorts`]?.concat({
               name: "",
               port: undefined,
               backendPort: await getPort(),

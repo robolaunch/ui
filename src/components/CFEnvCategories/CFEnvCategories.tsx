@@ -78,10 +78,10 @@ export default function CFEnvCategories({
         >
           <div className="grid grid-cols-2 gap-2">
             {responseReadyEnvironments
-              .filter(
+              ?.filter(
                 (env: any) => env?.domainName === formik.values?.domainName,
               )
-              .map((environment: any, index: number) => (
+              ?.map((environment: any, index: number) => (
                 <CFGridButton
                   key={index}
                   selected={
@@ -115,7 +115,7 @@ export default function CFEnvCategories({
                       });
                   }}
                   text={
-                    <Fragment>
+                    <div className="flex flex-col gap-1 text-center">
                       <span>
                         {environment?.application?.name} v(
                         {environment?.application?.version})
@@ -125,7 +125,7 @@ export default function CFEnvCategories({
                         {environment?.devspace?.ubuntuDistro}{" "}
                         {environment?.devspace?.version}
                       </span>
-                    </Fragment>
+                    </div>
                   }
                 />
               ))}

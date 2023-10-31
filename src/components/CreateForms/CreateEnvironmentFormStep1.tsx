@@ -39,10 +39,12 @@ export default function CreateEnvironmentFormStep1({
     onSubmit: async () => {
       formik.setSubmitting(true);
 
-      !formik.values.configureWorkspace && createEnvironment(true);
-
-      formik.setSubmitting(false);
-      handleCreateRobotNextStep();
+      if (!formik.values.configureWorkspace) {
+        createEnvironment(true);
+      } else {
+        formik.setSubmitting(false);
+        handleCreateRobotNextStep();
+      }
     },
   });
 
