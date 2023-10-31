@@ -1,17 +1,17 @@
 import React, { ReactElement } from "react";
 import StateCell from "../TableInformationCells/StateCell";
 
-interface ICreateRobotFormBuildStepItemAccordionHeader {
+interface ICFBuildStepItemAccordionHeader {
   buildStep: any;
   buildStepIndex: number;
   isImportRobot?: boolean;
 }
 
-export default function CreateRobotFormBuildStepItemAccordionHeader({
+export default function CFBuildStepItemAccordionHeader({
   buildStep,
   buildStepIndex,
   isImportRobot,
-}: ICreateRobotFormBuildStepItemAccordionHeader): ReactElement {
+}: ICFBuildStepItemAccordionHeader): ReactElement {
   return (
     <div className="flex justify-between">
       <span className="font-medium">

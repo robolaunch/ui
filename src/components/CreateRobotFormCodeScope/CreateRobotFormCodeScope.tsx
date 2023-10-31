@@ -1,9 +1,8 @@
 import React, { ReactElement } from "react";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
-import InputError from "../InputError/InputError";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
-import InfoTip from "../InfoTip/InfoTip";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
 
 interface ICreateRobotFormCodeScope {
   virtualInstanceChecked?: boolean;
@@ -30,11 +29,14 @@ export default function CreateRobotFormCodeScope({
   const { selectedState } = useMain();
 
   return (
-    <div data-tut="create-robot-build-step-scope">
-      <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-        <span>Code Scope:</span>
-        <InfoTip content="Code Scope" />
-      </div>
+    <CFInfoBar
+      label="Code Scope:"
+      tip="Code Scope"
+      dataTut="create-robot-build-step-code-scope"
+      vertical
+      error={error}
+      touched={true}
+    >
       <div className="flex gap-4">
         <div className="flex items-center gap-2">
           <span className="text-xs">
@@ -63,8 +65,6 @@ export default function CreateRobotFormCodeScope({
           </div>
         )}
       </div>
-
-      <InputError error={error} touched={true} />
-    </div>
+    </CFInfoBar>
   );
 }

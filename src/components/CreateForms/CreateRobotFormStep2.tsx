@@ -1,25 +1,25 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
-import CFLoader from "../CFLoader/CFLoader";
-import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
+import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
 import { useParams } from "react-router-dom";
+import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { toast } from "sonner";
-import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;

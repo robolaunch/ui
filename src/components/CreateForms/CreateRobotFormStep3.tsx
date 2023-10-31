@@ -1,22 +1,22 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
-import CreateRobotFormBuildStepItem from "../CreateRobotFormBuildStepItem/CreateRobotFormBuildStepItem";
-import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormLoader from "../CFLoader/CFLoader";
+import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
-import FormInputText from "../FormInputText/FormInputText";
+import { createBuildManager } from "../../toolkit/RobotSlice";
+import CFCancelButton from "../CFCancelButton/CFCancelButton";
+import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
+import CFBuildName from "../CFBuildName/CFBuildName";
 import useFunctions from "../../hooks/useFunctions";
+import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
-import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import { useAppDispatch } from "../../hooks/redux";
-import { createBuildManager } from "../../toolkit/RobotSlice";
 
 interface ICreateRobotFormStep3 {
   isImportRobot?: boolean;
@@ -73,7 +73,7 @@ export default function CreateRobotFormStep3({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
@@ -91,8 +91,8 @@ export default function CreateRobotFormStep3({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },
@@ -143,8 +143,8 @@ export default function CreateRobotFormStep3({
         createBuildManager({
           organizationId: selectedState?.organization?.organizationId!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.instance?.region,
+          instanceId: selectedState?.instance?.instanceId!,
+          region: selectedState?.instance?.region!,
           robotName: robotData?.step1?.robotName,
           fleetName: selectedState?.fleet?.name,
           physicalInstanceName: robotData?.step1?.physicalInstanceName,
@@ -183,11 +183,12 @@ export default function CreateRobotFormStep3({
             : "Please wait while we create your robot. This may take a few minutes."
         }
         isLoading={
-          !responseRobot?.robotClusters ||
-          responseRobot?.robotClusters?.filter(
-            (robotCluster: any) =>
-              robotCluster?.robotStatus !== "EnvironmentReady",
-          )?.length
+          // !responseRobot?.robotClusters ||
+          // responseRobot?.robotClusters?.filter(
+          //   (robotCluster: any) =>
+          //     robotCluster?.robotStatus !== "EnvironmentReady",
+          // )?.length
+          false
         }
         loadingItems={responseRobot?.robotClusters?.map((item: any) => {
           return {
@@ -364,49 +365,15 @@ export default function CreateRobotFormStep3({
           </div>
         ) : (
           <Fragment>
-            <FormInputText
-              dataTut="create-robot-step3-name"
-              labelName="Build Manager Name:"
-              labelInfoTip="Type a new build manager name."
-              inputError={formik.errors.buildManagerName}
-              inputTouched={formik.touched.buildManagerName}
-              disabled={formik?.isSubmitting}
-              inputProps={formik.getFieldProps("buildManagerName")}
-              inputHoverText="Type a new build manager name."
+            <CFBuildName formik={formik} />
+
+            <CFBuildMapper
+              formik={formik}
+              responseBuildManager={responseBuildManager}
+              isImportRobot={isImportRobot}
             />
 
-            <div data-tut="create-robot-step3-steps">
-              <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-                Build Steps:
-                <InfoTip content="Build Steps" />
-              </div>
-              <div className="flex flex-col gap-2">
-                {robotData?.step3?.robotBuildSteps?.map(
-                  (buildStep: any, buildStepIndex: number) => {
-                    return (
-                      <CreateRobotFormBuildStepItem
-                        key={buildStepIndex}
-                        formik={formik}
-                        buildStep={buildStep}
-                        buildStepIndex={buildStepIndex}
-                        stepState={responseBuildManager?.robotClusters?.map(
-                          (item: any) => item?.buildManagerStatus,
-                        )}
-                        disabled={isImportRobot || formik?.isSubmitting}
-                        isImportRobot={isImportRobot || false}
-                      />
-                    );
-                  },
-                )}
-              </div>
-            </div>
-
-            <div data-tut="create-robot-step3-build-add-button">
-              <CreateRobotFormAddButton
-                onClick={() => handleAddStepToBuildStep(formik)}
-                disabled={formik?.isSubmitting}
-              />
-            </div>
+            <CFAddBuildButton formik={formik} />
 
             <div className="mt-10 flex w-full gap-2">
               {isImportRobot ? (
@@ -415,7 +382,7 @@ export default function CreateRobotFormStep3({
                   submitting={formik?.isSubmitting}
                 />
               ) : (
-                <CreateRobotFormCancelButton disabled={formik?.isSubmitting} />
+                <CFCancelButton disabled={formik?.isSubmitting} />
               )}
               <Button
                 type="submit"

@@ -6,7 +6,7 @@ import InputError from "../InputError/InputError";
 interface IFormInputSelect {
   dataTut?: string;
   labelName: string;
-  labelInfoTip: string;
+  tip: string;
   inputProps?: any;
   options: ReactElement;
   disabled?: boolean;
@@ -19,7 +19,7 @@ interface IFormInputSelect {
 export default function FormInputSelect({
   dataTut,
   labelName,
-  labelInfoTip,
+  tip,
   inputProps,
   options,
   disabled,
@@ -34,7 +34,7 @@ export default function FormInputSelect({
         className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700 ${classNameInput}`}
       >
         {labelName}
-        <InfoTip content={labelInfoTip} rightTip />
+        <InfoTip content={tip} rightTip />
       </div>
       <InputSelect {...inputProps} disabled={disabled}>
         <Fragment>{options}</Fragment>
