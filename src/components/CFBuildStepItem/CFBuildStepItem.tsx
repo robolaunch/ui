@@ -11,7 +11,7 @@ import CFCodeType from "../CFCodeType/CFCodeType";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import CFCode from "../CFCode/CFCode";
-import CFScope from "../CFScope/CFScope";
+import CFBuildScope from "../CFBuildScope/CFBuildScope";
 
 interface ICFBuildStepItem {
   formik: FormikProps<IRobotBuildSteps>;
@@ -51,7 +51,7 @@ export default function CFBuildStepItem({
 
         <CFCode formik={formik} buildStepIndex={buildStepIndex} />
 
-        <CFScope formik={formik} buildStepIndex={buildStepIndex} />
+        <CFBuildScope formik={formik} buildStepIndex={buildStepIndex} />
 
         <CFDeleteBuildButton formik={formik} buildStepIndex={buildStepIndex} />
       </div>

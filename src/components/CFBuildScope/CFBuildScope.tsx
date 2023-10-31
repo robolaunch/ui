@@ -5,15 +5,15 @@ import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
 import useMain from "../../hooks/useMain";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
-interface ICFBuildName {
+interface ICFBuildScope {
   formik: FormikProps<IRobotBuildSteps>;
   buildStepIndex: number;
 }
 
-export default function CFScope({
+export default function CFBuildScope({
   formik,
   buildStepIndex,
-}: ICFBuildName): ReactElement {
+}: ICFBuildScope): ReactElement {
   const { selectedState } = useMain();
   const { robotData } = useCreateRobot();
 

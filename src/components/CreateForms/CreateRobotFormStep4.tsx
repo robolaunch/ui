@@ -2,9 +2,6 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
-import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
@@ -14,13 +11,14 @@ import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
-import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import CFLaunchName from "../CFLaunchName/CFLaunchName";
 import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
+import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
+import CFEnvMapper from "../CFEnvMapper/CFEnvMapper";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -33,8 +31,7 @@ export default function CreateRobotFormStep4({
   robotDataLaunchIndex,
   robotClusters,
 }: ICreateRobotFormStep4): ReactElement {
-  const { robotData, setRobotData, handleAddENVToLaunchStep } =
-    useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
@@ -196,73 +193,9 @@ export default function CreateRobotFormStep4({
 
         <CFLaunchCode formik={formik} disabled={isImportRobot} />
 
-        <CreateRobotFormCodeScope
-          virtualInstanceDisabled={isImportRobot || formik?.isSubmitting}
-          physicalInstanceDisabled={isImportRobot || formik?.isSubmitting}
-          virtualInstanceChecked={formik.values?.instancesName?.includes(
-            selectedState?.instance?.name,
-          )}
-          virtualInstanceOnChange={() => {
-            formik.setValues({
-              ...formik.values,
-              instancesName: formik.values.instancesName.includes(
-                selectedState?.instance?.name,
-              )
-                ? formik.values.instancesName.filter(
-                    (item) => item !== selectedState?.instance?.name,
-                  )
-                : [
-                    ...formik.values.instancesName,
-                    selectedState?.instance?.name,
-                  ],
-            });
-          }}
-          physicalInstanceOnChange={(e) => {
-            formik.setValues({
-              ...formik.values,
-              instancesName: formik.values.instancesName.includes(
-                robotData?.step1?.physicalInstanceName,
-              )
-                ? formik.values.instancesName.filter(
-                    (item) => item !== robotData?.step1?.physicalInstanceName,
-                  )
-                : [
-                    ...formik.values.instancesName,
-                    robotData?.step1?.physicalInstanceName,
-                  ],
-            });
-          }}
-          error={
-            // @ts-ignore
-            formik?.errors?.instancesName
-          }
-        />
-        <div
-          data-tut="create-robot-step4-environments"
-          className="flex flex-col gap-2"
-        >
-          <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-            Environment Variables:
-            <InfoTip content="Type Environment Variables" />
-          </div>
-          {formik?.values?.robotLmEnvs?.map((env: any, envIndex: number) => {
-            return (
-              <CreateRobotFormEnvItem
-                key={envIndex}
-                formik={formik}
-                envIndex={envIndex}
-                disabled={isImportRobot || formik?.isSubmitting}
-              />
-            );
-          })}
+        <CFLaunchScope formik={formik} disabled={isImportRobot} />
 
-          <div data-tut="create-robot-step4-environments-add-button">
-            <CreateRobotFormAddButton
-              onClick={() => handleAddENVToLaunchStep(formik)}
-              disabled={isImportRobot || formik?.isSubmitting}
-            />
-          </div>
-        </div>
+        <CFEnvMapper formik={formik} disabled={isImportRobot} />
 
         <div className="mt-10 flex gap-2">
           {!isImportRobot ? (
