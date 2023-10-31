@@ -3,10 +3,10 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
+import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
 import CFLoader from "../CFLoader/CFLoader";
-import CFWorkspaces from "../CFWorkspaces/CFWorkspaces";
+import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
@@ -279,7 +279,7 @@ export default function CreateRobotFormStep2({
       }
       formik={formik}
     >
-      <CFWorkspaces
+      <CFWorkspacesMapper
         formik={formik}
         responseRobot={responseRobot}
         isImportRobot={isImportRobot}
@@ -288,20 +288,22 @@ export default function CreateRobotFormStep2({
       <CFAddWorkspaceButton formik={formik} />
 
       <Fragment>
-        {!(envOnPremiseRobot && url?.robotName ? true : false) && (
+        {!(envOnPremiseRobot && url?.robotName) && (
           <div className="mt-10 flex w-full flex-col gap-6">
             <div className="flex gap-2">
               {!isImportRobot && (
-                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
+                <CFCancelButton disabled={formik.isSubmitting} />
               )}
               <Button
                 type="submit"
                 disabled={
-                  !formik?.isValid ||
-                  formik.isSubmitting ||
-                  JSON.stringify(formik.initialValues) ===
-                    JSON.stringify(formik.values) ||
-                  (envOnPremiseRobot && url?.robotName ? true : false)
+                  !!(
+                    !formik?.isValid ||
+                    formik.isSubmitting ||
+                    JSON.stringify(formik.initialValues) ===
+                      JSON.stringify(formik.values) ||
+                    (envOnPremiseRobot && url?.robotName)
+                  )
                 }
                 loading={formik.isSubmitting}
                 className="!h-11 w-full text-xs"
@@ -313,15 +315,15 @@ export default function CreateRobotFormStep2({
                       alt="loading"
                     />
                   ) : isImportRobot ? (
-                    `Update Robot`
+                    "Update Robot"
                   ) : robotData?.step1?.isDevelopmentMode ? (
                     envOnPremiseRobot ? (
-                      `Create Application with Workspaces`
+                      "Create Application with Workspaces"
                     ) : (
-                      `Create Robot`
+                      "Create Robot"
                     )
                   ) : (
-                    `Next Step`
+                    "Next Step"
                   )
                 }
               />

@@ -7,17 +7,17 @@ import {
   IRobotWorkspaces,
 } from "../../interfaces/robotInterfaces";
 
-interface ICFWorkspaces {
+interface ICFWorkspacesMapper {
   formik: FormikProps<IRobotWorkspaces>;
   responseRobot: any;
   isImportRobot?: boolean;
 }
 
-export default function CFWorkspaces({
+export default function CFWorkspacesMapper({
   formik,
   responseRobot,
   isImportRobot,
-}: ICFWorkspaces): ReactElement {
+}: ICFWorkspacesMapper): ReactElement {
   const { robotData } = useCreateRobot();
 
   return (
