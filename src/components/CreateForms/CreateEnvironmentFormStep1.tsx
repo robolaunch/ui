@@ -1,7 +1,6 @@
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import CFGpuResourceRange from "../CFGpuResourceRange/CFGpuResourceRange";
 import React, { ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import { IRobotStep1 } from "../../interfaces/robotInterfaces";
