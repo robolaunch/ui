@@ -23,7 +23,7 @@ export default ({ children }: any) => {
       isEnabledROS2Bridge: true,
       remoteDesktop: {
         isEnabled: true,
-        sessionCount: 1,
+        sessionCount: 2,
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,

@@ -1242,7 +1242,7 @@ export default ({ children }: any) => {
             environmentName: robotData?.step1?.robotName,
             domainName: robotData?.step1?.domainName,
             storageAmount: robotData?.step1?.robotStorage,
-            ideGpuResource: robotData?.step1?.ideGpuResource,
+            ideGpuResource: 1,
             ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
             vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
             applicationName: robotData?.step1?.application?.name,
