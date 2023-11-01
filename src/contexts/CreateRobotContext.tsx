@@ -17,7 +17,7 @@ export default ({ children }: any) => {
       physicalInstanceName: "",
       robotStorage: 40,
       isEnabledIde: true,
-      ideGpuResource: 2,
+      ideGpuResource: 0,
       ideGpuResourceType: "",
       configureWorkspace: false,
       isEnabledROS2Bridge: true,

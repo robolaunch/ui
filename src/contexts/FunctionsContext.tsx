@@ -1252,21 +1252,7 @@ export default ({ children }: any) => {
             devspaceVersion: robotData?.step1?.devspace?.version,
             permittedDirectories: robotData?.step1?.permittedDirectories,
             persistentDirectories: robotData?.step1?.persistentDirectories,
-            workspaces: withoutWorkspaces
-              ? [
-                  {
-                    name: "ws1",
-                    workspaceDistro: "",
-                    robotRepositories: [
-                      {
-                        name: "repo1",
-                        url: "https://github.com/robolaunch/robolaunch",
-                        branch: "main",
-                      },
-                    ],
-                  },
-                ]
-              : robotData?.step2.workspaces,
+            workspaces: withoutWorkspaces ? null : robotData?.step2.workspaces,
             ideCustomPorts:
               robotData.step1.ideCustomPorts
                 ?.map((port) => {

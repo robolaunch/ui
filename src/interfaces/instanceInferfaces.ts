@@ -27,6 +27,8 @@ export interface IInstanceResource {
 }
 
 export interface IGpuUsage {
+  gpuModel: string;
+  gpuUtilization: string;
   allocated: string;
   capacity: string;
   resourceName: string;

@@ -35,12 +35,14 @@ export default function CFGpuResourceRange({
         tip="GPU Resource"
         dataTut="create-environment-gpu-resource"
         InputProps={formik.getFieldProps("ideGpuResource")}
-        min={1}
+        min={0}
         max={
           Number(selectedGpu?.capacity) - Number(selectedGpu?.allocated) - 1 ||
           1
         }
         disabled={formik.isSubmitting || disabled}
+        error={formik.errors.ideGpuResource}
+        touched={true}
       />
     </Fragment>
   );

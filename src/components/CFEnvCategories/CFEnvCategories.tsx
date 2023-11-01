@@ -39,6 +39,15 @@ export default function CFEnvCategories({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik?.values?.domainName, formik?.initialValues?.domainName]);
 
+  useEffect(() => {
+    formik?.values?.application?.name &&
+      formik.setValues({
+        ...formik.values,
+        ideGpuResource: 0,
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik?.values?.application?.name]);
+
   return (
     <Fragment>
       <CFInfoBar

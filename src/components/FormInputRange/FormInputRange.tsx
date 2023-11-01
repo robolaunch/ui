@@ -9,6 +9,8 @@ interface IFormInputRange {
   min?: number;
   max?: number;
   disabled?: boolean;
+  error?: any;
+  touched?: boolean;
 }
 
 export default function FormInputRange({
@@ -19,9 +21,17 @@ export default function FormInputRange({
   min,
   max,
   disabled,
+  error,
+  touched,
 }: IFormInputRange): ReactElement {
   return (
-    <CFInfoBar label={label} tip={tip} dataTut={dataTut}>
+    <CFInfoBar
+      label={label}
+      tip={tip}
+      dataTut={dataTut}
+      error={error}
+      touched={touched}
+    >
       <input
         min={min}
         max={max}

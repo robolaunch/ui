@@ -9,7 +9,7 @@ interface ICirclePercentageBar {
 
 export default function CirclePercentageBar({
   percentage,
-  size = 60,
+  size = 50,
   title = "",
 }: ICirclePercentageBar): ReactElement {
   const strokeWidth = 4; // Border kalınlığı
@@ -24,7 +24,7 @@ export default function CirclePercentageBar({
       className="flex flex-col items-center gap-1"
       style={{ textAlign: "center" }}
     >
-      {!percentage ? (
+      {typeof percentage !== "number" ? (
         <ContentLoader
           width={100}
           height={120}

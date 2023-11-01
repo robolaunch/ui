@@ -29,8 +29,8 @@ export default function CFInfoBar({
           <InfoTip content={tip} />
         </div>
         {children}
-        <InputError error={error} touched={touched} />
       </div>
+      <InputError error={error} touched={touched} />
     </div>
   );
 }

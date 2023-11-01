@@ -113,7 +113,7 @@ export default function CreateEnvironmentFormStep1({
       </CFSection>
 
       <CFSection>
-        <CFStorageRange formik={formik} disabled={isImportRobot} />
+        <CFGpuResourceRange formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
 
@@ -123,7 +123,7 @@ export default function CreateEnvironmentFormStep1({
       </CFSection>
 
       <CFSection>
-        <CFGpuResourceRange formik={formik} disabled={isImportRobot} />
+        <CFStorageRange formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
 

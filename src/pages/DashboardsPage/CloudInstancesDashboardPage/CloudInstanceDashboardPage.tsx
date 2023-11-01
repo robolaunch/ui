@@ -27,6 +27,7 @@ import useMain from "../../../hooks/useMain";
 import { RiCpuLine } from "react-icons/ri";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { getGuideItem } from "../../../functions/handleGuide";
+import { BsGpuCard } from "react-icons/bs";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
@@ -230,7 +231,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
       },
       {
@@ -245,8 +246,8 @@ export default function CloudInstanceDashboardPage(): ReactElement {
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
       },
       {
         ifErrorNavigateTo404: !responseFleets,
@@ -285,6 +286,15 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               percentage:
                 pagesState?.instance?.cloudInstanceResource?.cpuUsage || 0,
             },
+            // {
+            //   title: `GPU (${pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]?.gpuModel})`,
+            //   percentage:
+            //     Number(
+            //       pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]?.gpuUtilization?.charAt(
+            //         0,
+            //       ),
+            //     ) || 1,
+            // },
             {
               title: `Memory (${
                 pagesState?.instance?.cloudInstanceResource?.memoryTotal || 0
@@ -299,12 +309,23 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               percentage:
                 Number(
                   (
-                    (pagesState?.instance?.cloudInstanceResource?.storageTotal /
+                    (pagesState?.instance?.cloudInstanceResource
+                      ?.storageTotal! /
                       100) *
-                    (pagesState?.instance?.cloudInstanceResource?.storageTotal -
-                      pagesState?.instance?.cloudInstanceResource?.storageUsage)
+                    (pagesState?.instance?.cloudInstanceResource
+                      ?.storageTotal! -
+                      pagesState?.instance?.cloudInstanceResource
+                        ?.storageUsage!)
                   ).toFixed(),
                 ) || 0,
+            },
+            {
+              title: `In Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficIn})`,
+              percentage: 1,
+            },
+            {
+              title: `Out Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficOut})`,
+              percentage: 1,
             },
           ]}
         />
@@ -341,6 +362,13 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               title: "K8S Version",
               value:
                 pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
+            },
+            {
+              icon: <BsGpuCard size={16} />,
+              title: "GPU Model",
+              value:
+                pagesState?.instance?.cloudInstanceResource?.gpuUsage?.[0]
+                  ?.gpuModel,
             },
           ]}
         />

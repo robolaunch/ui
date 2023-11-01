@@ -15,9 +15,9 @@ export default function CFGridButton({
 }: ICFGridButton): ReactElement {
   return (
     <div
-      className={`transition-300 flex items-center justify-center rounded border-2 px-1 py-3 text-xs capitalize text-layer-dark-700 hover:scale-95
+      className={`transition-300 flex items-center justify-center rounded border-2 px-1 py-3 text-xs capitalize text-layer-dark-700 
         ${selected && "border-layer-primary-600 shadow"}
-        ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+        ${disabled ? "cursor-not-allowed" : "cursor-pointer hover:scale-95"}`}
       onClick={onClick}
     >
       {text}
