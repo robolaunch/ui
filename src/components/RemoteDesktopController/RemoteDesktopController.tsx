@@ -82,6 +82,8 @@ export default function RemoteDesktopController({
 
           <RestartService type="vdi" />
 
+          <RestartService type="soft-vdi" />
+
           <VolumeControl
             isMuted={remoteDesktopReducer?.isMuted}
             handleVolumeControl={handleVolumeControl}

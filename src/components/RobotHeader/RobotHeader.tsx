@@ -20,7 +20,7 @@ export default function RobotHeader(): ReactElement {
   return (
     <div data-tut="robot-header" className="col-span-full">
       <CardLayout className="px-8 !pb-0 pt-6">
-        <div className="flex h-28 items-center justify-between">
+        <div className="flex h-20 items-start justify-between">
           <div
             data-tut="robot-information"
             className="flex h-full flex-col justify-around"
@@ -59,19 +59,21 @@ export default function RobotHeader(): ReactElement {
               </span>
             </span>
           </div>
-          <div className="hidden gap-8 text-xs font-medium text-layer-dark-400 md:flex">
-            <div className="flex h-full flex-col items-end gap-4">
+          <div className="hidden h-full gap-8 text-xs font-medium text-layer-dark-400 md:flex">
+            <div className="flex  flex-col items-end justify-around gap-2.5">
               <RobotServiceButtons />
               <RobotConnectionsViewer
                 ide={isSettedCookie}
                 vdiURL={responseRobot?.vdiIngressEndpoint}
                 ros={ros}
               />
-              <RobotResource responseRobot={responseRobot} />
             </div>
           </div>
         </div>
-        <RobotHeaderTabs />
+        <div className="flex items-center justify-between">
+          <RobotHeaderTabs />
+          <RobotResource responseRobot={responseRobot} />
+        </div>
       </CardLayout>
     </div>
   );

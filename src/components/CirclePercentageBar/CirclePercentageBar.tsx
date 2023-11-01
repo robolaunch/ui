@@ -5,12 +5,16 @@ interface ICirclePercentageBar {
   percentage: number;
   size?: number;
   title?: string;
+  hiddenCircle?: boolean;
+  content?: ReactElement;
 }
 
 export default function CirclePercentageBar({
-  percentage,
+  percentage = -1,
   size = 50,
   title = "",
+  hiddenCircle = false,
+  content,
 }: ICirclePercentageBar): ReactElement {
   const strokeWidth = 4; // Border kalınlığı
   const radius = size * 0.5 - strokeWidth; // Çemberin yarıçapı
@@ -24,7 +28,7 @@ export default function CirclePercentageBar({
       className="flex flex-col items-center gap-1"
       style={{ textAlign: "center" }}
     >
-      {typeof percentage !== "number" ? (
+      {percentage === -1 ? (
         <ContentLoader
           width={100}
           height={120}
@@ -39,7 +43,7 @@ export default function CirclePercentageBar({
         <Fragment>
           <svg
             className="animate__animated animate_fadeIn relative"
-            width={size}
+            width={content ? size * 1.75 : size}
             height={size}
             viewBox={`0 0 ${size} ${size}`}
             fill="none"
@@ -48,7 +52,7 @@ export default function CirclePercentageBar({
               cx={center}
               cy={center}
               r={radius}
-              stroke="#cbd0d8"
+              stroke={hiddenCircle ? "transparent" : "#cbd0d8"}
               strokeWidth={strokeWidth}
               fill="transparent"
             />
@@ -56,26 +60,24 @@ export default function CirclePercentageBar({
               cx={center}
               cy={center}
               r={radius}
-              stroke="#0B5ED7"
+              stroke={hiddenCircle ? "transparent" : "#0B5ED7"}
               strokeWidth={strokeWidth}
               fill="transparent"
               strokeDasharray={circumference}
               strokeDashoffset={dashOffset}
               transform={`rotate(-90 ${center} ${center})`}
             />
-            {percentage && (
-              <text
-                x={center}
-                y={center}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize={size * 0.25}
-                fontWeight="semibold"
-                fill="#000"
-              >
-                {percentage}%
-              </text>
-            )}
+            <text
+              x={center}
+              y={center}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={size * 0.25}
+              fontWeight="semibold"
+              fill="#000"
+            >
+              {typeof percentage === "number" ? percentage + "%" : content}
+            </text>
           </svg>
           <p
             style={{

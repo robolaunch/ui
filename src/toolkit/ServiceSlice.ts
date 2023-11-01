@@ -3,7 +3,7 @@ import { kubernetesApi } from "../api/api";
 import { toast } from "sonner";
 
 export const restartService = createAsyncThunk(
-  "robot/getPort",
+  "service/restartService",
   async (values: {
     organizationId: string;
     roboticsCloudName: string;
@@ -14,7 +14,44 @@ export const restartService = createAsyncThunk(
     podName: string;
   }) => {
     const response = await kubernetesApi.restartPod({
-      name: "robot/restartService",
+      name: "service/restartService",
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values?.instanceId,
+              region: values?.region,
+              environments: [
+                {
+                  fleetName: values?.fleetName,
+                  name: values?.environmentName,
+                  podName: values?.podName,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const vdiSoftReload = createAsyncThunk(
+  "service/vdiSoftReload",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    environmentName: string;
+    podName: string;
+  }) => {
+    const response = await kubernetesApi.vdiSoftReload({
+      name: "service/vdiSoftReload",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {

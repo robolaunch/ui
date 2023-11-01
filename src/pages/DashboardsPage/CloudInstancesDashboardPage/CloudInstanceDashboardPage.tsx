@@ -284,7 +284,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                 pagesState?.instance?.cloudInstanceResource?.cpuTotal || 0
               } Core)`,
               percentage:
-                pagesState?.instance?.cloudInstanceResource?.cpuUsage || 0,
+                pagesState?.instance?.cloudInstanceResource?.cpuUsage || -1,
             },
             // {
             //   title: `GPU (${pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]?.gpuModel})`,
@@ -300,7 +300,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                 pagesState?.instance?.cloudInstanceResource?.memoryTotal || 0
               } GB)`,
               percentage:
-                pagesState?.instance?.cloudInstanceResource?.memoryUsage || 0,
+                pagesState?.instance?.cloudInstanceResource?.memoryUsage || -1,
             },
             {
               title: `Storage (${
@@ -317,15 +317,27 @@ export default function CloudInstanceDashboardPage(): ReactElement {
                       pagesState?.instance?.cloudInstanceResource
                         ?.storageUsage!)
                   ).toFixed(),
-                ) || 0,
+                ) || -1,
             },
             {
-              title: `In Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficIn})`,
-              percentage: 1,
+              title: `In Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.interfaceName})`,
+              percentage:
+                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
+                  ?.trafficIn || -1,
+              hiddenCircle: true,
+              content:
+                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
+                  ?.trafficIn,
             },
             {
-              title: `Out Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficOut})`,
-              percentage: 1,
+              title: `Out Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.interfaceName})`,
+              percentage:
+                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
+                  ?.trafficOut || -1,
+              hiddenCircle: true,
+              content:
+                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
+                  ?.trafficOut,
             },
           ]}
         />

@@ -17,11 +17,11 @@ export default function RobotServiceButtons(): ReactElement {
             disabled={!isSettedCookie || !isRobotReady}
             loading={!isSettedCookie || !isRobotReady}
             text={"Code Editor"}
-            className="!h-9 px-4 text-xs"
+            className="m-0 !h-9 px-4 text-xs"
           />
         </a>
       </div>
-      <div className="flex items-center rounded-lg p-2">
+      <div className="flex items-center rounded-lg">
         <a
           target="_blank"
           rel="noreferrer"

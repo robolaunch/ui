@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import CreateRobotFormPortInput from "../CreateRobotFormPortInput/CreateRobotFormPortInput";
-import InfoTip from "../InfoTip/InfoTip";
 import { useAppDispatch } from "../../hooks/redux";
 import { getPort as getFreePort } from "../../toolkit/PortSlice";
 import useMain from "../../hooks/useMain";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
 
 interface ICreateRobotFormPortSetter {
   formik: any;
@@ -49,11 +49,11 @@ export default function PortSetter({
 
   return (
     <div>
-      <div>
-        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-          {type === "ide" ? "IDE" : "VDI"} Ports:
-          <InfoTip content="Type a ports with name." />
-        </div>
+      <CFInfoBar
+        label={`${type === "ide" ? "IDE" : "VDI"} Ports:`}
+        tip="Type a ports with name."
+        vertical
+      >
         <div className="flex flex-col">
           {formik.values?.[`${type}CustomPorts`]?.map(
             (_: any, index: number) => {
@@ -68,7 +68,7 @@ export default function PortSetter({
             },
           )}
         </div>
-      </div>
+      </CFInfoBar>
 
       <CreateRobotFormAddButton
         disabled={isImportRobot}

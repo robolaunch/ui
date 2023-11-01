@@ -1087,7 +1087,7 @@ export default ({ children }: any) => {
                     ?.cloudInstances[0]?.environments[0]?.ideEnabled,
                 ideGpuResourceType:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.ideGpuResourceType,
+                    ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
                 isEnabledROS2Bridge:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
@@ -1123,25 +1123,24 @@ export default ({ children }: any) => {
                 persistentDirectories:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.persistentDirectories,
-
                 ideCustomPorts:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
                     ?.split("/")
-                    .map((item: string) => {
+                    ?.map((item: string) => {
                       return {
-                        name: item.split("-")[0],
-                        port: item.split("-")[1].split(":")[1],
-                        backendPort: item.split("-")[1].split(":")[0],
+                        name: item?.split("-")[0],
+                        port: item?.split("-")[1].split(":")[0],
+                        backendPort: item?.split("-")[1].split(":")[1],
                       };
                     }),
                 vdiCustomPorts:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
                     ?.split("/")
-                    .map((item: string) => {
+                    ?.map((item: string) => {
                       return {
-                        name: item.split("-")[0],
-                        port: item.split("-")[1].split(":")[1],
-                        backendPort: item.split("-")[1].split(":")[0],
+                        name: item?.split("-")[0],
+                        port: item?.split("-")[1].split(":")[0],
+                        backendPort: item?.split("-")[1].split(":")[1],
                       };
                     }),
               },

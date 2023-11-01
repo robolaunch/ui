@@ -108,7 +108,7 @@ export default function RobotHeaderTabs(): ReactElement {
   return (
     <ul
       data-tut="robot-header-tabs"
-      className="flex items-end gap-6 overflow-x-auto px-6 pt-5"
+      className="flex items-end gap-6 overflow-x-auto px-6 pt-4"
     >
       {tabs
         ?.filter((tab: any) => tab && tab)

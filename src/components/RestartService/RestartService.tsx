@@ -3,7 +3,7 @@ import RestartServiceModal from "../../modals/RestartServiceModal";
 import { IoReloadOutline } from "react-icons/io5";
 
 interface IRestartService {
-  type: string;
+  type: "ide" | "vdi" | "soft-vdi";
 }
 
 export default function RestartService({ type }: IRestartService) {

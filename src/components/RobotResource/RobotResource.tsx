@@ -15,7 +15,7 @@ export default function RobotResource({
   const { pagesState } = useMain();
 
   return (
-    <div data-tut="robot-resources" className="flex flex-col items-end">
+    <div data-tut="robot-resources" className="flex flex-col items-end pb-2">
       <div className="flex items-center gap-3 pt-2">
         <span className="text-center text-xs font-semibold">
           Virtual Resources:
@@ -40,8 +40,14 @@ export default function RobotResource({
         </div>
         <div className="col-span-1 flex items-center gap-2">
           <BsFillCpuFill size={16} color="#666666" />
-          {pagesState?.instance?.cloudInstanceResource?.cpuTotal ? (
-            <span className="text-xs font-light">1T4 GPU</span>
+          {pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]
+            ?.gpuModel ? (
+            <span className="text-xs font-light">
+              {
+                pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]
+                  ?.gpuModel
+              }
+            </span>
           ) : (
             <ContentLoader
               speed={1}

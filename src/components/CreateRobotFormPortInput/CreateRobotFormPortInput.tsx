@@ -17,11 +17,11 @@ export default function CreateRobotFormPortInput({
   type,
 }: ICreateRobotFormPortInput): ReactElement {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <div className="flex flex-col">
         <InputText
           inputPlaceholder="Name"
-          className="h-10 text-xs"
+          className="h-9 text-xs"
           {...formik.getFieldProps(`${type}CustomPorts[${portIndex}].name`)}
         />
         <InputError
@@ -35,7 +35,7 @@ export default function CreateRobotFormPortInput({
         <InputText
           type="number"
           inputPlaceholder="Port"
-          className="h-10 text-xs"
+          className="h-9 text-xs"
           {...formik.getFieldProps(`${type}CustomPorts[${portIndex}].port`)}
         />
         <InputError

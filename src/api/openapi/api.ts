@@ -736,6 +736,12 @@ export interface Environment {
     'ideGpuResource'?: number;
     /**
      * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideGpuModelName'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof Environment
      */
@@ -879,6 +885,18 @@ export interface GpuUsage {
      * @memberof GpuUsage
      */
     'capacity'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuUsage
+     */
+    'gpuModel'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuUsage
+     */
+    'gpuUtilization'?: string;
 }
 /**
  * 
@@ -4288,6 +4306,39 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vdiSoftReload: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/vdiSoftReload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4428,6 +4479,16 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.restartPod(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async vdiSoftReload(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.vdiSoftReload(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4554,6 +4615,15 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          */
         restartPod(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.restartPod(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vdiSoftReload(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.vdiSoftReload(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4706,6 +4776,17 @@ export class KubernetesApi extends BaseAPI {
      */
     public restartPod(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).restartPod(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KubernetesApi
+     */
+    public vdiSoftReload(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).vdiSoftReload(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
