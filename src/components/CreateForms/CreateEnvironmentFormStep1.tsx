@@ -40,7 +40,7 @@ export default function CreateEnvironmentFormStep1({
       formik.setSubmitting(true);
 
       if (!formik.values.configureWorkspace) {
-        createEnvironment(true);
+        await createEnvironment(true);
       } else {
         formik.setSubmitting(false);
         handleCreateRobotNextStep();

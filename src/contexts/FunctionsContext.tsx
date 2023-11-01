@@ -1229,67 +1229,69 @@ export default ({ children }: any) => {
     );
   }
 
-  async function createEnvironment(withoutWorkspaces?: boolean) {
-    await dispatch(
-      createEnvironmentDispatch({
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        instanceId: selectedState?.instance?.instanceId!,
-        fleetName: selectedState?.fleet?.name,
-        environmentName: robotData?.step1?.robotName,
-        domainName: robotData?.step1?.domainName,
-        storageAmount: robotData?.step1?.robotStorage,
-        ideGpuResource: robotData?.step1?.ideGpuResource,
-        ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
-        vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-        applicationName: robotData?.step1?.application?.name,
-        applicationVersion: robotData?.step1?.application?.version,
-        devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
-        devspaceDesktop: robotData?.step1?.devspace?.desktop,
-        devspaceVersion: robotData?.step1?.devspace?.version,
-        permittedDirectories: robotData?.step1?.permittedDirectories,
-        persistentDirectories: robotData?.step1?.persistentDirectories,
-        workspaces: withoutWorkspaces
-          ? [
-              {
-                name: "ws1",
-                workspaceDistro: "",
-                robotRepositories: [
+  function createEnvironment(withoutWorkspaces: boolean) {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createEnvironmentDispatch({
+            organizationId: selectedState?.organization?.organizationId!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            region: selectedState?.roboticsCloud?.region!,
+            instanceId: selectedState?.instance?.instanceId!,
+            fleetName: selectedState?.fleet?.name,
+            environmentName: robotData?.step1?.robotName,
+            domainName: robotData?.step1?.domainName,
+            storageAmount: robotData?.step1?.robotStorage,
+            ideGpuResource: robotData?.step1?.ideGpuResource,
+            ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+            applicationName: robotData?.step1?.application?.name,
+            applicationVersion: robotData?.step1?.application?.version,
+            devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
+            devspaceDesktop: robotData?.step1?.devspace?.desktop,
+            devspaceVersion: robotData?.step1?.devspace?.version,
+            permittedDirectories: robotData?.step1?.permittedDirectories,
+            persistentDirectories: robotData?.step1?.persistentDirectories,
+            workspaces: withoutWorkspaces
+              ? [
                   {
-                    name: "repo1",
-                    url: "https://github.com/robolaunch/robolaunch",
-                    branch: "main",
+                    name: "ws1",
+                    workspaceDistro: "",
+                    robotRepositories: [
+                      {
+                        name: "repo1",
+                        url: "https://github.com/robolaunch/robolaunch",
+                        branch: "main",
+                      },
+                    ],
                   },
-                ],
-              },
-            ]
-          : robotData?.step2.workspaces,
-        ideCustomPorts:
-          robotData.step1.ideCustomPorts
-            ?.map(
-              (port: { name: string; port: number; backendPort: number }) => {
-                return `${port.name}-${port.backendPort}:${port.port}`;
-              },
-            )
-            ?.join("/") || "",
-        vdiCustomPorts:
-          robotData.step1.vdiCustomPorts
-            ?.map(
-              (port: { name: string; port: number; backendPort: number }) => {
-                return `${port.name}-${port.backendPort}:${port.port}`;
-              },
-            )
-            ?.join("/") || "",
-      }),
-    ).then(async () => {
-      setSidebarState((prevState: any) => {
-        return {
+                ]
+              : robotData?.step2.workspaces,
+            ideCustomPorts:
+              robotData.step1.ideCustomPorts
+                ?.map((port) => {
+                  return `${port.name}-${port.backendPort}:${port.port}`;
+                })
+                ?.join("/") || "",
+            vdiCustomPorts:
+              robotData.step1.vdiCustomPorts
+                ?.map((port) => {
+                  return `${port.name}-${port.backendPort}:${port.port}`;
+                })
+                ?.join("/") || "",
+          }),
+        );
+
+        setSidebarState((prevState) => ({
           ...prevState,
           isCreateMode: false,
           page: "robot",
-        };
-      });
+        }));
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
