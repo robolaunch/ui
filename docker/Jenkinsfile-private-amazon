@@ -82,14 +82,5 @@ pipeline {
         }
       }
     }
-    stage('Kubernetes Deploy') {
-      steps {
-        container('ubuntu') {
-          withCredentials([file(credentialsId: 'hetzner_prod', variable: 'config')]) {
-            sh "kubectl set image deployment.v1.apps/ui -n ui ui=robolaunchio/frontend-private-amazon-httpd:${env.VER} --kubeconfig=$config"
-          }
-        }
-      }
-    }
   }
 }
