@@ -76,13 +76,24 @@ export default function CFGpuTypes({
                     </div>
                   }
                   onClick={() => {
-                    if (
-                      !!disabled ||
-                      Number(type.capacity) - Number(type.allocated) <= 1
-                    ) {
-                      return toast.error(
-                        "You need minimum 2 vGPU for Application.",
-                      );
+                    if (!type.resourceName.includes("mig")) {
+                      if (
+                        !!disabled ||
+                        Number(type.capacity) - Number(type.allocated) <= 1
+                      ) {
+                        return toast.error(
+                          "You need minimum 2 vGPU for Application.",
+                        );
+                      }
+                    } else {
+                      if (
+                        !!disabled ||
+                        Number(type.capacity) - Number(type.allocated) <= 0
+                      ) {
+                        return toast.error(
+                          "You need minimum 1 vGPU for Application.",
+                        );
+                      }
                     }
 
                     formik.setFieldValue(
@@ -92,7 +103,10 @@ export default function CFGpuTypes({
                   }}
                   disabled={
                     !!disabled ||
-                    Number(type.capacity) - Number(type.allocated) <= 1
+                    (!type.resourceName.includes("mig") &&
+                      Number(type.capacity) - Number(type.allocated) <= 1) ||
+                    (type.resourceName.includes("mig") &&
+                      Number(type.capacity) - Number(type.allocated) <= 0)
                   }
                 />
               );
