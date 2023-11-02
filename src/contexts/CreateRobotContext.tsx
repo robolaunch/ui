@@ -1,7 +1,7 @@
 import {
   IRobotData,
-  IRobotWorkspace,
-  IRobotWorkspaceRepository,
+  IWorkspace,
+  IWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
 import React, { createContext, useEffect, useState } from "react";
 import { envOnPremiseRobot } from "../helpers/envProvider";
@@ -124,9 +124,9 @@ export default ({ children }: any) => {
     formik: any,
     workspaceIndex: number,
   ): void {
-    const robotWorkspaces: IRobotWorkspace[] = [...formik.values.workspaces];
+    const robotWorkspaces: IWorkspace[] = [...formik.values.workspaces];
 
-    const robotWorkspace: IRobotWorkspaceRepository = {
+    const robotWorkspace: IWorkspaceRepository = {
       name: "",
       url: "",
       branch: "",

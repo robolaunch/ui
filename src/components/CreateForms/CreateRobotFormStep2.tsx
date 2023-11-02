@@ -2,25 +2,25 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import { CreateEnvironmentFormStep2Validations } from "../../validations/AppsValidations";
-import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
+import { CFAppStep2Validations } from "../../validations/AppsValidations";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
-import { FormikProps, useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
+import { useFormik } from "formik";
 import { toast } from "sonner";
-import SidebarInfo from "../SidebarInfo/SidebarInfo";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -40,10 +40,10 @@ export default function CreateRobotFormStep2({
   const url = useParams();
   const dispatch = useAppDispatch();
 
-  const formik: FormikProps<IWorkspaces> = useFormik<IWorkspaces>({
+  const formik = useFormik<IWorkspaces>({
     validationSchema: envOnPremiseRobot
-      ? CreateEnvironmentFormStep2Validations
-      : CreateRobotFormStep2Validations,
+      ? CFAppStep2Validations
+      : CFRobotStep2Validations,
     initialValues: robotData?.step2,
     onSubmit: () => {
       formik.setSubmitting(true);

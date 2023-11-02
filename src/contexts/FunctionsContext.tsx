@@ -839,6 +839,26 @@ export default ({ children }: any) => {
                   responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
                     ?.idePodName,
+                ideCustomPorts:
+                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
+                    ?.split("/")
+                    ?.map((item: string) => {
+                      return {
+                        name: item?.split("-")[0],
+                        port: item?.split("-")[1].split(":")[1],
+                        backendPort: item?.split("-")[1].split(":")[0],
+                      };
+                    }),
+                vdiCustomPorts:
+                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
+                    ?.split("/")
+                    ?.map((item: string) => {
+                      return {
+                        name: item?.split("-")[0],
+                        port: item?.split("-")[1].split(":")[1],
+                        backendPort: item?.split("-")[1].split(":")[0],
+                      };
+                    }),
               },
               step2: {
                 workspaces:

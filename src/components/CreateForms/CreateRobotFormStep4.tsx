@@ -1,24 +1,24 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
-import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
+import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
+import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import CFLaunchName from "../CFLaunchName/CFLaunchName";
+import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
+import CFEnvMapper from "../CFEnvMapper/CFEnvMapper";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
-import { FormikProps, useFormik } from "formik";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
+import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import CFLaunchName from "../CFLaunchName/CFLaunchName";
-import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
-import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
-import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
-import CFEnvMapper from "../CFEnvMapper/CFEnvMapper";
 
 interface ICreateRobotFormStep4 {
   isImportRobot?: boolean;
@@ -39,7 +39,7 @@ export default function CreateRobotFormStep4({
   const { getBuildManager } = useFunctions();
   const url = useParams();
 
-  const formik: FormikProps<IRobotLaunchStep> = useFormik<IRobotLaunchStep>({
+  const formik = useFormik<ILaunchStep>({
     initialValues:
       robotData?.step4?.robotLaunchSteps[
         robotDataLaunchIndex ? robotDataLaunchIndex : 0
@@ -103,7 +103,6 @@ export default function CreateRobotFormStep4({
         !isImportRobot && handleGetBuildManager();
       }, 10000);
 
-      console.log(responseBuildManager);
       if (
         !responseBuildManager?.robotClusters?.filter(
           (robotCluster: any) => robotCluster?.buildManagerStatus !== "Ready",

@@ -6,7 +6,7 @@ export const ImportRobotSetSidebarState = Yup.object().shape({
   fleet: Yup.string().required("Fleet is required."),
 });
 
-export const CreateRobotFormStep1Validations = Yup.object().shape({
+export const CFRobotStep1Validations = Yup.object().shape({
   robotName: Yup.string()
     .required("Robot name is required.")
     .min(3, "Minimum 3 characters.")
@@ -32,7 +32,7 @@ export const CreateRobotFormStep1Validations = Yup.object().shape({
   }),
 });
 
-export const CreateRobotFormStep2Validations = Yup.object().shape({
+export const CFRobotStep2Validations = Yup.object().shape({
   workspaces: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().required("Workspace Name is required"),

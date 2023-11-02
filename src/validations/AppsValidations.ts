@@ -42,7 +42,7 @@ export const CFAppStep1Validations = Yup.object().shape({
   ),
 });
 
-export const CreateEnvironmentFormStep2Validations = Yup.object().shape({
+export const CFAppStep2Validations = Yup.object().shape({
   workspaces: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().required("Workspace Name is required"),

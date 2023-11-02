@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
@@ -104,7 +104,7 @@ export default function CreateRobotFormStep3({
     );
   }
 
-  const formik: FormikProps<IRobotBuildSteps> = useFormik<IRobotBuildSteps>({
+  const formik: FormikProps<IBuildSteps> = useFormik<IBuildSteps>({
     validationSchema: Yup.object().shape({
       buildManagerName: Yup.string().required("Build Manager Name is required"),
       robotBuildSteps: Yup.array().of(

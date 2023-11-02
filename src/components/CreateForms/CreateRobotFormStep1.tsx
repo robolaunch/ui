@@ -3,7 +3,7 @@ import { envOnPremiseRobot } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
-import { CreateRobotFormStep1Validations } from "../../validations/RobotsValidations";
+import { CFRobotStep1Validations } from "../../validations/RobotsValidations";
 import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import { addPhysicalInstanceToFleet } from "../../toolkit/InstanceSlice";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
@@ -79,7 +79,7 @@ export default function CreateRobotFormStep1({
   }
 
   const formik = useFormik({
-    validationSchema: CreateRobotFormStep1Validations,
+    validationSchema: CFRobotStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
       formik.setSubmitting(true);
