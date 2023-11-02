@@ -53,8 +53,8 @@ export default function RobotsList({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
       },
       {

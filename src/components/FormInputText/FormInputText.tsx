@@ -7,11 +7,12 @@ interface IFormInputText {
   dataTut?: string;
   labelName: string;
   labelInfoTip: string;
+  type?: string;
   inputProps?: any;
   disabled?: boolean;
   inputHoverText?: string;
-  inputError: any;
-  inputTouched: any;
+  inputError: string;
+  inputTouched: boolean;
   classNameInput?: string;
   classNameContainer?: string;
 }
@@ -20,6 +21,7 @@ export default function FormInputText({
   dataTut,
   labelName,
   labelInfoTip,
+  type,
   inputProps,
   disabled,
   inputHoverText,
@@ -40,6 +42,7 @@ export default function FormInputText({
         {...inputProps}
         disabled={disabled}
         inputHoverText={inputHoverText}
+        type={type}
       />
       <InputError error={inputError} touched={inputTouched} />
     </div>

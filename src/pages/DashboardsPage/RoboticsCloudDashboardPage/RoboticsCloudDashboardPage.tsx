@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { getGuideItem } from "../../../functions/handleGuide";
+import NetworkCell from "../../../components/NetworkCell/NetworkCell";
 
 export default function RoboticsCloudDashboardPage(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
@@ -218,7 +219,7 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     title={`Memory (${rowData?.usages?.memoryTotal} GB)`}
                     size={46}
                   />
-                  <CirclePercentageBar
+                  {/* <CirclePercentageBar
                     percentage={
                       Number(
                         (
@@ -240,6 +241,17 @@ export default function RoboticsCloudDashboardPage(): ReactElement {
                     }
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}
                     size={46}
+                  /> */}
+                  <NetworkCell
+                    data={[
+                      rowData.usages?.networkUsage?.[0]?.trafficIn ||
+                        "Pending...",
+                      rowData.usages?.networkUsage?.[0]?.trafficOut ||
+                        "Pending...",
+                    ]}
+                    networkInterface={
+                      rowData.usages?.networkUsage?.[0]?.interfaceName
+                    }
                   />
                 </Fragment>
               ) : (

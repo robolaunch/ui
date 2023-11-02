@@ -20,6 +20,7 @@ import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { toast } from "sonner";
+import SidebarInfo from "../SidebarInfo/SidebarInfo";
 
 interface ICreateRobotFormStep2 {
   isImportRobot?: boolean;
@@ -279,13 +280,21 @@ export default function CreateRobotFormStep2({
       }
       formik={formik}
     >
-      <CFWorkspacesMapper
-        formik={formik}
-        responseRobot={responseRobot}
-        isImportRobot={isImportRobot}
-      />
+      {isImportRobot &&
+      envOnPremiseRobot &&
+      !formik.values.workspaces?.length ? (
+        <SidebarInfo text={`No Workspace Available`} />
+      ) : (
+        <Fragment>
+          <CFWorkspacesMapper
+            formik={formik}
+            responseRobot={responseRobot}
+            isImportRobot={isImportRobot}
+          />
 
-      <CFAddWorkspaceButton formik={formik} />
+          <CFAddWorkspaceButton formik={formik} />
+        </Fragment>
+      )}
 
       <Fragment>
         {!(envOnPremiseRobot && url?.robotName) && (

@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
 
 interface InterfaceInputError {
-  touched: any;
-  error: any;
+  touched?: boolean;
+  error?: string;
   className?: string;
 }
 

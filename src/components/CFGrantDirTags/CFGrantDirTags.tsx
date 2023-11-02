@@ -1,11 +1,21 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import InfoTip from "../InfoTip/InfoTip";
-import { TagsInput } from "react-tag-input-component";
-import { toast } from "sonner";
+import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { TagsInput } from "react-tag-input-component";
+import { FormikProps } from "formik/dist/types";
+import InfoTip from "../InfoTip/InfoTip";
+import { toast } from "sonner";
 
-export default function GrantedDirectoriesInputTag(): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
+interface ICFGrantDirTag {
+  formik: FormikProps<IRobotStep1>;
+  disabled?: boolean;
+}
+
+export default function CFGrantDirTag({
+  formik,
+  disabled,
+}: ICFGrantDirTag): ReactElement {
+  const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
     robotData.step1.permittedDirectories.split(":") || ["/home/robolaunch"],
@@ -13,24 +23,16 @@ export default function GrantedDirectoriesInputTag(): ReactElement {
 
   useEffect(() => {
     if (!selected.includes("/home/robolaunch")) {
-      setRobotData({
-        ...robotData,
-        step1: {
-          ...robotData.step1,
-          permittedDirectories: [...selected, "/home/robolaunch"].join(":"),
-        },
-      });
+      formik.setFieldValue(
+        "permittedDirectories",
+        [...selected, "/home/robolaunch"].join(":"),
+      );
+
       setSelected([...selected, "/home/robolaunch"]);
       return;
     }
 
-    setRobotData({
-      ...robotData,
-      step1: {
-        ...robotData.step1,
-        permittedDirectories: selected.join(":"),
-      },
-    });
+    formik.setFieldValue("permittedDirectories", selected.join(":"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -47,7 +49,7 @@ export default function GrantedDirectoriesInputTag(): ReactElement {
           onChange={setSelected}
           name="Granted directories"
           classNames={{
-            input: "!text-xs",
+            input: "!text-xs disabled:cursor-not-allowed",
             tag: "!text-xs !bg-layer-light-50 border border-layer-light-200",
           }}
           placeHolder="enter a path"
@@ -64,6 +66,7 @@ export default function GrantedDirectoriesInputTag(): ReactElement {
               return false;
             }
           }}
+          disabled={disabled}
         />
       </div>
     </div>

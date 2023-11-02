@@ -1,10 +1,10 @@
+import CFPortSetter from "../CFPortSetter/CFPortSetter";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
-import CreateRobotFormGrantedDirectoriesInputTag from "../CreateRobotFormGrantedDirectoriesInputTag/CreateRobotFormGrantedDirectoriesInputTag";
-import PortSetter from "../CreateRobotFormPortSetter/CreateRobotFormPortSetter";
-import Accordion from "../Accordion/AccordionV2";
-import { ReactElement, useState } from "react";
-import { FormikProps } from "formik/dist/types";
 import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
+import Accordion from "../Accordion/AccordionV2";
+import { FormikProps } from "formik/dist/types";
+import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
 
@@ -33,22 +33,22 @@ export default function CFAdvancedSettings({
     >
       <div className="flex flex-col gap-5 px-4 pb-6 pt-2">
         <CFSection gap={4}>
-          <CFPersistDirTags />
+          <CFPersistDirTags formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
 
         <CFSection gap={4}>
-          <CreateRobotFormGrantedDirectoriesInputTag />
+          <CFGrantDirTags formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
 
         <CFSection gap={4}>
-          <PortSetter formik={formik} isImportRobot={disabled} type="ide" />
+          <CFPortSetter formik={formik} isImportRobot={disabled} type="ide" />
           <Seperator />
         </CFSection>
 
         <CFSection>
-          <PortSetter formik={formik} isImportRobot={disabled} type="vdi" />
+          <CFPortSetter formik={formik} isImportRobot={disabled} type="vdi" />
         </CFSection>
       </div>
     </Accordion>

@@ -1,7 +1,7 @@
 import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
@@ -16,7 +16,7 @@ import CFSection from "../CFSection/CFSection";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
-import { useFormik } from "formik";
+import { FormikProps, useFormik } from "formik";
 
 interface ICreateEnvironmentFormStep1 {
   isImportRobot?: boolean;
@@ -32,7 +32,7 @@ export default function CreateEnvironmentFormStep1({
   const { robotData, setRobotData }: any = useCreateRobot();
   const url = useParams();
 
-  const formik = useFormik<IRobotStep1>({
+  const formik: FormikProps<IRobotStep1> = useFormik<IRobotStep1>({
     validationSchema: CreateEnvironmentsFormStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
@@ -121,14 +121,22 @@ export default function CreateEnvironmentFormStep1({
         <Seperator />
       </CFSection>
 
-      <CFSection>
-        <CFConfigWorkspaces formik={formik} disabled={isImportRobot} />
-        <Seperator />
-      </CFSection>
+      <Fragment>
+        {!isImportRobot && (
+          <CFSection>
+            <CFConfigWorkspaces formik={formik} disabled={isImportRobot} />
+            <Seperator />
+          </CFSection>
+        )}
+      </Fragment>
 
       <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
 
-      <CFEnvButtons formik={formik} disabled={isImportRobot} />
+      <Fragment>
+        {!isImportRobot && (
+          <CFEnvButtons formik={formik} disabled={isImportRobot} />
+        )}
+      </Fragment>
     </CFLoader>
   );
 }

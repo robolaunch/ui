@@ -5,10 +5,11 @@ import InfoTip from "../InfoTip/InfoTip";
 interface ICFInfoBar {
   label: string;
   tip: string;
-  error?: boolean | string;
+  error?: string;
   touched?: boolean;
   dataTut?: string;
   children?: ReactElement | ReactElement[];
+  classNameContainer?: string;
   vertical?: boolean;
 }
 
@@ -19,11 +20,12 @@ export default function CFInfoBar({
   touched,
   dataTut,
   children,
+  classNameContainer,
   vertical,
 }: ICFInfoBar): ReactElement {
   return (
-    <div data-tut={dataTut}>
-      <div className={`flex ${vertical && "flex-col"}`}>
+    <div className={`${classNameContainer}`} data-tut={dataTut}>
+      <div className={`flex ${vertical && "flex-col"} `}>
         <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           {label}
           <InfoTip content={tip} />

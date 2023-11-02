@@ -1,11 +1,21 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
+import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
 
-export default function CFPersistDirTags(): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
+interface ICFPersistDirTags {
+  formik: FormikProps<IRobotStep1>;
+  disabled?: boolean;
+}
+
+export default function CFPersistDirTags({
+  formik,
+  disabled,
+}: ICFPersistDirTags): ReactElement {
+  const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
     robotData.step1.persistentDirectories.split(":") || [
@@ -38,13 +48,7 @@ export default function CFPersistDirTags(): ReactElement {
   }, [selected]);
 
   useEffect(() => {
-    setRobotData({
-      ...robotData,
-      step1: {
-        ...robotData.step1,
-        persistentDirectories: selected.join(":"),
-      },
-    });
+    formik.setFieldValue("persistentDirectories", selected.join(":"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
@@ -56,10 +60,10 @@ export default function CFPersistDirTags(): ReactElement {
     >
       <TagsInput
         value={selected}
-        onChange={setSelected}
+        onChange={(tags) => setSelected(tags)}
         name="persistent directories"
         classNames={{
-          input: "!text-xs",
+          input: "!text-xs disabled:cursor-not-allowed",
           tag: "!text-xs !bg-layer-light-50 border border-layer-light-200",
         }}
         placeHolder="enter a path"
@@ -82,6 +86,7 @@ export default function CFPersistDirTags(): ReactElement {
             return false;
           }
         }}
+        disabled={disabled}
       />
     </CFInfoBar>
   );
