@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
-import CreateEnvironmentFormStep1 from "../CreateForms/CreateEnvironmentFormStep1";
+import CreateEnvironmentFormStep1 from "../CreateForms/CFAppStep1";
 
 interface IUpdateRobotDetailsForm {
   reload: boolean;

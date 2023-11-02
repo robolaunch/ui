@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 
-export const CreateEnvironmentsFormStep1Validations = Yup.object().shape({
+export const CFAppStep1Validations = Yup.object().shape({
   robotName: Yup.string()
-    .required("Environment name is required.")
+    .required("Application name is required.")
     .min(3, "Minimum 3 characters.")
     .max(16, "Maximum 16 characters.")
     .lowercase("Must be lowercase.")
@@ -12,7 +12,7 @@ export const CreateEnvironmentsFormStep1Validations = Yup.object().shape({
     ),
   domainName: Yup.string().required("Categories is required."),
   application: Yup.object().shape({
-    name: Yup.string().required("Environment is required."),
+    name: Yup.string().required("Application model is required."),
   }),
   ideCustomPorts: Yup.array().of(
     Yup.object().shape({
@@ -27,7 +27,7 @@ export const CreateEnvironmentsFormStep1Validations = Yup.object().shape({
         .max(65535, "Maximum 65535."),
     }),
   ),
-  ideGpuResourceType: Yup.string().required("GPU Resource Type is required."),
+  ideGpuResourceType: Yup.string().required("GPU model is required."),
   vdiCustomPorts: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()

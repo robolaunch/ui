@@ -18,7 +18,7 @@ export interface IcreateRobotRequest {
   imageUser?: string;
   imageRepository?: string;
   imageTag?: string;
-  workspaces: IRobotWorkspace[];
+  workspaces: IWorkspace[];
 }
 
 export interface IgetRobotsRequest {
@@ -131,13 +131,13 @@ export interface IdeleteLaunchManagerRequest {
 }
 
 export interface IRobotData {
-  step1: IRobotStep1;
-  step2: IRobotWorkspaces;
-  step3: IRobotBuildSteps;
-  step4: IRobotLaunchSteps;
+  step1: IDetails;
+  step2: IWorkspaces;
+  step3: IBuildSteps;
+  step4: ILaunchSteps;
 }
 
-export interface IRobotStep1 {
+export interface IDetails {
   robotName: string;
   isVirtualRobot: boolean;
   physicalInstanceName: string;
@@ -172,28 +172,28 @@ export interface IRobotStep1 {
   vdiPodName: string;
 }
 
-export interface IRobotWorkspaces {
+export interface IWorkspaces {
   configureWorkspace: boolean;
-  workspaces: IRobotWorkspace[];
+  workspaces: IWorkspace[];
 }
 
-export interface IRobotWorkspace {
+export interface IWorkspace {
   name: string;
   workspaceDistro: "IRON" | "HUMBLE" | "GALACTIC" | "FOXY" | "";
-  robotRepositories: IRobotWorkspaceRepository[];
+  robotRepositories: IWorkspaceRepository[];
 }
 
-export interface IRobotWorkspaceRepository {
+export interface IWorkspaceRepository {
   name: string;
   url: string;
   branch: string;
 }
 
-export interface IRobotBuildSteps {
+export interface IBuildSteps {
   buildManagerName: string;
-  robotBuildSteps: IRobotBuildStep[];
+  robotBuildSteps: IBuildStep[];
 }
-export interface IRobotBuildStep {
+export interface IBuildStep {
   name: string;
   workspace: string;
   isCommandCode: boolean;
@@ -205,20 +205,20 @@ export interface IRobotBuildStep {
   buildStatus?: string;
 }
 
-export interface IRobotLaunchSteps {
-  robotLaunchSteps: IRobotLaunchStep[];
+export interface ILaunchSteps {
+  robotLaunchSteps: ILaunchStep[];
 }
 
-export interface IRobotLaunchStep {
+export interface ILaunchStep {
   name: string;
   workspace: string;
   entryPointType: string;
   entryPointCmd: string;
   instancesName: any[];
-  robotLmEnvs: IRobotLaunchENV[];
+  robotLmEnvs: ILaunchENV[];
 }
 
-export interface IRobotLaunchENV {
+export interface ILaunchENV {
   name: string;
   value: string;
 }

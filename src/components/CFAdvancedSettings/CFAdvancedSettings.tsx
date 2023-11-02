@@ -1,6 +1,6 @@
 import CFPortSetter from "../CFPortSetter/CFPortSetter";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
@@ -9,7 +9,7 @@ import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
 
 interface ICFAdvancedSettings {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 

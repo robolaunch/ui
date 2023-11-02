@@ -1,4 +1,4 @@
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import { IGpuUsage } from "../../interfaces/instanceInferfaces";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
@@ -8,7 +8,7 @@ import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import useFunctions from "../../hooks/useFunctions";
 interface ICFGpuTypes {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 
@@ -60,13 +60,13 @@ export default function CFGpuTypes({
                     formik.values.ideGpuResourceType === type.resourceName
                   }
                   text={
-                    <div className="flex w-3/4 items-center justify-evenly">
+                    <div className="grid w-full grid-cols-4">
                       <img
-                        className="w-10 scale-[1.8]"
+                        className="col-span-1 mx-auto w-10 scale-110"
                         src="/svg/apps/nvidia.svg"
-                        alt="nvidia"
+                        alt="img"
                       />
-                      <div className="flex flex-col gap-2">
+                      <div className="col-span-3 flex flex-col justify-around">
                         <p className="lowercase">{type.resourceName}</p>
                         <p className="text-[0.66rem] font-light">
                           {Number(type.capacity) - Number(type.allocated)}/

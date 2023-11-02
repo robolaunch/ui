@@ -1,24 +1,24 @@
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik/dist/types";
 import React, { ReactElement } from "react";
 
-interface ICFEnvName {
-  formik: FormikProps<IRobotStep1>;
+interface ICFAppName {
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 
-export default function CFEnvName({
+export default function CFAppName({
   formik,
   disabled,
-}: ICFEnvName): ReactElement {
+}: ICFAppName): ReactElement {
   return (
     <FormInputText
-      labelName="Environment Name:"
-      labelInfoTip="Type a new environment name."
+      labelName="Application Name:"
+      labelInfoTip="Type a new application name."
       dataTut="create-application-step1-name"
       disabled={formik.isSubmitting || disabled}
-      inputHoverText="You can't change environment name because this environment is created before."
+      inputHoverText="You can't change application name because this application is created before."
       inputProps={formik.getFieldProps("robotName")}
       inputError={formik.errors.robotName}
       inputTouched={formik.touched.robotName}

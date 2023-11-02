@@ -2,12 +2,12 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import { CreateEnvironmentFormStep2Validations } from "../../validations/EnvironmentsValidations";
+import { CreateEnvironmentFormStep2Validations } from "../../validations/AppsValidations";
 import { CreateRobotFormStep2Validations } from "../../validations/RobotsValidations";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { createEnvironment } from "../../toolkit/EnvironmentSlice";
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -40,7 +40,7 @@ export default function CreateRobotFormStep2({
   const url = useParams();
   const dispatch = useAppDispatch();
 
-  const formik: FormikProps<IRobotWorkspaces> = useFormik<IRobotWorkspaces>({
+  const formik: FormikProps<IWorkspaces> = useFormik<IWorkspaces>({
     validationSchema: envOnPremiseRobot
       ? CreateEnvironmentFormStep2Validations
       : CreateRobotFormStep2Validations,

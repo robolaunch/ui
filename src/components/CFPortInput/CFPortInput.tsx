@@ -1,12 +1,12 @@
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
 
 interface ICFPortInput {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   portIndex: number;
   disabled?: boolean;
   type: string;
@@ -41,32 +41,34 @@ export default function CFPortInput({
         <FormInputText
           disabled={disabled}
           labelName="App Port:"
-          labelInfoTip="Type a app port."
+          labelInfoTip="Is the port that the application is listening on."
           inputProps={formik.getFieldProps(
-            `${type}CustomPorts[${portIndex}].backendPort`,
+            `${type}CustomPorts[${portIndex}].port`,
           )}
           inputError={
             // @ts-ignore
-            formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.backendPort
+            formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.port
           }
           inputTouched={
             // @ts-ignore
-            formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.backendPort
+            formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.port
           }
           type="number"
+          rightTip
         />
 
         <CFInfoBar
           label="Node Port:"
-          tip="Is the port that the application is listening on."
+          tip="Type a node port."
           vertical
           classNameContainer="w-32"
+          rightTip
         >
           <div className="pt-2.5 text-sm text-layer-light-800">
             :
             {
               // @ts-ignore
-              formik.values?.[`${type}CustomPorts`]?.[portIndex]?.port
+              formik.values?.[`${type}CustomPorts`]?.[portIndex]?.backendPort
             }
           </div>
         </CFInfoBar>

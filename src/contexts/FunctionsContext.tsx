@@ -1129,8 +1129,8 @@ export default ({ children }: any) => {
                     ?.map((item: string) => {
                       return {
                         name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[0],
-                        backendPort: item?.split("-")[1].split(":")[1],
+                        port: item?.split("-")[1].split(":")[1],
+                        backendPort: item?.split("-")[1].split(":")[0],
                       };
                     }),
                 vdiCustomPorts:
@@ -1139,8 +1139,8 @@ export default ({ children }: any) => {
                     ?.map((item: string) => {
                       return {
                         name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[0],
-                        backendPort: item?.split("-")[1].split(":")[1],
+                        port: item?.split("-")[1].split(":")[1],
+                        backendPort: item?.split("-")[1].split(":")[0],
                       };
                     }),
               },

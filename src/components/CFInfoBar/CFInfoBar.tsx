@@ -11,6 +11,7 @@ interface ICFInfoBar {
   children?: ReactElement | ReactElement[];
   classNameContainer?: string;
   vertical?: boolean;
+  rightTip?: boolean;
 }
 
 export default function CFInfoBar({
@@ -22,13 +23,14 @@ export default function CFInfoBar({
   children,
   classNameContainer,
   vertical,
+  rightTip,
 }: ICFInfoBar): ReactElement {
   return (
-    <div className={`${classNameContainer}`} data-tut={dataTut}>
+    <div className={`${classNameContainer} transition-300`} data-tut={dataTut}>
       <div className={`flex ${vertical && "flex-col"} `}>
         <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
           {label}
-          <InfoTip content={tip} />
+          <InfoTip content={tip} rightTip={rightTip} />
         </div>
         {children}
       </div>

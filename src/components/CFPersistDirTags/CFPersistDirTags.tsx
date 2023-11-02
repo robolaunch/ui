@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
@@ -7,7 +7,7 @@ import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
 
 interface ICFPersistDirTags {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 

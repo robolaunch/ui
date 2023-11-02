@@ -1,13 +1,13 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { getReadyEnvironments } from "../../toolkit/EnvironmentSlice";
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
-import CFGridItem from "../CFGridItem/CFGridItem";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import { useAppDispatch } from "../../hooks/redux";
+import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 
 interface ICFEnvCategories {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 
@@ -39,15 +39,6 @@ export default function CFEnvCategories({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik?.values?.domainName, formik?.initialValues?.domainName]);
 
-  useEffect(() => {
-    formik?.values?.application?.name &&
-      formik.setValues({
-        ...formik.values,
-        ideGpuResource: 0,
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik?.values?.application?.name]);
-
   return (
     <Fragment>
       <CFInfoBar
@@ -73,7 +64,7 @@ export default function CFEnvCategories({
                 onClick={() =>
                   !disabled && formik.setFieldValue("domainName", environment)
                 }
-                className="rounded-full !p-1.5"
+                className="!rounded-full !p-1.5"
               />
             ))}
           </div>
@@ -118,16 +109,78 @@ export default function CFEnvCategories({
                         });
                     }}
                     text={
-                      <div className="flex flex-col gap-1 text-center">
-                        <p>
-                          {environment?.application?.name} v(
-                          {environment?.application?.version})
-                        </p>
-                        <p className="text-[0.66rem] font-light">
-                          {environment?.devspace?.desktop}{" "}
-                          {environment?.devspace?.ubuntuDistro}{" "}
-                          {environment?.devspace?.version}
-                        </p>
+                      <div className="grid w-full grid-cols-4">
+                        <img
+                          className="col-span-1 mx-auto w-10 scale-110"
+                          src={`/svg/apps/${(() => {
+                            if (
+                              environment?.application?.name.includes(
+                                "carla",
+                              ) ||
+                              environment?.application?.version.includes(
+                                "carla",
+                              )
+                            ) {
+                              return "carla";
+                            }
+                            if (
+                              environment?.application?.name.includes("foxy") ||
+                              environment?.application?.version.includes("foxy")
+                            ) {
+                              return "foxy";
+                            }
+                            if (
+                              environment?.application?.name.includes(
+                                "galactic",
+                              ) ||
+                              environment?.application?.version.includes(
+                                "galactic",
+                              )
+                            ) {
+                              return "galactic";
+                            }
+                            if (
+                              environment?.application?.name.includes("iron") ||
+                              environment?.application?.version.includes("iron")
+                            ) {
+                              return "iron";
+                            }
+                            if (
+                              environment?.application?.name.includes(
+                                "humble",
+                              ) ||
+                              environment?.application?.version.includes(
+                                "humble",
+                              )
+                            ) {
+                              return "humble";
+                            }
+                            if (
+                              environment?.application?.name.includes(
+                                "isaac",
+                              ) ||
+                              environment?.application?.version.includes(
+                                "isaac",
+                              )
+                            ) {
+                              return "nvidia";
+                            }
+
+                            return "ubuntu";
+                          })()}.svg`}
+                          alt="img"
+                        />
+                        <div className="col-span-3 flex flex-col justify-around">
+                          <p>
+                            {environment?.application?.name} v(
+                            {environment?.application?.version})
+                          </p>
+                          <p className="text-[0.66rem] font-light">
+                            {environment?.devspace?.desktop}{" "}
+                            {environment?.devspace?.ubuntuDistro}{" "}
+                            {environment?.devspace?.version}
+                          </p>
+                        </div>
                       </div>
                     }
                   />

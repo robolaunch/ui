@@ -7,12 +7,13 @@ interface IFormInputText {
   dataTut?: string;
   labelName: string;
   labelInfoTip: string;
+  rightTip?: boolean;
   type?: string;
   inputProps?: any;
   disabled?: boolean;
   inputHoverText?: string;
-  inputError: string;
-  inputTouched: boolean;
+  inputError?: string;
+  inputTouched?: boolean;
   classNameInput?: string;
   classNameContainer?: string;
 }
@@ -21,6 +22,7 @@ export default function FormInputText({
   dataTut,
   labelName,
   labelInfoTip,
+  rightTip,
   type,
   inputProps,
   disabled,
@@ -36,7 +38,7 @@ export default function FormInputText({
         className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700 ${classNameInput}`}
       >
         {labelName}
-        <InfoTip content={labelInfoTip} />
+        <InfoTip content={labelInfoTip} rightTip={rightTip} />
       </div>
       <InputText
         {...inputProps}

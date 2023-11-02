@@ -1,30 +1,30 @@
-import { CreateEnvironmentsFormStep1Validations } from "../../validations/EnvironmentsValidations";
+import { CFAppStep1Validations } from "../../validations/AppsValidations";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
-import CFEnvButtons from "../CFEnvButtons/CFEnvButtons";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import CFEnvButtons from "../CFEnvButtons/CFEnvButtons";
 import useFunctions from "../../hooks/useFunctions";
 import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
 import CFVDICount from "../CFVDICount/CFVDICount";
-import CFEnvName from "../CFEnvName/CFEnvName";
 import Seperator from "../Seperator/Seperator";
+import CFAppName from "../CFAppName/CFAppName";
 import CFSection from "../CFSection/CFSection";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
-import { FormikProps, useFormik } from "formik";
+import { useFormik } from "formik";
 
-interface ICreateEnvironmentFormStep1 {
+interface ICFAppStep1 {
   isImportRobot?: boolean;
 }
 
-export default function CreateEnvironmentFormStep1({
-  isImportRobot,
-}: ICreateEnvironmentFormStep1): ReactElement {
+export default function CFAppStep1({
+  isImportRobot = false,
+}: ICFAppStep1): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const { selectedState, handleCreateRobotNextStep } = useMain();
@@ -32,8 +32,8 @@ export default function CreateEnvironmentFormStep1({
   const { robotData, setRobotData }: any = useCreateRobot();
   const url = useParams();
 
-  const formik: FormikProps<IRobotStep1> = useFormik<IRobotStep1>({
-    validationSchema: CreateEnvironmentsFormStep1Validations,
+  const formik = useFormik<IDetails>({
+    validationSchema: CFAppStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
       formik.setSubmitting(true);
@@ -63,13 +63,6 @@ export default function CreateEnvironmentFormStep1({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
-  useEffect(() => {
-    if (formik.values.isVirtualRobot) {
-      formik.setFieldValue("physicalInstanceName", "");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values.isVirtualRobot]);
-
   function handleGetEnvironment() {
     getEnvironment(
       {
@@ -97,7 +90,7 @@ export default function CreateEnvironmentFormStep1({
       formik={formik}
     >
       <CFSection>
-        <CFEnvName formik={formik} disabled={isImportRobot} />
+        <CFAppName formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
 
