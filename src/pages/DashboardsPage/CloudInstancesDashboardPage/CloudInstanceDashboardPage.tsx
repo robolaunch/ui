@@ -1,32 +1,26 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
 import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../../helpers/envProvider";
-import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import NamespaceActionCells from "../../../components/TableActionCells/NamespaceActionCells";
-import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import FleetActionCells from "../../../components/TableActionCells/FleetActionCells";
+import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import StateCell from "../../../components/TableInformationCells/StateCell";
+import BasicCell from "../../../components/TableInformationCells/BasicCell";
+import { Fragment, ReactElement, useEffect, useMemo, useState } from "react";
+import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
+import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
+import { getGuideItem } from "../../../functions/handleGuide";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
-import BasicCell from "../../../components/TableInformationCells/BasicCell";
-import StateCell from "../../../components/TableInformationCells/StateCell";
-import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import useFunctions from "../../../hooks/useFunctions";
 import { SiKubernetes } from "react-icons/si";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
 import { RiCpuLine } from "react-icons/ri";
-import TourGuide from "../../../components/TourGuide/TourGuide";
-import { getGuideItem } from "../../../functions/handleGuide";
 import { BsGpuCard } from "react-icons/bs";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
@@ -302,23 +296,23 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               percentage:
                 pagesState?.instance?.cloudInstanceResource?.memoryUsage || -1,
             },
-            {
-              title: `Storage (${
-                pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
-              } GB)`,
-              percentage:
-                Number(
-                  (
-                    (pagesState?.instance?.cloudInstanceResource
-                      ?.storageTotal! /
-                      100) *
-                    (pagesState?.instance?.cloudInstanceResource
-                      ?.storageTotal! -
-                      pagesState?.instance?.cloudInstanceResource
-                        ?.storageUsage!)
-                  ).toFixed(),
-                ) || -1,
-            },
+            // {
+            //   title: `Storage (${
+            //     pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
+            //   } GB)`,
+            //   percentage:
+            //     Number(
+            //       (
+            //         (pagesState?.instance?.cloudInstanceResource
+            //           ?.storageTotal! /
+            //           100) *
+            //         (pagesState?.instance?.cloudInstanceResource
+            //           ?.storageTotal! -
+            //           pagesState?.instance?.cloudInstanceResource
+            //             ?.storageUsage!)
+            //       ).toFixed(),
+            //     ) || -1,
+            // },
             {
               title: `In Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.interfaceName})`,
               percentage:
@@ -338,6 +332,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
               content:
                 pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
                   ?.trafficOut,
+              size: 20,
             },
           ]}
         />

@@ -1,10 +1,11 @@
-import React, { ReactElement } from "react";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import { getPort as getFreePort } from "../../toolkit/PortSlice";
 import CFPortInput from "../CFPortInput/CFPortInput";
 import { useAppDispatch } from "../../hooks/redux";
-import { getPort as getFreePort } from "../../toolkit/PortSlice";
-import useMain from "../../hooks/useMain";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
+import { toast } from "sonner";
 
 interface ICFPortSetter {
   formik: any;
@@ -44,13 +45,15 @@ export default function CFPortSetter({
       }
 
       return result.payload;
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Error getting port. Please remove a port and try again.");
+    }
   }
 
   return (
     <div>
       <CFInfoBar
-        label={`${type === "ide" ? "IDE" : "VDI"} Ports:`}
+        label={`Custom Port Exposure From ${type === "ide" ? "IDE" : "VDI"}:`}
         tip="Type a ports with name."
         vertical
       >

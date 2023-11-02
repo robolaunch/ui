@@ -1,12 +1,12 @@
 import React, { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFWorkspaceDistro {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   disabled?: boolean;
 }
@@ -22,7 +22,7 @@ export default function CFWorkspaceDistro({
     <FormInputSelect
       dataTut="create-robot-step2-workspace-distro"
       labelName="Workspace Distro:"
-      labelInfoTip="Select a workspace ROS2 distro."
+      tip="Select a workspace ROS2 distro."
       disabled={disabled}
       classNameContainer="w-60"
       inputProps={formik.getFieldProps(
