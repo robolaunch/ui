@@ -47,6 +47,10 @@ export function organizationNameViewer({
   return organizationName?.split("_")[1];
 }
 
+export function handleSplitOrganizationName(organizationName: string) {
+  return organizationName?.split("_")[1];
+}
+
 export function handleLogout() {
   [
     "tokens",

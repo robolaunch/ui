@@ -10,7 +10,7 @@ import { getGuideItem } from "../../../functions/handleGuide";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
-import { GetOrganizationDashboardTableDatas } from "../../../controllers/GetTableDatas";
+import { OrgTableData } from "../../../controllers/OrgTableData";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -20,10 +20,9 @@ export default function OrganizationDashboardPage(): ReactElement {
     useState<any>(undefined);
   const url = useParams();
 
-  const { data, columns } = GetOrganizationDashboardTableDatas({
+  const { data, columns } = OrgTableData({
     responseRoboticsClouds,
     setReload,
-    url,
   });
 
   useEffect(() => {

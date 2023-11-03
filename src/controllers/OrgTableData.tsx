@@ -1,102 +1,39 @@
-import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
-import { Dispatch, SetStateAction, useMemo } from "react";
-import { IOrganization } from "../interfaces/organizationInterfaces";
-import StateCell from "../components/TableInformationCells/StateCell";
 import {
-  IMainDashboardColumn,
-  IMainDashboardData,
   IOrganizationDashboardColumn,
   IOrganizationDashboardData,
 } from "../interfaces/tableInterface";
-import OrganizationInfoCell from "../components/OrganizationInfoCell/OrganizationInfoCell";
 import RoboticsCloudActionCells from "../components/TableActionCells/RoboticsCloudActionCells";
+import {
+  handleSplitOrganizationName,
+  stringCapitalization,
+} from "../functions/GeneralFunctions";
+import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import { stringCapitalization } from "../functions/GeneralFunctions";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { Params } from "react-router-dom";
+import { Dispatch, SetStateAction, useMemo } from "react";
+import useMain from "../hooks/useMain";
 
-interface IGetMainDashboardTableDatas {
-  responseOrganizations: IOrganization[] | undefined;
-  setReload: Dispatch<SetStateAction<boolean>>;
-}
-
-export function GetMainDashboardTableDatas({
-  responseOrganizations,
-  setReload,
-}: IGetMainDashboardTableDatas) {
-  const data: IMainDashboardData[] = useMemo(
-    () =>
-      responseOrganizations?.map((organization: IOrganization) => {
-        return {
-          key: organization?.organizationName,
-          name: organization,
-          state: undefined,
-          actions: organization,
-        };
-      }) || [],
-    [responseOrganizations],
-  );
-
-  const columns: IMainDashboardColumn[] = useMemo(
-    () => [
-      {
-        key: "name",
-        header: "Name",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: IMainDashboardData) => {
-          return <OrganizationInfoCell rowData={rowData} />;
-        },
-      },
-      {
-        key: "state",
-        header: "State",
-        align: "left",
-        body: () => {
-          return <StateCell state="Ready" />;
-        },
-      },
-      {
-        key: "actions",
-        header: "Actions",
-        align: "right",
-        body: (rowData: IMainDashboardData) => {
-          return (
-            <OrganizationActionCells
-              data={rowData?.actions}
-              reload={() => setReload((prevState: boolean) => !prevState)}
-            />
-          );
-        },
-      },
-    ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  return { data, columns };
-}
-
-interface IGetOrganizationDashboardTableDatas {
+interface IOrgTableData {
   responseRoboticsClouds: any;
   setReload: Dispatch<SetStateAction<boolean>>;
-  url: Readonly<Params<string>>;
 }
 
-export function GetOrganizationDashboardTableDatas({
+export function OrgTableData({
   responseRoboticsClouds,
   setReload,
-  url,
-}: IGetOrganizationDashboardTableDatas) {
+}: IOrgTableData) {
+  const { pagesState } = useMain();
+
   const data: IOrganizationDashboardData[] = useMemo(
     () =>
       responseRoboticsClouds?.map(
-        (rc: { name: any; region: any; actions: any }) => {
+        (rc: { name: string; region: any; actions: any }) => {
           return {
             key: rc?.name,
             name: rc,
-            organization: url?.organizationName,
+            organization: handleSplitOrganizationName(
+              pagesState?.organization?.organizationName!,
+            ),
             region: rc?.region,
             country:
               rc.region === "eu-central-1"
@@ -115,7 +52,7 @@ export function GetOrganizationDashboardTableDatas({
           };
         },
       ),
-    [url, responseRoboticsClouds],
+    [pagesState, responseRoboticsClouds],
   );
 
   const columns: IOrganizationDashboardColumn[] = useMemo(
@@ -130,8 +67,12 @@ export function GetOrganizationDashboardTableDatas({
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={`${url?.organizationName} Organization`}
-              titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
+              subtitle={`${handleSplitOrganizationName(
+                pagesState?.organization?.organizationName!,
+              )} Organization`}
+              titleURL={`/${handleSplitOrganizationName(
+                pagesState?.organization?.organizationName!,
+              )}/${rowData?.name?.name}`}
             />
           );
         },
@@ -145,9 +86,9 @@ export function GetOrganizationDashboardTableDatas({
         body: () => {
           return (
             <BasicCell
-              text={stringCapitalization({
-                str: url?.organizationName!,
-              })}
+              text={handleSplitOrganizationName(
+                pagesState?.organization?.organizationName!,
+              )}
             />
           );
         },
@@ -200,7 +141,7 @@ export function GetOrganizationDashboardTableDatas({
     ],
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [url?.organizationName],
+    [pagesState.organization?.organizationName],
   );
 
   return { data, columns };

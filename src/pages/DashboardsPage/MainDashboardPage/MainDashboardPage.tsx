@@ -1,4 +1,4 @@
-import { GetMainDashboardTableDatas } from "../../../controllers/GetTableDatas";
+import { MainTableData } from "../../../controllers/MainTableData";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import MainDashboardTour from "../../../components/MainDashboardTour/MainDashboardTour";
 import CountWidget from "../../../components/CountWidget/CountWidget";
@@ -25,7 +25,7 @@ export default function MainDashboardPage(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload, url]);
 
-  const { data, columns } = GetMainDashboardTableDatas({
+  const { data, columns } = MainTableData({
     responseOrganizations,
     setReload,
   });
