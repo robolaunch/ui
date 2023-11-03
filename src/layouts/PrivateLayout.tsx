@@ -1,16 +1,15 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import TopLoadingBar from "../components/TopLoadingBar/TopLoadingBar";
 import useWindowDimensions from "../hooks/useWindowDimensions";
-import { Outlet, useLocation } from "react-router-dom";
+import React, { Fragment, ReactElement } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Header from "../components/Header/Header";
-import LoadingBar from "react-top-loading-bar";
+import { Outlet } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
 
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState } = useMain();
   const { width } = useWindowDimensions();
-  const url = useLocation();
 
   function handleCloseSidebar() {
     if (sidebarState?.isOpen && !sidebarState?.isCreateMode) {
@@ -26,13 +25,6 @@ export default function PrivateLayout(): ReactElement {
       toast.error("You can't close the sidebar while create mode is active.");
     }
   }
-
-  const [progress, setProgress] = useState<number>(0);
-  useEffect(() => {
-    setProgress(50);
-    setTimeout(() => setProgress(100), 500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
 
   return (
     <Fragment>
@@ -53,16 +45,7 @@ export default function PrivateLayout(): ReactElement {
           </div>
         </div>
       </div>
-      <LoadingBar
-        height={4}
-        progress={progress}
-        shadow={true}
-        transitionTime={500}
-        onLoaderFinished={() => setProgress(0)}
-        style={{
-          background: "linear-gradient(to right, #AC2DFE, #35B8FA)",
-        }}
-      />
+      <TopLoadingBar />
     </Fragment>
   );
 }

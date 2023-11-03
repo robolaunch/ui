@@ -3,10 +3,7 @@ import {
   IOrganizationDashboardData,
 } from "../interfaces/tableInterface";
 import RoboticsCloudActionCells from "../components/TableActionCells/RoboticsCloudActionCells";
-import {
-  handleSplitOrganizationName,
-  stringCapitalization,
-} from "../functions/GeneralFunctions";
+import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
@@ -139,9 +136,8 @@ export function OrgTableData({
         },
       },
     ],
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pagesState.organization?.organizationName],
+    [pagesState, responseRoboticsClouds],
   );
 
   return { data, columns };

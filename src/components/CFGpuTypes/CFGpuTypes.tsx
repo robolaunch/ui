@@ -1,12 +1,12 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { IGpuUsage } from "../../interfaces/instanceInferfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import React, { ReactElement, useEffect } from "react";
+import useFunctions from "../../hooks/useFunctions";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
-import React, { ReactElement, useEffect } from "react";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
-import useFunctions from "../../hooks/useFunctions";
 interface ICFGpuTypes {
   formik: FormikProps<IDetails>;
   disabled?: boolean;
@@ -16,16 +16,16 @@ export default function CFGpuTypes({
   formik,
   disabled,
 }: ICFGpuTypes): ReactElement {
-  const { selectedState, pagesState } = useMain();
+  const { selectedState } = useMain();
   const { getInstance } = useFunctions();
 
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceName: pagesState.instance?.name!,
-        region: pagesState?.roboticsCloud?.region!,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceName: selectedState.instance?.name!,
+        region: selectedState?.roboticsCloud?.region!,
         details: true,
       },
       {

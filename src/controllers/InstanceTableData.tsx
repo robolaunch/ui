@@ -132,7 +132,7 @@ export function InstanceTableData({
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [pagesState, responseFleets],
   );
 
   return { data, columns };

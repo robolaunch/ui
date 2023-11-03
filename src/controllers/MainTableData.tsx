@@ -65,7 +65,7 @@ export function MainTableData({
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [responseOrganizations],
   );
 
   return { data, columns };
