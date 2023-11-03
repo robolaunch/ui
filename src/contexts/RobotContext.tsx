@@ -1,5 +1,5 @@
-import React, { useEffect, createContext, useState } from "react";
 import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import React, { useEffect, createContext, useState } from "react";
 import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import adrinData from "../mock/adrinData.json";
@@ -71,7 +71,7 @@ export default ({ children }: any) => {
         !sidebarState?.isOpen &&
         Array.isArray(responseRobot?.robotClusters) &&
         responseRobot?.robotClusters?.filter(
-          (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+          (robot: any) => robot?.robotStatus !== "EnvironmentReady",
         )?.length
       ) {
         envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
@@ -81,7 +81,7 @@ export default ({ children }: any) => {
     const timerResponseBuildManager = setInterval(() => {
       !sidebarState?.isOpen &&
         responseBuildManager?.robotClusters?.filter(
-          (robot: any) => robot?.buildManagerStatus !== "Ready"
+          (robot: any) => robot?.buildManagerStatus !== "Ready",
         )?.length &&
         !envOnPremiseRobot &&
         handleGetBuildManager();
@@ -128,10 +128,10 @@ export default ({ children }: any) => {
   useEffect(() => {
     if (
       responseRobot?.robotClusters?.filter(
-        (robot: any) => robot?.robotStatus !== "EnvironmentReady"
+        (robot: any) => robot?.robotStatus !== "EnvironmentReady",
       )?.length ||
       responseBuildManager?.robotClusters?.filter(
-        (robot: any) => robot?.buildManagerStatus !== "Ready"
+        (robot: any) => robot?.buildManagerStatus !== "Ready",
       )?.length ||
       responseLaunchManagers
         ?.map((launchStep: any) => {
@@ -172,7 +172,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -186,7 +186,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -203,7 +203,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -212,7 +212,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: url?.fleetName!,
       },
@@ -220,7 +220,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -229,7 +229,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         namespaceName: url?.fleetName!,
       },
@@ -237,7 +237,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
-      }
+      },
     );
   }
 
@@ -246,7 +246,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName!,
@@ -255,7 +255,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         setRobotData: true,
         setResponse: setResponseRobot,
-      }
+      },
     );
   }
 
@@ -264,7 +264,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
         environmentName: url?.robotName!,
@@ -273,7 +273,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         setResponse: setResponseRobot,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -282,7 +282,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName!,
@@ -291,7 +291,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: false,
         setResponse: setResponseBuildManager,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -300,7 +300,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.organizationId!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId,
+        instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name,
         robotName: url?.robotName!,
@@ -309,7 +309,7 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: false,
         setResponse: setResponseLaunchManagers,
         setRobotData: true,
-      }
+      },
     );
   }
 
@@ -323,7 +323,7 @@ export default ({ children }: any) => {
       | "Settings"
       | "Remote Desktop"
       | "Development Suite"
-      | "Code Editor"
+      | "Code Editor",
   ) {
     setActiveTab("Loading");
 

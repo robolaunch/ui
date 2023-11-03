@@ -15,7 +15,7 @@ import { getGuideItem } from "../../../functions/handleGuide";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { NamespaceTableData } from "../../../controllers/NamespaceTableData";
 
-export default function FleetDashboardPage(): ReactElement {
+export default function NSDashboard(): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
   const { pagesState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);

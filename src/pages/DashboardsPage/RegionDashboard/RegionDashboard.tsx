@@ -11,7 +11,7 @@ import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
 
-export default function RoboticsCloudDashboardPage(): ReactElement {
+export default function RegionDashboard(): ReactElement {
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined,
   );

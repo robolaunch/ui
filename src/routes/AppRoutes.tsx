@@ -1,21 +1,17 @@
-import React, { ReactElement } from "react";
-import PhysicalInstancesDashboardPage from "../pages/DashboardsPage/PhysicalInstancesDashboardPage/PhysicalInstancesDashboardPage";
-import CloudInstanceDashboardPage from "../pages/DashboardsPage/CloudInstancesDashboardPage/CloudInstanceDashboardPage";
-import RoboticsCloudDashboardPage from "../pages/DashboardsPage/RoboticsCloudDashboardPage/RoboticsCloudDashboardPage";
-import OrganizationDashboardPage from "../pages/DashboardsPage/OrganizationDashboardPage/OrganizationDashboardPage";
 import MarketplaceSingleItemPage from "../pages/Marketplace/MarketplaceSingleItemPage/MarketplaceSingleItemPage";
-import FleetDashboardPage from "../pages/DashboardsPage/FleetDashboardPage/FleetDashboardPage";
 import MainDashboardPage from "../pages/DashboardsPage/MainDashboardPage/MainDashboardPage";
+import RegionDashboardPage from "../pages/DashboardsPage/RegionDashboard/RegionDashboard";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
+import OrgDashboard from "../pages/DashboardsPage/OrgDashboard/OrgDashboard";
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
+import CIDashboard from "../pages/DashboardsPage/CIDashboard/CIDashboard";
+import NSDashboard from "../pages/DashboardsPage/NSDashboard/NSDashboard";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateProvider from "../providers/PrivateProvider";
-import ProfileContext from "../contexts/ProfileContext";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import RobotPage from "../pages/RobotPage/RobotPage";
-import RobotContext from "../contexts/RobotContext";
 import Page404 from "../pages/Page404/Page404";
-// import BillingPage from "../pages/BillingPage/BillingPage";
+import { ReactElement } from "react";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -25,50 +21,31 @@ export default function AppRoutes(): ReactElement {
           path={`/user-role-management`}
           element={<UserRoleManagementLayout />}
         />
-        {/* <Route path={`/billing`} element={<BillingPage />} /> */}
         <Route path={`/marketplace`} element={<MarketplacePage />} />
         <Route
           path={`/marketplace/:productName`}
           element={<MarketplaceSingleItemPage />}
         />
-        <Route
-          path={`/profile`}
-          element={
-            <ProfileContext>
-              <ProfilePage />
-            </ProfileContext>
-          }
-        />
+        <Route path={`/profile`} element={<ProfilePage />} />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />
-        <Route
-          path={`/:organizationName`}
-          element={<OrganizationDashboardPage />}
-        />
+        <Route path={`/:organizationName`} element={<OrgDashboard />} />
         <Route
           path={`/:organizationName/:roboticsCloudName`}
-          element={<RoboticsCloudDashboardPage />}
+          element={<RegionDashboardPage />}
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName`}
-          element={<CloudInstanceDashboardPage />}
-        />
-        <Route
-          path={`/:organizationName/:roboticsCloudName/:instanceName/physical-instances`}
-          element={<PhysicalInstancesDashboardPage />}
+          element={<CIDashboard />}
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName`}
-          element={<FleetDashboardPage />}
+          element={<NSDashboard />}
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName/:robotName`}
-          element={
-            <RobotContext>
-              <RobotPage />
-            </RobotContext>
-          }
+          element={<RobotPage />}
         />
         {/* Dashboard Pages */}
 

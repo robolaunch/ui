@@ -1,18 +1,18 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { stringCapitalization } from "../../../functions/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
+import React, { ReactElement, useEffect, useState } from "react";
+import { OrgTableData } from "../../../controllers/OrgTableData";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
-import { OrgTableData } from "../../../controllers/OrgTableData";
 
-export default function OrganizationDashboardPage(): ReactElement {
+export default function OrgDashboard(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { getOrganization, getRoboticsClouds } = useFunctions();
   const { pagesState } = useMain();

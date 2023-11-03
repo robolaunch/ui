@@ -1,7 +1,7 @@
-import CFPortSetter from "../CFPortSetter/CFPortSetter";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import CFPortSetter from "../CFPortSetter/CFPortSetter";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";

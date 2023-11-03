@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
 import { Itabs, ProfileActiveTab } from "../interfaces/profileInterfaces";
+import React, { createContext, useState } from "react";
 
 export const ProfileContext: any = createContext<any>(null);
 

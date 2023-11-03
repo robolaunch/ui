@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
 import DevelopmentSuite from "../pages/RobotPage/DevelopmentSuite/DevelopmentSuite";
 import Teleoperation from "../pages/RobotPage/Teleoperation/Teleoperation";
 import Visualization from "../pages/RobotPage/Visualization/Visualization";
 import RemoteDesktop from "../pages/RobotPage/RemoteDesktop/RemoteDesktop";
+import RosConnector from "../components/RosConnector/RosConnector";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import Overview from "../pages/RobotPage/Overview/Overview";
 import { envOnPremiseRobot } from "../helpers/envProvider";
@@ -11,12 +11,16 @@ import BarcodeContext from "../contexts/BarcodeContext";
 import MissionContext from "../contexts/MissionContext";
 import { useAppSelector } from "../hooks/redux";
 import useRobot from "../hooks/useRobot";
+import { ReactElement } from "react";
 
 export default function RobotSubPageLayout(): ReactElement {
   const { activeTab, setActiveTab, responseRobot, isSettedCookie } = useRobot();
   const { urls } = useAppSelector((state) => state.robot);
+
   return (
     <div className="col-span-full">
+      {!envOnPremiseRobot && <RosConnector />}
+
       {(() => {
         switch (activeTab) {
           case "Overview":

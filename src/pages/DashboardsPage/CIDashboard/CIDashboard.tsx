@@ -23,7 +23,7 @@ import useMain from "../../../hooks/useMain";
 import { RiCpuLine } from "react-icons/ri";
 import { BsGpuCard } from "react-icons/bs";
 
-export default function CloudInstanceDashboardPage(): ReactElement {
+export default function CIDashboard(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const {
     getOrganization,
