@@ -1,11 +1,7 @@
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import RoboticsCloudActionCells from "../../../components/TableActionCells/RoboticsCloudActionCells";
+import React, { ReactElement, useEffect, useState } from "react";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import StateCell from "../../../components/TableInformationCells/StateCell";
-import BasicCell from "../../../components/TableInformationCells/BasicCell";
 import { stringCapitalization } from "../../../functions/GeneralFunctions";
-import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
@@ -14,6 +10,7 @@ import { getGuideItem } from "../../../functions/handleGuide";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
+import { GetOrganizationDashboardTableDatas } from "../../../controllers/GetTableDatas";
 
 export default function OrganizationDashboardPage(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
@@ -22,6 +19,12 @@ export default function OrganizationDashboardPage(): ReactElement {
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const url = useParams();
+
+  const { data, columns } = GetOrganizationDashboardTableDatas({
+    responseRoboticsClouds,
+    setReload,
+    url,
+  });
 
   useEffect(() => {
     if (
@@ -52,117 +55,6 @@ export default function OrganizationDashboardPage(): ReactElement {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagesState, reload, url]);
-
-  const data: any = useMemo(
-    () =>
-      responseRoboticsClouds?.map((rc: any) => {
-        return {
-          key: rc?.name,
-          name: rc,
-          organization: url?.organizationName,
-          region: rc?.region,
-          country:
-            rc.region === "eu-central-1"
-              ? "Frankfurt (Germany)"
-              : rc?.region === "eu-west-2"
-              ? "London (UK)"
-              : rc?.region === "us-east-1"
-              ? "N. Virginia (US)"
-              : rc?.region === "us-east-2"
-              ? "Ohio (US)"
-              : rc?.region === "us-west-1"
-              ? "N. California (US)"
-              : rc?.region === "ap-northeast-1" && "Tokyo (Japan)",
-          state: "Ready",
-          users: rc?.actions,
-        };
-      }),
-    [url, responseRoboticsClouds],
-  );
-
-  const columns: any = useMemo(
-    () => [
-      {
-        key: "name",
-        header: "Name",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return (
-            <InfoCell
-              title={rowData?.name?.name}
-              subtitle={`${url?.organizationName} Organization`}
-              titleURL={`/${url?.organizationName}/${rowData?.name?.name}`}
-            />
-          );
-        },
-      },
-      {
-        key: "organization",
-        header: "Organization",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return (
-            <BasicCell
-              text={stringCapitalization({
-                str: url?.organizationName!,
-              })}
-            />
-          );
-        },
-      },
-      {
-        key: "region",
-        header: "Region",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.region} />;
-        },
-      },
-      {
-        key: "country",
-        header: "Country",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.country} />;
-        },
-      },
-      {
-        key: "state",
-        header: "State",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return <StateCell state={rowData?.state} />;
-        },
-      },
-      {
-        key: "actions",
-        header: "Actions",
-        align: "right",
-        body: (rowData: any) => {
-          return (
-            <RoboticsCloudActionCells
-              data={rowData}
-              reload={() => {
-                setReload(!reload);
-              }}
-            />
-          );
-        },
-      },
-    ],
-
-    [reload, url?.organizationName],
-  );
 
   return (
     <DashboardLayout

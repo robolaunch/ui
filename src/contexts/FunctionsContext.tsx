@@ -52,13 +52,12 @@ import {
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
+import { ISelectedState } from "../interfaces/mainInterfaces";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
-
-import { ISelectedState } from "../interfaces/mainInterfaces";
 
 export const FunctionsContext: any = createContext<any>(null);
 

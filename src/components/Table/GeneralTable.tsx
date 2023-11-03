@@ -10,12 +10,12 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 interface IGeneralTable {
-  data: any;
-  columns: any;
+  data: any[];
+  columns: any[];
   loading: boolean;
   title: string;
   type: string;
-  handleReload?: any;
+  handleReload?: () => void;
 }
 
 export default function GeneralTable({

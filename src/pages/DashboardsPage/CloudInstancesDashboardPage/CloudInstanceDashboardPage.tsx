@@ -25,7 +25,6 @@ import { BsGpuCard } from "react-icons/bs";
 
 export default function CloudInstanceDashboardPage(): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { pagesState, selectedState } = useMain();
   const {
     getOrganization,
     getRoboticsCloud,
@@ -34,6 +33,7 @@ export default function CloudInstanceDashboardPage(): ReactElement {
     getNamespaces,
   } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
+  const { pagesState, selectedState } = useMain();
   const url = useParams();
 
   useEffect(() => {
