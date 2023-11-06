@@ -313,27 +313,6 @@ export default function CIDashboard(): ReactElement {
             //       ).toFixed(),
             //     ) || -1,
             // },
-            {
-              title: `In Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.interfaceName})`,
-              percentage:
-                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-                  ?.trafficIn || -1,
-              hiddenCircle: true,
-              content:
-                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-                  ?.trafficIn,
-            },
-            {
-              title: `Out Network (${pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.interfaceName})`,
-              percentage:
-                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-                  ?.trafficOut || -1,
-              hiddenCircle: true,
-              content:
-                pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-                  ?.trafficOut,
-              size: 20,
-            },
           ]}
         />
       }

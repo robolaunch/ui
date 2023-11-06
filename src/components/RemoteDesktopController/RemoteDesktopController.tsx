@@ -2,7 +2,7 @@ import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import RestartService from "../RestartService/RestartService";
 import VolumeControl from "../VolumeControl/VolumeControl";
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import Button from "../Button/Button";
 

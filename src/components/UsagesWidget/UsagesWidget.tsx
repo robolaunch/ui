@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { GoGraph } from "react-icons/go";
 import Widget from "../../layouts/WidgetLayout";
 import CirclePercentageBar from "../CirclePercentageBar/CirclePercentageBar";
+import NetworkChart from "../NetworkChart/NetworkChart";
 
 interface IUsagesWidget {
   title: string;
@@ -19,10 +20,11 @@ export default function UsagesWidget({
       subtitle={`${title} Usages`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
-      <div className="flex h-full w-full items-center justify-center gap-6 p-10 lg:p-6 xl:p-2">
+      <div className="flex h-full w-full items-center justify-center gap-20 p-10 lg:p-6 xl:p-2">
         {datas?.map((data: any) => {
           return <CirclePercentageBar key={data?.title} {...data} size={88} />;
         })}
+        <NetworkChart />
       </div>
     </Widget>
   );
