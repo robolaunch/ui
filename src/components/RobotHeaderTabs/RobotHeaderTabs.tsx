@@ -94,15 +94,17 @@ export default function RobotHeaderTabs(): ReactElement {
             </li>
           ))
       ) : (
-        <ContentLoader
-          speed={1}
-          width={92}
-          height={12}
-          backgroundColor="#f6f6ef"
-          foregroundColor="#e8e8e3"
-        >
-          <rect width="100%" height="12" />
-        </ContentLoader>
+        <div className="pb-2">
+          <ContentLoader
+            speed={1}
+            width={512}
+            height={12}
+            backgroundColor="#f6f6ef"
+            foregroundColor="#e8e8e3"
+          >
+            <rect width="100%" height="12" />
+          </ContentLoader>
+        </div>
       )}
     </ul>
   );

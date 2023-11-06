@@ -1,11 +1,10 @@
-import { Dialog } from "primereact/dialog";
-import React, { ReactElement, useState } from "react";
+import { restartService, vdiSoftReload } from "../toolkit/ServiceSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { restartService, vdiSoftReload } from "../toolkit/ServiceSlice";
+import { ReactElement, useState } from "react";
+import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
 import useMain from "../hooks/useMain";
-
 interface IDeleteRobotModalModal {
   type: "ide" | "vdi" | "soft-vdi";
   handleCloseModal: () => void;

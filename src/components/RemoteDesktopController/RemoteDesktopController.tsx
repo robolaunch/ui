@@ -1,12 +1,10 @@
-import React, { ReactElement, useState } from "react";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import VolumeControl from "../VolumeControl/VolumeControl";
-import { useKeycloak } from "@react-keycloak/web";
-// import { TfiReload } from "react-icons/tfi";
-// import useVDI from "../../hooks/useVDI";
-import Button from "../Button/Button";
 import RestartService from "../RestartService/RestartService";
+import VolumeControl from "../VolumeControl/VolumeControl";
+import React, { ReactElement, useState } from "react";
+import { useKeycloak } from "@react-keycloak/web";
+import Button from "../Button/Button";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -24,8 +22,6 @@ export default function RemoteDesktopController({
   handleFullScreen,
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
-
-  // const { setScreenResolution } = useVDI();
 
   const { keycloak } = useKeycloak();
 
