@@ -12,7 +12,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
-export default function CreateRoboticsCloudForm(): ReactElement {
+export default function CFRegion(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
 

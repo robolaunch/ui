@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
-export default function CreateCloudInstancesForm(): ReactElement {
+export default function CFInstance(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
 

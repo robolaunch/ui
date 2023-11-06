@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import LaunchFormAccordionHeader from "../LaunchFormAccordionHeader/LaunchFormAccordionHeader";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
-import CreateRobotFormStep4 from "../CreateForms/CreateRobotFormStep4";
+import CreateRobotFormStep4 from "../CreateForms/CFStep4";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";

@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement } from "react";
-import CreateRobotFormStep3 from "../CreateForms/CreateRobotFormStep3";
+import CreateRobotFormStep3 from "../CreateForms/CFStep3";
 
 interface IUpdateRobotBuildsForm {
   reload: boolean;

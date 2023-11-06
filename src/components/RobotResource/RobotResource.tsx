@@ -1,17 +1,13 @@
-import React, { ReactElement } from "react";
-import { BsFillCpuFill } from "react-icons/bs";
-import ContentLoader from "react-content-loader";
-import { FaMemory } from "react-icons/fa";
 import { MdOutlineStorage } from "react-icons/md";
+import ContentLoader from "react-content-loader";
+import { BsFillCpuFill } from "react-icons/bs";
+import useRobot from "../../hooks/useRobot";
+import { FaMemory } from "react-icons/fa";
 import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 
-interface IRobotResource {
-  responseRobot: any;
-}
-
-export default function RobotResource({
-  responseRobot,
-}: IRobotResource): ReactElement {
+export default function RobotResource(): ReactElement {
+  const { responseRobot } = useRobot();
   const { pagesState } = useMain();
 
   return (

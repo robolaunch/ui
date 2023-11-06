@@ -20,17 +20,17 @@ import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
 
-interface ICreateRobotFormStep4 {
+interface ICFStep4 {
   isImportRobot?: boolean;
   robotDataLaunchIndex?: number;
   robotClusters?: any[];
 }
 
-export default function CreateRobotFormStep4({
+export default function CFStep4({
   isImportRobot,
   robotDataLaunchIndex,
   robotClusters,
-}: ICreateRobotFormStep4): ReactElement {
+}: ICFStep4): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();

@@ -1,18 +1,4 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
-import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
-import UpdateRobotLaunchsForm from "../components/UpdateRobotLaunchsForm/UpdateRobotLaunchsForm";
-import UpdateRobotDetailsForm from "../components/UpdateRobotDetailsForm/UpdateRobotDetailsForm";
-import ConnectPhysicalInstanceForm from "../components/CreateForms/ConnectPhysicalInstanceForm";
-import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRobotBuildsForm";
-import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
-import CreateCloudInstancesForm from "../components/CreateForms/CreateCloudInstancesForm";
-import CreateRoboticsCloudForm from "../components/CreateForms/CreateRoboticsCloudForm";
-import CreateOrganizationForm from "../components/CreateForms/CreateOrganizationForm";
-import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
-import CreateNamespaceForm from "../components/CreateForms/CreateNamespaceForm";
-import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
-import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import {
   envCreateInstance,
   envCreateOrganization,
@@ -20,14 +6,28 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../helpers/envProvider";
+import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
+import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
+import UpdateRobotLaunchsForm from "../components/UpdateRobotLaunchsForm/UpdateRobotLaunchsForm";
+import UpdateRobotDetailsForm from "../components/UpdateRobotDetailsForm/UpdateRobotDetailsForm";
+import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRobotBuildsForm";
+import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
+import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
+import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
+import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
-import CreateFleetForm from "../components/CreateForms/CreateFleetForm";
 import NamespacesList from "../components/SidebarLists/NamespacesList";
+import CFOrganization from "../components/CreateForms/CFOrganization";
 import { stringCapitalization } from "../functions/GeneralFunctions";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";
+import CFNamespace from "../components/CreateForms/CFNamespace";
+import CFInstance from "../components/CreateForms/CFInstance";
+import CFPhysical from "../components/CreateForms/CFPhysical";
+import CFRegion from "../components/CreateForms/CFRegion";
+import CFFleet from "../components/CreateForms/CFFleet";
 import useCreateRobot from "../hooks/useCreateRobot";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
@@ -263,7 +263,7 @@ export default function SidebarContentLayout(): ReactElement {
             switch (sidebarState?.page) {
               case "organization":
                 if (sidebarState?.isCreateMode) {
-                  return <CreateOrganizationForm />;
+                  return <CFOrganization />;
                 }
                 return (
                   <OrganizationsList
@@ -273,7 +273,7 @@ export default function SidebarContentLayout(): ReactElement {
                 );
               case "roboticscloud":
                 if (sidebarState?.isCreateMode) {
-                  return <CreateRoboticsCloudForm />;
+                  return <CFRegion />;
                 }
                 return (
                   <RoboticsCloudsList
@@ -284,7 +284,7 @@ export default function SidebarContentLayout(): ReactElement {
               case "instance":
                 if (sidebarState?.instanceTab === "Cloud Instances") {
                   if (sidebarState?.isCreateMode) {
-                    return <CreateCloudInstancesForm />;
+                    return <CFInstance />;
                   }
                   return (
                     <CloudInstancesList
@@ -294,7 +294,7 @@ export default function SidebarContentLayout(): ReactElement {
                   );
                 } else {
                   if (sidebarState?.isCreateMode) {
-                    return <ConnectPhysicalInstanceForm />;
+                    return <CFPhysical />;
                   }
                   return (
                     <PhysicalInstancesList
@@ -307,7 +307,7 @@ export default function SidebarContentLayout(): ReactElement {
                 switch (envOnPremiseFleet) {
                   case true:
                     if (sidebarState?.isCreateMode) {
-                      return <CreateNamespaceForm />;
+                      return <CFNamespace />;
                     }
 
                     return (
@@ -318,7 +318,7 @@ export default function SidebarContentLayout(): ReactElement {
                     );
                   case false:
                     if (sidebarState?.isCreateMode) {
-                      return <CreateFleetForm />;
+                      return <CFFleet />;
                     }
 
                     return (

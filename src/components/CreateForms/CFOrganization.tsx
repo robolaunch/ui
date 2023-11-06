@@ -10,7 +10,7 @@ import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import Button from "../Button/Button";
 
-export default function CreateOrganizationForm(): ReactElement {
+export default function CFOrganization(): ReactElement {
   const { sidebarState, setSidebarState }: any = useMain();
 
   const dispatch = useAppDispatch();
@@ -49,7 +49,7 @@ export default function CreateOrganizationForm(): ReactElement {
           className="!text-sm"
           disabled={formik.isSubmitting}
         />
-        <InputError error={formik.errors.name} touched={formik.errors.name} />
+        <InputError error={formik.errors.name} touched={!!formik.errors.name} />
       </div>
 
       <div className="flex gap-2">

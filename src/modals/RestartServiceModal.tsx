@@ -17,7 +17,7 @@ export default function RestartServiceModal({
 }: IDeleteRobotModalModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { responseRobot } = useRobot();
+  const { responseRobot, handleResetRobot } = useRobot();
   const { selectedState } = useMain();
 
   const dispatch = useAppDispatch();
@@ -39,7 +39,9 @@ export default function RestartServiceModal({
       );
       await setIsLoading(false);
       await handleCloseModal();
-      await window.location.reload();
+      // await window.location.reload();
+      await handleResetRobot();
+
       return;
     }
 
@@ -59,7 +61,8 @@ export default function RestartServiceModal({
     );
     await setIsLoading(false);
     await handleCloseModal();
-    await window.location.reload();
+    // await window.location.reload();
+    await handleResetRobot();
   }
 
   return (

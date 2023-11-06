@@ -1,9 +1,9 @@
 import React, { Fragment, ReactElement } from "react";
 import CreateEnvironmentFormStep1 from "../components/CreateForms/CFAppStep1";
-import CreateRobotFormStep1 from "../components/CreateForms/CreateRobotFormStep1";
-import CreateRobotFormStep2 from "../components/CreateForms/CreateRobotFormStep2";
-import CreateRobotFormStep3 from "../components/CreateForms/CreateRobotFormStep3";
-import CreateRobotFormStep4 from "../components/CreateForms/CreateRobotFormStep4";
+import CreateRobotFormStep1 from "../components/CreateForms/CFStep1";
+import CreateRobotFormStep2 from "../components/CreateForms/CFStep2";
+import CreateRobotFormStep3 from "../components/CreateForms/CFStep3";
+import CreateRobotFormStep4 from "../components/CreateForms/CFStep4";
 import useMain from "../hooks/useMain";
 import { envOnPremiseRobot } from "../helpers/envProvider";
 

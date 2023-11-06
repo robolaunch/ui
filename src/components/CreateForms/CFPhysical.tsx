@@ -11,7 +11,7 @@ import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 
-export default function ConnectPhysicalInstanceForm(): ReactElement {
+export default function CFPhysical(): ReactElement {
   const [code, setCode] = React.useState<string>("");
   const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();

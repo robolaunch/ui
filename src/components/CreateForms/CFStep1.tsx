@@ -21,13 +21,11 @@ import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 
-interface ICreateRobotFormStep1 {
+interface ICFStep1 {
   isImportRobot?: boolean;
 }
 
-export default function CreateRobotFormStep1({
-  isImportRobot,
-}: ICreateRobotFormStep1): ReactElement {
+export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);

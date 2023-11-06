@@ -1,6 +1,6 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
@@ -18,13 +18,11 @@ import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
 
-interface ICreateRobotFormStep3 {
+interface ICFStep3 {
   isImportRobot?: boolean;
 }
 
-export default function CreateRobotFormStep3({
-  isImportRobot,
-}: ICreateRobotFormStep3): ReactElement {
+export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
   const { robotData, setRobotData, handleAddStepToBuildStep } =
     useCreateRobot();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);

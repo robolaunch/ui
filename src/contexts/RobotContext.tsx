@@ -1,8 +1,7 @@
 import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
-import React, { useEffect, createContext, useState } from "react";
+import { useEffect, createContext, useState } from "react";
 import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
-import adrinData from "../mock/adrinData.json";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 
@@ -37,11 +36,10 @@ export default ({ children }: any) => {
   const [ros, setRos] = useState<any>(null);
 
   const url = useParams();
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
 
-  const [adrinState, setAdrinState] = useState<any>([]);
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
 
   // Main Functions
   useEffect(() => {
@@ -148,20 +146,6 @@ export default ({ children }: any) => {
     return setIsRobotReady(true);
   }, [responseRobot, responseBuildManager, responseLaunchManagers]);
   // isRobotReady
-
-  // Adrin Integration
-  useEffect(() => {
-    const timer = setInterval(() => {
-      adrinState?.length !== adrinData?.length &&
-        setAdrinState((prevState: any) => {
-          console.log("A", [...prevState, adrinData[prevState?.length]]);
-          return [...prevState, adrinData[prevState?.length]];
-        });
-    }, 10 * 1000);
-
-    return () => clearInterval(timer);
-  }, [adrinState]);
-  // Adrin Integration
 
   function handleGetOrganization() {
     getOrganization(
@@ -337,6 +321,7 @@ export default ({ children }: any) => {
     setResponseBuildManager(undefined);
     setResponseLaunchManagers(undefined);
     setIsSettedCookie(null);
+    setIsRobotReady(false);
     setRos(null);
     setTopicList([]);
     setActiveTab("Overview");
@@ -354,11 +339,9 @@ export default ({ children }: any) => {
         ros,
         setRos,
         topicList,
-        setTopicList,
         isSettedCookie,
         setIsSettedCookie,
-        adrinState,
-        setAdrinState,
+        setTopicList,
         handleForceUpdate,
         handleResetRobot,
       }}
