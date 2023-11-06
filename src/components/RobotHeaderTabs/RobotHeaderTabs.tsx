@@ -9,13 +9,7 @@ import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
 
 export default function RobotHeaderTabs(): ReactElement {
-  const {
-    responseRobot,
-    activeTab,
-    isSettedCookie,
-    setActiveTab,
-    isRobotReady,
-  } = useRobot();
+  const { responseRobot, activeTab, setActiveTab } = useRobot();
 
   const tabs = [
     {
