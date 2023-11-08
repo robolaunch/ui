@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
-import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
+import CFDellButton from "../CFDellButton/CFDellButton";
 
 interface ICFHostDirectoriesInput {
   index: number;
@@ -15,10 +15,8 @@ export default function CFHostDirectoriesInput({
   formik,
   disabled,
 }: ICFHostDirectoriesInput): ReactElement {
-  console.log("formik.getFieldProps", formik.values.hostDirectories);
-
   return (
-    <div className="flex w-full  rounded-md border border-layer-light-100 p-4">
+    <div className="flex w-full  gap-3 rounded-md border border-layer-light-100 p-4">
       <FormInputText
         labelName="Host Directory:"
         labelInfoTip="Type a host directory."
@@ -45,15 +43,14 @@ export default function CFHostDirectoriesInput({
         inputTouched={formik.touched.hostDirectories?.[index]?.mountPath}
       />
 
-      <div className="flex items-center justify-center text-sm text-layer-light-800">
-        <CreateRobotFormDeleteButton
-          text="Delete"
+      <div className="flex items-center justify-center pt-2.5 text-sm text-layer-light-800">
+        <CFDellButton
+          disabled={disabled}
           onClick={() => {
             const hostDirectories = [...formik.values.hostDirectories];
             hostDirectories.splice(index, 1);
             formik.setFieldValue("hostDirectories", hostDirectories);
           }}
-          disabled={disabled}
         />
       </div>
     </div>

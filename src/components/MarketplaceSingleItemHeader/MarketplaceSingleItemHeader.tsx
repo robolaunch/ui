@@ -9,8 +9,6 @@ interface IMarketplaceSingleİtemHeader {
 export default function MarketplaceSingleİtemHeader({
   responseItem,
 }: IMarketplaceSingleİtemHeader): ReactElement {
-  console.log(responseItem);
-
   return (
     <CardLayout className="col-span-1 h-52 p-4">
       <div className="flex h-full items-center gap-6">

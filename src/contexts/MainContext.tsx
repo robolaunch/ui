@@ -10,8 +10,8 @@ export default ({ children }: any) => {
   const url = useLocation();
 
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
-    isOpen: true,
-    isCreateMode: true,
+    isOpen: false,
+    isCreateMode: false,
     page: undefined,
     instanceTab: "Cloud Instances",
   });

@@ -1,5 +1,5 @@
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import RestartService from "../RestartService/RestartService";
+import RestartService from "../RestartServiceButton/RestartServiceButton";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import { ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";

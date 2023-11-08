@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";
 import StateCell from "../TableInformationCells/StateCell";
 import ConnectionLabel from "../ConnectionLabel/ConnectionLabel";
@@ -7,10 +7,6 @@ import { useKeycloak } from "@react-keycloak/web";
 export default function Connections(): ReactElement {
   const { responseRobot, isSettedCookie } = useRobot();
   const { keycloak } = useKeycloak();
-
-  useEffect(() => {
-    console.log("isSettedCookie", isSettedCookie);
-  }, [isSettedCookie]);
 
   return (
     <div className="flex gap-4">

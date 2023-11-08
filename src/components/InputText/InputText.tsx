@@ -46,7 +46,7 @@ export default function InputText({
       <input
         autoComplete="off"
         disabled={disabled}
-        className={`h-10 w-full rounded-md border border-layer-light-300 p-3
+        className={`h-9 w-full rounded-md border border-layer-light-300 p-3
       text-sm  outline-none
        transition-all duration-500 focus:ring-2 focus:ring-primary disabled:cursor-not-allowed ${className}`}
         type={type || "text"}

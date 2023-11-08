@@ -10,8 +10,8 @@ export default function FullScreenButton({
   handleFullScreen,
 }: IFullScreenButton) {
   return (
-    <div
-      className="flex cursor-pointer flex-col items-center text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
+    <button
+      className="flex cursor-pointer flex-col items-center gap-1 text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
       onClick={handleFullScreen}
     >
       {isFullScreen ? (
@@ -26,6 +26,6 @@ export default function FullScreenButton({
         />
       )}
       <p className="text-[0.66rem]">Full Screen</p>
-    </div>
+    </button>
   );
 }

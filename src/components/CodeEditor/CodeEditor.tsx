@@ -3,7 +3,7 @@ import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
-import RestartService from "../RestartService/RestartService";
+import RestartService from "../RestartServiceButton/RestartServiceButton";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
 
 export default function CodeEditor(): ReactElement {

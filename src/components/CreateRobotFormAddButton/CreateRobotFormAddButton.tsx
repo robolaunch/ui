@@ -18,7 +18,7 @@ export default function CreateRobotFormAddButton({
     <BsPlusCircle
       title={description}
       onClick={disabled ? () => {} : onClick}
-      size={22}
+      size={18}
       className={`animate__animated animate__fadeIn mx-auto mt-4 cursor-pointer transition-all duration-500 ${
         disabled
           ? "text-layer-light-600 hover:cursor-not-allowed"
