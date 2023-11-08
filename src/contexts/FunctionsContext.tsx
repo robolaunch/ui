@@ -1144,7 +1144,7 @@ export default ({ children }: any) => {
                     ?.cloudInstances[0]?.environments[0]?.persistentDirectories,
                 hostDirectories:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.hostDirectories
-                    ?.split(":")
+                    ?.split(",")
                     ?.map((item: string) => {
                       return {
                         hostDirectory: item?.split(":")[0],

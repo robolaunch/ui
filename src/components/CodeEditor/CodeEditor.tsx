@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 import RestartService from "../RestartService/RestartService";
+import FullScreenButton from "../FullScreenButton/FullScreenButton";
 
 export default function CodeEditor(): ReactElement {
   const [ideKey, setIdeKey] = useState<number>(0);
@@ -28,7 +28,7 @@ export default function CodeEditor(): ReactElement {
   ];
 
   useEffect(() => {
-    setIsSettedCookie(false);
+    setIsSettedCookie(undefined);
     setIdeKey((prev) => prev + 1);
   }, [responseRobot?.robotClusters, setIsSettedCookie]);
 
@@ -94,7 +94,7 @@ export default function CodeEditor(): ReactElement {
               if (await responseRobot) {
                 await setTimeout(() => {
                   setIsSettedCookie(true);
-                }, 1500);
+                }, 4000);
               }
             }}
           />
@@ -103,27 +103,16 @@ export default function CodeEditor(): ReactElement {
             <RestartService type="ide" />
           </div>
 
-          {handleFullScreen.active ? (
-            <button
-              className="absolute bottom-3 right-3"
-              onClick={handleFullScreen.exit}
-            >
-              <BsFullscreenExit
-                size={24}
-                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-              />
-            </button>
-          ) : (
-            <button
-              className="absolute bottom-3 right-3"
-              onClick={handleFullScreen.enter}
-            >
-              <BsFullscreen
-                size={24}
-                className=" text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-              />
-            </button>
-          )}
+          <div className="absolute bottom-3 right-3">
+            <FullScreenButton
+              isFullScreen={handleFullScreen.active}
+              handleFullScreen={
+                handleFullScreen.active
+                  ? handleFullScreen.exit
+                  : handleFullScreen.enter
+              }
+            />
+          </div>
         </FullScreen>
       </CardLayout>
     </div>

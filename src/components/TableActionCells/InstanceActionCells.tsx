@@ -1,14 +1,13 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
-import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
-import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 import {
   envCreateInstance,
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-
+import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
+import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
+import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
+import { Fragment, ReactElement, useState } from "react";
+import Button from "../Button/Button";
 interface IInstanceActionCells {
   data: any;
   reload: () => void;

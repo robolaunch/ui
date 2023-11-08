@@ -829,6 +829,12 @@ export interface Environment {
      * @type {string}
      * @memberof Environment
      */
+    'hostDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
     'ideCustomPorts'?: string;
     /**
      * 
@@ -2172,6 +2178,12 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'persistentDirectories'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'hostDirectories'?: string;
     /**
      * 
      * @type {string}

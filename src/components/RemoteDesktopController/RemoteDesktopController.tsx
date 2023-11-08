@@ -1,10 +1,10 @@
-import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import RestartService from "../RestartService/RestartService";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import { ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import Button from "../Button/Button";
+import FullScreenButton from "../FullScreenButton/FullScreenButton";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -59,22 +59,14 @@ export default function RemoteDesktopController({
       </button>
       {isControllerOpen && (
         <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-layer-light-50 px-4 py-2 ">
-          {handleFullScreen.active ? (
-            <button onClick={handleFullScreen.exit}>
-              <BsFullscreenExit
-                size={24}
-                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-              />
-            </button>
-          ) : (
-            <button onClick={handleFullScreen.enter}>
-              <BsFullscreen
-                size={24}
-                className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-              />
-            </button>
-          )}
-          {/* <TfiReload size={20} onClick={() => setScreenResolution()} /> */}
+          <FullScreenButton
+            isFullScreen={handleFullScreen.active}
+            handleFullScreen={
+              handleFullScreen.active
+                ? handleFullScreen.exit
+                : handleFullScreen.enter
+            }
+          />
 
           <RestartService type="vdi" />
 

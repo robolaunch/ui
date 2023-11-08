@@ -32,7 +32,7 @@ export default function CFAdvancedSettings({
         setIsOpen(!isOpen);
       }}
     >
-      <div className="flex flex-col gap-5 px-4 pb-6 pt-2">
+      <div className="flex flex-col gap-8 px-4 pb-6 pt-2">
         <CFSection gap={4}>
           <CFPersistDirTags formik={formik} disabled={disabled} />
           <Seperator />

@@ -32,7 +32,7 @@ export default function HiddenFrame(): ReactElement {
           onLoad={() => {
             setTimeout(() => {
               !isSettedCookie && setIsSettedCookie(true);
-            }, 2000);
+            }, 4000);
           }}
         />
       )}
