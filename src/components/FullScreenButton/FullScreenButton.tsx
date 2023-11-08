@@ -15,15 +15,9 @@ export default function FullScreenButton({
       onClick={handleFullScreen}
     >
       {isFullScreen ? (
-        <BsFullscreenExit
-          size={24}
-          className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-        />
+        <BsFullscreenExit size={24} />
       ) : (
-        <BsFullscreen
-          size={24}
-          className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
-        />
+        <BsFullscreen size={24} />
       )}
       <p className="text-[0.66rem]">Full Screen</p>
     </button>

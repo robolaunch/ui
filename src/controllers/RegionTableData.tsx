@@ -91,7 +91,6 @@ export function RegionTableData({
           );
         },
       },
-
       {
         key: "OSResources",
         header: "OS Resources",
@@ -165,7 +164,7 @@ export function RegionTableData({
         header: "Resources & Usages",
         sortable: false,
         filter: false,
-        align: "left",
+        align: "center",
         body: (rowData: any) => {
           return (
             <div className="flex gap-4">
@@ -181,35 +180,35 @@ export function RegionTableData({
                     title={`Memory (${rowData?.usages?.memoryTotal} GB)`}
                     size={46}
                   />
-                  {/* <CirclePercentageBar
-                    percentage={
-                      Number(
-                        (
-                          ((rowData?.usages?.storageTotal -
-                            rowData?.usages?.storageUsage) /
-                            rowData?.usages?.storageTotal) *
-                          100
-                        ).toFixed(),
-                      ) < 1
-                        ? 1
-                        : Number(
-                            (
-                              ((rowData?.usages?.storageTotal -
-                                rowData?.usages?.storageUsage) /
-                                rowData?.usages?.storageTotal) *
-                              100
-                            ).toFixed(),
-                          )
-                    }
+                  <CirclePercentageBar
+                    percentage={Math.floor(
+                      (rowData?.usages?.storageUsage /
+                        rowData?.usages?.storageTotal) *
+                        100,
+                    )}
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}
                     size={46}
-                  /> */}
+                  />
                   <NetworkCell
                     data={[
-                      rowData.usages?.networkUsage?.[0]?.trafficIn ||
-                        "Pending...",
-                      rowData.usages?.networkUsage?.[0]?.trafficOut ||
-                        "Pending...",
+                      Number(
+                        (
+                          Number(
+                            rowData.usages?.networkUsage?.[0]?.trafficIn?.split(
+                              "Kbps",
+                            )?.[0],
+                          ) / 1024
+                        )?.toFixed(2),
+                      ) || 0,
+                      Number(
+                        (
+                          Number(
+                            rowData.usages?.networkUsage?.[0]?.trafficOut?.split(
+                              "Kbps",
+                            )?.[0],
+                          ) / 1024
+                        )?.toFixed(2),
+                      ) || 0,
                     ]}
                     networkInterface={
                       rowData.usages?.networkUsage?.[0]?.interfaceName

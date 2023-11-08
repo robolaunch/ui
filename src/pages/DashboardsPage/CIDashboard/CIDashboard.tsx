@@ -296,23 +296,21 @@ export default function CIDashboard(): ReactElement {
               percentage:
                 pagesState?.instance?.cloudInstanceResource?.memoryUsage || -1,
             },
-            // {
-            //   title: `Storage (${
-            //     pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
-            //   } GB)`,
-            //   percentage:
-            //     Number(
-            //       (
-            //         (pagesState?.instance?.cloudInstanceResource
-            //           ?.storageTotal! /
-            //           100) *
-            //         (pagesState?.instance?.cloudInstanceResource
-            //           ?.storageTotal! -
-            //           pagesState?.instance?.cloudInstanceResource
-            //             ?.storageUsage!)
-            //       ).toFixed(),
-            //     ) || -1,
-            // },
+            {
+              title: `Storage (${
+                pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
+              } GB)`,
+              percentage:
+                pagesState?.instance?.cloudInstanceResource?.storageUsage &&
+                pagesState?.instance?.cloudInstanceResource?.storageTotal
+                  ? Math.floor(
+                      (pagesState.instance.cloudInstanceResource.storageUsage /
+                        pagesState.instance.cloudInstanceResource
+                          .storageTotal) *
+                        100,
+                    )
+                  : 0,
+            },
           ]}
         />
       }

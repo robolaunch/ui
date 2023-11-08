@@ -39,7 +39,9 @@ export default ({ children }: any) => {
 
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
 
-  const [isSettedCookie, setIsSettedCookie] = useState<boolean | null>(null);
+  const [isSettedCookie, setIsSettedCookie] = useState<boolean | undefined>(
+    undefined,
+  );
 
   // Main Functions
   useEffect(() => {
@@ -320,7 +322,7 @@ export default ({ children }: any) => {
     setResponseRobot(undefined);
     setResponseBuildManager(undefined);
     setResponseLaunchManagers(undefined);
-    setIsSettedCookie(null);
+    setIsSettedCookie(undefined);
     setIsRobotReady(false);
     setRos(null);
     setTopicList([]);

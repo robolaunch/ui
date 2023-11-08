@@ -94,16 +94,13 @@ export default function CodeEditor(): ReactElement {
               if (await responseRobot) {
                 await setTimeout(() => {
                   setIsSettedCookie(true);
-                }, 4000);
+                }, 2500);
               }
             }}
           />
 
-          <div className="absolute bottom-12 right-3">
+          <div className="absolute bottom-3 right-6 flex flex-col gap-4">
             <RestartService type="ide" />
-          </div>
-
-          <div className="absolute bottom-3 right-3">
             <FullScreenButton
               isFullScreen={handleFullScreen.active}
               handleFullScreen={

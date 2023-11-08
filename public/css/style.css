@@ -757,6 +757,14 @@ video {
   top: 3.6rem;
 }
 
+.bottom-10 {
+  bottom: 2.5rem;
+}
+
+.right-6 {
+  right: 1.5rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -1689,6 +1697,14 @@ video {
 
 .gap-9 {
   gap: 2.25rem;
+}
+
+.gap-0 {
+  gap: 0px;
+}
+
+.gap-0\.5 {
+  gap: 0.125rem;
 }
 
 .overflow-auto {

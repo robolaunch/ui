@@ -22,7 +22,7 @@ export default function CFHostDirectories({
         vertical
       >
         <div className="flex flex-col gap-2">
-          {formik.values.hostDirectories.map((_, index) => {
+          {formik.values.hostDirectories?.map((_, index) => {
             return (
               <CFHostDirectoriesInput
                 key={index}

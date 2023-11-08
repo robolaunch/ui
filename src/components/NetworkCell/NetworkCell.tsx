@@ -1,7 +1,7 @@
-import React, { Fragment, ReactElement } from "react";
+import React, { Fragment, ReactElement, useEffect } from "react";
 
 interface INetworkCell {
-  data: string[];
+  data: number[];
   networkInterface: string;
 }
 
@@ -9,10 +9,14 @@ export default function NetworkCell({
   data,
   networkInterface,
 }: INetworkCell): ReactElement {
+  useEffect(() => {
+    console.log("NetworkCell", data);
+  }, [data]);
+
   return (
     <Fragment>
       {data?.map(
-        (network: string, index: number) =>
+        (network: number, index: number) =>
           network && (
             <div
               key={index}
@@ -20,7 +24,7 @@ export default function NetworkCell({
             >
               <div className="flex flex-col items-center justify-center gap-1">
                 <div className="flex h-11 w-11 items-center justify-center text-center text-layer-light-700">
-                  {network}
+                  {network > 0 ? `${network} Mbps` : "Pending..."}
                 </div>
                 <span className="text-[0.66rem] text-layer-dark-500">
                   ({networkInterface}) {index === 0 ? "In" : "Out"}

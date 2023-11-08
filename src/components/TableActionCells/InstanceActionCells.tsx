@@ -3,9 +3,9 @@ import {
   envOnPremiseFleet,
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
-import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
+import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
 import { Fragment, ReactElement, useState } from "react";
 import Button from "../Button/Button";
 interface IInstanceActionCells {
@@ -59,7 +59,7 @@ export default function InstanceActionCells({
           disabled={
             data?.state === "running" || data?.state === "stopped"
               ? false
-              : true
+              : true || !envCreateInstance
           }
           onClick={
             data?.state === "running" || data?.state === "stopped"
