@@ -42,6 +42,7 @@ export default ({ children }: any) => {
       persistentDirectories: "/var:/etc:/opt:/usr",
       ideCustomPorts: [],
       vdiCustomPorts: [],
+      hostDirectories: [],
       idePodName: "",
       vdiPodName: "",
     },

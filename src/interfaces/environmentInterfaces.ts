@@ -18,6 +18,7 @@ export interface IcreateEnvironmentRequest {
   workspaces: any;
   permittedDirectories: string;
   persistentDirectories: string;
+  hostDirectories: string;
   ideCustomPorts: string;
   vdiCustomPorts: string;
 }

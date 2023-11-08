@@ -1,5 +1,5 @@
 import { ISelectedState, ISidebarState } from "../interfaces/mainInterfaces";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IpagesState } from "../interfaces/mainInterfaces";
 import { useLocation } from "react-router-dom";
 

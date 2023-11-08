@@ -14,6 +14,17 @@ export const CFAppStep1Validations = Yup.object().shape({
   application: Yup.object().shape({
     name: Yup.string().required("Application model is required."),
   }),
+  ideGpuResourceType: Yup.string().required("GPU model is required."),
+  hostDirectories: Yup.array().of(
+    Yup.object().shape({
+      hostDirectory: Yup.string()
+        .required("Directory is required.")
+        .matches(/^\//, "Path must start with a '/'"),
+      mountPath: Yup.string()
+        .required("Path is required.")
+        .matches(/^\//, "Path must start with a '/'"),
+    }),
+  ),
   ideCustomPorts: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()
@@ -27,7 +38,6 @@ export const CFAppStep1Validations = Yup.object().shape({
         .max(65535, "Maximum 65535."),
     }),
   ),
-  ideGpuResourceType: Yup.string().required("GPU model is required."),
   vdiCustomPorts: Yup.array().of(
     Yup.object().shape({
       name: Yup.string()

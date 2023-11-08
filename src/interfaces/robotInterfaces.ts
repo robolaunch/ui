@@ -168,10 +168,15 @@ export interface IDetails {
   persistentDirectories: string;
   ideCustomPorts: any[];
   vdiCustomPorts: any[];
+  hostDirectories: IhostDirectories[];
   idePodName: string;
   vdiPodName: string;
 }
 
+export interface IhostDirectories {
+  hostDirectory: string;
+  mountPath: string;
+}
 export interface IWorkspaces {
   configureWorkspace: boolean;
   workspaces: IWorkspace[];

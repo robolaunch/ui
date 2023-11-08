@@ -7,6 +7,7 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
+import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;
@@ -39,6 +40,11 @@ export default function CFAdvancedSettings({
 
         <CFSection gap={4}>
           <CFGrantDirTags formik={formik} disabled={disabled} />
+          <Seperator />
+        </CFSection>
+
+        <CFSection gap={4}>
+          <CFHostDirectories formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
 

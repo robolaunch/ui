@@ -1142,6 +1142,15 @@ export default ({ children }: any) => {
                 persistentDirectories:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.persistentDirectories,
+                hostDirectories:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.hostDirectories
+                    ?.split(":")
+                    ?.map((item: string) => {
+                      return {
+                        hostDirectory: item?.split(":")[0],
+                        mountPath: item?.split(":")[1],
+                      };
+                    }),
                 ideCustomPorts:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
                     ?.split("/")
@@ -1268,9 +1277,15 @@ export default ({ children }: any) => {
             devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
             devspaceDesktop: robotData?.step1?.devspace?.desktop,
             devspaceVersion: robotData?.step1?.devspace?.version,
+            workspaces: withoutWorkspaces ? null : robotData?.step2.workspaces,
             permittedDirectories: robotData?.step1?.permittedDirectories,
             persistentDirectories: robotData?.step1?.persistentDirectories,
-            workspaces: withoutWorkspaces ? null : robotData?.step2.workspaces,
+            hostDirectories:
+              robotData?.step1?.hostDirectories
+                ?.map((directory) => {
+                  return `${directory.hostDirectory}:${directory.mountPath}`;
+                })
+                ?.join(",") || "",
             ideCustomPorts:
               robotData.step1.ideCustomPorts
                 ?.map((port) => {
