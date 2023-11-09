@@ -1,12 +1,13 @@
 import { IGpuUsage } from "../../interfaces/instanceInferfaces";
 import { IDetails } from "../../interfaces/robotInterfaces";
-import { ReactElement, useEffect } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import CFGridItem from "../CFGridItem/CFGridItem";
+import { ReactElement, useEffect } from "react";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
+
 interface ICFGpuTypes {
   formik: FormikProps<IDetails>;
   disabled?: boolean;
@@ -70,7 +71,10 @@ export default function CFGpuTypes({
                         <p className="lowercase">{type.resourceName}</p>
                         <p className="text-[0.66rem] font-light">
                           {Number(type.capacity) - Number(type.allocated)}/
-                          {type.capacity} Avaliable vGPU
+                          {type.capacity} Available{" "}
+                          {type.resourceName.includes("mig")
+                            ? "MIG Instance"
+                            : "vGPU"}
                         </p>
                       </div>
                     </div>
@@ -100,9 +104,14 @@ export default function CFGpuTypes({
                       "ideGpuResourceType",
                       type.resourceName,
                     );
+
+                    formik.setFieldValue("ideGpuResource", 0);
+
                     formik.setFieldValue(
                       "ideGpuResourceMaxCore",
-                      Number(type.capacity) - Number(type.allocated) - 1,
+                      Number(type.capacity) -
+                        Number(type.allocated) -
+                        (type.resourceName.includes("mig") ? 0 : 1),
                     );
                   }}
                   disabled={

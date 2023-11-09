@@ -1,12 +1,12 @@
-import React, { Fragment, ReactElement } from "react";
+import { stringSlugify } from "../../functions/GeneralFunctions";
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { BiJoystickButton } from "react-icons/bi";
 import ContentLoader from "react-content-loader";
+import { Fragment, ReactElement } from "react";
 import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
-import { stringSlugify } from "../../functions/GeneralFunctions";
 
 export default function RobotHeaderTabs(): ReactElement {
   const {
@@ -134,12 +134,12 @@ export default function RobotHeaderTabs(): ReactElement {
                 {tab?.isLoading || !isRobotReady ? (
                   <ContentLoader
                     speed={1}
-                    width={92}
+                    width={108}
                     height={12}
                     backgroundColor="#f6f6ef"
                     foregroundColor="#e8e8e3"
                   >
-                    <rect width="92" height="12" />
+                    <rect width="108" height="12" />
                   </ContentLoader>
                 ) : (
                   <Fragment>

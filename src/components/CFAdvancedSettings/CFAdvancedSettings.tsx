@@ -1,3 +1,4 @@
+import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import { IDetails } from "../../interfaces/robotInterfaces";
@@ -7,7 +8,6 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
-import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;

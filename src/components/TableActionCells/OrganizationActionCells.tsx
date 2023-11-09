@@ -1,10 +1,10 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { BiTrash, BiPencil } from "react-icons/bi";
-import { HiOutlineEye } from "react-icons/hi";
 import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
 import RenameOrganizationModal from "../../modals/RenameOrganizationModal";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { Fragment, ReactElement, useState } from "react";
+import { BiTrash, BiPencil } from "react-icons/bi";
+import { HiOutlineEye } from "react-icons/hi";
+import Button from "../Button/Button";
 interface IOrganizationActionCells {
   data: any;
   reload: () => void;

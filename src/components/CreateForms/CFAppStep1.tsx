@@ -1,8 +1,8 @@
-import { CFAppStep1Validations } from "../../validations/AppsValidations";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
+import { CFAppStep1Validations } from "../../validations/AppsValidations";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -13,11 +13,11 @@ import CFVDICount from "../CFVDICount/CFVDICount";
 import Seperator from "../Seperator/Seperator";
 import CFAppName from "../CFAppName/CFAppName";
 import CFSection from "../CFSection/CFSection";
+import CFGpuCore from "../CFGpuCore/CFGpuCore";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
-import CFGpuCore from "../CFGpuCore/CFGpuCore";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;

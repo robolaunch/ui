@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect } from "react";
+import { Fragment, ReactElement, useEffect } from "react";
 
 interface INetworkCell {
   data: number[];

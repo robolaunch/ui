@@ -1,10 +1,11 @@
-import React, { ReactElement, useState } from "react";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import StreamContext from "../../../contexts/VDIContext";
 import CardLayout from "../../../layouts/CardLayout";
+import { ReactElement, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
+
 interface IDevelopmentSuite {
   ideURL: string;
   vdiURL: string;
