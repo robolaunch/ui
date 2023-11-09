@@ -15,11 +15,11 @@ export default function FullScreenButton({
       onClick={handleFullScreen}
     >
       {isFullScreen ? (
-        <BsFullscreenExit size={24} />
+        <BsFullscreenExit size={20} />
       ) : (
-        <BsFullscreen size={24} />
+        <BsFullscreen size={20} />
       )}
-      <p className="text-[0.66rem]">Full Screen</p>
+      <p className="text-[0.60rem]">Full Screen</p>
     </button>
   );
 }

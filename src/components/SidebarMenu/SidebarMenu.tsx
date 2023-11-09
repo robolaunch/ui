@@ -17,7 +17,7 @@ export default function PrivateSidebar(): ReactElement {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-    }, 7777);
+    }, 5000);
   }, [url]);
 
   return (

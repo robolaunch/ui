@@ -23,8 +23,7 @@ export default function CFGpuCore({
   return (
     <FormInputRange
       label={`GPU Core Count (${formik.values.ideGpuResource} Core):`}
-      tip="GPU Core Count is the number of GPU cores that will be allocated to the IDE. The GPU cores are used to accelerate the rendering of the IDE. The GPU cores are allocated from the GPU resource pool that is available on the robot. The GPU cores are allocated from the GPU resource pool that."
-      dataTut="create-environment-ide-gpu-core"
+      tip="GPU Core Count is the number of GPU cores that will be allocated to the application. The GPU cores are used to accelerate the rendering of the application. The GPU cores are allocated from the GPU resource pool that is available on the instance. The GPU cores are allocated from the GPU resource pool that."
       InputProps={formik.getFieldProps("ideGpuResource")}
       min={0}
       max={robotData.step1.ideGpuResourceMaxCore || 0}

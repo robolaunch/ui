@@ -1,4 +1,3 @@
-import React, { createContext } from "react";
 import {
   IgetBuildManager,
   IgetEnvironments,
@@ -57,6 +56,7 @@ import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { createContext } from "react";
 import { toast } from "sonner";
 
 export const FunctionsContext: any = createContext<any>(null);
@@ -70,7 +70,6 @@ export default ({ children }: any) => {
     setSelectedState,
     pagesState,
     setPagesState,
-    setSidebarState,
   } = useMain();
   const navigate = useNavigate();
   const { robotData, setRobotData } = useCreateRobot();
@@ -1303,12 +1302,6 @@ export default ({ children }: any) => {
                 ?.join("/") || "",
           }),
         );
-
-        setSidebarState((prevState) => ({
-          ...prevState,
-          isCreateMode: false,
-          page: "robot",
-        }));
 
         resolve();
       } catch (error) {

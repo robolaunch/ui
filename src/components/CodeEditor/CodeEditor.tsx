@@ -99,7 +99,7 @@ export default function CodeEditor(): ReactElement {
             }}
           />
 
-          <div className="absolute bottom-3 right-6 flex flex-col gap-4">
+          <div className="absolute bottom-1 right-4 flex scale-[0.88] flex-col gap-4">
             <RestartService type="ide" />
             <FullScreenButton
               isFullScreen={handleFullScreen.active}

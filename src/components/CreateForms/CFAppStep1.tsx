@@ -28,7 +28,8 @@ export default function CFAppStep1({
 }: ICFAppStep1): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
-  const { selectedState, handleCreateRobotNextStep } = useMain();
+  const { selectedState, handleCreateRobotNextStep, setSidebarState } =
+    useMain();
   const { getEnvironment, createEnvironment } = useFunctions();
   const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
@@ -40,7 +41,13 @@ export default function CFAppStep1({
       formik.setSubmitting(true);
 
       if (!formik.values.configureWorkspace) {
-        await createEnvironment(true);
+        await createEnvironment(true).then(async () => {
+          setSidebarState((prevState) => ({
+            ...prevState,
+            isCreateMode: false,
+            page: "robot",
+          }));
+        });
       } else {
         formik.setSubmitting(false);
         handleCreateRobotNextStep();

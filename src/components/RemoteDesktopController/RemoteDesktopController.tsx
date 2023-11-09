@@ -1,10 +1,10 @@
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import RestartService from "../RestartServiceButton/RestartServiceButton";
-import VolumeControl from "../VolumeControl/VolumeControl";
-import { ReactElement, useState } from "react";
-import { useKeycloak } from "@react-keycloak/web";
-import Button from "../Button/Button";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import VolumeControl from "../VolumeControl/VolumeControl";
+import { useKeycloak } from "@react-keycloak/web";
+import { ReactElement, useState } from "react";
+import Button from "../Button/Button";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -58,7 +58,7 @@ export default function RemoteDesktopController({
         )}
       </button>
       {isControllerOpen && (
-        <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-layer-light-50 px-4 py-2 ">
+        <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-layer-light-50 px-3 pb-1.5 pt-3">
           <FullScreenButton
             isFullScreen={handleFullScreen.active}
             handleFullScreen={
@@ -94,7 +94,7 @@ export default function RemoteDesktopController({
               return "Take Control";
             })()}
             onClick={() => handleControl()}
-            className="h-10 !w-40 text-xs"
+            className="!h-11 !w-36 text-xs"
           />
         </div>
       )}

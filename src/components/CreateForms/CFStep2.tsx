@@ -3,11 +3,10 @@ import {
   envOnPremiseRobot,
 } from "../../helpers/envProvider";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
-import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
+import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { createEnvironment } from "../../toolkit/EnvironmentSlice";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -34,7 +33,13 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const { robotData, setRobotData } = useCreateRobot();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
-  const { getRobot, getFleet, getEnvironment, getNamespace } = useFunctions();
+  const {
+    getRobot,
+    getFleet,
+    getEnvironment,
+    getNamespace,
+    createEnvironment,
+  } = useFunctions();
   const url = useParams();
   const dispatch = useAppDispatch();
 
@@ -47,53 +52,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       formik.setSubmitting(true);
 
       if (envOnPremiseRobot) {
-        dispatch(
-          createEnvironment({
-            organizationId: selectedState?.organization?.organizationId!,
-            roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            region: selectedState?.roboticsCloud?.region!,
-            instanceId: selectedState?.instance?.instanceId!,
-            fleetName: selectedState?.fleet?.name,
-            environmentName: robotData?.step1?.robotName,
-            domainName: robotData?.step1?.domainName,
-            storageAmount: robotData?.step1?.robotStorage,
-            ideGpuResource: robotData?.step1?.ideGpuResource,
-            ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
-            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-            applicationName: robotData?.step1?.application?.name,
-            applicationVersion: robotData?.step1?.application?.version,
-            devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
-            devspaceDesktop: robotData?.step1?.devspace?.desktop,
-            devspaceVersion: robotData?.step1?.devspace?.version,
-            permittedDirectories: robotData?.step1?.permittedDirectories,
-            persistentDirectories: robotData?.step1?.persistentDirectories,
-            workspaces: robotData?.step2.workspaces,
-            ideCustomPorts:
-              robotData.step1.ideCustomPorts
-                ?.map(
-                  (port: {
-                    name: string;
-                    port: number;
-                    backendPort: number;
-                  }) => {
-                    return `${port.name}-${port.backendPort}:${port.port}`;
-                  },
-                )
-                ?.join("/") || "",
-            vdiCustomPorts:
-              robotData.step1.vdiCustomPorts
-                ?.map(
-                  (port: {
-                    name: string;
-                    port: number;
-                    backendPort: number;
-                  }) => {
-                    return `${port.name}-${port.backendPort}:${port.port}`;
-                  },
-                )
-                ?.join("/") || "",
-          }),
-        ).then(async () => {
+        createEnvironment(false).then(async () => {
           await handleSubmit();
         });
       } else {

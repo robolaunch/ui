@@ -47,7 +47,7 @@ export default function InputText({
         autoComplete="off"
         disabled={disabled}
         className={`h-9 w-full rounded-md border border-layer-light-300 p-3
-      text-sm  outline-none
+      text-xs  outline-none
        transition-all duration-500 focus:ring-2 focus:ring-primary disabled:cursor-not-allowed ${className}`}
         type={type || "text"}
         name={name}
