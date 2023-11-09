@@ -7,7 +7,7 @@ import { ReactElement } from "react";
 
 export default function RobotHeader(): ReactElement {
   return (
-    <div data-tut="robot-header" className="col-span-full">
+    <div data-tut="robot-header" className="col-span-full h-fit">
       <CardLayout className="flex w-full flex-col gap-6 px-8 !pb-0 pt-6">
         <div className="flex items-center justify-between">
           <RobotHeaderDetails />

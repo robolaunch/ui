@@ -1142,6 +1142,26 @@ video {
   height: 100vh;
 }
 
+.h-\[44\.4rem\] {
+  height: 44.4rem;
+}
+
+.h-\[45rem\] {
+  height: 45rem;
+}
+
+.h-\[46rem\] {
+  height: 46rem;
+}
+
+.h-\[45\.4rem\] {
+  height: 45.4rem;
+}
+
+.h-\[45\.6rem\] {
+  height: 45.6rem;
+}
+
 .max-h-\[40rem\] {
   max-height: 40rem;
 }

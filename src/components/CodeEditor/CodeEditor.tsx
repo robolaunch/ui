@@ -38,7 +38,7 @@ export default function CodeEditor(): ReactElement {
       id={`CODE_EDITOR_${ideKey}`}
       className={`${
         activeTab === "Code Editor"
-          ? "animate__animated animate__fadeIn grid"
+          ? "animate__animated animate__fadeIn grid h-full"
           : "absolute -top-[9999px]"
       } grid-cols-1 gap-6`}
     >
@@ -82,7 +82,7 @@ export default function CodeEditor(): ReactElement {
           <iframe
             allow="clipboard-read"
             className={`animate__animated animate__fadeIn w-full ${
-              handleFullScreen?.active ? "h-screen" : "h-[43.8rem]"
+              handleFullScreen?.active ? "h-screen" : "h-[45.4rem]"
             }`}
             src={
               activeTabCodeEditor === "Cloud IDE"
