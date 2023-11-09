@@ -16,7 +16,7 @@ export default function CFGpuCore({
   const { robotData } = useCreateRobot();
 
   useEffect(() => {
-    formik.setFieldValue("ideGpuResource", 0);
+    !disabled && formik.setFieldValue("ideGpuResource", 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [robotData.step1.ideGpuResourceType]);
 

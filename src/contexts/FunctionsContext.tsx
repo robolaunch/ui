@@ -1107,6 +1107,9 @@ export default ({ children }: any) => {
                 ideGpuResourceType:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
+                ideGpuResource:
+                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
                 isEnabledROS2Bridge:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
