@@ -29,19 +29,9 @@ export default function HiddenFrame(): ReactElement {
   const frame = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    // Check if the iframe is available and has a contentWindow
-    if (frame?.current?.contentWindow) {
-      frame.current.contentWindow.onload = () => {
-        // The iframe has loaded, and you can access its content here
-        const iframeContent = frame?.current?.contentWindow?.document;
-        console.log("Accessed iframe content:", iframeContent);
-
-        setTimeout(() => {
-          !isSettedCookie && setIsSettedCookie(true);
-        }, 2500);
-      };
-    }
-  }, [frame, isSettedCookie, setIsSettedCookie]);
+    const test = document.getElementsByClassName("-top-[9999px]")?.[0];
+    console.log(test.children?.[0]?.children?.[0]?.children?.[0]);
+  }, [frame, iframeKey]);
 
   return (
     <Fragment>
@@ -51,12 +41,19 @@ export default function HiddenFrame(): ReactElement {
           key={iframeKey}
           title="iframe"
           allow="clipboard-read"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation allow-downloads"
           className="absolute -top-[9999px]"
           src={urls?.ide || responseRobot?.ideIngressEndpoint}
           onLoad={(e) => {
             setTimeout(() => {
               !isSettedCookie && setIsSettedCookie(true);
             }, 2500);
+          }}
+          onLoadedData={(e) => {
+            console.log("onLoaded", e);
+          }}
+          onLoadedMetadata={(e) => {
+            console.log("onLoadedMetadata", e);
           }}
         />
       )}
