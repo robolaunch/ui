@@ -30,7 +30,7 @@ export default function CFAppStep1({
 
   const { selectedState, handleCreateRobotNextStep } = useMain();
   const { getEnvironment, createEnvironment } = useFunctions();
-  const { robotData, setRobotData }: any = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
 
   const formik = useFormik<IDetails>({
@@ -105,10 +105,14 @@ export default function CFAppStep1({
         <Seperator />
       </CFSection>
 
-      <CFSection>
-        <CFGpuCore formik={formik} disabled={isImportRobot} />
-        <Seperator />
-      </CFSection>
+      <Fragment>
+        {robotData.step1.ideGpuResourceType && (
+          <CFSection>
+            <CFGpuCore formik={formik} disabled={isImportRobot} />
+            <Seperator />
+          </CFSection>
+        )}
+      </Fragment>
 
       <CFSection>
         <CFVDICount formik={formik} disabled={isImportRobot} />

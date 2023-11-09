@@ -15,7 +15,7 @@ export const CFAppStep1Validations = Yup.object().shape({
     name: Yup.string().required("Application model is required."),
   }),
   ideGpuResourceType: Yup.string().required("GPU model is required."),
-  ideGpuResourceMaxCore: Yup.number().required("GPU core is required."),
+  ideGpuResource: Yup.number().min(1, "Minimum 1 core is required."),
   hostDirectories: Yup.array().of(
     Yup.object().shape({
       hostDirectory: Yup.string()
