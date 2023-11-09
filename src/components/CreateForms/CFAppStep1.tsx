@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
+import CFGpuCore from "../CFGpuCore/CFGpuCore";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -101,6 +102,11 @@ export default function CFAppStep1({
 
       <CFSection>
         <CFGpuTypes formik={formik} disabled={isImportRobot} />
+        <Seperator />
+      </CFSection>
+
+      <CFSection>
+        <CFGpuCore formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
 

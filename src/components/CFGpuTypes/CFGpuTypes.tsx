@@ -1,6 +1,6 @@
 import { IGpuUsage } from "../../interfaces/instanceInferfaces";
 import { IDetails } from "../../interfaces/robotInterfaces";
-import React, { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
@@ -99,6 +99,10 @@ export default function CFGpuTypes({
                     formik.setFieldValue(
                       "ideGpuResourceType",
                       type.resourceName,
+                    );
+                    formik.setFieldValue(
+                      "ideGpuResourceMaxCore",
+                      Number(type.capacity) - Number(type.allocated) - 1,
                     );
                   }}
                   disabled={

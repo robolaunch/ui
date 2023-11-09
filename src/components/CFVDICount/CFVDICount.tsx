@@ -1,10 +1,10 @@
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputRange from "../FormInputRange/FormInputRange";
 import { FormikProps } from "formik/dist/types";
 import React, { ReactElement, useEffect } from "react";
 
 interface ICFVDICount {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 

@@ -145,6 +145,7 @@ export interface IDetails {
   isEnabledIde: boolean;
   ideGpuResource: number;
   ideGpuResourceType: string;
+  ideGpuResourceMaxCore: number;
   isEnabledROS2Bridge: boolean;
   configureWorkspace: boolean;
   remoteDesktop: {

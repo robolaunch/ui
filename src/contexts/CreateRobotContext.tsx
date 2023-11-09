@@ -19,6 +19,7 @@ export default ({ children }: any) => {
       isEnabledIde: true,
       ideGpuResource: 0,
       ideGpuResourceType: "",
+      ideGpuResourceMaxCore: 0,
       configureWorkspace: false,
       isEnabledROS2Bridge: true,
       remoteDesktop: {
