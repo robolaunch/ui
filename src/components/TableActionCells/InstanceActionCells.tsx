@@ -6,7 +6,7 @@ import {
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 import { BiTrash, BiStopCircle, BiPlayCircle } from "react-icons/bi";
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import Button from "../Button/Button";
 interface IInstanceActionCells {
   data: any;
@@ -21,24 +21,28 @@ export default function InstanceActionCells({
     useState<boolean>(false);
   const [isTerminateModalVisible, setIsTerminateModalVisible] =
     useState<boolean>(false);
+  const [isApplicationMode, setIsApplicationMode] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsApplicationMode(envOnPremiseRobot || envOnPremiseFleet);
+  }, []);
 
   return (
     <Fragment>
       <div className="card float-right flex gap-4">
         <Button
+          tooltip="Start/Stop Instance"
           className={`!h-8 !w-8 !border !bg-transparent disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-layer-primary-500"
               : "!border-layer-dark-100"
           }`}
           text={
-            data?.state === "running" ||
-            envOnPremiseRobot ||
-            envOnPremiseFleet ? (
+            data?.state === "running" ? (
               <BiStopCircle
                 size={20}
                 className={`${
-                  envOnPremiseRobot
+                  isApplicationMode
                     ? "text-layer-light-500"
                     : "text-layer-primary-500"
                 }`}
@@ -47,7 +51,7 @@ export default function InstanceActionCells({
               <BiPlayCircle
                 size={20}
                 className={`${
-                  envOnPremiseRobot
+                  isApplicationMode
                     ? "text-layer-light-500"
                     : "text-layer-primary-500"
                 }`}
@@ -57,7 +61,9 @@ export default function InstanceActionCells({
             )
           }
           disabled={
-            data?.state === "running" || data?.state === "stopped"
+            isApplicationMode ||
+            data?.state === "running" ||
+            data?.state === "stopped"
               ? false
               : true || !envCreateInstance
           }
@@ -68,6 +74,7 @@ export default function InstanceActionCells({
           }
         />
         <Button
+          tooltip="Terminate Instance"
           className={`!h-8 !w-8 !border !bg-transparent disabled:!border-layer-light-500 ${
             data?.state === "running" || data?.state === "stopped"
               ? "!border-red-600"
@@ -76,11 +83,10 @@ export default function InstanceActionCells({
           text={
             data?.state === "running" ||
             data?.state === "stopped" ||
-            envOnPremiseRobot ||
-            envOnPremiseFleet ? (
+            isApplicationMode ? (
               <BiTrash
                 className={`${
-                  envOnPremiseRobot ? "text-layer-light-500" : "text-red-600"
+                  isApplicationMode ? "text-layer-light-500" : "text-red-600"
                 }`}
               />
             ) : (

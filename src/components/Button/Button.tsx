@@ -7,6 +7,7 @@ interface ButtonProps {
   loading?: boolean | null;
   disabled?: boolean;
   className?: string;
+  tooltip?: string;
 }
 
 export default function Button({
@@ -16,9 +17,11 @@ export default function Button({
   loading,
   disabled,
   className,
+  tooltip,
 }: ButtonProps): ReactElement {
   return (
     <button
+      title={tooltip}
       type={type || "button"}
       disabled={disabled}
       onClick={() => (onClick ? onClick() : null)}

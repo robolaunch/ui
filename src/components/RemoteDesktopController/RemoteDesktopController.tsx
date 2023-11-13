@@ -5,6 +5,7 @@ import VolumeControl from "../VolumeControl/VolumeControl";
 import { useKeycloak } from "@react-keycloak/web";
 import { ReactElement, useState } from "react";
 import Button from "../Button/Button";
+import ServiceLogsButton from "../ServiceLogs/ServiceLogs";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -67,6 +68,8 @@ export default function RemoteDesktopController({
                 : handleFullScreen.enter
             }
           />
+
+          <ServiceLogsButton type="vdi" />
 
           <RestartService type="vdi" />
 
