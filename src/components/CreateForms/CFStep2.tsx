@@ -212,12 +212,13 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     <CFLoader
       type="workspace"
       isLoading={
-        isImportRobot
-          ? isLoadingImportRobot
-          : !responseFleet ||
-            (envOnPremiseFleet
-              ? responseFleet?.namespaceStatus !== "Active"
-              : responseFleet?.fleetStatus !== "Ready")
+        // isImportRobot
+        // ? isLoadingImportRobot
+        // : !responseFleet ||
+        //   (envOnPremiseFleet
+        //     ? responseFleet?.namespaceStatus !== "Active"
+        //     : responseFleet?.fleetStatus !== "Ready")
+        false
       }
       loadingText={
         isImportRobot

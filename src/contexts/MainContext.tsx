@@ -10,9 +10,9 @@ export default ({ children }: any) => {
   const url = useLocation();
 
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
-    isOpen: false,
-    isCreateMode: false,
-    page: undefined,
+    isOpen: true,
+    isCreateMode: true,
+    page: "workspacesmanager",
     instanceTab: "Cloud Instances",
   });
 
@@ -46,14 +46,14 @@ export default ({ children }: any) => {
     console.log("SelectedState", selectedState);
   }, [selectedState]);
 
-  useEffect(() => {
-    setSidebarState({
-      isOpen: false,
-      page: undefined,
-      isCreateMode: false,
-      instanceTab: "Cloud Instances",
-    });
-  }, [url]);
+  // useEffect(() => {
+  //   setSidebarState({
+  //     isOpen: false,
+  //     page: undefined,
+  //     isCreateMode: false,
+  //     instanceTab: "Cloud Instances",
+  //   });
+  // }, [url]);
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {

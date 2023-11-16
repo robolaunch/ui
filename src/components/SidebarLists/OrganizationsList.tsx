@@ -46,11 +46,8 @@ export default function OrganizationsList({
         !responseOrganizations?.length ? (
         <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
-        responseOrganizations
-          ?.filter(
-            (organization: IOrganization) => !organization?.organizationName,
-          )
-          ?.map((organization: IOrganization, index: number) => {
+        responseOrganizations?.map(
+          (organization: IOrganization, index: number) => {
             return (
               <SidebarListItem
                 key={index}
@@ -71,7 +68,8 @@ export default function OrganizationsList({
                 }
               />
             );
-          })
+          },
+        )
       )}
     </Fragment>
   );
