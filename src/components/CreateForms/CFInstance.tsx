@@ -4,7 +4,6 @@ import { createCloudInstance } from "../../toolkit/InstanceSlice";
 import FormInputText from "../FormInputText/FormInputText";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
-import CFButtons from "../CFButtons/CFButtons";
 import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
@@ -42,7 +41,7 @@ export default function CFInstance(): ReactElement {
   });
 
   return (
-    <CFSidebar formik={formik}>
+    <CFSidebar formik={formik} text="Create Instance">
       <FormInputText
         labelName="Cloud Instance Name:"
         labelInfoTip="Type a new cloud instance name."
@@ -100,7 +99,6 @@ export default function CFInstance(): ReactElement {
         </div>
         <InputError error={formik?.errors?.instanceType} touched={true} />
       </div>
-      <CFButtons formik={formik} text="Create Instance" />
     </CFSidebar>
   );
 }

@@ -1,24 +1,22 @@
-import { useFormik } from "formik";
-import { Dialog } from "primereact/dialog";
-import React, { ReactElement } from "react";
 import { deleteOrganizationSchema } from "../validations/OrganizationsValidations";
+import { deleteOrganization } from "../toolkit/OrganizationSlice";
 import InputError from "../components/InputError/InputError";
 import InputText from "../components/InputText/InputText";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { deleteOrganization } from "../toolkit/OrganizationSlice";
+import React, { ReactElement } from "react";
+import { Dialog } from "primereact/dialog";
+import { useFormik } from "formik";
 
 interface IDeleteOrganizationModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function DeleteOrganizationModal({
   data,
   reload,
-  visibleModal,
   handleCloseModal,
 }: IDeleteOrganizationModal): ReactElement {
   const dispatch = useAppDispatch();
@@ -46,7 +44,7 @@ export default function DeleteOrganizationModal({
   return (
     <Dialog
       header="Delete Organization"
-      visible={visibleModal}
+      visible={true}
       className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >

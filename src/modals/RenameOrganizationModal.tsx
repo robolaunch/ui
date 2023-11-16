@@ -1,21 +1,19 @@
-import { useFormik } from "formik";
-import React, { ReactElement } from "react";
 import { renameOrganizationSchema } from "../validations/OrganizationsValidations";
-import { Dialog } from "primereact/dialog";
-import InputText from "../components/InputText/InputText";
 import InputError from "../components/InputError/InputError";
+import InputText from "../components/InputText/InputText";
 import Button from "../components/Button/Button";
+import { Dialog } from "primereact/dialog";
+import { ReactElement } from "react";
+import { useFormik } from "formik";
 
 interface IRenameOrganizationModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function RenameOrganizationModal({
   data,
-  visibleModal,
   handleCloseModal,
 }: IRenameOrganizationModal): ReactElement {
   const renameFormik = useFormik({
@@ -23,7 +21,7 @@ export default function RenameOrganizationModal({
       newOrganizationName: "",
     },
     validationSchema: renameOrganizationSchema,
-    onSubmit: (values) => {
+    onSubmit: () => {
       renameFormik.setSubmitting(true);
       renameFormik.resetForm();
       handleCloseModal();
@@ -34,7 +32,7 @@ export default function RenameOrganizationModal({
   return (
     <Dialog
       header="Rename Organization"
-      visible={visibleModal}
+      visible={true}
       className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >

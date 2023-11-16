@@ -64,7 +64,6 @@ export default function OrganizationActionCells({
       {visibleRenameModal && (
         <RenameOrganizationModal
           data={data}
-          visibleModal={visibleRenameModal}
           reload={reload}
           handleCloseModal={() => setVisibleRenameModal(false)}
         />
@@ -72,7 +71,6 @@ export default function OrganizationActionCells({
       {visibleDeleteModal && (
         <DeleteOrganizationModal
           data={data}
-          visibleModal={visibleDeleteModal}
           reload={reload}
           handleCloseModal={() => setVisibleDeleteModal(false)}
         />

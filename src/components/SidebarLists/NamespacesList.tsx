@@ -90,53 +90,51 @@ export default function NamespacesList({
           ) : responseNamespaces.length === 0 ? (
             <SidebarInfo text={`Create a Namespace.`} />
           ) : (
-            responseNamespaces
-              ?.filter((fleet: any) => !fleet.name)
-              ?.map((fleet: any, index: number) => {
-                return (
-                  <SidebarListItem
-                    key={index}
-                    type="fleet"
-                    name={fleet?.name}
-                    description={
-                      <div className="flex gap-2">
-                        <div className="flex gap-1.5">
-                          <span className="font-medium">VI:</span>
-                          <StateCell state={fleet?.namespaceStatus} />
-                        </div>
-                        {responseNamespaces?.filter(
-                          (pFleet: any) => fleet?.name === pFleet?.fleetName,
-                        ).length > 0 && (
-                          <div className="flex gap-1.5">
-                            <span className="font-medium">PI:</span>
-                            <StateCell
-                              state={
-                                responseNamespaces?.filter(
-                                  (pFleet: any) =>
-                                    fleet?.name === pFleet?.fleetName,
-                                )[0]?.fleetStatus
-                              }
-                            />
-                          </div>
-                        )}
+            responseNamespaces?.map((fleet: any, index: number) => {
+              return (
+                <SidebarListItem
+                  key={index}
+                  type="fleet"
+                  name={fleet?.name}
+                  description={
+                    <div className="flex gap-2">
+                      <div className="flex gap-1.5">
+                        <span className="font-medium">VI:</span>
+                        <StateCell state={fleet?.namespaceStatus} />
                       </div>
-                    }
-                    url={`${selectedState?.organization?.organizationName?.split(
-                      "_",
-                    )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
-                      ?.instance?.name}/${fleet?.name}`}
-                    data={{
-                      ...fleet,
-                      physicalInstance: responseNamespaces?.filter(
-                        (pFleet: any) =>
-                          fleet?.name === pFleet?.fleetName &&
-                          pFleet?.fleetStatus !== "Ready",
-                      ),
-                    }}
-                    selected={fleet.name === selectedState?.fleet?.name}
-                  />
-                );
-              })
+                      {responseNamespaces?.filter(
+                        (pFleet: any) => fleet?.name === pFleet?.fleetName,
+                      ).length > 0 && (
+                        <div className="flex gap-1.5">
+                          <span className="font-medium">PI:</span>
+                          <StateCell
+                            state={
+                              responseNamespaces?.filter(
+                                (pFleet: any) =>
+                                  fleet?.name === pFleet?.fleetName,
+                              )[0]?.fleetStatus
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+                  }
+                  url={`${selectedState?.organization?.organizationName?.split(
+                    "_",
+                  )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
+                    ?.instance?.name}/${fleet?.name}`}
+                  data={{
+                    ...fleet,
+                    physicalInstance: responseNamespaces?.filter(
+                      (pFleet: any) =>
+                        fleet?.name === pFleet?.fleetName &&
+                        pFleet?.fleetStatus !== "Ready",
+                    ),
+                  }}
+                  selected={fleet.name === selectedState?.fleet?.name}
+                />
+              );
+            })
           )}
         </Fragment>
       )}
