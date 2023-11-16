@@ -87,7 +87,7 @@ export default function CFLoader({
         </div>
       ) : (
         <form
-          onSubmit={formik.handleSubmit}
+          onSubmit={formik?.handleSubmit}
           className="animate__animated animate__fadeIn relative flex h-full w-full flex-col gap-4"
         >
           {children}

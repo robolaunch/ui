@@ -181,11 +181,14 @@ export function RegionTableData({
                     size={46}
                   />
                   <CirclePercentageBar
-                    percentage={Math.floor(
-                      (rowData?.usages?.storageUsage /
-                        rowData?.usages?.storageTotal) *
-                        100,
-                    )}
+                    percentage={
+                      // Math.floor(
+                      //   (rowData?.usages?.storageUsage /
+                      //     rowData?.usages?.storageTotal) *
+                      //     100,
+                      // )
+                      20
+                    }
                     title={`Storage (${rowData?.usages?.storageTotal} GB)`}
                     size={46}
                   />
