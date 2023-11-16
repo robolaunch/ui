@@ -17,7 +17,7 @@ export default function CFVDICount({
   return (
     <FormInputRange
       label={`VDI Session Count (${formik.values.remoteDesktop.sessionCount} Sessions):`}
-      tip="Session Count is the number of simultaneous remote desktop sessions that can be created for the robot/application. Each session is independent of the other, meaning that each session can be used by a different user. The session count is expandable, meaning that you can increase the session count at any time."
+      tip="Here you can determine how many people can connect to your application's VDI service at the same time."
       dataTut="create-environment-vdi-session-count"
       InputProps={formik.getFieldProps("remoteDesktop.sessionCount")}
       min={2}

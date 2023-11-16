@@ -55,7 +55,7 @@ export default function CFPersistDirTags({
   return (
     <CFInfoBar
       label="Persistent Directories:"
-      tip="Type a persistent directories."
+      tip="Here you can persist directorys on the application."
       vertical
     >
       <TagsInput

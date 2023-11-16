@@ -2,11 +2,11 @@ import React, { ReactElement } from "react";
 import CFWorkspaceName from "../CFWorkspaceName/CFWorkspaceName";
 import CFWorkspaceDistro from "../CFWorkspaceDistro/CFWorkspaceDistro";
 import { envOnPremiseRobot } from "../../helpers/envProvider";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFWorkspaceNameDistro {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   disabled?: boolean;
 }

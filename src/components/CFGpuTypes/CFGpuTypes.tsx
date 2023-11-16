@@ -44,8 +44,8 @@ export default function CFGpuTypes({
 
   return (
     <CFInfoBar
-      label="GPU Types"
-      tip="Select the GPU type for Instance. If you have 1 available core, you can not select it. Because you need minimum 2 core for Application."
+      label="GPU Models:"
+      tip="You can choose the GPU model here."
       vertical
       error={formik.errors.ideGpuResourceType}
       touched={true}

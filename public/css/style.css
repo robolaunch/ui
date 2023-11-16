@@ -1316,8 +1316,8 @@ video {
   width: 50vw;
 }
 
-.w-\[60vw\] {
-  width: 60vw;
+.w-\[80vw\] {
+  width: 80vw;
 }
 
 .w-\[8px\] {
@@ -1341,10 +1341,6 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
-}
-
-.w-\[80vw\] {
-  width: 80vw;
 }
 
 .min-w-\[12rem\] {

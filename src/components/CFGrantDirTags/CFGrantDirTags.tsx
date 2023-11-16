@@ -40,7 +40,7 @@ export default function CFGrantDirTag({
     <div>
       <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
         Granted Directories:
-        <InfoTip content="Type a granted directories." />
+        <InfoTip content="Here you can specify the directories that the user needs to access." />
       </div>
 
       <div>

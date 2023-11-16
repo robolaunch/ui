@@ -54,7 +54,9 @@ export default function CFPortSetter({
     <div>
       <CFInfoBar
         label={`Custom Port Exposure From ${type === "ide" ? "IDE" : "VDI"}:`}
-        tip="Type a ports with name."
+        tip={`Here you can specify the custom ports you want your application running in the ${
+          type === "ide" ? "IDE" : "VDI"
+        } service to expose.`}
         vertical
       >
         <div className="flex flex-col gap-2">

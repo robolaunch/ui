@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import CFRepositoryURL from "../CFRepositoryURL/CFRepositoryURL";
 import CFRepositoryBranch from "../CFRepositoryBranch/CFRepositoryBranch";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFRepositoryURLBranch {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   repositoryIndex: number;
   disabled?: boolean;

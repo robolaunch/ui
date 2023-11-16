@@ -1,7 +1,7 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { IOrganization } from "../../interfaces/organizationInterfaces";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
@@ -46,8 +46,11 @@ export default function OrganizationsList({
         !responseOrganizations?.length ? (
         <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
-        responseOrganizations?.map(
-          (organization: IOrganization, index: number) => {
+        responseOrganizations
+          ?.filter(
+            (organization: IOrganization) => !organization?.organizationName,
+          )
+          ?.map((organization: IOrganization, index: number) => {
             return (
               <SidebarListItem
                 key={index}
@@ -68,8 +71,7 @@ export default function OrganizationsList({
                 }
               />
             );
-          },
-        )
+          })
       )}
     </Fragment>
   );

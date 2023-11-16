@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFWorkspaceName {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   disabled?: boolean;
 }
@@ -18,7 +18,9 @@ export default function CFWorkspaceName({
     <FormInputText
       dataTut="create-robot-step2-workspace-name"
       labelName="Workspace Name:"
-      labelInfoTip="Type a workspace name."
+      labelInfoTip="You can specify the name of your workspace here.
+
+"
       inputProps={formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
       classNameContainer="w-full"
       disabled={disabled}
@@ -27,7 +29,9 @@ export default function CFWorkspaceName({
         formik?.errors?.workspaces?.[workspaceIndex]?.name
       }
       inputTouched={formik?.touched?.workspaces?.[workspaceIndex]?.name}
-      inputHoverText="Type a workspace name."
+      inputHoverText="You can specify the name of your workspace here.
+
+"
     />
   );
 }

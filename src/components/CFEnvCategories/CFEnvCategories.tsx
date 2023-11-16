@@ -42,8 +42,8 @@ export default function CFEnvCategories({
   return (
     <Fragment>
       <CFInfoBar
-        label="Image Categories"
-        tip="Select a image category."
+        label="Application Categories:"
+        tip="You can choose the image category and application here."
         dataTut="create-application-step1-environment-selector"
         error={formik.errors.application?.name}
         touched={true}

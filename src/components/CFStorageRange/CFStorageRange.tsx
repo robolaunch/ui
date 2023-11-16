@@ -1,11 +1,10 @@
-import { IRobotStep1 } from "../../interfaces/robotInterfaces";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
-import FormInputRange from "../FormInputRange/FormInputRange";
+import { ReactElement } from "react";
 import { FormikProps } from "formik/dist/types";
-import React, { ReactElement } from "react";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import FormInputRange from "../FormInputRange/FormInputRange";
 
 interface ICFStorageRange {
-  formik: FormikProps<IRobotStep1>;
+  formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 
@@ -15,17 +14,8 @@ export default function CFStorageRange({
 }: ICFStorageRange): ReactElement {
   return (
     <FormInputRange
-      label={`${envOnPremiseRobot ? "Application" : "Robot"} Storage (${formik
-        ?.values?.robotStorage} GB):`}
-      tip={`Storage is the amount of disk space available to the ${
-        envOnPremiseRobot ? "application" : "robot"
-      }. This is where the ${
-        envOnPremiseRobot ? "application" : "robot"
-      }'s files and data are stored. The storage is persistent, meaning that it will not be deleted when the ${
-        envOnPremiseRobot ? "application" : "robot"
-      } is shut down. If you need more storage, you can not upgrade it later. You will need to create a new ${
-        envOnPremiseRobot ? "application" : "robot"
-      } with the desired storage size.`}
+      label={`Storage (${formik?.values?.robotStorage} GB):`}
+      tip={`You can determine how much storage space will be allocated for your application or robot here.`}
       dataTut="create-robot-step1-storage"
       InputProps={formik.getFieldProps("robotStorage")}
       min={20}

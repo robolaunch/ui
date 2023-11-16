@@ -18,7 +18,7 @@ export default function CFRepositoryURL({
     <FormInputText
       dataTut="create-robot-step2-workspace-repository-url"
       labelName="Repository URL:"
-      labelInfoTip="Type a repository URL."
+      labelInfoTip="You can specify the URL of your repository here."
       inputProps={formik.getFieldProps(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`,
       )}

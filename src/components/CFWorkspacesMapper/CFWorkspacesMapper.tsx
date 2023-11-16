@@ -1,14 +1,11 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
+import { FormikProps } from "formik";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CFWorkspaceItem from "../CFWorkspaceItem/CFWorkspaceItem";
-import { FormikProps } from "formik";
-import {
-  IRobotWorkspace,
-  IRobotWorkspaces,
-} from "../../interfaces/robotInterfaces";
+import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
 
 interface ICFWorkspacesMapper {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   responseRobot: any;
   isImportRobot?: boolean;
 }
@@ -26,7 +23,7 @@ export default function CFWorkspacesMapper({
       className="flex flex-col gap-2"
     >
       {robotData?.step2?.workspaces?.map(
-        (workspace: IRobotWorkspace, workspaceIndex: number) => {
+        (workspace: IWorkspace, workspaceIndex: number) => {
           return (
             <CFWorkspaceItem
               key={workspaceIndex}

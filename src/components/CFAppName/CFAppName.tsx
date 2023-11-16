@@ -15,7 +15,7 @@ export default function CFAppName({
   return (
     <FormInputText
       labelName="Application Name:"
-      labelInfoTip="Type a new application name."
+      labelInfoTip="You can specify the name of your application here."
       dataTut="create-application-step1-name"
       disabled={formik.isSubmitting || disabled}
       inputHoverText="You can't change application name because this application is created before."

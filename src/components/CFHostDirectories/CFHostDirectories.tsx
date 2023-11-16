@@ -18,7 +18,7 @@ export default function CFHostDirectories({
     <div>
       <CFInfoBar
         label="Host Directories:"
-        tip="Type a host directories."
+        tip="You can link a directory on the host to the directory specified in the application here."
         vertical
       >
         <div className="flex flex-col gap-2">

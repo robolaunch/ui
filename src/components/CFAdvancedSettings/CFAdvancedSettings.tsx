@@ -1,13 +1,13 @@
-import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
-import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
-import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
-import { IDetails } from "../../interfaces/robotInterfaces";
-import CFPortSetter from "../CFPortSetter/CFPortSetter";
-import Accordion from "../Accordion/AccordionV2";
-import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
+import { FormikProps } from "formik/dist/types";
+import Accordion from "../Accordion/AccordionV2";
+import CFPortSetter from "../CFPortSetter/CFPortSetter";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
+import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
+import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;

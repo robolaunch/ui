@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -56,10 +56,10 @@ export default function NamespacesList({
   function handleGetNamespaces() {
     getNamespaces(
       {
-        organizationId: selectedState?.organization?.organizationId as string,
-        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -91,8 +91,8 @@ export default function NamespacesList({
             <SidebarInfo text={`Create a Namespace.`} />
           ) : (
             responseNamespaces
-              ?.filter((fleet: any) => !fleet.fleetName)
-              .map((fleet: any, index: number) => {
+              ?.filter((fleet: any) => !fleet.name)
+              ?.map((fleet: any, index: number) => {
                 return (
                   <SidebarListItem
                     key={index}

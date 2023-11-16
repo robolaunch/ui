@@ -1,18 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactElement, useState } from "react";
-import Accordion from "../Accordion/AccordionV2";
-import {
-  IRobotWorkspace,
-  IRobotWorkspaces,
-} from "../../interfaces/robotInterfaces";
-import { FormikProps } from "formik/dist/types";
+import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
+import { FormikProps } from "formik/dist/types";
+import Accordion from "../Accordion/AccordionV2";
 import CFRepositoryName from "../CFRepositoryName/CFRepositoryName";
+import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFRepositoryURLBranch from "../CFRepositoryURLBranch/CFRepositoryURLBranch";
 import CFDeleteRepositoryButton from "../CFDeleteRepositoryButton/CFDeleteRepositoryButton";
 interface ICFRepositoryItem {
-  formik: FormikProps<IRobotWorkspaces>;
-  repository: IRobotWorkspace;
+  formik: FormikProps<IWorkspaces>;
+  repository: IWorkspace;
   repositoryIndex: number;
   workspaceIndex: number;
   disabled?: boolean;

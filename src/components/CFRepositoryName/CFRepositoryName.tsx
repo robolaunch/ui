@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFRepositoryName {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   repositoryIndex: number;
   disabled?: boolean;
@@ -20,7 +20,7 @@ export default function CFRepositoryName({
     <FormInputText
       dataTut="create-robot-step2-workspace-repository-name"
       labelName="Repository Name:"
-      labelInfoTip="Type a repository name."
+      labelInfoTip="You can specify the name of your repository here."
       inputProps={formik.getFieldProps(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`,
       )}
