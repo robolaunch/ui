@@ -1,16 +1,16 @@
 import { createInstanceSchema } from "../../validations/InstancesValidations";
+import responseProviders from "../../mock/CloudInstanceProviders.json";
 import { createCloudInstance } from "../../toolkit/InstanceSlice";
-import React, { ReactElement } from "react";
+import FormInputText from "../FormInputText/FormInputText";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
+import CFButtons from "../CFButtons/CFButtons";
+import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
-import InputText from "../InputText/InputText";
 import InfoTip from "../InfoTip/InfoTip";
 import { BsCpu } from "react-icons/bs";
-import Button from "../Button/Button";
+import { ReactElement } from "react";
 import { useFormik } from "formik";
-import responseProviders from "../../mock/CloudInstanceProviders.json";
-import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 
 export default function CFInstance(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -42,25 +42,16 @@ export default function CFInstance(): ReactElement {
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="animate__animated animate__fadeIn flex flex-col gap-8"
-    >
-      <div>
-        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-          Cloud Instance Name:
-          <InfoTip content="Type a new cloud instance name." />
-        </div>
-        <InputText
-          {...formik.getFieldProps("cloudInstanceName")}
-          className="!text-sm"
-          disabled={formik.isSubmitting}
-        />
-        <InputError
-          error={formik.errors.cloudInstanceName}
-          touched={formik.touched.cloudInstanceName}
-        />
-      </div>
+    <CFSidebar formik={formik}>
+      <FormInputText
+        labelName="Cloud Instance Name:"
+        labelInfoTip="Type a new cloud instance name."
+        disabled={formik.isSubmitting}
+        inputProps={formik.getFieldProps("cloudInstanceName")}
+        inputError={formik.errors.cloudInstanceName}
+        inputTouched={!!formik.errors.cloudInstanceName}
+      />
+
       <div className="flex flex-col gap-3">
         <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Types:
@@ -109,17 +100,7 @@ export default function CFInstance(): ReactElement {
         </div>
         <InputError error={formik?.errors?.instanceType} touched={true} />
       </div>
-
-      <div className="flex gap-2">
-        <CreateFormCancelButton disabled={formik.isSubmitting} />
-        <Button
-          type="submit"
-          text="Create a new Cloud Instance"
-          disabled={formik.isSubmitting || !formik.isValid}
-          loading={formik.isSubmitting}
-          className="!h-11"
-        />
-      </div>
-    </form>
+      <CFButtons formik={formik} text="Create Instance" />
+    </CFSidebar>
   );
 }

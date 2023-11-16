@@ -1,14 +1,11 @@
-import { useFormik } from "formik";
 import { createOrganizationSchema } from "../../validations/OrganizationsValidations";
-import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 import { createOrganization } from "../../toolkit/OrganizationSlice";
+import FormInputText from "../FormInputText/FormInputText";
 import { useAppDispatch } from "../../hooks/redux";
-import InputError from "../InputError/InputError";
-import InputText from "../InputText/InputText";
-import React, { ReactElement } from "react";
+import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
-import InfoTip from "../InfoTip/InfoTip";
-import Button from "../Button/Button";
+import { ReactElement } from "react";
+import { useFormik } from "formik";
 
 export default function CFOrganization(): ReactElement {
   const { sidebarState, setSidebarState }: any = useMain();
@@ -35,33 +32,16 @@ export default function CFOrganization(): ReactElement {
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="animate__animated animate__fadeIn flex flex-col gap-8"
-    >
-      <div>
-        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-          Organization Name:
-          <InfoTip content="Type a new organization name." />
-        </div>
-        <InputText
-          {...formik.getFieldProps("name")}
-          className="!text-sm"
-          disabled={formik.isSubmitting}
-        />
-        <InputError error={formik.errors.name} touched={!!formik.errors.name} />
-      </div>
-
-      <div className="flex gap-2">
-        <CreateFormCancelButton disabled={formik.isSubmitting} />
-        <Button
-          type="submit"
-          text="Create a new organization"
-          disabled={formik.isSubmitting || !formik.isValid}
-          loading={formik.isSubmitting}
-          className="!h-11"
-        />
-      </div>
-    </form>
+    <CFSidebar formik={formik} text="Create Organization">
+      <FormInputText
+        labelName="Organization Name:"
+        labelInfoTip="Type a new organization name."
+        dataTut="create-application-step1-name"
+        disabled={formik.isSubmitting}
+        inputProps={formik.getFieldProps("name")}
+        inputError={formik.errors.name}
+        inputTouched={!!formik.errors.name}
+      />
+    </CFSidebar>
   );
 }

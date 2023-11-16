@@ -1,16 +1,15 @@
 import { useFormik } from "formik";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import InputError from "../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../validations/RoboticsCloudsValidations";
-import InputText from "../InputText/InputText";
-import Button from "../Button/Button";
 import useMain from "../../hooks/useMain";
 import { useAppDispatch } from "../../hooks/redux";
 import { createRoboticsCloud } from "../../toolkit/RoboticsCloudSlice";
 import { toast } from "sonner";
 import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
-import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
+import FormInputText from "../FormInputText/FormInputText";
+import CFSidebar from "../CFSidebar/CFSidebar";
 
 export default function CFRegion(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -43,26 +42,15 @@ export default function CFRegion(): ReactElement {
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="animate__animated animate__fadeIn flex flex-col gap-8"
-    >
-      <div>
-        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-          Region Name:
-          <InfoTip content="Type a new region name." />
-        </div>
-        <InputText
-          {...formik.getFieldProps("roboticsCloudName")}
-          className="!text-sm"
-          disabled={formik.isSubmitting}
-        />
-        <InputError
-          error={formik.errors.roboticsCloudName}
-          touched={formik.touched.roboticsCloudName}
-        />
-      </div>
-
+    <CFSidebar formik={formik} text="Create Region">
+      <FormInputText
+        labelName="Region Name:"
+        labelInfoTip="Type a new region name."
+        disabled={formik.isSubmitting}
+        inputProps={formik.getFieldProps("roboticsCloudName")}
+        inputError={formik.errors.roboticsCloudName}
+        inputTouched={!!formik.errors.roboticsCloudName}
+      />
       <div className="flex flex-col gap-3">
         <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           Providers:
@@ -110,7 +98,6 @@ export default function CFRegion(): ReactElement {
         </div>
         <InputError error={formik?.errors?.provider} touched={true} />
       </div>
-
       {formik?.values?.provider && (
         <div className="flex flex-col gap-3">
           <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
@@ -153,17 +140,6 @@ export default function CFRegion(): ReactElement {
           <InputError error={formik?.errors?.region} touched={true} />
         </div>
       )}
-
-      <div className="flex gap-2">
-        <CreateFormCancelButton disabled={formik.isSubmitting} />
-        <Button
-          type="submit"
-          text="Create a new Region"
-          disabled={formik.isSubmitting || !formik.isValid}
-          loading={formik.isSubmitting}
-          className="!h-11"
-        />
-      </div>
-    </form>
+    </CFSidebar>
   );
 }
