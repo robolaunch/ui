@@ -18,12 +18,21 @@ export function MainTableData() {
   const { getOrganizations } = useFunctions();
   const url = useParams();
 
+  function handleReload() {
+    setResponseOrganizations(undefined);
+    setReload(!reload);
+  }
+
   useEffect(() => {
     getOrganizations({
       setResponse: setResponseOrganizations,
       ifErrorNavigateTo404: false,
     });
   }, [getOrganizations, reload, url]);
+
+  useEffect(() => {
+    setResponseOrganizations(undefined);
+  }, [url]);
 
   const data: IMainDashboardData[] = useMemo(
     () =>
@@ -35,7 +44,8 @@ export function MainTableData() {
           actions: organization,
         };
       }) || [],
-    [responseOrganizations],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [responseOrganizations, reload, url],
   );
 
   const columns: IMainDashboardColumn[] = useMemo(
@@ -66,22 +76,20 @@ export function MainTableData() {
           return (
             <OrganizationActionCells
               data={rowData?.actions}
-              reloadHandle={() => setReload(!reload)}
+              reloadHandle={handleReload}
             />
           );
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseOrganizations],
+    [responseOrganizations, reload, url],
   );
 
   return {
     data,
     columns,
     responseOrganizations,
-    setResponseOrganizations,
-    reload,
-    setReload,
+    handleReload,
   };
 }

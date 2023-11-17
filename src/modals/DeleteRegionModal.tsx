@@ -1,44 +1,42 @@
-import Button from "../components/Button/Button";
-import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import { IOrganization } from "../interfaces/organizationInterfaces";
+import { ReactElement, useState } from "react";
+import Button from "../components/Button/Button";
+import { IRegion } from "../interfaces/regionInterfaces";
 
-interface IDeleteOrganizationModal {
-  data: IOrganization;
-  reloadHandle: () => void;
+interface IDeleteRegionModal {
+  data: IRegion;
+  handleReload: () => void;
   handleCloseModal: () => void;
 }
 
-export default function DeleteOrganizationModal({
+export default function DeleteRegionModal({
   data,
-  reloadHandle,
+  handleReload,
   handleCloseModal,
-}: IDeleteOrganizationModal): ReactElement {
+}: IDeleteRegionModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-  function handleDeleteOrganization() {
+  function handleDeleteRegion() {
     setIsLoading(true);
     setIsDisabled(true);
     setTimeout(() => {
-      reloadHandle();
+      handleReload();
       handleCloseModal();
     }, 2000);
   }
 
   return (
     <Dialog
-      header="Delete Organization"
+      header={`Delete Region`}
       visible={true}
       className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="flex w-full flex-col gap-8">
         <p>
-          Are you sure you want to delete the organization named "
-          <span className="font-bold">
-            {data?.organizationName?.split("_")[1]}
-          </span>
+          Are you sure you want to delete the region named "
+          <span className="font-bold">{data?.name}</span>
           "? This action permanently deletes all objects underneath.
         </p>
         <div className="flex items-center justify-end gap-4">
@@ -46,9 +44,9 @@ export default function DeleteOrganizationModal({
             className="!h-11 !w-44"
             type="submit"
             loading={isLoading}
-            text={`Delete Organization`}
+            text={`Delete Region`}
             disabled={isDisabled}
-            onClick={() => handleDeleteOrganization()}
+            onClick={() => handleDeleteRegion()}
           />
         </div>
       </div>

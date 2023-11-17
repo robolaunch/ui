@@ -7,14 +7,8 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 
 export default function MainDashboardPage(): ReactElement {
-  const {
-    data,
-    columns,
-    responseOrganizations,
-    setResponseOrganizations,
-    reload,
-    setReload,
-  } = MainTableData();
+  const { data, columns, responseOrganizations, handleReload } =
+    MainTableData();
 
   return (
     <DashboardLayout
@@ -59,11 +53,8 @@ export default function MainDashboardPage(): ReactElement {
           title="Organizations"
           data={data}
           columns={columns}
-          loading={Array.isArray(responseOrganizations) ? false : true}
-          handleReload={() => {
-            setResponseOrganizations(undefined);
-            setReload(!reload);
-          }}
+          loading={!Array.isArray(responseOrganizations)}
+          handleReload={handleReload}
         />
       }
     />

@@ -13,7 +13,7 @@ export interface IInstanceResource {
   architecture: string;
   cpuTotal: number;
   cpuUsage: number;
-  gpuUsage: IGpuUsage[];
+  gpuUsage: any;
   kernelVersion: string;
   kubernetesVersion: string;
   memoryTotal: number;

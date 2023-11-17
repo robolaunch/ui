@@ -1638,6 +1638,10 @@ video {
   justify-content: space-evenly;
 }
 
+.justify-stretch {
+  justify-content: stretch;
+}
+
 .gap-1 {
   gap: 0.25rem;
 }
@@ -2477,6 +2481,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[0\.70rem\] {
+  font-size: 0.70rem;
 }
 
 .\!font-semibold {

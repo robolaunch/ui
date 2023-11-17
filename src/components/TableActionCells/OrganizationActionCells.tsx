@@ -18,14 +18,14 @@ export default function OrganizationActionCells({
   return (
     <Fragment>
       <TableActionButtons
-        showDeleteButton={envCreateOrganization}
+        showDeleteButton
         disabledDeleteButton={!envCreateOrganization}
         onClickDeleteButton={() => setVisibleDeleteModal(true)}
       />
       {visibleDeleteModal && (
         <DeleteOrganizationModal
           data={data}
-          reload={reloadHandle}
+          reloadHandle={reloadHandle}
           handleCloseModal={() => setVisibleDeleteModal(false)}
         />
       )}

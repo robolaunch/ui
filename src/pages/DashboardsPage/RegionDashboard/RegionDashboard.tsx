@@ -6,96 +6,12 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
-import { ReactElement, useEffect, useState } from "react";
-import useFunctions from "../../../hooks/useFunctions";
+import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
-import useMain from "../../../hooks/useMain";
 
 export default function RegionDashboard(): ReactElement {
-  const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
-    undefined,
-  );
-  const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
-  const { pagesState, selectedState } = useMain();
-  const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
-
-  useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
-      handleGetOrganization();
-    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
-      handleGetRoboticsCloud();
-    } else {
-      handleGetInstances();
-    }
-
-    const timer = setInterval(() => {
-      selectedState?.organization &&
-        selectedState?.roboticsCloud &&
-        pagesState?.roboticsCloud &&
-        handleGetInstances();
-    }, 20000);
-
-    return () => {
-      clearInterval(timer);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesState, url, reload]);
-
-  useEffect(() => {
-    setResponseInstances(undefined);
-  }, [url]);
-
-  const { data, columns } = RegionTableData({
-    responseInstances,
-    setReload,
-  });
-
-  function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !responseInstances,
-        setPages: true,
-      },
-    );
-  }
-
-  function handleGetRoboticsCloud() {
-    getRoboticsCloud(
-      {
-        organizationId: pagesState?.organization?.organizationId!,
-        roboticsCloudName: url?.roboticsCloudName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !responseInstances,
-        setPages: true,
-      },
-    );
-  }
-
-  function handleGetInstances() {
-    getInstances(
-      {
-        organizationId: pagesState?.organization?.organizationId!,
-        roboticsCloudName: url?.roboticsCloudName!,
-        region: pagesState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        setResponse: setResponseInstances,
-        ifErrorNavigateTo404: !responseInstances,
-      },
-    );
-  }
+  const { data, columns, responseInstances, handleReload } = RegionTableData();
 
   return (
     <DashboardLayout
@@ -168,10 +84,7 @@ export default function RegionDashboard(): ReactElement {
           data={data}
           columns={columns}
           loading={Array.isArray(responseInstances) ? false : true}
-          handleReload={() => {
-            setResponseInstances(undefined);
-            setReload(!reload);
-          }}
+          handleReload={handleReload}
         />
       }
     />

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import {
   ICreateRoboticsCloudRequest,
   IGetRoboticsCloudsRequest,
-} from "../interfaces/roboticsCloudInterfaces";
+} from "../interfaces/regionInterfaces";
 
 export const createRoboticsCloud = createAsyncThunk(
   "roboticsCloud/createRoboticsCloud",

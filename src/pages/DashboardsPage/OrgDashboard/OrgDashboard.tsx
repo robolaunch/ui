@@ -3,57 +3,17 @@ import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { stringCapitalization } from "../../../functions/GeneralFunctions";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { OrgTableData } from "../../../controllers/OrgTableData";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
-import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import useMain from "../../../hooks/useMain";
 
 export default function OrgDashboard(): ReactElement {
-  const [reload, setReload] = useState<boolean>(false);
-  const { getOrganization, getRoboticsClouds } = useFunctions();
-  const { pagesState } = useMain();
-  const [responseRoboticsClouds, setResponseRoboticsClouds] =
-    useState<any>(undefined);
   const url = useParams();
 
-  const { data, columns } = OrgTableData({
-    responseRoboticsClouds,
-    setReload,
-  });
-
-  useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
-      getOrganization(
-        {
-          organizationName: url?.organizationName!,
-        },
-        {
-          isSetState: true,
-          ifErrorNavigateTo404: !responseRoboticsClouds,
-          setPages: true,
-        },
-      );
-    } else {
-      getRoboticsClouds(
-        {
-          organizationId: pagesState?.organization?.organizationId,
-        },
-        {
-          setResponse: setResponseRoboticsClouds,
-          ifErrorNavigateTo404: !responseRoboticsClouds,
-        },
-      );
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesState, reload, url]);
+  const { data, columns, responseRegions, handleReload } = OrgTableData();
 
   return (
     <DashboardLayout
@@ -64,7 +24,7 @@ export default function OrgDashboard(): ReactElement {
               str: url?.organizationName!,
             }) || ""
           }
-          subtitle="This page is the platform's Robotics Cloud page. Here, you can manage, delete, or view the details of your existing robotics clouds."
+          subtitle="This page is the platform's regions page. Here, you can manage, delete, or view the details of your existing regions."
           component={
             <TourGuide
               type="organization"
@@ -81,27 +41,23 @@ export default function OrgDashboard(): ReactElement {
       widget2={
         <RegionsWidget
           title="Provider"
-          responseData={
-            responseRoboticsClouds?.map((item: any) => item.region) || []
-          }
+          responseData={responseRegions?.map((item: any) => item.region) || []}
         />
       }
       widget3={
         <CountWidget
           data={
-            responseRoboticsClouds
+            responseRegions
               ? Array?.from(
                   new Set(
-                    responseRoboticsClouds?.map((item: any) => item?.region) ||
-                      [],
+                    responseRegions?.map((item: any) => item?.region) || [],
                   ),
                 )?.map((item: any, index: number) => {
                   return {
                     label: item || "",
                     value:
-                      responseRoboticsClouds?.filter(
-                        (rc: any) => rc?.region === item,
-                      )?.length || 0,
+                      responseRegions?.filter((rc: any) => rc?.region === item)
+                        ?.length || 0,
                     color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
                   };
                 })
@@ -115,11 +71,8 @@ export default function OrgDashboard(): ReactElement {
           title="Regions"
           data={data}
           columns={columns}
-          loading={responseRoboticsClouds ? false : true}
-          handleReload={() => {
-            setResponseRoboticsClouds(undefined);
-            setReload(!reload);
-          }}
+          loading={!Array.isArray(responseRegions)}
+          handleReload={handleReload}
         />
       }
     />

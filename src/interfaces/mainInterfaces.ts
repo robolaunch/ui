@@ -1,4 +1,4 @@
-import { IRoboticsCloud } from "./roboticsCloudInterfaces";
+import { IRoboticsCloud } from "./regionInterfaces";
 import { IOrganization } from "./organizationInterfaces";
 import { IInstance } from "./instanceInferfaces";
 

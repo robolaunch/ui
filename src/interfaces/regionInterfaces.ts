@@ -9,7 +9,7 @@ export interface IGetRoboticsCloudsRequest {
   organizationId: string;
 }
 
-export interface IRoboticsCloud {
+export interface IRegion {
   name: string;
   region: string;
 }

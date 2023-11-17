@@ -2,54 +2,111 @@ import {
   IOrganizationDashboardColumn,
   IOrganizationDashboardData,
 } from "../interfaces/tableInterface";
-import RoboticsCloudActionCells from "../components/TableActionCells/RoboticsCloudActionCells";
+import RegionsActionCells from "../components/TableActionCells/RegionsActionCells";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { IRegion } from "../interfaces/regionInterfaces";
+import { useEffect, useMemo, useState } from "react";
+import useFunctions from "../hooks/useFunctions";
+import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 
-interface IOrgTableData {
-  responseRoboticsClouds: any;
-  setReload: Dispatch<SetStateAction<boolean>>;
-}
-
-export function OrgTableData({
-  responseRoboticsClouds,
-  setReload,
-}: IOrgTableData) {
+export function OrgTableData() {
+  const [responseRegions, setResponseRegions] = useState<IRegion[] | undefined>(
+    undefined,
+  );
   const { pagesState } = useMain();
+  const { getOrganization, getRoboticsClouds } = useFunctions();
+  const [reload, setReload] = useState<boolean>(false);
+  const url = useParams();
+
+  function handleReload() {
+    setResponseRegions(undefined);
+    setReload(!reload);
+  }
+
+  useEffect(() => {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
+      handleGetOrganization();
+    } else {
+      handleGetRegions();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagesState, reload, url]);
+
+  useEffect(() => {
+    setResponseRegions(undefined);
+  }, [url]);
+
+  function handleGetOrganization() {
+    getOrganization(
+      {
+        organizationName: url?.organizationName!,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseRegions,
+        setPages: true,
+      },
+    );
+  }
+
+  function handleGetRegions() {
+    getRoboticsClouds(
+      {
+        organizationId: pagesState?.organization?.organizationId!,
+      },
+      {
+        setResponse: setResponseRegions,
+        ifErrorNavigateTo404: !responseRegions,
+      },
+    );
+  }
 
   const data: IOrganizationDashboardData[] = useMemo(
     () =>
-      responseRoboticsClouds?.map(
-        (rc: { name: string; region: any; actions: any }) => {
-          return {
-            key: rc?.name,
-            name: rc,
+      responseRegions?.map((r: IRegion) => {
+        return {
+          key: r?.name,
+          name: {
+            name: r?.name,
             organization: handleSplitOrganizationName(
               pagesState?.organization?.organizationName!,
             ),
-            region: rc?.region,
-            country:
-              rc.region === "eu-central-1"
-                ? "Frankfurt (Germany)"
-                : rc?.region === "eu-west-2"
-                ? "London (UK)"
-                : rc?.region === "us-east-1"
-                ? "N. Virginia (US)"
-                : rc?.region === "us-east-2"
-                ? "Ohio (US)"
-                : rc?.region === "us-west-1"
-                ? "N. California (US)"
-                : rc?.region === "ap-northeast-1" && "Tokyo (Japan)",
-            state: "Ready",
-            users: rc?.actions,
-          };
-        },
-      ),
-    [pagesState, responseRoboticsClouds],
+            titleURL: `/${handleSplitOrganizationName(
+              pagesState?.organization?.organizationName!,
+            )}/${r?.name}`,
+          },
+          organization: handleSplitOrganizationName(
+            pagesState?.organization?.organizationName!,
+          ),
+          region: r?.region,
+          country:
+            r.region === "eu-central-1"
+              ? "Frankfurt (Germany)"
+              : r?.region === "eu-west-2"
+              ? "London (UK)"
+              : r?.region === "us-east-1"
+              ? "N. Virginia (US)"
+              : r?.region === "us-east-2"
+              ? "Ohio (US)"
+              : r?.region === "us-west-1"
+              ? "N. California (US)"
+              : r?.region === "ap-northeast-1"
+              ? "Tokyo (Japan)"
+              : "",
+          state: "Ready",
+          actions: r,
+        };
+      }) || [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [responseRegions, pagesState, url, reload],
   );
 
   const columns: IOrganizationDashboardColumn[] = useMemo(
@@ -60,16 +117,14 @@ export function OrgTableData({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: (rowData: {
+          name: { name: string; organization: string; titleURL: string };
+        }) => {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={`${handleSplitOrganizationName(
-                pagesState?.organization?.organizationName!,
-              )} Organization`}
-              titleURL={`/${handleSplitOrganizationName(
-                pagesState?.organization?.organizationName!,
-              )}/${rowData?.name?.name}`}
+              subtitle={rowData?.name?.organization}
+              titleURL={rowData?.name?.titleURL}
             />
           );
         },
@@ -80,14 +135,8 @@ export function OrgTableData({
         sortable: false,
         filter: false,
         align: "left",
-        body: () => {
-          return (
-            <BasicCell
-              text={handleSplitOrganizationName(
-                pagesState?.organization?.organizationName!,
-              )}
-            />
-          );
+        body: (rowData: { organization: string }) => {
+          return <BasicCell text={rowData?.organization} />;
         },
       },
       {
@@ -96,7 +145,7 @@ export function OrgTableData({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: (rowData: { region: string }) => {
           return <BasicCell text={rowData?.region} />;
         },
       },
@@ -106,7 +155,7 @@ export function OrgTableData({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: (rowData: { country: string }) => {
           return <BasicCell text={rowData?.country} />;
         },
       },
@@ -116,7 +165,7 @@ export function OrgTableData({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: (rowData: { state: string }) => {
           return <StateCell state={rowData?.state} />;
         },
       },
@@ -124,21 +173,24 @@ export function OrgTableData({
         key: "actions",
         header: "Actions",
         align: "right",
-        body: (rowData: any) => {
+        body: (rowData: { actions: IRegion }) => {
           return (
-            <RoboticsCloudActionCells
-              data={rowData}
-              reload={() => {
-                setReload((prevState: boolean) => !prevState);
-              }}
+            <RegionsActionCells
+              data={rowData?.actions}
+              handleReload={handleReload}
             />
           );
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pagesState, responseRoboticsClouds],
+    [responseRegions, pagesState, url, reload],
   );
 
-  return { data, columns };
+  return {
+    data,
+    columns,
+    responseRegions,
+    handleReload,
+  };
 }

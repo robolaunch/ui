@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 RUN apt-get update
 RUN ln -fs /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
-RUN apt-get install -y wget curl vim mlocate apache2
+RUN apt-get update && apt-get install -y wget curl vim mlocate apache2
 RUN a2enmod rewrite
 ADD build /var/www/html/
 COPY .htaccess /var/www/html/.htaccess
