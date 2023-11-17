@@ -1,34 +1,20 @@
-import { MainTableData } from "../../../controllers/MainTableData";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import MainDashboardTour from "../../../components/MainDashboardTour/MainDashboardTour";
 import CountWidget from "../../../components/CountWidget/CountWidget";
-import { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement } from "react";
+import { MainTableData } from "../../../controllers/MainTableData";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import useFunctions from "../../../hooks/useFunctions";
-import { useParams } from "react-router-dom";
-import { IOrganization } from "../../../interfaces/organizationInterfaces";
 
 export default function MainDashboardPage(): ReactElement {
-  const [responseOrganizations, setResponseOrganizations] = useState<
-    IOrganization[] | undefined
-  >();
-  const { getOrganizations } = useFunctions();
-  const [reload, setReload] = useState<boolean>(false);
-  const url = useParams();
-
-  useEffect(() => {
-    getOrganizations({
-      setResponse: setResponseOrganizations,
-      ifErrorNavigateTo404: false,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reload, url]);
-
-  const { data, columns } = MainTableData({
+  const {
+    data,
+    columns,
     responseOrganizations,
+    setResponseOrganizations,
+    reload,
     setReload,
-  });
+  } = MainTableData();
 
   return (
     <DashboardLayout

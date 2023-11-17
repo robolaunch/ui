@@ -3,24 +3,24 @@ import InfoCell from "../TableInformationCells/InfoCell";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 
 interface IOrganizationInfoCell {
-  rowData: any;
+  organizationName: any;
 }
 
 export default function OrganizationInfoCell({
-  rowData,
+  organizationName,
 }: IOrganizationInfoCell): ReactElement {
   return (
     <InfoCell
       title={organizationNameViewer({
-        organizationName: rowData?.name?.organizationName,
+        organizationName: organizationName,
         capitalization: false,
       })}
       subtitle={`${organizationNameViewer({
-        organizationName: rowData?.name?.organizationName,
+        organizationName: organizationName,
         capitalization: false,
       })}`}
       titleURL={`/${organizationNameViewer({
-        organizationName: rowData?.name?.organizationName,
+        organizationName: organizationName,
         capitalization: false,
       })}`}
     />

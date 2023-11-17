@@ -1,29 +1,37 @@
-import { Dispatch, SetStateAction, useMemo } from "react";
 import {
   IMainDashboardColumn,
   IMainDashboardData,
 } from "../interfaces/tableInterface";
-import { IOrganization } from "../interfaces/organizationInterfaces";
+import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
 import OrganizationInfoCell from "../components/OrganizationInfoCell/OrganizationInfoCell";
 import StateCell from "../components/TableInformationCells/StateCell";
-import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
+import { IOrganization } from "../interfaces/organizationInterfaces";
+import { useEffect, useMemo, useState } from "react";
+import useFunctions from "../hooks/useFunctions";
+import { useParams } from "react-router-dom";
 
-interface IMainTableData {
-  responseOrganizations: IOrganization[] | undefined;
-  setReload: Dispatch<SetStateAction<boolean>>;
-}
+export function MainTableData() {
+  const [responseOrganizations, setResponseOrganizations] = useState<
+    IOrganization[] | undefined
+  >();
+  const [reload, setReload] = useState<boolean>(false);
+  const { getOrganizations } = useFunctions();
+  const url = useParams();
 
-export function MainTableData({
-  responseOrganizations,
-  setReload,
-}: IMainTableData) {
+  useEffect(() => {
+    getOrganizations({
+      setResponse: setResponseOrganizations,
+      ifErrorNavigateTo404: false,
+    });
+  }, [getOrganizations, reload, url]);
+
   const data: IMainDashboardData[] = useMemo(
     () =>
       responseOrganizations?.map((organization: IOrganization) => {
         return {
           key: organization?.organizationName,
-          name: organization,
-          state: undefined,
+          name: organization?.organizationName,
+          state: "Ready",
           actions: organization,
         };
       }) || [],
@@ -39,15 +47,15 @@ export function MainTableData({
         filter: false,
         align: "left",
         body: (rowData: IMainDashboardData) => {
-          return <OrganizationInfoCell rowData={rowData} />;
+          return <OrganizationInfoCell organizationName={rowData?.name} />;
         },
       },
       {
         key: "state",
         header: "State",
         align: "left",
-        body: () => {
-          return <StateCell state="Ready" />;
+        body: (rowData) => {
+          return <StateCell state={rowData?.state} />;
         },
       },
       {
@@ -58,7 +66,7 @@ export function MainTableData({
           return (
             <OrganizationActionCells
               data={rowData?.actions}
-              reload={() => setReload((prevState: boolean) => !prevState)}
+              reloadHandle={() => setReload(!reload)}
             />
           );
         },
@@ -68,5 +76,12 @@ export function MainTableData({
     [responseOrganizations],
   );
 
-  return { data, columns };
+  return {
+    data,
+    columns,
+    responseOrganizations,
+    setResponseOrganizations,
+    reload,
+    setReload,
+  };
 }

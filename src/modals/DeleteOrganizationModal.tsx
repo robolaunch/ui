@@ -1,15 +1,10 @@
-import { deleteOrganizationSchema } from "../validations/OrganizationsValidations";
-import { deleteOrganization } from "../toolkit/OrganizationSlice";
-import InputError from "../components/InputError/InputError";
-import InputText from "../components/InputText/InputText";
 import Button from "../components/Button/Button";
-import { useAppDispatch } from "../hooks/redux";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { Dialog } from "primereact/dialog";
-import { useFormik } from "formik";
+import { IOrganization } from "../interfaces/organizationInterfaces";
 
 interface IDeleteOrganizationModal {
-  data: any;
+  data: IOrganization;
   reload: () => void;
   handleCloseModal: () => void;
 }
@@ -19,27 +14,7 @@ export default function DeleteOrganizationModal({
   reload,
   handleCloseModal,
 }: IDeleteOrganizationModal): ReactElement {
-  const dispatch = useAppDispatch();
-  const deleteFormik = useFormik({
-    initialValues: {
-      deleteOrganizationName: "",
-    },
-    validationSchema: deleteOrganizationSchema(
-      data?.organizationName?.split("_")[1],
-    ),
-    onSubmit: (values) => {
-      deleteFormik.setSubmitting(true);
-
-      dispatch(
-        deleteOrganization({
-          organizationId: data?.organizationId,
-        }),
-      ).then(async () => {
-        deleteFormik.resetForm();
-        handleCloseModal();
-      });
-    },
-  });
+  const isLoading = false;
 
   return (
     <Dialog
@@ -48,37 +23,33 @@ export default function DeleteOrganizationModal({
       className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
-      <form
-        onSubmit={deleteFormik.handleSubmit}
-        className="flex w-full flex-col gap-8"
-      >
-        <p className="text-sm">
-          If you delete this organization, type the name (
-          {data?.organizationName?.split("_")[1]}) of the organization to
-          confirm.
+      <div className="flex w-full flex-col gap-8">
+        <p>
+          Are you sure you want to delete the organization named "
+          <span className="font-bold">
+            {data?.organizationName?.split("_")[1]}
+          </span>
+          "? This action permanently deletes all objects underneath.
         </p>
-        <div className="w-full">
-          <InputText
-            {...deleteFormik.getFieldProps("deleteOrganizationName")}
-            placeholder="Organization Name"
-            disabled={deleteFormik.isSubmitting}
-          />
-          <InputError
-            touched={deleteFormik.touched.deleteOrganizationName}
-            error={deleteFormik.errors.deleteOrganizationName}
-          />
-        </div>
         <div className="flex items-center justify-end gap-4">
           <Button
             className="!h-11 !w-44"
             type="submit"
-            text="Delete Organization"
-            disabled={
-              deleteFormik.isSubmitting || !deleteFormik.isValid || true
+            text={
+              isLoading ? (
+                <img
+                  className="h-10 w-10"
+                  src="/svg/general/loading.svg"
+                  alt="loading"
+                />
+              ) : (
+                `Delete Organization`
+              )
             }
+            disabled={true}
           />
         </div>
-      </form>
+      </div>
     </Dialog>
   );
 }

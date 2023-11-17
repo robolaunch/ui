@@ -3,8 +3,8 @@ import { IOrganization } from "./organizationInterfaces";
 
 export interface IMainDashboardData {
   key: string;
-  name: IOrganization;
-  state: undefined;
+  name: string;
+  state: string;
   actions: IOrganization;
 }
 
