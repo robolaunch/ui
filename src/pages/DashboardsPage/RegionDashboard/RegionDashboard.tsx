@@ -83,7 +83,7 @@ export default function RegionDashboard(): ReactElement {
           title="Cloud Instances"
           data={data}
           columns={columns}
-          loading={Array.isArray(responseInstances) ? false : true}
+          loading={!Array.isArray(responseInstances)}
           handleReload={handleReload}
         />
       }

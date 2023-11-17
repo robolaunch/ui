@@ -1,9 +1,9 @@
-import { BiPencil, BiTrash } from "react-icons/bi";
+import { BiPencil, BiPlayCircle, BiStopCircle, BiTrash } from "react-icons/bi";
 import { ReactElement } from "react";
 import Button from "../Button/Button";
 
 interface ITableActionButton {
-  type: "edit" | "delete";
+  type: "edit" | "delete" | "stop" | "start";
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -19,14 +19,12 @@ export default function TableActionButton({
     }
 
     switch (type) {
-      case "edit": {
-        return "text-layer-primary-500 border-layer-primary-500";
-      }
-
       case "delete": {
         return "text-red-500 border-red-500";
       }
     }
+
+    return "text-layer-primary-500 border-layer-primary-500";
   }
 
   return (
@@ -37,9 +35,14 @@ export default function TableActionButton({
           case "edit": {
             return <BiPencil className={colorHandle()} />;
           }
-
           case "delete": {
             return <BiTrash className={colorHandle()} />;
+          }
+          case "start": {
+            return <BiPlayCircle className={colorHandle()} />;
+          }
+          case "stop": {
+            return <BiStopCircle className={colorHandle()} />;
           }
         }
       })()}

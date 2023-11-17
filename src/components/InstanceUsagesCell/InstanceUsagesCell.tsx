@@ -10,13 +10,11 @@ interface IInstanceUsagesCell {
 export default function InstanceUsagesCell({
   data,
 }: IInstanceUsagesCell): ReactElement {
-  console.log("GG", data);
-
   return (
     <div className="flex gap-4">
       <CirclePercentageBar
-        percentage={data?.cpu?.percentage}
-        title={`CPU (${data?.cpu?.core} Core)`}
+        percentage={data?.cpu?.percentage || 0}
+        title={data?.cpu?.core ? `CPU (${data?.cpu?.core} Core)` : "Pending..."}
         size={46}
       />
       {/* <CirclePercentageBar
@@ -25,8 +23,12 @@ export default function InstanceUsagesCell({
         size={46}
       /> */}
       <CirclePercentageBar
-        percentage={data?.memory?.percentage}
-        title={`Memory (${data?.memory?.size} GB)`}
+        percentage={data?.memory?.percentage || 0}
+        title={
+          data?.memory?.size
+            ? `Memory (${data?.memory?.size} GB)`
+            : "Pending..."
+        }
         size={46}
       />
       <CirclePercentageBar

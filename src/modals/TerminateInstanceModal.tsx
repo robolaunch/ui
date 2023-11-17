@@ -7,14 +7,12 @@ import { terminateInstance } from "../toolkit/InstanceSlice";
 interface ITerminateInstanceModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function TerminateInstanceModal({
   data,
   reload,
-  visibleModal,
   handleCloseModal,
 }: ITerminateInstanceModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,7 +38,7 @@ export default function TerminateInstanceModal({
   return (
     <Dialog
       header={`Terminate Instance ${data?.name}`}
-      visible={visibleModal}
+      visible={true}
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >

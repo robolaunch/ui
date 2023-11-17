@@ -100,11 +100,6 @@ export function RegionTableData() {
     );
   }
 
-  console.log(
-    "res",
-    responseInstances?.[0]?.cloudInstanceResource?.networkUsage?.[0],
-  );
-
   const data: IInstanceDashboardData[] = useMemo(
     () =>
       responseInstances?.map((instance: IInstance) => {
@@ -122,7 +117,7 @@ export function RegionTableData() {
           ),
           architecture: instance?.cloudInstanceResource?.architecture,
           OSResources: `${instance?.cloudInstanceResource?.operatingSystemDistro}
-          (${instance?.cloudInstanceResource?.operatingSystem}})
+          (${instance?.cloudInstanceResource?.operatingSystem})
           `,
           kernel: instance?.cloudInstanceResource?.kernelVersion,
           k8s: instance?.cloudInstanceResource?.kubernetesVersion,
@@ -179,7 +174,14 @@ export function RegionTableData() {
     [pagesState, responseInstances],
   );
 
-  const columns: any = useMemo(
+  const columns: {
+    key: string;
+    header: string;
+    sortable?: boolean;
+    filter?: boolean;
+    align: "left" | "right" | "center";
+    body?: (rowData: any) => JSX.Element;
+  }[] = useMemo(
     () => [
       {
         key: "name",
@@ -210,7 +212,7 @@ export function RegionTableData() {
         filter: false,
         align: "left",
         body: (rowData: { organization: string }) => {
-          return <BasicCell text={rowData?.organization} />;
+          return <BasicCell text={rowData?.organization || "Pending..."} />;
         },
       },
       {
@@ -230,6 +232,7 @@ export function RegionTableData() {
         filter: false,
         align: "left",
         body: (rowData: { OSResources: string }) => {
+          console.log("x", rowData?.OSResources);
           return <BasicCell text={rowData?.OSResources || "Pending..."} />;
         },
       },
@@ -293,12 +296,12 @@ export function RegionTableData() {
           return (
             <InstanceActionCells
               data={{
-                name: rowData?.name?.name,
+                name: rowData?.actions?.name,
                 state: rowData?.providerState,
                 organizationId: pagesState?.organization?.organizationId,
                 roboticsCloudName: pagesState.roboticsCloud?.name,
                 instanceId: rowData?.name?.instanceId,
-                region: rowData?.name?.region,
+                region: rowData?.actions?.region,
               }}
               reload={() => setReload((prevState: boolean) => !prevState)}
             />

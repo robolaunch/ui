@@ -7,14 +7,12 @@ import { startInstance, stopInstance } from "../toolkit/InstanceSlice";
 interface IChangeInstanceModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function ChangeInstanceModal({
   data,
   reload,
-  visibleModal,
   handleCloseModal,
 }: IChangeInstanceModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -51,7 +49,7 @@ export default function ChangeInstanceModal({
   return (
     <Dialog
       header="Change Instance State"
-      visible={visibleModal}
+      visible={true}
       className="w-[30vw]"
       onHide={() => handleCloseModal()}
     >

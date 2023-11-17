@@ -16,7 +16,7 @@ export default function InstanceNetworkCell({
       <div className="flex h-12 w-12 flex-col items-center  justify-center  text-[0.70rem]">
         {typeof mbps === "number" ? (
           <Fragment>
-            <p>{mbps}</p>
+            <p>{mbps || "0.000"}</p>
             <p>Mbps</p>
           </Fragment>
         ) : (
