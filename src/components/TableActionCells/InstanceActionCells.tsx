@@ -23,6 +23,10 @@ export default function InstanceActionCells({
         showDeleteButton
         disabledDeleteButton={!envCreateInstance}
         onClickDeleteButton={() => setIsTerminateModalVisible(true)}
+        showStartStopButton
+        disabledStartStopButton={!envCreateInstance}
+        onClickStartStopButton={() => setIsChangeStateModalVisible(true)}
+        instanceState={data?.state}
       />
 
       {isChangeStateModalVisible && (

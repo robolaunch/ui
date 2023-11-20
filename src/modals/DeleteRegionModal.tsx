@@ -15,11 +15,9 @@ export default function DeleteRegionModal({
   handleCloseModal,
 }: IDeleteRegionModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
   function handleDeleteRegion() {
     setIsLoading(true);
-    setIsDisabled(true);
     setTimeout(() => {
       handleReload();
       handleCloseModal();
@@ -43,9 +41,9 @@ export default function DeleteRegionModal({
           <Button
             className="!h-11 !w-44"
             type="submit"
-            loading={isLoading}
             text={`Delete Region`}
-            disabled={isDisabled}
+            loading={isLoading}
+            disabled={isLoading}
             onClick={() => handleDeleteRegion()}
           />
         </div>

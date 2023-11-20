@@ -1,18 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
-import useMain from "../hooks/useMain";
-import InfoCell from "../components/TableInformationCells/InfoCell";
-import BasicCell from "../components/TableInformationCells/BasicCell";
-import StateCell from "../components/TableInformationCells/StateCell";
-import InstanceActionCells from "../components/TableActionCells/InstanceActionCells";
-import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
-import useFunctions from "../hooks/useFunctions";
-import { useParams } from "react-router-dom";
-import { IInstance } from "../interfaces/instanceInferfaces";
 import {
   IInstanceDashboardData,
   IInstanceDashboardUsages,
 } from "../interfaces/tableInterface";
+import InstanceActionCells from "../components/TableActionCells/InstanceActionCells";
 import InstanceUsagesCell from "../components/InstanceUsagesCell/InstanceUsagesCell";
+import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
+import BasicCell from "../components/TableInformationCells/BasicCell";
+import StateCell from "../components/TableInformationCells/StateCell";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import { IInstance } from "../interfaces/instanceInferfaces";
+import { useEffect, useMemo, useState } from "react";
+import useFunctions from "../hooks/useFunctions";
+import { useParams } from "react-router-dom";
+import useMain from "../hooks/useMain";
 
 export function RegionTableData() {
   const [responseInstances, setResponseInstances] = useState<
@@ -293,6 +293,8 @@ export function RegionTableData() {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
+          console.log("rowData", rowData);
+
           return (
             <InstanceActionCells
               data={{
@@ -300,7 +302,7 @@ export function RegionTableData() {
                 state: rowData?.providerState,
                 organizationId: pagesState?.organization?.organizationId,
                 roboticsCloudName: pagesState.roboticsCloud?.name,
-                instanceId: rowData?.name?.instanceId,
+                instanceId: rowData?.actions?.instanceId,
                 region: rowData?.actions?.region,
               }}
               reload={() => setReload((prevState: boolean) => !prevState)}

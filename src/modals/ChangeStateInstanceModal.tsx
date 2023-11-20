@@ -1,8 +1,8 @@
-import { Dialog } from "primereact/dialog";
-import React, { ReactElement, useState } from "react";
+import { startInstance, stopInstance } from "../toolkit/InstanceSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
-import { startInstance, stopInstance } from "../toolkit/InstanceSlice";
+import { ReactElement, useState } from "react";
+import { Dialog } from "primereact/dialog";
 
 interface IChangeInstanceModal {
   data: any;
@@ -19,6 +19,8 @@ export default function ChangeInstanceModal({
   const dispatch = useAppDispatch();
 
   function handleChangeInstance() {
+    setIsLoading(true);
+
     if (data?.state === "running") {
       dispatch(
         stopInstance({
@@ -39,7 +41,6 @@ export default function ChangeInstanceModal({
       );
     }
 
-    setIsLoading(true);
     setTimeout(() => {
       reload();
       handleCloseModal();
@@ -48,9 +49,9 @@ export default function ChangeInstanceModal({
 
   return (
     <Dialog
-      header="Change Instance State"
+      header={`${data?.state === "running" ? "Stop" : "Start"} Instance`}
       visible={true}
-      className="w-[30vw]"
+      className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="flex w-full flex-col gap-8">
@@ -64,18 +65,11 @@ export default function ChangeInstanceModal({
             className="!h-11 !w-44"
             type="submit"
             text={
-              isLoading ? (
-                <img
-                  className="h-10 w-10"
-                  src="/svg/general/loading.svg"
-                  alt="loading"
-                />
-              ) : (
-                `${data?.state === "running" ? "Stop" : "Start"} Instance`
-              )
+              data?.state === "running" ? "Stop Instance" : "Start Instance"
             }
-            onClick={() => handleChangeInstance()}
+            loading={isLoading}
             disabled={isLoading}
+            onClick={() => handleChangeInstance()}
           />
         </div>
       </div>

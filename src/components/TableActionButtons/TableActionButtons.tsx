@@ -28,6 +28,14 @@ export default function TableActionButtons({
 }: ITableActionButtons): ReactElement {
   return (
     <div className="card float-right flex gap-4">
+      {showStartStopButton && (
+        <TableActionButton
+          type={instanceState === "running" ? "stop" : "start"}
+          disabled={disabledStartStopButton}
+          onClick={onClickStartStopButton}
+        />
+      )}
+
       {showEditButton && (
         <TableActionButton
           type="edit"
