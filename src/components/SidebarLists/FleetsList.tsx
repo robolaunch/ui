@@ -1,7 +1,7 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
@@ -57,10 +57,10 @@ export default function FleetsList({
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: selectedState?.organization?.organizationId as string,
-        roboticsCloudName: selectedState?.roboticsCloud?.name as string,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -82,7 +82,7 @@ export default function FleetsList({
               : !selectedState?.roboticsCloud
               ? "Robotics Cloud"
               : "Instance"
-          } to view ${envOnPremiseRobot ? "namespaces" : "fleets"}.`}
+          } to view ${envApplication ? "namespaces" : "fleets"}.`}
         />
       ) : (
         <Fragment>

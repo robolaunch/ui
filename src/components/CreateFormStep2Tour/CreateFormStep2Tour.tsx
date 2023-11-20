@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
 import { getGuideItem } from "../../functions/handleGuide";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import TourGuide from "../TourGuide/TourGuide";
+import { ReactElement } from "react";
 
 export default function CreateFormStep2Tour(): ReactElement {
   return (
@@ -9,7 +9,7 @@ export default function CreateFormStep2Tour(): ReactElement {
       hiddenButton
       type="createRobotStep2"
       tourConfig={
-        envOnPremiseRobot
+        envApplication
           ? [
               getGuideItem("[data-tut='create-robot-step2-workspaces']"),
               getGuideItem(

@@ -59,7 +59,7 @@ pipeline {
     stage('Install Depends && Build') {
       steps {
         container('ubuntu') {
-          withCredentials([file(credentialsId: 'frontend-public-demo-env', variable: 'text')]) {
+          withCredentials([file(credentialsId: 'env-frontend-public-demo', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm i --force'
@@ -74,11 +74,11 @@ pipeline {
     stage('Docker Build && Push') {
       steps {
         container('docker') {
-          sh "docker build -t robolaunchio/frontend-public-demo-httpd:${env.VER} ."
+          sh "docker build -t robolaunchio/frontend-public:${env.VER}-demo ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
-          sh "docker push robolaunchio/frontend-public-demo-httpd:${env.VER}"
+          sh "docker push robolaunchio/frontend-public:${env.VER}-demo"
         }
       }
     }

@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 import { toast } from "sonner";
 
 interface ISidebarListItem {
@@ -143,8 +143,8 @@ export default function SidebarListItem({
           draggable="false"
           className="w-8"
           src={`/svg/general/${
-            envOnPremiseRobot && type === "robot" ? "application" : type
-          }/${envOnPremiseRobot && type === "robot" ? "application" : type}-${
+            envApplication && type === "robot" ? "application" : type
+          }/${envApplication && type === "robot" ? "application" : type}-${
             selected ? "blue" : "gray"
           }.svg`}
           alt=""

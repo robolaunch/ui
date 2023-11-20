@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
@@ -80,7 +80,7 @@ export default function RobotsList({
               : !selectedState?.instance
               ? "Instance"
               : "Fleet"
-          } to view ${envOnPremiseRobot ? "applications" : "robots"}.`}
+          } to view ${envApplication ? "applications" : "robots"}.`}
         />
       ) : !Array.isArray(responseRobots) ? (
         <SidebarListLoader />

@@ -3,7 +3,7 @@ import useWindow from "../hooks/useWindow";
 import useRobot from "../hooks/useRobot";
 import BuildManagerStepsTable from "../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import WorkspacesTable from "../components/WorkspacesTable/WorkspacesTable";
-import { envOnPremiseRobot } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 import LaunchManagerStepsTable from "../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 
 interface IRobotOverviewLayout {
@@ -29,7 +29,7 @@ export default function RobotOverviewLayout({
         <div className="col-span-full lg:col-span-3">{widget3}</div>
       )}
 
-      {!envOnPremiseRobot && (
+      {!envApplication && (
         <Fragment>
           <div data-tut="robot-workspaces-table" className="col-span-full">
             <WorkspacesTable responseRobot={responseRobot} />

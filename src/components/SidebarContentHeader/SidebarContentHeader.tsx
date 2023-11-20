@@ -1,6 +1,6 @@
-import React, { Fragment, ReactElement } from "react";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
+import { Fragment, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 
@@ -32,7 +32,7 @@ export default function SidebarContentLayout({
       return "Physical Instances";
     }
 
-    if (sidebarState?.page === "fleet" && envOnPremiseRobot) {
+    if (sidebarState?.page === "fleet" && envApplication) {
       return "Namespaces";
     }
 
@@ -40,14 +40,14 @@ export default function SidebarContentLayout({
       case "robot":
         if (url?.robotName) {
           return `${url.robotName} ${
-            envOnPremiseRobot ? "Application" : "Robot"
+            envApplication ? "Application" : "Robot"
           } Details`;
         }
         return sidebarState?.isCreateMode
-          ? envOnPremiseRobot
+          ? envApplication
             ? "Application Details"
             : "Robot Details"
-          : envOnPremiseRobot
+          : envApplication
           ? "Applications"
           : "Robots";
       case "workspacesmanager":

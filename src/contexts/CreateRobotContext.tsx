@@ -3,8 +3,8 @@ import {
   IWorkspace,
   IWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
-import React, { createContext, useEffect, useState } from "react";
-import { envOnPremiseRobot } from "../helpers/envProvider";
+import { createContext, useEffect, useState } from "react";
+import { envApplication } from "../helpers/envProvider";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
@@ -28,7 +28,7 @@ export default ({ children }: any) => {
       },
       rosDistros: [],
       gpuEnabledForCloudInstance: true,
-      isDevelopmentMode: envOnPremiseRobot,
+      isDevelopmentMode: envApplication,
       domainName: "",
       application: {
         name: "",

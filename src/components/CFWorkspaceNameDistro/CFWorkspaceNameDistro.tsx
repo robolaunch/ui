@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
-import CFWorkspaceName from "../CFWorkspaceName/CFWorkspaceName";
 import CFWorkspaceDistro from "../CFWorkspaceDistro/CFWorkspaceDistro";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import CFWorkspaceName from "../CFWorkspaceName/CFWorkspaceName";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
+import { envApplication } from "../../helpers/envProvider";
 import { FormikProps } from "formik/dist/types";
+import { ReactElement } from "react";
 
 interface ICFWorkspaceNameDistro {
   formik: FormikProps<IWorkspaces>;
@@ -24,7 +24,7 @@ export default function CFWorkspaceNameDistro({
         disabled={disabled}
       />
 
-      {!envOnPremiseRobot && (
+      {!envApplication && (
         <CFWorkspaceDistro
           formik={formik}
           workspaceIndex={workspaceIndex}

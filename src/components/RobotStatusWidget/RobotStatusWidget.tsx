@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -34,8 +34,8 @@ export default function RobotStatusWidget({
   return (
     <WidgetLayout
       dataTut="robot-status-widget"
-      title={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
-      subtitle={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
+      title={`${envApplication ? "Application" : "Robot"} Status`}
+      subtitle={`${envApplication ? "Application" : "Robot"} Status`}
       icon={<VscHistory size={20} className="text-layer-light-700" />}
     >
       <div className="flex h-full w-full items-center justify-around">
@@ -69,7 +69,7 @@ export default function RobotStatusWidget({
         {/* Workspace */}
 
         {/* Build */}
-        {!envOnPremiseRobot && (
+        {!envApplication && (
           <RobotStatusWidgetItem
             title="Build Manager"
             loading={!responseBuildManager}
@@ -104,7 +104,7 @@ export default function RobotStatusWidget({
         {/* Build */}
 
         {/* Launch */}
-        {!envOnPremiseRobot && (
+        {!envApplication && (
           <RobotStatusWidgetItem
             title="Launch Manager"
             loading={!responseLaunchManagersFiltered}

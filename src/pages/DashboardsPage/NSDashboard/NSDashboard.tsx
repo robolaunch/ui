@@ -6,10 +6,7 @@ import DashboardLayout from "../../../layouts/DashboardLayout";
 import useFunctions from "../../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../../../hooks/useMain";
-import {
-  envOnPremiseFleet,
-  envOnPremiseRobot,
-} from "../../../helpers/envProvider";
+import { envApplication } from "../../../helpers/envProvider";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import { getGuideItem } from "../../../functions/handleGuide";
 import TourGuide from "../../../components/TourGuide/TourGuide";
@@ -42,9 +39,9 @@ export default function NSDashboard(): ReactElement {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
+      envApplication ? handleGetNamespace() : handleGetFleet();
     } else {
-      envOnPremiseRobot ? handleGetEnvironments() : handleGetRobots();
+      envApplication ? handleGetEnvironments() : handleGetRobots();
     }
 
     const timer =
@@ -53,7 +50,7 @@ export default function NSDashboard(): ReactElement {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        pagesState?.fleet && envOnPremiseRobot
+        pagesState?.fleet && envApplication
           ? handleGetEnvironments()
           : handleGetRobots();
       }, 10000);
@@ -245,8 +242,8 @@ export default function NSDashboard(): ReactElement {
       }
       table={
         <GeneralTable
-          type={envOnPremiseRobot ? "application" : "robot"}
-          title={envOnPremiseRobot ? "Applications" : "Robots"}
+          type={envApplication ? "application" : "robot"}
+          title={envApplication ? "Applications" : "Robots"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseRobots) ? false : true}

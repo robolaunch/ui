@@ -1,10 +1,9 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import {
+  envApplication,
   envCreateInstance,
   envCreateOrganization,
   envCreateRegion,
-  envOnPremiseFleet,
-  envOnPremiseRobot,
 } from "../helpers/envProvider";
 import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
 import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
@@ -82,11 +81,11 @@ export default function SidebarContentLayout(): ReactElement {
             return "Region";
           }
 
-          if (sidebarState?.page === "fleet" && envOnPremiseRobot) {
+          if (sidebarState?.page === "fleet" && envApplication) {
             return "Namespace";
           }
 
-          if (sidebarState?.page === "robot" && envOnPremiseRobot) {
+          if (sidebarState?.page === "robot" && envApplication) {
             return "Application";
           }
 
@@ -304,7 +303,7 @@ export default function SidebarContentLayout(): ReactElement {
                   );
                 }
               case "fleet":
-                switch (envOnPremiseFleet) {
+                switch (envApplication) {
                   case true:
                     if (sidebarState?.isCreateMode) {
                       return <CFNamespace />;
@@ -332,7 +331,7 @@ export default function SidebarContentLayout(): ReactElement {
                   return <CreateRobotLayout />;
                 }
                 if (url?.robotName) {
-                  if (envOnPremiseRobot) {
+                  if (envApplication) {
                     return (
                       <UpdateEnvironmentDetailsForm
                         reload={reload}
@@ -348,7 +347,7 @@ export default function SidebarContentLayout(): ReactElement {
                     />
                   );
                 }
-                return envOnPremiseRobot ? (
+                return envApplication ? (
                   <EnvironmentsList
                     reload={reload}
                     setItemCount={setItemCount}

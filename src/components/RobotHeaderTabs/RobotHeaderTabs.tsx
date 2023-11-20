@@ -1,6 +1,6 @@
 import { stringSlugify } from "../../functions/GeneralFunctions";
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { BiJoystickButton } from "react-icons/bi";
 import ContentLoader from "react-content-loader";
@@ -35,7 +35,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        envOnPremiseRobot || (responseRobot && !responseRobot?.bridgeEnabled),
+        envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Teleoperation",
@@ -48,7 +48,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        envOnPremiseRobot || (responseRobot && !responseRobot?.bridgeEnabled),
+        envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Visualization",
@@ -61,7 +61,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        envOnPremiseRobot || (responseRobot && !responseRobot?.bridgeEnabled),
+        envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Code Editor",

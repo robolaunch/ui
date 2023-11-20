@@ -1,12 +1,9 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import {
-  envOnPremiseFleet,
-  envOnPremiseRobot,
-} from "../../helpers/envProvider";
 import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { envApplication } from "../../helpers/envProvider";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
@@ -66,7 +63,7 @@ export default function CloudInstancesList({
 
   return (
     <Fragment>
-      {!(envOnPremiseFleet || envOnPremiseRobot) && <SidebarInstancesTabs />}
+      {!(envApplication || envApplication) && <SidebarInstancesTabs />}
       {!selectedState?.organization || !selectedState?.roboticsCloud ? (
         <SidebarInfo
           text={`Select an ${

@@ -5,7 +5,7 @@ import CreateRobotFormStep2 from "../components/CreateForms/CFStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CFStep3";
 import CreateRobotFormStep4 from "../components/CreateForms/CFStep4";
 import useMain from "../hooks/useMain";
-import { envOnPremiseRobot } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 
 export default function CreateRobotLayout(): ReactElement {
   const { sidebarState } = useMain();
@@ -15,7 +15,7 @@ export default function CreateRobotLayout(): ReactElement {
       {(() => {
         switch (sidebarState?.page) {
           case "robot":
-            return envOnPremiseRobot ? (
+            return envApplication ? (
               <CreateEnvironmentFormStep1 />
             ) : (
               <CreateRobotFormStep1 />

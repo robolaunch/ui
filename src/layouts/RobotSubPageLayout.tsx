@@ -5,10 +5,10 @@ import RemoteDesktop from "../pages/RobotPage/RemoteDesktop/RemoteDesktop";
 import RosConnector from "../components/RosConnector/RosConnector";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import Overview from "../pages/RobotPage/Overview/Overview";
-import { envOnPremiseRobot } from "../helpers/envProvider";
 import TaskManagementLayout from "./TaskManagementLayout";
 import BarcodeContext from "../contexts/BarcodeContext";
 import MissionContext from "../contexts/MissionContext";
+import { envApplication } from "../helpers/envProvider";
 import { useAppSelector } from "../hooks/redux";
 import useRobot from "../hooks/useRobot";
 import { ReactElement } from "react";
@@ -19,7 +19,7 @@ export default function RobotSubPageLayout(): ReactElement {
 
   return (
     <div className="col-span-full h-full">
-      {!envOnPremiseRobot && <RosConnector />}
+      {!envApplication && <RosConnector />}
 
       {(() => {
         switch (activeTab) {
@@ -29,7 +29,7 @@ export default function RobotSubPageLayout(): ReactElement {
                 informationWidgetAction={() => {
                   isSettedCookie &&
                     setActiveTab(
-                      envOnPremiseRobot ? "Development Suite" : "Teleoperation",
+                      envApplication ? "Development Suite" : "Teleoperation",
                     );
                 }}
               />

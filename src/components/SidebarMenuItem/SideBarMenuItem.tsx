@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import { isDesktop } from "react-device-detect";
 import useTheme from "../../hooks/useTheme";
@@ -114,14 +114,14 @@ export default function SideBarMenuItem({
           src={`/svg/general/${(() => {
             switch (type) {
               case "robot":
-                return envOnPremiseRobot ? "application" : "robot";
+                return envApplication ? "application" : "robot";
               case "back":
-                return envOnPremiseRobot ? "back-application" : "back";
+                return envApplication ? "back-application" : "back";
               default:
                 return type;
             }
           })()}/${
-            envOnPremiseRobot && type === "robot" ? "application" : type
+            envApplication && type === "robot" ? "application" : type
           }-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
@@ -137,11 +137,11 @@ export default function SideBarMenuItem({
               : type === "instance"
               ? "Instances"
               : type === "fleet"
-              ? envOnPremiseRobot
+              ? envApplication
                 ? "Namespaces"
                 : "Fleets"
               : type === "robot"
-              ? envOnPremiseRobot
+              ? envApplication
                 ? "Applications"
                 : "Robots"
               : type === "workspacesmanager"

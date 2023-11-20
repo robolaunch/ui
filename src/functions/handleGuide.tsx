@@ -1,6 +1,6 @@
 import GuideContainer from "../components/GuideContainer/GuideContainer";
 import WelcomeGuide from "../components/WelcomeGuide/WelcomeGuide";
-import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 
 export function getGuideItem(guide: string) {
   switch (guide) {
@@ -19,7 +19,7 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Marketplace"
             text={`Access predefined ${
-              envOnPremiseRobot ? "applications" : "robots"
+              envApplication ? "applications" : "robots"
             } on Marketplace and install them quickly.`}
           />
         ),
@@ -60,9 +60,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={envOnPremiseFleet ? "Namespaces" : "Fleets"}
+            title={envApplication ? "Namespaces" : "Fleets"}
             text={
-              envOnPremiseFleet
+              envApplication
                 ? `Namespace is a centralized cloud resource that integrates cloud coordination, data sharing, and advanced ecosystem capabilities."`
                 : `Fleet is a centralized cloud resource that integrates Cloud and Physical Instances for seamless coordination, data sharing, and enhanced robotics ecosystem capabilities.`
             }
@@ -74,9 +74,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={envOnPremiseRobot ? "Applications" : "Robots"}
+            title={envApplication ? "Applications" : "Robots"}
             text={
-              envOnPremiseRobot
+              envApplication
                 ? `The application is a Kubernetes-based resource within robolaunch's Cloud AI Platform, enabling seamless communication and collaboration within the platform through containerized app environments.`
                 : `Robot is a Kubernetes-based resource in robolaunch's Cloud Robotics Platform, facilitating seamless communication and collaboration between robots through containerized ROS 2 environments.`
             }
@@ -148,9 +148,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={envOnPremiseRobot ? "Application Header" : "Robot Header"}
+            title={envApplication ? "Application Header" : "Robot Header"}
             text={
-              envOnPremiseRobot
+              envApplication
                 ? "You can see the details of the application, control the application,  control the environments running on the application or develop the application's software."
                 : "You can see the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
             }
@@ -163,12 +163,10 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title={
-              envOnPremiseRobot
-                ? "Application Information"
-                : "Robot Information"
+              envApplication ? "Application Information" : "Robot Information"
             }
             text={`You can see the details of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -178,11 +176,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={
-              envOnPremiseRobot ? "Application Services" : "Robot Services"
-            }
+            title={envApplication ? "Application Services" : "Robot Services"}
             text={`You can access the code editor and remote desktop of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -192,11 +188,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={
-              envOnPremiseRobot ? "Application Resources" : "Robot Resources"
-            }
+            title={envApplication ? "Application Resources" : "Robot Resources"}
             text={
-              envOnPremiseRobot
+              envApplication
                 ? "You can see tho application's resources."
                 : "You can see tho robot's resources."
             }
@@ -209,12 +203,10 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title={
-              envOnPremiseRobot
-                ? "Application Connections"
-                : "Robot Connections"
+              envApplication ? "Application Connections" : "Robot Connections"
             }
             text={`You can see the connection status of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -224,9 +216,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={`${envOnPremiseRobot ? "Application" : "Robot"} Header Tabs`}
+            title={`${envApplication ? "Application" : "Robot"} Header Tabs`}
             text={
-              envOnPremiseRobot
+              envApplication
                 ? "You can access the code editor, development suite and remote desktop of the application."
                 : "You can access the visualization, code editor, development suite and remote desktop of the robot."
             }
@@ -241,7 +233,7 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Overview"
             text={`You can see the details of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -311,9 +303,9 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={`${envOnPremiseRobot ? "Application" : "Robot"} Status`}
+            title={`${envApplication ? "Application" : "Robot"} Status`}
             text={`You can see the status of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -325,7 +317,7 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Activities Widget"
             text={`You can see the activities of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -337,7 +329,7 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Workspaces Table"
             text={`You can see the workspaces of the ${
-              envOnPremiseRobot ? "application" : "robot"
+              envApplication ? "application" : "robot"
             }.`}
           />
         ),
@@ -394,7 +386,7 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title={`${envOnPremiseRobot ? "Application" : "Robot"} Storage`}
+            title={`${envApplication ? "Application" : "Robot"} Storage`}
             text="Select the storage you want to use."
           />
         ),
@@ -447,7 +439,7 @@ export function getGuideItem(guide: string) {
           <GuideContainer
             title="Workspaces"
             text={
-              envOnPremiseRobot
+              envApplication
                 ? `If you want to use a workspace in your application, you can add it here.`
                 : `Workspaces are the ROS2 workspaces that you want to use in your robot.`
             }

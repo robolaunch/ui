@@ -1,10 +1,7 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import {
-  // envOnPremiseFleet,
-  envOnPremiseRobot,
-} from "../../helpers/envProvider";
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
+import { envApplication } from "../../helpers/envProvider";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 
@@ -42,7 +39,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="robot"
                 description={`You can access all your ${
-                  envOnPremiseRobot ? "applications" : "robots"
+                  envApplication ? "applications" : "robots"
                 } here.`}
                 loading={isLoading}
                 disabled={
@@ -65,7 +62,7 @@ export default function PrivateSidebar(): ReactElement {
                     sidebarState?.page === "launchsmanager")
                 }
               />
-              {!envOnPremiseRobot && (
+              {!envApplication && (
                 <Fragment>
                   <SideBarMenuItem
                     type="buildsmanager"
@@ -96,7 +93,7 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
-              {/* {!(envOnPremiseFleet || envOnPremiseRobot) && (
+              {/* {!(envApplicationFleet || envApplication) && (
                 <SidebarStaticItem
                   to="/marketplace"
                   imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
@@ -117,7 +114,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="fleet"
                 description={
-                  envOnPremiseRobot
+                  envApplication
                     ? "You can access all your namespaces here."
                     : "You can access all your fleets here."
                 }
@@ -125,7 +122,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="robot"
                 description={
-                  envOnPremiseRobot
+                  envApplication
                     ? "You can access all your applications here."
                     : "You can access all your robots here."
                 }

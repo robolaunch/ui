@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import useMain from "../hooks/useMain";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import { envOnPremiseRobot } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 import RobotServicesCell from "../components/TableInformationCells/RobotServicesCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import EnvironmentActionCells from "../components/TableActionCells/EnvironmentActionCells";
@@ -107,7 +107,7 @@ export function NamespaceTableData({
       },
       {
         key: "fleet",
-        header: envOnPremiseRobot ? "Namespace" : "Fleet",
+        header: envApplication ? "Namespace" : "Fleet",
         sortable: false,
         filter: false,
         align: "left",
@@ -115,9 +115,9 @@ export function NamespaceTableData({
           return <BasicCell text={rowData?.fleet} />;
         },
       },
-      !envOnPremiseRobot && {
+      !envApplication && {
         key: "robotServices",
-        header: `${envOnPremiseRobot ? "Application" : "Robot"} Services`,
+        header: `${envApplication ? "Application" : "Robot"} Services`,
         sortable: true,
         filter: true,
         align: "left",
@@ -132,7 +132,7 @@ export function NamespaceTableData({
       },
       {
         key: "virtualState",
-        header: `Virtual ${envOnPremiseRobot ? "Application" : "Robot"} State`,
+        header: `Virtual ${envApplication ? "Application" : "Robot"} State`,
         sortable: true,
         filter: false,
         align: "left",
@@ -140,9 +140,9 @@ export function NamespaceTableData({
           return <StateCell state={rowData?.virtualState} />;
         },
       },
-      !envOnPremiseRobot && {
+      !envApplication && {
         key: "physicalState",
-        header: `Physical ${envOnPremiseRobot ? "Application" : "Robot"} State`,
+        header: `Physical ${envApplication ? "Application" : "Robot"} State`,
         sortable: true,
         filter: true,
         align: "left",
@@ -158,7 +158,7 @@ export function NamespaceTableData({
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return envOnPremiseRobot ? (
+          return envApplication ? (
             <EnvironmentActionCells
               data={rowData?.actions}
               reload={() => setReload((prevState: boolean) => !prevState)}

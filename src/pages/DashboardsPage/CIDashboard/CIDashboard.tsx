@@ -1,14 +1,10 @@
-import {
-  envOnPremiseFleet,
-  envOnPremiseRobot,
-} from "../../../helpers/envProvider";
 import NamespaceActionCells from "../../../components/TableActionCells/NamespaceActionCells";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import FleetActionCells from "../../../components/TableActionCells/FleetActionCells";
 import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import { Fragment, ReactElement, useEffect, useMemo, useState } from "react";
 import StateCell from "../../../components/TableInformationCells/StateCell";
 import BasicCell from "../../../components/TableInformationCells/BasicCell";
-import { Fragment, ReactElement, useEffect, useMemo, useState } from "react";
 import InfoCell from "../../../components/TableInformationCells/InfoCell";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
@@ -16,6 +12,7 @@ import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
+import { envApplication } from "../../../helpers/envProvider";
 import useFunctions from "../../../hooks/useFunctions";
 import { SiKubernetes } from "react-icons/si";
 import { useParams } from "react-router-dom";
@@ -47,11 +44,11 @@ export default function CIDashboard(): ReactElement {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else {
-      envOnPremiseFleet ? handleGetNamespaces() : handleGetFleets();
+      envApplication ? handleGetNamespaces() : handleGetFleets();
     }
 
     const timer = setInterval(() => {
-      pagesState?.instance && envOnPremiseFleet
+      pagesState?.instance && envApplication
         ? handleGetNamespaces()
         : handleGetFleets();
     }, 10000);
@@ -132,7 +129,7 @@ export default function CIDashboard(): ReactElement {
       },
       {
         key: "state",
-        header: `${envOnPremiseRobot ? "Namespace" : "Fleet"} State`,
+        header: `${envApplication ? "Namespace" : "Fleet"} State`,
         sortable: false,
         filter: false,
         align: "left",
@@ -147,7 +144,7 @@ export default function CIDashboard(): ReactElement {
         body: (rowData: any) => {
           return (
             <Fragment>
-              {envOnPremiseFleet ? (
+              {envApplication ? (
                 <NamespaceActionCells
                   reload={() => setReload(!reload)}
                   data={{
@@ -360,7 +357,7 @@ export default function CIDashboard(): ReactElement {
       table={
         <GeneralTable
           type="fleet"
-          title={envOnPremiseRobot ? "Namespaces" : "Fleets"}
+          title={envApplication ? "Namespaces" : "Fleets"}
           data={data}
           columns={columns}
           loading={Array.isArray(responseFleets) ? false : true}

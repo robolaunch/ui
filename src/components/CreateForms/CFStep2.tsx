@@ -1,7 +1,4 @@
-import {
-  envOnPremiseFleet,
-  envOnPremiseRobot,
-} from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
@@ -44,14 +41,14 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const dispatch = useAppDispatch();
 
   const formik = useFormik<IWorkspaces>({
-    validationSchema: envOnPremiseRobot
+    validationSchema: envApplication
       ? CFAppStep2Validations
       : CFRobotStep2Validations,
     initialValues: robotData?.step2,
     onSubmit: () => {
       formik.setSubmitting(true);
 
-      if (envOnPremiseRobot) {
+      if (envApplication) {
         createEnvironment(false).then(async () => {
           await handleSubmit();
         });
@@ -116,19 +113,19 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   useEffect(
     () => {
       if (isImportRobot) {
-        envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
+        envApplication ? handleGetEnvironment() : handleGetRobot();
         setTimeout(() => {
           setIsLoadingImportRobot(false);
         }, 2000);
       } else {
         if (!responseFleet) {
-          envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
+          envApplication ? handleGetNamespace() : handleGetFleet();
         }
       }
 
       const timer = setInterval(() => {
         if (!isImportRobot && !robotData?.step1?.isVirtualRobot) {
-          envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
+          envApplication ? handleGetNamespace() : handleGetFleet();
         }
       }, 10000);
 
@@ -215,7 +212,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         isImportRobot
           ? isLoadingImportRobot
           : !responseFleet ||
-            (envOnPremiseFleet
+            (envApplication
               ? responseFleet?.namespaceStatus !== "Active"
               : responseFleet?.fleetStatus !== "Ready")
       }
@@ -237,9 +234,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       }
       formik={formik}
     >
-      {isImportRobot &&
-      envOnPremiseRobot &&
-      !formik.values.workspaces?.length ? (
+      {isImportRobot && envApplication && !formik.values.workspaces?.length ? (
         <SidebarInfo text={`No Workspace Available`} />
       ) : (
         <Fragment>
@@ -254,7 +249,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       )}
 
       <Fragment>
-        {!(envOnPremiseRobot && url?.robotName) && (
+        {!(envApplication && url?.robotName) && (
           <div className="mt-10 flex w-full flex-col gap-6">
             <div className="flex gap-2">
               {!isImportRobot && (
@@ -268,7 +263,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
                     formik.isSubmitting ||
                     JSON.stringify(formik.initialValues) ===
                       JSON.stringify(formik.values) ||
-                    (envOnPremiseRobot && url?.robotName)
+                    (envApplication && url?.robotName)
                   )
                 }
                 loading={formik.isSubmitting}
@@ -283,7 +278,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
                   ) : isImportRobot ? (
                     "Update Robot"
                   ) : robotData?.step1?.isDevelopmentMode ? (
-                    envOnPremiseRobot ? (
+                    envApplication ? (
                       "Create Application with Workspaces"
                     ) : (
                       "Create Robot"

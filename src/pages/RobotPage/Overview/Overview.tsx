@@ -1,13 +1,6 @@
-import React, { ReactElement } from "react";
-import {
-  envAdrinIntegration,
-  envOnPremiseRobot,
-} from "../../../helpers/envProvider";
-import AdrinNetworkStatusWidget from "../../../components/AdrinNetworkStatusWidget/AdrinNetworkStatusWidget";
-import AdrinActivitiesWidget from "../../../components/AdrinActivitiesWidget/AdrinActivitiesWidget";
-// import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
+import { ReactElement } from "react";
+import { envApplication } from "../../../helpers/envProvider";
 import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
-// import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
@@ -24,12 +17,8 @@ export default function Overview({
   informationWidgetAction,
 }: IOverview): ReactElement {
   const url = useParams();
-  const {
-    responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
-    adrinState,
-  } = useRobot();
+  const { responseRobot, responseBuildManager, responseLaunchManagers } =
+    useRobot();
 
   return (
     <RobotOverviewLayout
@@ -37,7 +26,7 @@ export default function Overview({
         <InformationWidget
           title={url?.robotName || ""}
           subtitle={
-            envOnPremiseRobot
+            envApplication
               ? "From this page, you can see all the details of the application, control the application, control the environments running on the application or develop the application's software."
               : "From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
           }
@@ -45,7 +34,7 @@ export default function Overview({
             <TourGuide
               type="robot"
               tourConfig={
-                envOnPremiseRobot
+                envApplication
                   ? [
                       getGuideItem('[data-tut="robot-header"]'),
                       getGuideItem('[data-tut="robot-information"]'),
@@ -101,25 +90,13 @@ export default function Overview({
         />
       }
       widget2={
-        envAdrinIntegration ? (
-          <AdrinNetworkStatusWidget
-            data={adrinState?.[adrinState?.length - 1]}
-          />
-        ) : (
-          <RobotStatusWidget
-            responseRobot={responseRobot}
-            responseBuildManager={responseBuildManager}
-            responseLaunchManagers={responseLaunchManagers}
-          />
-        )
+        <RobotStatusWidget
+          responseRobot={responseRobot}
+          responseBuildManager={responseBuildManager}
+          responseLaunchManagers={responseLaunchManagers}
+        />
       }
-      widget3={
-        envAdrinIntegration ? (
-          <AdrinActivitiesWidget />
-        ) : (
-          <ActivitiesWidget responseRobot={responseRobot} />
-        )
-      }
+      widget3={<ActivitiesWidget responseRobot={responseRobot} />}
     />
   );
 }

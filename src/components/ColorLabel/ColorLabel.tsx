@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
-import useRobot from "../../hooks/useRobot";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { envApplication } from "../../helpers/envProvider";
 import ContentLoader from "react-content-loader";
+import useRobot from "../../hooks/useRobot";
+import { ReactElement } from "react";
 
 export default function ColorLabel(): ReactElement {
   const { responseRobot } = useRobot();
@@ -9,9 +9,9 @@ export default function ColorLabel(): ReactElement {
   return (
     <div className="w-fit rounded-lg bg-layer-primary-100 px-2 py-1 text-[0.58rem] font-medium capitalize text-layer-primary-500">
       {responseRobot?.robotClusters?.length === 1
-        ? `Virtual ${envOnPremiseRobot ? "Application" : "Robot"}`
+        ? `Virtual ${envApplication ? "Application" : "Robot"}`
         : (responseRobot?.robotClusters?.length === 2 &&
-            `Physical ${envOnPremiseRobot ? "Application" : "Robot"}`) || (
+            `Physical ${envApplication ? "Application" : "Robot"}`) || (
             <ContentLoader
               speed={1}
               width={64}

@@ -1,4 +1,4 @@
-import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 import { useEffect, createContext, useState } from "react";
 import { IrobotPages } from "../interfaces/generalInterfaces";
 import useFunctions from "../hooks/useFunctions";
@@ -55,15 +55,15 @@ export default ({ children }: any) => {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      envOnPremiseFleet ? handleGetNamespace() : handleGetFleet();
+      envApplication ? handleGetNamespace() : handleGetFleet();
     } else if (
       !responseRobot &&
       !responseBuildManager &&
       !responseLaunchManagers
     ) {
-      envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
-      !envOnPremiseRobot && handleGetBuildManager();
-      !envOnPremiseRobot && handleGetLaunchManagers();
+      envApplication ? handleGetEnvironment() : handleGetRobot();
+      !envApplication && handleGetBuildManager();
+      !envApplication && handleGetLaunchManagers();
     }
 
     const timerResponseRobot = setInterval(() => {
@@ -74,7 +74,7 @@ export default ({ children }: any) => {
           (robot: any) => robot?.robotStatus !== "EnvironmentReady",
         )?.length
       ) {
-        envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
+        envApplication ? handleGetEnvironment() : handleGetRobot();
       }
     }, 10000);
 
@@ -83,7 +83,7 @@ export default ({ children }: any) => {
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready",
         )?.length &&
-        !envOnPremiseRobot &&
+        !envApplication &&
         handleGetBuildManager();
     }, 10000);
 
@@ -98,7 +98,7 @@ export default ({ children }: any) => {
             return cluster?.launchManagerStatus;
           })
           ?.filter((status: any) => status !== "Running")?.length &&
-        !envOnPremiseRobot &&
+        !envApplication &&
         handleGetLaunchManagers();
     }, 10000);
 

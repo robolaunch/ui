@@ -3,7 +3,10 @@ import useMain from "../hooks/useMain";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import { envOnPremiseFleet, envOnPremiseRobot } from "../helpers/envProvider";
+import {
+  envApplicationFleet,
+  envApplicationRobot,
+} from "../helpers/envProvider";
 import StateCell from "../components/TableInformationCells/StateCell";
 import NamespaceActionCells from "../components/TableActionCells/NamespaceActionCells";
 import FleetActionCells from "../components/TableActionCells/FleetActionCells";
@@ -90,7 +93,7 @@ export function InstanceTableData({
       },
       {
         key: "state",
-        header: `${envOnPremiseRobot ? "Namespace" : "Fleet"} State`,
+        header: `${envApplicationRobot ? "Namespace" : "Fleet"} State`,
         sortable: false,
         filter: false,
         align: "left",
@@ -105,7 +108,7 @@ export function InstanceTableData({
         body: (rowData: any) => {
           return (
             <Fragment>
-              {envOnPremiseFleet ? (
+              {envApplicationFleet ? (
                 <NamespaceActionCells
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{

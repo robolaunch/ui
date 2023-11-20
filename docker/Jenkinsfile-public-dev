@@ -59,7 +59,7 @@ pipeline {
     stage('Install Depends && Build') {
       steps {
         container('ubuntu') {
-          withCredentials([file(credentialsId: 'frontend-public-dev-env', variable: 'text')]) {
+          withCredentials([file(credentialsId: 'env-frontend-public-dev', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm i --force'
@@ -74,11 +74,11 @@ pipeline {
     stage('Docker Build && Push') {
       steps {
         container('docker') {
-          sh "docker build -t robolaunchio/frontend-public-dev-httpd:${env.VER} ."
+          sh "docker build -t robolaunchio/frontend-public:${env.VER}-dev ."
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
-          sh "docker push robolaunchio/frontend-public-dev-httpd:${env.VER}"
+          sh "docker push robolaunchio/frontend-public:${env.VER}-dev"
         }
       }
     }
@@ -86,7 +86,7 @@ pipeline {
       steps {
         container('ubuntu') {
           withCredentials([file(credentialsId: 'hetzner_prod', variable: 'config')]) {
-            sh "kubectl set image deployment.v1.apps/ui -n ui ui=robolaunchio/frontend-public-dev-httpd:${env.VER} --kubeconfig=$config"
+            sh "kubectl set image deployment.v1.apps/ui -n ui ui=robolaunchio/frontend-public:${env.VER}-dev --kubeconfig=$config"
           }
         }
       }

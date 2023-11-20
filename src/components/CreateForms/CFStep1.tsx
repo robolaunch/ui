@@ -1,5 +1,5 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { envOnPremiseRobot } from "../../helpers/envProvider";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { envApplication } from "../../helpers/envProvider";
 import CreateRobotRosDistrobutions from "../CreateRobotRosDistrobutions/CreateRobotRosDistrobutions";
 import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
@@ -35,7 +35,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      envOnPremiseRobot ? handleGetEnvironment() : handleGetRobot();
+      envApplication ? handleGetEnvironment() : handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
