@@ -41,8 +41,8 @@ pipeline {
       steps {
         container('ubuntu') {
           sh 'npm install -g n'
-          sh 'npm install -g bun'
           sh 'n latest'
+          sh 'npm install -g bun'
         }
       }
     }
