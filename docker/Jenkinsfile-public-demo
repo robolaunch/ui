@@ -61,7 +61,7 @@ pipeline {
         container('ubuntu') {
           sh 'apt-get install unzip -y'
           sh 'curl -fsSL https://bun.sh/install | bash'
-          sh 'exec /usr/bin/bash'
+          sh 'source /root/.bashrc'
           sh 'bun install'
           // sh 'npm i --force'
         }
