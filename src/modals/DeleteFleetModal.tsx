@@ -1,5 +1,5 @@
 import { Dialog } from "primereact/dialog";
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { deleteFederatedFleet } from "../toolkit/FleetSlice";
@@ -7,14 +7,12 @@ import { deleteFederatedFleet } from "../toolkit/FleetSlice";
 interface IDeleteFleetModalModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function DeleteFleetModalModal({
   data,
   reload,
-  visibleModal,
   handleCloseModal,
 }: IDeleteFleetModalModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,8 +39,8 @@ export default function DeleteFleetModalModal({
   return (
     <Dialog
       header="Delete Fleet"
-      visible={visibleModal}
-      className="w-[30vw]"
+      visible={true}
+      className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="flex w-full flex-col gap-8">

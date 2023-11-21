@@ -26,7 +26,6 @@ export default function NSActionCells({
           data={data || undefined}
           reload={reload}
           handleCloseModal={() => setIsDeleteModalVisible(false)}
-          visibleModal={isDeleteModalVisible}
         />
       )}
     </Fragment>

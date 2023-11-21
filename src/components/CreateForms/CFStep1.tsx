@@ -159,6 +159,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
           loadingText="Loading..."
           loadingItems={[]}
           isLoading={isImportRobot ? !responseRobot : false}
+          formik={formik}
         >
           {/* RobotName */}
           <FormInputText

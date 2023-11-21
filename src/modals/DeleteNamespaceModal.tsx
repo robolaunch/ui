@@ -1,5 +1,5 @@
 import { Dialog } from "primereact/dialog";
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { deleteNamespace } from "../toolkit/FleetSlice";
@@ -7,20 +7,18 @@ import { deleteNamespace } from "../toolkit/FleetSlice";
 interface IDeleteNamespaceModal {
   data: any;
   reload: () => void;
-  visibleModal: boolean;
   handleCloseModal: () => void;
 }
 
 export default function DeleteNamespaceModal({
   data,
   reload,
-  visibleModal,
   handleCloseModal,
 }: IDeleteNamespaceModal): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  function handleDeleteFleetModal() {
+  function handleDeleteNamespaceModal() {
     setIsLoading(true);
     dispatch(
       deleteNamespace({
@@ -41,8 +39,8 @@ export default function DeleteNamespaceModal({
   return (
     <Dialog
       header="Delete Namespace"
-      visible={visibleModal}
-      className="w-[30vw]"
+      visible={true}
+      className="w-[40vw]"
       onHide={() => handleCloseModal()}
     >
       <div className="flex w-full flex-col gap-8">
@@ -66,7 +64,7 @@ export default function DeleteNamespaceModal({
                 `Delete Namespace`
               )
             }
-            onClick={() => handleDeleteFleetModal()}
+            onClick={() => handleDeleteNamespaceModal()}
           />
         </div>
       </div>
