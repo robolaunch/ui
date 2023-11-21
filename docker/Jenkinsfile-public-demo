@@ -33,7 +33,7 @@ pipeline {
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock
-'''
+      '''
     }
   }
   stages {
@@ -63,13 +63,22 @@ pipeline {
         }
       }
     }
-    stage('Install Deps & Build') {
+    stage('Build') {
       steps {
         container('ubuntu') {
           withCredentials([file(credentialsId: 'env-frontend-public-demo', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'npm run build'
+        }
+      }
+    }
+    stage('Nexus Push') {
+      steps {
+        container('ubuntu') {
+          withCredentials([file(credentialsId: 'env-frontend-public-demo', variable: 'text')]) {
+            writeFile file:'./.env', text: readFile(text)
+          }
           sh "tar -zcvf ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz build"
           withCredentials([usernamePassword(credentialsId: '7fadeb6b-976b-40ed-8c7c-20e157b4f81a', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh "curl --fail -u $username:$password --upload-file ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz https://nexus.robolaunch.cloud/repository/ui/"
@@ -77,10 +86,16 @@ pipeline {
         }
       }
     }
-    stage('Docker Build & Push') {
+    stage('Docker Build') {
       steps {
         container('docker') {
           sh "docker build -t robolaunchio/frontend-public:${env.VER}-demo ."
+        }
+      }
+    }
+    stage('Docker Push') {
+      steps {
+        container('docker') {
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }
