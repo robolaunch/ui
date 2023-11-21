@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { GoGraph } from "react-icons/go";
 import Widget from "../../layouts/WidgetLayout";
 import CirclePercentageBar from "../CirclePercentageBar/CirclePercentageBar";

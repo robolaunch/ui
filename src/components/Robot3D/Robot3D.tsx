@@ -1,7 +1,7 @@
-import React, { useRef, useMemo, useState } from "react";
-import { useFrame } from "@react-three/fiber";
-import useBarcode from "../../hooks/useBarcode";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useRef, useMemo, useState } from "react";
+import useBarcode from "../../hooks/useBarcode";
+import { useFrame } from "@react-three/fiber";
 
 export default function Robot3D() {
   const { robotLocation } = useBarcode();

@@ -1,6 +1,10 @@
-import React from "react";
 import RosWaypointListItem from "../RosWaypointListItem/RosWaypointListItem";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  DraggableProvided,
+  Droppable,
+} from "react-beautiful-dnd";
 
 interface IRosWaypointList {
   setMissions: (value: any) => void;
@@ -54,7 +58,7 @@ export default function RosWaypointList({
                       draggableId={`${waypointIndex}`}
                       index={waypointIndex}
                     >
-                      {(provided, snapshot) => (
+                      {(provided: DraggableProvided, snapshot) => (
                         <div
                           key={waypointIndex}
                           ref={provided.innerRef}
