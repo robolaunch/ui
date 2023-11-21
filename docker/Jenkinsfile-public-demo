@@ -59,10 +59,10 @@ pipeline {
     stage('Install Depends') {
       steps {
         container('ubuntu') {
-          bash 'apt-get install unzip -y'
-          bash 'curl -fsSL https://bun.sh/install | bash'
-          bash 'source /root/.bashrc'
-          bash 'bun install'
+          bash -c 'apt-get install unzip -y'
+          bash -c 'curl -fsSL https://bun.sh/install | bash'
+          bash -c 'source /root/.bashrc'
+          bash -c 'bun install'
           // sh 'npm i --force'
         }
       }
