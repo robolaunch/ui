@@ -59,10 +59,11 @@ pipeline {
     stage('Install Depends') {
       steps {
         container('ubuntu') {
+          sh 'sudo apt-get unzip -y'
           sh 'curl -fsSL https://bun.sh/install | bash'
           sh 'exec /usr/bin/bash'
-          // sh 'npm i --force'
           sh 'bun install'
+          // sh 'npm i --force'
         }
       }
     }
@@ -72,9 +73,8 @@ pipeline {
           withCredentials([file(credentialsId: 'env-frontend-public-demo', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
-          // sh 'npm run build'
-
           sh 'bun react-scripts build'
+          // sh 'npm run build'
         }
       }
     }
