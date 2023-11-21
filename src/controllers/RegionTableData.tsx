@@ -300,6 +300,7 @@ export function RegionTableData() {
               data={{
                 name: rowData?.actions?.name,
                 state: rowData?.providerState,
+                robolaunchState: rowData?.robolaunchState,
                 organizationId: pagesState?.organization?.organizationId,
                 roboticsCloudName: pagesState.roboticsCloud?.name,
                 instanceId: rowData?.actions?.instanceId,

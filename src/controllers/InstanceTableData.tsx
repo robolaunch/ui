@@ -1,26 +1,137 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import useMain from "../hooks/useMain";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import {
-  envApplicationFleet,
-  envApplicationRobot,
-} from "../helpers/envProvider";
 import StateCell from "../components/TableInformationCells/StateCell";
 import NamespaceActionCells from "../components/TableActionCells/NamespaceActionCells";
 import FleetActionCells from "../components/TableActionCells/FleetActionCells";
+import { envApplication } from "../helpers/envProvider";
+import useFunctions from "../hooks/useFunctions";
+import { useParams } from "react-router-dom";
 
-interface IInstanceTableData {
-  responseFleets: any;
-  setReload: any;
-}
+export function InstanceTableData() {
+  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const [reload, setReload] = useState<boolean>(false);
 
-export function InstanceTableData({
-  responseFleets,
-  setReload,
-}: IInstanceTableData) {
-  const { pagesState } = useMain();
+  const {
+    getOrganization,
+    getRoboticsCloud,
+    getInstance,
+    getFleets,
+    getNamespaces,
+  } = useFunctions();
+  const url = useParams();
+  const { pagesState, selectedState } = useMain();
+
+  useEffect(() => {
+    if (
+      pagesState?.organization?.organizationName !==
+      `org_${url?.organizationName}`
+    ) {
+      handleGetOrganization();
+    } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
+      handleGetRoboticsCloud();
+    } else if (pagesState?.instance?.name !== url?.instanceName) {
+      handleGetInstance();
+    } else {
+      envApplication ? handleGetNamespaces() : handleGetFleets();
+    }
+
+    const timer = setInterval(() => {
+      pagesState?.instance && envApplication
+        ? handleGetNamespaces()
+        : handleGetFleets();
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagesState, url, reload]);
+
+  useEffect(() => {
+    setResponseFleets(undefined);
+  }, [url]);
+
+  function handleGetOrganization() {
+    getOrganization(
+      {
+        organizationName: url?.organizationName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseFleets,
+        setPages: true,
+      },
+    );
+  }
+
+  function handleGetRoboticsCloud() {
+    getRoboticsCloud(
+      {
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: url?.roboticsCloudName as string,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseFleets,
+        setPages: true,
+      },
+    );
+  }
+
+  function handleGetInstance() {
+    getInstance(
+      {
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceName: url?.instanceName as string,
+        region: pagesState?.roboticsCloud?.region!,
+        details: true,
+      },
+      {
+        isSetState: true,
+        ifErrorNavigateTo404: !responseFleets,
+        setPages: true,
+      },
+    );
+  }
+
+  function handleGetFleets() {
+    getFleets(
+      {
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceId: pagesState?.instance?.instanceId!,
+        region: pagesState?.roboticsCloud?.region!,
+      },
+      {
+        ifErrorNavigateTo404: !responseFleets,
+        setResponse: setResponseFleets,
+      },
+    );
+  }
+
+  function handleGetNamespaces() {
+    getNamespaces(
+      {
+        organizationId: selectedState?.organization?.organizationId!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
+      },
+      {
+        ifErrorNavigateTo404: !responseFleets,
+        setResponse: setResponseFleets,
+      },
+    );
+  }
+
+  function handleReload() {
+    setResponseFleets(undefined);
+    setReload((prevState: boolean) => !prevState);
+  }
 
   const data: any = useMemo(
     () =>
@@ -93,7 +204,7 @@ export function InstanceTableData({
       },
       {
         key: "state",
-        header: `${envApplicationRobot ? "Namespace" : "Fleet"} State`,
+        header: `${envApplication ? "Namespace" : "Fleet"} State`,
         sortable: false,
         filter: false,
         align: "left",
@@ -108,7 +219,7 @@ export function InstanceTableData({
         body: (rowData: any) => {
           return (
             <Fragment>
-              {envApplicationFleet ? (
+              {envApplication ? (
                 <NamespaceActionCells
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{
@@ -138,5 +249,5 @@ export function InstanceTableData({
     [pagesState, responseFleets],
   );
 
-  return { data, columns };
+  return { data, columns, responseFleets, handleReload };
 }

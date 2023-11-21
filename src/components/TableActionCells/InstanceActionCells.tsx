@@ -1,7 +1,7 @@
 import { envCreateInstance } from "../../helpers/envProvider";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
 interface IInstanceActionCells {
   data: any;
@@ -17,6 +17,24 @@ export default function InstanceActionCells({
   const [isTerminateModalVisible, setIsTerminateModalVisible] =
     useState<boolean>(false);
 
+  const [disabledSwitchButton, setDisabledSwitchButton] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (!envCreateInstance) {
+      return setDisabledSwitchButton(true);
+    }
+
+    if (
+      (data?.state === "running" &&
+        data?.robolaunchState === "ConnectionHub_Ready") ||
+      data?.state === "stopped"
+    ) {
+      return setDisabledSwitchButton(false);
+    }
+    return setDisabledSwitchButton(true);
+  }, [data]);
+
   return (
     <Fragment>
       <TableActionButtons
@@ -24,9 +42,14 @@ export default function InstanceActionCells({
         disabledDeleteButton={!envCreateInstance}
         onClickDeleteButton={() => setIsTerminateModalVisible(true)}
         showStartStopButton
-        disabledStartStopButton={!envCreateInstance}
+        disabledStartStopButton={
+          !envCreateInstance ? true : disabledSwitchButton
+        }
         onClickStartStopButton={() => setIsChangeStateModalVisible(true)}
         instanceState={data?.state}
+        loadingStartStopButton={
+          !envCreateInstance ? false : disabledSwitchButton
+        }
       />
 
       {isChangeStateModalVisible && (

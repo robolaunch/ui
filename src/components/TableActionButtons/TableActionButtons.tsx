@@ -8,6 +8,7 @@ interface ITableActionButtons {
   disabledEditButton?: boolean;
   disabledDeleteButton?: boolean;
   disabledStartStopButton?: boolean;
+  loadingStartStopButton?: boolean;
   onClickEditButton?: () => void;
   onClickDeleteButton?: () => void;
   onClickStartStopButton?: () => void;
@@ -21,6 +22,7 @@ export default function TableActionButtons({
   disabledEditButton,
   disabledDeleteButton,
   disabledStartStopButton,
+  loadingStartStopButton,
   onClickEditButton,
   onClickDeleteButton,
   onClickStartStopButton,
@@ -33,6 +35,7 @@ export default function TableActionButtons({
           type={instanceState === "running" ? "stop" : "start"}
           disabled={disabledStartStopButton}
           onClick={onClickStartStopButton}
+          loading={loadingStartStopButton}
         />
       )}
 

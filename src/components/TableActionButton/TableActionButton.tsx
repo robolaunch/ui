@@ -6,12 +6,14 @@ import { ReactElement } from "react";
 interface ITableActionButton {
   type: "edit" | "delete" | "stop" | "start";
   disabled?: boolean;
+  loading?: boolean;
   onClick?: () => void;
 }
 
 export default function TableActionButton({
   type,
   disabled,
+  loading,
   onClick,
 }: ITableActionButton): ReactElement {
   function colorHandle(): string {
@@ -53,6 +55,7 @@ export default function TableActionButton({
       })()}
       onClick={onClick}
       disabled={disabled}
+      loading={loading}
     />
   );
 }

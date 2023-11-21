@@ -1,29 +1,26 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { BiTrash } from "react-icons/bi";
+import { Fragment, ReactElement, useState } from "react";
 import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
+import TableActionButtons from "../TableActionButtons/TableActionButtons";
 
-interface INamespaceActionCells {
+interface INSActionCells {
   data: any;
   reload: () => void;
 }
 
-export default function NamespaceActionCells({
+export default function NSActionCells({
   data,
   reload,
-}: INamespaceActionCells): ReactElement {
+}: INSActionCells): ReactElement {
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false);
 
   return (
     <Fragment>
-      <div className="card float-right flex gap-4">
-        <Button
-          className={`!h-8 !w-8 !border !border-red-600 !bg-transparent`}
-          text={<BiTrash className="text-red-600" />}
-          onClick={() => setIsDeleteModalVisible(true)}
-        />
-      </div>
+      <TableActionButtons
+        showDeleteButton
+        onClickDeleteButton={() => setIsDeleteModalVisible(true)}
+      />
+
       {isDeleteModalVisible && (
         <DeleteNamespaceModal
           data={data || undefined}
