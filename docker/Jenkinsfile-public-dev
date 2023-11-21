@@ -56,7 +56,7 @@ pipeline {
         }
       }
     }
-    stage('Install Depends && Build') {
+    stage('Install Deps && Build') {
       steps {
         container('ubuntu') {
           withCredentials([file(credentialsId: 'env-frontend-public-dev', variable: 'text')]) {

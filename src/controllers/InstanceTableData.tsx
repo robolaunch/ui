@@ -184,7 +184,7 @@ export function InstanceTableData() {
       },
       {
         key: "roboticsCloud",
-        header: "Robotics Cloud",
+        header: "Region",
         sortable: false,
         filter: false,
         align: "left",
@@ -204,7 +204,7 @@ export function InstanceTableData() {
       },
       {
         key: "state",
-        header: `${envApplication ? "Namespace" : "Fleet"} State`,
+        header: envApplication ? "Namespace State" : "Fleet State",
         sortable: false,
         filter: false,
         align: "left",
@@ -223,9 +223,9 @@ export function InstanceTableData() {
                 <NamespaceActionCells
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{
-                    organization: pagesState?.organization,
-                    roboticsCloud: pagesState?.roboticsCloud?.name,
-                    instance: pagesState?.instance,
+                    organization: pagesState?.organization!,
+                    roboticsCloud: pagesState?.roboticsCloud?.name!,
+                    instance: pagesState?.instance!,
                     fleet: rowData?.actions,
                   }}
                 />
@@ -233,9 +233,9 @@ export function InstanceTableData() {
                 <FleetActionCells
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{
-                    organization: pagesState?.organization,
+                    organization: pagesState?.organization!,
                     roboticsCloud: pagesState?.roboticsCloud?.name,
-                    instance: pagesState?.instance,
+                    instance: pagesState?.instance!,
                     fleet: rowData?.actions,
                   }}
                 />

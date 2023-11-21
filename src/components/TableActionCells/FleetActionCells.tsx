@@ -1,9 +1,17 @@
-import { Fragment, ReactElement, useState } from "react";
-import DeleteFleetModalModal from "../../modals/DeleteFleetModal";
+import { IOrganization } from "../../interfaces/organizationInterfaces";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
+import { IInstance } from "../../interfaces/instanceInferfaces";
+import DeleteFleetModalModal from "../../modals/DeleteFleetModal";
+import { IRegion } from "../../interfaces/regionInterfaces";
+import { Fragment, ReactElement, useState } from "react";
 
 interface IFleetActionCells {
-  data: any;
+  data: {
+    organization: IOrganization;
+    roboticsCloud: IRegion;
+    instance: IInstance;
+    fleet: any;
+  };
   reload: () => void;
 }
 

@@ -1,9 +1,17 @@
 import { Fragment, ReactElement, useState } from "react";
 import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
+import { IOrganization } from "../../interfaces/organizationInterfaces";
+import { IInstance } from "../../interfaces/instanceInferfaces";
+import { IRegion } from "../../interfaces/regionInterfaces";
 
 interface INSActionCells {
-  data: any;
+  data: {
+    organization: IOrganization;
+    roboticsCloud: IRegion;
+    instance: IInstance;
+    fleet: any;
+  };
   reload: () => void;
 }
 
