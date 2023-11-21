@@ -40,8 +40,9 @@ pipeline {
     stage('Install Node') {
       steps {
         container('ubuntu') {
-          sh 'npm install -g n'
+          sh 'npm install -g n bun'
           sh 'n latest'
+          sh 'apt-get install unzip -y'
         }
       }
     }
@@ -56,14 +57,29 @@ pipeline {
         }
       }
     }
-    stage('Install Deps & Build') {
+    stage('Install Depends') {
+      steps {
+        container('ubuntu') {
+          sh 'bun install'
+        }
+      }
+    }
+    stage('Build') {
       steps {
         container('ubuntu') {
           withCredentials([file(credentialsId: 'env-frontend-public-dev', variable: 'text')]) {
             writeFile file:'./.env', text: readFile(text)
           }
-          sh 'npm i --force'
-          sh 'npm run build'
+          sh 'bun react-scripts build'
+        }
+      }
+    }
+    stage('Nexus Push') {
+      steps {
+        container('ubuntu') {
+          withCredentials([file(credentialsId: 'env-frontend-public-dev', variable: 'text')]) {
+            writeFile file:'./.env', text: readFile(text)
+          }
           sh "tar -zcvf ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz build"
           withCredentials([usernamePassword(credentialsId: '7fadeb6b-976b-40ed-8c7c-20e157b4f81a', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh "curl --fail -u $username:$password --upload-file ui-${env.VER}-${env.BUILD_NUMBER}.tar.gz https://nexus.robolaunch.cloud/repository/ui/"
@@ -71,10 +87,16 @@ pipeline {
         }
       }
     }
-    stage('Docker Build & Push') {
+    stage('Docker Build') {
       steps {
         container('docker') {
           sh "docker build -t robolaunchio/frontend-public:${env.VER}-dev ."
+        }
+      }
+    }
+    stage('Docker Push') {
+      steps {
+        container('docker') {
           withCredentials([usernamePassword(credentialsId: 'dockerhub-robolaunchio', passwordVariable: 'password', usernameVariable: 'username')]) {
             sh 'docker login -u $username -p $password'
           }

@@ -40,10 +40,9 @@ pipeline {
     stage('Install Node') {
       steps {
         container('ubuntu') {
-          sh 'npm install -g n'
+          sh 'npm install -g n bun'
           sh 'n latest'
           sh 'apt-get install unzip -y'
-          sh 'npm install -g bun'
         }
       }
     }
