@@ -42,6 +42,8 @@ pipeline {
         container('ubuntu') {
           sh 'npm install -g n'
           sh 'n latest'
+          sh 'apt-get install unzip -y'
+          sh 'npm install -g bun'
         }
       }
     }
@@ -59,10 +61,7 @@ pipeline {
     stage('Install Depends') {
       steps {
         container('ubuntu') {
-          sh 'apt-get install unzip -y'
-          sh 'npm install -g bun'
           sh 'bun install'
-          // sh 'npm i --force'
         }
       }
     }
@@ -73,7 +72,6 @@ pipeline {
             writeFile file:'./.env', text: readFile(text)
           }
           sh 'bun react-scripts build'
-          // sh 'npm run build'
         }
       }
     }

@@ -22,7 +22,7 @@ export default function UsagesWidget({
     >
       <div className="flex h-full w-full items-center justify-center gap-20 p-10 lg:p-6 xl:p-2">
         {datas?.map((data: any) => {
-          return <CirclePercentageBar key={data?.title} {...data} size={88} />;
+          return <CirclePercentageBar {...data} size={88} />;
         })}
         <NetworkChart />
       </div>
