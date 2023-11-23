@@ -12,6 +12,7 @@ import { envApplication } from "../helpers/envProvider";
 import { useAppSelector } from "../hooks/redux";
 import useRobot from "../hooks/useRobot";
 import { ReactElement } from "react";
+import FileManager from "../components/FileManager/FileManager";
 
 export default function RobotSubPageLayout(): ReactElement {
   const { activeTab, setActiveTab, responseRobot, isSettedCookie } = useRobot();
@@ -61,6 +62,8 @@ export default function RobotSubPageLayout(): ReactElement {
             );
           case "Remote Desktop":
             return <RemoteDesktop />;
+          case "File Manager":
+            return <FileManager />;
           case "Settings":
             return <div>Settings</div>;
           case "Loading":

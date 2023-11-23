@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import { ReactElement } from "react";
 
 interface IDashboardLayout {

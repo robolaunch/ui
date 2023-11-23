@@ -1,6 +1,6 @@
-import { envApplication } from "../helpers/envProvider";
 import { useEffect, createContext, useState } from "react";
-import { IrobotPages } from "../interfaces/generalInterfaces";
+import { IrobotTab } from "../interfaces/robotInterfaces";
+import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -23,8 +23,7 @@ export default ({ children }: any) => {
 
   const { pagesState, sidebarState } = useMain();
 
-  const [activeTab, setActiveTab] =
-    useState<IrobotPages["activeTab"]>("Overview");
+  const [activeTab, setActiveTab] = useState<IrobotTab["name"]>("Overview");
 
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
@@ -143,7 +142,6 @@ export default ({ children }: any) => {
         })
         ?.filter((status: any) => status !== "Running")?.length
     ) {
-      return setIsRobotReady(false);
     }
     return setIsRobotReady(true);
   }, [responseRobot, responseBuildManager, responseLaunchManagers]);
@@ -299,20 +297,8 @@ export default ({ children }: any) => {
     );
   }
 
-  function handleForceUpdate(
-    page:
-      | "Overview"
-      | "Teleoperation"
-      | "Task Management"
-      | "Visualization"
-      | "Loading"
-      | "Settings"
-      | "Remote Desktop"
-      | "Development Suite"
-      | "Code Editor",
-  ) {
+  function handleForceUpdate(page: IrobotTab["name"]) {
     setActiveTab("Loading");
-
     setTimeout(() => {
       setActiveTab(page);
     }, 500);

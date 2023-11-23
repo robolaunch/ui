@@ -1,32 +1,27 @@
-import { stringSlugify } from "../../functions/GeneralFunctions";
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
+import RobotHeaderTab from "../RobotHeaderTab/RobotHeaderTab";
+import { IrobotTab } from "../../interfaces/robotInterfaces";
 import { envApplication } from "../../helpers/envProvider";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { BiJoystickButton } from "react-icons/bi";
-import ContentLoader from "react-content-loader";
-import { Fragment, ReactElement } from "react";
+import { BiSolidFolder } from "react-icons/bi";
 import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
+import { ReactElement } from "react";
 
 export default function RobotHeaderTabs(): ReactElement {
-  const {
-    responseRobot,
-    activeTab,
-    isSettedCookie,
-    setActiveTab,
-    isRobotReady,
-  } = useRobot();
+  const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
 
-  const tabs = [
+  const tabs: IrobotTab[] = [
     {
       name: "Overview",
-      icon: <MdDashboard size={14} />,
+      icon: <MdDashboard size={16} />,
       isLoading: false,
       isHidden: false,
     },
     {
       name: "Task Management",
-      icon: <MdMap size={14} />,
+      icon: <MdMap size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -39,7 +34,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Teleoperation",
-      icon: <BiJoystickButton size={14} />,
+      icon: <BiJoystickButton size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -52,7 +47,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Visualization",
-      icon: <BsCameraVideoFill size={14} />,
+      icon: <BsCameraVideoFill size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -65,7 +60,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Code Editor",
-      icon: <AiFillCode size={14} />,
+      icon: <AiFillCode size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -77,7 +72,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Development Suite",
-      icon: <AiFillCode size={14} />,
+      icon: <AiFillCode size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -93,12 +88,24 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Remote Desktop",
-      icon: <MdScreenShare size={14} />,
+      icon: <MdScreenShare size={16} />,
       isLoading:
         !responseRobot ||
         !(
           responseRobot?.vdiEnabled &&
           responseRobot?.vdiIngressEndpoint &&
+          isSettedCookie
+        ),
+      isHidden: false,
+    },
+    {
+      name: "File Manager",
+      icon: <BiSolidFolder size={16} />,
+      isLoading:
+        !responseRobot ||
+        !(
+          responseRobot?.ideEnabled &&
+          responseRobot?.ideIngressEndpoint &&
           isSettedCookie
         ),
       isHidden: false,
@@ -111,53 +118,9 @@ export default function RobotHeaderTabs(): ReactElement {
       className="flex items-end gap-6 overflow-x-auto px-6 pt-4"
     >
       {tabs
-        ?.filter((tab: any) => tab && tab)
-        .map((tab: any, index: number) => {
-          return (
-            <li
-              data-tut={`robot-header-tab-${stringSlugify(tab?.name)}`}
-              className={`flex cursor-pointer flex-col gap-3 ${
-                tab?.isHidden && "!hidden"
-              }`}
-              onClick={() =>
-                !tab?.isLoading && !tab?.isHidden && setActiveTab(tab.name)
-              }
-              key={index}
-            >
-              <div
-                className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500  ${
-                  tab.name === activeTab
-                    ? "text-layer-primary-500"
-                    : "text-layer-light-500"
-                }`}
-              >
-                {tab?.isLoading || !isRobotReady ? (
-                  <ContentLoader
-                    speed={1}
-                    width={108}
-                    height={12}
-                    backgroundColor="#f6f6ef"
-                    foregroundColor="#e8e8e3"
-                  >
-                    <rect width="108" height="12" />
-                  </ContentLoader>
-                ) : (
-                  <Fragment>
-                    {tab?.icon}
-                    <span>{tab.name}</span>
-                  </Fragment>
-                )}
-              </div>
-              <div
-                className={`h-[2px] w-full transition-all duration-500 
-                  ${
-                    tab.name === activeTab
-                      ? "bg-layer-primary-500"
-                      : "bg-layer-light-100"
-                  } `}
-              />
-            </li>
-          );
+        ?.filter((tab: IrobotTab) => tab && tab)
+        .map((tab: IrobotTab, index: number) => {
+          return <RobotHeaderTab tab={tab} key={index} />;
         })}
     </ul>
   );

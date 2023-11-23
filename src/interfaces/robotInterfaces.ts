@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface IcreateRobotRequest {
   organizationId: string;
   roboticsCloudName: string;
@@ -228,6 +230,23 @@ export interface ILaunchENV {
   name: string;
   value: string;
 }
+
+export type IrobotTab = {
+  name:
+    | "Overview"
+    | "Teleoperation"
+    | "Task Management"
+    | "Visualization"
+    | "Loading"
+    | "Settings"
+    | "Remote Desktop"
+    | "Development Suite"
+    | "Code Editor"
+    | "File Manager";
+  icon: ReactElement;
+  isLoading: boolean;
+  isHidden: boolean;
+};
 
 export interface IuseCreateRobot {
   robotData: IRobotData;
