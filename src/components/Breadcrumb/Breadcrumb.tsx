@@ -9,6 +9,7 @@ import {
   RiUser3Fill,
   RiUserSettingsFill,
 } from "react-icons/ri";
+import { envApplication } from "../../helpers/envProvider";
 
 export default function Breadcrumb(): ReactElement {
   const breadcrumbs = useBreadcrumbs();
@@ -73,7 +74,11 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/general/robot/robot-gray.svg"
+                        src={
+                          envApplication
+                            ? "/svg/general/application/application-gray.svg"
+                            : "/svg/general/robot/robot-gray.svg"
+                        }
                         alt="rc"
                       />
                     );

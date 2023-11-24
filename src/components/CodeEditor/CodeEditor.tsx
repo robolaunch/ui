@@ -83,7 +83,7 @@ export default function CodeEditor(): ReactElement {
           <iframe
             allow="clipboard-read"
             className={`animate__animated animate__fadeIn w-full ${
-              handleFullScreen?.active ? "h-screen" : "h-[45.4rem]"
+              handleFullScreen?.active ? "h-screen" : "h-[43.4rem]"
             }`}
             src={
               activeTabCodeEditor === "Cloud IDE"

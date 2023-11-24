@@ -1130,6 +1130,22 @@ video {
   height: 100vh;
 }
 
+.h-\[44rem\] {
+  height: 44rem;
+}
+
+.h-\[43\.5rem\] {
+  height: 43.5rem;
+}
+
+.h-\[43\.6rem\] {
+  height: 43.6rem;
+}
+
+.h-\[43\.4rem\] {
+  height: 43.4rem;
+}
+
 .max-h-\[40rem\] {
   max-height: 40rem;
 }
@@ -2130,6 +2146,18 @@ video {
 .bg-yellow-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
+}
+
+.bg-opacity-25 {
+  --tw-bg-opacity: 0.25;
+}
+
+.bg-opacity-75 {
+  --tw-bg-opacity: 0.75;
 }
 
 .\!p-0 {

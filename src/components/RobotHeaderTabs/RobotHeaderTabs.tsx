@@ -59,18 +59,6 @@ export default function RobotHeaderTabs(): ReactElement {
         envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
-      name: "Code Editor",
-      icon: <AiFillCode size={16} />,
-      isLoading:
-        !responseRobot ||
-        !(
-          responseRobot?.ideEnabled &&
-          responseRobot?.ideIngressEndpoint &&
-          isSettedCookie
-        ),
-      isHidden: false,
-    },
-    {
       name: "Development Suite",
       icon: <AiFillCode size={16} />,
       isLoading:
@@ -84,6 +72,18 @@ export default function RobotHeaderTabs(): ReactElement {
         ) ||
         !isRobotReady,
 
+      isHidden: false,
+    },
+    {
+      name: "Code Editor",
+      icon: <AiFillCode size={16} />,
+      isLoading:
+        !responseRobot ||
+        !(
+          responseRobot?.ideEnabled &&
+          responseRobot?.ideIngressEndpoint &&
+          isSettedCookie
+        ),
       isHidden: false,
     },
     {
@@ -108,7 +108,7 @@ export default function RobotHeaderTabs(): ReactElement {
           responseRobot?.ideIngressEndpoint &&
           isSettedCookie
         ),
-      isHidden: false,
+      isHidden: true,
     },
   ];
 
@@ -117,11 +117,9 @@ export default function RobotHeaderTabs(): ReactElement {
       data-tut="robot-header-tabs"
       className="flex items-end gap-6 overflow-x-auto px-6 pt-4"
     >
-      {tabs
-        ?.filter((tab: IrobotTab) => tab && tab)
-        .map((tab: IrobotTab, index: number) => {
-          return <RobotHeaderTab tab={tab} key={index} />;
-        })}
+      {tabs.map((tab: IrobotTab, index: number) => {
+        return <RobotHeaderTab tab={tab} key={index} />;
+      })}
     </ul>
   );
 }
