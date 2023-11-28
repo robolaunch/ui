@@ -1,6 +1,7 @@
-import React, { ReactElement } from "react";
+import { envApplication } from "../../helpers/envProvider";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
+import { ReactElement } from "react";
 
 interface IActivitiesWidget {
   responseRobot: any;
@@ -13,7 +14,7 @@ export default function ActivitiesWidget({
     {
       show: responseRobot ? true : false,
       time: "",
-      description: "Robot is created.",
+      description: `${envApplication ? "Application" : "Robot"} is created.`,
     },
     {
       show: responseRobot ? true : false,
@@ -23,12 +24,12 @@ export default function ActivitiesWidget({
     {
       show: responseRobot?.ideEnabled,
       time: "",
-      description: "IDE is opened.",
+      description: "VDI and IDE is created.",
     },
     {
-      show: responseRobot?.bridgeEnabled,
+      show: responseRobot?.ideEnabled,
       time: "",
-      description: "Bridge is opened.",
+      description: "IDE is opened.",
     },
     {
       show: responseRobot?.vdiEnabled,

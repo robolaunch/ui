@@ -279,7 +279,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
       payload.setBigUint64(3, BigInt(key), true);
       if (
         typeof buffer !== "undefined" &&
-        channel.current!.readyState === "open"
+        channel.current?.readyState === "open"
       ) {
         channel.current!.send(buffer);
       }
@@ -359,7 +359,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
           );
           if (
             typeof buffer !== "undefined" &&
-            channel.current.readyState === "open"
+            channel.current?.readyState === "open"
           ) {
             channel.current!.send(buffer);
           }
@@ -379,7 +379,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
         payload.setUint8(0, 0x03);
         payload.setUint16(1, 8, true);
         payload.setBigUint64(3, BigInt(key.button + 1), true);
-        if (channel.current.readyState === "open") {
+        if (channel.current?.readyState === "open") {
           channel.current!.send(buffer);
         }
       }
@@ -398,7 +398,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
         payload.setBigUint64(3, BigInt(key.button + 1), true);
         if (
           typeof buffer !== "undefined" &&
-          channel.current.readyState === "open"
+          channel.current?.readyState === "open"
         ) {
           channel.current!.send(buffer);
         }
@@ -420,7 +420,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
         payload.setInt16(5, key.deltaY / -114, true);
         if (
           typeof buffer !== "undefined" &&
-          channel.current.readyState === "open"
+          channel.current?.readyState === "open"
         ) {
           channel.current!.send(buffer);
         }

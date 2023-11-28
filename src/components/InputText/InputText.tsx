@@ -36,7 +36,7 @@ export default function InputText({
   return (
     <div className="animate__animated animate__fadeIn relative">
       <label
-        className={`pointer-events-none absolute z-10 text-layer-light-700 transition-all duration-300 ${
+        className={`pointer-events-none absolute z-10 text-xs text-layer-light-700 transition-all duration-300 ${
           isFocused ? "-top-6 left-0 text-xs" : "left-3 top-2.5 text-sm"
         }`}
         htmlFor=""
