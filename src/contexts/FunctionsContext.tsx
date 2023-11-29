@@ -1177,7 +1177,7 @@ export default ({ children }: any) => {
               step2: {
                 workspaces:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.robotWorkspaces,
+                    ?.cloudInstances[0]?.environments[0]?.robotWorkspaces || [],
               },
             };
           });

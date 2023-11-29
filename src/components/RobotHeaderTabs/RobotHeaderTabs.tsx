@@ -2,10 +2,10 @@ import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
 import RobotHeaderTab from "../RobotHeaderTab/RobotHeaderTab";
 import { IrobotTab } from "../../interfaces/robotInterfaces";
 import { envApplication } from "../../helpers/envProvider";
+import { AiFillCode, AiFillLayout } from "react-icons/ai";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { BiJoystickButton } from "react-icons/bi";
 import { BiSolidFolder } from "react-icons/bi";
-import { AiFillCode } from "react-icons/ai";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 
@@ -60,7 +60,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Development Suite",
-      icon: <AiFillCode size={16} />,
+      icon: <AiFillLayout size={16} />,
       isLoading:
         !responseRobot ||
         !(
@@ -87,6 +87,18 @@ export default function RobotHeaderTabs(): ReactElement {
       isHidden: false,
     },
     {
+      name: "File Manager",
+      icon: <BiSolidFolder size={16} />,
+      isLoading:
+        !responseRobot ||
+        !(
+          responseRobot?.ideEnabled &&
+          responseRobot?.ideIngressEndpoint &&
+          isSettedCookie
+        ),
+      isHidden: false,
+    },
+    {
       name: "Remote Desktop",
       icon: <MdScreenShare size={16} />,
       isLoading:
@@ -97,18 +109,6 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden: false,
-    },
-    {
-      name: "File Manager",
-      icon: <BiSolidFolder size={16} />,
-      isLoading:
-        !responseRobot ||
-        !(
-          responseRobot?.ideEnabled &&
-          responseRobot?.ideIngressEndpoint &&
-          isSettedCookie
-        ),
-      isHidden: true,
     },
   ];
 

@@ -64,8 +64,6 @@ export default function RobotSubPageLayout(): ReactElement {
             return <RemoteDesktop />;
           case "File Manager":
             return <FileManager />;
-          case "Settings":
-            return <div>Settings</div>;
           case "Loading":
             return (
               <div>

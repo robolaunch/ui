@@ -1,10 +1,10 @@
-import React, { Fragment, ReactElement } from "react";
-import useWindow from "../hooks/useWindow";
-import useRobot from "../hooks/useRobot";
+import LaunchManagerStepsTable from "../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import BuildManagerStepsTable from "../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import WorkspacesTable from "../components/WorkspacesTable/WorkspacesTable";
 import { envApplication } from "../helpers/envProvider";
-import LaunchManagerStepsTable from "../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
+import { Fragment, ReactElement } from "react";
+import useWindow from "../hooks/useWindow";
+import useRobot from "../hooks/useRobot";
 
 interface IRobotOverviewLayout {
   widget1?: ReactElement;

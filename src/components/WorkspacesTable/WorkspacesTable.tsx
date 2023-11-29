@@ -1,12 +1,11 @@
-import React, { ReactElement, useMemo } from "react";
-import { useParams } from "react-router-dom";
-import DistroCell from "../TableInformationCells/DistroCell";
-import InfoCell from "../TableInformationCells/InfoCell";
-import StateCell from "../TableInformationCells/StateCell";
 import WorkspacesCell from "../TableInformationCells/WorkspacesCell";
-import GeneralTable from "../Table/GeneralTable";
+import DistroCell from "../TableInformationCells/DistroCell";
 import { envApplication } from "../../helpers/envProvider";
-
+import StateCell from "../TableInformationCells/StateCell";
+import InfoCell from "../TableInformationCells/InfoCell";
+import GeneralTable from "../Table/GeneralTable";
+import { ReactElement, useMemo } from "react";
+import { useParams } from "react-router-dom";
 interface IWorkspacesTable {
   responseRobot: any;
 }
@@ -15,6 +14,8 @@ export default function WorkspacesTable({
   responseRobot,
 }: IWorkspacesTable): ReactElement {
   const url = useParams();
+
+  console.log("gg", responseRobot);
 
   const data: any = useMemo(
     () =>
