@@ -1,7 +1,7 @@
 import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik/dist/types";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 interface ICFAppName {
   formik: FormikProps<IDetails>;

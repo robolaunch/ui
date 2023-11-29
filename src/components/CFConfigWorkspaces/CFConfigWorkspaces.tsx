@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import FormInputToggle from "../FormInputToggle/FormInputToggle";
+import CFInputToggle from "../CFInputToggle/CFInputToggle";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
@@ -13,7 +13,7 @@ export default function CFConfigWorkspaces({
   disabled,
 }: ICFConfigWorkspaces): ReactElement {
   return (
-    <FormInputToggle
+    <CFInputToggle
       labelName="Configure Workspaces:"
       labelInfoTip="If you want to specify workspaces, you can do so here."
       dataTut="create-robot-step1-ros2-bridge"

@@ -6,9 +6,11 @@ import InputError from "../InputError/InputError";
 import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import { toast } from "sonner";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import { FormikProps } from "formik";
 
 interface ICreateRobotTypes {
-  formik: any;
+  formik: FormikProps<IDetails>;
   isImportRobot?: boolean;
 }
 

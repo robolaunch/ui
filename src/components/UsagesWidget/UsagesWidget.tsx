@@ -21,8 +21,8 @@ export default function UsagesWidget({
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >
       <div className="flex h-full w-full items-center justify-center gap-20 p-10 lg:p-6 xl:p-2">
-        {datas?.map((data: any) => {
-          return <CirclePercentageBar {...data} size={88} />;
+        {datas?.map((data: any, index: number) => {
+          return <CirclePercentageBar key={index} {...data} size={88} />;
         })}
         <NetworkChart />
       </div>

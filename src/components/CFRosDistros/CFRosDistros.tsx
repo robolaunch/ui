@@ -4,16 +4,18 @@ import { toast } from "sonner";
 import { stringSlugify } from "../../functions/GeneralFunctions";
 import { MdVerified } from "react-icons/md";
 import InputError from "../InputError/InputError";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import { FormikProps } from "formik";
 
-interface ICreateRobotRosDistrobutions {
-  formik: any;
+interface ICFRosDistros {
+  formik: FormikProps<IDetails>;
   isImportRobot?: boolean;
 }
 
-export default function CreateRobotRosDistrobutions({
+export default function CFRosDistros({
   formik,
   isImportRobot,
-}: ICreateRobotRosDistrobutions): ReactElement {
+}: ICFRosDistros): ReactElement {
   function handleRosDistroFilter(item: string) {
     if (item === "HUMBLE" || item === "IRON") {
       if (
@@ -134,7 +136,11 @@ export default function CreateRobotRosDistrobutions({
           ),
         )}
       </div>
-      <InputError error={formik?.errors?.rosDistros} touched={true} />
+      <InputError
+        // @ts-ignore
+        error={formik?.errors?.rosDistros}
+        touched={true}
+      />
     </div>
   );
 }

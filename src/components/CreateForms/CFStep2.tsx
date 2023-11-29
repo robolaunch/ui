@@ -1,11 +1,11 @@
-import { envApplication } from "../../helpers/envProvider";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
-import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
+import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
+import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { createRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";

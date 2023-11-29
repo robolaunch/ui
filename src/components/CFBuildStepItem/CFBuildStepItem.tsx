@@ -1,7 +1,4 @@
-import {
-  IRobotBuildStep,
-  IRobotBuildSteps,
-} from "../../interfaces/robotInterfaces";
+import { IBuildStep, IBuildSteps } from "../../interfaces/robotInterfaces";
 import CFBuildStepItemAccordionHeader from "../CFBuildStepItemAccordionHeader/CFBuildStepItemAccordionHeader";
 import CFDeleteBuildButton from "../CFDeleteBuildButton/CFDeleteBuildButton";
 import CFBuildStepName from "../CFBuildStepName/CFBuildStepName";
@@ -14,9 +11,9 @@ import CFCode from "../CFCode/CFCode";
 import CFBuildScope from "../CFBuildScope/CFBuildScope";
 
 interface ICFBuildStepItem {
-  formik: FormikProps<IRobotBuildSteps>;
+  formik: FormikProps<IBuildSteps>;
   buildStepIndex: number;
-  buildStep: IRobotBuildStep;
+  buildStep: IBuildStep;
   isImportRobot?: boolean;
 }
 

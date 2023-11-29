@@ -1,8 +1,8 @@
-import React from "react";
-import InfoTip from "../InfoTip/InfoTip";
 import InputToggle from "../InputToggle/InputToggle";
+import InfoTip from "../InfoTip/InfoTip";
+import { ReactElement } from "react";
 
-interface IFormInputToggle {
+interface ICFInputToggle {
   dataTut?: string;
   labelName: string;
   labelInfoTip: string;
@@ -11,14 +11,14 @@ interface IFormInputToggle {
   checked: boolean;
 }
 
-export default function FormInputToggle({
+export default function CFInputToggle({
   dataTut,
   labelName,
   labelInfoTip,
   disabled,
   onChange,
   checked,
-}: IFormInputToggle) {
+}: ICFInputToggle): ReactElement {
   return (
     <div data-tut={dataTut} className="flex items-center gap-1 pb-3">
       <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">

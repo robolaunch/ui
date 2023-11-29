@@ -1,12 +1,12 @@
 import React, { ReactElement } from "react";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import { FormikProps } from "formik/dist/types";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import useMain from "../../hooks/useMain";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFBuildScope {
-  formik: FormikProps<IRobotBuildSteps>;
+  formik: FormikProps<IBuildSteps>;
   buildStepIndex: number;
 }
 
