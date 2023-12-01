@@ -191,7 +191,6 @@ export interface IuseFunctions {
   ) => void;
   getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
-
   getBuildManager: (
     values: IgetBuildManager,
     parameters?: IsingleGetBuildParameters,
@@ -208,12 +207,13 @@ export interface IuseFunctions {
     values: IgetEnvironmentRequest,
     parameters?: IsingleGetEnviromentParameters,
   ) => void;
-  addPhysicalInstanceToFleet: () => void;
-  createRobot: () => void;
-  updateRobot: () => void;
+
+  addPhysicalInstanceToFleet: () => Promise<void>;
+  createRobot: () => Promise<void>;
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => void;
   getIP: () => void;
+
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,
   ) => void;
@@ -225,7 +225,6 @@ export interface IuseFunctions {
   handleSetterResponseOrganizations: (setResponseOrganizations: any) => void;
   handleSetterResponseRoboticsClouds: (setResponseRoboticsClouds: any) => void;
   handleSetterResponseInstances: (setResponseInstances: any) => void;
-
   handleSetterResponseFleets: (setResponseFleets: any) => void;
   handleSetterResponseFleet: (setResponseFleet: any) => void;
   handleSetterResponseRobots: (setResponseRobots: any) => void;

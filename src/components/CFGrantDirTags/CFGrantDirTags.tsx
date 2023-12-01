@@ -1,9 +1,9 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import { IDetails } from "../../interfaces/robotInterfaces";
+import { ReactElement, useEffect, useState } from "react";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
-import InfoTip from "../InfoTip/InfoTip";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
 
 interface ICFGrantDirTag {
@@ -37,38 +37,35 @@ export default function CFGrantDirTag({
   }, [selected]);
 
   return (
-    <div>
-      <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
-        Granted Directories:
-        <InfoTip content="Here you can specify the directories that the user needs to access." />
-      </div>
-
-      <div>
-        <TagsInput
-          value={selected}
-          onChange={setSelected}
-          name="Granted directories"
-          classNames={{
-            input: "!text-xs disabled:cursor-not-allowed",
-            tag: "!text-xs !bg-layer-light-50 border border-layer-light-200",
-          }}
-          placeHolder="enter a path"
-          beforeAddValidate={(tag) => {
-            if (tag.charAt(0) !== "/") {
-              toast.error("Path must start with '/'");
-              return false;
-            }
-            return true;
-          }}
-          onRemoved={(tag) => {
-            if (tag === "/home/robolaunch") {
-              toast.error("Cannot remove this path");
-              return false;
-            }
-          }}
-          disabled={disabled}
-        />
-      </div>
-    </div>
+    <CFInfoBar
+      label="Granted Directories:"
+      tip="Here you can specify the directories that the user needs to access."
+      vertical
+    >
+      <TagsInput
+        value={selected}
+        onChange={setSelected}
+        name="Granted directories"
+        classNames={{
+          input: "!text-xs disabled:cursor-not-allowed",
+          tag: "!text-xs !bg-layer-light-50 border border-layer-light-200",
+        }}
+        placeHolder="enter a path"
+        beforeAddValidate={(tag) => {
+          if (tag.charAt(0) !== "/") {
+            toast.error("Path must start with '/'");
+            return false;
+          }
+          return true;
+        }}
+        onRemoved={(tag) => {
+          if (tag === "/home/robolaunch") {
+            toast.error("Cannot remove this path");
+            return false;
+          }
+        }}
+        disabled={disabled}
+      />
+    </CFInfoBar>
   );
 }

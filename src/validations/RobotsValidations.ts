@@ -30,6 +30,41 @@ export const CFRobotStep1Validations = Yup.object().shape({
       otherwise: Yup.number().notRequired(),
     }),
   }),
+  hostDirectories: Yup.array().of(
+    Yup.object().shape({
+      hostDirectory: Yup.string()
+        .required("Directory is required.")
+        .matches(/^\//, "Path must start with a '/'"),
+      mountPath: Yup.string()
+        .required("Path is required.")
+        .matches(/^\//, "Path must start with a '/'"),
+    }),
+  ),
+  ideCustomPorts: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string()
+        .required("Port name is required.")
+        .min(4, "Minimum 4 characters.")
+        .max(4, "Maximum 4 characters.")
+        .matches(/^[a-z]+$/, "Must be lowercase and english letters only."),
+      port: Yup.number()
+        .required("Port is required.")
+        .min(0, "Minimum 0.")
+        .max(65535, "Maximum 65535."),
+    }),
+  ),
+  vdiCustomPorts: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string()
+        .required("Port name is required.")
+        .min(4, "Minimum 4 characters.")
+        .max(4, "Maximum 4 characters."),
+      port: Yup.number()
+        .required("Port is required.")
+        .min(0, "Minimum 0.")
+        .max(65535, "Maximum 65535."),
+    }),
+  ),
 });
 
 export const CFRobotStep2Validations = Yup.object().shape({

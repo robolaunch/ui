@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { FormikProps } from "formik/dist/types";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputRange from "../FormInputRange/FormInputRange";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import { FormikProps } from "formik/dist/types";
+import { ReactElement } from "react";
 
 interface ICFStorageRange {
   formik: FormikProps<IDetails>;
@@ -21,6 +21,8 @@ export default function CFStorageRange({
       min={20}
       max={100}
       disabled={formik.isSubmitting || disabled}
+      error={formik.errors.robotStorage}
+      touched={formik.touched.robotStorage}
     />
   );
 }

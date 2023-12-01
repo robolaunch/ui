@@ -1,15 +1,17 @@
 import React, { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFAddWorkspaceButton {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
+  disabled?: boolean;
 }
 
 export default function CFAddWorkspaceButton({
   formik,
+  disabled,
 }: ICFAddWorkspaceButton): ReactElement {
   const { handleAddWorkspaceStep } = useCreateRobot();
 
@@ -17,6 +19,7 @@ export default function CFAddWorkspaceButton({
     <div data-tut="create-robot-step2-workspace-add-button">
       <CreateRobotFormAddButton
         onClick={() => handleAddWorkspaceStep(formik)}
+        disabled={disabled}
       />
     </div>
   );

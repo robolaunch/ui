@@ -1,10 +1,8 @@
-import RobotDeleteBuildManagerButton from "../RobotDeleteBuildManagerButton/RobotDeleteBuildManagerButton";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import { createBuildManager } from "../../toolkit/RobotSlice";
-import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -14,9 +12,9 @@ import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
-import Button from "../Button/Button";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
@@ -372,39 +370,11 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
 
             <CFAddBuildButton formik={formik} />
 
-            <div className="mt-10 flex w-full gap-2">
-              {isImportRobot ? (
-                <RobotDeleteBuildManagerButton
-                  disabled={formik?.isSubmitting}
-                  submitting={formik?.isSubmitting}
-                />
-              ) : (
-                <CFCancelButton disabled={formik?.isSubmitting} />
-              )}
-              <Button
-                type="submit"
-                disabled={
-                  !formik?.isValid ||
-                  formik.isSubmitting ||
-                  JSON.stringify(formik.initialValues) ===
-                    JSON.stringify(formik.values)
-                }
-                className="!h-11 w-full text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="h-10 w-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    `Update Build Configration`
-                  ) : (
-                    `Next Step`
-                  )
-                }
-              />
-            </div>
+            <CFRobotButtons
+              formik={formik}
+              step={3}
+              isImportRobot={isImportRobot}
+            />
           </Fragment>
         )}
       </CreateRobotFormLoader>

@@ -814,9 +814,9 @@ export default ({ children }: any) => {
                       ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
                       ?.vdiEnabled,
                   sessionCount:
-                    responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.vdiSessionCount,
+                    responseFederatedRobot?.payload?.data?.[0]
+                      ?.roboticsClouds?.[0]?.cloudInstances?.[0]
+                      ?.robolaunchFederatedRobots?.[0]?.vdiSessionCount,
                 },
                 rosDistros:
                   responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
@@ -834,27 +834,44 @@ export default ({ children }: any) => {
                     ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
                     ?.vdiPodName,
                 idePodName:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.idePodName,
+                  responseFederatedRobot?.payload?.data?.[0]
+                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
+                    ?.robolaunchFederatedRobots?.[0]?.idePodName,
+                permittedDirectories:
+                  responseFederatedRobot?.payload?.data?.[0]
+                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
+                    ?.robolaunchFederatedRobots?.[0]?.permittedDirectories,
+                persistentDirectories:
+                  responseFederatedRobot?.payload?.data?.[0]
+                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
+                    ?.robolaunchFederatedRobots?.[0]?.persistentDirectories,
+                hostDirectories:
+                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.hostDirectories
+                    ?.split(",")
+                    ?.map((item: string) => {
+                      return {
+                        hostDirectory: item?.split(":")[0],
+                        mountPath: item?.split(":")[1],
+                      };
+                    }),
                 ideCustomPorts:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
+                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.ideCustomPorts
                     ?.split("/")
                     ?.map((item: string) => {
                       return {
-                        name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[1],
-                        backendPort: item?.split("-")[1].split(":")[0],
+                        name: item?.split("-")?.[0],
+                        port: item?.split("-")?.[1].split(":")?.[1],
+                        backendPort: item?.split("-")?.[1].split(":")?.[0],
                       };
                     }),
                 vdiCustomPorts:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
+                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.vdiCustomPorts
                     ?.split("/")
                     ?.map((item: string) => {
                       return {
-                        name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[1],
-                        backendPort: item?.split("-")[1].split(":")[0],
+                        name: item?.split("-")?.[0],
+                        port: item?.split("-")?.[1].split(":")?.[1],
+                        backendPort: item?.split("-")?.[1].split(":")?.[0],
                       };
                     }),
               },
@@ -1195,67 +1212,77 @@ export default ({ children }: any) => {
     });
   }
 
-  async function addPhysicalInstanceToFleet() {
-    await dispatch(
-      addPhysicalInstanceToFleetDispatch({
-        organizationId: selectedState?.organization?.organizationId,
-        roboticsCloudName: selectedState?.roboticsCloud?.name,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.roboticsCloud?.region,
-        robolaunchFederatedFleetsName: selectedState?.fleet?.name,
-        robolaunchPhysicalInstancesName: robotData.step1.physicalInstanceName,
-      }),
-    );
+  function addPhysicalInstanceToFleet() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          addPhysicalInstanceToFleetDispatch({
+            organizationId: selectedState?.organization?.organizationId,
+            roboticsCloudName: selectedState?.roboticsCloud?.name,
+            instanceId: selectedState?.instance?.instanceId,
+            region: selectedState?.roboticsCloud?.region,
+            robolaunchFederatedFleetsName: selectedState?.fleet?.name,
+            robolaunchPhysicalInstancesName:
+              robotData.step1.physicalInstanceName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  async function createRobot() {
-    await dispatch(
-      createRobotDispatch({
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.roboticsCloud?.region!,
-        robotName: robotData?.step1?.robotName,
-        fleetName: selectedState?.fleet?.name,
-        physicalInstanceName: robotData?.step1?.isVirtualRobot
-          ? undefined
-          : robotData?.step1?.physicalInstanceName,
-        distributions: robotData?.step1?.rosDistros,
-        bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
-        vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
-        vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-        ideEnabled: robotData?.step1?.isEnabledIde,
-        storageAmount: robotData?.step1?.robotStorage,
-        gpuEnabledForCloudInstance:
-          robotData?.step1?.gpuEnabledForCloudInstance,
-        workspaces: robotData.step2.workspaces,
-      }),
-    );
-  }
-
-  async function updateRobot() {
-    await dispatch(
-      createRobotDispatch({
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name,
-        robotName: robotData.step1.robotName,
-        workspaceUpdated: true,
-        physicalInstanceName: robotData?.step1?.isVirtualRobot
-          ? undefined
-          : robotData?.step1?.physicalInstanceName,
-        distributions: robotData.step1.rosDistros,
-        bridgeEnabled: robotData.step1.isEnabledROS2Bridge,
-        vdiEnabled: robotData.step1.remoteDesktop.isEnabled,
-        vdiSessionCount: robotData.step1.remoteDesktop.sessionCount,
-        ideEnabled: robotData.step1.isEnabledIde,
-        storageAmount: robotData.step1.robotStorage,
-        gpuEnabledForCloudInstance: robotData.step1.gpuEnabledForCloudInstance,
-        workspaces: robotData.step2.workspaces,
-      }),
-    );
+  function createRobot() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createRobotDispatch({
+            organizationId: selectedState?.organization?.organizationId!,
+            region: selectedState?.roboticsCloud?.region!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.instanceId!,
+            fleetName: selectedState?.fleet?.name,
+            robotName: robotData?.step1?.robotName,
+            physicalInstanceName: robotData?.step1?.isVirtualRobot
+              ? undefined
+              : robotData?.step1?.physicalInstanceName,
+            distributions: robotData?.step1?.rosDistros,
+            bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
+            vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+            ideEnabled: robotData?.step1?.isEnabledIde,
+            storageAmount: robotData?.step1?.robotStorage,
+            gpuEnabledForCloudInstance:
+              robotData?.step1?.gpuEnabledForCloudInstance,
+            workspaces: robotData.step2.workspaces,
+            permittedDirectories: robotData?.step1?.permittedDirectories,
+            persistentDirectories: robotData?.step1?.persistentDirectories,
+            hostDirectories:
+              robotData?.step1?.hostDirectories
+                ?.map((directory) => {
+                  return `${directory.hostDirectory}:${directory.mountPath}`;
+                })
+                ?.join(",") || "",
+            ideCustomPorts:
+              robotData.step1.ideCustomPorts
+                ?.map((port) => {
+                  return `${port.name}-${port.backendPort}:${port.port}`;
+                })
+                ?.join("/") || "",
+            vdiCustomPorts:
+              robotData.step1.vdiCustomPorts
+                ?.map((port) => {
+                  return `${port.name}-${port.backendPort}:${port.port}`;
+                })
+                ?.join("/") || "",
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   function createEnvironment(withoutWorkspaces: boolean) {
@@ -1264,16 +1291,18 @@ export default ({ children }: any) => {
         await dispatch(
           createEnvironmentDispatch({
             organizationId: selectedState?.organization?.organizationId!,
-            roboticsCloudName: selectedState?.roboticsCloud?.name!,
             region: selectedState?.roboticsCloud?.region!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
             environmentName: robotData?.step1?.robotName,
-            domainName: robotData?.step1?.domainName,
+
             storageAmount: robotData?.step1?.robotStorage,
+            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
+
+            domainName: robotData?.step1?.domainName,
             ideGpuResource: robotData?.step1?.ideGpuResource,
             ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
-            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
             applicationName: robotData?.step1?.application?.name,
             applicationVersion: robotData?.step1?.application?.version,
             devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
@@ -1365,7 +1394,6 @@ export default ({ children }: any) => {
         getEnvironment,
         addPhysicalInstanceToFleet,
         createRobot,
-        updateRobot,
         createEnvironment,
         createBuildManager,
         getIP,

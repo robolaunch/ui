@@ -15,8 +15,6 @@ export default function WorkspacesTable({
 }: IWorkspacesTable): ReactElement {
   const url = useParams();
 
-  console.log("gg", responseRobot);
-
   const data: any = useMemo(
     () =>
       responseRobot?.robotWorkspaces?.map((workspace: any) => {

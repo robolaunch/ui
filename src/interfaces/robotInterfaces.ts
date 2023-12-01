@@ -21,6 +21,11 @@ export interface IcreateRobotRequest {
   imageRepository?: string;
   imageTag?: string;
   workspaces: IWorkspace[];
+  permittedDirectories: string;
+  persistentDirectories: string;
+  hostDirectories: string;
+  ideCustomPorts: string;
+  vdiCustomPorts: string;
 }
 
 export interface IgetRobotsRequest {

@@ -4,19 +4,16 @@ import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
-import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { createRobot } from "../../toolkit/RobotSlice";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
-import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
@@ -36,16 +33,16 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     getEnvironment,
     getNamespace,
     createEnvironment,
+    createRobot,
   } = useFunctions();
   const url = useParams();
-  const dispatch = useAppDispatch();
 
   const formik = useFormik<IWorkspaces>({
     validationSchema: envApplication
       ? CFAppStep2Validations
       : CFRobotStep2Validations,
     initialValues: robotData?.step2,
-    onSubmit: () => {
+    onSubmit: async () => {
       formik.setSubmitting(true);
 
       if (envApplication) {
@@ -53,28 +50,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
           await handleSubmit();
         });
       } else {
-        dispatch(
-          createRobot({
-            organizationId: selectedState?.organization?.organizationId!,
-            roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId!,
-            region: selectedState?.roboticsCloud?.region!,
-            robotName: robotData?.step1?.robotName,
-            fleetName: selectedState?.fleet?.name,
-            physicalInstanceName: robotData?.step1?.isVirtualRobot
-              ? undefined
-              : robotData?.step1?.physicalInstanceName,
-            distributions: robotData?.step1?.rosDistros,
-            bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
-            vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
-            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-            ideEnabled: robotData?.step1?.isEnabledIde,
-            storageAmount: robotData?.step1?.robotStorage,
-            gpuEnabledForCloudInstance:
-              robotData?.step1?.gpuEnabledForCloudInstance,
-            workspaces: robotData.step2.workspaces,
-          }),
-        ).then(async () => {
+        await createRobot().then(async () => {
           await handleSubmit();
         });
       }
@@ -244,52 +220,17 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
             isImportRobot={isImportRobot}
           />
 
-          <CFAddWorkspaceButton formik={formik} />
+          <CFAddWorkspaceButton formik={formik} disabled={isImportRobot} />
         </Fragment>
       )}
 
       <Fragment>
         {!(envApplication && url?.robotName) && (
-          <div className="mt-10 flex w-full flex-col gap-6">
-            <div className="flex gap-2">
-              {!isImportRobot && (
-                <CFCancelButton disabled={formik.isSubmitting} />
-              )}
-              <Button
-                type="submit"
-                disabled={
-                  !!(
-                    !formik?.isValid ||
-                    formik.isSubmitting ||
-                    JSON.stringify(formik.initialValues) ===
-                      JSON.stringify(formik.values) ||
-                    (envApplication && url?.robotName)
-                  )
-                }
-                loading={formik.isSubmitting}
-                className="!h-11 w-full text-xs"
-                text={
-                  formik.isSubmitting ? (
-                    <img
-                      className="h-10 w-10"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  ) : isImportRobot ? (
-                    "Update Robot"
-                  ) : robotData?.step1?.isDevelopmentMode ? (
-                    envApplication ? (
-                      "Create Application with Workspaces"
-                    ) : (
-                      "Create Robot"
-                    )
-                  ) : (
-                    "Next Step"
-                  )
-                }
-              />
-            </div>
-          </div>
+          <CFRobotButtons
+            formik={formik}
+            step={2}
+            isImportRobot={isImportRobot}
+          />
         )}
       </Fragment>
     </CFLoader>

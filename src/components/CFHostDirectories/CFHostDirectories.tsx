@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
-import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { FormikProps } from "formik/dist/types";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFHostDirectoriesInput from "../CFHostDirectoriesInput/CFHostDirectoriesInput";
+import { IDetails } from "../../interfaces/robotInterfaces";
+import { FormikProps } from "formik/dist/types";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { ReactElement } from "react";
 
 interface ICFHostDirectories {
   formik: FormikProps<IDetails>;
@@ -46,6 +46,7 @@ export default function CFHostDirectories({
           ]);
         }}
         className="!mt-1"
+        disabled={disabled}
       />
     </div>
   );

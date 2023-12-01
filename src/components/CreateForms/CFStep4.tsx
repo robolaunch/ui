@@ -1,5 +1,4 @@
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
-import CreateRobotFormCancelButton from "../CFCancelButton/CFCancelButton";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import { Fragment, ReactElement, useEffect, useState } from "react";
@@ -13,12 +12,11 @@ import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
 import CFEnvMapper from "../CFEnvMapper/CFEnvMapper";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
-import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
-import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep4 {
   isImportRobot?: boolean;
@@ -37,7 +35,6 @@ export default function CFStep4({
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const { getBuildManager } = useFunctions();
-  const url = useParams();
 
   const formik = useFormik<ILaunchStep>({
     initialValues:
@@ -198,17 +195,11 @@ export default function CFStep4({
 
         <div className="mt-10 flex gap-2">
           {!isImportRobot ? (
-            <Fragment>
-              {!url?.robotName && (
-                <CreateRobotFormCancelButton disabled={formik.isSubmitting} />
-              )}
-              <Button
-                type="submit"
-                disabled={!formik?.isValid || formik.isSubmitting}
-                className="!h-11 w-full text-xs"
-                text={url?.robotName ? `Add Launch Step` : `Create Robot`}
-              />
-            </Fragment>
+            <CFRobotButtons
+              formik={formik}
+              step={4}
+              isImportRobot={isImportRobot}
+            />
           ) : (
             <RobotDeleteLaunchManagerButton
               launchManagerName={formik.values?.name}

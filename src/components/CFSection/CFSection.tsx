@@ -7,7 +7,7 @@ interface ICFSection {
 
 export default function CFSection({
   children,
-  gap = 1,
+  gap = 4,
 }: ICFSection): ReactElement {
   return <div className={`flex w-full flex-col gap-${gap}`}>{children}</div>;
 }

@@ -1,7 +1,7 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputRange from "../FormInputRange/FormInputRange";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
-import React, { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 
 interface ICFVDICount {
   formik: FormikProps<IDetails>;

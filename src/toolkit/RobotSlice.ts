@@ -55,6 +55,12 @@ export const createRobot = createAsyncThunk(
                     imageTag: values?.imageTag,
                   },
                   robotWorkspaces: values?.workspaces,
+
+                  permittedDirectories: values?.permittedDirectories,
+                  persistentDirectories: values?.persistentDirectories,
+                  hostDirectories: values?.hostDirectories,
+                  ideCustomPorts: values?.ideCustomPorts,
+                  vdiCustomPorts: values?.vdiCustomPorts,
                 },
               ],
             },
@@ -63,7 +69,7 @@ export const createRobot = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getRobots = createAsyncThunk(
@@ -86,7 +92,7 @@ export const getRobots = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getRobot = createAsyncThunk(
@@ -111,7 +117,7 @@ export const getRobot = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteRobot = createAsyncThunk(
@@ -136,7 +142,7 @@ export const deleteRobot = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const createBuildManager = createAsyncThunk(
@@ -167,7 +173,7 @@ export const createBuildManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getBuildManagers = createAsyncThunk(
@@ -192,7 +198,7 @@ export const getBuildManagers = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getBuildManager = createAsyncThunk(
@@ -221,7 +227,7 @@ export const getBuildManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteBuildManager = createAsyncThunk(
@@ -250,7 +256,7 @@ export const deleteBuildManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const createLaunchManager = createAsyncThunk(
@@ -281,7 +287,7 @@ export const createLaunchManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getLaunchManagers = createAsyncThunk(
@@ -306,7 +312,7 @@ export const getLaunchManagers = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getLaunchManager = createAsyncThunk(
@@ -335,7 +341,7 @@ export const getLaunchManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteLaunchManager = createAsyncThunk(
@@ -365,7 +371,7 @@ export const deleteLaunchManager = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const RobotSlice = createSlice({

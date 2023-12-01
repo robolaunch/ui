@@ -1,6 +1,6 @@
 import InputError from "../InputError/InputError";
-import React, { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
+import { ReactElement } from "react";
 
 interface ICFInfoBar {
   label: string;
@@ -27,14 +27,14 @@ export default function CFInfoBar({
 }: ICFInfoBar): ReactElement {
   return (
     <div className={`${classNameContainer} transition-300`} data-tut={dataTut}>
-      <div className={`flex ${vertical && "flex-col"} `}>
-        <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700">
+      <div className={`flex ${vertical && "flex-col gap-2"}`}>
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
           {label}
           <InfoTip content={tip} rightTip={rightTip} />
         </div>
         {children}
       </div>
-      <InputError error={error} touched={touched} />
+      {error && touched && <InputError error={error} />}
     </div>
   );
 }

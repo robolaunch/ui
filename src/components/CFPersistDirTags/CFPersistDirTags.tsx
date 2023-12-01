@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect, useState } from "react";
 import { IDetails } from "../../interfaces/robotInterfaces";
+import { ReactElement, useEffect, useState } from "react";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";

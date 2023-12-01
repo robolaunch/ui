@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { ReactElement } from "react";
 
 interface IFormInputRange {
   label: string;
@@ -38,7 +38,7 @@ export default function FormInputRange({
         type="range"
         autoComplete="off"
         {...InputProps}
-        className={`mb-3 ml-2 w-full ${disabled && "cursor-not-allowed"}`}
+        className={`ml-2 w-full ${disabled && "cursor-not-allowed"}`}
         style={{
           appearance: "auto",
           color: "#AC2DFE",
