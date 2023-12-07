@@ -7,9 +7,9 @@ export interface IuseProfile {
 export type Itabs = [
   "Overview",
   "Profile Info",
-  "Connected Apps",
-  "Email Preferences",
-  "Notifications",
+  // "Connected Apps",
+  // "Email Preferences",
+  // "Notifications",
   "Change Password",
   "Deactivate Account",
 ];
@@ -17,8 +17,8 @@ export type Itabs = [
 export type ProfileActiveTab =
   | "Overview"
   | "Profile Info"
-  | "Connected Apps"
-  | "Email Preferences"
-  | "Notifications"
+  // | "Connected Apps"
+  // | "Email Preferences"
+  // | "Notifications"
   | "Change Password"
   | "Deactivate Account";

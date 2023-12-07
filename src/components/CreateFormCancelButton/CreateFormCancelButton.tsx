@@ -2,13 +2,13 @@ import React, { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 
-interface ICreateFormCancelButton {
+interface ICFCancelButton {
   disabled?: boolean;
 }
 
-export default function CreateFormCancelButton({
+export default function CFCancelButton({
   disabled,
-}: ICreateFormCancelButton): ReactElement {
+}: ICFCancelButton): ReactElement {
   const { setSidebarState } = useMain();
 
   return (

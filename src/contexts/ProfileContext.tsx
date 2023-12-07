@@ -10,9 +10,9 @@ export default ({ children }: any) => {
   const tabs: Itabs = [
     "Overview",
     "Profile Info",
-    "Connected Apps",
-    "Email Preferences",
-    "Notifications",
+    // "Connected Apps",
+    // "Email Preferences",
+    // "Notifications",
     "Change Password",
     "Deactivate Account",
   ];

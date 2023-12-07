@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { CircleMenu, CircleMenuItem } from "react-circular-menu";
-import { AiOutlineCode, AiOutlinePlus } from "react-icons/ai";
-import { handleAddWidget } from "../../helpers/gridStack";
 import {
   BsBatteryFull,
   BsCameraVideo,
   BsJoystick,
   BsPinMap,
 } from "react-icons/bs";
+import { CircleMenu, CircleMenuItem } from "react-circular-menu";
+import { AiOutlineCode, AiOutlinePlus } from "react-icons/ai";
+import { handleAddWidget } from "../../helpers/gridStack";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { IoMdCodeWorking } from "react-icons/io";
-import { GoGraph } from "react-icons/go";
 import { BiErrorCircle } from "react-icons/bi";
+import { GoGraph } from "react-icons/go";
+import { useState } from "react";
 
 interface IFloatMenu {
   grid: any;
@@ -41,6 +41,7 @@ export function FloatMenu({
         rotationAngle={180}
         itemSize={2}
         radius={12}
+        open={isOpenMenu}
         rotationAngleInclusive={true}
         menuToggleElement={
           <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-layer-light-200 bg-layer-light-50 transition-all duration-500 hover:scale-90 hover:bg-layer-light-100">

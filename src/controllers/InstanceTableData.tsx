@@ -1,14 +1,14 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
-import useMain from "../hooks/useMain";
-import InfoCell from "../components/TableInformationCells/InfoCell";
+import NamespaceActionCells from "../components/TableActionCells/NamespaceActionCells";
+import FleetActionCells from "../components/TableActionCells/FleetActionCells";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
-import NamespaceActionCells from "../components/TableActionCells/NamespaceActionCells";
-import FleetActionCells from "../components/TableActionCells/FleetActionCells";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
+import useMain from "../hooks/useMain";
 
 export function InstanceTableData() {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);

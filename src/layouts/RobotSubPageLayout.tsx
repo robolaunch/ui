@@ -3,6 +3,7 @@ import Teleoperation from "../pages/RobotPage/Teleoperation/Teleoperation";
 import Visualization from "../pages/RobotPage/Visualization/Visualization";
 import RemoteDesktop from "../pages/RobotPage/RemoteDesktop/RemoteDesktop";
 import RosConnector from "../components/RosConnector/RosConnector";
+import FileManager from "../components/FileManager/FileManager";
 import CodeEditor from "../components/CodeEditor/CodeEditor";
 import Overview from "../pages/RobotPage/Overview/Overview";
 import TaskManagementLayout from "./TaskManagementLayout";
@@ -12,7 +13,6 @@ import { envApplication } from "../helpers/envProvider";
 import { useAppSelector } from "../hooks/redux";
 import useRobot from "../hooks/useRobot";
 import { ReactElement } from "react";
-import FileManager from "../components/FileManager/FileManager";
 
 export default function RobotSubPageLayout(): ReactElement {
   const { activeTab, setActiveTab, responseRobot, isSettedCookie } = useRobot();

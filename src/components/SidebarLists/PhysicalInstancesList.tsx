@@ -52,7 +52,7 @@ export default function PhysicalInstancesList({
       selectedState.organization,
       selectedState?.roboticsCloud,
       sidebarState?.instanceTab,
-    ]
+    ],
   );
 
   function handleGetPhysicalInstances() {
@@ -60,14 +60,14 @@ export default function PhysicalInstancesList({
       {
         organizationId: selectedState?.organization?.organizationId!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
       },
       {
         ifErrorNavigateTo404: false,
         setResponse: setResponsePhysicalInstances,
         setItemCount: setItemCount,
-      }
+      },
     );
   }
 
@@ -108,9 +108,8 @@ export default function PhysicalInstancesList({
                   organizationName:
                     selectedState?.organization?.organizationName!,
                   capitalization: false,
-                })}/${selectedState?.roboticsCloud?.name}/${
-                  instance?.name
-                }/physical-instances`}
+                })}/${selectedState?.roboticsCloud
+                  ?.name}/${instance?.name}/physical-instances`}
                 data={instance}
                 notSelectable
               />

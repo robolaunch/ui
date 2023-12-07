@@ -1,8 +1,10 @@
 import { CFRobotStep1Validations } from "../../validations/RobotsValidations";
+import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import { envApplication } from "../../helpers/envProvider";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
@@ -19,8 +21,6 @@ import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep1 {
   isImportRobot?: boolean;

@@ -1,9 +1,10 @@
 import { ReactElement } from "react";
 import CreateFormCancelButton from "../CreateFormCancelButton/CreateFormCancelButton";
 import Button from "../Button/Button";
+import { FormikProps } from "formik";
 
 interface ICFButtons {
-  formik: any;
+  formik: FormikProps<any>;
   text: string;
 }
 

@@ -1,8 +1,9 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { Fragment, ReactElement, useEffect, useState } from "react";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { createBuildManager } from "../../toolkit/RobotSlice";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -14,7 +15,6 @@ import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep3 {
   isImportRobot?: boolean;

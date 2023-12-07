@@ -4,6 +4,7 @@ import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -13,7 +14,6 @@ import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep2 {
   isImportRobot?: boolean;

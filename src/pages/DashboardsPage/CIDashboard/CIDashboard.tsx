@@ -10,9 +10,9 @@ import { envApplication } from "../../../helpers/envProvider";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import { SiKubernetes } from "react-icons/si";
 import useMain from "../../../hooks/useMain";
+import { useParams } from "react-router-dom";
 import { RiCpuLine } from "react-icons/ri";
 import { BsGpuCard } from "react-icons/bs";
-import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
 
 export default function CIDashboard(): ReactElement {

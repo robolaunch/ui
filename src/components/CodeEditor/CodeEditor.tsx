@@ -5,7 +5,8 @@ import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 import RestartService from "../RestartServiceButton/RestartServiceButton";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
-import ServiceLogsButton from "../ServiceLogs/ServiceLogs";
+import ServiceLogs from "../ServiceLogs/ServiceLogs";
+import ServiceJobs from "../ServiceJobs/ServiceJobs";
 
 export default function CodeEditor(): ReactElement {
   const [ideKey, setIdeKey] = useState<number>(0);
@@ -101,7 +102,8 @@ export default function CodeEditor(): ReactElement {
           />
 
           <div className="absolute bottom-1 right-4 flex scale-[0.88] flex-col gap-4">
-            <ServiceLogsButton type="ide" />
+            <ServiceJobs type="ide" />
+            <ServiceLogs type="ide" />
             <RestartService type="ide" />
             <FullScreenButton
               isFullScreen={handleFullScreen.active}

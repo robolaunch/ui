@@ -4,6 +4,7 @@ import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -16,7 +17,6 @@ import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep4 {
   isImportRobot?: boolean;

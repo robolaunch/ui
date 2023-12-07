@@ -246,7 +246,7 @@ export function NamespaceTableData() {
       },
       {
         key: "roboticsCloud",
-        header: "Robotics Cloud",
+        header: "Region",
         sortable: false,
         filter: false,
         align: "left",

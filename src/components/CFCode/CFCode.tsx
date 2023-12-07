@@ -1,11 +1,11 @@
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { Editor } from "@monaco-editor/react";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { FormikProps } from "formik";
 
 interface ICFCode {
-  formik: FormikProps<IRobotBuildSteps>;
+  formik: FormikProps<IBuildSteps>;
   buildStepIndex: number;
 }
 

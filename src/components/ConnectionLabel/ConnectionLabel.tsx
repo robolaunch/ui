@@ -3,7 +3,7 @@ import { RxOpenInNewWindow } from "react-icons/rx";
 
 interface IConnectionLabel {
   label: string;
-  url: string;
+  url?: string;
 }
 
 export default function ConnectionLabel({

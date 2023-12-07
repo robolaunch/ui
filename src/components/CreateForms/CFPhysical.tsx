@@ -1,18 +1,19 @@
-import React, { ReactElement } from "react";
 import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useAppDispatch } from "../../hooks/redux";
 import { useKeycloak } from "@react-keycloak/web";
-import InputError from "../InputError/InputError";
-import InputText from "../InputText/InputText";
+import { ReactElement, useState } from "react";
 import { Editor } from "@monaco-editor/react";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import CFSection from "../CFSection/CFSection";
+import FormInputText from "../FormInputText/FormInputText";
+import CFForm from "../CFForm/CFForm";
 
 export default function CFPhysical(): ReactElement {
-  const [code, setCode] = React.useState<string>("");
+  const [code, setCode] = useState<string>("");
   const { sidebarState, setSidebarState, selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { keycloak } = useKeycloak();
@@ -92,27 +93,18 @@ export default function CFPhysical(): ReactElement {
   }
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="animate__animated animate__fadeIn flex flex-col gap-8 pt-6"
-    >
-      <div>
-        <InputText
-          {...formik.getFieldProps("name")}
-          placeholder="Physical Instance Name"
+    <CFForm formik={formik}>
+      <CFSection>
+        <FormInputText
+          labelName="Physical Instance Name"
+          labelInfoTip="Type a new physical instance name."
+          inputProps={formik.getFieldProps("name")}
           disabled={formik.isSubmitting}
+          inputHoverText="You can't change physical instance name because this physical instance is created before."
+          inputError={formik.errors.name}
+          inputTouched={formik.touched.name}
         />
-        <InputError error={formik.errors.name} touched={formik.touched.name} />
-      </div>
-      <div>
-        <Button
-          type="submit"
-          text="Connect Physical Instance"
-          disabled={formik.isSubmitting || !formik.isValid}
-          loading={formik.isSubmitting}
-          className="!h-11"
-        />
-      </div>
-    </form>
+      </CFSection>
+    </CFForm>
   );
 }
