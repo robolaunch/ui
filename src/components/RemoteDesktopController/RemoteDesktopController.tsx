@@ -5,7 +5,8 @@ import VolumeControl from "../VolumeControl/VolumeControl";
 import { useKeycloak } from "@react-keycloak/web";
 import { ReactElement, useState } from "react";
 import Button from "../Button/Button";
-import ServiceLogsButton from "../ServiceLogs/ServiceLogs";
+import ServiceLogs from "../ServiceLogs/ServiceLogs";
+import FileBrowser from "../FileBrowser/FileBrowser";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;
@@ -49,7 +50,7 @@ export default function RemoteDesktopController({
   return (
     <div className="absolute bottom-0 flex flex-col items-center ">
       <button
-        className="border-light-200 bg-light-50 rounded-t-lg border-x-2 border-t-2 bg-opacity-75 px-1"
+        className="rounded-t-lg border-x-2 border-t-2 border-light-200 bg-light-50 bg-opacity-75 px-1"
         onClick={() => handleIsControllerOpen()}
       >
         {isControllerOpen ? (
@@ -59,7 +60,7 @@ export default function RemoteDesktopController({
         )}
       </button>
       {isControllerOpen && (
-        <div className="bg-light-50 flex w-full items-center justify-center gap-6 rounded-t-lg bg-opacity-75 px-3 pb-1.5 pt-3">
+        <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-light-50 bg-opacity-75 px-3 pb-1.5 pt-3">
           <FullScreenButton
             isFullScreen={handleFullScreen.active}
             handleFullScreen={
@@ -68,8 +69,9 @@ export default function RemoteDesktopController({
                 : handleFullScreen.enter
             }
           />
+          <FileBrowser type="vdi" />
 
-          <ServiceLogsButton type="vdi" />
+          <ServiceLogs type="vdi" />
 
           <RestartService type="vdi" />
 

@@ -163,10 +163,7 @@ export default ({ children }: any) => {
         organizationId: values?.organizationId,
       }),
     ).then((responseRoboticsClouds: any) => {
-      if (
-        Array.isArray(responseRoboticsClouds?.payload?.data) &&
-        responseRoboticsClouds?.payload?.data[0]?.roboticsClouds
-      ) {
+      if (responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds) {
         parameters?.setResponse &&
           parameters?.setResponse(
             responseRoboticsClouds?.payload?.data[0]?.roboticsClouds || [],
@@ -204,10 +201,7 @@ export default ({ children }: any) => {
         organizationId: values?.organizationId,
       }),
     ).then((responseRoboticsClouds: any) => {
-      if (
-        Array.isArray(responseRoboticsClouds?.payload?.data) &&
-        responseRoboticsClouds?.payload?.data[0]?.roboticsClouds
-      ) {
+      if (responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds) {
         parameters?.isSetState &&
           setSelectedState((prevState: any) => {
             return {
@@ -274,9 +268,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseInstances: any) => {
       if (
-        Array.isArray(responseInstances?.payload?.data) &&
-        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+        responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -324,16 +317,8 @@ export default ({ children }: any) => {
       }),
     ).then((responsePhysicalInstances: any) => {
       if (
-        Array.isArray(responsePhysicalInstances?.payload?.data) &&
-        Array.isArray(
-          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchPhysicalInstances
+        responsePhysicalInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -367,9 +352,8 @@ export default ({ children }: any) => {
       }),
     ).then(async (responseInstances: any) => {
       if (
-        Array.isArray(responseInstances?.payload?.data) &&
-        Array.isArray(responseInstances?.payload?.data[0]?.roboticsClouds) &&
-        responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
+        responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances
       ) {
         parameters?.isSetState &&
           (await setSelectedState((prevState: any) => {
@@ -418,16 +402,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseFederatedFleets: any) => {
       if (
-        Array.isArray(responseFederatedFleets?.payload?.data) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
+        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedFleets
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -489,16 +465,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseFederatedFleets: any) => {
       if (
-        Array.isArray(responseFederatedFleets?.payload?.data) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
+        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedFleets
       ) {
         parameters?.isSetState &&
           setSelectedState((prevState: ISelectedState) => {
@@ -547,14 +515,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseNamespaces: any) => {
       if (
-        Array.isArray(responseNamespaces?.payload?.data) &&
-        Array.isArray(responseNamespaces?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseNamespaces?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchNamespaces
+        responseNamespaces?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchNamespaces
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -674,17 +636,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseFederatedFleets: any) => {
       if (
-        Array.isArray(responseFederatedFleets?.payload?.data) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        //Change robolaunchFederatedFleets object
-        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedFleets
+        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedFleets
       ) {
         parameters?.isSetState &&
           setSelectedState((prevState: any) => {
@@ -725,13 +678,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseRobots: any) => {
       if (
-        Array.isArray(responseRobots?.payload?.data) &&
-        Array.isArray(responseRobots?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseRobots?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances,
-        ) &&
-        responseRobots?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-          ?.robolaunchFederatedRobots
+        responseRobots?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedRobots
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -767,16 +715,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseFederatedRobot: any) => {
       if (
-        Array.isArray(responseFederatedRobot?.payload?.data) &&
-        Array.isArray(
-          responseFederatedRobot?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseFederatedRobot?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots
+        responseFederatedRobot?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedRobots
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
@@ -912,20 +852,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseRobotBuildManager: any) => {
       if (
-        Array.isArray(responseRobotBuildManager?.payload?.data) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        Array.isArray(
-          responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances[0]?.robolaunchFederatedRobots,
-        ) &&
-        responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+        responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
@@ -1045,14 +973,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseEnvironments: any) => {
       if (
-        Array.isArray(responseEnvironments?.payload?.data) &&
-        Array.isArray(responseEnvironments?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-          ?.cloudInstances[0]?.environments
+        responseEnvironments?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.environments
       ) {
         parameters?.setResponse &&
           parameters?.setResponse(
@@ -1088,14 +1010,8 @@ export default ({ children }: any) => {
       }),
     ).then((responseEnvironment: any) => {
       if (
-        Array.isArray(responseEnvironment?.payload?.data) &&
-        Array.isArray(responseEnvironment?.payload?.data[0]?.roboticsClouds) &&
-        Array.isArray(
-          responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseEnvironment?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.environments
+        responseEnvironment?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.environments
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {

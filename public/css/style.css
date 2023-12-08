@@ -1134,6 +1134,10 @@ video {
   height: 100vh;
 }
 
+.h-\[80vh\] {
+  height: 80vh;
+}
+
 .max-h-\[40rem\] {
   max-height: 40rem;
 }
@@ -1349,6 +1353,10 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
+}
+
+.w-\[90vw\] {
+  width: 90vw;
 }
 
 .min-w-\[12rem\] {

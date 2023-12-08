@@ -1,6 +1,6 @@
-import React, { Fragment, ReactElement, useState } from "react";
 import { handleLogout } from "../../functions/GeneralFunctions";
 import useOnclickOutside from "react-cool-onclickoutside";
+import { Fragment, ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { Link } from "react-router-dom";
 import Gravatar from "react-gravatar";
@@ -33,7 +33,7 @@ export default function HeaderDropdownMenu(): ReactElement {
       </div>
       {isOpen && (
         <ul
-          className="animate__animated animate__fadeInDown animate__faster border-light-100 bg-light-50 absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border p-2 text-sm shadow-lg"
+          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border border-light-100 bg-light-50 p-2 text-sm shadow-lg"
           ref={ref}
         >
           <Link onClick={() => setIsOpen(false)} to={`/profile`}>
@@ -44,15 +44,15 @@ export default function HeaderDropdownMenu(): ReactElement {
                 default="mp"
               />
               <div className="flex flex-col">
-                <span className="text-light-600 font-semibold">
+                <span className="font-semibold text-light-600">
                   {keycloak?.tokenParsed?.given_name +
                     " " +
                     keycloak?.tokenParsed?.family_name}
                 </span>
-                <span className="text-light-500 text-xs font-medium">
+                <span className="text-xs font-medium text-light-500">
                   {keycloak?.tokenParsed?.preferred_username}
                 </span>
-                <span className="text-light-500 text-xs font-light">
+                <span className="text-xs font-light text-light-500">
                   {keycloak?.tokenParsed?.email}
                 </span>
               </div>

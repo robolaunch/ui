@@ -7,6 +7,7 @@ import RestartService from "../RestartServiceButton/RestartServiceButton";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
 import ServiceLogs from "../ServiceLogs/ServiceLogs";
 import ServiceJobs from "../ServiceJobs/ServiceJobs";
+import FileBrowser from "../FileBrowser/FileBrowser";
 
 export default function CodeEditor(): ReactElement {
   const [ideKey, setIdeKey] = useState<number>(0);
@@ -102,6 +103,7 @@ export default function CodeEditor(): ReactElement {
           />
 
           <div className="absolute bottom-1 right-4 flex scale-[0.88] flex-col gap-4">
+            <FileBrowser type="ide" />
             <ServiceJobs type="ide" />
             <ServiceLogs type="ide" />
             <RestartService type="ide" />
