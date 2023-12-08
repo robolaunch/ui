@@ -42,7 +42,7 @@ export default function WidgetLayout({
         </div>
         <div>{options}</div>
       </div>
-      <div id="widgetBody" className={`h-full px-8 pb-2 ${className}`}>
+      <div id="widgetBody" className={`h-full w-full px-8 pb-2 ${className}`}>
         {children}
       </div>
     </div>

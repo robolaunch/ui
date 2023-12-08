@@ -1,4 +1,4 @@
-import { IRoboticsCloud } from "./regionInterfaces";
+import { IRegion } from "./regionInterfaces";
 import { IOrganization } from "./organizationInterfaces";
 import { IInstance } from "./instanceInferfaces";
 
@@ -20,14 +20,14 @@ export interface ISidebarState {
 
 export interface ISelectedState {
   organization: IOrganization | null;
-  roboticsCloud: IRoboticsCloud | null;
+  roboticsCloud: IRegion | null;
   instance: IInstance | null;
   fleet: any;
 }
 
 export interface IpagesState {
   organization: IOrganization | null;
-  roboticsCloud: IRoboticsCloud | null;
+  roboticsCloud: IRegion | null;
   instance: IInstance | null;
   fleet: any;
 }

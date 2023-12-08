@@ -73,6 +73,9 @@ export default function CIDashboard(): ReactElement {
                   : 0,
             },
           ]}
+          gpuData={
+            pagesState?.instance?.cloudInstanceResource?.gpuDeviceUsage || []
+          }
         />
       }
       widget3={

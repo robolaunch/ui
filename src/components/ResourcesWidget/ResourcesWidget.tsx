@@ -16,7 +16,7 @@ export default function ResourcesWidget({
   return (
     <Widget
       dataTut="resources-widget"
-      title={`Software Resources`}
+      title={`Resource Details`}
       subtitle={`${title} Resources`}
       icon={<GoGraph size={20} className="text-layer-light-700" />}
     >

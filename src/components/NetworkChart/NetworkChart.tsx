@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { TiArrowDown, TiArrowUp } from "react-icons/ti";
 import useMain from "../../hooks/useMain";
 
@@ -6,8 +6,8 @@ export default function NetworkChart(): ReactElement {
   const { pagesState } = useMain();
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center gap-3 text-base">
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex items-center gap-0.5 text-sm">
         <TiArrowUp size={28} className="text-layer-primary-600" />
         <p>
           {(
@@ -20,7 +20,7 @@ export default function NetworkChart(): ReactElement {
           {" Mbps"}
         </p>
       </div>
-      <div className="flex items-center gap-3 text-base">
+      <div className="flex items-center gap-0.5 text-sm">
         <TiArrowDown size={28} className="text-layer-secondary-600" />
         <p>
           {(

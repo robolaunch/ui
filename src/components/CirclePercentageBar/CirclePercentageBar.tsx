@@ -1,5 +1,5 @@
-import React, { Fragment, ReactElement } from "react";
 import ContentLoader from "react-content-loader";
+import { Fragment, ReactElement } from "react";
 
 interface ICirclePercentageBar {
   percentage: number;
@@ -17,7 +17,7 @@ export default function CirclePercentageBar({
   content,
 }: ICirclePercentageBar): ReactElement {
   const strokeWidth = 4; // Border kalınlığı
-  const radius = size * 0.5 - strokeWidth; // Çemberin yarıçapı
+  const radius = size * 0.44 - strokeWidth; // Çemberin yarıçapı
   const circumference = 2 * Math.PI * radius; // Çemberin çevresi
   const dashOffset = circumference - (circumference * percentage) / 100; // Dolgu başlangıç noktası
 

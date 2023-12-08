@@ -13,6 +13,7 @@ export interface IInstanceResource {
   architecture: string;
   cpuTotal: number;
   cpuUsage: number;
+  gpuDeviceUsage: IGPUDeviceUsage[];
   gpuUsage: any;
   kernelVersion: string;
   kubernetesVersion: string;
@@ -26,6 +27,17 @@ export interface IInstanceResource {
   virtualGpu: number;
 }
 
+export interface IGPUDeviceUsage {
+  device: string;
+  gpuUtil: string;
+  memoryFree: string;
+  memoryUsed: string;
+  memoryUtil: string;
+  model: string;
+  powerUsage: string;
+  temp: string;
+  uuid: string;
+}
 export interface IGpuUsage {
   gpuModel: string;
   gpuUtilization: string;
