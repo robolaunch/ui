@@ -52,7 +52,7 @@ export default function CFInstance(): ReactElement {
       />
 
       <div className="flex flex-col gap-3">
-        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
           Types:
           <InfoTip
             content="
@@ -66,8 +66,8 @@ export default function CFInstance(): ReactElement {
               key={index}
               className={`relative flex cursor-pointer items-center justify-between gap-1 rounded border-2 p-4   ${
                 formik.values.instanceType === type.name
-                  ? "border-layer-primary-600 shadow"
-                  : "border-layer-light-100"
+                  ? "border-primary-400 shadow"
+                  : "border-light-100"
               } transition-all duration-300
                `}
               onClick={() => formik.setFieldValue("instanceType", type.name)}
@@ -80,17 +80,17 @@ export default function CFInstance(): ReactElement {
                 />
                 <div className="text-xs uppercase">{type.name}</div>
               </div>
-              <div className="flex gap-2.5 text-layer-dark-700">
+              <div className="text-light-700 flex gap-2.5">
                 <div className="flex items-center gap-1">
-                  <BsCpu className="text-layer-light-600" size={14} />
+                  <BsCpu className="text-light-600" size={14} />
                   <span className="text-xs">{type.resources.cpu} CPU</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <BsCpu className="text-layer-light-600" size={14} />
+                  <BsCpu className="text-light-600" size={14} />
                   <span className="text-xs">{type.resources.ram} RAM</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <BsCpu className="text-layer-light-600" size={14} />
+                  <BsCpu className="text-light-600" size={14} />
                   <span className="text-xs">{type.resources.gpu} GPU</span>
                 </div>
               </div>

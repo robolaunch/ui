@@ -45,8 +45,8 @@ export default function Paginate({
             key={index}
             className={`flex h-6 w-6 cursor-pointer items-center justify-center  rounded-lg text-sm transition-all duration-300 ${
               currentPage === index
-                ? "bg-layer-primary-500 text-layer-light-50"
-                : "hover:border hover:border-layer-primary-200 hover:bg-layer-primary-50"
+                ? "text-light-50 bg-primary-500"
+                : "hover:border-primary-200 hover:bg-primary-50 hover:border"
             }`}
           >
             {item + 1}

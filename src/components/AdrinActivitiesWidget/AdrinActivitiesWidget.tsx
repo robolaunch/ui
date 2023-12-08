@@ -10,7 +10,7 @@ export default function AdrinActivitiesWidget(): ReactElement {
     <WidgetLayout
       title={`Acitivities`}
       subtitle={`Last Activities`}
-      icon={<VscHistory size={20} className="text-layer-light-700" />}
+      icon={<VscHistory size={20} className="text-light-700" />}
     >
       <ul className="flex flex-col p-5 text-sm">
         {adrinState?.map((item: any, index: number) => {
@@ -26,10 +26,10 @@ export default function AdrinActivitiesWidget(): ReactElement {
                 <div
                   className={`mx-auto flex h-4 w-4 items-center justify-center  rounded-full ${item?.color}`}
                 >
-                  <div className="h-2 w-2 rounded-full bg-layer-light-50 " />
+                  <div className="bg-light-50 h-2 w-2 rounded-full " />
                 </div>
                 {adrinState?.length - 1 !== index && (
-                  <div className="mx-auto h-4 w-1 bg-layer-light-200"></div>
+                  <div className="bg-light-200 mx-auto h-4 w-1"></div>
                 )}
               </div>
               <span className="col-span-9 text-xs font-light">

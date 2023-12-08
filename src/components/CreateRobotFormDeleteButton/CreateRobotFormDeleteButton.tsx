@@ -16,7 +16,7 @@ export default function CreateRobotFormDeleteButton({
       onClick={disabled ? () => {} : onClick}
       className={`mx-auto cursor-pointer text-[0.68rem] font-semibold  ${
         disabled
-          ? "text-layer-light-600 hover:cursor-not-allowed"
+          ? "text-light-600 hover:cursor-not-allowed"
           : "text-red-500 hover:underline"
       }`}
     >

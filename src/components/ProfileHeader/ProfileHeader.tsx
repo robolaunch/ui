@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
 import { ProfileActiveTab } from "../../interfaces/profileInterfaces";
 import { useKeycloak } from "@react-keycloak/web";
 import CardLayout from "../../layouts/CardLayout";
 import useProfile from "../../hooks/useProfile";
 import Gravatar from "react-gravatar";
+import { ReactElement } from "react";
 
 export default function ProfileHeader(): ReactElement {
   const { keycloak } = useKeycloak();
@@ -20,13 +20,13 @@ export default function ProfileHeader(): ReactElement {
           size={200}
         />
         <div className="flex flex-col justify-between py-2">
-          <p className="font-medium text-layer-dark-700">
+          <p className="text-light-700 font-medium">
             {keycloak?.tokenParsed?.name}
           </p>
-          <p className="text-sm text-layer-dark-500">
+          <p className="text-light-500 text-sm">
             {keycloak?.tokenParsed?.preferred_username}
           </p>
-          <p className="text-sm text-layer-dark-500">
+          <p className="text-light-400 text-sm">
             {keycloak?.tokenParsed?.email}
           </p>
         </div>
@@ -41,20 +41,14 @@ export default function ProfileHeader(): ReactElement {
             >
               <li
                 className={`min-w-max px-2 text-xs font-medium transition-all duration-500 hover:scale-90  ${
-                  tab === activeTab
-                    ? "text-layer-primary-500"
-                    : "text-layer-light-500"
+                  tab === activeTab ? "text-primary-500" : "text-light-500"
                 } `}
               >
                 {tab}
               </li>
               <div
                 className={`h-[2px] w-full transition-all duration-500 
-                  ${
-                    tab === activeTab
-                      ? "bg-layer-primary-500"
-                      : "bg-layer-light-100"
-                  } `}
+                  ${tab === activeTab ? "bg-primary-500" : "bg-light-100"} `}
               />
             </div>
           );

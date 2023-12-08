@@ -21,7 +21,7 @@ export default function ProfileNotifications({
   return (
     <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
-        <p className="text-lg font-bold text-layer-dark-600">
+        <p className="text-light-600 text-lg font-bold">
           Profile Notifications
         </p>
         <form
@@ -31,21 +31,21 @@ export default function ProfileNotifications({
           {["", "", "", "", "", ""].map((_, i: number) => (
             <div key={i} className="flex items-center justify-between py-1">
               <div className="flex flex-col gap-1">
-                <div className="text-sm font-medium text-layer-dark-700">
+                <div className="text-light-700 text-sm font-medium">
                   Title #{i + 1}
                 </div>
-                <p className="text-xs font-light text-layer-light-600">
+                <p className="text-light-600 text-xs font-light">
                   Description #{i + 1}
                 </p>
               </div>
               <div className="flex gap-10">
                 <div className="flex gap-2">
                   <InputCheckbox {...formik.getFieldProps("creation")} />
-                  <span className="text-xs text-layer-dark-500">Email</span>
+                  <span className="text-light-500 text-xs">Email</span>
                 </div>
                 <div className="flex gap-2">
                   <InputCheckbox {...formik.getFieldProps("creation")} />
-                  <span className="text-xs text-layer-dark-500">Phone</span>
+                  <span className="text-light-500 text-xs">Phone</span>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function ProfileNotifications({
 
           <div className="flex items-center justify-end gap-6">
             <span
-              className="cursor-pointer text-xs font-medium text-layer-dark-500 hover:underline"
+              className="text-light-500 cursor-pointer text-xs font-medium hover:underline"
               onClick={() => formik.resetForm()}
             >
               Discard

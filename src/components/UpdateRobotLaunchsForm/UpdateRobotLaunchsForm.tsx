@@ -54,7 +54,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
             src="/svg/general/loading.svg"
             alt="Loading..."
           />
-          <span className="pb-4 text-sm text-layer-light-900">Loading...</span>
+          <span className="text-light-900 pb-4 text-sm">Loading...</span>
         </div>
       ) : url?.robotName && robotData?.step4?.robotLaunchSteps?.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center gap-4">
@@ -80,7 +80,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         </div>
       ) : (
         <Fragment>
-          <div className="animate__animated animate__fadeIn flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+          <div className="animate__animated animate__fadeIn text-light-700 flex min-w-fit gap-1 text-xs font-medium">
             Launch Steps:
             <InfoTip content="Launch Steps" />
           </div>

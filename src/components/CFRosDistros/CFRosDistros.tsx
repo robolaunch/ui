@@ -43,7 +43,7 @@ export default function CFRosDistros({
       data-tut="create-robot-step1-ros-distrobutions"
       className="flex flex-col gap-2"
     >
-      <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+      <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
         Ros Distrobutions:
         <InfoTip
           content="
@@ -63,9 +63,9 @@ export default function CFRosDistros({
               className={`relative flex w-full items-center justify-center gap-1 rounded  border-2 p-2 transition-all duration-300 ${
                 formik.values.rosDistros?.includes(item)
                   ? isImportRobot
-                    ? "border-layer-primary-300"
-                    : "border-layer-primary-600 shadow"
-                  : "border-layer-light-100"
+                    ? "border-primary-300"
+                    : "border-primary-400 shadow"
+                  : "border-light-100"
               } ${isImportRobot ? "cursor-not-allowed" : "cursor-pointer"}`}
               onClick={(e: any) => {
                 if (isImportRobot) {
@@ -109,7 +109,7 @@ export default function CFRosDistros({
                     filter: `grayscale(${handleRosDistroFilter(item)})`,
                   }}
                 />
-                <span className="text-center text-[0.68rem] text-layer-light-700">
+                <span className="text-light-700 text-center text-[0.68rem]">
                   ROS2{" "}
                   {item === "FOXY"
                     ? "Foxy"
@@ -125,9 +125,7 @@ export default function CFRosDistros({
                   <MdVerified
                     size={16}
                     className={
-                      isImportRobot
-                        ? "!text-layer-primary-300"
-                        : "!text-primary"
+                      isImportRobot ? "!text-primary-300" : "!text-primary-500"
                     }
                   />
                 </div>

@@ -23,8 +23,8 @@ export default function UserActionCells({
     <Fragment>
       <div className="card float-right flex gap-4">
         <Button
-          className="!h-8 !w-8 !border !border-layer-primary-500 !bg-transparent"
-          text={<BiPencil className="text-layer-primary-500" />}
+          className="!border-primary-500 !h-8 !w-8 !border !bg-transparent"
+          text={<BiPencil className="text-primary-500" />}
           onClick={() => setVisibleChangeRoleModal(true)}
         />
         <Button

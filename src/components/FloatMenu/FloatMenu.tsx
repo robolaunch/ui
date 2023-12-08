@@ -44,10 +44,10 @@ export function FloatMenu({
         open={isOpenMenu}
         rotationAngleInclusive={true}
         menuToggleElement={
-          <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-layer-light-200 bg-layer-light-50 transition-all duration-500 hover:scale-90 hover:bg-layer-light-100">
+          <div className="border-light-200 bg-light-50 hover:bg-light-100 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border transition-all duration-500 hover:scale-90">
             <AiOutlinePlus
               size={24}
-              className={`text-layer-dark-900 ${
+              className={`text-light-900 ${
                 isOpenMenu && "rotate-45"
               } transition-all duration-500`}
             />
@@ -59,7 +59,7 @@ export function FloatMenu({
       >
         <CircleMenuItem
           tooltip="Camera"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               widget: "RosCameraWidget",
@@ -73,12 +73,12 @@ export function FloatMenu({
             })
           }
         >
-          <BsCameraVideo size={24} className="text-layer-light-800" />
+          <BsCameraVideo size={24} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="cmd_vel Logs"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               widget: "RosCmdVelWidget",
@@ -92,12 +92,12 @@ export function FloatMenu({
             })
           }
         >
-          <AiOutlineCode size={26} className="text-layer-light-800" />
+          <AiOutlineCode size={26} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Topic List"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -111,12 +111,12 @@ export function FloatMenu({
             })
           }
         >
-          <AiOutlineUnorderedList size={26} className="text-layer-light-800" />
+          <AiOutlineUnorderedList size={26} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="ros_out Logs"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -130,12 +130,12 @@ export function FloatMenu({
             })
           }
         >
-          <IoMdCodeWorking size={26} className="text-layer-light-800" />
+          <IoMdCodeWorking size={26} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Map"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -149,12 +149,12 @@ export function FloatMenu({
             })
           }
         >
-          <BsPinMap size={20} className="text-layer-light-800" />
+          <BsPinMap size={20} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Network"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -168,12 +168,12 @@ export function FloatMenu({
             })
           }
         >
-          <BsPinMap size={20} className="text-layer-light-800" />
+          <BsPinMap size={20} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Resorce Usage"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -187,12 +187,12 @@ export function FloatMenu({
             })
           }
         >
-          <GoGraph size={20} className="text-layer-light-800" />
+          <GoGraph size={20} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Emergency Control"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -206,12 +206,12 @@ export function FloatMenu({
             })
           }
         >
-          <BiErrorCircle size={20} className="text-layer-light-800" />
+          <BiErrorCircle size={20} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Battery"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -225,12 +225,12 @@ export function FloatMenu({
             })
           }
         >
-          <BsBatteryFull size={22} className="text-layer-light-800" />
+          <BsBatteryFull size={22} className="text-light-800" />
         </CircleMenuItem>
 
         <CircleMenuItem
           tooltip="Joystick"
-          className="!border !border-layer-light-600 shadow-xl hover:scale-90 hover:!bg-layer-light-200"
+          className="!border-light-600 hover:!bg-light-200 !border shadow-xl hover:scale-90"
           onClick={() =>
             handleAddWidget({
               grid,
@@ -244,7 +244,7 @@ export function FloatMenu({
             })
           }
         >
-          <BsJoystick size={22} className="text-layer-light-800" />
+          <BsJoystick size={22} className="text-light-800" />
         </CircleMenuItem>
       </CircleMenu>
     </div>

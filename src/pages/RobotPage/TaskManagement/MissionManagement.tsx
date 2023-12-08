@@ -95,14 +95,14 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
   }
 
   return (
-    <div className="w-full h-[42rem] grid grid-cols-10 gap-6">
-      <div className="h-full col-span-10 md:col-span-5 lg:col-span-4 xl:col-span-3 2xl:col-span-2  overflow-auto">
+    <div className="grid h-[42rem] w-full grid-cols-10 gap-6">
+      <div className="col-span-10 h-full overflow-auto md:col-span-5 lg:col-span-4 xl:col-span-3  2xl:col-span-2">
         <CardLayout className="h-full">
           <Fragment>
-            <div className="h-full flex flex-col gap-2 py-2">
-              <div className="flex flex-col gap-1 items-center justify-center font-medium pb-1 ">
+            <div className="flex h-full flex-col gap-2 py-2">
+              <div className="flex flex-col items-center justify-center gap-1 pb-1 font-medium ">
                 <span>Missions</span>
-                <span className="w-20 h-[2px] bg-layer-primary-500" />
+                <span className="bg-primary-500 h-[2px] w-20" />
               </div>
               {missions?.length ? (
                 missions?.map((mission: any, missionIndex: number) => {
@@ -171,14 +171,14 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
 
               <BsPlusCircle
                 onClick={() => handleAddMissions()}
-                className="mx-auto mt-4 hover:scale-90 cursor-pointer transition-all duration-300"
+                className="mx-auto mt-4 cursor-pointer transition-all duration-300 hover:scale-90"
                 size={20}
               />
             </div>
           </Fragment>
         </CardLayout>
       </div>
-      <div className="h-full col-span-10 md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">
+      <div className="col-span-10 h-full md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">
         <CardLayout className="!relative h-full">
           <Fragment>
             <TransformWrapper
@@ -199,10 +199,10 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
                   style={{
                     backgroundImage: `url(/images/bg-transparent.png)`,
                   }}
-                  className="w-full flex items-center justify-center"
+                  className="flex w-full items-center justify-center"
                 >
                   <div
-                    className="relative border-4 border-layer-dark-600"
+                    className="border-light-600 relative border-4"
                     style={{
                       width: `${rosMapDetails?.resolution?.x}px`,
                       height: `${rosMapDetails?.resolution?.y}px`,
@@ -220,7 +220,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
                       }}
                       src={`/html/rosMap.html?ws=${ros?.socket?.url?.slice(
                         0,
-                        ros?.socket?.url?.length - 1
+                        ros?.socket?.url?.length - 1,
                       )}&costmap=${isCostMapActive ? "true" : "false"}`}
                     />
 
@@ -236,7 +236,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
                             rosMapWebsocketHeight: rosMapDetails?.resolution?.y,
                             rosMapWidth: rosMapDetails?.x,
                             rosMapHeight: rosMapDetails?.y,
-                          })
+                          }),
                         );
 
                         e.preventDefault();

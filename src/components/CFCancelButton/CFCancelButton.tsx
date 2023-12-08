@@ -24,7 +24,7 @@ export default function CFCancelButton({
       }}
       disabled={disabled || false}
       type="button"
-      className="!h-11 border border-layer-primary-700 !bg-layer-light-50 text-xs !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
+      className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 !h-11 border text-xs transition-all duration-500"
       text="Cancel"
     />
   );

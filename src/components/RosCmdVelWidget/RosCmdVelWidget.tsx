@@ -48,7 +48,7 @@ export default function RosCmdVelWidget({
       id={id}
       type="RosCmdVelWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<AiOutlineCode size={26} className="text-layer-light-400" />}
+      icon={<AiOutlineCode size={26} className="text-light-400" />}
       title="cmd_vel"
     >
       <div
@@ -60,9 +60,9 @@ export default function RosCmdVelWidget({
             return (
               <div
                 key={key}
-                className="flex border-y border-layer-light-100 py-1.5 text-xs font-medium"
+                className="border-light-100 flex border-y py-1.5 text-xs font-medium"
               >
-                <div className="text-layer-dark-600">
+                <div className="text-light-600">
                   {`angular: x:${log.angular.x} y:${log.angular.y} z:${log.angular.z} linear: x:${log.linear.x} y:${log.linear.y} z:${log.linear.z}`}
                 </div>
               </div>

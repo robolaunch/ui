@@ -18,7 +18,7 @@ export default function ResourcesWidget({
       dataTut="resources-widget"
       title={`Resource Details`}
       subtitle={`${title} Resources`}
-      icon={<GoGraph size={20} className="text-layer-light-700" />}
+      icon={<GoGraph size={20} className="text-light-700" />}
     >
       <ul className="flex h-full flex-col justify-evenly">
         {data?.map((item: any, index: number) => {
@@ -27,11 +27,11 @@ export default function ResourcesWidget({
               <li className="flex justify-between" key={item?.title}>
                 <div className="flex items-center gap-2">
                   {item?.icon}
-                  <span className="text-xs font-medium text-layer-dark-600">
+                  <span className="text-light-600 text-xs font-medium">
                     {item?.title}:
                   </span>
                 </div>
-                <span className="text-xs font-medium text-layer-dark-500">
+                <span className="text-light-500 text-xs font-medium">
                   {item?.value || (
                     <ContentLoader
                       width={124}

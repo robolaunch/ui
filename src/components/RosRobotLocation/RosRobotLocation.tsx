@@ -74,7 +74,7 @@ export default function RosRobotLocation({
             }}
           >
             <FaLocationArrow
-              className={`text-layer-secondary-500 transition-all duration-300`}
+              className={`text-secondary-500 transition-all duration-300`}
               style={{
                 rotate: `${rosRobotPosition?.z}deg`,
               }}

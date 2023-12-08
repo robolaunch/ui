@@ -40,7 +40,7 @@ export default function PrivateLayout(): ReactElement {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="h-full bg-layer-light-bg p-6">
+          <div className="bg-transparent- h-full p-6">
             <Outlet />
           </div>
         </div>

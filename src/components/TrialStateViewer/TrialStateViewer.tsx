@@ -132,8 +132,8 @@ export default function TrialStateViewer({
               <div className="flex items-center gap-4">
                 {item?.state === "None" && (
                   <span
-                    className="cursor-pointer text-xs 
-                    text-layer-dark-300 underline"
+                    className="text-light-300 cursor-pointer 
+                    text-xs underline"
                     onClick={handleRedirectSidebar}
                   >
                     Create

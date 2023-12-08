@@ -21,7 +21,7 @@ export default function TeleoperationControlBar({
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
   return (
-    <div className="shadow-t-lg absolute bottom-0 z-10 flex w-full items-center justify-between rounded-t bg-layer-light-50 px-4 py-3">
+    <div className="shadow-t-lg bg-light-50 absolute bottom-0 z-10 flex w-full items-center justify-between rounded-t px-4 py-3">
       <div className="flex gap-2">
         <InputSelect
           disabled={isRemoteDesktopStream}
@@ -50,7 +50,7 @@ export default function TeleoperationControlBar({
       </div>
 
       {/* <div className="flex gap-4">
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>CPU: </span>
           <ReactApexChart
             series={[24]}
@@ -134,7 +134,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>GPU: </span>
           <ReactApexChart
             series={[54]}
@@ -218,7 +218,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>RAM: </span>
           <ReactApexChart
             series={[65]}
@@ -302,7 +302,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>DISK: </span>
           <ReactApexChart
             series={[12]}
@@ -386,7 +386,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>Battery: </span>
           <ReactApexChart
             series={[75]}
@@ -470,7 +470,7 @@ export default function TeleoperationControlBar({
             width={60}
           />
         </div>
-        <div className="flex items-center text-xs font-medium text-layer-light-700">
+        <div className="flex items-center text-xs font-medium text-light-700">
           <span>Ping: </span>
           <ReactApexChart
             series={[68]}
@@ -563,14 +563,14 @@ export default function TeleoperationControlBar({
         <button onClick={handleFullScreen.exit}>
           <BsFullscreenExit
             size={24}
-            className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
+            className="text-light-700 hover:text-primary-400 transition-all duration-200 hover:scale-90"
           />
         </button>
       ) : (
         <button onClick={handleFullScreen.enter}>
           <BsFullscreen
             size={24}
-            className="text-layer-light-700 transition-all duration-200 hover:scale-90 hover:text-layer-primary-400"
+            className="text-light-700 hover:text-primary-400 transition-all duration-200 hover:scale-90"
           />
         </button>
       )}

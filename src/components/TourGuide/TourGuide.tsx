@@ -126,14 +126,14 @@ export default function TourGuide({
         isOpen={handleIsOpen()}
         showNumber={false}
         maskClassName="opacity-50"
-        className="!bg-primary !p-10 text-sm !text-white"
+        className="!bg-primary-500 !p-10 text-sm !text-white"
         rounded={5}
         accentColor={"#FFFFFF"}
         prevButton={
-          <FiArrowLeft className="transition-500 scale-150 text-white hover:text-layer-primary-200" />
+          <FiArrowLeft className="transition-500 hover:text-primary-200 scale-150 text-white" />
         }
         nextButton={
-          <FiArrowRight className="transition-500 scale-150 text-white hover:text-layer-primary-200" />
+          <FiArrowRight className="transition-500 hover:text-primary-200 scale-150 text-white" />
         }
         onAfterOpen={(target: any) => disableBodyScroll(target)}
         onBeforeClose={(target: any) => enableBodyScroll(target)}

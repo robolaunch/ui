@@ -22,7 +22,7 @@ export default function TimerDropdownMenu(): ReactElement {
       </div>
       {isOpen && (
         <div
-          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-14 flex w-[22rem] flex-col gap-1 rounded border border-layer-light-100 bg-layer-light-50 p-2 text-sm shadow-lg"
+          className="animate__animated animate__fadeInDown animate__faster border-light-100 bg-light-50 absolute right-4 top-14 flex w-[22rem] flex-col gap-1 rounded border p-2 text-sm shadow-lg"
           ref={ref}
         >
           <TimeCounter hour={0} minute={0} second={0} />

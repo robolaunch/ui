@@ -72,7 +72,7 @@ export default function SidebarContentLayout({
       <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
       {handleShowDetails() && (
         <Fragment>
-          <span className="rounded-lg bg-layer-primary-300 px-2.5 py-0.5">
+          <span className="bg-primary-300 rounded-lg px-2.5 py-0.5">
             {itemCount}
           </span>
           <i

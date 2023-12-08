@@ -64,7 +64,7 @@ export default function CFPersistDirTags({
         name="persistent directories"
         classNames={{
           input: "!text-xs disabled:cursor-not-allowed",
-          tag: "!text-xs !bg-layer-light-50 border border-layer-light-200",
+          tag: "!text-xs !bg-light-50 border border-light-200",
         }}
         placeHolder="enter a path"
         beforeAddValidate={(tag) => {

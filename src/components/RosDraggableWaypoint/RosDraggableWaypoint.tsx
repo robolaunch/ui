@@ -111,8 +111,8 @@ export default function RosDraggableWaypoint({
           <FaFlagCheckered
             className={`${
               waypointIndex === hoverWaypoint
-                ? "scale-150 text-layer-primary-900"
-                : "text-layer-secondary-500"
+                ? "text-primary-900 scale-150"
+                : "text-secondary-500"
             } ml-2 mt-1 transition-all duration-300`}
             size={20}
           />
@@ -121,8 +121,8 @@ export default function RosDraggableWaypoint({
           <CgFlagAlt
             className={`${
               waypointIndex === hoverWaypoint
-                ? "scale-150 text-layer-primary-500"
-                : "text-layer-primary-700"
+                ? "text-primary-500 scale-150"
+                : "text-primary-700"
             } ml-1.5 transition-all duration-300 `}
             size={26}
           />
@@ -130,8 +130,8 @@ export default function RosDraggableWaypoint({
           <TbMapPinFilled
             className={`${
               waypointIndex === hoverWaypoint
-                ? "scale-150 text-layer-primary-500"
-                : "text-layer-secondary-500"
+                ? "text-primary-500 scale-150"
+                : "text-secondary-500"
             } transition-all duration-300`}
             size={24}
           />
@@ -142,7 +142,7 @@ export default function RosDraggableWaypoint({
           }}
           className="absolute left-1 top-3"
         >
-          <TbArrowBigUpLinesFilled className="mb-2 text-layer-secondary-800 " />
+          <TbArrowBigUpLinesFilled className="text-secondary-800 mb-2 " />
           {/* <img
             src="/images/rosMapRotate.png"
             className="scale-150"

@@ -12,7 +12,7 @@ export default function MarketplaceTopBar(): ReactElement {
         /images/rocket.svg"
           alt="robolaunch"
         />
-        <span className="font-medium text-layer-dark-600">
+        <span className="text-light-600 font-medium">
           robolaunch Application Templates
         </span>
       </div>

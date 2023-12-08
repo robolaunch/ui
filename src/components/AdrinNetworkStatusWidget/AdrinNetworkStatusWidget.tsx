@@ -18,7 +18,7 @@ export default function AdrinNetworkStatusWidget({
     <WidgetLayout
       title={`Network Status`}
       subtitle={`ADriN Status`}
-      icon={<GiAerialSignal size={20} className="text-layer-light-700" />}
+      icon={<GiAerialSignal size={20} className="text-light-700" />}
     >
       <div className="flex h-full w-full items-center justify-around gap-4">
         <img
@@ -124,7 +124,7 @@ export default function AdrinNetworkStatusWidget({
                   ? "text-orange-800"
                   : data?.color === "bg-red-600"
                   ? "text-red-800"
-                  : "text-layer-light-800"
+                  : "text-light-800"
               }`}
             >
               {data?.description}

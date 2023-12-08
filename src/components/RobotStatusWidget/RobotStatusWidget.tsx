@@ -36,7 +36,7 @@ export default function RobotStatusWidget({
       dataTut="robot-status-widget"
       title={`${envApplication ? "Application" : "Robot"} Status`}
       subtitle={`${envApplication ? "Application" : "Robot"} Status`}
-      icon={<VscHistory size={20} className="text-layer-light-700" />}
+      icon={<VscHistory size={20} className="text-light-700" />}
     >
       <div className="flex h-full w-full items-center justify-around">
         {/* Workspace */}

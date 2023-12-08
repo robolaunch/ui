@@ -59,8 +59,8 @@ export default function CodeEditor(): ReactElement {
                     className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500 hover:scale-90
                         ${
                           tab.name === activeTabCodeEditor
-                            ? "text-layer-primary-500"
-                            : "text-layer-light-500"
+                            ? "text-primary-500"
+                            : "text-light-500"
                         } `}
                   >
                     <span>{tab.name}</span>
@@ -69,8 +69,8 @@ export default function CodeEditor(): ReactElement {
                     className={`h-[2px] w-full transition-all duration-500 
                   ${
                     tab.name === activeTabCodeEditor
-                      ? "bg-layer-primary-500"
-                      : "bg-layer-light-100"
+                      ? "bg-primary-500"
+                      : "bg-light-100"
                   } `}
                   />
                 </li>

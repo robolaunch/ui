@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 interface ISideBarMenuItemToolTip {
   title: string;
@@ -11,7 +11,7 @@ export default function SidebarMenuItemToolTip({
 }: ISideBarMenuItemToolTip): ReactElement {
   return (
     <div
-      className={`animate__animated animate__fadeIn absolute left-14 top-2 z-50 flex flex-col gap-1 rounded border border-layer-light-500 bg-layer-dark-500 px-2.5 py-1.5 text-[0.66rem] text-layer-light-100 opacity-90 ${
+      className={`animate__animated animate__fadeIn border-light-500 text-light-100 bg-light-500 absolute left-14 top-2 z-50 flex flex-col gap-1 rounded border px-2.5 py-1.5 text-[0.66rem] opacity-90 ${
         description && description?.length > 42 ? "w-64" : "w-max"
       }`}
     >

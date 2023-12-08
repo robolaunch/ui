@@ -26,8 +26,8 @@ export default function TaskManagementLayout(): ReactElement {
                   <li
                     className={`min-w-max px-2 text-xs font-medium transition-all duration-500 hover:scale-90  ${
                       tab.name === activeTab
-                        ? "text-layer-primary-500"
-                        : "text-layer-light-500"
+                        ? "text-primary-500"
+                        : "text-light-500"
                     } `}
                   >
                     {tab.name}
@@ -35,9 +35,7 @@ export default function TaskManagementLayout(): ReactElement {
                   <div
                     className={`h-[2px] w-full transition-all duration-500 
                   ${
-                    tab.name === activeTab
-                      ? "bg-layer-primary-500"
-                      : "bg-layer-light-100"
+                    tab.name === activeTab ? "bg-primary-500" : "bg-light-100"
                   } `}
                   />
                 </div>

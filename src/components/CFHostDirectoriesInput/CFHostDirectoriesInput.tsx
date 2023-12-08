@@ -16,7 +16,7 @@ export default function CFHostDirectoriesInput({
   disabled,
 }: ICFHostDirectoriesInput): ReactElement {
   return (
-    <div className="flex w-full  gap-3 rounded-md border border-layer-light-100 p-4">
+    <div className="border-light-100 flex  w-full gap-3 rounded-md border p-4">
       <FormInputText
         labelName="Host Directory:"
         labelInfoTip="Type a host directory."
@@ -43,7 +43,7 @@ export default function CFHostDirectoriesInput({
         inputTouched={formik.touched.hostDirectories?.[index]?.mountPath}
       />
 
-      <div className="flex items-center justify-center pt-2.5 text-sm text-layer-light-800">
+      <div className="text-light-800 flex items-center justify-center pt-2.5 text-sm">
         <CFDellButton
           disabled={disabled}
           onClick={() => {

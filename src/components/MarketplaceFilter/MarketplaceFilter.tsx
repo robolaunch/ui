@@ -16,10 +16,10 @@ export default function MarketplaceFilter(): ReactElement {
     <CardLayout className="!col-span-3 flex !h-fit flex-col gap-8 p-6">
       <div className="flex flex-col gap-1">
         <span className="font-medium">Filter Settings</span>
-        <div className="h-[2px] w-28 bg-primary" />
+        <div className="bg-primary-500 h-[2px] w-28" />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-sm font-semibold text-layer-dark-700">
+        <div className="text-light-700 text-sm font-semibold">
           Template Type
         </div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
@@ -30,16 +30,13 @@ export default function MarketplaceFilter(): ReactElement {
           </label>
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
-            <MdPublic size={20} className="text-layer-secondary-500" />
+            <MdPublic size={20} className="text-secondary-500" />
             <span>Public Template</span>
           </label>
 
           <label className="flex items-center gap-2" htmlFor="foxy">
             <InputCheckbox className="!scale-125" name="foxy" />
-            <RiOrganizationChart
-              size={20}
-              className="text-layer-secondary-500"
-            />
+            <RiOrganizationChart size={20} className="text-secondary-500" />
             <span className="flex items-center gap-1">
               <InputSelect className="h-8 !p-0">
                 <Fragment>
@@ -53,35 +50,28 @@ export default function MarketplaceFilter(): ReactElement {
           </label>
           <label className="flex items-center gap-2" htmlFor="foxy">
             <InputCheckbox className="!scale-125" name="foxy" />
-            <BsShieldLockFill size={20} className="text-layer-secondary-500" />
+            <BsShieldLockFill size={20} className="text-secondary-500" />
             <span>Private Template</span>
           </label>
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-sm font-semibold text-layer-dark-700">
-          Robot Type
-        </div>
+        <div className="text-light-700 text-sm font-semibold">Robot Type</div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
-            <BsFillCloudFill size={22} className="text-layer-secondary-500" />
+            <BsFillCloudFill size={22} className="text-secondary-500" />
             <span>Virtual Robot</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="foxy">
             <InputCheckbox className="!scale-125" name="foxy" />
-            <BsFillCloudDownloadFill
-              size={22}
-              className="text-layer-primary-500"
-            />
+            <BsFillCloudDownloadFill size={22} className="text-primary-500" />
             <span>Hybrid Robot</span>
           </label>
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-sm font-semibold text-layer-dark-700">
-          Ros Distro
-        </div>
+        <div className="text-light-700 text-sm font-semibold">Ros Distro</div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
@@ -108,7 +98,7 @@ export default function MarketplaceFilter(): ReactElement {
 
       <div className="flex gap-4">
         <Button
-          className="!h-11 border border-layer-primary-500 !bg-layer-light-50 !text-primary"
+          className="!bg-light-50 !text-primary-500 border-primary-500 !h-11 border"
           text={"Reset Filter"}
         />
         <Button className="!h-11" text={"Apply Filter"} />

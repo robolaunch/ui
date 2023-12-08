@@ -19,7 +19,7 @@ export default function RosEmergencyControlWidget({
       id={id}
       type="RosEmergencyControlWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<BiErrorCircle size={22} className="text-layer-light-400" />}
+      icon={<BiErrorCircle size={22} className="text-light-400" />}
       title="Emergency Control"
     >
       <div className="flex h-full flex-col items-center justify-center gap-6">
@@ -27,7 +27,7 @@ export default function RosEmergencyControlWidget({
           <Button className="!w-24" text="Start" disabled />
           <Button className="!w-24" text="Stop" />
         </div>
-        <div className="flex items-center justify-center gap-2 rounded-lg bg-layer-light-100 p-2 text-sm">
+        <div className="bg-light-100 flex items-center justify-center gap-2 rounded-lg p-2 text-sm">
           <span>State:</span>
           <span className="h-3 w-3 rounded-full bg-secondary" />
           <span>Robot is running</span>

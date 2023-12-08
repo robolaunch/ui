@@ -23,7 +23,7 @@ export default function MarketplaceSingleItemSidebar({
       <Fragment>
         <div className="flex flex-col gap-1">
           <span className="font-medium">Installation</span>
-          <div className="h-[2px] w-[5.5rem] bg-primary" />
+          <div className="bg-primary-500 h-[2px] w-[5.5rem]" />
         </div>
         <div className="flex gap-4 transition-all duration-500">
           <Button
@@ -37,16 +37,13 @@ export default function MarketplaceSingleItemSidebar({
 
         <div className="flex flex-col gap-1">
           <span className="font-medium">Application Details</span>
-          <div className="h-[2px] w-32 bg-primary" />
+          <div className="bg-primary-500 h-[2px] w-32" />
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">Name</div>
+          <div className="text-light-700 text-sm font-semibold">Name</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <VscSymbolNamespace
-                size={20}
-                className="text-layer-secondary-500"
-              />
+              <VscSymbolNamespace size={20} className="text-secondary-500" />
               <span>
                 {item?.name || (
                   <ContentLoader
@@ -64,15 +61,10 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
-            Family
-          </div>
+          <div className="text-light-700 text-sm font-semibold">Family</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <VscSymbolNamespace
-                size={20}
-                className="text-layer-secondary-500"
-              />
+              <VscSymbolNamespace size={20} className="text-secondary-500" />
               <span>
                 {item?.family || (
                   <ContentLoader
@@ -90,12 +82,12 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
+          <div className="text-light-700 text-sm font-semibold">
             Deployment Type
           </div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <BsCloudy size={22} className="text-layer-secondary-500" />
+              <BsCloudy size={22} className="text-secondary-500" />
               <span>
                 {item?.deploymentType || (
                   <ContentLoader
@@ -113,12 +105,10 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
-            Storage
-          </div>
+          <div className="text-light-700 text-sm font-semibold">Storage</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="noetic">
-              <MdStorage size={22} className="text-layer-secondary-500" />
+              <MdStorage size={22} className="text-secondary-500" />
               {item?.minStorageAmount ? (
                 <span>Minimum Storage: {item?.minStorageAmount / 1000} GB</span>
               ) : (
@@ -136,12 +126,10 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-sm font-semibold text-layer-dark-700">
-            Version
-          </div>
+          <div className="text-light-700 text-sm font-semibold">Version</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
-              <FiDownload size={20} className="text-layer-secondary-500" />
+              <FiDownload size={20} className="text-secondary-500" />
               <span>
                 {item?.version || (
                   <ContentLoader

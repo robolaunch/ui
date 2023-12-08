@@ -13,7 +13,7 @@ export default function CountWidget({ data }: ICountWidget): ReactElement {
       dataTut="counter-widget"
       title={`State Counter`}
       subtitle={`State Counter`}
-      icon={<GoGraph size={20} className="text-layer-light-700" />}
+      icon={<GoGraph size={20} className="text-light-700" />}
     >
       <ReactApexChart
         series={data?.map((item) => item?.value) || []}

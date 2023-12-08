@@ -35,7 +35,7 @@ export default function RosNetworkWidget({
       id={id}
       type="RosNetworkWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<FaSignal size={22} className="text-layer-light-400" />}
+      icon={<FaSignal size={22} className="text-light-400" />}
       title="Network"
     >
       <div ref={ref} className="relative h-full w-full">

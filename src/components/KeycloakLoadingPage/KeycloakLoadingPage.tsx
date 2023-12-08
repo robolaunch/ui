@@ -6,7 +6,7 @@ export default function KeycloakLoadingPage(): ReactElement {
       <img
         src="/images/ring.svg"
         alt=""
-        className="w-28 animate-spin rounded-full bg-layer-light-50 shadow"
+        className="bg-light-50 w-28 animate-spin rounded-full shadow"
       />
       <img
         src="/images/rocket.svg"

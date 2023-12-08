@@ -21,11 +21,11 @@ export default function Accordion({
     <Collapsible
       triggerDisabled
       open={isOpen === id ? true : false}
-      className="rounded border border-layer-light-100 bg-layer-light-50 shadow"
-      openedClassName="bg-layer-light-50 rounded shadow"
+      className="border-light-100 bg-light-50 rounded border shadow"
+      openedClassName="bg-light-50 rounded shadow"
       trigger={
         <div className="flex h-11 w-full items-center justify-between p-2">
-          <div className="w-full text-sm text-layer-dark-700">{header}</div>
+          <div className="text-light-700 w-full text-sm">{header}</div>
           <div
             className={`px-3 transition-all  duration-200 hover:scale-110 ${
               !isOpen ? "rotate-90" : "rotate-0"

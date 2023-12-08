@@ -12,7 +12,7 @@ export default function InvoiceStatusWidget(): ReactElement {
     <WidgetLayout
       title={`Invoice Status Widget`}
       subtitle={""}
-      icon={<MdPayment size={22} className="text-layer-light-700" />}
+      icon={<MdPayment size={22} className="text-light-700" />}
     >
       {(() => {
         switch (errorCount) {
@@ -20,7 +20,7 @@ export default function InvoiceStatusWidget(): ReactElement {
             return (
               <div className="flex h-full items-center justify-center">
                 <div className="flex flex-col items-center gap-5">
-                  <div className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-layer-secondary-500 text-3xl font-medium">
+                  <div className="border-secondary-500 flex h-32 w-32 items-center justify-center rounded-full border-4 text-3xl font-medium">
                     <span>104$</span>
                   </div>
                   <span className="text-sm font-medium">

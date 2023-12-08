@@ -31,23 +31,20 @@ export default function MarketplaceRobotAssetItem({
             <span
               className={`w-fit text-[0.60rem] font-medium ${
                 robot?.type === "Hybrid Robot"
-                  ? "text-layer-secondary-500"
-                  : "text-layer-primary-500"
+                  ? "text-secondary-500"
+                  : "text-primary-500"
               } `}
             >
               {robot?.type}
             </span>
           </div>
-          <div className="-ml-1.5 flex items-center gap-1 rounded-lg px-1.5 text-[0.60rem] font-medium capitalize text-layer-secondary-500">
+          <div className="text-secondary-500 -ml-1.5 flex items-center gap-1 rounded-lg px-1.5 text-[0.60rem] font-medium capitalize">
             {(() => {
               switch (robot?.access) {
                 case "public":
                   return (
                     <Fragment>
-                      <MdPublic
-                        size={16}
-                        className="text-layer-secondary-500"
-                      />
+                      <MdPublic size={16} className="text-secondary-500" />
                       <span>Public Template</span>
                     </Fragment>
                   );
@@ -56,7 +53,7 @@ export default function MarketplaceRobotAssetItem({
                     <Fragment>
                       <RiOrganizationChart
                         size={16}
-                        className="text-layer-secondary-500"
+                        className="text-secondary-500"
                       />
                       <span>{robot?.organization} Template</span>
                     </Fragment>
@@ -66,7 +63,7 @@ export default function MarketplaceRobotAssetItem({
                     <Fragment>
                       <BsShieldLockFill
                         size={16}
-                        className="text-layer-secondary-500"
+                        className="text-secondary-500"
                       />
                       <span>Private Template</span>
                     </Fragment>
@@ -76,14 +73,14 @@ export default function MarketplaceRobotAssetItem({
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <ul className="flex flex-col gap-2 text-xs text-layer-dark-500">
+          <ul className="text-light-500 flex flex-col gap-2 text-xs">
             <li>Vendor: {robot?.vendor}</li>
             <li>Family: {robot?.family}</li>
             <li>Type: {robot?.type}</li>
             <li>Storage: {robot?.minStorageAmount / 1000} GB</li>
           </ul>
           <img
-            className="w-24 border border-layer-light-100"
+            className="border-light-100 w-24 border"
             src={
               robot
                 ? robot.type === "Environment"

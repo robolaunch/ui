@@ -27,7 +27,7 @@ export default function InputToggle({
 }: IInputToggle): ReactElement {
   return (
     <div
-      className={`flex flex-col text-xs text-layer-light-700 ${
+      className={`text-light-700 flex flex-col text-xs ${
         placeholder && "gap-1"
       } ${className} `}
     >

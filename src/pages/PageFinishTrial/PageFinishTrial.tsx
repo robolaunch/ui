@@ -16,14 +16,14 @@ export default function PageFinishTrial(): ReactElement {
     >
       <Fragment>
         <img className="w-24" src="/images/rocket.svg" alt="robolaunch" />
-        <p className="font-semibold text-layer-dark-600">
+        <p className="text-light-600 font-semibold">
           Your trial period has ended. Please contact us to continue using
           robolaunch.
         </p>
         <Link to={"/"}>
           <Button
             text={"Redirect to robolaunch"}
-            className="!h-fit !w-fit !border-2 !border-layer-primary-300 !bg-transparent p-2.5 !text-xs !font-semibold !text-layer-primary-600 transition-all duration-500 hover:!scale-90"
+            className="!border-primary-300 !text-primary-400 !h-fit !w-fit !border-2 !bg-transparent p-2.5 !text-xs !font-semibold transition-all duration-500 hover:!scale-90"
           />
         </Link>
       </Fragment>

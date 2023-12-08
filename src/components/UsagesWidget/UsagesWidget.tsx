@@ -20,7 +20,7 @@ export default function UsagesWidget({
       dataTut="usages-widget"
       title={`Hardware Resources & Usages`}
       subtitle={`${title} Usages`}
-      icon={<GoGraph size={20} className="text-layer-light-700" />}
+      icon={<GoGraph size={20} className="text-light-700" />}
     >
       <div className="flex h-full items-center justify-between">
         <div className="flex gap-4">

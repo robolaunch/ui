@@ -49,17 +49,17 @@ export default function RemoteDesktopController({
   return (
     <div className="absolute bottom-0 flex flex-col items-center ">
       <button
-        className="rounded-t-lg border-x-2 border-t-2 border-layer-light-200 bg-layer-light-50 bg-opacity-75 px-1"
+        className="border-light-200 bg-light-50 rounded-t-lg border-x-2 border-t-2 bg-opacity-75 px-1"
         onClick={() => handleIsControllerOpen()}
       >
         {isControllerOpen ? (
-          <IoIosArrowDown size={20} className="text-layer-dark-700" />
+          <IoIosArrowDown size={20} className="text-light-700" />
         ) : (
-          <IoIosArrowUp size={20} className="text-layer-dark-700" />
+          <IoIosArrowUp size={20} className="text-light-700" />
         )}
       </button>
       {isControllerOpen && (
-        <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-layer-light-50 bg-opacity-75 px-3 pb-1.5 pt-3">
+        <div className="bg-light-50 flex w-full items-center justify-center gap-6 rounded-t-lg bg-opacity-75 px-3 pb-1.5 pt-3">
           <FullScreenButton
             isFullScreen={handleFullScreen.active}
             handleFullScreen={

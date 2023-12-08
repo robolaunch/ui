@@ -46,7 +46,7 @@ export default function RosJoystickWidget({
       id={id}
       type="RosJoystickWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<BsJoystick size={20} className="text-layer-light-400" />}
+      icon={<BsJoystick size={20} className="text-light-400" />}
       title="Joystick"
     >
       <div

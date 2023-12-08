@@ -26,7 +26,7 @@ export default function RosBatteryWidget({
       handleRemoveWidget={handleRemoveWidget}
       id={id}
       type="RosBatteryWidget"
-      icon={<BsBatteryFull size={22} className="text-layer-light-400" />}
+      icon={<BsBatteryFull size={22} className="text-light-400" />}
       title="Battery"
     >
       <div ref={ref} className="relative h-full w-full">
@@ -116,14 +116,14 @@ export default function RosBatteryWidget({
             </div>
             <div className="col-span-1 flex flex-col items-center justify-center gap-4  font-medium">
               <div
-                className="flex flex-col gap-1 rounded-lg bg-layer-light-100 py-2 text-center"
+                className="bg-light-100 flex flex-col gap-1 rounded-lg py-2 text-center"
                 style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">37.2 V</span>
                 {height > 100 && <span className="text-xs ">Voltage</span>}
               </div>
               <div
-                className="flex flex-col gap-1 rounded-lg bg-layer-light-100 py-2 text-center "
+                className="bg-light-100 flex flex-col gap-1 rounded-lg py-2 text-center "
                 style={{ width: width / 2.5 }}
               >
                 <span className="text-sm ">5.2 V</span>

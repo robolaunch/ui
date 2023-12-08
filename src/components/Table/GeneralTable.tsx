@@ -29,7 +29,7 @@ export default function GeneralTable({
   return (
     <div
       data-tut="general-table"
-      className="animate__animated animate__fadeIn flex flex-col rounded-lg border border-layer-light-200 bg-layer-light-50 px-4 pb-0 pt-4 shadow-md"
+      className="animate__animated animate__fadeIn border-light-200 bg-light-50 flex flex-col rounded-lg border px-4 pb-0 pt-4 shadow-md"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex items-center gap-3 px-4 pb-8 pt-1">

@@ -52,11 +52,11 @@ export default function RosWaypointListItem({
   return (
     <div
       key={waypoint?.id}
-      className="flex flex-col items-center gap-4 rounded border border-layer-light-100 bg-layer-light-50 px-4 pb-2 pt-3 shadow-md"
+      className="border-light-100 bg-light-50 flex flex-col items-center gap-4 rounded border px-4 pb-2 pt-3 shadow-md"
     >
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-layer-secondary-500 text-xs text-layer-light-50 ">
+          <span className="text-light-50 bg-secondary-500 flex h-6 w-6 items-center justify-center rounded-full text-xs ">
             {waypointIndex + 1}
           </span>
           <div className="flex flex-col gap-1 !text-xs">

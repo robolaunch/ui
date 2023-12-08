@@ -21,7 +21,7 @@ export default function CFInputToggle({
 }: ICFInputToggle): ReactElement {
   return (
     <div data-tut={dataTut} className="flex items-center gap-1">
-      <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+      <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
         {labelName}
         <InfoTip content={labelInfoTip} />
       </div>

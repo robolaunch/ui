@@ -19,7 +19,7 @@ export default function CFPortInput({
   type,
 }: ICFPortInput): ReactElement {
   return (
-    <div className="flex w-full gap-3 rounded-md border border-layer-light-100 p-4">
+    <div className="border-light-100 flex w-full gap-3 rounded-md border p-4">
       <FormInputText
         disabled={disabled}
         labelName="Port Name:"
@@ -65,7 +65,7 @@ export default function CFPortInput({
         classNameContainer="w-1/3"
         rightTip
       >
-        <div className="pt-2.5 text-sm text-layer-light-800">
+        <div className="text-light-800 pt-2.5 text-sm">
           :
           {
             // @ts-ignore
@@ -74,7 +74,7 @@ export default function CFPortInput({
         </div>
       </CFInfoBar>
 
-      <div className="flex items-center justify-center pt-2.5 text-sm text-layer-light-800">
+      <div className="text-light-800 flex items-center justify-center pt-2.5 text-sm">
         <CFDellButton
           onClick={() => {
             formik.setFieldValue(

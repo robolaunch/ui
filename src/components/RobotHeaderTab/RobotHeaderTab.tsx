@@ -26,7 +26,7 @@ export default function RobotHeaderTab({
     >
       <div
         className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500 ${
-          isActiveTab ? "text-layer-primary-500" : "text-layer-light-500"
+          isActiveTab ? "text-primary-500" : "text-light-500"
         }`}
       >
         {tab?.isLoading || !isRobotReady ? (
@@ -48,7 +48,7 @@ export default function RobotHeaderTab({
       </div>
       <div
         className={`h-[2px] w-full transition-all duration-500 ${
-          isActiveTab ? "bg-layer-primary-500" : "bg-layer-light-100"
+          isActiveTab ? "bg-primary-500" : "bg-light-100"
         }`}
       />
     </li>

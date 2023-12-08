@@ -18,7 +18,7 @@ export default function GPUChart(): ReactElement {
         return (
           <div key={index} className="flex items-center gap-4 text-sm">
             <div className="flex gap-2">
-              <BsGpuCard size={22} className="text-layer-secondary-600" />
+              <BsGpuCard size={22} className="text-secondary-600" />
               <p>{data?.device}</p>
             </div>
             <div className="flex flex-col text-[0.66rem]">

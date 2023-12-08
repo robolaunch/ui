@@ -23,10 +23,8 @@ export default function CFAdvancedSettings({
   return (
     <Accordion
       id={0}
-      header={
-        <div className="text-xs text-layer-light-900">Advanced Settings</div>
-      }
-      className="rounded-md !border-layer-light-100 shadow-none"
+      header={<div className="text-light-900 text-xs">Advanced Settings</div>}
+      className="!border-light-100 rounded-md shadow-none"
       isOpen={isOpen}
       handleOpen={() => {
         setIsOpen(!isOpen);

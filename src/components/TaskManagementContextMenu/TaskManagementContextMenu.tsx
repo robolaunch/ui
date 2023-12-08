@@ -29,8 +29,8 @@ export default function TaskManagementContextMenu({
 }: ITaskManagementContextMenu) {
   return (
     <Menu className="flex flex-col gap-2" id={MENU_ID}>
-      <Item className="hover:!bg-layer-light-100" onClick={() => {}}>
-        <div className="flex items-center gap-2 text-layer-dark-500">
+      <Item className="hover:!bg-light-100" onClick={() => {}}>
+        <div className="text-light-500 flex items-center gap-2">
           {getWaypointIcon({
             type: "go",
             size: 20,
@@ -42,7 +42,7 @@ export default function TaskManagementContextMenu({
         disabled={activeMission === -1 ? true : false}
         onClick={() => handleAddWaypointToMission({ type: "wait" })}
       >
-        <div className="flex items-center gap-2 text-layer-dark-500">
+        <div className="text-light-500 flex items-center gap-2">
           {getWaypointIcon({
             type: "wait",
             size: 20,
@@ -58,7 +58,7 @@ export default function TaskManagementContextMenu({
           })
         }
       >
-        <div className="flex items-center gap-2 text-layer-dark-500">
+        <div className="text-light-500 flex items-center gap-2">
           {getWaypointIcon({
             type: "move",
             size: 20,
@@ -74,7 +74,7 @@ export default function TaskManagementContextMenu({
           })
         }
       >
-        <div className="flex items-center gap-2 text-layer-dark-500">
+        <div className="text-light-500 flex items-center gap-2">
           {getWaypointIcon({
             type: "picture",
             size: 20,
@@ -85,14 +85,14 @@ export default function TaskManagementContextMenu({
       <Separator />
       <Submenu
         label={
-          <div className="flex items-center gap-2 text-layer-dark-500">
+          <div className="text-light-500 flex items-center gap-2">
             <IoSettingsOutline size={20} />
             <span className="text-sm">Map Settings</span>
           </div>
         }
       >
         <Item onClick={() => handleCostMap()}>
-          <div className="flex items-center gap-2 text-layer-dark-500">
+          <div className="text-light-500 flex items-center gap-2">
             {isCostMapActive ? (
               <AiOutlineEyeInvisible size={20} />
             ) : (

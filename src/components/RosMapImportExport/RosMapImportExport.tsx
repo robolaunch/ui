@@ -9,7 +9,7 @@ export default function RosMapImportExport() {
 
   return (
     <div className="absolute bottom-4 left-4 z-10 cursor-pointer">
-      <div className="flex flex-col rounded-lg border border-layer-light-200 bg-layer-light-50 text-xs">
+      <div className="border-light-200 bg-light-50 flex flex-col rounded-lg border text-xs">
         <FileUploader
           label="text"
           multiple={false}
@@ -17,13 +17,13 @@ export default function RosMapImportExport() {
           name="file"
           types={["json"]}
         >
-          <div className="flex gap-2 px-4 py-2 transition-all duration-300 hover:bg-layer-light-100">
+          <div className="hover:bg-light-100 flex gap-2 px-4 py-2 transition-all duration-300">
             <CiImport size={16} />
             <span>Import</span>
           </div>
         </FileUploader>
         <div
-          className="flex gap-2 px-4 py-2 transition-all duration-300 hover:bg-layer-light-100"
+          className="hover:bg-light-100 flex gap-2 px-4 py-2 transition-all duration-300"
           onClick={() => handleExportJSON()}
         >
           <CiExport size={16} />

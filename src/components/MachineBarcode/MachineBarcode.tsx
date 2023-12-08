@@ -9,7 +9,7 @@ export default function MachineBarcode({
   barcode,
 }: IMachineBarcode): ReactElement {
   return (
-    <div className="flex h-20 w-40 items-center justify-center border-[2px] border-layer-dark-800 bg-yellow-400">
+    <div className="border-light-800 flex h-20 w-40 items-center justify-center border-[2px] bg-yellow-400">
       {barcode ? (
         <Barcode
           fontSize={16}

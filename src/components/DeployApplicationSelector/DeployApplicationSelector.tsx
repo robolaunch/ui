@@ -256,7 +256,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "organization" };
                 });
               }}
-              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
+              className="text-light-700 cursor-pointer text-xs hover:underline "
             >
               Create
             </span>
@@ -310,7 +310,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "roboticscloud" };
                 });
               }}
-              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
+              className="text-light-700 cursor-pointer text-xs hover:underline "
             >
               Create
             </span>
@@ -364,7 +364,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "instance" };
                 });
               }}
-              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
+              className="text-light-700 cursor-pointer text-xs hover:underline "
             >
               Create
             </span>
@@ -425,7 +425,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "fleet" };
                 });
               }}
-              className="cursor-pointer text-xs text-layer-light-700 hover:underline "
+              className="text-light-700 cursor-pointer text-xs hover:underline "
             >
               Create
             </span>

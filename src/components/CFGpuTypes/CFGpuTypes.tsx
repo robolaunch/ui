@@ -126,7 +126,7 @@ export default function CFGpuTypes({
             },
           )
         ) : (
-          <div className="animate__animated animate__fadeIn col-span-2 text-center text-sm font-bold text-layer-dark-100">
+          <div className="animate__animated animate__fadeIn text-light-100 col-span-2 text-center text-sm font-bold">
             No Available GPU Types
           </div>
         )}

@@ -13,19 +13,19 @@ export default function ProfileChangePassword({
   return (
     <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
-        <p className="text-lg font-bold text-layer-dark-600">Change Password</p>
+        <p className="text-light-600 text-lg font-bold">Change Password</p>
 
         <div className="flex flex-col items-end gap-4">
-          <div className="flex w-full items-center gap-4 rounded-lg border border-layer-secondary-500 bg-layer-secondary-100 p-4">
+          <div className="border-secondary-500 bg-secondary-100 flex w-full items-center gap-4 rounded-lg border p-4">
             <RiErrorWarningFill
-              className="text-2xl text-layer-secondary-600"
+              className="text-secondary-600 text-2xl"
               size={32}
             />
             <div className="flex flex-col gap-2">
               <div className="text-sm font-medium">
                 You Are Changing Your Password
               </div>
-              <p className="text-xs text-layer-dark-500">
+              <p className="text-light-500 text-xs">
                 If you want to change your password, we will send you an email
               </p>
             </div>

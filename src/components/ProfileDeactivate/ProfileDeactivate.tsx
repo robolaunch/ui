@@ -17,9 +17,7 @@ export default function ProfileDeactivate({
   return (
     <CardLayout className={`flex h-fit flex-col gap-8 p-6 ${className}`}>
       <Fragment>
-        <p className="text-lg font-bold text-layer-dark-600">
-          Profile Deactive
-        </p>
+        <p className="text-light-600 text-lg font-bold">Profile Deactive</p>
 
         <div className="flex flex-col items-end gap-4">
           <div className="flex w-full items-center gap-4 rounded-lg border border-yellow-500 bg-yellow-100 p-4">
@@ -31,7 +29,7 @@ export default function ProfileDeactivate({
               <div className="text-sm font-medium">
                 You Are Deactivating Your Account
               </div>
-              <p className="text-xs text-layer-dark-500">
+              <p className="text-light-500 text-xs">
                 You will no longer be able to access your account and all your
                 data will be deleted.
               </p>

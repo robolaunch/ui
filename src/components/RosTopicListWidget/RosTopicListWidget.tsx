@@ -39,9 +39,7 @@ export default function RosTopicListWidget({
       id={id}
       type="RosTopicListWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={
-        <AiOutlineUnorderedList size={26} className="text-layer-light-400" />
-      }
+      icon={<AiOutlineUnorderedList size={26} className="text-light-400" />}
       title="Topic List"
     >
       <div className="flex flex-col gap-2 overflow-auto p-2 scrollbar-hide">
@@ -49,10 +47,10 @@ export default function RosTopicListWidget({
           return (
             <div
               key={key}
-              className="flex justify-between border-y border-layer-light-100  py-1.5 text-xs font-medium"
+              className="border-light-100 flex justify-between border-y  py-1.5 text-xs font-medium"
             >
-              <div className="text-layer-dark-600">{topic.name}</div>
-              <div className="text-layer-dark-400">{topic.type}</div>
+              <div className="text-light-600">{topic.name}</div>
+              <div className="text-light-400">{topic.type}</div>
             </div>
           );
         })}

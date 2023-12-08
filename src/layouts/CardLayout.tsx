@@ -22,7 +22,7 @@ export default function CardLayout({
   return (
     <div
       ref={ref}
-      className={`animate__animated animate__fadeIn rounded-lg border border-layer-light-200 bg-layer-light-50 p-1.5 shadow-md transition-all duration-500 ${className}`}
+      className={`animate__animated animate__fadeIn border-light-200 bg-light-50 rounded-lg border p-1.5 shadow-md transition-all duration-500 ${className}`}
       style={
         loading
           ? {

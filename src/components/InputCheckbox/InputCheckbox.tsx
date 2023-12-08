@@ -22,7 +22,7 @@ export default function InputCheckbox({
   return (
     <div className="flex gap-2">
       <label
-        className="flex min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700"
+        className="text-light-700 flex min-w-fit flex-wrap gap-1 text-xs font-medium"
         htmlFor={name}
       >
         {name}

@@ -21,7 +21,7 @@ export default function RemoteDesktop(): ReactElement {
             vdiIngressEndpoint={urls?.vdi || responseRobot?.vdiIngressEndpoint}
           >
             <div className="animate__animated animate__fadeIn grid grid-cols-12">
-              <div className="col-span-12 bg-layer-dark-900 lg:col-span-8 xl:col-span-9 2xl:col-span-10 ">
+              <div className="bg-light-900 col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 ">
                 <RemoteDesktopScene isControllerActive={true} />
               </div>
               <div className="hidden flex-col lg:col-span-4 lg:flex xl:col-span-3 2xl:col-span-2">

@@ -43,7 +43,7 @@ export default function ActivitiesWidget({
       dataTut="robot-activities-widget"
       title={`Acitivities`}
       subtitle={`Last Activities`}
-      icon={<VscHistory size={20} className="text-layer-light-700" />}
+      icon={<VscHistory size={20} className="text-light-700" />}
     >
       <ul className="flex flex-col p-5 text-sm">
         {data
@@ -56,10 +56,10 @@ export default function ActivitiesWidget({
                 </span>
 
                 <div className="col-span-2 justify-center">
-                  <div className="mx-auto flex h-4 w-4 items-center justify-center rounded-full bg-layer-primary-500">
-                    <div className="h-2 w-2 rounded-full bg-layer-light-50 " />
+                  <div className="bg-primary-500 mx-auto flex h-4 w-4 items-center justify-center rounded-full">
+                    <div className="bg-light-50 h-2 w-2 rounded-full " />
                   </div>
-                  <div className="mx-auto h-6 w-1 bg-layer-light-200"></div>
+                  <div className="bg-light-200 mx-auto h-6 w-1"></div>
                 </div>
 
                 <span className="col-span-9 text-xs font-light">

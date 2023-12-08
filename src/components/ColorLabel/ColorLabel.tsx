@@ -7,7 +7,7 @@ export default function ColorLabel(): ReactElement {
   const { responseRobot } = useRobot();
 
   return (
-    <div className="w-fit rounded-lg bg-layer-primary-100 px-2 py-1 text-[0.58rem] font-medium capitalize text-layer-primary-500">
+    <div className="bg-primary-100 text-primary-500 w-fit rounded-lg px-2 py-1 text-[0.58rem] font-medium capitalize">
       {responseRobot?.robotClusters?.length === 1
         ? `Virtual ${envApplication ? "Application" : "Robot"}`
         : (responseRobot?.robotClusters?.length === 2 &&

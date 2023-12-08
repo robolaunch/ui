@@ -59,7 +59,7 @@ export default function CreateRobotTypes({
         data-tut="create-robot-step1-type"
         className="flex flex-col gap-2 pb-2"
       >
-        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
           Robot Type:
           <InfoTip content="Select the type of robot you want to create." />
         </div>
@@ -85,9 +85,9 @@ export default function CreateRobotTypes({
               className={`relative flex w-full items-center justify-center gap-1 rounded border-2 p-3 transition-all duration-300 ${
                 formik.values?.isVirtualRobot === robotType?.isVirtualRobot
                   ? robotType?.disabled
-                    ? "border-layer-primary-300"
-                    : "border-layer-primary-600 shadow"
-                  : "border-layer-light-100"
+                    ? "border-primary-300"
+                    : "border-primary-400 shadow"
+                  : "border-light-100"
               } ${
                 robotType?.disabled ? "cursor-not-allowed" : "cursor-pointer"
               }`}
@@ -101,7 +101,7 @@ export default function CreateRobotTypes({
               }}
             >
               <div className="flex flex-col items-center gap-2">
-                <span className="text-xs text-layer-light-800">
+                <span className="text-light-800 text-xs">
                   {robotType?.name}
                 </span>
               </div>
@@ -115,7 +115,7 @@ export default function CreateRobotTypes({
       Array.isArray(responsePhysicalInstances) ? (
         responsePhysicalInstances?.length > 0 ? (
           <div className="flex flex-col gap-2 pt-1">
-            <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+            <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
               Physical Instances:
               <InfoTip content="Select the physical instance you want to hybrid robot to be deployed on." />
             </div>
@@ -126,8 +126,8 @@ export default function CreateRobotTypes({
                     key={index}
                     className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                       formik.values?.physicalInstanceName === instance?.name
-                        ? "border-layer-primary-600 shadow"
-                        : "border-layer-light-100"
+                        ? "border-primary-400 shadow"
+                        : "border-light-100"
                     } transition-all duration-300
                `}
                     onClick={() => {
@@ -142,7 +142,7 @@ export default function CreateRobotTypes({
                     }}
                   >
                     <div className="flex flex-col items-center gap-2">
-                      <span className="text-xs text-layer-light-800">
+                      <span className="text-light-800 text-xs">
                         {instance?.name}
                       </span>
                     </div>

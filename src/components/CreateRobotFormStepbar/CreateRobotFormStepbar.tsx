@@ -31,10 +31,10 @@ export default function Stepbar({
                 className={`
               flex h-7 w-7 items-center justify-center rounded-full border font-semibold  ${
                 index + 1 > currentStep
-                  ? "border-layer-primary-600 bg-layer-primary-300 text-layer-primary-900"
+                  ? "border-primary-400 bg-primary-300 text-primary-900"
                   : index + 1 < currentStep
                   ? "border-green-500 bg-green-200 text-green-900"
-                  : "animate__animated animate__pulse animate__fast animate__infinite border-layer-secondary-500 bg-layer-secondary-200 text-layer-secondary-900"
+                  : "animate__animated animate__pulse animate__fast animate__infinite border-secondary-500 bg-secondary-200 text-secondary-900"
               }`}
               >
                 <span>{index + 1}</span>
@@ -46,10 +46,10 @@ export default function Stepbar({
         <progress
           value={currentStep - 1}
           max={steps?.length - 1}
-          className="absolute inset-0 top-3.5 h-0.5 w-full appearance-none bg-layer-primary-200"
+          className="bg-primary-200 absolute inset-0 top-3.5 h-0.5 w-full appearance-none"
         />
       </div>
-      <ul className="flex w-fit flex-col items-start gap-1 rounded border border-layer-light-100 px-12 py-4 text-xs shadow-sm">
+      <ul className="border-light-100 flex w-fit flex-col items-start gap-1 rounded border px-12 py-4 text-xs shadow-sm">
         {steps?.[currentStep - 1]?.process?.map(
           (process: any, index: number) => {
             return (

@@ -18,7 +18,7 @@ export default function RosMapWidget({
       id={id}
       type="RosMapWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<BsPinMap size={20} className="text-layer-light-400" />}
+      icon={<BsPinMap size={20} className="text-light-400" />}
       title="Map"
     >
       <div className="relative h-full">

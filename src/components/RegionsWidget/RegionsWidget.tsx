@@ -80,7 +80,7 @@ export default function RegionsWidget({
       dataTut="regions-widget"
       title={`${title} Regions`}
       subtitle={`Locations of the ${title}`}
-      icon={<GoGraph size={20} className="text-layer-light-700" />}
+      icon={<GoGraph size={20} className="text-light-700" />}
     >
       <ComposableMap className="-mt-5 h-full w-full">
         <Geographies geography={world}>

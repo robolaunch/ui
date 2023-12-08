@@ -24,7 +24,7 @@ export default function InvoiceUtilizationWidget(): ReactElement {
           </InputSelect>
         </div>
       }
-      icon={<GoGraph size={20} className="text-layer-light-700" />}
+      icon={<GoGraph size={20} className="text-light-700" />}
     >
       <ReactApexChart
         options={{

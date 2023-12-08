@@ -22,7 +22,7 @@ export default function RosResourceUsageWidget({
       id={id}
       type="RosResourceUsageWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<GoGraph size={20} className="text-layer-light-400" />}
+      icon={<GoGraph size={20} className="text-light-400" />}
       title="Resource Widget"
     >
       <div className="relative h-full w-full">

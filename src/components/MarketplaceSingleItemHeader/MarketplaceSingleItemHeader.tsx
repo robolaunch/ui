@@ -50,7 +50,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
+                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
               >
                 {responseItem?.type || (
                   <ContentLoader
@@ -65,7 +65,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
+                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
               >
                 {typeof responseItem?.hasBuild === "boolean" ? (
                   `Build Steps: ${responseItem?.hasBuild ? "Include" : "None"}`
@@ -82,7 +82,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`w-fit rounded-lg bg-layer-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-layer-primary-500`}
+                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
               >
                 {typeof responseItem?.hasLaunch === "boolean" ? (
                   `Launch Steps: ${
@@ -102,7 +102,7 @@ export default function MarketplaceSingleİtemHeader({
               </div>
             </div>
           </div>
-          <div className="text-xs text-layer-dark-600">
+          <div className="text-light-600 text-xs">
             {typeof responseItem?.family === "string" ? (
               responseItem?.family + ` (${responseItem?.acronym})`
             ) : (
@@ -117,7 +117,7 @@ export default function MarketplaceSingleİtemHeader({
               </ContentLoader>
             )}
           </div>
-          <div className="text-xs text-layer-dark-700">
+          <div className="text-light-700 text-xs">
             {typeof responseItem?.distro === "string" ? (
               `ROS2 ${responseItem?.distro}`
             ) : (
@@ -133,7 +133,7 @@ export default function MarketplaceSingleİtemHeader({
             )}
           </div>
 
-          <div className="text-xs text-layer-dark-600">
+          <div className="text-light-600 text-xs">
             {typeof responseItem?.minStorageAmount === "number" ? (
               responseItem?.minStorageAmount / 1000 + " GB Storage"
             ) : (
@@ -148,7 +148,7 @@ export default function MarketplaceSingleİtemHeader({
               </ContentLoader>
             )}
           </div>
-          <div className="text-xs text-layer-dark-600">
+          <div className="text-light-600 text-xs">
             {responseItem?.version || (
               <ContentLoader
                 speed={1}

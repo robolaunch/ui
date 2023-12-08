@@ -21,7 +21,7 @@ export default function RemoteDesktopViewersTab({
             key={index}
           >
             <div className="flex gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-layer-primary-300 font-semibold text-layer-primary-700">
+              <div className="bg-primary-300 text-primary-700 flex h-10 w-10 items-center justify-center rounded-full font-semibold">
                 {member?.displayname[0]?.toUpperCase()}
               </div>
               <div className="flex flex-col justify-between">

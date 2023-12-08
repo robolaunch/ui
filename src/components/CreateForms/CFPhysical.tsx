@@ -69,7 +69,7 @@ export default function CFPhysical(): ReactElement {
           }}
           theme="vs-dark"
         />
-        <p className="text-sm font-medium text-layer-dark-600">
+        <p className="text-light-600 text-sm font-medium">
           Copy the code given below and run it on your physical device. After
           doing this, you can check and manage the status of your device.
         </p>
@@ -81,7 +81,7 @@ export default function CFPhysical(): ReactElement {
             />
           </CopyToClipboard>
           <Button
-            className="border border-layer-primary-700 !bg-layer-light-50 capitalize !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
+            className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 border capitalize transition-all duration-500"
             text="Done"
             onClick={() => {
               setSidebarState({ ...sidebarState, isCreateMode: false });

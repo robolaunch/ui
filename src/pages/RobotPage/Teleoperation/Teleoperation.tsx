@@ -148,7 +148,7 @@ export default function Teleoperation({
       <Fragment>
         <FullScreen className="relative" handle={handleFullScreen}>
           <div
-            className="grid-stack animate__animated animate__fadeIn z-0 col-span-1 w-full rounded bg-layer-dark-900"
+            className="grid-stack animate__animated animate__fadeIn bg-light-900 z-0 col-span-1 w-full rounded"
             style={{
               height: handleFullScreen.active ? "100vh" : "unset",
               backgroundImage: `url(${cameraData})`,

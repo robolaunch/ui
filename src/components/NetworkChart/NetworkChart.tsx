@@ -8,7 +8,7 @@ export default function NetworkChart(): ReactElement {
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex items-center gap-0.5 text-sm">
-        <TiArrowUp size={28} className="text-layer-primary-600" />
+        <TiArrowUp size={28} className="text-primary-400" />
         <p>
           {(
             Number(
@@ -21,7 +21,7 @@ export default function NetworkChart(): ReactElement {
         </p>
       </div>
       <div className="flex items-center gap-0.5 text-sm">
-        <TiArrowDown size={28} className="text-layer-secondary-600" />
+        <TiArrowDown size={28} className="text-secondary-600" />
         <p>
           {(
             Number(

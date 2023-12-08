@@ -7,7 +7,7 @@ export default function RobotHeaderTop(): ReactElement {
   return (
     <div
       data-tut="robot-information"
-      className="flex h-full items-center justify-between gap-8 text-layer-dark-600"
+      className="text-light-600 flex h-full items-center justify-between gap-8"
     >
       <div className="flex items-center gap-8">
         <RobotNameLabel />

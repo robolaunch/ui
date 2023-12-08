@@ -34,7 +34,7 @@ export default function RemoteDesktopChatTab({
                   key={index}
                   className="animate__animated animate__fadeIn grid grid-cols-6 gap-2 pb-2"
                 >
-                  <div className="col-span-1 flex h-10 w-10 items-center justify-center rounded-full bg-layer-primary-300 font-semibold text-layer-primary-700">
+                  <div className="bg-primary-300 text-primary-700 col-span-1 flex h-10 w-10 items-center justify-center rounded-full font-semibold">
                     {remoteDesktopReducer?.members
                       ?.filter((member: any) => member.id === message.id)[0]
                       ?.displayname[0]?.toUpperCase()}

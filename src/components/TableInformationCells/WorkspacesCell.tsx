@@ -46,14 +46,14 @@ export default function WorkspacesCell({
         return (
           <div
             key={index}
-            className="w-fit rounded border border-layer-light-200 px-4 py-1.5 shadow-md"
+            className="border-light-200 w-fit rounded border px-4 py-1.5 shadow-md"
           >
             <div className="flex gap-2">
               <a
                 target="_blank"
                 rel="noreferrer"
                 href={workspace?.url}
-                className="transition-300 flex gap-3 text-xs font-medium text-layer-secondary-700 hover:text-layer-secondary-800 hover:underline"
+                className="transition-300 text-secondary-700 hover:text-secondary-800 flex gap-3 text-xs font-medium hover:underline"
               >
                 <div className="flex items-center gap-1">
                   <img

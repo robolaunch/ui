@@ -88,9 +88,9 @@ export default function UserRoleManagementLayout(): ReactElement {
                   onClick={() =>
                     setVisibleInviteUserModal(!visibleInviteUserModal)
                   }
-                  className="!h-10 border border-layer-primary-700 !bg-layer-light-50 !text-layer-primary-700 transition-all duration-500 hover:scale-95 hover:!bg-layer-primary-100"
+                  className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 !h-10 border transition-all duration-500 hover:scale-95"
                 />
-                <CardLayout className="border border-layer-light-100">
+                <CardLayout className="border-light-100 border">
                   <div className="flex flex-col gap-4">
                     <ul className="flex flex-col gap-2 text-sm ">
                       {pages?.map((page: any) => {
@@ -101,9 +101,9 @@ export default function UserRoleManagementLayout(): ReactElement {
                         return (
                           <li
                             key={page?.key}
-                            className={`cursor-pointer rounded p-2.5 text-layer-dark-900 transition-all hover:bg-layer-light-200 ${
+                            className={`hover:bg-light-200 text-light-900 cursor-pointer rounded p-2.5 transition-all ${
                               page?.key === activePage?.page &&
-                              "bg-layer-light-100 font-medium"
+                              "bg-light-100 font-medium"
                             } ${
                               page?.key !== "organizations" &&
                               "flex items-center gap-4"
@@ -119,7 +119,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                             }
                           >
                             {page?.key !== "organizations" && (
-                              <span className="h-2 w-2 rounded-full bg-primary" />
+                              <span className="bg-primary-500 h-2 w-2 rounded-full" />
                             )}
                             {page?.key === "organizations"
                               ? "All Organizations"

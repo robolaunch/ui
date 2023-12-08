@@ -38,7 +38,7 @@ export default function BarcodeManagement2D(): ReactElement {
                                 backgroundSize: "contain",
                               }}
                             >
-                              <div className="flex h-10 w-full items-center justify-center border-[6px] border-layer-dark-800 bg-yellow-400">
+                              <div className="border-light-800 flex h-10 w-full items-center justify-center border-[6px] bg-yellow-400">
                                 {barcode ? (
                                   <Barcode
                                     fontSize={8}

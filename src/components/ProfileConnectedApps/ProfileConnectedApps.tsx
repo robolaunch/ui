@@ -46,12 +46,12 @@ export default function ProfileConnectedApps({
   return (
     <CardLayout className={`flex h-fit flex-col gap-5 p-6 ${className}`}>
       <Fragment>
-        <p className="text-lg font-bold text-layer-dark-600">Connected Apps</p>
+        <p className="text-light-600 text-lg font-bold">Connected Apps</p>
         {mockData?.map((app: any, index: number) => {
           return (
             <div
               key={index}
-              className="flex items-center justify-between rounded-lg border border-layer-light-200 p-3.5"
+              className="border-light-200 flex items-center justify-between rounded-lg border p-3.5"
             >
               <div className="flex gap-4">
                 <img
@@ -60,12 +60,10 @@ export default function ProfileConnectedApps({
                   alt={`${app?.name} icon`}
                 />
                 <div className="flex flex-col justify-between">
-                  <p className="text-base font-medium text-layer-dark-700">
+                  <p className="text-light-700 text-base font-medium">
                     {app?.name}
                   </p>
-                  <p className="text-xs text-layer-dark-500">
-                    {app?.description}
-                  </p>
+                  <p className="text-light-500 text-xs">{app?.description}</p>
                 </div>
               </div>
               <InputToggle

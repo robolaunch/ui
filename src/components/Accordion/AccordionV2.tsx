@@ -23,14 +23,14 @@ export default function Accordion({
     <Collapsible
       triggerDisabled
       open={isOpen}
-      className={`animate__animated animate__fadeIn rounded border border-layer-primary-200 bg-layer-light-50 shadow transition-all duration-500 ${className}`}
-      openedClassName={`bg-layer-light-50 rounded-md border border-layer-primary-200 !shadow ${className}`}
+      className={`animate__animated animate__fadeIn bg-light-50 border-primary-200 rounded border shadow transition-all duration-500 ${className}`}
+      openedClassName={`bg-light-50 rounded-md border border-primary-200 !shadow ${className}`}
       trigger={
         <div
           className="h-13 flex w-full !cursor-pointer items-center justify-between p-4"
           onClick={() => handleOpen()}
         >
-          <div className="w-full text-sm text-layer-dark-700">{header}</div>
+          <div className="text-light-700 w-full text-sm">{header}</div>
           <div
             className={`px-3 transition-all duration-200 hover:scale-110  ${
               isOpen ? "rotate-90" : "rotate-0"

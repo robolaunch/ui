@@ -49,7 +49,7 @@ export default function RosRosOutWidget({
       id={id}
       type="RosRosOutWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<IoMdCodeWorking size={26} className="text-layer-light-400" />}
+      icon={<IoMdCodeWorking size={26} className="text-light-400" />}
       title="ros_out"
     >
       <div
@@ -61,9 +61,9 @@ export default function RosRosOutWidget({
             return (
               <div
                 key={key}
-                className="flex border-y border-layer-light-100 py-1.5 text-xs font-medium"
+                className="border-light-100 flex border-y py-1.5 text-xs font-medium"
               >
-                <div className="text-layer-dark-600">{log}</div>
+                <div className="text-light-600">{log}</div>
               </div>
             );
           })}

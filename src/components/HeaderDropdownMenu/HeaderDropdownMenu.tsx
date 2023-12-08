@@ -15,7 +15,7 @@ export default function HeaderDropdownMenu(): ReactElement {
   const { keycloak } = useKeycloak();
 
   const liClassName =
-    "hover:bg-layer-light-100 pl-2 pr-6 py-3 transition-all duration-200 rounded cursor-pointer";
+    "hover:bg-light-100 pl-2 pr-6 py-3 transition-all duration-200 rounded cursor-pointer";
 
   return (
     <Fragment>
@@ -33,7 +33,7 @@ export default function HeaderDropdownMenu(): ReactElement {
       </div>
       {isOpen && (
         <ul
-          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border border-layer-light-100 bg-layer-light-50 p-2 text-sm shadow-lg"
+          className="animate__animated animate__fadeInDown animate__faster border-light-100 bg-light-50 absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border p-2 text-sm shadow-lg"
           ref={ref}
         >
           <Link onClick={() => setIsOpen(false)} to={`/profile`}>
@@ -44,15 +44,15 @@ export default function HeaderDropdownMenu(): ReactElement {
                 default="mp"
               />
               <div className="flex flex-col">
-                <span className="font-semibold text-layer-dark-700">
+                <span className="text-light-600 font-semibold">
                   {keycloak?.tokenParsed?.given_name +
                     " " +
                     keycloak?.tokenParsed?.family_name}
                 </span>
-                <span className="text-xs font-medium text-layer-dark-300">
+                <span className="text-light-500 text-xs font-medium">
                   {keycloak?.tokenParsed?.preferred_username}
                 </span>
-                <span className="text-xs font-light text-layer-dark-300">
+                <span className="text-light-500 text-xs font-light">
                   {keycloak?.tokenParsed?.email}
                 </span>
               </div>

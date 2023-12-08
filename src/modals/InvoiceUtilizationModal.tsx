@@ -110,14 +110,11 @@ export default function InvoiceUtilizationModal({
         />
         <div className="flex items-center justify-center">
           <Button
-            className="!h-8 !w-fit !border !border-layer-secondary-600 !bg-transparent !ring-layer-secondary-200"
+            className="!border-secondary-600 !ring-secondary-200 !h-8 !w-fit !border !bg-transparent"
             text={
               <div className="flex items-center gap-1.5 p-3">
-                <TbCloudDownload
-                  size={20}
-                  className="text-layer-secondary-600"
-                />
-                <span className="text-layer-secondary-600">Download</span>
+                <TbCloudDownload size={20} className="text-secondary-600" />
+                <span className="text-secondary-600">Download</span>
               </div>
             }
           />

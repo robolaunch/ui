@@ -38,7 +38,7 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
     >
       <Fragment>
         <div className="flex items-center justify-between">
-          <p className="text-lg font-bold text-layer-dark-600">Profile Info</p>
+          <p className="text-light-600 text-lg font-bold">Profile Info</p>
           {isEditModeActive ? (
             <MdOutlineCancel
               className="cursor-pointer"
@@ -64,7 +64,7 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
               default="mp"
               size={144}
             />
-            <div className="flex items-center text-sm text-layer-dark-600">
+            <div className="text-light-600 flex items-center text-sm">
               <span>
                 We use gravatar to get your avatar. If you want to change your
                 avatar, please go to{" "}
@@ -72,7 +72,7 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
                   href="https://gravatar.com/"
                   target="_blank"
                   rel="noreferrer"
-                  className="text-layer-primary-500 hover:underline"
+                  className="text-primary-500 hover:underline"
                 >
                   Gravatar
                 </a>{" "}
@@ -145,7 +145,7 @@ export default function ProfileInfo({ className }: IProfileInfo): ReactElement {
           {isEditModeActive && (
             <div className="flex items-center justify-end gap-6">
               <span
-                className="cursor-pointer text-xs font-medium text-layer-dark-500 hover:underline"
+                className="text-light-500 cursor-pointer text-xs font-medium hover:underline"
                 onClick={() => formik.resetForm()}
               >
                 Discard

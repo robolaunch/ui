@@ -8,8 +8,8 @@ export default function RosControlBar(): ReactElement {
 
   return (
     <div className="absolute bottom-4 flex w-full cursor-pointer items-center justify-center">
-      <div className="flex rounded-lg border border-layer-light-200 bg-layer-light-50 text-xs">
-        <div className="flex gap-2 px-4 py-2 transition-all duration-300 hover:bg-layer-light-100">
+      <div className="border-light-200 bg-light-50 flex rounded-lg border text-xs">
+        <div className="hover:bg-light-100 flex gap-2 px-4 py-2 transition-all duration-300">
           <FaPlayCircle size={16} />
           <span>Start Mission</span>
         </div>
@@ -32,12 +32,12 @@ export default function RosControlBar(): ReactElement {
               ],
             });
           }}
-          className="flex gap-2 px-4 py-2 transition-all duration-300 hover:bg-layer-light-100"
+          className="hover:bg-light-100 flex gap-2 px-4 py-2 transition-all duration-300"
         >
           <RiArrowGoBackFill size={16} />
           <span>Return a Starting Point</span>
         </div>{" "}
-        <div className="flex gap-2 px-4 py-2 transition-all duration-300 hover:bg-layer-light-100">
+        <div className="hover:bg-light-100 flex gap-2 px-4 py-2 transition-all duration-300">
           <FaStopCircle size={16} />
           <span>Emergency Stop</span>
         </div>

@@ -17,13 +17,13 @@ export default function AdrinNetworkTypes({
     <Fragment>
       <div className="flex w-full gap-6">
         <div className="flex w-full flex-col gap-2">
-          <div className="flex w-full min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700">
+          <div className="text-light-700 flex w-full min-w-fit flex-wrap gap-1 text-xs font-medium">
             ADriN Regions:
             <InfoTip content="ADriN Region." />
           </div>
           <div className="flex w-full gap-6">
             <InputSelect
-              className="w-full text-sm text-layer-light-900"
+              className="text-light-900 w-full text-sm"
               {...formik.getFieldProps(`adrinRegions`)}
               wrapClassName="w-full"
               disabled={isImportRobot || formik?.isSubmitting}
@@ -39,7 +39,7 @@ export default function AdrinNetworkTypes({
         </div>
 
         <div className="flex w-full flex-col  gap-2">
-          <div className="flex min-w-fit flex-wrap gap-1 text-xs font-medium text-layer-light-700">
+          <div className="text-light-700 flex min-w-fit flex-wrap gap-1 text-xs font-medium">
             Communication Profile:
             <InfoTip content="ADriN Types." rightTip />
           </div>
@@ -65,7 +65,7 @@ export default function AdrinNetworkTypes({
 
       {/*    Network Autoscale: */}
       <div className="flex items-center gap-1 pt-2">
-        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
           Network Autoscale:
           <InfoTip content="Network Autoscale" />
         </div>

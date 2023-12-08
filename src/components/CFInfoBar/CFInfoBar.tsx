@@ -28,7 +28,7 @@ export default function CFInfoBar({
   return (
     <div className={`${classNameContainer} transition-300`} data-tut={dataTut}>
       <div className={`flex ${vertical && "flex-col gap-2"}`}>
-        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
           {label}
           <InfoTip content={tip} rightTip={rightTip} />
         </div>

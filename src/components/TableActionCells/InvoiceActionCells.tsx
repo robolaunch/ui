@@ -19,23 +19,21 @@ export default function InvoiceActionCells({
     <Fragment>
       <div className="flex justify-end gap-3">
         <Button
-          className="!h-8 !w-8 !border !border-layer-primary-500 !bg-transparent
-                disabled:cursor-not-allowed disabled:!border-layer-light-300 disabled:!text-layer-light-300
+          className="disabled:!border-light-300 disabled:!text-light-300 !border-primary-500 !h-8 !w-8
+                !border !bg-transparent disabled:cursor-not-allowed
                 "
           text={
             <MdPayment
               className={`${
-                rowData?.status
-                  ? "!text-layer-light-300"
-                  : "!text-layer-primary-500"
+                rowData?.status ? "!text-light-300" : "!text-primary-500"
               } `}
             />
           }
           disabled={rowData?.status}
         />
         <Button
-          className="!h-8 !w-8 !border !border-layer-secondary-600 !bg-transparent !ring-layer-secondary-200"
-          text={<TbCloudDownload className="text-layer-secondary-600" />}
+          className="!border-secondary-600 !ring-secondary-200 !h-8 !w-8 !border !bg-transparent"
+          text={<TbCloudDownload className="text-secondary-600" />}
         />
         <Button
           onClick={() => setIsOpenInvoiceUtilizationModal(true)}

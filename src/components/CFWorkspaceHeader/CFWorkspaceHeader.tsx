@@ -6,7 +6,7 @@ export default function CFWorkspaceHeader(): ReactElement {
       <span className="mx-auto text-[0.75rem] font-medium">
         Workspace Repositories
       </span>
-      <span className="h-[2px] w-full bg-primary" />
+      <span className="bg-primary-500 h-[2px] w-full" />
     </Fragment>
   );
 }

@@ -243,7 +243,7 @@ export default function SidebarContentLayout(): ReactElement {
 
   return (
     <div
-      className={`w-fill-available animate__animated animate__fadeInLeftBig animate__faster fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-layer-light-200 bg-layer-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
+      className={`w-fill-available animate__animated animate__fadeInLeftBig animate__faster border-light-200 bg-light-50 fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r shadow-2xl md:w-[38rem] lg:left-20 ${
         url?.robotName || sidebarState?.isCreateMode ? "px-8 pb-2 pt-8" : "p-6"
       }`}
     >
@@ -424,7 +424,7 @@ export default function SidebarContentLayout(): ReactElement {
           <Button
             className={
               sidebarState?.isCreateMode
-                ? "mt-3 border border-layer-primary-700 !bg-layer-light-50 capitalize !text-layer-primary-700 transition-all duration-500 hover:!bg-layer-primary-100"
+                ? "!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 mt-3 border capitalize transition-all duration-500"
                 : ""
             }
             text={buttonTextGenerator()}

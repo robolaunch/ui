@@ -18,7 +18,7 @@ export default function TableActionButton({
 }: ITableActionButton): ReactElement {
   function colorHandle(): string {
     if (disabled) {
-      return "text-layer-light-500";
+      return "text-light-500";
     }
 
     switch (type) {
@@ -27,7 +27,7 @@ export default function TableActionButton({
       }
     }
 
-    return "text-layer-primary-500 border-layer-primary-500";
+    return "text-primary-500 border-primary-500";
   }
 
   const props: IconBaseProps = {
@@ -36,7 +36,7 @@ export default function TableActionButton({
 
   return (
     <Button
-      className={`!h-8 !w-8 !border   !bg-transparent disabled:!border-layer-light-500 ${colorHandle()} `}
+      className={`disabled:!border-light-500 !h-8 !w-8   !border !bg-transparent ${colorHandle()} `}
       text={(() => {
         switch (type) {
           case "edit": {

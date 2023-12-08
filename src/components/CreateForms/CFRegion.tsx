@@ -52,7 +52,7 @@ export default function CFRegion(): ReactElement {
         inputTouched={!!formik.errors.roboticsCloudName}
       />
       <div className="flex flex-col gap-3">
-        <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
           Providers:
           <InfoTip
             content="
@@ -65,10 +65,10 @@ export default function CFRegion(): ReactElement {
               key={index}
               className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                 formik.values.provider === provider.name
-                  ? "border-layer-primary-600 shadow"
-                  : "border-layer-light-100"
+                  ? "border-primary-400 shadow"
+                  : "border-light-100"
               } transition-all duration-300 ${
-                provider?.isDisabled && "bg-layer-light-100"
+                provider?.isDisabled && "bg-light-100"
               }
                `}
               onClick={() => {
@@ -88,7 +88,7 @@ export default function CFRegion(): ReactElement {
                     filter: provider.isDisabled ? `grayscale(1)` : `none`,
                   }}
                 />
-                <span className="text-[0.68rem] text-layer-light-700">
+                <span className="text-light-700 text-[0.68rem]">
                   {provider.fullName}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function CFRegion(): ReactElement {
       </div>
       {formik?.values?.provider && (
         <div className="flex flex-col gap-3">
-          <div className="flex min-w-fit gap-1 text-xs font-medium text-layer-light-700">
+          <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
             Regions:
             <InfoTip
               content="
@@ -117,8 +117,8 @@ export default function CFRegion(): ReactElement {
                   key={index}
                   className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
                     formik.values.region === region.name
-                      ? "border-layer-primary-600 shadow"
-                      : "border-layer-light-100"
+                      ? "border-primary-400 shadow"
+                      : "border-light-100"
                   } transition-all duration-300
                `}
                   onClick={() => {
@@ -126,10 +126,10 @@ export default function CFRegion(): ReactElement {
                   }}
                 >
                   <div className="flex flex-col items-center gap-2">
-                    <span className="text-xs text-layer-light-800">
+                    <span className="text-light-800 text-xs">
                       {region?.name}
                     </span>
-                    <span className="text-xs text-layer-light-700">
+                    <span className="text-light-700 text-xs">
                       ({region?.city})
                     </span>
                   </div>

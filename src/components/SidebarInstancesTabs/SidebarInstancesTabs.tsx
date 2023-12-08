@@ -11,8 +11,8 @@ export default function SidebarInstancesTabs(): ReactElement {
           return (
             <li
               key={index}
-              className={`flex w-full min-w-max cursor-pointer flex-col items-center justify-center gap-3 px-1 text-xs font-medium text-layer-light-300 transition-all duration-500 hover:scale-95 ${
-                sidebarState?.instanceTab === item && "!text-layer-primary-500"
+              className={`text-light-300 flex w-full min-w-max cursor-pointer flex-col items-center justify-center gap-3 px-1 text-xs font-medium transition-all duration-500 hover:scale-95 ${
+                sidebarState?.instanceTab === item && "!text-primary-500"
               }`}
               onClick={() =>
                 setSidebarState({
@@ -23,8 +23,8 @@ export default function SidebarInstancesTabs(): ReactElement {
             >
               <p>{item}</p>
               <span
-                className={`h-[2px] w-full bg-layer-light-300 ${
-                  sidebarState?.instanceTab === item && "!bg-primary"
+                className={`bg-light-300 h-[2px] w-full ${
+                  sidebarState?.instanceTab === item && "!bg-primary-500"
                 } `}
               />
             </li>

@@ -127,16 +127,16 @@ export default function SidebarListItem({
       key={name}
       className={`animate__animated animate__fadeIn flex cursor-pointer  select-none rounded-lg border hover:scale-[0.985] ${
         selected
-          ? "border-layer-light-400 bg-layer-light-100 shadow"
-          : "border-layer-light-200 bg-layer-light-50 shadow-sm"
+          ? "border-light-400 bg-light-100 shadow"
+          : "border-light-200 bg-light-50 shadow-sm"
       } transition-300`}
     >
       <div
         onClick={() => handleSelectItem()}
         className={`transition-300 flex w-full gap-4 rounded-l-lg border-r p-2.5 ${
           selected
-            ? "border-layer-light-400 hover:bg-layer-light-200"
-            : "border-layer-light-200 hover:bg-layer-light-100"
+            ? "border-light-400 hover:bg-light-200"
+            : "border-light-200 hover:bg-light-100"
         } ${notSelectable && "!border-0"}`}
       >
         <img
@@ -213,13 +213,13 @@ export default function SidebarListItem({
           }}
           className={`transition-300 flex items-center justify-center rounded-r-lg px-3.5 ${
             selected
-              ? "border-layer-light-400 hover:bg-layer-light-200"
-              : "border-layer-light-100 hover:bg-layer-light-100"
+              ? "border-light-400 hover:bg-light-200"
+              : "border-light-100 hover:bg-light-100"
           } `}
         >
           <i
             className={`pi pi-angle-right transition-300 ${
-              selected ? "text-layer-light-900" : "text-layer-light-700"
+              selected ? "text-light-900" : "text-light-700"
             }`}
             style={{ fontSize: "1.25rem" }}
           />

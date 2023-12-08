@@ -20,13 +20,13 @@ export default function NetworkCell({
           network && (
             <div
               key={index}
-              className="flex flex-col gap-2 text-xs font-medium text-layer-light-700"
+              className="text-light-700 flex flex-col gap-2 text-xs font-medium"
             >
               <div className="flex flex-col items-center justify-center gap-1">
-                <div className="flex h-11 w-11 items-center justify-center text-center text-layer-light-700">
+                <div className="text-light-700 flex h-11 w-11 items-center justify-center text-center">
                   {network > 0 ? `${network} Mbps` : "Pending..."}
                 </div>
-                <span className="text-[0.66rem] text-layer-dark-500">
+                <span className="text-light-600 text-[0.66rem]">
                   ({networkInterface}) {index === 0 ? "In" : "Out"}
                 </span>
               </div>

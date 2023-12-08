@@ -44,7 +44,7 @@ const RosCameraWidget = ({
       id={id}
       type="RosCameraWidget"
       handleRemoveWidget={handleRemoveWidget}
-      icon={<BsCameraVideo size={24} className="text-layer-light-400" />}
+      icon={<BsCameraVideo size={24} className="text-light-400" />}
       title={
         <InputSelect
           className="h-8 min-w-[8rem] p-0 text-center text-xs font-medium"

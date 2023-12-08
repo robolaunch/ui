@@ -15,7 +15,7 @@ export default function RobotStatusWidgetItem({
   stateText,
 }: IRobotStatusWidgetItem): ReactElement {
   return (
-    <div className="flex flex-col items-center justify-center gap-6 text-sm font-medium text-layer-dark-600">
+    <div className="text-light-600 flex flex-col items-center justify-center gap-6 text-sm font-medium">
       <span>{title}</span>
       <div className="flex flex-col items-center justify-center gap-2">
         {loading ? (

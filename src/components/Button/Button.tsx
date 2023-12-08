@@ -25,7 +25,7 @@ export default function Button({
       type={type || "button"}
       disabled={disabled}
       onClick={() => (onClick ? onClick() : null)}
-      className={`transition-300 flex h-12 w-full items-center justify-center rounded-md bg-primary text-xs font-medium text-white hover:scale-[0.99] hover:bg-layer-primary-700 focus:ring-4 focus:ring-layer-primary-300 active:bg-purple-900 disabled:bg-layer-primary-400 ${className}`}
+      className={`transition-300 bg-primary-500 hover:bg-primary-700 focus:ring-primary-300 disabled:bg-primary-400 flex h-12 w-full items-center justify-center rounded-md text-xs font-medium text-white hover:scale-[0.99] focus:ring-4 active:bg-purple-900 ${className}`}
     >
       {loading ? (
         <img

@@ -35,7 +35,7 @@ export default function FormInputText({
   return (
     <div data-tut={dataTut} className={classNameContainer}>
       <div
-        className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-layer-light-700 ${classNameInput}`}
+        className={`text-light-700 flex min-w-fit gap-1 pb-3 text-xs font-medium ${classNameInput}`}
       >
         {labelName}
         <InfoTip content={labelInfoTip} rightTip={rightTip} />

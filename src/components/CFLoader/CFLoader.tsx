@@ -38,7 +38,7 @@ export default function CFLoader({
               src="/svg/general/loading.svg"
               alt="Loading..."
             />
-            <span className="pb-4 text-sm text-layer-light-900">
+            <span className="text-light-900 pb-4 text-sm">
               {loadingText ||
                 "Please wait while we create your robot. This may take a few minutes."}
             </span>
@@ -53,7 +53,7 @@ export default function CFLoader({
                   return (
                     <div
                       key={index}
-                      className="flex w-full flex-col items-center justify-center gap-3 rounded border border-layer-light-100 p-4 shadow"
+                      className="border-light-100 flex w-full flex-col items-center justify-center gap-3 rounded border p-4 shadow"
                     >
                       <div className="flex items-center justify-center">
                         {item?.status === "EnvironmentReady" ||
@@ -69,10 +69,10 @@ export default function CFLoader({
                       </div>
                       {loadingItems?.length && (
                         <Fragment>
-                          <span className="text-sm font-semibold text-layer-light-900">
+                          <span className="text-light-900 text-sm font-semibold">
                             {item?.name}
                           </span>
-                          <span className="text-sm text-layer-dark-700">
+                          <span className="text-light-950 text-sm">
                             {item?.status || "Loading..."}
                           </span>
                         </Fragment>
