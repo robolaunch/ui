@@ -35,28 +35,6 @@ export default function RobotResource(): ReactElement {
           )}
         </div>
         <div className="col-span-1 flex items-center gap-2">
-          <BsFillCpuFill size={16} color="#666666" />
-          {pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]
-            ?.gpuModel ? (
-            <span className="text-xs font-light">
-              {
-                pagesState.instance?.cloudInstanceResource?.gpuUsage?.[0]
-                  ?.gpuModel
-              }
-            </span>
-          ) : (
-            <ContentLoader
-              speed={1}
-              width={64}
-              height={12}
-              backgroundColor="#f6f6ef"
-              foregroundColor="#e8e8e3"
-            >
-              <rect width="64" height="12" />
-            </ContentLoader>
-          )}
-        </div>
-        <div className="col-span-1 flex items-center gap-2">
           <FaMemory size={16} color="#666666" />
 
           {pagesState?.instance?.cloudInstanceResource?.memoryTotal ? (

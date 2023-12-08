@@ -12,7 +12,6 @@ import { SiKubernetes } from "react-icons/si";
 import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { RiCpuLine } from "react-icons/ri";
-import { BsGpuCard } from "react-icons/bs";
 import { ReactElement } from "react";
 
 export default function CIDashboard(): ReactElement {
@@ -110,13 +109,6 @@ export default function CIDashboard(): ReactElement {
               title: "K8S Version",
               value:
                 pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
-            },
-            {
-              icon: <BsGpuCard size={16} />,
-              title: "GPU Model",
-              value:
-                pagesState?.instance?.cloudInstanceResource?.gpuUsage?.[0]
-                  ?.gpuModel,
             },
           ]}
         />
