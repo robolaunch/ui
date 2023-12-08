@@ -88,18 +88,6 @@ export default function RobotHeaderTabs(): ReactElement {
       isHidden: false,
     },
     {
-      name: "File Manager",
-      icon: <BiSolidFolder size={16} />,
-      isLoading:
-        !responseRobot ||
-        !(
-          responseRobot?.ideEnabled &&
-          responseRobot?.ideIngressEndpoint &&
-          isSettedCookie
-        ),
-      isHidden: false,
-    },
-    {
       name: "Remote Desktop",
       icon: <MdScreenShare size={16} />,
       isLoading:
