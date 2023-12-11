@@ -12,12 +12,8 @@ jobs:
     name: test
 
     steps:
-      - name: Set environment secret to env variable
-        run: |
-          export GG="${{ secrets.GG }}"
-
       - name: Display environment secret variable
-        run: echo "GG value is $GG"
+        run: echo ${{ secrets.GG }}
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
