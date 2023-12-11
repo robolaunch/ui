@@ -13,7 +13,8 @@ jobs:
 
     steps:
       - name: Display environment secret variable
-        run: echo ${{ secrets }}
+        run: echo ${{ secrets }} | jq .
+        shell: bash
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
