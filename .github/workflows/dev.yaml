@@ -17,8 +17,12 @@ jobs:
         id: project_version
         run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
+      - name: Set environment secret to env variable
+        run: |
+          export MY_SECRET_VARIABLE="${{ environments.test.TESTIKO }}"
+
       - name: test echo
-        run: echo ${{ environments.test.TESTIKO }}
+        run: echo $MY_SECRET_VARIABLE
 
       - name: Build the Docker Image
         run: |
