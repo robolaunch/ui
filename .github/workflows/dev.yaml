@@ -20,7 +20,7 @@ jobs:
 
       - name: Set environment secret to env variable
         run: |
-          export MY_SECRET_VARIABLE="${{ environments.test.TESTIKO }}"
+          export MY_SECRET_VARIABLE="${{ secrets }}"
 
       - name: test echo
         run: echo $MY_SECRET_VARIABLE
