@@ -8,37 +8,33 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: test
+    environment:
+    name: test
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Extract Version from package.json
-        id: project_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
-
-      - name: test echo
-        run: echo ${{ secrets.DOCKER_USERNAME }}
-
-      - name: test echo2
-        run: echo ${{ secrets }}
-
-      - name: test echo3
-        run: echo ${{ secrets.test.TESTIKO }}
-
-      - name: test echo4
-        run: echo $TESTIKO
-
-      - name: Build the Docker Image
+      - name: Set environment secret to env variable
         run: |
-          docker build \
-            --file Dockerfile-dev \
-            --tag robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev \
-            .
+          export TESTIKO="${{ secrets.TESTIKO }}"
 
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Display environment secret variable
+        run: echo "TESTIKO value is $TESTIKO"
 
-      - name: Push the Docker Image to Docker Hub
-        run: docker push robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev
+      # - name: Checkout Code
+      #   uses: actions/checkout@v3
+
+      # - name: Extract Version from package.json
+      #   id: project_version
+      #   run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
+      # - name: Build the Docker Image
+      #   run: |
+      #     docker build \
+      #       --file Dockerfile-dev \
+      #       --tag robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev \
+      #       .
+
+      # - name: Login to Docker Hub
+      #   run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      # - name: Push the Docker Image to Docker Hub
+      #   run: docker push robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev
