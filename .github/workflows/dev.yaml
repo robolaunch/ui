@@ -16,7 +16,7 @@ jobs:
         run: echo ${{ secrets.DOCKER_USERNAME }}
 
       - name: Display environment secret variable
-        run: echo ${{ secrets.TEST }}
+        run: echo ${{ secrets.TEST2 }}
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
