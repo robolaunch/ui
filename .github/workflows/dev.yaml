@@ -24,8 +24,11 @@ jobs:
       - name: test echo2
         run: echo ${{ secrets }}
 
-      - name: test echo2
+      - name: test echo3
         run: echo ${{ secrets.test.TESTIKO }}
+
+      - name: test echo4
+        run: echo $TESTIKO
 
       - name: Build the Docker Image
         run: |
