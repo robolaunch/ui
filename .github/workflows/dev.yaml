@@ -17,6 +17,9 @@ jobs:
         id: project_version
         run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
+      - name: test echo
+        run: echo ${{ environments.test.TESTIKO }}
+
       - name: Build the Docker Image
         run: |
           docker build \
