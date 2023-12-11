@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Display environment secret variable
-        run: echo "${{ secrets.GG }}"
+        run: echo ${{ secrets }}
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
