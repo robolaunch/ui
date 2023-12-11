@@ -116,7 +116,9 @@ export function RegionTableData() {
             pagesState?.organization?.organizationName!,
           ),
           architecture: instance?.cloudInstanceResource?.architecture,
-          OSResources: `${instance?.cloudInstanceResource?.operatingSystemDistro}
+          OSResources:
+            instance?.cloudInstanceResource?.operatingSystemDistro &&
+            `${instance?.cloudInstanceResource?.operatingSystemDistro}
           (${instance?.cloudInstanceResource?.operatingSystem})
           `,
           kernel: instance?.cloudInstanceResource?.kernelVersion,
