@@ -1,11 +1,16 @@
-FROM ubuntu:20.04
-RUN apt-get update
-RUN ln -fs /usr/share/zoneinfo/Europe/Istanbul /etc/localtime
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
-RUN apt-get update && apt-get install -y wget curl vim mlocate apache2
-RUN a2enmod rewrite
-ADD build /var/www/html/
-COPY .htaccess /var/www/html/.htaccess
-COPY 000-default.conf /etc/apache2/sites-enabled/
-RUN echo ServerName 127.0.0.1 >> /etc/apache2/apache2.conf
-ENTRYPOINT ["apachectl", "-D", "FOREGROUND"] 
+FROM node:latest as build-stage
+ARG REACT_APP_BACKEND_URL
+ARG REACT_APP_KEYCLOAK_URL
+ARG REACT_APP_KEYCLOAK_REALM
+ARG REACT_APP_KEYCLOAK_CLIENT_ID
+ARG REACT_APP_APPLICATION
+ARG REACT_APP_CREATE_ORGANIZATION
+ARG REACT_APP_CREATE_REGION
+ARG REACT_APP_CREATE_INSTANCE
+COPY . /app
+WORKDIR /app
+RUN npm install
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
+FROM nginx:alpine as production-stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
+EXPOSE 80

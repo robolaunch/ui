@@ -1,0 +1,41 @@
+name: Docker Image (onpremise-amz-01)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: onpremise-amz-01
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Extract Version from package.json
+        id: project_version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
+      - name: Build the Docker Image
+        run: |
+          docker build \
+            --file Dockerfile \
+            --tag robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-amz-01 \
+            --build-arg REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_URL=${{ secrets.REACT_APP_KEYCLOAK_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_REALM=${{ secrets.REACT_APP_KEYCLOAK_REALM }} \
+            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{ secrets.REACT_APP_KEYCLOAK_CLIENT_ID }} \
+            --build-arg REACT_APP_APPLICATION=${{ secrets.REACT_APP_APPLICATION }} \
+            --build-arg REACT_APP_CREATE_ORGANIZATION=${{ secrets.REACT_APP_CREATE_ORGANIZATION }} \
+            --build-arg REACT_APP_CREATE_REGION=${{ secrets.REACT_APP_CREATE_REGION }} \
+            --build-arg REACT_APP_CREATE_INSTANCE=${{ secrets.REACT_APP_CREATE_INSTANCE }} \
+            .
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push the Docker Image to Docker Hub
+        run: docker push robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-amz-01
