@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Display environment secret variable
-        run: echo ${{ secrets.DOCKER_USERNAME }}
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
