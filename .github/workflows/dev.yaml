@@ -12,28 +12,30 @@ jobs:
       name: development
 
     steps:
-      - name: Display environment secret variable
-        run: echo ${{ secrets.DOCKER_USERNAME }}
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Display environment secret variable
-        run: echo ${{ secrets.TEST2 }}
+      - name: Extract Version from package.json
+        id: project_version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
+      - name: Build the Docker Image
+        run: |
+          docker build \
+            --file Dockerfile-dev \
+            --tag robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev \
+            --build-arg REACT_APP_BACKEND_URL=${{ secrets.DEV_REACT_APP_BACKEND_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_URL=${{ secrets.DEV_REACT_APP_KEYCLOAK_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_REALM=${{ secrets.DEV_REACT_APP_KEYCLOAK_REALM }} \
+            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{ secrets.DEV_REACT_APP_KEYCLOAK_CLIENT_ID }} \
+            --build-arg REACT_APP_APPLICATION=${{ secrets.DEV_REACT_APP_APPLICATION }} \
+            --build-arg REACT_APP_CREATE_ORGANIZATION=${{ secrets.DEV_REACT_APP_CREATE_ORGANIZATION }} \
+            --build-arg REACT_APP_CREATE_REGION=${{ secrets.DEV_REACT_APP_CREATE_REGION }} \
+            --build-arg REACT_APP_CREATE_INSTANCE=${{ secrets.DEV_REACT_APP_CREATE_INSTANCE }} \
+            .
 
-      # - name: Extract Version from package.json
-      #   id: project_version
-      #   run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      # - name: Build the Docker Image
-      #   run: |
-      #     docker build \
-      #       --file Dockerfile-dev \
-      #       --tag robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev \
-      #       .
-
-      # - name: Login to Docker Hub
-      #   run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-      # - name: Push the Docker Image to Docker Hub
-      #   run: docker push robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev
+      - name: Push the Docker Image to Docker Hub
+        run: docker push robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-dev
