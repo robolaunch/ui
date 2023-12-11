@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: test
 
     steps:
       - name: Checkout Code
@@ -18,12 +19,10 @@ jobs:
         run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
       - name: Set environment secret to env variable
-        environment: test
         run: |
-          export MY_SECRET_VARIABLE="${{ environments.test.TESTIKO }}"
+          export MY_SECRET_VARIABLE="${{ secrets.test.TESTIKO }}"
 
       - name: test echo
-        environment: test
         run: echo $MY_SECRET_VARIABLE
 
       - name: Build the Docker Image
