@@ -36,8 +36,8 @@ _Visualization_
 ![Robolaunch UI](./docs/assets/dev-suite.png)
 _Development-Suite_
 
-![Robolaunch UI](./docs/assets/rc-dashboard.png)
-_Regions-Dashboard_
+![Robolaunch UI](./docs/assets/ci-dashboard.png)
+_Instance-Dashboard_
 
 ![Robolaunch UI](./docs/assets/remote-desktop.png)
 _Remote-Desktop_
