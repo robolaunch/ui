@@ -2,7 +2,6 @@ import { handleLogout } from "../../functions/GeneralFunctions";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Fragment, ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";
-import { Link } from "react-router-dom";
 import Gravatar from "react-gravatar";
 
 export default function HeaderDropdownMenu(): ReactElement {
@@ -36,7 +35,7 @@ export default function HeaderDropdownMenu(): ReactElement {
           className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border border-light-100 bg-light-50 p-2 text-sm shadow-lg"
           ref={ref}
         >
-          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
+          <div onClick={() => setIsOpen(false)}>
             <li className={`${liClassName} flex gap-3`}>
               <Gravatar
                 email={keycloak?.tokenParsed?.email}
@@ -57,10 +56,10 @@ export default function HeaderDropdownMenu(): ReactElement {
                 </span>
               </div>
             </li>
-          </Link>
-          <Link onClick={() => setIsOpen(false)} to={`/profile`}>
+          </div>
+          <div onClick={() => setIsOpen(false)}>
             <li className={liClassName}>Account Settings</li>
-          </Link>
+          </div>
           <li
             className={liClassName}
             onClick={() => {

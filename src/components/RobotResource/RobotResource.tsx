@@ -21,6 +21,7 @@ export default function RobotResource(): ReactElement {
           {pagesState?.instance?.cloudInstanceResource?.cpuTotal ? (
             <span className="text-xs font-light">
               {pagesState?.instance?.cloudInstanceResource?.cpuTotal} Core
+              vGPU/MIG
             </span>
           ) : (
             <ContentLoader
@@ -40,6 +41,7 @@ export default function RobotResource(): ReactElement {
           {pagesState?.instance?.cloudInstanceResource?.memoryTotal ? (
             <span className="text-xs font-light">
               {pagesState?.instance?.cloudInstanceResource?.memoryTotal} GB
+              Memory
             </span>
           ) : (
             <ContentLoader
@@ -58,7 +60,7 @@ export default function RobotResource(): ReactElement {
 
           {responseRobot?.storageAmount ? (
             <span className="text-xs font-light">
-              {responseRobot?.storageAmount} GB
+              {responseRobot?.storageAmount} GB Storage
             </span>
           ) : (
             <ContentLoader

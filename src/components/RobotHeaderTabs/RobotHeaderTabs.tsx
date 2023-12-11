@@ -5,7 +5,6 @@ import { envApplication } from "../../helpers/envProvider";
 import { AiFillCode, AiFillLayout } from "react-icons/ai";
 import { BsCameraVideoFill } from "react-icons/bs";
 import { BiJoystickButton } from "react-icons/bi";
-import { BiSolidFolder } from "react-icons/bi";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 

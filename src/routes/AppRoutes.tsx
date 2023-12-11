@@ -8,7 +8,6 @@ import CIDashboard from "../pages/DashboardsPage/CIDashboard/CIDashboard";
 import NSDashboard from "../pages/DashboardsPage/NSDashboard/NSDashboard";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateProvider from "../providers/PrivateProvider";
-import ProfilePage from "../pages/Profile/ProfilePage";
 import RobotPage from "../pages/RobotPage/RobotPage";
 import Page404 from "../pages/Page404/Page404";
 import { ReactElement } from "react";
@@ -26,7 +25,6 @@ export default function AppRoutes(): ReactElement {
           path={`/marketplace/:productName`}
           element={<MarketplaceSingleItemPage />}
         />
-        <Route path={`/profile`} element={<ProfilePage />} />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />
