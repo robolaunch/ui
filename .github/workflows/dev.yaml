@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-    name: test
+      - name: test
 
     steps:
       - name: Set environment secret to env variable
