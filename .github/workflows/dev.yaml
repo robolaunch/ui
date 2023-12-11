@@ -9,15 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      - name: test
+    name: test
 
     steps:
       - name: Set environment secret to env variable
         run: |
-          export TESTIKO="${{ secrets.TESTIKO }}"
+          export GG="${{ secrets.GG }}"
 
       - name: Display environment secret variable
-        run: echo "TESTIKO value is $TESTIKO"
+        run: echo "GG value is $GG"
 
       # - name: Checkout Code
       #   uses: actions/checkout@v3
