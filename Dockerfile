@@ -12,5 +12,6 @@ WORKDIR /app
 RUN npm install
 RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 FROM nginx:alpine as production-stage
+COPY --from=build-stage /app/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/build /usr/share/nginx/html
 EXPOSE 80
