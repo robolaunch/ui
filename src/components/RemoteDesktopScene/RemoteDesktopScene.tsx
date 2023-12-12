@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
-import { GiSpeaker } from "react-icons/gi";
 import RemoteDesktopController from "../RemoteDesktopController/RemoteDesktopController";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { GiSpeaker } from "react-icons/gi";
 import useVDI from "../../hooks/useVDI";
+import { ReactElement } from "react";
 
 interface IRemoteDesktopScene {
   isControllerActive: boolean;
@@ -38,13 +38,13 @@ export default function RemoteDesktopScene({
           {isControllerActive && remoteDesktopReducer?.isMuted && (
             <div
               onClick={() => handleMute()}
-              className="animate__animated animate__fadeIn text-light-50 absolute top-0 z-10 flex h-full w-full cursor-pointer items-center justify-center bg-[#00000090]"
+              className="animate__animated animate__fadeIn absolute top-0 z-10 flex h-full w-full cursor-pointer items-center justify-center bg-[#00000090] text-light-50"
             >
               <GiSpeaker size={48} />
             </div>
           )}
         </span>
-        <div className="text-light-100 absolute bottom-4 left-4 flex items-center gap-2 text-xs">
+        <div className="absolute bottom-4 left-4 flex items-center gap-2 text-xs text-light-100">
           <div
             className={`h-[8px] w-[8px] rounded ${
               remoteDesktopReducer?.controller?.displayname

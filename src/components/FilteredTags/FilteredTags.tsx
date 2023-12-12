@@ -1,21 +1,21 @@
-import React from "react";
-import useMain from "../../hooks/useMain";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 
-export default function FilteredTags() {
+export default function FilteredTags(): ReactElement {
   const { selectedState } = useMain();
 
   return (
     <div className="animate__animated animate__fadeIn flex flex-wrap gap-2 pb-4">
       {selectedState?.organization && (
-        <div className="border-secondary-400 bg-secondary-100 col-span-1 flex max-w-fit items-center gap-2 rounded border p-1">
+        <div className="col-span-1 flex max-w-fit items-center gap-2 rounded border border-secondary-400 bg-secondary-100 p-1">
           <img
             draggable="false"
             className="h-4 w-4"
             src="/svg/general/organization/organization-blue.svg"
             alt="robolaunch"
           />
-          <span className="text-secondary-900 cursor-default text-xs">
+          <span className="cursor-default text-xs text-secondary-900">
             {organizationNameViewer({
               organizationName: selectedState?.organization?.organizationName,
               capitalization: false,
@@ -24,40 +24,40 @@ export default function FilteredTags() {
         </div>
       )}
       {selectedState?.roboticsCloud && (
-        <div className="border-secondary-400 bg-secondary-100 col-span-1 flex max-w-fit items-center gap-2 rounded border p-1">
+        <div className="col-span-1 flex max-w-fit items-center gap-2 rounded border border-secondary-400 bg-secondary-100 p-1">
           <img
             draggable="false"
             className="h-4 w-4"
             src="/svg/general/roboticscloud/roboticscloud-blue.svg"
             alt="robolaunch"
           />
-          <span className="text-secondary-900 cursor-default text-xs">
+          <span className="cursor-default text-xs text-secondary-900">
             {selectedState?.roboticsCloud?.name}
           </span>
         </div>
       )}
       {selectedState?.instance && (
-        <div className="border-secondary-400 bg-secondary-100 col-span-1 flex max-w-fit items-center gap-2 rounded border p-1">
+        <div className="col-span-1 flex max-w-fit items-center gap-2 rounded border border-secondary-400 bg-secondary-100 p-1">
           <img
             draggable="false"
             className="h-4 w-4"
             src="/svg/general/instance/instance-blue.svg"
             alt="robolaunch"
           />
-          <span className="text-secondary-900 cursor-default text-xs">
+          <span className="cursor-default text-xs text-secondary-900">
             {selectedState?.instance?.name}
           </span>
         </div>
       )}
       {selectedState?.fleet && (
-        <div className="border-secondary-400 bg-secondary-100 col-span-1 flex max-w-fit items-center gap-2 rounded border p-1">
+        <div className="col-span-1 flex max-w-fit items-center gap-2 rounded border border-secondary-400 bg-secondary-100 p-1">
           <img
             draggable="false"
             className="h-4 w-4"
             src="/svg/general/fleet/fleet-blue.svg"
             alt="robolaunch"
           />
-          <span className="text-secondary-900 cursor-default text-xs">
+          <span className="cursor-default text-xs text-secondary-900">
             {selectedState?.fleet?.name}
           </span>
         </div>

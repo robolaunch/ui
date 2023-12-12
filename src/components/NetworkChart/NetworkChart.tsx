@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { TiArrowDown, TiArrowUp } from "react-icons/ti";
 import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 
 export default function NetworkChart(): ReactElement {
   const { pagesState } = useMain();

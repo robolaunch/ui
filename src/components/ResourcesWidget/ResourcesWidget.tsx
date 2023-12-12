@@ -1,8 +1,8 @@
-import React, { Fragment, ReactElement } from "react";
-import { GoGraph } from "react-icons/go";
-import Widget from "../../layouts/WidgetLayout";
-import Seperator from "../Seperator/Seperator";
 import ContentLoader from "react-content-loader";
+import Widget from "../../layouts/WidgetLayout";
+import { Fragment, ReactElement } from "react";
+import Seperator from "../Seperator/Seperator";
+import { GoGraph } from "react-icons/go";
 
 interface IResourcesWidget {
   title: string;
@@ -27,11 +27,11 @@ export default function ResourcesWidget({
               <li className="flex justify-between" key={item?.title}>
                 <div className="flex items-center gap-2">
                   {item?.icon}
-                  <span className="text-light-600 text-xs font-medium">
+                  <span className="text-xs font-medium text-light-600">
                     {item?.title}:
                   </span>
                 </div>
-                <span className="text-light-500 text-xs font-medium">
+                <span className="text-xs font-medium text-light-500">
                   {item?.value || (
                     <ContentLoader
                       width={124}

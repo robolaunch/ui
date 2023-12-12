@@ -6,8 +6,8 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
-import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
+import { ReactElement } from "react";
 
 export default function RegionDashboard(): ReactElement {
   const url = useParams();

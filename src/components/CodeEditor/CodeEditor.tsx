@@ -1,13 +1,13 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import CardLayout from "../../layouts/CardLayout";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useAppSelector } from "../../hooks/redux";
-import useRobot from "../../hooks/useRobot";
 import RestartService from "../RestartServiceButton/RestartServiceButton";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
+import { ReactElement, useEffect, useState } from "react";
 import ServiceLogs from "../ServiceLogs/ServiceLogs";
 import ServiceJobs from "../ServiceJobs/ServiceJobs";
 import FileBrowser from "../FileBrowser/FileBrowser";
+import { useAppSelector } from "../../hooks/redux";
+import CardLayout from "../../layouts/CardLayout";
+import useRobot from "../../hooks/useRobot";
 
 export default function CodeEditor(): ReactElement {
   const [ideKey, setIdeKey] = useState<number>(0);

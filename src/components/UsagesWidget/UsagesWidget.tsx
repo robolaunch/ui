@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
-import { GoGraph } from "react-icons/go";
-import Widget from "../../layouts/WidgetLayout";
 import CirclePercentageBar from "../CirclePercentageBar/CirclePercentageBar";
 import NetworkChart from "../NetworkChart/NetworkChart";
+import Widget from "../../layouts/WidgetLayout";
 import GPUChart from "../GPUChart/GPUChart";
+import { GoGraph } from "react-icons/go";
+import { ReactElement } from "react";
 
 interface IUsagesWidget {
   title: string;

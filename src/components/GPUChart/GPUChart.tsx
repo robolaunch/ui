@@ -1,7 +1,7 @@
-import { ReactElement, useEffect, useState } from "react";
-import useMain from "../../hooks/useMain";
-import { BsGpuCard } from "react-icons/bs";
 import { IGPUDeviceUsage } from "../../interfaces/instanceInferfaces";
+import { ReactElement, useEffect, useState } from "react";
+import { BsGpuCard } from "react-icons/bs";
+import useMain from "../../hooks/useMain";
 
 export default function GPUChart(): ReactElement {
   const { pagesState } = useMain();

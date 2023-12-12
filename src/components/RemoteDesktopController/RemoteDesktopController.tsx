@@ -2,11 +2,11 @@ import RestartService from "../RestartServiceButton/RestartServiceButton";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
+import ServiceLogs from "../ServiceLogs/ServiceLogs";
+import FileBrowser from "../FileBrowser/FileBrowser";
 import { useKeycloak } from "@react-keycloak/web";
 import { ReactElement, useState } from "react";
 import Button from "../Button/Button";
-import ServiceLogs from "../ServiceLogs/ServiceLogs";
-import FileBrowser from "../FileBrowser/FileBrowser";
 
 interface IRemoteDesktopController {
   remoteDesktopReducer: any;

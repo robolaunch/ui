@@ -1,5 +1,5 @@
-import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
+import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
 import StreamContext from "../../../contexts/VDIContext.tsx";
 import { useAppSelector } from "../../../hooks/redux.ts";
 import CardLayout from "../../../layouts/CardLayout";
