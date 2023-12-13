@@ -1,36 +1,62 @@
-import CirclePercentageBar from "../CirclePercentageBar/CirclePercentageBar";
-import NetworkChart from "../NetworkChart/NetworkChart";
+import { ReactElement, useEffect } from "react";
 import Widget from "../../layouts/WidgetLayout";
-import GPUChart from "../GPUChart/GPUChart";
 import { GoGraph } from "react-icons/go";
-import { ReactElement } from "react";
+import WidgetCPUCell from "../WidgetCPUCell/WidgetCPUCell";
+import WidgetMemoryCell from "../WidgetMemoryCell/WidgetMemoryCell";
+import WidgetStorageCell from "../WidgetStorageCell/WidgetStorageCell";
+import WidgetUploadCell from "../WidgetUploadCell/WidgetUploadCell";
+import WidgetDownloadCell from "../WidgetDownloadCell/WidgetDownloadCell";
+import WidgetSystemOperatorCell from "../WidgetSystemOperatorCell/WidgetSystemOperatorCell";
+import useFunctions from "../../hooks/useFunctions";
+import useMain from "../../hooks/useMain";
+import WidgetSystemBackendCell from "../WidgetSystemBackendCell/WidgetSystemBackendCell";
+import WidgetGPUCell from "../WidgetGPUCell/WidgetGPUCell";
 
-interface IUsagesWidget {
-  title: string;
-  datas: any[];
-  gpuData: any[];
-}
+export default function UsagesWidget(): ReactElement {
+  const { pagesState } = useMain();
 
-export default function UsagesWidget({
-  title,
-  datas,
-}: IUsagesWidget): ReactElement {
+  const { getSystemStatus } = useFunctions();
+
+  useEffect(() => {
+    pagesState?.organization?.organizationId &&
+      pagesState?.roboticsCloud?.name &&
+      pagesState?.instance?.instanceId &&
+      !pagesState?.instance?.systemStatus?.length &&
+      getSystemStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagesState]);
+
   return (
     <Widget
       dataTut="usages-widget"
       title={`Hardware Resources & Usages`}
-      subtitle={`${title} Usages`}
+      subtitle={`Instance Usages`}
       icon={<GoGraph size={20} className="text-light-700" />}
     >
-      <div className="flex h-full items-center justify-between">
-        <div className="flex gap-4">
-          {datas?.map((data: any, index: number) => {
-            return <CirclePercentageBar key={index} {...data} size={88} />;
-          })}
-        </div>
+      <div
+        className={`grid h-full w-full 
+        ${
+          pagesState?.instance?.systemStatus?.length
+            ? "grid-cols-4"
+            : "grid-cols-3"
+        }
+         grid-rows-2`}
+      >
+        <WidgetCPUCell />
+        <WidgetGPUCell />
+        <WidgetUploadCell />
 
-        <NetworkChart />
-        <GPUChart />
+        {pagesState?.instance?.systemStatus?.length && (
+          <WidgetSystemOperatorCell />
+        )}
+
+        <WidgetMemoryCell />
+        <WidgetStorageCell />
+        <WidgetDownloadCell />
+
+        {pagesState?.instance?.systemStatus?.length && (
+          <WidgetSystemBackendCell />
+        )}
       </div>
     </Widget>
   );

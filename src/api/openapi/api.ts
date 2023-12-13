@@ -424,6 +424,12 @@ export interface CloudInstance {
     'environments'?: Array<Environment>;
     /**
      * 
+     * @type {Array<RobolaunchPod>}
+     * @memberof CloudInstance
+     */
+    'robolaunchPods'?: Array<RobolaunchPod>;
+    /**
+     * 
      * @type {string}
      * @memberof CloudInstance
      */
@@ -497,10 +503,22 @@ export interface CloudInstanceResource {
     'storageTotal'?: number;
     /**
      * 
+     * @type {number}
+     * @memberof CloudInstanceResource
+     */
+    'storagePercentage'?: number;
+    /**
+     * 
      * @type {Array<GpuUsage>}
      * @memberof CloudInstanceResource
      */
     'gpuUsage'?: Array<GpuUsage>;
+    /**
+     * 
+     * @type {Array<GpuDeviceUsage>}
+     * @memberof CloudInstanceResource
+     */
+    'gpuDeviceUsage'?: Array<GpuDeviceUsage>;
     /**
      * 
      * @type {Array<NetworkUsage>}
@@ -781,6 +799,18 @@ export interface Environment {
      * @type {string}
      * @memberof Environment
      */
+    'vdiFileBrowserIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideFileBrowserIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
     'physicalIdeIngressEndpoint'?: string;
     /**
      * 
@@ -866,6 +896,85 @@ export interface Environment {
      * @memberof Environment
      */
     'ideGpuResourceType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'applicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'vdiApplicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'ideApplicationLog'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GpuDeviceUsage
+ */
+export interface GpuDeviceUsage {
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'device'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'model'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'uuid'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'memoryFree'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'memoryUsed'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'gpuUtil'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'memoryUtil'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'powerUsage'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof GpuDeviceUsage
+     */
+    'temp'?: string;
 }
 /**
  * 
@@ -2096,6 +2205,12 @@ export interface RobolaunchFederatedRobot {
     'ideGpuResource'?: number;
     /**
      * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'ideGpuModelName'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof RobolaunchFederatedRobot
      */
@@ -2130,6 +2245,18 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'ideIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'vdiFileBrowserIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'ideFileBrowserIngressEndpoint'?: string;
     /**
      * 
      * @type {string}
@@ -2220,6 +2347,36 @@ export interface RobolaunchFederatedRobot {
      * @memberof RobolaunchFederatedRobot
      */
     'podName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'ideGpuResourceType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'applicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'vdiApplicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'ideApplicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRobot
+     */
+    'bridgeApplicationLog'?: string;
 }
 /**
  * 
@@ -2318,6 +2475,31 @@ export interface RobolaunchPhysicalInstance {
      * @memberof RobolaunchPhysicalInstance
      */
     'organizationName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RobolaunchPod
+ */
+export interface RobolaunchPod {
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPod
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPod
+     */
+    'log'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchPod
+     */
+    'status'?: string;
 }
 /**
  * 
@@ -4258,8 +4440,8 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPodLogs: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/kubernetes/getPodLogs`;
+        getSystemStatus: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/getSystemStatus`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4477,8 +4659,8 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPodLogs(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPodLogs(organization, options);
+        async getSystemStatus(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSystemStatus(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4616,8 +4798,8 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPodLogs(organization?: Organization, options?: any): AxiosPromise<string> {
-            return localVarFp.getPodLogs(organization, options).then((request) => request(axios, basePath));
+        getSystemStatus(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getSystemStatus(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4775,8 +4957,8 @@ export class KubernetesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof KubernetesApi
      */
-    public getPodLogs(organization?: Organization, options?: AxiosRequestConfig) {
-        return KubernetesApiFp(this.configuration).getPodLogs(organization, options).then((request) => request(this.axios, this.basePath));
+    public getSystemStatus(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).getSystemStatus(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

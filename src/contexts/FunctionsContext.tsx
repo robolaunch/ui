@@ -47,6 +47,7 @@ import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/Roboti
 import {
   getPhysicalInstances as getAllPhysicalInstances,
   addPhysicalInstanceToFleet as addPhysicalInstanceToFleetDispatch,
+  getSystemStatus as getSystemStatusDispatch,
 } from "../toolkit/InstanceSlice";
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
@@ -1149,6 +1150,36 @@ export default ({ children }: any) => {
     });
   }
 
+  function getSystemStatus() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          getSystemStatusDispatch({
+            organizationId: pagesState?.organization?.organizationId!,
+            instanceId: pagesState?.instance?.instanceId!,
+            region: pagesState?.roboticsCloud?.region!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+          }),
+        ).then((res: any) => {
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              instance: {
+                ...prevState.instance,
+                systemStatus:
+                  res?.payload?.data?.[0]?.roboticsClouds?.[0]
+                    ?.cloudInstances?.[0]?.robolaunchPods,
+              },
+            };
+          });
+        });
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   function createRobot() {
     return new Promise<void>(async (resolve, reject) => {
       try {
@@ -1309,6 +1340,7 @@ export default ({ children }: any) => {
         getEnvironments,
         getEnvironment,
         addPhysicalInstanceToFleet,
+        getSystemStatus,
         createRobot,
         createEnvironment,
         createBuildManager,

@@ -7,6 +7,11 @@ export interface IInstance {
   instanceCloudState: string;
   cloudInstanceResource: IInstanceResource;
   physicalInstanceResource: any;
+  systemStatus: {
+    name: string;
+    status: string;
+    log: string;
+  }[];
 }
 
 export interface IInstanceResource {

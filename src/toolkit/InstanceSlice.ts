@@ -22,7 +22,7 @@ export const createCloudInstance = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getInstances = createAsyncThunk(
@@ -45,7 +45,7 @@ export const getInstances = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const stopInstance = createAsyncThunk(
@@ -64,7 +64,7 @@ export const stopInstance = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const startInstance = createAsyncThunk(
@@ -83,7 +83,7 @@ export const startInstance = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const terminateInstance = createAsyncThunk(
@@ -102,7 +102,7 @@ export const terminateInstance = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const addPhysicalInstance = createAsyncThunk(
@@ -127,7 +127,7 @@ export const addPhysicalInstance = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const getPhysicalInstances = createAsyncThunk(
@@ -146,7 +146,7 @@ export const getPhysicalInstances = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
 );
 
 export const addPhysicalInstanceToFleet = createAsyncThunk(
@@ -174,7 +174,31 @@ export const addPhysicalInstanceToFleet = createAsyncThunk(
       ],
     });
     return response.data;
-  }
+  },
+);
+
+export const getSystemStatus = createAsyncThunk(
+  "instance/getSystemStatus",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+  }) => {
+    const response = await kubernetesApi.getSystemStatus({
+      name: "instance/getSystemStatus",
+      organizationId: values?.organizationId,
+      roboticsClouds: [
+        {
+          name: values?.roboticsCloudName,
+          cloudInstances: [
+            { instanceId: values?.instanceId, region: values?.region },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
 );
 
 export const instanceSlice = createSlice({
@@ -254,8 +278,16 @@ export const instanceSlice = createSlice({
       })
       .addCase(addPhysicalInstanceToFleet.rejected, () => {
         toast.error(
-          "Something went wrong of adding physical instance to fleet"
+          "Something went wrong of adding physical instance to fleet",
         );
+      })
+      .addCase(getSystemStatus.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getSystemStatus.rejected, () => {
+        toast.error("Something went wrong of getting system status");
       });
   },
 });

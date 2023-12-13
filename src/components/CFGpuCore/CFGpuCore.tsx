@@ -14,7 +14,7 @@ export default function CFGpuCore({
 }: ICFGpuCore): ReactElement {
   return (
     <FormInputRange
-      label={`GPU Core Count (${formik.values.ideGpuResource} Core):`}
+      label={`GPU Core Count (${formik.values.ideGpuResource} vGPU/MIG):`}
       tip="GPU Core Count is the number of GPU cores that will be allocated to the application. The GPU cores are used to accelerate the rendering of the application. The GPU cores are allocated from the GPU resource pool that is available on the instance. The GPU cores are allocated from the GPU resource pool that."
       InputProps={formik.getFieldProps("ideGpuResource")}
       min={0}

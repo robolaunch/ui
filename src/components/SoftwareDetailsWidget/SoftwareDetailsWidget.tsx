@@ -4,15 +4,15 @@ import { Fragment, ReactElement } from "react";
 import Seperator from "../Seperator/Seperator";
 import { GoGraph } from "react-icons/go";
 
-interface IResourcesWidget {
+interface ISoftwareDetailsWidget {
   title: string;
   data: any[];
 }
 
-export default function ResourcesWidget({
+export default function SoftwareDetailsWidget({
   title,
   data,
-}: IResourcesWidget): ReactElement {
+}: ISoftwareDetailsWidget): ReactElement {
   return (
     <Widget
       dataTut="resources-widget"

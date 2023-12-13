@@ -1,7 +1,6 @@
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
-import ResourcesWidget from "../../../components/ResourcesWidget/ResourcesWidget";
+import SoftwareDetailsWidget from "../../../components/SoftwareDetailsWidget/SoftwareDetailsWidget";
 import { InstanceTableData } from "../../../controllers/InstanceTableData";
-import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout";
@@ -13,6 +12,7 @@ import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { RiCpuLine } from "react-icons/ri";
 import { ReactElement } from "react";
+import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 
 export default function CIDashboard(): ReactElement {
   const { data, columns, responseFleets, handleReload } = InstanceTableData();
@@ -38,47 +38,9 @@ export default function CIDashboard(): ReactElement {
           }
         />
       }
-      widget2={
-        <UsagesWidget
-          title={`Cloud Instance`}
-          datas={[
-            {
-              title: `CPU (${
-                pagesState?.instance?.cloudInstanceResource?.cpuTotal || 0
-              } Core)`,
-              percentage:
-                pagesState?.instance?.cloudInstanceResource?.cpuUsage || -1,
-            },
-            {
-              title: `Memory (${
-                pagesState?.instance?.cloudInstanceResource?.memoryTotal || 0
-              } GB)`,
-              percentage:
-                pagesState?.instance?.cloudInstanceResource?.memoryUsage || -1,
-            },
-            {
-              title: `Storage (${
-                pagesState?.instance?.cloudInstanceResource?.storageTotal || 0
-              } GB)`,
-              percentage:
-                pagesState?.instance?.cloudInstanceResource?.storageUsage &&
-                pagesState?.instance?.cloudInstanceResource?.storageTotal
-                  ? Math.floor(
-                      (pagesState.instance.cloudInstanceResource.storageUsage /
-                        pagesState.instance.cloudInstanceResource
-                          .storageTotal) *
-                        100,
-                    )
-                  : 0,
-            },
-          ]}
-          gpuData={
-            pagesState?.instance?.cloudInstanceResource?.gpuDeviceUsage || []
-          }
-        />
-      }
+      widget2={<UsagesWidget />}
       widget3={
-        <ResourcesWidget
+        <SoftwareDetailsWidget
           title={pagesState?.instance?.name || ""}
           data={[
             {

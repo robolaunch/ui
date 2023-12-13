@@ -209,6 +209,7 @@ export interface IuseFunctions {
   ) => void;
 
   addPhysicalInstanceToFleet: () => Promise<void>;
+  getSystemStatus: () => Promise<void>;
   createRobot: () => Promise<void>;
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => void;

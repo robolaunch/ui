@@ -20,7 +20,7 @@ export default function RobotResource(): ReactElement {
           <BsFillCpuFill size={16} color="#666666" />
           {pagesState?.instance?.cloudInstanceResource?.cpuTotal ? (
             <span className="text-xs font-light">
-              {pagesState?.instance?.cloudInstanceResource?.cpuTotal} Core
+              {pagesState?.instance?.cloudInstanceResource?.cpuTotal}
               vGPU/MIG
             </span>
           ) : (
