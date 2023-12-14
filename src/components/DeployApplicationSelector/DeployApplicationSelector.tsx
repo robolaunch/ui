@@ -242,7 +242,7 @@ export default function DeployApplicationSelector({
         <div className="flex items-center gap-2">
           <img
             className="h-5 w-5"
-            src={`/svg/general/organization/organization-gray.svg`}
+            src={`/svg/general/organization/organization-dark.svg`}
             alt="robolaunch"
           />
           <span className="text-xs capitalize">Organization</span>
@@ -256,7 +256,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "organization" };
                 });
               }}
-              className="text-light-700 cursor-pointer text-xs hover:underline "
+              className="cursor-pointer text-xs text-light-700 hover:underline "
             >
               Create
             </span>
@@ -310,7 +310,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "roboticscloud" };
                 });
               }}
-              className="text-light-700 cursor-pointer text-xs hover:underline "
+              className="cursor-pointer text-xs text-light-700 hover:underline "
             >
               Create
             </span>
@@ -364,7 +364,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "instance" };
                 });
               }}
-              className="text-light-700 cursor-pointer text-xs hover:underline "
+              className="cursor-pointer text-xs text-light-700 hover:underline "
             >
               Create
             </span>
@@ -425,7 +425,7 @@ export default function DeployApplicationSelector({
                   return { ...prev, isOpen: true, page: "fleet" };
                 });
               }}
-              className="text-light-700 cursor-pointer text-xs hover:underline "
+              className="cursor-pointer text-xs text-light-700 hover:underline "
             >
               Create
             </span>

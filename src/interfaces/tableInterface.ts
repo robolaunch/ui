@@ -5,7 +5,7 @@ import { IInstance } from "./instanceInferfaces";
 export interface IMainDashboardData {
   key: string;
   name: string;
-  state: string;
+  status: string;
   actions: IOrganization;
 }
 

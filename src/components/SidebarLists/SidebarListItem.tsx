@@ -145,7 +145,7 @@ export default function SidebarListItem({
           src={`/svg/general/${
             envApplication && type === "robot" ? "application" : type
           }/${envApplication && type === "robot" ? "application" : type}-${
-            selected ? "blue" : "gray"
+            selected ? "blue" : "dark"
           }.svg`}
           alt=""
         />

@@ -17,7 +17,7 @@ export default function RobotHeaderLabel({
             return (
               <img
                 className="h-3.5 w-3.5"
-                src="/svg/general/organization/organization-gray.svg"
+                src="/svg/general/organization/organization-dark.svg"
                 alt="organization"
               />
             );

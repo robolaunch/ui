@@ -38,7 +38,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/general/organization/organization-gray.svg"
+                        src="/svg/general/organization/organization-dark.svg"
                         alt="rc"
                       />
                     );
@@ -46,8 +46,8 @@ export default function Breadcrumb(): ReactElement {
                   if (params?.roboticsCloudName && index === 2) {
                     return (
                       <img
-                        className="w-4"
-                        src="/svg/general/roboticscloud/roboticscloud-gray.svg"
+                        className="w-3"
+                        src="/svg/general/roboticscloud/roboticscloud-dark.svg"
                         alt="rc"
                       />
                     );
@@ -56,7 +56,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/general/instance/instance-gray.svg"
+                        src="/svg/general/instance/instance-dark.svg"
                         alt="rc"
                       />
                     );
@@ -65,7 +65,7 @@ export default function Breadcrumb(): ReactElement {
                     return (
                       <img
                         className="w-3"
-                        src="/svg/general/fleet/fleet-gray.svg"
+                        src="/svg/general/fleet/fleet-dark.svg"
                         alt="rc"
                       />
                     );
@@ -76,8 +76,8 @@ export default function Breadcrumb(): ReactElement {
                         className="w-3"
                         src={
                           envApplication
-                            ? "/svg/general/application/application-gray.svg"
-                            : "/svg/general/robot/robot-gray.svg"
+                            ? "/svg/general/application/application-dark.svg"
+                            : "/svg/general/robot/robot-dark.svg"
                         }
                         alt="rc"
                       />

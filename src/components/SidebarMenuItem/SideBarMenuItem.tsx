@@ -54,7 +54,7 @@ export default function SideBarMenuItem({
           }
           break;
       }
-      return "gray";
+      return "dark";
     } else {
       return "white";
     }

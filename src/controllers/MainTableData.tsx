@@ -3,12 +3,13 @@ import {
   IMainDashboardData,
 } from "../interfaces/tableInterface";
 import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
-import OrganizationInfoCell from "../components/OrganizationInfoCell/OrganizationInfoCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IOrganization } from "../interfaces/organizationInterfaces";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import { organizationNameViewer } from "../functions/GeneralFunctions";
 
 export function MainTableData() {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -40,7 +41,7 @@ export function MainTableData() {
         return {
           key: organization?.organizationName,
           name: organization?.organizationName,
-          state: "Ready",
+          status: "Ready",
           actions: organization,
         };
       }) || [],
@@ -57,15 +58,30 @@ export function MainTableData() {
         filter: false,
         align: "left",
         body: (rowData: IMainDashboardData) => {
-          return <OrganizationInfoCell organizationName={rowData?.name} />;
+          return (
+            <InfoCell
+              title={organizationNameViewer({
+                organizationName: rowData?.name,
+                capitalization: false,
+              })}
+              subtitle={`${organizationNameViewer({
+                organizationName: rowData?.name,
+                capitalization: false,
+              })}`}
+              titleURL={`/${organizationNameViewer({
+                organizationName: rowData?.name,
+                capitalization: false,
+              })}`}
+            />
+          );
         },
       },
       {
-        key: "state",
-        header: "State",
+        key: "status",
+        header: "Status",
         align: "left",
         body: (rowData) => {
-          return <StateCell state={rowData?.state} />;
+          return <StateCell state={rowData?.status} />;
         },
       },
       {
