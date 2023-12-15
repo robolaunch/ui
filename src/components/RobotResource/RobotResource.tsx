@@ -5,6 +5,7 @@ import useRobot from "../../hooks/useRobot";
 import { FaMemory } from "react-icons/fa";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
+import { envApplication } from "../../helpers/envProvider";
 
 export default function RobotResource(): ReactElement {
   const { responseRobot } = useRobot();
@@ -14,7 +15,7 @@ export default function RobotResource(): ReactElement {
     <div data-tut="robot-resources" className="flex flex-col items-end pb-2">
       <div className="flex items-center gap-3 pt-2">
         <span className="text-center text-xs font-semibold">
-          Virtual Resources:
+          {envApplication ? "Application" : "Robot"} Resources:
         </span>
         <div className="col-span-1 flex items-center gap-2">
           <BsFillCpuFill size={16} color="#666666" />

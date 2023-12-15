@@ -1,17 +1,17 @@
-import RobotHeader from "../../components/RobotHeader/RobotHeader";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 import RobotSubPageLayout from "../../layouts/RobotSubPageLayout";
 import RobotContext from "../../contexts/RobotContext";
 import { ReactElement } from "react";
+import EnvironmentHeader from "../../components/EnvironmentHeader/EnvironmentHeader";
 
 export default function RobotPage(): ReactElement {
   return (
     <RobotContext>
-      <div className="grid grid-cols-1 gap-6">
-        <RobotHeader />
+      <div className="flex h-full flex-col gap-6">
+        <EnvironmentHeader />
         <RobotSubPageLayout />
-        <HiddenFrame />
       </div>
+      <HiddenFrame />
     </RobotContext>
   );
 }

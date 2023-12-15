@@ -19,7 +19,7 @@ export default function RobotSubPageLayout(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
 
   return (
-    <div className="col-span-full h-full">
+    <div className="h-full">
       {!envApplication && <RosConnector />}
 
       {(() => {

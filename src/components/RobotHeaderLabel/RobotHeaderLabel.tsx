@@ -10,7 +10,7 @@ export default function RobotHeaderLabel({
   text,
 }: IRobotHeaderLabel): ReactElement {
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex items-center gap-1">
       {(() => {
         switch (icon) {
           case "organization":
@@ -25,7 +25,7 @@ export default function RobotHeaderLabel({
             return (
               <img
                 className="h-4 w-4"
-                src="/svg/general/roboticscloud/roboticscloud-gray.svg"
+                src="/svg/general/roboticscloud/roboticscloud-dark.svg"
                 alt="region"
               />
             );
@@ -33,7 +33,7 @@ export default function RobotHeaderLabel({
             return (
               <img
                 className="h-3.5 w-3.5"
-                src="/svg/general/instance/instance-gray.svg"
+                src="/svg/general/instance/instance-dark.svg"
                 alt="instance"
               />
             );
@@ -41,7 +41,7 @@ export default function RobotHeaderLabel({
             return (
               <img
                 className="h-3.5 w-3.5"
-                src="/svg/general/fleet/fleet-gray.svg"
+                src="/svg/general/fleet/fleet-dark.svg"
                 alt="fleet"
               />
             );
