@@ -26,7 +26,12 @@ export default function Connections(): ReactElement {
         </div>
       )}
       <div className="flex gap-1" id="ide">
-        <ConnectionLabel label="IDE" url={responseRobot?.ideIngressEndpoint} />
+        <ConnectionLabel
+          label={`${
+            responseRobot?.physicalIdeIngressEndpoint && "Virtual "
+          }IDE`}
+          url={responseRobot?.ideIngressEndpoint}
+        />
         <StateCell
           state={
             isSettedCookie === undefined
