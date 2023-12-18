@@ -1,5 +1,4 @@
 import RestartService from "../RestartServiceButton/RestartServiceButton";
-import FullScreenButton from "../FullScreenButton/FullScreenButton";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import VolumeControl from "../VolumeControl/VolumeControl";
 import ServiceLogs from "../ServiceLogs/ServiceLogs";
@@ -7,25 +6,22 @@ import FileBrowser from "../FileBrowser/FileBrowser";
 import { useKeycloak } from "@react-keycloak/web";
 import { ReactElement, useState } from "react";
 import Button from "../Button/Button";
+import FullScreenService from "../FullScreenService/FullScreenService";
+import { FullScreenHandle } from "react-full-screen";
+import useVDI from "../../hooks/useVDI";
 
 interface IRemoteDesktopController {
-  remoteDesktopReducer: any;
-  client: any;
-  video: any;
-  handleMute: any;
-  handleFullScreen: any;
+  handleFullScreen: FullScreenHandle;
 }
 
 export default function RemoteDesktopController({
-  remoteDesktopReducer,
-  client,
-  video,
-  handleMute,
   handleFullScreen,
 }: IRemoteDesktopController): ReactElement {
   const [isControllerOpen, setIsControllerOpen] = useState<boolean>(false);
 
   const { keycloak } = useKeycloak();
+
+  const { remoteDesktopReducer, client, video, handleMute } = useVDI();
 
   function handleIsControllerOpen() {
     setIsControllerOpen(!isControllerOpen);
@@ -61,14 +57,8 @@ export default function RemoteDesktopController({
       </button>
       {isControllerOpen && (
         <div className="flex w-full items-center justify-center gap-6 rounded-t-lg bg-light-50 bg-opacity-75 px-3 pb-1.5 pt-3">
-          <FullScreenButton
-            isFullScreen={handleFullScreen.active}
-            handleFullScreen={
-              handleFullScreen.active
-                ? handleFullScreen.exit
-                : handleFullScreen.enter
-            }
-          />
+          <FullScreenService handleFullScreen={handleFullScreen} />
+
           <FileBrowser type="vdi" />
 
           <ServiceLogs type="vdi" />

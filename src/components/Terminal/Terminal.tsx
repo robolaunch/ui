@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import { ReactTerminal, TerminalContextProvider } from "react-terminal";
 
 interface ITerminal {

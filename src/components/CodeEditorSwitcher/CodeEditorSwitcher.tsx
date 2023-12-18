@@ -4,7 +4,7 @@ import Card from "../Card/Card";
 interface ICodeEditorSwitcher {
   codeEditorTabs: any;
   activeTabCodeEditor: number;
-  setActiveTabCodeEditor: Dispatch<SetStateAction<1 | 2>>;
+  setActiveTabCodeEditor: any;
 }
 
 export default function CodeEditorSwitcher({
@@ -19,13 +19,13 @@ export default function CodeEditorSwitcher({
           return (
             <li
               className="flex w-full cursor-pointer flex-col items-center gap-3"
-              onClick={() => setActiveTabCodeEditor(tab.index + 1)}
+              onClick={() => setActiveTabCodeEditor(index + 1)}
               key={index}
             >
               <div
                 className={`flex min-w-max items-center gap-1 px-2 text-xs font-medium transition-all duration-500 hover:scale-90
                         ${
-                          tab.name === activeTabCodeEditor
+                          index + 1 === activeTabCodeEditor
                             ? "text-primary-500"
                             : "text-light-500"
                         } `}
@@ -35,7 +35,7 @@ export default function CodeEditorSwitcher({
               <div
                 className={`h-[2px] w-full transition-all duration-500 
                   ${
-                    tab.name === activeTabCodeEditor
+                    index + 1 === activeTabCodeEditor
                       ? "bg-primary-500"
                       : "bg-light-100"
                   } `}

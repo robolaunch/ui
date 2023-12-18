@@ -20,12 +20,7 @@ export default function RemoteDesktopChatTab({
 
   return (
     <div className="flex h-full flex-col justify-between p-2">
-      <div
-        className="overflow-y-hidden"
-        style={{
-          height: `${height - 88}px`,
-        }}
-      >
+      <div className="overflow-y-hidden">
         <ScrollToBottom className={cssScrollBottom}>
           {remoteDesktopReducer?.messages?.map(
             (message: any, index: number) => {
@@ -34,7 +29,7 @@ export default function RemoteDesktopChatTab({
                   key={index}
                   className="animate__animated animate__fadeIn grid grid-cols-6 gap-2 pb-2"
                 >
-                  <div className="bg-primary-300 text-primary-700 col-span-1 flex h-10 w-10 items-center justify-center rounded-full font-semibold">
+                  <div className="col-span-1 flex h-10 w-10 items-center justify-center rounded-full bg-primary-300 font-semibold text-primary-700">
                     {remoteDesktopReducer?.members
                       ?.filter((member: any) => member.id === message.id)[0]
                       ?.displayname[0]?.toUpperCase()}

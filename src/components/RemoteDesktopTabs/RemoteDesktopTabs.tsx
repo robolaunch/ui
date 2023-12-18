@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import RemoteDesktopViewersTab from "../RemoteDesktopViewersTab/RemoteDesktopViewersTab";
 import RemoteDesktopChatTab from "../RemoteDesktopChatTab/RemoteDesktopChatTab";
 import RemoteDesktopHeader from "../RemoteDesktopHeader/RemoteDesktopHeader";

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import useVDI from "../../hooks/useVDI";
 import { MdStopScreenShare } from "react-icons/md";
 import Button from "../Button/Button";
@@ -13,7 +13,7 @@ export default function RemoteDesktopViewersTab({
   const { remoteDesktopReducer } = useVDI();
 
   return (
-    <div style={{ height: `${height}px` }}>
+    <div>
       {remoteDesktopReducer?.members?.map((member: any, index: number) => {
         return (
           <div
@@ -21,7 +21,7 @@ export default function RemoteDesktopViewersTab({
             key={index}
           >
             <div className="flex gap-2">
-              <div className="bg-primary-300 text-primary-700 flex h-10 w-10 items-center justify-center rounded-full font-semibold">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-300 font-semibold text-primary-700">
                 {member?.displayname[0]?.toUpperCase()}
               </div>
               <div className="flex flex-col justify-between">

@@ -11,13 +11,8 @@ export default function RemoteDesktopReadmeTab({
   readMe,
 }: IRemoteDesktopReadmeTab): ReactElement {
   return (
-    <div className="h-full flex flex-col justify-between p-2">
-      <div
-        className="overflow-y-hidden"
-        style={{
-          height: `${height - 88}px`,
-        }}
-      >
+    <div className="flex h-full flex-col justify-between p-2">
+      <div className="overflow-y-hidden">
         <MarkdownPreview
           className="h-full"
           source={readMe || "Readme not found"}

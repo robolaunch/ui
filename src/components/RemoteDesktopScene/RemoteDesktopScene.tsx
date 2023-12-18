@@ -11,12 +11,12 @@ interface IRemoteDesktopScene {
 export default function RemoteDesktopScene({
   isControllerActive,
 }: IRemoteDesktopScene): ReactElement {
-  const { remoteDesktopReducer, client, overlay, video, handleMute } = useVDI();
+  const { remoteDesktopReducer, overlay, video, handleMute } = useVDI();
 
   const handleFullScreen = useFullScreenHandle();
 
   return (
-    <FullScreen handle={handleFullScreen}>
+    <FullScreen className="h-full w-full" handle={handleFullScreen}>
       <div className="relative flex h-full w-full justify-center">
         <span
           className="relative appearance-none outline-none"
@@ -25,7 +25,7 @@ export default function RemoteDesktopScene({
         >
           <video
             onContextMenu={(e) => e.preventDefault()}
-            className={`absolute bottom-0 top-0 lg:min-h-[20rem] xl:min-h-[30rem] 2xl:min-h-[40rem]`}
+            className={`absolute bottom-0 top-0 h-full`}
             playsInline
             ref={video}
             autoPlay
@@ -44,30 +44,22 @@ export default function RemoteDesktopScene({
             </div>
           )}
         </span>
-        <div className="absolute bottom-4 left-4 flex items-center gap-2 text-xs text-light-100">
+        <div className="absolute bottom-4 left-4 flex items-center gap-2  ">
           <div
-            className={`h-[8px] w-[8px] rounded ${
+            className={`h-2.5 w-2.5 rounded ${
               remoteDesktopReducer?.controller?.displayname
                 ? "bg-primary-500"
                 : "bg-secondary-400"
             }`}
-          ></div>
-          <div>
+          />
+          <div className="text-xs text-light-200">
             {remoteDesktopReducer?.controller?.displayname || "No Controller"}{" "}
-            <span>
-              {remoteDesktopReducer?.currentResolution?.width}x
-              {remoteDesktopReducer?.currentResolution?.height}
-            </span>
+            {remoteDesktopReducer?.currentResolution?.width || "None"}x
+            {remoteDesktopReducer?.currentResolution?.height || "None"}
           </div>
         </div>
         {isControllerActive && (
-          <RemoteDesktopController
-            remoteDesktopReducer={remoteDesktopReducer}
-            client={client}
-            video={video}
-            handleMute={handleMute}
-            handleFullScreen={handleFullScreen}
-          />
+          <RemoteDesktopController handleFullScreen={handleFullScreen} />
         )}
       </div>
     </FullScreen>

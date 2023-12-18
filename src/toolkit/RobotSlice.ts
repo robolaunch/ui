@@ -378,17 +378,12 @@ export const RobotSlice = createSlice({
   name: "robot",
   initialState: {
     urls: {
-      vdi: isProduction ? "" : "",
+      vdi: isProduction ? "" : "ws://localhost:8080/",
       ide: isProduction ? "" : "",
       ros: isProduction ? "" : "",
     },
   },
-  reducers: {
-    updateUrls: (state, action) => {
-      state.urls = action.payload;
-      return state;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(createRobot.fulfilled, (_, action: any) => {
@@ -502,5 +497,4 @@ export const RobotSlice = createSlice({
   },
 });
 
-export const { updateUrls } = RobotSlice.actions;
 export default RobotSlice.reducer;
