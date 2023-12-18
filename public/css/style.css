@@ -1738,6 +1738,10 @@ video {
   overflow: hidden !important;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .overflow-x-auto {
   overflow-x: auto;
 }

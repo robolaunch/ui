@@ -1,7 +1,7 @@
 import { Fragment, ReactElement, useState } from "react";
 import useMain from "../../hooks/useMain";
 import StateCell from "../TableInformationCells/StateCell";
-import LogModal from "../../modals/LogModal";
+import ServiceLogModal from "../../modals/ServiceLogModal";
 import { RxOpenInNewWindow } from "react-icons/rx";
 
 export default function WidgetSystemOperatorCell(): ReactElement {
@@ -34,7 +34,7 @@ export default function WidgetSystemOperatorCell(): ReactElement {
         </div>
       </div>
       {isOpenModal && (
-        <LogModal
+        <ServiceLogModal
           log={pagesState?.instance?.systemStatus?.[0]?.log}
           handleCloseModal={() => setIsOpenModal(false)}
         />

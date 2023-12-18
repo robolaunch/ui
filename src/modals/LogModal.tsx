@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Dialog } from "primereact/dialog";
-import Terminal from "../components/Terminal/Terminal";
+import { LazyLog } from "@melloware/react-logviewer";
 
 interface ILogModal {
   log?: string;
@@ -15,12 +15,10 @@ export default function LogModal({
     <Dialog
       header={`Logs`}
       visible={true}
-      className=" w-[80vw]"
+      className=" w-[90vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="flex h-full w-full flex-col gap-8">
-        <Terminal value={log || ""} />
-      </div>
+      <LazyLog text={log} height={752} scrollToLine={9999999} />
     </Dialog>
   );
 }

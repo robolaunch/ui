@@ -1,15 +1,17 @@
 import { ReactElement } from "react";
 import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
-import Terminal from "../components/Terminal/Terminal";
+import { LazyLog } from "@melloware/react-logviewer";
 
 interface IServiceLogModal {
-  type: "ide" | "vdi";
+  type?: "ide" | "vdi";
+  log?: string;
   handleCloseModal: () => void;
 }
 
 export default function ServiceLogModal({
   type,
+  log,
   handleCloseModal,
 }: IServiceLogModal): ReactElement {
   const { responseRobot } = useRobot();
@@ -18,18 +20,20 @@ export default function ServiceLogModal({
     <Dialog
       header={`${type === "ide" ? "IDE" : "VDI"} Service Log`}
       visible={true}
-      className="w-[80vw]"
+      className="h-full w-[90vw]"
       onHide={() => handleCloseModal()}
     >
-      <div className="flex w-full flex-col gap-8">
-        <Terminal
-          value={
-            type === "ide"
+      <LazyLog
+        text={
+          type
+            ? type === "ide"
               ? responseRobot?.ideApplicationLog
               : responseRobot?.vdiApplicationLog
-          }
-        />
-      </div>
+            : log
+        }
+        height={752}
+        scrollToLine={9999999}
+      />
     </Dialog>
   );
 }

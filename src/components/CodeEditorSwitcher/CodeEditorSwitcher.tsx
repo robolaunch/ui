@@ -1,4 +1,4 @@
-import { Dispatch, ReactElement, SetStateAction } from "react";
+import { ReactElement } from "react";
 import Card from "../Card/Card";
 
 interface ICodeEditorSwitcher {

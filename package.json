@@ -30,6 +30,7 @@
   "dependencies": {
     "@emotion/css": "^11.10.6",
     "@fontsource/inter": "^5.0.8",
+    "@melloware/react-logviewer": "^5.0.2",
     "@monaco-editor/react": "^4.5.0",
     "@react-hook/mouse-position": "^4.1.3",
     "@react-keycloak/web": "^3.4.0",
