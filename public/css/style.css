@@ -1142,6 +1142,10 @@ video {
   height: 0px;
 }
 
+.\!h-screen {
+  height: 100vh !important;
+}
+
 .max-h-\[40rem\] {
   max-height: 40rem;
 }

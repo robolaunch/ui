@@ -37,6 +37,23 @@ export default function Connections(): ReactElement {
           }
         />
       </div>
+      {responseRobot?.physicalIdeIngressEndpoint && (
+        <div className="flex gap-1" id="ide">
+          <ConnectionLabel
+            label="Physical IDE"
+            url={responseRobot?.physicalIdeIngressEndpoint}
+          />
+          <StateCell
+            state={
+              isSettedCookie === undefined
+                ? "Waiting"
+                : isSettedCookie
+                ? "Connected"
+                : "Warning"
+            }
+          />
+        </div>
+      )}
       <div className="flex gap-1" id="vdi">
         <ConnectionLabel
           label="VDI"
