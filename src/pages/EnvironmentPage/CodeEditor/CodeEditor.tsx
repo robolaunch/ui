@@ -47,14 +47,26 @@ export default function CodeEditor(): ReactElement {
               <iframe
                 title="Code Editor"
                 allow="clipboard-read"
-                className={`animate__animated animate__fadeIn w-full ${
-                  handleFullScreen?.active ? "h-screen" : "h-full"
-                }`}
-                src={
+                className={`animate__animated animate__fadeIn w-full
+                ${
                   activeTabCodeEditor === 1
-                    ? responseRobot?.ideIngressEndpoint
-                    : responseRobot?.physicalIdeIngressEndpoint
+                    ? "h-full"
+                    : "absolute -top-[9999px]"
                 }
+                ${handleFullScreen?.active && "h-screen"}`}
+                src={responseRobot?.ideIngressEndpoint}
+              />
+              <iframe
+                title="Code Editor"
+                allow="clipboard-read"
+                className={`animate__animated animate__fadeIn w-full
+                ${
+                  activeTabCodeEditor === 2
+                    ? "h-full"
+                    : "absolute -top-[9999px]"
+                }
+                ${handleFullScreen?.active && "h-screen"}`}
+                src={responseRobot?.physicalIdeIngressEndpoint}
               />
               <div className="absolute bottom-4 right-4 flex flex-col gap-5">
                 <FileBrowser type="ide" />
