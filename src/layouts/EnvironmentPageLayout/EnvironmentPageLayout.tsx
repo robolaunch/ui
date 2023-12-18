@@ -24,67 +24,63 @@ export default function EnvironmentPageLayout(): ReactElement {
     <Fragment>
       <div className="flex h-full flex-col gap-6">
         <EnvironmentHeader />
-        <div className="h-full">
-          {!envApplication && <RosConnector />}
+        {!envApplication && <RosConnector />}
 
-          {(() => {
-            switch (activeTab) {
-              case "Overview":
-                return (
-                  <Overview
-                    informationWidgetAction={() => {
-                      isSettedCookie &&
-                        setActiveTab(
-                          envApplication
-                            ? "Development Suite"
-                            : "Teleoperation",
-                        );
-                    }}
+        {(() => {
+          switch (activeTab) {
+            case "Overview":
+              return (
+                <Overview
+                  informationWidgetAction={() => {
+                    isSettedCookie &&
+                      setActiveTab(
+                        envApplication ? "Development Suite" : "Teleoperation",
+                      );
+                  }}
+                />
+              );
+            case "Task Management":
+              return (
+                <MissionContext>
+                  <BarcodeContext>
+                    <TaskManagementLayout />
+                  </BarcodeContext>
+                </MissionContext>
+              );
+            case "Visualization":
+              return <Visualization />;
+            case "Teleoperation":
+              return (
+                <Teleoperation
+                  vdiIngressEndpoint={
+                    urls?.vdi || responseRobot?.vdiIngressEndpoint
+                  }
+                />
+              );
+            case "Development Suite":
+              return (
+                <DevelopmentSuite
+                  ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
+                  vdiURL={urls?.vdi || responseRobot?.vdiIngressEndpoint}
+                />
+              );
+            case "Remote Desktop":
+              return <RemoteDesktop />;
+            case "File Manager":
+              return <FileManager />;
+            case "Loading":
+              return (
+                <div>
+                  <img
+                    className="mx-auto scale-75"
+                    src="/svg/general/loading.svg"
+                    alt="loading"
                   />
-                );
-              case "Task Management":
-                return (
-                  <MissionContext>
-                    <BarcodeContext>
-                      <TaskManagementLayout />
-                    </BarcodeContext>
-                  </MissionContext>
-                );
-              case "Visualization":
-                return <Visualization />;
-              case "Teleoperation":
-                return (
-                  <Teleoperation
-                    vdiIngressEndpoint={
-                      urls?.vdi || responseRobot?.vdiIngressEndpoint
-                    }
-                  />
-                );
-              case "Development Suite":
-                return (
-                  <DevelopmentSuite
-                    ideURL={urls?.ide || responseRobot?.ideIngressEndpoint}
-                    vdiURL={urls?.vdi || responseRobot?.vdiIngressEndpoint}
-                  />
-                );
-              case "Remote Desktop":
-                return <RemoteDesktop />;
-              case "File Manager":
-                return <FileManager />;
-              case "Loading":
-                return (
-                  <div>
-                    <img
-                      className="mx-auto scale-75"
-                      src="/svg/general/loading.svg"
-                      alt="loading"
-                    />
-                  </div>
-                );
-            }
-          })()}
-          <CodeEditor />
-        </div>
+                </div>
+              );
+          }
+        })()}
+        <CodeEditor />
       </div>
       <HiddenFrame />
     </Fragment>
