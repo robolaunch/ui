@@ -7,8 +7,8 @@ import EnvironmentLabels from "../EnvironmentLabels/EnvironmentLabels";
 
 export default function EnvironmentHeader(): ReactElement {
   return (
-    <Card dataTut="robot-header" className="!h-32 flex-none">
-      <div className="flex h-full flex-col justify-between px-9 py-6 !pb-0">
+    <Card dataTut="robot-header" className="!h-32 flex-none !p-0">
+      <div className="flex h-full flex-col justify-between px-9 py-7 !pb-0">
         <div className="flex items-center justify-between">
           <EnvironmentLabels />
           <Connections />

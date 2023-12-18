@@ -749,6 +749,14 @@ video {
   top: 3.6rem;
 }
 
+.bottom-6 {
+  bottom: 1.5rem;
+}
+
+.right-6 {
+  right: 1.5rem;
+}
+
 .-z-10 {
   z-index: -10;
 }
@@ -2356,6 +2364,21 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
 .\!pb-0 {
   padding-bottom: 0px !important;
 }
@@ -2523,6 +2546,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[0\.62rem\] {
+  font-size: 0.62rem;
 }
 
 .\!font-semibold {
