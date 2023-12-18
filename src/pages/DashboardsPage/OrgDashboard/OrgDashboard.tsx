@@ -6,7 +6,7 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import { ReactElement } from "react";
 import { OrgTableData } from "../../../controllers/OrgTableData";
 import TourGuide from "../../../components/TourGuide/TourGuide";
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
 import { useParams } from "react-router-dom";
 

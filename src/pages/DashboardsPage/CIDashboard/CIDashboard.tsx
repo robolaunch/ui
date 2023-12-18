@@ -3,7 +3,7 @@ import SoftwareDetailsWidget from "../../../components/SoftwareDetailsWidget/Sof
 import { InstanceTableData } from "../../../controllers/InstanceTableData";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
 import { envApplication } from "../../../helpers/envProvider";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";

@@ -8,7 +8,7 @@ import CIDashboard from "../pages/DashboardsPage/CIDashboard/CIDashboard";
 import NSDashboard from "../pages/DashboardsPage/NSDashboard/NSDashboard";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateProvider from "../providers/PrivateProvider";
-import RobotPage from "../pages/RobotPage/RobotPage";
+import EnvironmentPage from "../pages/EnvironmentPage/EnvironmentPage";
 import Page404 from "../pages/Page404/Page404";
 import { ReactElement } from "react";
 
@@ -43,7 +43,7 @@ export default function AppRoutes(): ReactElement {
         />
         <Route
           path={`/:organizationName/:roboticsCloudName/:instanceName/:fleetName/:robotName`}
-          element={<RobotPage />}
+          element={<EnvironmentPage />}
         />
         {/* Dashboard Pages */}
 

@@ -57,9 +57,6 @@ export default function HeaderDropdownMenu(): ReactElement {
               </div>
             </li>
           </div>
-          <div onClick={() => setIsOpen(false)}>
-            <li className={liClassName}>Account Settings</li>
-          </div>
           <li
             className={liClassName}
             onClick={() => {

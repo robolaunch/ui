@@ -1,10 +1,10 @@
-import TopLoadingBar from "../components/TopLoadingBar/TopLoadingBar";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import React, { Fragment, ReactElement } from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
-import Header from "../components/Header/Header";
+import TopLoadingBar from "../../components/TopLoadingBar/TopLoadingBar";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Header from "../../components/Header/Header";
+import { Fragment, ReactElement } from "react";
 import { Outlet } from "react-router-dom";
-import useMain from "../hooks/useMain";
+import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 
 export default function PrivateLayout(): ReactElement {

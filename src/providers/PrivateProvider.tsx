@@ -4,7 +4,7 @@ import CreateRobotContext from "../contexts/CreateRobotContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import FunctionsContext from "../contexts/FunctionsContext";
 import GithubContext from "../contexts/GithubContext";
-import PrivateLayout from "../layouts/PrivateLayout";
+import PrivateLayout from "../layouts/PrivateLayout/PrivateLayout";
 import MainContext from "../contexts/MainContext";
 import keycloak from "../api/keycloak";
 

@@ -4,7 +4,7 @@ import CountWidget from "../../../components/CountWidget/CountWidget";
 import { Fragment, ReactElement } from "react";
 import { MainTableData } from "../../../controllers/MainTableData";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 
 export default function MainDashboardPage(): ReactElement {
   const { data, columns, responseOrganizations, handleReload } =

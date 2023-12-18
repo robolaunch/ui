@@ -1,6 +1,6 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import MissionManagement from "../pages/RobotPage/TaskManagement/MissionManagement";
-import BarcodeManagement from "../pages/RobotPage/TaskManagement/BarcodeManagement";
+import { Fragment, ReactElement, useState } from "react";
+import MissionManagement from "../pages/EnvironmentPage/TaskManagement/MissionManagement";
+import BarcodeManagement from "../pages/EnvironmentPage/TaskManagement/BarcodeManagement";
 import CardLayout from "./CardLayout";
 import useRobot from "../hooks/useRobot";
 

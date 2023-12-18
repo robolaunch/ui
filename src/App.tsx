@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import VersionViewer from "./components/VersionViewer/VersionViewer";
 import ThemeContext from "./contexts/ThemeContext";
 import AppRoutes from "./routes/AppRoutes";

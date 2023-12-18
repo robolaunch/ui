@@ -4,7 +4,7 @@ import Visualization from "../pages/RobotPage/Visualization/Visualization";
 import RemoteDesktop from "../pages/RobotPage/RemoteDesktop/RemoteDesktop";
 import RosConnector from "../components/RosConnector/RosConnector";
 import FileManager from "../components/FileManager/FileManager";
-import CodeEditor from "../components/CodeEditor/CodeEditor";
+import CodeEditor from "../pages/EnvironmentPage/CodeEditor/CodeEditor";
 import Overview from "../pages/RobotPage/Overview/Overview";
 import TaskManagementLayout from "./TaskManagementLayout";
 import BarcodeContext from "../contexts/BarcodeContext";

@@ -1,6 +1,6 @@
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import { NamespaceTableData } from "../../../controllers/NamespaceTableData";
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import CountWidget from "../../../components/CountWidget/CountWidget";
