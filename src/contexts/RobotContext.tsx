@@ -38,6 +38,8 @@ export default ({ children }: any) => {
 
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
 
+  const [iFrameId, setIFrameId] = useState<number>(0);
+
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | undefined>(
     undefined,
   );
@@ -125,13 +127,21 @@ export default ({ children }: any) => {
 
   // isRobotReady
   useEffect(() => {
-    if (
+    const isWorkspaceReady =
       responseRobot?.robotClusters?.filter(
         (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-      )?.length ||
+      )?.length === 0
+        ? true
+        : false;
+
+    const isBuildManagerReady =
       responseBuildManager?.robotClusters?.filter(
         (robot: any) => robot?.buildManagerStatus !== "Ready",
-      )?.length ||
+      )?.length === 0
+        ? true
+        : false;
+
+    const isLaunchManagerReady =
       responseLaunchManagers
         ?.map((launchStep: any) => {
           return launchStep?.robotClusters;
@@ -140,12 +150,41 @@ export default ({ children }: any) => {
         ?.map((cluster: any) => {
           return cluster?.launchManagerStatus;
         })
-        ?.filter((status: any) => status !== "Running")?.length
-    ) {
+        ?.filter((status: any) => status !== "Running")?.length === 0
+        ? true
+        : false;
+
+    console.log("isWorkspaceReady", isWorkspaceReady);
+
+    if (isWorkspaceReady || isBuildManagerReady || isLaunchManagerReady) {
+      setIsRobotReady(true);
+    } else {
+      setIFrameId((prevState) => prevState + 1);
+      setIsRobotReady(false);
     }
-    return setIsRobotReady(true);
   }, [responseRobot, responseBuildManager, responseLaunchManagers]);
   // isRobotReady
+
+  // Cookies Reloader
+  useEffect(() => {
+    const timer = setInterval(
+      () => {
+        setIFrameId((prevState) => prevState + 1);
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [
+    isRobotReady,
+    responseRobot,
+    responseBuildManager,
+    responseLaunchManagers,
+    iFrameId,
+  ]);
+  // Cookies Reloader
 
   function handleGetOrganization() {
     getOrganization(
@@ -324,6 +363,7 @@ export default ({ children }: any) => {
         responseBuildManager,
         responseLaunchManagers,
         isRobotReady,
+        iFrameId,
         ros,
         setRos,
         topicList,

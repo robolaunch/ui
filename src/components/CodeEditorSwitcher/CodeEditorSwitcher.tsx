@@ -3,10 +3,8 @@ import Card from "../Card/Card";
 
 interface ICodeEditorSwitcher {
   codeEditorTabs: any;
-  activeTabCodeEditor: string;
-  setActiveTabCodeEditor: Dispatch<
-    SetStateAction<"Cloud IDE" | "Physical IDE">
-  >;
+  activeTabCodeEditor: number;
+  setActiveTabCodeEditor: Dispatch<SetStateAction<1 | 2>>;
 }
 
 export default function CodeEditorSwitcher({
@@ -21,7 +19,7 @@ export default function CodeEditorSwitcher({
           return (
             <li
               className="flex w-full cursor-pointer flex-col items-center gap-3"
-              onClick={() => setActiveTabCodeEditor(tab.name)}
+              onClick={() => setActiveTabCodeEditor(tab.index + 1)}
               key={index}
             >
               <div

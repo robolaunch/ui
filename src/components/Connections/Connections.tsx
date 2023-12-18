@@ -1,9 +1,9 @@
 import ConnectionLabel from "../ConnectionLabel/ConnectionLabel";
 import StateCell from "../TableInformationCells/StateCell";
+import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
-import { envApplication } from "../../helpers/envProvider";
 
 export default function Connections(): ReactElement {
   const { responseRobot, isSettedCookie } = useRobot();

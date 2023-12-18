@@ -1,41 +1,27 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import useRobot from "../../hooks/useRobot";
-import { useAppSelector } from "../../hooks/redux";
+import { ReactElement } from "react";
 
 export default function HiddenFrame(): ReactElement {
-  const [iframeKey, setIframeKey] = useState<number>(0);
-  const { responseRobot, setIsSettedCookie, isSettedCookie } = useRobot();
-  const { urls } = useAppSelector((state) => state.robot);
-
-  useEffect(() => {
-    const timer = setInterval(
-      () => {
-        setIframeKey(iframeKey + 1);
-      },
-      5 * 60 * 1000,
-    ); // 5 minutes
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, [iframeKey]);
+  const {
+    responseRobot,
+    isRobotReady,
+    setIsSettedCookie,
+    isSettedCookie,
+    iFrameId,
+  } = useRobot();
 
   return (
-    <Fragment>
-      {responseRobot?.ideIngressEndpoint && (
-        <iframe
-          key={iframeKey}
-          title="iframe"
-          allow="clipboard-read"
-          className="absolute -top-[9999px]"
-          src={urls?.ide || responseRobot?.ideIngressEndpoint}
-          onLoad={() => {
-            setTimeout(() => {
-              !isSettedCookie && setIsSettedCookie(true);
-            }, 2500);
-          }}
-        />
-      )}
-    </Fragment>
+    <iframe
+      key={iFrameId}
+      title={String(iFrameId)}
+      allow="clipboard-read"
+      className="absolute -top-[9999px]"
+      src={responseRobot?.ideIngressEndpoint}
+      onLoad={() => {
+        setTimeout(() => {
+          isRobotReady && !isSettedCookie && setIsSettedCookie(true);
+        }, 2500);
+      }}
+    />
   );
 }

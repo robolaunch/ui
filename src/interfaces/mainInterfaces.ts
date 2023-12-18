@@ -1,6 +1,6 @@
-import { IRegion } from "./regionInterfaces";
 import { IOrganization } from "./organizationInterfaces";
 import { IInstance } from "./instanceInferfaces";
+import { IRegion } from "./regionInterfaces";
 
 export interface ISidebarState {
   isOpen: boolean;

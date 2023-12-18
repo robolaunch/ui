@@ -1,6 +1,6 @@
 import RestartService from "../../../components/RestartServiceButton/RestartServiceButton";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import ServiceLogs from "../../../components/ServiceLogs/ServiceLogs";
 import ServiceJobs from "../../../components/ServiceJobs/ServiceJobs";
 import FileBrowser from "../../../components/FileBrowser/FileBrowser";
@@ -10,14 +10,11 @@ import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEdito
 import FullScreenService from "../../../components/FullScreenService/FullScreenService";
 
 export default function CodeEditor(): ReactElement {
-  const [ideKey, setIdeKey] = useState<number>(0);
-  const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
-    "Cloud IDE" | "Physical IDE"
-  >("Cloud IDE");
+  const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<1 | 2>(1);
 
   const handleFullScreen = useFullScreenHandle();
 
-  const { activeTab, responseRobot, setIsSettedCookie } = useRobot();
+  const { activeTab, responseRobot, isRobotReady, isSettedCookie } = useRobot();
 
   const codeEditorTabs = [
     {
@@ -28,15 +25,8 @@ export default function CodeEditor(): ReactElement {
     },
   ];
 
-  useEffect(() => {
-    setIsSettedCookie(undefined);
-    setIdeKey((prev) => prev + 1);
-  }, [responseRobot?.robotClusters, setIsSettedCookie]);
-
   return (
     <div
-      key={ideKey}
-      id={`CODE_EDITOR_${ideKey}`}
       className={
         activeTab === "Code Editor"
           ? "animate__animated animate__fadeIn flex h-full flex-col gap-6"
@@ -51,34 +41,31 @@ export default function CodeEditor(): ReactElement {
         />
       )}
       <Card loading className="relative">
-        <FullScreen className="h-full w-full" handle={handleFullScreen}>
-          <iframe
-            allow="clipboard-read"
-            className={`animate__animated animate__fadeIn w-full ${
-              handleFullScreen?.active ? "h-screen" : "h-full"
-            }`}
-            src={
-              activeTabCodeEditor === "Cloud IDE"
-                ? responseRobot?.ideIngressEndpoint
-                : responseRobot?.physicalIdeIngressEndpoint
-            }
-            title="Code Editor"
-            onLoad={async () => {
-              if (await responseRobot) {
-                await setTimeout(() => {
-                  setIsSettedCookie(true);
-                }, 2500);
-              }
-            }}
-          />
-          <div className="absolute bottom-4 right-4 flex flex-col gap-5">
-            <FileBrowser type="ide" />
-            <ServiceJobs type="ide" />
-            <ServiceLogs type="ide" />
-            <RestartService type="ide" />
-            <FullScreenService handleFullScreen={handleFullScreen} />
-          </div>
-        </FullScreen>
+        <Fragment>
+          {isRobotReady && isSettedCookie && (
+            <FullScreen className="h-full w-full" handle={handleFullScreen}>
+              <iframe
+                title="Code Editor"
+                allow="clipboard-read"
+                className={`animate__animated animate__fadeIn w-full ${
+                  handleFullScreen?.active ? "h-screen" : "h-full"
+                }`}
+                src={
+                  activeTabCodeEditor === 1
+                    ? responseRobot?.ideIngressEndpoint
+                    : responseRobot?.physicalIdeIngressEndpoint
+                }
+              />
+              <div className="absolute bottom-4 right-4 flex flex-col gap-5">
+                <FileBrowser type="ide" />
+                <ServiceJobs type="ide" />
+                <ServiceLogs type="ide" />
+                <RestartService type="ide" />
+                <FullScreenService handleFullScreen={handleFullScreen} />
+              </div>
+            </FullScreen>
+          )}
+        </Fragment>
       </Card>
     </div>
   );
