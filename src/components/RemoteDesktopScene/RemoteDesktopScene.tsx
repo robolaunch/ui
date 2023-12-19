@@ -1,8 +1,8 @@
-import RemoteDesktopController from "../RemoteDesktopController/RemoteDesktopController";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { GiSpeaker } from "react-icons/gi";
 import useVDI from "../../hooks/useVDI";
 import { ReactElement } from "react";
+import ControlBar from "../ControlBar/ControlBar";
 
 interface IRemoteDesktopScene {
   isControllerActive: boolean;
@@ -59,7 +59,7 @@ export default function RemoteDesktopScene({
           </div>
         </div>
         {isControllerActive && (
-          <RemoteDesktopController handleFullScreen={handleFullScreen} />
+          <ControlBar handleFullScreen={handleFullScreen} type="vdi" />
         )}
       </div>
     </FullScreen>

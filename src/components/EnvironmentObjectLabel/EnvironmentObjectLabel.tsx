@@ -1,16 +1,16 @@
 import { ReactElement } from "react";
 
-interface IRobotHeaderLabel {
+interface IEnvironmentObjectLabel {
   icon: "organization" | "region" | "instance" | "fleet";
   text: string;
 }
 
-export default function RobotHeaderLabel({
+export default function EnvironmentObjectLabel({
   icon,
   text,
-}: IRobotHeaderLabel): ReactElement {
+}: IEnvironmentObjectLabel): ReactElement {
   return (
-    <span className="flex items-center gap-1">
+    <span className="flex items-center gap-1.5">
       {(() => {
         switch (icon) {
           case "organization":
@@ -24,7 +24,7 @@ export default function RobotHeaderLabel({
           case "region":
             return (
               <img
-                className="h-4 w-4"
+                className="h-3.5 w-3.5"
                 src="/svg/general/roboticscloud/roboticscloud-dark.svg"
                 alt="region"
               />

@@ -1,10 +1,6 @@
-import RestartService from "../../../components/RestartServiceButton/RestartServiceButton";
 import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEditorSwitcher";
-import FullScreenService from "../../../components/FullScreenService/FullScreenService";
-import ServiceLogs from "../../../components/ServiceLogs/ServiceLogs";
-import ServiceJobs from "../../../components/ServiceJobs/ServiceJobs";
-import FileBrowser from "../../../components/FileBrowser/FileBrowser";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import ControlBar from "../../../components/ControlBar/ControlBar";
 import { Fragment, ReactElement, useState } from "react";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
@@ -33,7 +29,10 @@ export default function CodeEditor(): ReactElement {
       <Card loading className="relative">
         <Fragment>
           {isRobotReady && isSettedCookie && (
-            <FullScreen className="h-full w-full" handle={handleFullScreen}>
+            <FullScreen
+              className="relative h-full w-full"
+              handle={handleFullScreen}
+            >
               <iframe
                 title="Virtual IDE"
                 allow="clipboard-read"
@@ -50,13 +49,7 @@ export default function CodeEditor(): ReactElement {
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={responseRobot?.physicalIdeIngressEndpoint}
               />
-              <div className="absolute bottom-4 right-4 flex flex-col gap-5">
-                <FileBrowser type="ide" />
-                <ServiceJobs type="ide" />
-                <ServiceLogs type="ide" />
-                <RestartService type="ide" />
-                <FullScreenService handleFullScreen={handleFullScreen} />
-              </div>
+              <ControlBar type="ide" handleFullScreen={handleFullScreen} />
             </FullScreen>
           )}
         </Fragment>

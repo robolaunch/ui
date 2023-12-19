@@ -3,7 +3,6 @@ import RemoteDesktopViewersTab from "../RemoteDesktopViewersTab/RemoteDesktopVie
 import RemoteDesktopChatTab from "../RemoteDesktopChatTab/RemoteDesktopChatTab";
 import RemoteDesktopHeader from "../RemoteDesktopHeader/RemoteDesktopHeader";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
-import RemoteDesktopReadmeTab from "../RemoteDesktopReadmeTab/RemoteDesktopReadmeTab";
 
 export default function RemoteDesktopTabs(): ReactElement {
   const [activeTab, setActiveTab] = useState<"Chat" | "Viewers" | "Readme">(
@@ -29,8 +28,6 @@ export default function RemoteDesktopTabs(): ReactElement {
               return <RemoteDesktopChatTab height={height} />;
             case "Viewers":
               return <RemoteDesktopViewersTab height={height} />;
-            case "Readme":
-              return <RemoteDesktopReadmeTab height={height} readMe={""} />;
           }
         })()}
       </div>

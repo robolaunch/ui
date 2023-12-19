@@ -11,7 +11,7 @@ export default function RemoteDesktopHeader({
 }: IRemoteDesktopHeader): ReactElement {
   return (
     <ul className="flex w-full items-center justify-center gap-6 p-2.5">
-      {["Chat", "Viewers", "Readme"].map((tab: any, index: number) => {
+      {["Chat", "Viewers"].map((tab: any, index: number) => {
         return (
           <li
             className="flex cursor-pointer flex-col gap-3"

@@ -12,7 +12,7 @@ export default function ServiceLogs({ type }: IServiceLogs): ReactElement {
   return (
     <button className="flex cursor-pointer flex-col items-center gap-1 text-light-700 transition-all duration-200 hover:scale-90 hover:text-primary-400">
       <RiListCheck size={16} onClick={() => setIsOpenedModal(true)} />
-      <p className="text-[0.62rem]">Logs</p>
+      <p className="whitespace-nowrap text-[0.62rem]">Service Logs</p>
       {isOpenedModal && (
         <ServiceLogModal
           type={type}

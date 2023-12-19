@@ -50,20 +50,18 @@ export default ({ children }: any) => {
       pagesState?.organization?.organizationName !==
       `org_${url?.organizationName}`
     ) {
-      handleGetOrganization();
+      return handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
-      handleGetRoboticsCloud();
+      return handleGetRoboticsCloud();
     } else if (pagesState?.instance?.name !== url?.instanceName) {
-      handleGetInstance();
+      return handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      envApplication ? handleGetNamespace() : handleGetFleet();
-    } else if (
-      !responseRobot &&
-      !responseBuildManager &&
-      !responseLaunchManagers
-    ) {
+      return envApplication ? handleGetNamespace() : handleGetFleet();
+    } else if (!responseRobot) {
       envApplication ? handleGetEnvironment() : handleGetRobot();
+    } else if (!responseBuildManager) {
       !envApplication && handleGetBuildManager();
+    } else if (!responseLaunchManagers) {
       !envApplication && handleGetLaunchManagers();
     }
 

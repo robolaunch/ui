@@ -23,7 +23,7 @@ export default function FullScreenService({
       ) : (
         <BsFullscreen size={16} />
       )}
-      <p className="text-[0.62rem]">Full Screen</p>
+      <p className="whitespace-nowrap text-[0.62rem]">Full Screen</p>
     </button>
   );
 }

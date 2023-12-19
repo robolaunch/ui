@@ -12,7 +12,9 @@ export default function RestartService({ type }: IRestartService) {
   return (
     <button className="flex cursor-pointer flex-col items-center gap-1 text-light-700 transition-all duration-200 hover:scale-90 hover:text-primary-400">
       <IoReloadOutline size={16} onClick={() => setIsOpenedModal(true)} />
-      <p className="text-[0.62rem]">{type === "soft-vdi" && "Soft"} Restart </p>
+      <p className="whitespace-nowrap text-[0.62rem]">
+        {type === "soft-vdi" && "Soft"}Service Restart{" "}
+      </p>
       {isOpenedModal && (
         <RestartServiceModal
           type={type}

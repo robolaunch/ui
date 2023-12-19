@@ -1,3 +1,4 @@
+import { envApplication } from "../../helpers/envProvider";
 import { MdOutlineStorage } from "react-icons/md";
 import ContentLoader from "react-content-loader";
 import { BsFillCpuFill } from "react-icons/bs";
@@ -5,7 +6,6 @@ import useRobot from "../../hooks/useRobot";
 import { FaMemory } from "react-icons/fa";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
-import { envApplication } from "../../helpers/envProvider";
 
 export default function RobotResource(): ReactElement {
   const { responseRobot } = useRobot();

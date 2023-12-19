@@ -1,32 +1,29 @@
-import { ReactElement } from "react";
-import ColorLabel from "../ColorLabel/ColorLabel";
-import { useParams } from "react-router-dom";
-import RobotHeaderLabel from "../RobotHeaderLabel/RobotHeaderLabel";
+import EnvironmentObjectLabel from "../EnvironmentObjectLabel/EnvironmentObjectLabel";
+import EnvironmentNameLabel from "../EnvironmentNameLabel/EnvironmentNameLabel";
 import { envApplication } from "../../helpers/envProvider";
+import { useParams } from "react-router-dom";
+import { ReactElement } from "react";
 
 export default function EnvironmentLabels(): ReactElement {
   const url = useParams();
 
   return (
-    <div className="flex items-center gap-4">
-      <span className="flex items-center gap-2">
-        <span className="text-lg font-medium">{url?.robotName}</span>
-        <ColorLabel />
-      </span>
-      <div className="flex h-full items-center justify-center gap-4">
-        <RobotHeaderLabel
+    <div className="flex items-center gap-7">
+      <EnvironmentNameLabel />
+      <div className="flex items-center gap-3.5">
+        <EnvironmentObjectLabel
           icon="organization"
           text={`Organization: ${url?.organizationName}`}
         />
-        <RobotHeaderLabel
+        <EnvironmentObjectLabel
           icon="region"
           text={`Region: ${url?.roboticsCloudName}`}
         />
-        <RobotHeaderLabel
+        <EnvironmentObjectLabel
           icon="instance"
           text={`Instance: ${url?.instanceName}`}
         />
-        <RobotHeaderLabel
+        <EnvironmentObjectLabel
           icon="fleet"
           text={`${envApplication ? "Namespace" : "Fleet"}: ${url?.fleetName}`}
         />

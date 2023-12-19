@@ -12,7 +12,7 @@ export default function ServiceJobs({ type }: IServiceJobs): ReactElement {
   return (
     <button className="flex cursor-pointer flex-col items-center gap-1 text-light-700 transition-all duration-200 hover:scale-90 hover:text-primary-400">
       <RiSettings3Line size={16} onClick={() => setIsOpenedModal(true)} />
-      <p className="text-[0.62rem]">Jobs</p>
+      <p className="whitespace-nowrap text-[0.62rem]">Service Jobs</p>
       {isOpenedModal && (
         <ServiceJobModal
           type={type}
