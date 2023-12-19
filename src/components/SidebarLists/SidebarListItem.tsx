@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 interface ISidebarListItem {
   name: string;
@@ -122,24 +123,79 @@ export default function SidebarListItem({
     }
   };
 
+  function handleNotSelectableClick() {
+    switch (type) {
+      case "organization":
+        setSelectedState({
+          ...selectedState,
+          organization: data,
+          roboticsCloud: null,
+          instance: null,
+          fleet: null,
+        });
+        setSidebarState({ ...sidebarState, isOpen: false });
+        navigate(url);
+        break;
+      case "roboticscloud":
+        setSelectedState({
+          ...selectedState,
+          roboticsCloud: data,
+          instance: null,
+          fleet: null,
+        });
+        setSidebarState({ ...sidebarState, isOpen: false });
+        navigate(url);
+        break;
+      case "instance":
+        if (data?.instanceCloudState === "ConnectionHub_Ready") {
+          setSelectedState({
+            ...selectedState,
+            instance: data,
+            fleet: null,
+          });
+          setSidebarState({ ...sidebarState, isOpen: false });
+          navigate(url);
+        } else {
+          toast.error(
+            "Instance is not selectable now. Please try again later.",
+          );
+        }
+        break;
+      case "fleet":
+        if (
+          data?.fleetStatus === "Ready" ||
+          data?.namespaceStatus === "Active"
+        ) {
+          setSelectedState({ ...selectedState, fleet: data });
+          setSidebarState({ ...sidebarState, isOpen: false });
+          navigate(url);
+        } else {
+          toast.error("Fleet is not selectable now. Please try again later.");
+        }
+
+        break;
+    }
+  }
+
   return (
     <div
       key={name}
-      className={`animate__animated animate__fadeIn flex cursor-pointer  select-none rounded-lg border hover:scale-[0.985] ${
+      className={`animate__animated animate__fadeIn transition-300 flex w-full cursor-pointer select-none items-center justify-between rounded-lg border hover:scale-[0.985]
+      ${
         selected
-          ? "border-light-400 bg-light-100 shadow"
+          ? "border-light-300 bg-light-100 shadow"
           : "border-light-200 bg-light-50 shadow-sm"
-      } transition-300`}
+      }
+      `}
     >
       <div
         onClick={() => handleSelectItem()}
-        className={`transition-300 flex w-full gap-4 rounded-l-lg border-r p-2.5 ${
-          selected
-            ? "border-light-400 hover:bg-light-200"
-            : "border-light-200 hover:bg-light-100"
-        } ${notSelectable && "!border-0"}`}
+        className={`flex w-full gap-4 rounded-l-lg p-2.5 
+        ${selected ? " hover:bg-light-200" : " hover:bg-light-100"} 
+        `}
       >
         <img
+          alt="rl"
           draggable="false"
           className="w-8"
           src={`/svg/general/${
@@ -147,82 +203,22 @@ export default function SidebarListItem({
           }/${envApplication && type === "robot" ? "application" : type}-${
             selected ? "blue" : "dark"
           }.svg`}
-          alt=""
         />
         <div className="flex flex-col gap-1">
-          <span className="text-sm font-medium">{name}</span>
-          <span className="text-xs font-light">{description}</span>
+          <p className="text-sm font-medium">{name}</p>
+          <p className="text-xs font-light">{description}</p>
         </div>
       </div>
       {!notSelectable && (
         <div
-          onClick={() => {
-            switch (type) {
-              case "organization":
-                setSelectedState({
-                  ...selectedState,
-                  organization: data,
-                  roboticsCloud: null,
-                  instance: null,
-                  fleet: null,
-                });
-                setSidebarState({ ...sidebarState, isOpen: false });
-                navigate(url);
-                break;
-              case "roboticscloud":
-                setSelectedState({
-                  ...selectedState,
-                  roboticsCloud: data,
-                  instance: null,
-                  fleet: null,
-                });
-                setSidebarState({ ...sidebarState, isOpen: false });
-                navigate(url);
-                break;
-              case "instance":
-                if (data?.instanceCloudState === "ConnectionHub_Ready") {
-                  setSelectedState({
-                    ...selectedState,
-                    instance: data,
-                    fleet: null,
-                  });
-                  setSidebarState({ ...sidebarState, isOpen: false });
-                  navigate(url);
-                } else {
-                  toast.error(
-                    "Instance is not selectable now. Please try again later.",
-                  );
-                }
-                break;
-              case "fleet":
-                if (
-                  data?.fleetStatus === "Ready" ||
-                  data?.namespaceStatus === "Active"
-                ) {
-                  setSelectedState({ ...selectedState, fleet: data });
-                  setSidebarState({ ...sidebarState, isOpen: false });
-                  navigate(url);
-                } else {
-                  toast.error(
-                    "Fleet is not selectable now. Please try again later.",
-                  );
-                }
-
-                break;
-            }
-          }}
-          className={`transition-300 flex items-center justify-center rounded-r-lg px-3.5 ${
+          onClick={() => handleNotSelectableClick()}
+          className={`transition-300 flex h-full items-center justify-center border-l px-3 ${
             selected
-              ? "border-light-400 hover:bg-light-200"
-              : "border-light-100 hover:bg-light-100"
+              ? "border-light-300 hover:bg-light-200"
+              : "border-light-200 hover:bg-light-100"
           } `}
         >
-          <i
-            className={`pi pi-angle-right transition-300 ${
-              selected ? "text-light-900" : "text-light-700"
-            }`}
-            style={{ fontSize: "1.25rem" }}
-          />
+          <MdKeyboardArrowRight size={26} />
         </div>
       )}
     </div>

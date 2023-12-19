@@ -1,3 +1,7 @@
+import RestartService from "../RestartServiceButton/RestartServiceButton";
+import FullScreenService from "../FullScreenService/FullScreenService";
+import VDIVolumeControl from "../VDIVolumeControl/VDIVolumeControl";
+import VDIControlButton from "../VDIControlButton/VDIControlButton";
 import { ReactElement, useState } from "react";
 import {
   MdOutlineKeyboardArrowDown,
@@ -6,11 +10,7 @@ import {
 import FileBrowser from "../FileBrowser/FileBrowser";
 import ServiceJobs from "../ServiceJobs/ServiceJobs";
 import ServiceLogs from "../ServiceLogs/ServiceLogs";
-import RestartService from "../RestartServiceButton/RestartServiceButton";
-import FullScreenService from "../FullScreenService/FullScreenService";
 import { FullScreenHandle } from "react-full-screen";
-import VDIVolumeControl from "../VDIVolumeControl/VDIVolumeControl";
-import VDIControlButton from "../VDIControlButton/VDIControlButton";
 
 interface IControlBar {
   type: "ide" | "vdi";
@@ -26,7 +26,7 @@ export default function ControlBar({
   return (
     <div className="absolute bottom-0 left-1/2 right-1/2 flex flex-col items-center">
       <button
-        className="rounded-t-lg bg-light-100 bg-opacity-75 px-3 py-0.5"
+        className="rounded-t-lg bg-light-100 px-3 py-0.5"
         onClick={() => setIsOpenMenu(!isOpenMenu)}
       >
         {isOpenMenu ? (
@@ -36,7 +36,7 @@ export default function ControlBar({
         )}
       </button>
       {isOpenMenu && (
-        <div className="flex items-center gap-6 rounded-t-lg bg-light-100 bg-opacity-75 px-6 pb-2 pt-3">
+        <div className="flex items-center gap-6 rounded-t-lg bg-light-100 px-6 pb-2 pt-3">
           <FileBrowser type={type} />
           <ServiceJobs type={type} />
           <ServiceLogs type={type} />

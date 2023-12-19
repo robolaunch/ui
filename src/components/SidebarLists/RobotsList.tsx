@@ -1,5 +1,5 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import { envApplication } from "../../helpers/envProvider";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";

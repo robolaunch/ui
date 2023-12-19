@@ -21,6 +21,11 @@ export default function VDIVolumeControl(): ReactElement {
       <input
         className="h-[3px] w-24"
         onChange={(e) => handleVolumeControl(Number(e.target.value) / 100)}
+        style={{
+          appearance: "auto",
+          color: "#AC2DFE",
+          accentColor: "currentcolor",
+        }}
         type="range"
         min="1"
         max="100"

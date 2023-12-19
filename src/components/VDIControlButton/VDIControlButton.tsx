@@ -36,7 +36,7 @@ export default function VDIControlButton(): ReactElement {
         return "Take Control";
       })()}
       onClick={() => handleGetControl()}
-      className="!h-11 !w-36 text-xs"
+      className="!h-9 !w-32 !text-[0.68rem]"
     />
   );
 }

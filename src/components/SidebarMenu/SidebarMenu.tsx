@@ -93,12 +93,6 @@ export default function PrivateSidebar(): ReactElement {
             </Fragment>
           ) : (
             <Fragment>
-              {/* {!(envApplicationFleet || envApplication) && (
-                <SidebarStaticItem
-                  to="/marketplace"
-                  imgSrc={`/svg/general/marketplace/marketplace-gray.svg`}
-                />
-              )} */}
               <SideBarMenuItem
                 type="organization"
                 description="You can access all your organizations here."
@@ -132,10 +126,6 @@ export default function PrivateSidebar(): ReactElement {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {/* <SidebarStaticItem
-            to="/billing"
-            imgSrc={`/svg/general/billing/billing-gray.svg`}
-          /> */}
         <SidebarStaticItem
           to="/user-role-management"
           imgSrc={`/svg/general/users/users-gray.svg`}
