@@ -2,7 +2,7 @@ import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDes
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import StreamContext from "../../../contexts/VDIContext";
-import CardLayout from "../../../layouts/CardLayout";
+import Card from "../../../components/Card/Card";
 import { ReactElement, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
 
@@ -19,16 +19,13 @@ export default function DevelopmentSuite({
   const { ref, width } = useComponentSize();
 
   return (
-    <CardLayout>
+    <Card>
       <ImageSplitter
         setIsDragging={setIsDragging}
         source={
           <StreamContext vdiIngressEndpoint={vdiURL}>
-            <div
-              ref={ref}
-              className="animate__animated animate__fadeIn grid grid-cols-12"
-            >
-              <div className="bg-light-900 col-span-12 lg:col-span-8 xl:col-span-9 2xl:col-span-10 ">
+            <div ref={ref} className=" grid h-full grid-cols-12">
+              <div className="col-span-12 h-full bg-light-900 lg:col-span-8 xl:col-span-9 2xl:col-span-10">
                 <RemoteDesktopScene isControllerActive={true} />
               </div>
               <div className="hidden flex-col lg:col-span-4 lg:flex xl:col-span-3 2xl:col-span-2">
@@ -53,6 +50,6 @@ export default function DevelopmentSuite({
         }
         startPosition={41.5}
       />
-    </CardLayout>
+    </Card>
   );
 }

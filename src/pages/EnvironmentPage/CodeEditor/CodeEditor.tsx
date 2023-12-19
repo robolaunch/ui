@@ -1,13 +1,13 @@
 import RestartService from "../../../components/RestartServiceButton/RestartServiceButton";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { Fragment, ReactElement, useState } from "react";
+import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEditorSwitcher";
+import FullScreenService from "../../../components/FullScreenService/FullScreenService";
 import ServiceLogs from "../../../components/ServiceLogs/ServiceLogs";
 import ServiceJobs from "../../../components/ServiceJobs/ServiceJobs";
 import FileBrowser from "../../../components/FileBrowser/FileBrowser";
-import useRobot from "../../../hooks/useRobot";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { Fragment, ReactElement, useState } from "react";
 import Card from "../../../components/Card/Card";
-import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEditorSwitcher";
-import FullScreenService from "../../../components/FullScreenService/FullScreenService";
+import useRobot from "../../../hooks/useRobot";
 
 export default function CodeEditor(): ReactElement {
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<1 | 2>(1);
@@ -15,15 +15,6 @@ export default function CodeEditor(): ReactElement {
   const handleFullScreen = useFullScreenHandle();
 
   const { activeTab, responseRobot, isRobotReady, isSettedCookie } = useRobot();
-
-  const codeEditorTabs = [
-    {
-      name: "Cloud IDE",
-    },
-    {
-      name: "Physical IDE",
-    },
-  ];
 
   return (
     <div
@@ -37,7 +28,6 @@ export default function CodeEditor(): ReactElement {
         <CodeEditorSwitcher
           activeTabCodeEditor={activeTabCodeEditor}
           setActiveTabCodeEditor={setActiveTabCodeEditor}
-          codeEditorTabs={codeEditorTabs}
         />
       )}
       <Card loading className="relative">
@@ -45,18 +35,18 @@ export default function CodeEditor(): ReactElement {
           {isRobotReady && isSettedCookie && (
             <FullScreen className="h-full w-full" handle={handleFullScreen}>
               <iframe
-                title="Code Editor"
+                title="Virtual IDE"
                 allow="clipboard-read"
                 className={`animate__animated animate__fadeIn h-full w-full
-                ${activeTabCodeEditor === 1 && "absolute -top-[9999px]"}
+                ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={responseRobot?.ideIngressEndpoint}
               />
               <iframe
-                title="Code Editor"
+                title="Physical IDE"
                 allow="clipboard-read"
                 className={`animate__animated animate__fadeIn h-full w-full
-                ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
+                ${activeTabCodeEditor === 1 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={responseRobot?.physicalIdeIngressEndpoint}
               />

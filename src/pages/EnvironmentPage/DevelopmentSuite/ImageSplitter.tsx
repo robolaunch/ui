@@ -97,8 +97,8 @@ const ImageSplitter = ({ ...props }: Props) => {
   }, [drag, onDragMove, onMouseUp]);
 
   return (
-    <div className="content-splitter" ref={refSplitter}>
-      <div className="content-splitter-main">{splitter.source}</div>
+    <div className="content-splitter h-full" ref={refSplitter}>
+      <div className="content-splitter-main h-full">{splitter.source}</div>
       <div
         className="content-splitter-layer"
         style={{ width: `${drag.position.toFixed(2)}%` }}
@@ -106,7 +106,7 @@ const ImageSplitter = ({ ...props }: Props) => {
         {splitter.content}
       </div>
       <div
-        className="splitter-divider"
+        className="splitter-divider h-full"
         onMouseDown={onMouseDown}
         style={{ left: `${drag.position.toFixed(2)}%` }}
       >

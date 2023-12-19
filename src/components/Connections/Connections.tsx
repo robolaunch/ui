@@ -27,9 +27,9 @@ export default function Connections(): ReactElement {
       )}
       <div className="flex gap-1" id="ide">
         <ConnectionLabel
-          label={`${
-            responseRobot?.physicalIdeIngressEndpoint && "Virtual "
-          }IDE`}
+          label={
+            responseRobot?.physicalIdeIngressEndpoint ? "Virtual IDE" : "IDE"
+          }
           url={responseRobot?.ideIngressEndpoint}
         />
         <StateCell
