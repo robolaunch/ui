@@ -44,6 +44,8 @@ export default ({ children }: any) => {
   const [topicList, setTopicList] = useState<any>([]);
   const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
 
+  const [isVDIConnected, setIsVDIConnected] = useState<boolean | null>(null);
+
   // Main Functions
   useEffect(() => {
     if (
@@ -247,6 +249,44 @@ export default ({ children }: any) => {
     }
   }
   // ROS Topic Setter
+
+  // VDI Test Connection
+  useEffect(() => {
+    const vdiClient =
+      responseRobot?.vdiIngressEndpoint &&
+      isRobotReady &&
+      isSettedCookie &&
+      isVDIConnected === null
+        ? new WebSocket(
+            responseRobot?.vdiIngressEndpoint + "ws?password=admin" || "",
+          )
+        : null;
+
+    vdiClient?.addEventListener("open", () => {
+      setIsVDIConnected(true);
+    });
+
+    vdiClient?.addEventListener("error", () => {
+      setIsVDIConnected(false);
+    });
+
+    vdiClient?.addEventListener("close", () => {
+      setIsVDIConnected(false);
+    });
+
+    function closeConnection() {
+      typeof isVDIConnected === "boolean" && vdiClient?.close();
+    }
+
+    closeConnection();
+
+    return closeConnection();
+  }, [isRobotReady, isSettedCookie, isVDIConnected, responseRobot]);
+
+  useEffect(() => {
+    console.log("isVDIConnected", isVDIConnected);
+  }, [isVDIConnected]);
+  // VDI Test Connection
 
   function handleGetOrganization() {
     getOrganization(
