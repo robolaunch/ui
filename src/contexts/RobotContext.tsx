@@ -181,9 +181,9 @@ export default ({ children }: any) => {
   // ROS Bridge Connector
   useEffect(() => {
     const rosClient: ROSLIB.Ros | null =
+      !envApplication &&
       isSettedCookie &&
-      responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss" &&
-      !envApplication
+      responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss"
         ? new ROSLIB.Ros({
             url: responseRobot?.bridgeIngressEndpoint,
           })
@@ -206,7 +206,7 @@ export default ({ children }: any) => {
       rosClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseRobot, isSettedCookie]);
+  }, [isSettedCookie]);
   // ROS Bridge Connector
 
   // ROS Topic Setter
