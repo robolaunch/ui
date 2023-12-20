@@ -6,7 +6,7 @@
       <img src="https://img.shields.io/badge/nodejs-18.18.2-dgreen" alt="node">
     </a>
     <a href="https://github.com/robolaunch/ui/releases">
-      <img src="https://img.shields.io/badge/release-v0.24.4-red" alt="release">
+      <img src="https://img.shields.io/badge/release-v0.24.5-red" alt="release">
     </a>
         <a href="#">
       <img src="https://img.shields.io/badge/language-typescript-blue" alt="language">

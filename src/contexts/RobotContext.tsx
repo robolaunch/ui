@@ -270,10 +270,6 @@ export default ({ children }: any) => {
       setIsVDIConnected(false);
     });
 
-    vdiClient?.addEventListener("close", () => {
-      setIsVDIConnected(false);
-    });
-
     typeof isVDIConnected === "boolean" && vdiClient?.close();
 
     return () => {
