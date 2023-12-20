@@ -3,11 +3,47 @@ import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import ROSLIB from "roslib";
 
 export default function Connections(): ReactElement {
-  const { responseRobot, isSettedCookie } = useRobot();
+  const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
   const { keycloak } = useKeycloak();
+
+  const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const rosClient: ROSLIB.Ros = new ROSLIB.Ros({
+      url: responseRobot?.bridgeIngressEndpoint,
+    });
+
+    if (isRosConnected === null) {
+      if (
+        isRobotReady &&
+        isSettedCookie &&
+        responseRobot?.bridgeIngressEndpoint
+      ) {
+        rosClient?.on("connection", function () {
+          setIsRosConnected(true);
+        });
+
+        rosClient?.on("error", function (error) {
+          setIsRosConnected(false);
+        });
+      }
+    } else {
+      rosClient?.close();
+    }
+  }, [
+    isRobotReady,
+    isSettedCookie,
+    isRosConnected,
+    responseRobot?.bridgeIngressEndpoint,
+  ]);
+
+  useEffect(() => {
+    console.log("isRosConnected", isRosConnected);
+  }, [isRosConnected]);
 
   return (
     <div className="flex gap-4">

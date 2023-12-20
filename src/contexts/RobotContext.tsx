@@ -42,10 +42,6 @@ export default ({ children }: any) => {
     undefined,
   );
 
-  useEffect(() => {
-    console.log("pagesState", pagesState);
-  }, [pagesState]);
-
   // Main Functions
   useEffect(() => {
     if (
@@ -147,8 +143,6 @@ export default ({ children }: any) => {
         ?.filter((status: any) => status !== "Running")?.length === 0
         ? true
         : false;
-
-    console.log("isWorkspaceReady", isWorkspaceReady);
 
     if (isWorkspaceReady || isBuildManagerReady || isLaunchManagerReady) {
       setIsRobotReady(true);
