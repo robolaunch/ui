@@ -4,6 +4,7 @@ import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import ROSLIB from "roslib";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -33,15 +34,14 @@ export default ({ children }: any) => {
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
 
-  const [ros, setRos] = useState<any>(null);
-  const [topicList, setTopicList] = useState<any>([]);
-
   const [iFrameId, setIFrameId] = useState<number>(0);
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | undefined>(
     undefined,
   );
 
+  const [ros, setRos] = useState<ROSLIB.Ros | null>(null);
+  const [topicList, setTopicList] = useState<any>([]);
   const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
 
   // Main Functions
@@ -175,6 +175,78 @@ export default ({ children }: any) => {
     iFrameId,
   ]);
   // Cookies Reloader
+
+  // ROS Bridge Connector
+  useEffect(() => {
+    if (
+      isSettedCookie &&
+      responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss" &&
+      !envApplication
+    ) {
+      const rosClient: ROSLIB.Ros = new ROSLIB.Ros({
+        url: responseRobot?.bridgeIngressEndpoint,
+      });
+
+      setRos(ros);
+
+      rosClient?.on("connection", function () {
+        setIsRosConnected(true);
+      });
+      rosClient?.on("error", function (error) {
+        setIsRosConnected(false);
+      });
+      rosClient?.on("close", function () {
+        setIsRosConnected(false);
+      });
+    }
+
+    return () => {
+      ros?.close();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseRobot, isSettedCookie]);
+  // ROS Bridge Connector
+
+  // ROS Topic Setter
+  useEffect(() => {
+    !envApplication && getTopics();
+
+    const timer = setInterval(() => {
+      !envApplication && getTopics();
+    }, 10000);
+
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ros]);
+
+  function getTopics() {
+    if (ros && isSettedCookie && !envApplication) {
+      const getTopics = new ROSLIB.Service({
+        ros: ros,
+        name: "/rosapi/topics",
+        serviceType: "rosapi/Topics",
+      });
+      // @ts-ignore
+      const request = new ROSLIB.ServiceRequest();
+      getTopics.callService(request, async function (result) {
+        const resultTopicsList = await result?.topics?.map(
+          (topic: string, key: number) => {
+            return {
+              name: topic,
+              type: result?.types[key],
+            };
+          },
+        );
+
+        if (resultTopicsList?.length !== topicList?.length) {
+          setTopicList(resultTopicsList);
+        }
+      });
+    }
+  }
+  // ROS Topic Setter
 
   function handleGetOrganization() {
     getOrganization(

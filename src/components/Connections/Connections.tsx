@@ -3,15 +3,11 @@ import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 
 export default function Connections(): ReactElement {
   const { responseRobot, isSettedCookie, isRosConnected } = useRobot();
   const { keycloak } = useKeycloak();
-
-  useEffect(() => {
-    console.log("isRosConnected", isRosConnected);
-  }, [isRosConnected]);
 
   return (
     <div className="flex gap-4">
@@ -20,9 +16,9 @@ export default function Connections(): ReactElement {
           <ConnectionLabel label="ROS" />
           <StateCell
             state={
-              isSettedCookie === undefined
+              isRosConnected === null
                 ? "Waiting"
-                : isSettedCookie
+                : isRosConnected === true
                 ? "Connected"
                 : "Warning"
             }
