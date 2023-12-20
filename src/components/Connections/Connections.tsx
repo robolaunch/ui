@@ -13,37 +13,34 @@ export default function Connections(): ReactElement {
   const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const rosClient: ROSLIB.Ros = new ROSLIB.Ros({
-      url: responseRobot?.bridgeIngressEndpoint,
-    });
+    let rosClient: ROSLIB.Ros | null = null;
 
-    if (isRosConnected === null) {
-      if (
-        isRobotReady &&
-        isSettedCookie &&
-        responseRobot?.bridgeIngressEndpoint
-      ) {
-        rosClient?.on("connection", function () {
-          setIsRosConnected(true);
-        });
+    const establishRosConnection = () => {
+      rosClient = new ROSLIB.Ros({
+        url: responseRobot?.bridgeIngressEndpoint,
+      });
 
-        rosClient?.on("error", function (error) {
-          setIsRosConnected(false);
-        });
+      rosClient.on("connection", () => setIsRosConnected(true));
+      rosClient.on("error", () => setIsRosConnected(false));
+    };
+
+    const closeRosConnection = () => {
+      if (rosClient) {
+        rosClient.close();
       }
-    } else {
-      rosClient?.close();
+    };
+
+    if (
+      isRobotReady &&
+      isSettedCookie &&
+      responseRobot?.bridgeIngressEndpoint
+    ) {
+      closeRosConnection();
+      establishRosConnection();
     }
 
-    return () => {
-      rosClient?.close();
-    };
-  }, [
-    isRobotReady,
-    isSettedCookie,
-    isRosConnected,
-    responseRobot?.bridgeIngressEndpoint,
-  ]);
+    return closeRosConnection;
+  }, [isRobotReady, isSettedCookie, responseRobot?.bridgeIngressEndpoint]);
 
   useEffect(() => {
     console.log("isRosConnected", isRosConnected);
