@@ -21,7 +21,10 @@ export default function Connections(): ReactElement {
       });
 
       rosClient.on("connection", () => setIsRosConnected(true));
-      rosClient.on("error", () => setIsRosConnected(false));
+      rosClient.on(
+        "error",
+        () => isRosConnected === null && setIsRosConnected(false),
+      );
     }
 
     function closeRosConnection() {
