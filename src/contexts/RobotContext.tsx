@@ -191,13 +191,13 @@ export default ({ children }: any) => {
 
     setRos(ros);
 
-    ros?.on("connection", function () {
+    rosClient?.on("connection", function () {
       isRosConnected === null && setIsRosConnected(true);
     });
-    ros?.on("error", function (error) {
+    rosClient?.on("error", function (error) {
       isRosConnected === null && setIsRosConnected(false);
     });
-    ros?.on("close", function () {
+    rosClient?.on("close", function () {
       isRosConnected === null && setIsRosConnected(false);
     });
 
