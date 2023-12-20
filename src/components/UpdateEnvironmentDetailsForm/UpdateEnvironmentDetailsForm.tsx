@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import CreateEnvironmentFormStep1 from "../CreateForms/CFAppStep1";
 
 interface IUpdateRobotDetailsForm {

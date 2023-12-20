@@ -112,6 +112,7 @@ export default function SidebarListItem({
         }
         break;
       case "robot":
+        setSidebarState({ ...sidebarState, isOpen: false });
         navigate(
           `/${organizationNameViewer({
             organizationName: selectedState?.organization

@@ -330,6 +330,7 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CreateRobotLayout />;
                 }
+
                 if (url?.robotName) {
                   if (envApplication) {
                     return (
@@ -338,15 +339,16 @@ export default function SidebarContentLayout(): ReactElement {
                         setItemCount={setItemCount}
                       />
                     );
+                  } else {
+                    return (
+                      <UpdateRobotDetailsForm
+                        reload={reload}
+                        setItemCount={setItemCount}
+                      />
+                    );
                   }
-
-                  return (
-                    <UpdateRobotDetailsForm
-                      reload={reload}
-                      setItemCount={setItemCount}
-                    />
-                  );
                 }
+
                 return envApplication ? (
                   <EnvironmentsList
                     reload={reload}

@@ -21,6 +21,8 @@ export default ({ children }: any) => {
     getLaunchManagers,
   } = useFunctions();
 
+  const url = useParams();
+
   const { pagesState, sidebarState } = useMain();
 
   const [activeTab, setActiveTab] = useState<IrobotTab["name"]>("Overview");
@@ -31,18 +33,18 @@ export default ({ children }: any) => {
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
 
-  const [topicList, setTopicList] = useState<any>([]);
   const [ros, setRos] = useState<any>(null);
-
-  const url = useParams();
-
-  const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
+  const [topicList, setTopicList] = useState<any>([]);
 
   const [iFrameId, setIFrameId] = useState<number>(0);
-
+  const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | undefined>(
     undefined,
   );
+
+  useEffect(() => {
+    console.log("pagesState", pagesState);
+  }, [pagesState]);
 
   // Main Functions
   useEffect(() => {
@@ -114,13 +116,7 @@ export default ({ children }: any) => {
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    pagesState,
-    sidebarState?.isOpen,
-    responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
-  ]);
+  }, [pagesState, responseRobot, responseBuildManager, responseLaunchManagers]);
   // Main Functions
 
   // isRobotReady

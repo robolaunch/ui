@@ -29,7 +29,8 @@ export function MainTableData() {
       setResponse: setResponseOrganizations,
       ifErrorNavigateTo404: false,
     });
-  }, [getOrganizations, reload, url]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload, url]);
 
   useEffect(() => {
     setResponseOrganizations(undefined);

@@ -6,7 +6,6 @@ import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import { IDetails } from "../../interfaces/robotInterfaces";
-import { envApplication } from "../../helpers/envProvider";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CFRosDistros from "../CFRosDistros/CFRosDistros";
@@ -32,7 +31,6 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const {
     getRobot,
-    getEnvironment,
     addPhysicalInstanceToFleet,
     createRobot: updateRobot,
   } = useFunctions();
@@ -40,7 +38,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
 
   useEffect(() => {
     if (!responseRobot && isImportRobot) {
-      envApplication ? handleGetEnvironment() : handleGetRobot();
+      handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -57,24 +55,6 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
       },
       {
         ifErrorNavigateTo404: false,
-        setResponse: setResponseRobot,
-        setRobotData: true,
-      },
-    );
-  }
-
-  function handleGetEnvironment() {
-    getEnvironment(
-      {
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name,
-        environmentName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
         setResponse: setResponseRobot,
         setRobotData: true,
       },
