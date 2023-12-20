@@ -2,7 +2,7 @@ import { Fragment, ReactElement } from "react";
 import EnvironmentHeader from "../../components/EnvironmentHeader/EnvironmentHeader";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 import { envApplication } from "../../helpers/envProvider";
-import RosConnector from "../../components/RosConnector/RosConnector";
+// import RosConnector from "../../components/RosConnector/RosConnector";
 import Overview from "../../pages/EnvironmentPage/Overview/Overview";
 import MissionContext from "../../contexts/MissionContext";
 import BarcodeContext from "../../contexts/BarcodeContext";
@@ -24,7 +24,7 @@ export default function EnvironmentPageLayout(): ReactElement {
     <Fragment>
       <div className="flex h-full flex-col gap-6">
         <EnvironmentHeader />
-        {!envApplication && <RosConnector />}
+        {/* {!envApplication && <RosConnector />} */}
 
         {(() => {
           switch (activeTab) {

@@ -34,6 +34,10 @@ export default function Connections(): ReactElement {
     } else {
       rosClient?.close();
     }
+
+    return () => {
+      rosClient?.close();
+    };
   }, [
     isRobotReady,
     isSettedCookie,
