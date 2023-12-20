@@ -253,13 +253,8 @@ export default ({ children }: any) => {
   // VDI Test Connection
   useEffect(() => {
     const vdiClient =
-      responseRobot?.vdiIngressEndpoint &&
-      isRobotReady &&
-      isSettedCookie &&
-      isVDIConnected === null
-        ? new WebSocket(
-            responseRobot?.vdiIngressEndpoint + "ws?password=admin" || "",
-          )
+      isSettedCookie && isVDIConnected === null
+        ? new WebSocket(responseRobot?.vdiIngressEndpoint + "ws?password=admin")
         : null;
 
     vdiClient?.addEventListener("open", () => {
@@ -279,7 +274,8 @@ export default ({ children }: any) => {
     return () => {
       vdiClient?.close();
     };
-  }, [isRobotReady, isSettedCookie, isVDIConnected, responseRobot]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSettedCookie, isVDIConnected]);
   // VDI Test Connection
 
   function handleGetOrganization() {
