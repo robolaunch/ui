@@ -15,20 +15,18 @@ export default function Connections(): ReactElement {
   useEffect(() => {
     let rosClient: ROSLIB.Ros | null = null;
 
-    const establishRosConnection = () => {
+    function tryConnection() {
       rosClient = new ROSLIB.Ros({
         url: responseRobot?.bridgeIngressEndpoint,
       });
 
       rosClient.on("connection", () => setIsRosConnected(true));
       rosClient.on("error", () => setIsRosConnected(false));
-    };
+    }
 
-    const closeRosConnection = () => {
-      if (rosClient) {
-        rosClient.close();
-      }
-    };
+    function closeRosConnection() {
+      rosClient?.close();
+    }
 
     if (
       isRobotReady &&
@@ -36,11 +34,16 @@ export default function Connections(): ReactElement {
       responseRobot?.bridgeIngressEndpoint
     ) {
       closeRosConnection();
-      establishRosConnection();
+      isRosConnected === null && tryConnection();
     }
 
-    return closeRosConnection;
-  }, [isRobotReady, isSettedCookie, responseRobot?.bridgeIngressEndpoint]);
+    return closeRosConnection();
+  }, [
+    isRobotReady,
+    isRosConnected,
+    isSettedCookie,
+    responseRobot?.bridgeIngressEndpoint,
+  ]);
 
   useEffect(() => {
     console.log("isRosConnected", isRosConnected);
