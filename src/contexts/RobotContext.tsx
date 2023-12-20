@@ -42,6 +42,8 @@ export default ({ children }: any) => {
     undefined,
   );
 
+  const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
+
   // Main Functions
   useEffect(() => {
     if (
@@ -357,6 +359,8 @@ export default ({ children }: any) => {
         topicList,
         isSettedCookie,
         setIsSettedCookie,
+        isRosConnected,
+        setIsRosConnected,
         setTopicList,
         handleForceUpdate,
         handleResetRobot,

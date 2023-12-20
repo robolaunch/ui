@@ -13,6 +13,7 @@ export default function RosConnector(): ReactElement {
     responseRobot,
     topicList,
     setTopicList,
+    setIsRosConnected,
   } = useRobot();
 
   useEffect(() => {
@@ -27,11 +28,10 @@ export default function RosConnector(): ReactElement {
       setRos(ros);
 
       ros?.on("connection", function () {
-        console.log("Connected to websocket server.");
-        console.info("ROSBRIDGE URL: ", ros);
+        setIsRosConnected(true);
       });
       ros?.on("error", function (error) {
-        console.warn("Error connecting to websocket server: ", error);
+        setIsRosConnected(false);
       });
       ros?.on("close", function () {
         console.log("Connection to websocket server closed.");

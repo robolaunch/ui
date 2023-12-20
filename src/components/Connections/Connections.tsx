@@ -3,50 +3,11 @@ import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement, useEffect, useState } from "react";
-import ROSLIB from "roslib";
+import { ReactElement, useEffect } from "react";
 
 export default function Connections(): ReactElement {
-  const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
+  const { responseRobot, isSettedCookie, isRosConnected } = useRobot();
   const { keycloak } = useKeycloak();
-
-  const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    let rosClient: ROSLIB.Ros | null = null;
-
-    function tryConnection() {
-      rosClient = new ROSLIB.Ros({
-        url: responseRobot?.bridgeIngressEndpoint,
-      });
-
-      rosClient.on("connection", () => setIsRosConnected(true));
-      rosClient.on(
-        "error",
-        () => isRosConnected === null && setIsRosConnected(false),
-      );
-    }
-
-    function closeRosConnection() {
-      // rosClient?.close();
-    }
-
-    if (
-      isRobotReady &&
-      isSettedCookie &&
-      responseRobot?.bridgeIngressEndpoint
-    ) {
-      closeRosConnection();
-      isRosConnected === null && tryConnection();
-    }
-
-    return closeRosConnection();
-  }, [
-    isRobotReady,
-    isRosConnected,
-    isSettedCookie,
-    responseRobot?.bridgeIngressEndpoint,
-  ]);
 
   useEffect(() => {
     console.log("isRosConnected", isRosConnected);

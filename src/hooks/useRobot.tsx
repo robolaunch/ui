@@ -15,6 +15,8 @@ interface IuseRobot {
   setTopicList: any;
   isSettedCookie: boolean | null;
   setIsSettedCookie: any;
+  isRosConnected: boolean | null;
+  setIsRosConnected: any;
   adrinState: any;
   setAdrinState: any;
   handleForceUpdate: any;
