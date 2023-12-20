@@ -17,8 +17,8 @@ interface IuseRobot {
   setIsSettedCookie: any;
   isRosConnected: boolean | null;
   setIsRosConnected: any;
-  adrinState: any;
-  setAdrinState: any;
+  isVDIConnected: boolean | null;
+  setIsVDIConnected: any;
   handleForceUpdate: any;
   handleResetRobot: () => void;
 }

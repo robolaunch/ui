@@ -6,7 +6,8 @@ import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 
 export default function Connections(): ReactElement {
-  const { responseRobot, isSettedCookie, isRosConnected } = useRobot();
+  const { responseRobot, isSettedCookie, isRosConnected, isVDIConnected } =
+    useRobot();
   const { keycloak } = useKeycloak();
 
   return (
@@ -34,9 +35,9 @@ export default function Connections(): ReactElement {
         />
         <StateCell
           state={
-            isSettedCookie === undefined
+            isVDIConnected === null
               ? "Waiting"
-              : isSettedCookie
+              : isVDIConnected
               ? "Connected"
               : "Warning"
           }
@@ -71,9 +72,9 @@ export default function Connections(): ReactElement {
         />
         <StateCell
           state={
-            isSettedCookie === undefined
+            isVDIConnected === null
               ? "Waiting"
-              : isSettedCookie
+              : isVDIConnected
               ? "Connected"
               : "Warning"
           }

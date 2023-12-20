@@ -274,18 +274,12 @@ export default ({ children }: any) => {
       setIsVDIConnected(false);
     });
 
-    function closeConnection() {
-      typeof isVDIConnected === "boolean" && vdiClient?.close();
-    }
+    typeof isVDIConnected === "boolean" && vdiClient?.close();
 
-    closeConnection();
-
-    return closeConnection();
+    return () => {
+      vdiClient?.close();
+    };
   }, [isRobotReady, isSettedCookie, isVDIConnected, responseRobot]);
-
-  useEffect(() => {
-    console.log("isVDIConnected", isVDIConnected);
-  }, [isVDIConnected]);
   // VDI Test Connection
 
   function handleGetOrganization() {
@@ -473,6 +467,8 @@ export default ({ children }: any) => {
         setIsSettedCookie,
         isRosConnected,
         setIsRosConnected,
+        isVDIConnected,
+        setIsVDIConnected,
         setTopicList,
         handleForceUpdate,
         handleResetRobot,
