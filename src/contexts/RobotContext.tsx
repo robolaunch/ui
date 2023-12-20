@@ -258,18 +258,25 @@ export default ({ children }: any) => {
         : null;
 
     vdiClient?.addEventListener("open", () => {
-      isVDIConnected === null && setIsVDIConnected(true);
+      if (isVDIConnected === null) {
+        setIsVDIConnected(true);
+        vdiClient?.close();
+      }
     });
 
     vdiClient?.addEventListener("error", () => {
-      isVDIConnected === null && setIsVDIConnected(false);
+      if (isVDIConnected === null) {
+        setIsVDIConnected(false);
+        vdiClient?.close();
+      }
     });
 
     vdiClient?.addEventListener("close", () => {
-      isVDIConnected === null && setIsVDIConnected(false);
+      if (isVDIConnected === null) {
+        setIsVDIConnected(false);
+        vdiClient?.close();
+      }
     });
-
-    typeof isVDIConnected === "boolean" && vdiClient?.close();
 
     return () => {
       vdiClient?.close();
