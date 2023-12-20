@@ -28,7 +28,7 @@ export default function Connections(): ReactElement {
     }
 
     function closeRosConnection() {
-      rosClient?.close();
+      // rosClient?.close();
     }
 
     if (
