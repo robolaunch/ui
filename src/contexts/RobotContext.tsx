@@ -180,30 +180,30 @@ export default ({ children }: any) => {
 
   // ROS Bridge Connector
   useEffect(() => {
-    if (
+    const rosClient: ROSLIB.Ros | null =
       isSettedCookie &&
       responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss" &&
       !envApplication
-    ) {
-      const rosClient: ROSLIB.Ros = new ROSLIB.Ros({
-        url: responseRobot?.bridgeIngressEndpoint,
-      });
+        ? new ROSLIB.Ros({
+            url: responseRobot?.bridgeIngressEndpoint,
+          })
+        : null;
 
-      setRos(ros);
+    setRos(ros);
 
-      rosClient?.on("connection", function () {
-        setIsRosConnected(true);
-      });
-      rosClient?.on("error", function (error) {
-        setIsRosConnected(false);
-      });
-      rosClient?.on("close", function () {
-        setIsRosConnected(false);
-      });
-    }
+    ros?.on("connection", function () {
+      isRosConnected === null && setIsRosConnected(true);
+    });
+    ros?.on("error", function (error) {
+      isRosConnected === null && setIsRosConnected(false);
+    });
+    ros?.on("close", function () {
+      isRosConnected === null && setIsRosConnected(false);
+    });
 
     return () => {
       ros?.close();
+      rosClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responseRobot, isSettedCookie]);
