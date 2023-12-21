@@ -380,7 +380,7 @@ export const RobotSlice = createSlice({
     urls: {
       vdi: isProduction ? "" : "ws://localhost:8080/",
       ide: isProduction ? "" : "",
-      ros: isProduction ? "" : "",
+      ros: isProduction ? "" : "ws://172.16.44.189:9090",
     },
   },
   reducers: {},

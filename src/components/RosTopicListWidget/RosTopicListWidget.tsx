@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import ROSLIB from "roslib";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import RosWidgetLayout from "../../layouts/RosWidgetLayout";
@@ -14,24 +14,41 @@ export default function RosTopicListWidget({
   id,
   handleRemoveWidget,
 }: IRosTopicListWidget): ReactElement {
-  const [topicList, setTopicList] = useState<string[]>([]);
+  const [topicList, setTopicList] = useState<any>([]);
 
   useEffect(() => {
-    const getTopics = new ROSLIB.Service({
-      ros: ros,
-      name: "/rosapi/topics",
-      serviceType: "rosapi/Topics",
-    });
-    // @ts-ignore
-    const request = new ROSLIB.ServiceRequest();
-    getTopics.callService(request, function (result) {
-      result.topics.map((topic: string, key: number) =>
-        setTopicList((prev: any) => [
-          ...prev,
-          { name: topic, type: result.types[key] },
-        ]),
-      );
-    });
+    function getTopics() {
+      if (ros) {
+        const getTopics = new ROSLIB.Service({
+          ros: ros,
+          name: "/rosapi/topics",
+          serviceType: "rosapi/Topics",
+        });
+
+        const request = new ROSLIB.ServiceRequest({});
+        getTopics.callService(request, async function (result) {
+          const resultTopicsList = await result?.topics?.map(
+            (topic: string, key: number) => {
+              return {
+                name: topic,
+                type: result?.types[key],
+              };
+            },
+          );
+
+          if (resultTopicsList?.length !== topicList?.length) {
+            setTopicList(resultTopicsList);
+          }
+        });
+      }
+    }
+
+    getTopics();
+    const timer = setInterval(() => getTopics(), 10000);
+    return () => {
+      clearInterval(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ros]);
 
   return (

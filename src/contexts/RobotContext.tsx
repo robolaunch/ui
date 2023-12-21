@@ -5,6 +5,7 @@ import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
+import { useAppSelector } from "../hooks/redux";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -52,6 +53,8 @@ export default ({ children }: any) => {
     physicalIDE: null,
     vdi: null,
   });
+
+  const { urls } = useAppSelector((state) => state.robot);
 
   function handleReducer(state: any, action: any) {
     switch (action.type) {
@@ -221,11 +224,11 @@ export default ({ children }: any) => {
       isSettedCookie &&
       responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss"
         ? new ROSLIB.Ros({
-            url: responseRobot?.bridgeIngressEndpoint,
+            url: urls?.ros || responseRobot?.bridgeIngressEndpoint,
           })
         : null;
 
-    setRos(ros);
+    setRos(rosClient);
 
     rosClient?.on("connection", function () {
       connectionsReducer?.ros === null &&
@@ -249,43 +252,41 @@ export default ({ children }: any) => {
 
   // ROS Topic Setter
   useEffect(() => {
-    !envApplication && getTopics();
+    function getTopics() {
+      if (ros && isSettedCookie && !envApplication) {
+        const getTopics = new ROSLIB.Service({
+          ros: ros,
+          name: "/rosapi/topics",
+          serviceType: "rosapi/Topics",
+        });
 
-    const timer = setInterval(() => {
-      !envApplication && getTopics();
-    }, 10000);
+        const request = new ROSLIB.ServiceRequest({});
+        getTopics.callService(request, async function (result) {
+          const resultTopicsList = await result?.topics?.map(
+            (topic: string, key: number) => {
+              return {
+                name: topic,
+                type: result?.types[key],
+              };
+            },
+          );
+
+          if (resultTopicsList?.length !== topicList?.length) {
+            setTopicList(resultTopicsList);
+          }
+        });
+      }
+    }
+
+    getTopics();
+
+    const timer = setInterval(() => getTopics(), 10000);
 
     return () => {
       clearInterval(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ros]);
-
-  function getTopics() {
-    if (ros && isSettedCookie && !envApplication) {
-      const getTopics = new ROSLIB.Service({
-        ros: ros,
-        name: "/rosapi/topics",
-        serviceType: "rosapi/Topics",
-      });
-      // @ts-ignore
-      const request = new ROSLIB.ServiceRequest();
-      getTopics.callService(request, async function (result) {
-        const resultTopicsList = await result?.topics?.map(
-          (topic: string, key: number) => {
-            return {
-              name: topic,
-              type: result?.types[key],
-            };
-          },
-        );
-
-        if (resultTopicsList?.length !== topicList?.length) {
-          setTopicList(resultTopicsList);
-        }
-      });
-    }
-  }
+  }, [ros, isSettedCookie]);
   // ROS Topic Setter
 
   // VDI - vIDE Test Connection
