@@ -1,4 +1,4 @@
-import { useEffect, createContext, useState } from "react";
+import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
 import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
@@ -42,9 +42,40 @@ export default ({ children }: any) => {
 
   const [ros, setRos] = useState<ROSLIB.Ros | null>(null);
   const [topicList, setTopicList] = useState<any>([]);
-  const [isRosConnected, setIsRosConnected] = useState<boolean | null>(null);
 
-  const [isVDIConnected, setIsVDIConnected] = useState<boolean | null>(null);
+  const [connectionsReducer, dispatcher] = useReducer(handleReducer, {
+    ros: null,
+    virtualIDE: null,
+    physicalIDE: null,
+    vdi: null,
+  });
+
+  function handleReducer(state: any, action: any) {
+    switch (action.type) {
+      case "ros":
+        return {
+          ...state,
+          ros: action.payload,
+        };
+      case "virtualIDE":
+        return {
+          ...state,
+          virtualIDE: action.payload,
+        };
+      case "physicalIDE":
+        return {
+          ...state,
+          physicalIDE: action.payload,
+        };
+      case "vdi":
+        return {
+          ...state,
+          vdi: action.payload,
+        };
+      default:
+        return state;
+    }
+  }
 
   // Main Functions
   useEffect(() => {
@@ -192,13 +223,16 @@ export default ({ children }: any) => {
     setRos(ros);
 
     rosClient?.on("connection", function () {
-      isRosConnected === null && setIsRosConnected(true);
+      connectionsReducer?.ros === null &&
+        dispatcher({ type: "ros", payload: true });
     });
     rosClient?.on("error", function (error) {
-      isRosConnected === null && setIsRosConnected(false);
+      connectionsReducer?.ros === null &&
+        dispatcher({ type: "ros", payload: false });
     });
     rosClient?.on("close", function () {
-      isRosConnected === null && setIsRosConnected(false);
+      connectionsReducer?.ros === null &&
+        dispatcher({ type: "ros", payload: false });
     });
 
     return () => {
@@ -252,37 +286,37 @@ export default ({ children }: any) => {
 
   // VDI Test Connection
   useEffect(() => {
-    const vdiClient =
-      isSettedCookie && isVDIConnected === null
+    const vdiClient: WebSocket | null =
+      isSettedCookie && connectionsReducer?.vdi === null
         ? new WebSocket(responseRobot?.vdiIngressEndpoint + "ws?password=admin")
         : null;
 
     vdiClient?.addEventListener("open", () => {
-      if (isVDIConnected === null) {
-        setIsVDIConnected(true);
-        vdiClient?.close();
-      }
+      dispatcher({
+        type: "vdi",
+        payload: true,
+      });
     });
 
     vdiClient?.addEventListener("error", () => {
-      if (isVDIConnected === null) {
-        setIsVDIConnected(false);
-        vdiClient?.close();
-      }
+      dispatcher({
+        type: "vdi",
+        payload: false,
+      });
     });
 
     vdiClient?.addEventListener("close", () => {
-      if (isVDIConnected === null) {
-        setIsVDIConnected(false);
-        vdiClient?.close();
-      }
+      dispatcher({
+        type: "vdi",
+        payload: false,
+      });
     });
 
     return () => {
       vdiClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSettedCookie, isVDIConnected]);
+  }, [isSettedCookie, connectionsReducer?.vdi]);
   // VDI Test Connection
 
   function handleGetOrganization() {
@@ -468,10 +502,7 @@ export default ({ children }: any) => {
         topicList,
         isSettedCookie,
         setIsSettedCookie,
-        isRosConnected,
-        setIsRosConnected,
-        isVDIConnected,
-        setIsVDIConnected,
+        connectionsReducer,
         setTopicList,
         handleForceUpdate,
         handleResetRobot,

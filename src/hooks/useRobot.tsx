@@ -15,10 +15,7 @@ interface IuseRobot {
   setTopicList: any;
   isSettedCookie: boolean | null;
   setIsSettedCookie: any;
-  isRosConnected: boolean | null;
-  setIsRosConnected: any;
-  isVDIConnected: boolean | null;
-  setIsVDIConnected: any;
+  connectionsReducer: any;
   handleForceUpdate: any;
   handleResetRobot: () => void;
 }

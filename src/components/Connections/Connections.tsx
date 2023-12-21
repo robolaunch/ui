@@ -3,12 +3,15 @@ import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 
 export default function Connections(): ReactElement {
-  const { responseRobot, isSettedCookie, isRosConnected, isVDIConnected } =
-    useRobot();
+  const { responseRobot, isSettedCookie, connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
+
+  useEffect(() => {
+    console.log("connectionsReducer", connectionsReducer);
+  }, [connectionsReducer]);
 
   return (
     <div className="flex gap-4">
@@ -17,9 +20,9 @@ export default function Connections(): ReactElement {
           <ConnectionLabel label="ROS" />
           <StateCell
             state={
-              isRosConnected === null
+              connectionsReducer?.ros === null
                 ? "Waiting"
-                : isRosConnected === true
+                : connectionsReducer?.ros === true
                 ? "Connected"
                 : "Warning"
             }
@@ -35,9 +38,9 @@ export default function Connections(): ReactElement {
         />
         <StateCell
           state={
-            isVDIConnected === null
+            connectionsReducer?.vdi === null
               ? "Waiting"
-              : isVDIConnected
+              : connectionsReducer?.vdi
               ? "Connected"
               : "Warning"
           }
@@ -72,9 +75,9 @@ export default function Connections(): ReactElement {
         />
         <StateCell
           state={
-            isVDIConnected === null
+            connectionsReducer?.vdi === null
               ? "Waiting"
-              : isVDIConnected
+              : connectionsReducer?.vdi
               ? "Connected"
               : "Warning"
           }
