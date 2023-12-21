@@ -5,7 +5,8 @@ import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import axiosInterceptorOpenApi from "../middlewares/axios.interceptor.openapi";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -319,7 +320,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     try {
       if (isSettedCookie && isProduction) {
-        axios
+        axiosInterceptorOpenApi
           .get(responseRobot?.ideIngressEndpoint + "healthz")
           .then((response: AxiosResponse<any>) => {
             console.log(response.data);
