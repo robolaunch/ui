@@ -1,12 +1,10 @@
 import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
-import { envApplication, isProduction } from "../helpers/envProvider";
+import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
-import { AxiosResponse } from "axios";
-import axiosInterceptorOpenApi from "../middlewares/axios.interceptor.openapi";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -16,6 +14,7 @@ export default ({ children }: any) => {
     getOrganization,
     getRoboticsCloud,
     getInstance,
+    getPhysicalInstance,
     getFleet,
     getNamespace,
     getRobot,
@@ -30,6 +29,8 @@ export default ({ children }: any) => {
 
   const [activeTab, setActiveTab] = useState<IrobotTab["name"]>("Overview");
 
+  const [responsePhysicalInstance, setResponsePhysicalInstance] =
+    useState<any>(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
@@ -98,6 +99,8 @@ export default ({ children }: any) => {
       !envApplication && handleGetBuildManager();
     } else if (!responseLaunchManagers) {
       !envApplication && handleGetLaunchManagers();
+    } else if (responseRobot?.physicalInstance && !responsePhysicalInstance) {
+      handleGetPhysicalInstance();
     }
 
     const timerResponseRobot = setInterval(() => {
@@ -286,7 +289,7 @@ export default ({ children }: any) => {
   }
   // ROS Topic Setter
 
-  // VDI Test Connection
+  // VDI - vIDE Test Connection
   useEffect(() => {
     const vdiClient: WebSocket | null =
       isSettedCookie && connectionsReducer?.vdi === null
@@ -294,17 +297,21 @@ export default ({ children }: any) => {
         : null;
 
     vdiClient?.addEventListener("open", () => {
-      dispatcher({
-        type: "vdi",
-        payload: true,
-      });
+      ["vdi", "virtualIDE"].map((connection) =>
+        dispatcher({
+          type: connection,
+          payload: true,
+        }),
+      );
     });
 
     vdiClient?.addEventListener("error", () => {
-      dispatcher({
-        type: "vdi",
-        payload: false,
-      });
+      ["vdi", "virtualIDE"].map((connection) =>
+        dispatcher({
+          type: connection,
+          payload: false,
+        }),
+      );
     });
 
     connectionsReducer?.vdi !== null && vdiClient && vdiClient.close();
@@ -314,37 +321,30 @@ export default ({ children }: any) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSettedCookie, connectionsReducer?.vdi]);
-  // VDI Test Connection
+  // VDI - vIDE Test Connection
 
-  // V-IDE Test Connection
+  // Physical IDE Test Connection
   useEffect(() => {
-    try {
-      if (isSettedCookie && isProduction) {
-        axiosInterceptorOpenApi
-          .get(responseRobot?.ideIngressEndpoint + "healthz")
-          .then((response: AxiosResponse<any>) => {
-            console.log(response.data);
-            dispatcher({
-              type: "virtualIDE",
-              payload: true,
-            });
-          });
+    if (isSettedCookie && typeof connectionsReducer?.vdi === "boolean") {
+      if (
+        connectionsReducer?.vdi &&
+        responsePhysicalInstance?.federationPhase === "Connected" &&
+        responsePhysicalInstance?.multicastPhase === "Connected" &&
+        responsePhysicalInstance?.phase === "Connected"
+      ) {
+        dispatcher({
+          type: "physicalIDE",
+          payload: true,
+        });
       } else {
         dispatcher({
-          type: "virtualIDE",
+          type: "physicalIDE",
           payload: false,
         });
       }
-    } catch (error) {
-      dispatcher({
-        type: "virtualIDE",
-        payload: false,
-      });
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSettedCookie]);
-  // V-IDE Test Connection
+  }, [responsePhysicalInstance, isSettedCookie, connectionsReducer?.vdi]);
+  // Physical IDE Test Connection
 
   function handleGetOrganization() {
     getOrganization(
@@ -386,6 +386,22 @@ export default ({ children }: any) => {
         ifErrorNavigateTo404: !responseRobot,
         isSetState: true,
         setPages: true,
+      },
+    );
+  }
+
+  function handleGetPhysicalInstance() {
+    getPhysicalInstance(
+      {
+        organizationId: pagesState?.organization?.organizationId!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
+        instanceId: pagesState?.instance?.instanceId!,
+        physicalInstanceName: responseRobot?.physicalInstance,
+        region: pagesState?.roboticsCloud?.region!,
+      },
+      {
+        ifErrorNavigateTo404: false,
+        setResponse: setResponsePhysicalInstance,
       },
     );
   }
@@ -519,6 +535,7 @@ export default ({ children }: any) => {
       value={{
         activeTab,
         setActiveTab,
+        responsePhysicalInstance,
         responseRobot,
         responseBuildManager,
         responseLaunchManagers,

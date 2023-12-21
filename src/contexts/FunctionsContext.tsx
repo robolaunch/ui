@@ -10,6 +10,7 @@ import {
   IgetNamespaces,
   IgetOrganization,
   IgetPhysicalFleet,
+  IgetPhysicalInstance,
   IgetPhysicalInstances,
   IgetRobot,
   IgetRoboticsCloud,
@@ -336,6 +337,36 @@ export default ({ children }: any) => {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
         parameters?.setItemCount && parameters?.setItemCount(0);
+      }
+    });
+  }
+
+  async function getPhysicalInstance(
+    values: IgetPhysicalInstance,
+    parameters?: ImultipleGetParameters,
+  ) {
+    await dispatch(
+      getAllPhysicalInstances({
+        organizationId: values?.organizationId,
+        roboticsCloudName: values?.roboticsCloudName,
+        instanceId: values?.instanceId,
+        region: values?.region,
+      }),
+    ).then((responsePhysicalInstances: any) => {
+      if (
+        responsePhysicalInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances
+      ) {
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchPhysicalInstances?.find(
+              (physicalInstance: any) =>
+                physicalInstance?.name === values?.physicalInstanceName,
+            ) || {},
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse({});
       }
     });
   }
@@ -1327,6 +1358,7 @@ export default ({ children }: any) => {
         getRoboticsCloud,
         getInstances,
         getPhysicalInstances,
+        getPhysicalInstance,
         getInstance,
         getFleets,
         getFleet,

@@ -54,7 +54,7 @@ export default function Connections(): ReactElement {
           />
           <StateCell
             state={
-              connectionsReducer?.physicalIDE === undefined
+              connectionsReducer?.physicalIDE === null
                 ? "Waiting"
                 : connectionsReducer?.physicalIDE
                 ? "Connected"

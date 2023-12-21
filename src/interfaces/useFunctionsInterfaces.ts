@@ -43,6 +43,14 @@ export interface IgetPhysicalInstances {
   region: string;
 }
 
+export interface IgetPhysicalInstance {
+  organizationId: string;
+  roboticsCloudName: string;
+  instanceId: string;
+  physicalInstanceName: string;
+  region: string;
+}
+
 export interface IgetInstance {
   organizationId: string;
   roboticsCloudName: string;
@@ -170,6 +178,10 @@ export interface IuseFunctions {
   getPhysicalInstances: (
     values: IgetPhysicalInstances,
     parameters?: ImultipleGetParameters,
+  ) => void;
+  getPhysicalInstance: (
+    values: IgetPhysicalInstance,
+    parameters?: IsingleGetParameters,
   ) => void;
   getInstance: (
     values: IgetInstance,

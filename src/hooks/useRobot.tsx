@@ -4,6 +4,7 @@ import { useContext } from "react";
 interface IuseRobot {
   activeTab: string;
   setActiveTab: any;
+  responsePhysicalInstance: any;
   responseRobot: any;
   responseBuildManager: any;
   responseLaunchManagers: any;
