@@ -1,10 +1,11 @@
 import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
-import { envApplication } from "../helpers/envProvider";
+import { envApplication, isProduction } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
+import axios, { AxiosResponse } from "axios";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -305,13 +306,6 @@ export default ({ children }: any) => {
       });
     });
 
-    // vdiClient?.addEventListener("close", () => {
-    //   dispatcher({
-    //     type: "vdi",
-    //     payload: false,
-    //   });
-    // });
-
     connectionsReducer?.vdi !== null && vdiClient && vdiClient.close();
 
     return () => {
@@ -320,6 +314,36 @@ export default ({ children }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSettedCookie, connectionsReducer?.vdi]);
   // VDI Test Connection
+
+  // V-IDE Test Connection
+  useEffect(() => {
+    try {
+      if (isSettedCookie && isProduction) {
+        axios
+          .get(responseRobot?.ideIngressEndpoint + "healthz")
+          .then((response: AxiosResponse<any>) => {
+            console.log(response.data);
+            dispatcher({
+              type: "virtualIDE",
+              payload: true,
+            });
+          });
+      } else {
+        dispatcher({
+          type: "virtualIDE",
+          payload: false,
+        });
+      }
+    } catch (error) {
+      dispatcher({
+        type: "virtualIDE",
+        payload: false,
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSettedCookie]);
+  // V-IDE Test Connection
 
   function handleGetOrganization() {
     getOrganization(
