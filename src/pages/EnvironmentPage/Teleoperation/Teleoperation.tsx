@@ -6,21 +6,15 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { handleSaveLayout } from "../../../helpers/gridStack";
 import StreamContext from "../../../contexts/VDIContext";
 import { GridLayout } from "../../../layouts/GridLayout";
-import CardLayout from "../../../layouts/CardLayout";
 import { useParams } from "react-router-dom";
 import "gridstack/dist/gridstack-extra.css";
 import "gridstack/dist/gridstack.min.css";
 import { GridStack } from "gridstack";
 import ROSLIB from "roslib";
 import useRobot from "../../../hooks/useRobot";
+import Card from "../../../components/Card/Card";
 
-interface ITeleoperation {
-  vdiIngressEndpoint: string;
-}
-
-export default function Teleoperation({
-  vdiIngressEndpoint,
-}: ITeleoperation): ReactElement {
+export default function Teleoperation(): ReactElement {
   const [grid, setGrid] = useState<any>();
   const url = useParams();
   const localStoragePath = `teleoperation_${url?.organizationName}_${url.roboticsCloudName}_${url.instanceName}_${url.fleetName}_${url.robotName}`;
@@ -144,11 +138,11 @@ export default function Teleoperation({
   }, [selectedTopic, isRemoteDesktopStream, localStoragePath]);
 
   return (
-    <CardLayout>
+    <Card>
       <Fragment>
         <FullScreen className="relative" handle={handleFullScreen}>
           <div
-            className="grid-stack animate__animated animate__fadeIn bg-light-900 z-0 col-span-1 w-full rounded"
+            className="grid-stack animate__animated animate__fadeIn z-0 col-span-1 w-full rounded bg-light-900"
             style={{
               height: handleFullScreen.active ? "100vh" : "unset",
               backgroundImage: `url(${cameraData})`,
@@ -164,7 +158,7 @@ export default function Teleoperation({
               handleRemoveWidget={handleRemoveWidget}
             />
             {isRemoteDesktopStream && (
-              <StreamContext vdiIngressEndpoint={vdiIngressEndpoint}>
+              <StreamContext>
                 <div className="absolute inset-0 -z-10">
                   <RemoteDesktopScene isControllerActive={false} />
                 </div>
@@ -192,6 +186,6 @@ export default function Teleoperation({
           handleForceUpdate={handleForceUpdate}
         />
       </Fragment>
-    </CardLayout>
+    </Card>
   );
 }

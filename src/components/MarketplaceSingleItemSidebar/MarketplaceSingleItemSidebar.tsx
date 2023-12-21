@@ -1,12 +1,12 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import { VscSymbolNamespace } from "react-icons/vsc";
-import CardLayout from "../../layouts/CardLayout";
 import { BsCloudy } from "react-icons/bs";
 import { MdStorage } from "react-icons/md";
 import ImportRobotModal from "../../modals/DeployApplicationModal";
 import ContentLoader from "react-content-loader";
 import Button from "../Button/Button";
+import Card from "../Card/Card";
 
 interface IMarketplaceSingleItemSidebar {
   item: any;
@@ -19,11 +19,11 @@ export default function MarketplaceSingleItemSidebar({
     useState<boolean>(false);
 
   return (
-    <CardLayout className="!col-span-3 flex !h-full flex-col gap-8 p-6">
+    <Card className="!col-span-3 flex !h-full flex-col gap-8 p-6">
       <Fragment>
         <div className="flex flex-col gap-1">
           <span className="font-medium">Installation</span>
-          <div className="bg-primary-500 h-[2px] w-[5.5rem]" />
+          <div className="h-[2px] w-[5.5rem] bg-primary-500" />
         </div>
         <div className="flex gap-4 transition-all duration-500">
           <Button
@@ -37,10 +37,10 @@ export default function MarketplaceSingleItemSidebar({
 
         <div className="flex flex-col gap-1">
           <span className="font-medium">Application Details</span>
-          <div className="bg-primary-500 h-[2px] w-32" />
+          <div className="h-[2px] w-32 bg-primary-500" />
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 text-sm font-semibold">Name</div>
+          <div className="text-sm font-semibold text-light-700">Name</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <VscSymbolNamespace size={20} className="text-secondary-500" />
@@ -61,7 +61,7 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 text-sm font-semibold">Family</div>
+          <div className="text-sm font-semibold text-light-700">Family</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <VscSymbolNamespace size={20} className="text-secondary-500" />
@@ -82,7 +82,7 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 text-sm font-semibold">
+          <div className="text-sm font-semibold text-light-700">
             Deployment Type
           </div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
@@ -105,7 +105,7 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 text-sm font-semibold">Storage</div>
+          <div className="text-sm font-semibold text-light-700">Storage</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="noetic">
               <MdStorage size={22} className="text-secondary-500" />
@@ -126,7 +126,7 @@ export default function MarketplaceSingleItemSidebar({
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 text-sm font-semibold">Version</div>
+          <div className="text-sm font-semibold text-light-700">Version</div>
           <div className="flex flex-col gap-3 pl-6 text-xs">
             <label className="flex items-center gap-2" htmlFor="humble">
               <FiDownload size={20} className="text-secondary-500" />
@@ -153,6 +153,6 @@ export default function MarketplaceSingleItemSidebar({
           />
         )}
       </Fragment>
-    </CardLayout>
+    </Card>
   );
 }

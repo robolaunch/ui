@@ -1,16 +1,10 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import InputSelect from "../InputSelect/InputSelect";
 import { useFormik } from "formik";
 import { Separator } from "react-contexify";
 import Button from "../Button/Button";
 import { useAppDispatch } from "../../hooks/redux";
-import {
-  handleGetRandomString,
-  organizationNameViewer,
-} from "../../functions/GeneralFunctions";
-import { createRobot } from "../../toolkit/RobotSlice";
-import { useNavigate } from "react-router-dom";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
 import { envApplication } from "../../helpers/envProvider";
@@ -61,7 +55,6 @@ export default function DeployApplicationSelector({
     useFunctions();
   const dispatch = useAppDispatch();
   const { trialState } = useMain();
-  const navigate = useNavigate();
 
   const formik = useFormik<formikValues>({
     initialValues: {
@@ -74,50 +67,50 @@ export default function DeployApplicationSelector({
     onSubmit: async () => {
       formik.setSubmitting(true);
 
-      await dispatch(
-        createRobot({
-          organizationId: formik.values?.organization?.organizationId!,
-          roboticsCloudName: formik.values?.roboticscloud?.name!,
-          instanceId: formik.values?.instance?.instanceId!,
-          region: formik?.values?.roboticscloud?.region!,
-          robotName: item?.acronym + "-" + handleGetRandomString(5),
-          fleetName: formik.values.fleet?.name!,
-          distributions: [item?.distro.toUpperCase()],
-          bridgeEnabled: item?.type === "Environment" ? false : true,
-          vdiEnabled: true,
-          vdiSessionCount: 3,
-          ideEnabled: true,
-          storageAmount: item?.minStorageAmount,
-          gpuEnabledForCloudInstance: true,
-          marketPlaceEnabled: true,
-          imageUser: item?.trialImage?.imageUser,
-          imageRepository: item?.trialImage?.imageRepository,
-          imageTag: item?.trialImage?.imageTag,
-          workspaces: [
-            {
-              name: "ws-1",
-              workspaceDistro: item?.distro?.toUpperCase(),
-              robotRepositories: [
-                {
-                  url: item?.trialImage?.sampleRepository?.url,
-                  branch: item?.trialImage?.sampleRepository?.branch,
-                  name: "repo1",
-                },
-              ],
-            },
-          ],
-        }),
-      ).then(() => {
-        navigate(
-          `/${organizationNameViewer({
-            organizationName: formik.values?.organization
-              ?.organizationName as string,
-            capitalization: false,
-          })}/${formik.values?.roboticscloud?.name}/${formik.values?.instance
-            ?.name}/${formik?.values?.fleet?.name}/`,
-        );
-        handleCloseModal();
-      });
+      // await dispatch(
+      //   createRobot({
+      //     organizationId: formik.values?.organization?.organizationId!,
+      //     roboticsCloudName: formik.values?.roboticscloud?.name!,
+      //     instanceId: formik.values?.instance?.instanceId!,
+      //     region: formik?.values?.roboticscloud?.region!,
+      //     robotName: item?.acronym + "-" + handleGetRandomString(5),
+      //     fleetName: formik.values.fleet?.name!,
+      //     distributions: [item?.distro.toUpperCase()],
+      //     bridgeEnabled: item?.type === "Environment" ? false : true,
+      //     vdiEnabled: true,
+      //     vdiSessionCount: 3,
+      //     ideEnabled: true,
+      //     storageAmount: item?.minStorageAmount,
+      //     gpuEnabledForCloudInstance: true,
+      //     marketPlaceEnabled: true,
+      //     imageUser: item?.trialImage?.imageUser,
+      //     imageRepository: item?.trialImage?.imageRepository,
+      //     imageTag: item?.trialImage?.imageTag,
+      //     workspaces: [
+      //       {
+      //         name: "ws-1",
+      //         workspaceDistro: item?.distro?.toUpperCase(),
+      //         robotRepositories: [
+      //           {
+      //             url: item?.trialImage?.sampleRepository?.url,
+      //             branch: item?.trialImage?.sampleRepository?.branch,
+      //             name: "repo1",
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   }),
+      // ).then(() => {
+      //   navigate(
+      //     `/${organizationNameViewer({
+      //       organizationName: formik.values?.organization
+      //         ?.organizationName as string,
+      //       capitalization: false,
+      //     })}/${formik.values?.roboticscloud?.name}/${formik.values?.instance
+      //       ?.name}/${formik?.values?.fleet?.name}/`,
+      //   );
+      //   handleCloseModal();
+      // });
     },
   });
 

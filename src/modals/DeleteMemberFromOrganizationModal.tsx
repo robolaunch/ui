@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Dialog } from "primereact/dialog";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import InputText from "../components/InputText/InputText";
 import InputError from "../components/InputError/InputError";
 import Button from "../components/Button/Button";

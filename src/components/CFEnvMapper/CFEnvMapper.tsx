@@ -1,12 +1,12 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import CFAddEnvButton from "../CFAddEnvButton/CFAddEnvButton";
-import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
+import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFEnvMapper {
-  formik: FormikProps<IRobotLaunchStep>;
+  formik: FormikProps<ILaunchStep>;
   disabled?: boolean;
 }
 
@@ -20,7 +20,7 @@ export default function CFEnvMapper({
       tip="Type Environment Variables"
       dataTut="create-robot-step4-environments"
       vertical
-      error={!!formik.errors.robotLmEnvs}
+      error={formik.errors.robotLmEnvs as string}
       touched={true}
     >
       <Fragment>

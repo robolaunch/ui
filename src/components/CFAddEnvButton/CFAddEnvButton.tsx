@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
+import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFAddEnvButton {
-  formik: FormikProps<IRobotLaunchStep>;
+  formik: FormikProps<ILaunchStep>;
   disabled?: boolean;
 }
 

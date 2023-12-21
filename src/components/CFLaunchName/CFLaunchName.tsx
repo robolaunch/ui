@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
+import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFBuildName {
-  formik: FormikProps<IRobotLaunchStep>;
+  formik: FormikProps<ILaunchStep>;
   disabled?: boolean;
 }
 

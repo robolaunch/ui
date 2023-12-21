@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { FormikProps } from "formik/dist/types";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFDeleteRepositoryButton {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   repositoryIndex: number;
 }

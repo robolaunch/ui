@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import OrganizationActionCells from "../../components/TableActionCells/OrganizationActionCells";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import BasicCell from "../../components/TableInformationCells/BasicCell";
@@ -71,14 +71,8 @@ export default function OrganizationsPage({
         body: (rowData: any) => {
           return (
             <OrganizationActionCells
-              onClickSee={() =>
-                handleChangeActiveTab({
-                  page: "organizationUsers",
-                  selectedOrganization: rowData?.name,
-                })
-              }
               data={rowData?.name}
-              reload={() => {}}
+              reloadHandle={() => {}}
             />
           );
         },

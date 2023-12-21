@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFAddBuildButton {
-  formik?: FormikProps<IRobotBuildSteps>;
+  formik?: FormikProps<IBuildSteps>;
 }
 
 export default function CFAddBuildButton({

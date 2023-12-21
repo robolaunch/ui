@@ -54,8 +54,8 @@ export default function RemoteDesktopScene({
           />
           <div className="text-xs text-light-200">
             {remoteDesktopReducer?.controller?.displayname || "No Controller"}{" "}
-            {remoteDesktopReducer?.currentResolution?.width || "None"}x
-            {remoteDesktopReducer?.currentResolution?.height || "None"}
+            {remoteDesktopReducer?.currentResolution?.width || ""}x
+            {remoteDesktopReducer?.currentResolution?.height || ""}
           </div>
         </div>
         {isControllerActive && (

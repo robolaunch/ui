@@ -1,14 +1,11 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
-import {
-  IRobotLaunchStep,
-  IRobotWorkspace,
-} from "../../interfaces/robotInterfaces";
+import { ILaunchStep, IWorkspace } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFBuildWorkspace {
-  formik: FormikProps<IRobotLaunchStep>;
+  formik: FormikProps<ILaunchStep>;
   disabled?: boolean;
 }
 
@@ -27,7 +24,7 @@ export default function CFLaunchWorkspace({
         <Fragment>
           {!formik?.values?.workspace && <option value=""></option>}
           {robotData?.step2?.workspaces?.map(
-            (workspace: IRobotWorkspace, index: number) => (
+            (workspace: IWorkspace, index: number) => (
               <option key={index} value={workspace.name}>
                 {workspace.name}
               </option>

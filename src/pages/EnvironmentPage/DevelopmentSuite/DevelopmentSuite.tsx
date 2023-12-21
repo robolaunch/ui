@@ -5,25 +5,19 @@ import StreamContext from "../../../contexts/VDIContext";
 import Card from "../../../components/Card/Card";
 import { ReactElement, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
+import useRobot from "../../../hooks/useRobot";
 
-interface IDevelopmentSuite {
-  ideURL: string;
-  vdiURL: string;
-}
-
-export default function DevelopmentSuite({
-  ideURL,
-  vdiURL,
-}: IDevelopmentSuite): ReactElement {
+export default function DevelopmentSuite(): ReactElement {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { ref, width } = useComponentSize();
+  const { responseRobot } = useRobot();
 
   return (
     <Card>
       <ImageSplitter
         setIsDragging={setIsDragging}
         source={
-          <StreamContext vdiIngressEndpoint={vdiURL}>
+          <StreamContext>
             <div ref={ref} className=" grid h-full grid-cols-12">
               <div className="col-span-12 h-full bg-light-900 lg:col-span-8 xl:col-span-9 2xl:col-span-10">
                 <RemoteDesktopScene isControllerActive={true} />
@@ -40,7 +34,7 @@ export default function DevelopmentSuite({
             className={`animate__animated animate__fadeIn h-full w-full ${
               isDragging && "pointer-events-none"
             }`}
-            src={ideURL}
+            src={responseRobot?.ideIngressEndpoint}
             title="Code Editor"
             style={{
               width: `${width}px`,

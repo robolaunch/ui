@@ -224,7 +224,7 @@ export function InstanceTableData() {
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{
                     organization: pagesState?.organization!,
-                    roboticsCloud: pagesState?.roboticsCloud?.name!,
+                    roboticsCloud: pagesState?.roboticsCloud!,
                     instance: pagesState?.instance!,
                     fleet: rowData?.actions,
                   }}
@@ -234,7 +234,7 @@ export function InstanceTableData() {
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{
                     organization: pagesState?.organization!,
-                    roboticsCloud: pagesState?.roboticsCloud?.name,
+                    roboticsCloud: pagesState?.roboticsCloud!,
                     instance: pagesState?.instance!,
                     fleet: rowData?.actions,
                   }}

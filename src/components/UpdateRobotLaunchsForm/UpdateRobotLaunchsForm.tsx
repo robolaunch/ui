@@ -32,8 +32,8 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
       {
         organizationId: selectedState?.organization!.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
         robotName: robotData?.step1?.robotName,
       },
@@ -54,7 +54,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
             src="/svg/general/loading.svg"
             alt="Loading..."
           />
-          <span className="text-light-900 pb-4 text-sm">Loading...</span>
+          <span className="pb-4 text-sm text-light-900">Loading...</span>
         </div>
       ) : url?.robotName && robotData?.step4?.robotLaunchSteps?.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center gap-4">
@@ -80,7 +80,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         </div>
       ) : (
         <Fragment>
-          <div className="animate__animated animate__fadeIn text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+          <div className="animate__animated animate__fadeIn flex min-w-fit gap-1 text-xs font-medium text-light-700">
             Launch Steps:
             <InfoTip content="Launch Steps" />
           </div>

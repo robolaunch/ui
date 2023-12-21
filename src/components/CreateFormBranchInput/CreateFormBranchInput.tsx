@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik";
 import axios from "axios";
 
 interface ICreateFormBrachInput {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   repositoryIndex: number;
   disabled?: boolean;
@@ -86,7 +86,7 @@ export default function CreateFormBrachInput({
         <FormInputSelect
           dataTut="create-robot-step2-workspace-repository-branch"
           labelName="Branch Name:"
-          labelInfoTip="Type a repository branch name."
+          tip="Type a repository branch name."
           disabled={disabled}
           inputProps={formik.getFieldProps(
             `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,

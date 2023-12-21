@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { deleteBuildManager } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
@@ -27,7 +27,7 @@ export default function DeleteBuildManagerModal({
       deleteBuildManager({
         organizationId: selectedState?.organization!.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
-        instanceId: selectedState?.instance?.instanceId,
+        instanceId: selectedState?.instance?.instanceId!,
         fleetName: selectedState?.fleet?.name,
         robotName: url?.robotName as string,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,

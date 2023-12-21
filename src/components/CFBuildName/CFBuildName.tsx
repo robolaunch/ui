@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFBuildName {
-  formik: FormikProps<IRobotBuildSteps>;
+  formik: FormikProps<IBuildSteps>;
 }
 
 export default function CFBuildName({ formik }: ICFBuildName): ReactElement {

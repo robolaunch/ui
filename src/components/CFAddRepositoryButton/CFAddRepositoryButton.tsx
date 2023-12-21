@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { IRobotWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFAddRepositoryButton {
-  formik: FormikProps<IRobotWorkspaces>;
+  formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
 }
 

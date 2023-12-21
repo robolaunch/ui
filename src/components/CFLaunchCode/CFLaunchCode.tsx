@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { Editor } from "@monaco-editor/react";
-import { IRobotLaunchStep } from "../../interfaces/robotInterfaces";
+import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFLaunchCode {
-  formik: FormikProps<IRobotLaunchStep>;
+  formik: FormikProps<ILaunchStep>;
   disabled?: boolean;
 }
 

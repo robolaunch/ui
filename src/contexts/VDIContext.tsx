@@ -1,18 +1,19 @@
-import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard.ts";
+import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useEffect, createContext, useRef, useReducer } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { toast } from "sonner";
+import useRobot from "../hooks/useRobot";
+import { useAppSelector } from "../hooks/redux";
 
 export const VDIContext: any = createContext<any>(null);
 
 interface IVDIContext {
-  vdiIngressEndpoint: string;
   children: any;
 }
 
 // eslint-disable-next-line
-export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
+export default ({ children }: IVDIContext) => {
   const video = useRef<any>(null);
   const peer = useRef<any>(null);
   const candidate = useRef<any>(null);
@@ -23,6 +24,8 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
 
   const { keycloak } = useKeycloak();
 
+  const { responseRobot } = useRobot();
+
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
     members: [],
     messages: [],
@@ -30,6 +33,8 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
     currentResolution: null,
     isMuted: true,
   });
+
+  const { urls } = useAppSelector((state) => state.robot);
 
   function handleReducer(state: any, action: any) {
     switch (action?.type) {
@@ -147,7 +152,7 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
     };
 
     client.current = new WebSocket(
-      vdiIngressEndpoint + "ws?password=admin" || "",
+      urls?.vdi || responseRobot?.vdiIngressEndpoint + "ws?password=admin",
     );
 
     client.current.onmessage = (e: any) => {
@@ -261,7 +266,11 @@ export default ({ vdiIngressEndpoint, children }: IVDIContext) => {
       }
       client.current.close();
     };
-  }, [vdiIngressEndpoint, keycloak?.tokenParsed?.preferred_username]);
+  }, [
+    responseRobot?.vdiIngressEndpoint,
+    keycloak?.tokenParsed?.preferred_username,
+    urls?.vdi,
+  ]);
 
   useEffect(() => {
     var buffer: ArrayBuffer;

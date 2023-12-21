@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
-import { IRobotWorkspace } from "../../interfaces/robotInterfaces";
+import { ReactElement } from "react";
+import { IWorkspace } from "../../interfaces/robotInterfaces";
 import StateCell from "../TableInformationCells/StateCell";
 
 interface ICFWorkspaceItemAccordionHeader {
-  workspace: IRobotWorkspace;
+  workspace: IWorkspace;
   workspaceIndex: number;
   workspaceState: string[];
 }

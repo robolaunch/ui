@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
-import CardLayout from "../../layouts/CardLayout";
+import { ReactElement } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useAppSelector } from "../../hooks/redux";
 import useRobot from "../../hooks/useRobot";
 import RestartService from "../RestartServiceButton/RestartServiceButton";
 import FullScreenButton from "../FullScreenButton/FullScreenButton";
 import ServiceLogsButton from "../ServiceLogs/ServiceLogs";
+import Card from "../Card/Card";
 
 export default function CodeEditor(): ReactElement {
   const handleFullScreen = useFullScreenHandle();
@@ -16,7 +16,7 @@ export default function CodeEditor(): ReactElement {
 
   return (
     <div className="animate__animated animate__fadeIn grid h-full">
-      <CardLayout loading={true}>
+      <Card loading={true}>
         <FullScreen className="relative" handle={handleFullScreen}>
           <iframe
             allow="clipboard-read"
@@ -40,7 +40,7 @@ export default function CodeEditor(): ReactElement {
             />
           </div>
         </FullScreen>
-      </CardLayout>
+      </Card>
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import React, { Fragment, ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import InputSelect from "../InputSelect/InputSelect";
-import { IRobotBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 
 interface ICFCodeType {
-  formik: FormikProps<IRobotBuildSteps>;
+  formik: FormikProps<IBuildSteps>;
   buildStepIndex: number;
 }
 

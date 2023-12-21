@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import { deleteLaunchManager } from "../toolkit/RobotSlice";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
@@ -26,8 +26,8 @@ export default function DeleteLaunchManagerModal({
       deleteLaunchManager({
         organizationId: selectedState?.organization!.organizationId,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
-        instanceId: selectedState?.instance?.instanceId,
-        region: selectedState?.instance?.region,
+        instanceId: selectedState?.instance?.instanceId!,
+        region: selectedState?.instance?.region!,
         robotName: robotData?.step1?.robotName,
         fleetName: selectedState?.fleet?.name,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,

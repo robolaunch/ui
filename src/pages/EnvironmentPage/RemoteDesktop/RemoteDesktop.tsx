@@ -1,19 +1,12 @@
-import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene.tsx";
-import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs.tsx";
-import StreamContext from "../../../contexts/VDIContext.tsx";
-import { useAppSelector } from "../../../hooks/redux.ts";
-import useRobot from "../../../hooks/useRobot.tsx";
+import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
+import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
+import StreamContext from "../../../contexts/VDIContext";
 import { ReactElement } from "react";
-import Card from "../../../components/Card/Card.tsx";
+import Card from "../../../components/Card/Card";
 
 export default function RemoteDesktop(): ReactElement {
-  const { responseRobot } = useRobot();
-  const { urls } = useAppSelector((state) => state.robot);
-
   return (
-    <StreamContext
-      vdiIngressEndpoint={urls?.vdi || responseRobot?.vdiIngressEndpoint}
-    >
+    <StreamContext>
       <Card className="grid h-full grid-cols-12">
         <div className="col-span-12 h-full bg-dark-950 lg:col-span-8 xl:col-span-9 2xl:col-span-10">
           <RemoteDesktopScene isControllerActive={true} />

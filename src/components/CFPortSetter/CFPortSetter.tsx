@@ -22,7 +22,7 @@ export default function CFPortSetter({
 
   const dispatch = useAppDispatch();
 
-  async function getPort() {
+  async function getPort(): Promise<unknown> {
     try {
       const result = await dispatch(
         getFreePort({
