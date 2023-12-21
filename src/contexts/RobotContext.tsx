@@ -305,12 +305,14 @@ export default ({ children }: any) => {
       });
     });
 
-    vdiClient?.addEventListener("close", () => {
-      dispatcher({
-        type: "vdi",
-        payload: false,
-      });
-    });
+    // vdiClient?.addEventListener("close", () => {
+    //   dispatcher({
+    //     type: "vdi",
+    //     payload: false,
+    //   });
+    // });
+
+    connectionsReducer?.vdi !== null && vdiClient && vdiClient.close();
 
     return () => {
       vdiClient?.close();
