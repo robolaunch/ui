@@ -3508,8 +3508,16 @@ td {
     grid-column: span 9 / span 9;
   }
 
+  .xl\:hidden {
+    display: none;
+  }
+
   .xl\:grid-cols-6 {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .xl\:flex-col {
+    flex-direction: column;
   }
 }
 
@@ -3538,7 +3546,19 @@ td {
     display: inline;
   }
 
+  .\32xl\:flex {
+    display: flex;
+  }
+
   .\32xl\:grid-cols-9 {
     grid-template-columns: repeat(9, minmax(0, 1fr));
+  }
+
+  .\32xl\:flex-row {
+    flex-direction: row;
+  }
+
+  .\32xl\:flex-col-reverse {
+    flex-direction: column-reverse;
   }
 }

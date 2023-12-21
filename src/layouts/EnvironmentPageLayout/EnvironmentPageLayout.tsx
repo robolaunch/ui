@@ -1,18 +1,18 @@
-import { Fragment, ReactElement } from "react";
+import DevelopmentSuite from "../../pages/EnvironmentPage/DevelopmentSuite/DevelopmentSuite";
 import EnvironmentHeader from "../../components/EnvironmentHeader/EnvironmentHeader";
-import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
-import { envApplication } from "../../helpers/envProvider";
+import Visualization from "../../pages/EnvironmentPage/Visualization/Visualization";
+import Teleoperation from "../../pages/EnvironmentPage/Teleoperation/Teleoperation";
+import RemoteDesktop from "../../pages/EnvironmentPage/RemoteDesktop/RemoteDesktop";
+import CodeEditor from "../../pages/EnvironmentPage/CodeEditor/CodeEditor";
 import Overview from "../../pages/EnvironmentPage/Overview/Overview";
+import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
+import FileManager from "../../components/FileManager/FileManager";
+import { envApplication } from "../../helpers/envProvider";
 import MissionContext from "../../contexts/MissionContext";
 import BarcodeContext from "../../contexts/BarcodeContext";
 import TaskManagementLayout from "../TaskManagementLayout";
-import Visualization from "../../pages/EnvironmentPage/Visualization/Visualization";
-import Teleoperation from "../../pages/EnvironmentPage/Teleoperation/Teleoperation";
-import DevelopmentSuite from "../../pages/EnvironmentPage/DevelopmentSuite/DevelopmentSuite";
-import RemoteDesktop from "../../pages/EnvironmentPage/RemoteDesktop/RemoteDesktop";
-import FileManager from "../../components/FileManager/FileManager";
-import CodeEditor from "../../pages/EnvironmentPage/CodeEditor/CodeEditor";
 import { useAppSelector } from "../../hooks/redux";
+import { Fragment, ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";
 
 export default function EnvironmentPageLayout(): ReactElement {

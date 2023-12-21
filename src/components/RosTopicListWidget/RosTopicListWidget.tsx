@@ -47,7 +47,7 @@ export default function RosTopicListWidget({
           return (
             <div
               key={key}
-              className="border-light-100 flex justify-between border-y  py-1.5 text-xs font-medium"
+              className="flex justify-between border-y border-light-100  py-1.5 text-xs font-medium"
             >
               <div className="text-light-600">{topic.name}</div>
               <div className="text-light-400">{topic.type}</div>

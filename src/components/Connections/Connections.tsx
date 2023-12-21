@@ -3,15 +3,11 @@ import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 
 export default function Connections(): ReactElement {
   const { responseRobot, connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
-
-  useEffect(() => {
-    console.log("connectionsReducer", connectionsReducer);
-  }, [connectionsReducer]);
 
   return (
     <div className="flex gap-4">

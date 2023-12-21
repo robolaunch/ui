@@ -241,7 +241,6 @@ export default ({ children }: any) => {
     });
 
     return () => {
-      ros?.close();
       rosClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
