@@ -2,15 +2,17 @@ import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDes
 import RemoteDesktopTabs from "../../../components/RemoteDesktopTabs/RemoteDesktopTabs";
 import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import StreamContext from "../../../contexts/VDIContext";
+import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
+import useRobot from "../../../hooks/useRobot";
 import { ReactElement, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
-import useRobot from "../../../hooks/useRobot";
 
 export default function DevelopmentSuite(): ReactElement {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { ref, width } = useComponentSize();
   const { responseRobot } = useRobot();
+  const { urls } = useAppSelector((state) => state.robot);
 
   return (
     <Card>
@@ -34,7 +36,7 @@ export default function DevelopmentSuite(): ReactElement {
             className={`animate__animated animate__fadeIn h-full w-full ${
               isDragging && "pointer-events-none"
             }`}
-            src={responseRobot?.ideIngressEndpoint}
+            src={urls?.ide || responseRobot?.ideIngressEndpoint}
             title="Code Editor"
             style={{
               width: `${width}px`,

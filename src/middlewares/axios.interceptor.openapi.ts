@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosInterceptorOpenApi: any = axios.create({});
 
 axiosInterceptorOpenApi.interceptors.request.use(async (req: any) => {
-  const tokens = JSON.parse(localStorage.getItem("tokens") || "{}");
+  const { tokens } = JSON.parse(localStorage.getItem("tokens") || "{}");
 
   if (tokens?.token) {
     req.headers.Authorization = `Bearer ${tokens.token}`;

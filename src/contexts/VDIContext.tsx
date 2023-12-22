@@ -1,4 +1,4 @@
-import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard";
+import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useEffect, createContext, useRef, useReducer } from "react";
 import { useKeycloak } from "@react-keycloak/web";
@@ -152,7 +152,7 @@ export default ({ children }: IVDIContext) => {
     };
 
     client.current = new WebSocket(
-      urls?.vdi || responseRobot?.vdiIngressEndpoint + "ws?password=admin",
+      (urls?.vdi || responseRobot?.vdiIngressEndpoint) + "ws?password=admin",
     );
 
     client.current.onmessage = (e: any) => {

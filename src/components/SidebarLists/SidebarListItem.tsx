@@ -1,10 +1,10 @@
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { envApplication } from "../../helpers/envProvider";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
-import { MdKeyboardArrowRight } from "react-icons/md";
 
 interface ISidebarListItem {
   name: string;

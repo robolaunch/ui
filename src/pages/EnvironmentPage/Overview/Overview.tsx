@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
-import { envApplication } from "../../../helpers/envProvider";
 import RobotStatusWidget from "../../../components/RobotStatusWidget/RobotStatusWidget";
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
 import TourGuide from "../../../components/TourGuide/TourGuide";
+import { envApplication } from "../../../helpers/envProvider";
 import { getGuideItem } from "../../../functions/handleGuide";
 import useRobot from "../../../hooks/useRobot";
 import { useParams } from "react-router-dom";
+import { ReactElement } from "react";
 
 interface IOverview {
   informationWidgetAction: () => void;

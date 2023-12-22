@@ -1,12 +1,13 @@
-import React, { ReactElement } from "react";
 import KeycloakLoadingPage from "../components/KeycloakLoadingPage/KeycloakLoadingPage";
+import PrivateLayout from "../layouts/PrivateLayout/PrivateLayout";
 import CreateRobotContext from "../contexts/CreateRobotContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import FunctionsContext from "../contexts/FunctionsContext";
 import GithubContext from "../contexts/GithubContext";
-import PrivateLayout from "../layouts/PrivateLayout/PrivateLayout";
 import MainContext from "../contexts/MainContext";
 import keycloak from "../api/keycloak";
+import { jwtDecode } from "jwt-decode";
+import { ReactElement } from "react";
 
 export default function PrivateProvider(): ReactElement {
   return (
@@ -15,7 +16,13 @@ export default function PrivateProvider(): ReactElement {
       authClient={keycloak}
       autoRefreshToken={true}
       onTokens={(tokens) => {
-        localStorage.setItem("tokens", JSON.stringify(tokens));
+        localStorage.setItem(
+          "tokens",
+          JSON.stringify({
+            tokens,
+            user: jwtDecode?.(tokens?.token as string),
+          }),
+        );
       }}
       initOptions={{
         useNonce: true,

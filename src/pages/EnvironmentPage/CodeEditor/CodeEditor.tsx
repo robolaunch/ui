@@ -2,6 +2,7 @@ import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEdito
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ControlBar from "../../../components/ControlBar/ControlBar";
 import { Fragment, ReactElement, useState } from "react";
+import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
 
@@ -11,6 +12,8 @@ export default function CodeEditor(): ReactElement {
   const handleFullScreen = useFullScreenHandle();
 
   const { activeTab, responseRobot, isRobotReady, isSettedCookie } = useRobot();
+
+  const { urls } = useAppSelector((state) => state.robot);
 
   return (
     <div
@@ -39,7 +42,7 @@ export default function CodeEditor(): ReactElement {
                 className={`animate__animated animate__fadeIn h-full w-full
                 ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
-                src={responseRobot?.ideIngressEndpoint}
+                src={urls?.ide || responseRobot?.ideIngressEndpoint}
               />
               <iframe
                 title="Physical IDE"

@@ -3,8 +3,8 @@ import RobotHeaderTab from "../RobotHeaderTab/RobotHeaderTab";
 import { IrobotTab } from "../../interfaces/robotInterfaces";
 import { envApplication } from "../../helpers/envProvider";
 import { AiFillCode, AiFillLayout } from "react-icons/ai";
+import { BiSolidJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
-import { BiJoystickButton } from "react-icons/bi";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 
@@ -34,7 +34,7 @@ export default function RobotHeaderTabs(): ReactElement {
     },
     {
       name: "Teleoperation",
-      icon: <BiJoystickButton size={16} />,
+      icon: <BiSolidJoystickButton size={16} />,
       isLoading:
         !responseRobot ||
         !(

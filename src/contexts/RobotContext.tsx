@@ -293,7 +293,10 @@ export default ({ children }: any) => {
   useEffect(() => {
     const vdiClient: WebSocket | null =
       isSettedCookie && connectionsReducer?.vdi === null
-        ? new WebSocket(responseRobot?.vdiIngressEndpoint + "ws?password=admin")
+        ? new WebSocket(
+            (urls?.vdi || responseRobot?.vdiIngressEndpoint) +
+              "ws?password=admin",
+          )
         : null;
 
     vdiClient?.addEventListener("open", () => {

@@ -1,7 +1,9 @@
 import TopLoadingBar from "../../components/TopLoadingBar/TopLoadingBar";
+import ZohoSalesIQ from "../../components/ZohoSalesIQ/ZohoSalesIQ";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Header from "../../components/Header/Header";
+import { useKeycloak } from "@react-keycloak/web";
 import { Fragment, ReactElement } from "react";
 import { Outlet } from "react-router-dom";
 import useMain from "../../hooks/useMain";
@@ -10,6 +12,7 @@ import { toast } from "sonner";
 export default function PrivateLayout(): ReactElement {
   const { sidebarState, setSidebarState } = useMain();
   const { width } = useWindowDimensions();
+  const { keycloak } = useKeycloak();
 
   function handleCloseSidebar() {
     if (sidebarState?.isOpen && !sidebarState?.isCreateMode) {
@@ -46,6 +49,7 @@ export default function PrivateLayout(): ReactElement {
         </div>
       </div>
       <TopLoadingBar />
+      {keycloak.authenticated && <ZohoSalesIQ />}
     </Fragment>
   );
 }
