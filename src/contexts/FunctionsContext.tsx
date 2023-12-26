@@ -29,6 +29,7 @@ import {
   getLaunchManagers as getLaunchManagerDispatch,
   createRobot as createRobotDispatch,
   createBuildManager as createBuildManagerDispatch,
+  getFiles as getFilesDispatch,
 } from "../toolkit/RobotSlice";
 import {
   getFederatedFleets,
@@ -1344,6 +1345,24 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getFiles(paths?: string[]): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const response = await dispatch(
+          getFilesDispatch({
+            paths: paths,
+          }),
+        );
+
+        resolve({
+          items: response?.payload?.items || [],
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   function navigateTo404() {
     toast.error("The current page does not exist or is not available to you.");
     navigate("/404");
@@ -1377,6 +1396,7 @@ export default ({ children }: any) => {
         createEnvironment,
         createBuildManager,
         getIP,
+        getFiles,
       }}
     >
       {children}

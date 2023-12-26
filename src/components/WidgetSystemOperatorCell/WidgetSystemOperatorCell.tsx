@@ -35,6 +35,7 @@ export default function WidgetSystemOperatorCell(): ReactElement {
       </div>
       {isOpenModal && (
         <ServiceLogModal
+          header="System Status (Operator)"
           log={pagesState?.instance?.systemStatus?.[0]?.log}
           handleCloseModal={() => setIsOpenModal(false)}
         />

@@ -20,6 +20,8 @@ import {
   IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
 import { isProduction } from "../helpers/envProvider";
+import axiosInterceptorOpenApi from "../middlewares/axios.interceptor.openapi";
+import axios from "axios";
 
 export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
@@ -370,6 +372,27 @@ export const deleteLaunchManager = createAsyncThunk(
         },
       ],
     });
+    return response.data;
+  },
+);
+
+export const getFiles = createAsyncThunk(
+  "robot/getFiles",
+  async (values: { paths?: string[] }) => {
+    const response = await axios.get(
+      `${process.env.REACT_APP_FILE_MANAGER_URL}/api/resources${
+        values?.paths?.join("") || ""
+      }`,
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Headers":
+            "X-Auth,DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-Amz-Date",
+          "Access-Control-Expose-Headers": "Content-Length,Content-Range",
+        },
+      },
+    );
     return response.data;
   },
 );

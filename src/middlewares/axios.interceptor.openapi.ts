@@ -1,8 +1,10 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosInterceptorOpenApi: any = axios.create({});
 
-axiosInterceptorOpenApi.interceptors.request.use(async (req: any) => {
+axiosInterceptorOpenApi.interceptors.request.use((req: AxiosRequestConfig) => {
+  console.log("axios.request", req);
+
   const { tokens } = JSON.parse(localStorage.getItem("tokens") || "{}");
 
   if (tokens?.token) {
@@ -12,8 +14,8 @@ axiosInterceptorOpenApi.interceptors.request.use(async (req: any) => {
   return req;
 });
 
-axiosInterceptorOpenApi.interceptors.response.use(async (res: any) => {
-  console.log("axios", res);
+axiosInterceptorOpenApi.interceptors.response.use((res: AxiosResponse) => {
+  console.log("axios.response", res);
   return res;
 });
 

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosInterceptorGithub: any = axios.create({});
 
-axiosInterceptorGithub.interceptors.request.use(async (req: any) => {
+axiosInterceptorGithub.interceptors.request.use((req: AxiosRequestConfig) => {
   req.headers.Authorization = `Bearer ${JSON.parse(
     localStorage.getItem("githubTokens") as any,
   )?.access_token}`;
@@ -11,7 +11,7 @@ axiosInterceptorGithub.interceptors.request.use(async (req: any) => {
   return req;
 });
 
-axiosInterceptorGithub.interceptors.response.use(async (res: any) => {
+axiosInterceptorGithub.interceptors.response.use((res: AxiosResponse) => {
   return res;
 });
 

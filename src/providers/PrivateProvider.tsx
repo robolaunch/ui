@@ -20,7 +20,7 @@ export default function PrivateProvider(): ReactElement {
           "tokens",
           JSON.stringify({
             tokens,
-            user: jwtDecode?.(tokens?.token as string),
+            user: tokens?.token && jwtDecode?.(tokens?.token),
           }),
         );
       }}

@@ -226,6 +226,7 @@ export interface IuseFunctions {
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => void;
   getIP: () => void;
+  getFiles: (paths?: string[]) => Promise<any>;
 
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,

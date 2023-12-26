@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import useMain from "../../hooks/useMain";
 import StateCell from "../TableInformationCells/StateCell";
 import { RxOpenInNewWindow } from "react-icons/rx";
@@ -7,6 +7,10 @@ import ServiceLogModal from "../../modals/ServiceLogModal";
 export default function WidgetSystemBackendCell(): ReactElement {
   const { pagesState } = useMain();
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log("AAA", pagesState?.instance);
+  }, [pagesState]);
 
   return (
     <Fragment>
@@ -35,6 +39,7 @@ export default function WidgetSystemBackendCell(): ReactElement {
       </div>
       {isOpenModal && (
         <ServiceLogModal
+          header="System Status (Backend)"
           log={pagesState?.instance?.systemStatus?.[1]?.log}
           handleCloseModal={() => setIsOpenModal(false)}
         />
