@@ -20,7 +20,6 @@ import {
   IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
 import { isProduction } from "../helpers/envProvider";
-import axiosInterceptorOpenApi from "../middlewares/axios.interceptor.openapi";
 import axios from "axios";
 
 export const createRobot = createAsyncThunk(
@@ -380,9 +379,7 @@ export const getFiles = createAsyncThunk(
   "robot/getFiles",
   async (values: { paths?: string[] }) => {
     const response = await axios.get(
-      `${process.env.REACT_APP_FILE_MANAGER_URL}/api/resources${
-        values?.paths?.join("") || ""
-      }`,
+      `http://localhost:5500/api/resources${values?.paths?.join("") || ""}`,
       {
         headers: {
           "Access-Control-Allow-Origin": "*",

@@ -206,8 +206,8 @@ export default function SidebarListItem({
           }.svg`}
         />
         <div className="flex flex-col gap-1">
-          <p className="text-sm font-medium">{name}</p>
-          <p className="text-xs font-light">{description}</p>
+          <div className="text-sm font-medium">{name}</div>
+          <div className="text-xs font-light">{description}</div>
         </div>
       </div>
       {!notSelectable && (

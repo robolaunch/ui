@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import InfoTip from "../InfoTip/InfoTip";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
@@ -35,7 +35,7 @@ export default function FormInputText({
   return (
     <div data-tut={dataTut} className={classNameContainer}>
       <div
-        className={`text-light-700 flex min-w-fit gap-1 pb-3 text-xs font-medium ${classNameInput}`}
+        className={`flex min-w-fit gap-1 pb-3 text-xs font-medium text-light-700 ${classNameInput}`}
       >
         {labelName}
         <InfoTip content={labelInfoTip} rightTip={rightTip} />

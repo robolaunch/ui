@@ -19,6 +19,35 @@ export default function RobotsList({
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
   const { selectedState } = useMain();
   const { getRobots } = useFunctions();
+  const [robotsStatus, setRobotsStatus] = useState<
+    {
+      virtual: string;
+      physical: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    setRobotsStatus(
+      responseRobots?.map((robot: any, index: number) => {
+        const virtualStatus = robot.robotClusters.filter(
+          (robotCluster: any) =>
+            robotCluster.name === selectedState?.instance?.name,
+        )?.[0]?.robotStatus;
+
+        const physicalStatus = robot.robotClusters.filter(
+          (robotCluster: any) =>
+            robotCluster.name !== selectedState?.instance?.name,
+        )?.[0]?.robotStatus;
+
+        return {
+          virtual:
+            virtualStatus === "EnvironmentReady" ? "Ready" : virtualStatus,
+          physical:
+            physicalStatus === "EnvironmentReady" ? "Ready" : physicalStatus,
+        };
+      }),
+    );
+  }, [responseRobots, selectedState?.instance?.name]);
 
   useEffect(
     () => {
@@ -76,10 +105,10 @@ export default function RobotsList({
             !selectedState?.organization
               ? "Organization"
               : !selectedState?.roboticsCloud
-              ? "Robotics Cloud"
-              : !selectedState?.instance
-              ? "Instance"
-              : "Fleet"
+                ? "Robotics Cloud"
+                : !selectedState?.instance
+                  ? "Instance"
+                  : "Fleet"
           } to view ${envApplication ? "applications" : "robots"}.`}
         />
       ) : !Array.isArray(responseRobots) ? (
@@ -98,29 +127,13 @@ export default function RobotsList({
                   <div className="flex gap-2">
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
-                      <StateCell
-                        state={
-                          Array.isArray(robot?.robotClusters) &&
-                          robot?.robotClusters[0]?.robotStatus ===
-                            "EnvironmentReady"
-                            ? "Ready"
-                            : robot?.robotClusters[0]?.robotStatus
-                        }
-                      />
+                      <StateCell state={robotsStatus?.[index]?.virtual} />
                     </div>
                     {Array.isArray(robot?.robotClusters) &&
                       robot?.robotClusters.length > 1 && (
                         <div className="flex gap-1.5">
                           <span className="font-medium">Physical:</span>
-                          <StateCell
-                            state={
-                              Array.isArray(robot?.robotClusters) &&
-                              robot?.robotClusters[1]?.robotStatus ===
-                                "EnvironmentReady"
-                                ? "Ready"
-                                : robot?.robotClusters[1]?.robotStatus
-                            }
-                          />
+                          <StateCell state={robotsStatus?.[index]?.physical} />
                         </div>
                       )}
                   </div>

@@ -36,7 +36,7 @@ export default function InputText({
   return (
     <div className="animate__animated animate__fadeIn relative">
       <label
-        className={`text-light-700 pointer-events-none absolute z-10 text-xs transition-all duration-300 ${
+        className={`pointer-events-none absolute z-10 text-xs text-light-700 transition-all duration-300 ${
           isFocused ? "-top-6 left-0 text-xs" : "left-3 top-2.5 text-sm"
         }`}
         htmlFor=""
@@ -46,9 +46,9 @@ export default function InputText({
       <input
         autoComplete="off"
         disabled={disabled}
-        className={`border-light-300 h-9 w-full rounded-md border p-3
+        className={`h-9 w-full rounded border border-light-300 p-3
       text-xs  outline-none
-       transition-all duration-500 focus:ring-2 focus:ring-primary disabled:cursor-not-allowed ${className}`}
+       transition-all duration-500 focus:ring-2 focus:ring-primary-500 disabled:cursor-not-allowed ${className}`}
         type={type || "text"}
         name={name}
         value={value}

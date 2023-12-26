@@ -1,5 +1,5 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import CFHostDirectoriesInput from "../CFHostDirectoriesInput/CFHostDirectoriesInput";
+import CFHostDirectoriesInput from "../CFHostDirectoriesInput2/CFHostDirectoriesInput2";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";

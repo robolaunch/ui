@@ -3,8 +3,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 const axiosInterceptorOpenApi: any = axios.create({});
 
 axiosInterceptorOpenApi.interceptors.request.use((req: AxiosRequestConfig) => {
-  console.log("axios.request", req);
-
   const { tokens } = JSON.parse(localStorage.getItem("tokens") || "{}");
 
   if (tokens?.token) {

@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { IoTrashBinOutline } from "react-icons/io5";
+import { ReactElement } from "react";
+import { MdRemoveCircleOutline } from "react-icons/md";
 
 interface ICFDellButton {
   disabled?: boolean;
@@ -16,7 +16,7 @@ export default function CFDellButton({
       onClick={onClick}
       className="transition-300 hover:scale-90"
     >
-      <IoTrashBinOutline color={disabled ? "gray" : "red"} size={18} />
+      <MdRemoveCircleOutline color={disabled ? "gray" : "red"} size={18} />
     </button>
   );
 }

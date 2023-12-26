@@ -1,62 +1,52 @@
-import { ReactElement, useEffect, useState } from "react";
-import useFunctions from "../../hooks/useFunctions";
-import Select from "react-select";
+import { ReactElement } from "react";
+import CFDirectoriesInputGroup from "../CFHostDirectoriesInputGroup/CFHostDirectoriesInputGroup";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import { FormikProps } from "formik";
+import { IDetails } from "../../interfaces/robotInterfaces";
 
-export default function CFHostDirectories(): ReactElement {
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
-  const [selectableItems, setSelectableItems] = useState<string[]>([]);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const { getFiles } = useFunctions();
+interface ICFDirectories {
+  formik: FormikProps<IDetails>;
+  disabled?: boolean;
+}
 
-  useEffect(() => {
-    handleGetSelectableItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    console.log("selectableItems", selectableItems);
-    console.log("selectedItems", selectedItems);
-  }, [selectableItems, selectedItems]);
-
-  async function handleGetSelectableItems(paths?: string[]) {
-    const { items } = await getFiles(paths || []);
-
-    if (items?.length) {
-      setSelectableItems(
-        items
-          ?.filter((item: any) => item.isDir)
-          ?.map((item: any) => `/${item.name}`),
-      );
-    } else {
-      setSelectableItems([]);
-      setMenuIsOpen(false);
-    }
-  }
-
+export default function CFDirectories({
+  formik,
+  disabled,
+}: ICFDirectories): ReactElement {
   return (
-    <>
-      <Select
-        menuIsOpen={menuIsOpen}
-        options={
-          selectableItems?.map((item) => ({
-            value: item,
-            label: selectedItems?.join("") || item,
-          })) || []
-        }
-        onChange={(e) => {
-          if (e) {
-            handleGetSelectableItems([...selectedItems, e.value]);
-            setSelectedItems([...selectedItems, e.value]);
-          }
+    <div>
+      <CFInfoBar
+        label="Host Directories:"
+        tip="You can link a directory on the host to the directory specified in the application here."
+        vertical
+      >
+        <div className="flex flex-col gap-2">
+          {formik.values.hostDirectories?.map((_, index) => {
+            return (
+              <CFDirectoriesInputGroup
+                key={index}
+                formik={formik}
+                disabled={disabled}
+                index={index}
+              />
+            );
+          })}
+        </div>
+      </CFInfoBar>
+
+      <CreateRobotFormAddButton
+        onClick={() => {
+          formik.setFieldValue("hostDirectories", [
+            ...formik.values.hostDirectories,
+            {
+              hostDirectory: "",
+              mountPath: "",
+            },
+          ]);
         }}
-        onFocus={() => setMenuIsOpen(true)}
-        onBlur={() => setMenuIsOpen(false)}
-        value={{
-          value: selectedItems?.join("") || "",
-          label: selectedItems?.join("") || "",
-        }}
-        isClearable
+        disabled={disabled}
       />
-    </>
+    </div>
   );
 }

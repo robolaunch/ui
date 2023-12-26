@@ -1,3 +1,5 @@
+import CFHostDirectories2 from "../CFHostDirectories2/CFHostDirectories2";
+// import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import { IDetails } from "../../interfaces/robotInterfaces";
@@ -7,8 +9,6 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
-import CFHostDirectories2 from "../CFHostDirectories2/CFHostDirectories2";
-// import CFHostDirectories from "../CFHostDirectories/CFHostDirectories";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;
@@ -32,11 +32,6 @@ export default function CFAdvancedSettings({
       }}
     >
       <div className="flex flex-col gap-8 px-4 pb-6 pt-2">
-        {/* <CFSection>
-          <CFHostDirectories />
-          <Seperator />
-        </CFSection> */}
-
         <CFSection gap={4}>
           <CFPersistDirTags formik={formik} disabled={disabled} />
           <Seperator />
@@ -46,6 +41,11 @@ export default function CFAdvancedSettings({
           <CFGrantDirTags formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
+
+        {/* <CFSection gap={4}>
+          <CFDirectories formik={formik} disabled={disabled} />
+          <Seperator />
+        </CFSection> */}
 
         <CFSection gap={4}>
           <CFHostDirectories2 formik={formik} disabled={disabled} />
