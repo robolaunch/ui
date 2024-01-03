@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { IDataScienceApp } from "../interfaces/environmentInterfaces";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import ToggleCell from "../components/TableInformationCells/ToggleCell";
 import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
 import URLCell from "../components/TableInformationCells/URLCell";
 import StartStopCell from "../components/TableInformationCells/StartStopCell";
