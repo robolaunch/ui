@@ -11,7 +11,7 @@ export default function DataScienceLogs({
   const [isOpenedModal, setIsOpenedModal] = useState<boolean>(false);
 
   return (
-    <button className="flex cursor-pointer flex-col items-center gap-1 text-light-700 underline transition-all duration-200 hover:scale-90 hover:text-primary-400">
+    <button className="flex cursor-pointer flex-col items-center gap-1 text-light-700 underline transition-all duration-200  hover:text-primary-400">
       <p
         onClick={() => setIsOpenedModal(true)}
         className="whitespace-nowrap text-xs"

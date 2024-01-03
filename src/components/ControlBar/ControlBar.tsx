@@ -13,7 +13,7 @@ import ServiceLogs from "../ServiceLogs/ServiceLogs";
 import { FullScreenHandle } from "react-full-screen";
 
 interface IControlBar {
-  type: "ide" | "vdi";
+  type: "ide" | "vdi" | "jupyter-notebook";
   handleFullScreen: FullScreenHandle;
 }
 

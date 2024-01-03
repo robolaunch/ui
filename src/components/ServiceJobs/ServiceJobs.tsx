@@ -3,7 +3,7 @@ import { RiSettings3Line } from "react-icons/ri";
 import ServiceJobModal from "../../modals/ServiceJobModal";
 
 interface IServiceJobs {
-  type: "vdi" | "ide";
+  type: "ide" | "vdi" | "jupyter-notebook";
 }
 
 export default function ServiceJobs({ type }: IServiceJobs): ReactElement {

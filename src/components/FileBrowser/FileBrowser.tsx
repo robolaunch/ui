@@ -3,7 +3,7 @@ import { ReactElement, useState } from "react";
 import { RiFolder3Line } from "react-icons/ri";
 
 interface IFileBrowser {
-  type: "vdi" | "ide";
+  type: "ide" | "vdi" | "jupyter-notebook";
 }
 
 export default function FileBrowser({ type }: IFileBrowser): ReactElement {

@@ -3,7 +3,7 @@ import { IoReloadOutline } from "react-icons/io5";
 import { useState } from "react";
 
 interface IRestartService {
-  type: "ide" | "vdi" | "soft-vdi";
+  type: "ide" | "vdi" | "soft-vdi" | "jupyter-notebook";
 }
 
 export default function RestartService({ type }: IRestartService) {

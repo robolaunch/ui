@@ -7,6 +7,7 @@ import { IDataScienceApp } from "../interfaces/environmentInterfaces";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import ToggleCell from "../components/TableInformationCells/ToggleCell";
 import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
+import URLCell from "../components/TableInformationCells/URLCell";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
@@ -81,7 +82,19 @@ export function DataScienceTableData() {
         key: "externalIP",
         header: "External Endpoint",
         body: (rowData: any) => {
-          return <BasicCell text={rowData?.externalIP} />;
+          return (
+            <Fragment>
+              {rowData?.externalIP === "Not Deployed" ? (
+                <p className="text-xs text-light-700">Not Deployed</p>
+              ) : (
+                <URLCell
+                  text={rowData?.externalIP}
+                  url={rowData?.externalIP}
+                  target="_blank"
+                />
+              )}
+            </Fragment>
+          );
         },
       },
       {

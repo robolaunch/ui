@@ -1,26 +1,29 @@
 import { ReactElement } from "react";
 import { Dialog } from "primereact/dialog";
-import { LazyLog } from "@melloware/react-logviewer";
 
-interface IServiceLogModal {
+interface IIframeModal {
   header?: string;
-  log?: string;
+  url: string;
   handleCloseModal: () => void;
 }
 
-export default function ServiceLogModal({
+export default function IframeModal({
   header,
-  log,
+  url,
   handleCloseModal,
-}: IServiceLogModal): ReactElement {
+}: IIframeModal): ReactElement {
   return (
     <Dialog
-      header={`${header || ""} Service Log`}
+      header={header}
       visible={true}
       className="h-full w-[90vw]"
       onHide={() => handleCloseModal()}
     >
-      <LazyLog text={log} height={752} scrollToLine={9999999} />
+      <iframe
+        title="Iframe"
+        src={url}
+        style={{ height: "752px", width: "100%" }}
+      />
     </Dialog>
   );
 }

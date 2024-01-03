@@ -5,8 +5,9 @@ import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
 import useMain from "../hooks/useMain";
+import useCreateRobot from "../hooks/useCreateRobot";
 interface IDeleteRobotModalModal {
-  type: "ide" | "vdi" | "soft-vdi";
+  type: "ide" | "vdi" | "soft-vdi" | "jupyter-notebook";
   handleCloseModal: () => void;
 }
 
@@ -17,6 +18,7 @@ export default function RestartServiceModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { responseRobot, handleResetRobot } = useRobot();
+  const { robotData } = useCreateRobot();
   const { selectedState } = useMain();
 
   const dispatch = useAppDispatch();
@@ -55,7 +57,11 @@ export default function RestartServiceModal({
         podName:
           type === "ide"
             ? responseRobot?.idePodName
-            : responseRobot?.vdiPodName,
+            : type === "vdi"
+              ? responseRobot?.vdiPodName
+              : type === "jupyter-notebook"
+                ? robotData?.step1?.jupyterNotebook?.appPodName
+                : "",
       }),
     );
     await setIsLoading(false);

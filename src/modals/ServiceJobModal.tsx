@@ -3,7 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { ReactElement } from "react";
 
 interface IServiceJobModal {
-  type: "ide" | "vdi";
+  type: "ide" | "vdi" | "jupyter-notebook";
   handleCloseModal: () => void;
 }
 
