@@ -4,10 +4,12 @@ import { envApplication } from "../../helpers/envProvider";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 export default function Connections(): ReactElement {
   const { responseRobot, connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
+  const { robotData } = useCreateRobot();
 
   return (
     <div className="flex gap-4">
@@ -19,8 +21,8 @@ export default function Connections(): ReactElement {
               connectionsReducer?.ros === null
                 ? "Waiting"
                 : connectionsReducer?.ros === true
-                ? "Connected"
-                : "Warning"
+                  ? "Connected"
+                  : "Warning"
             }
           />
         </div>
@@ -37,8 +39,8 @@ export default function Connections(): ReactElement {
             connectionsReducer?.virtualIDE === null
               ? "Waiting"
               : connectionsReducer?.virtualIDE
-              ? "Connected"
-              : "Warning"
+                ? "Connected"
+                : "Warning"
           }
         />
       </div>
@@ -53,8 +55,8 @@ export default function Connections(): ReactElement {
               connectionsReducer?.physicalIDE === null
                 ? "Waiting"
                 : connectionsReducer?.physicalIDE
-                ? "Connected"
-                : "Warning"
+                  ? "Connected"
+                  : "Warning"
             }
           />
         </div>
@@ -74,11 +76,28 @@ export default function Connections(): ReactElement {
             connectionsReducer?.vdi === null
               ? "Waiting"
               : connectionsReducer?.vdi
-              ? "Connected"
-              : "Warning"
+                ? "Connected"
+                : "Warning"
           }
         />
       </div>
+      {robotData.step1?.jupyterNotebook?.appEndpoint && (
+        <div className="flex gap-1" id="jupyter">
+          <ConnectionLabel
+            label="Jupyter Notebook"
+            url={robotData.step1.jupyterNotebook.appEndpoint}
+          />
+          <StateCell
+            state={
+              connectionsReducer?.virtualIDE === null
+                ? "Waiting"
+                : connectionsReducer?.virtualIDE
+                  ? "Connected"
+                  : "Warning"
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }

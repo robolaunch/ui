@@ -1370,6 +1370,14 @@ video {
   width: max-content;
 }
 
+.\!w-20 {
+  width: 5rem !important;
+}
+
+.\!w-28 {
+  width: 7rem !important;
+}
+
 .min-w-\[12rem\] {
   min-width: 12rem;
 }

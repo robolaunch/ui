@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment, ReactElement } from "react";
 import Toggle from "react-toggle";
 
 interface IToggleCell {
@@ -15,9 +15,9 @@ export default function ToggleCell({
   disabled,
   onOpenHandle,
   onCloseHandle,
-}: IToggleCell) {
+}: IToggleCell): ReactElement {
   return (
-    <div>
+    <Fragment>
       {loading ? (
         <img
           className="h-10 w-10"
@@ -38,6 +38,6 @@ export default function ToggleCell({
           defaultChecked={isChecked || false}
         />
       )}
-    </div>
+    </Fragment>
   );
 }

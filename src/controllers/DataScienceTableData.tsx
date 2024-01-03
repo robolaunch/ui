@@ -8,6 +8,7 @@ import BasicCell from "../components/TableInformationCells/BasicCell";
 import ToggleCell from "../components/TableInformationCells/ToggleCell";
 import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
 import URLCell from "../components/TableInformationCells/URLCell";
+import StartStopCell from "../components/TableInformationCells/StartStopCell";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
@@ -127,25 +128,77 @@ export function DataScienceTableData() {
         body: (rowData: any) => {
           console.log(rowData);
           return (
-            <ToggleCell
-              isChecked={(() => {
-                switch (rowData?.toggleState?.status) {
+            // <ToggleCell
+            //   isChecked={(() => {
+            //     switch (rowData?.toggleState?.status) {
+            //       case "Ready":
+            //         return true;
+            //       default:
+            //         return false;
+            //     }
+            //   })()}
+            //   loading={(() => {
+            //     switch (rowData?.toggleState?.status) {
+            //       case "Not Deployed":
+            //         return false;
+            //       case "Ready":
+            //         return false;
+            //       default:
+            //         return true;
+            //     }
+            //   })()}
+            //   disabled={(() => {
+            //     switch (rowData?.status) {
+            //       case "Not Deployed":
+            //         return false;
+            //       case "Ready":
+            //         return false;
+            //       default:
+            //         return true;
+            //     }
+            //   })()}
+            //   onOpenHandle={() => {
+            //     createDataScienceApp({
+            //       applicationName: rowData?.toggleState?.name,
+            //     });
+            //     setTimeout(() => {
+            //       handleReload();
+            //     }, 1000);
+            //   }}
+            //   onCloseHandle={() => {
+            //     deleteDataScienceApp({
+            //       applicationName: rowData?.toggleState?.name,
+            //     });
+            //     setTimeout(() => {
+            //       handleReload();
+            //     }, 1000);
+            //   }}
+            // />
+            <StartStopCell
+              isRunning={(() => {
+                switch (rowData?.status) {
                   case "Ready":
                     return true;
                   default:
                     return false;
                 }
               })()}
-              loading={(() => {
-                switch (rowData?.toggleState?.status) {
-                  case "Not Deployed":
-                    return false;
-                  case "Ready":
-                    return false;
-                  default:
-                    return true;
-                }
-              })()}
+              handleStart={() => {
+                createDataScienceApp({
+                  applicationName: rowData?.toggleState?.name,
+                });
+                setTimeout(() => {
+                  handleReload();
+                }, 1000);
+              }}
+              handleStop={() => {
+                deleteDataScienceApp({
+                  applicationName: rowData?.toggleState?.name,
+                });
+                setTimeout(() => {
+                  handleReload();
+                }, 1000);
+              }}
               disabled={(() => {
                 switch (rowData?.status) {
                   case "Not Deployed":
@@ -156,22 +209,16 @@ export function DataScienceTableData() {
                     return true;
                 }
               })()}
-              onOpenHandle={() => {
-                createDataScienceApp({
-                  applicationName: rowData?.toggleState?.name,
-                });
-                setTimeout(() => {
-                  handleReload();
-                }, 1000);
-              }}
-              onCloseHandle={() => {
-                deleteDataScienceApp({
-                  applicationName: rowData?.toggleState?.name,
-                });
-                setTimeout(() => {
-                  handleReload();
-                }, 1000);
-              }}
+              modalText={
+                (() => {
+                  switch (rowData?.status) {
+                    case "Ready":
+                      return "Are you sure you want to stop this application?";
+                    default:
+                      return "Are you sure you want to start this application?";
+                  }
+                })() || ""
+              }
             />
           );
         },
