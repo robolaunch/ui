@@ -9,7 +9,7 @@ interface ICFPortInput {
   formik: FormikProps<IDetails>;
   portIndex: number;
   disabled?: boolean;
-  type: string;
+  type: "ide" | "vdi" | "jupyter-notebook";
 }
 
 export default function CFPortInput({
@@ -19,22 +19,47 @@ export default function CFPortInput({
   type,
 }: ICFPortInput): ReactElement {
   return (
-    <div className="border-light-100 flex w-full gap-3 rounded-md border p-4">
+    <div className="flex w-full gap-3 rounded-md border border-light-100 p-4">
       <FormInputText
         disabled={disabled}
         labelName="Port Name:"
         labelInfoTip="Type a port name."
-        inputProps={formik.getFieldProps(
-          `${type}CustomPorts[${portIndex}].name`,
-        )}
-        inputError={
-          // @ts-ignore
-          formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.name
-        }
-        inputTouched={
-          // @ts-ignore
-          formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.name
-        }
+        inputProps={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return formik.getFieldProps(
+                `jupyterNotebook.customPorts[${portIndex}].name`,
+              );
+            default:
+              return formik.getFieldProps(
+                `${type}CustomPorts[${portIndex}].name`,
+              );
+          }
+        })()}
+        inputError={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return (
+                // @ts-ignore
+                formik.errors?.jupyterNotebook?.customPorts?.[portIndex]?.name
+              );
+            default:
+              // @ts-ignore
+              return formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.name;
+          }
+        })()}
+        inputTouched={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return (
+                // @ts-ignore
+                formik.touched?.jupyterNotebook?.customPorts?.[portIndex]?.name
+              );
+            default:
+              // @ts-ignore
+              return formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.name;
+          }
+        })()}
         classNameContainer="w-1/3"
       />
 
@@ -42,17 +67,42 @@ export default function CFPortInput({
         disabled={disabled}
         labelName="App Port:"
         labelInfoTip="Is the port that the application is listening on."
-        inputProps={formik.getFieldProps(
-          `${type}CustomPorts[${portIndex}].port`,
-        )}
-        inputError={
-          // @ts-ignore
-          formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.port
-        }
-        inputTouched={
-          // @ts-ignore
-          formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.port
-        }
+        inputProps={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return formik.getFieldProps(
+                `jupyterNotebook.customPorts[${portIndex}].port`,
+              );
+            default:
+              return formik.getFieldProps(
+                `${type}CustomPorts[${portIndex}].port`,
+              );
+          }
+        })()}
+        inputError={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return (
+                // @ts-ignore
+                formik.errors?.jupyterNotebook?.customPorts?.[portIndex]?.port
+              );
+            default:
+              // @ts-ignore
+              return formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.port;
+          }
+        })()}
+        inputTouched={(() => {
+          switch (type) {
+            case "jupyter-notebook":
+              return (
+                // @ts-ignore
+                formik.touched?.jupyterNotebook?.customPorts?.[portIndex]?.port
+              );
+            default:
+              // @ts-ignore
+              return formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.port;
+          }
+        })()}
         type="number"
         rightTip
         classNameContainer="w-1/3"
@@ -65,25 +115,44 @@ export default function CFPortInput({
         classNameContainer="w-1/3"
         rightTip
       >
-        <div className="text-light-800 pt-2.5 text-sm">
+        <div className="pt-2.5 text-sm text-light-800">
           :
-          {
-            // @ts-ignore
-            formik.values?.[`${type}CustomPorts`]?.[portIndex]?.backendPort
-          }
+          {(() => {
+            switch (type) {
+              case "jupyter-notebook":
+                return formik.values?.jupyterNotebook?.customPorts?.[portIndex]
+                  ?.backendPort;
+              default:
+                return formik.values?.[`${type}CustomPorts`]?.[portIndex]
+                  ?.backendPort;
+            }
+          })()}
         </div>
       </CFInfoBar>
 
-      <div className="text-light-800 flex items-center justify-center pt-2.5 text-sm">
+      <div className="flex items-center justify-center pt-2.5 text-sm text-light-800">
         <CFDellButton
           onClick={() => {
-            formik.setFieldValue(
-              `${type}CustomPorts`,
-              // @ts-ignore
-              formik.values?.[`${type}CustomPorts`].filter(
-                (port: any, index: number) => index !== portIndex,
-              ),
-            );
+            switch (type) {
+              case "jupyter-notebook":
+                formik.setFieldValue(
+                  `jupyterNotebook.customPorts`,
+                  // @ts-ignore
+                  formik.values?.jupyterNotebook?.customPorts.filter(
+                    (port: any, index: number) => index !== portIndex,
+                  ),
+                );
+                break;
+              default:
+                formik.setFieldValue(
+                  `${type}CustomPorts`,
+                  // @ts-ignore
+                  formik.values?.[`${type}CustomPorts`].filter(
+                    (port: any, index: number) => index !== portIndex,
+                  ),
+                );
+                break;
+            }
           }}
           disabled={disabled}
         />

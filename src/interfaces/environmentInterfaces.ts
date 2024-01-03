@@ -21,6 +21,9 @@ export interface IcreateEnvironmentRequest {
   hostDirectories: string;
   ideCustomPorts: string;
   vdiCustomPorts: string;
+  notebookEnabled: boolean;
+  notebookGpuResource: number;
+  notebookCustomPorts: string;
 }
 
 export interface IgetEnvironmentsRequest {
@@ -44,4 +47,24 @@ export interface IgetEnvironmentRequest {
   region: string;
   fleetName: string;
   environmentName: string;
+}
+
+export interface IcreateDataScienceAppsRequest {
+  applicationName: string;
+}
+
+export interface IdeleteDataScienceAppsRequest {
+  applicationName: string;
+}
+
+export interface IDataScienceApp {
+  name: string;
+  status: string;
+  applicationLog: string;
+  application: {
+    hasUi: boolean;
+    name: string;
+  };
+  internalServiceEndpoint: string;
+  externalServiceEndpoint: string;
 }

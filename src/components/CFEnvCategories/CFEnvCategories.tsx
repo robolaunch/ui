@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { FaDocker, FaLinux, FaTag } from "react-icons/fa";
 
 interface ICFEnvCategories {
   formik: FormikProps<IDetails>;
@@ -60,7 +61,22 @@ export default function CFEnvCategories({
                 key={index}
                 selected={formik.values?.domainName === environment}
                 disabled={disabled ? true : false}
-                text={environment === "aiml" ? "AI & ML" : environment}
+                text={(() => {
+                  switch (environment) {
+                    case "plain":
+                      return "Plain";
+                    case "robotics":
+                      return "Robotics";
+                    case "simulation":
+                      return "Simulation";
+                    case "aiml":
+                      return "AI & ML";
+                    case "data-science":
+                      return "Data Science";
+                    default:
+                      return environment;
+                  }
+                })()}
                 onClick={() =>
                   !disabled && formik.setFieldValue("domainName", environment)
                 }
@@ -109,9 +125,9 @@ export default function CFEnvCategories({
                         });
                     }}
                     text={
-                      <div className="grid w-full grid-cols-4">
-                        <img
-                          className="col-span-1 mx-auto w-10 scale-110"
+                      <div className="flex w-full">
+                        {/* <img
+                          className="col-span-1 mx-auto w-11"
                           src={`/svg/apps/${(() => {
                             if (
                               environment?.application?.name.includes(
@@ -169,17 +185,55 @@ export default function CFEnvCategories({
                             return "ubuntu";
                           })()}.svg`}
                           alt="img"
+                        /> */}
+                        <img
+                          className="flex h-full w-20 scale-75 items-center justify-center"
+                          src={
+                            environment?.application?.icon ||
+                            "/svg/general/rocket.svg"
+                          }
+                          alt="img"
+                          style={{
+                            objectFit: "cover",
+                          }}
                         />
-                        <div className="col-span-3 flex flex-col justify-around">
-                          <p>
-                            {environment?.application?.name} v(
-                            {environment?.application?.version})
-                          </p>
-                          <p className="text-[0.66rem] font-light">
-                            {environment?.devspace?.desktop}{" "}
-                            {environment?.devspace?.ubuntuDistro}{" "}
-                            {environment?.devspace?.version}
-                          </p>
+                        <div className=" flex flex-col justify-around">
+                          <div className="flex items-center justify-between gap-2  ">
+                            <p className="font-medium">
+                              {environment?.application?.alias ||
+                                environment?.application?.name}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <FaTag className="text-light-500" size={10} />
+                            <p className="text-[0.66rem] font-light">
+                              {environment?.application?.version}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <FaLinux className="text-light-600" size={12} />
+
+                            <p className="text-[0.66rem] font-light capitalize">
+                              {environment?.devspace?.ubuntuDistro.includes(
+                                "focal",
+                              )
+                                ? "Ubuntu 20.04"
+                                : environment?.devspace?.ubuntuDistro.includes(
+                                      "jammy",
+                                    )
+                                  ? "Ubuntu 22.04"
+                                  : environment?.devspace?.ubuntuDistro}{" "}
+                              {environment?.devspace?.desktop}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-1">
+                            <FaDocker className="text-light-500" size={12} />
+
+                            <p className="text-[0.66rem] font-light">
+                              {environment?.devspace?.version}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     }

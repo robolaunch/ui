@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
+import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -130,6 +131,15 @@ export default function CFAppStep1({
         <CFStorageRange formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
+
+      <Fragment>
+        {!isImportRobot && (
+          <CFSection>
+            <CFJupyterNotebook formik={formik} disabled={isImportRobot} />
+            <Seperator />
+          </CFSection>
+        )}
+      </Fragment>
 
       <Fragment>
         {!isImportRobot && (

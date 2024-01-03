@@ -11,6 +11,7 @@ import PrivateProvider from "../providers/PrivateProvider";
 import EnvironmentPage from "../pages/EnvironmentPage/EnvironmentPage";
 import Page404 from "../pages/Page404/Page404";
 import { ReactElement } from "react";
+import DataSciencePage from "../pages/DataSciencePage/DataSciencePage";
 
 export default function AppRoutes(): ReactElement {
   return (
@@ -25,6 +26,8 @@ export default function AppRoutes(): ReactElement {
           path={`/marketplace/:productName`}
           element={<MarketplaceSingleItemPage />}
         />
+
+        <Route path={`/data-science`} element={<DataSciencePage />} />
 
         {/* Dashboard Pages */}
         <Route path={`/`} element={<MainDashboardPage />} />

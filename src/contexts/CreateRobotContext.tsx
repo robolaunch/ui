@@ -46,6 +46,15 @@ export default ({ children }: any) => {
       hostDirectories: [],
       idePodName: "",
       vdiPodName: "",
+      jupyterNotebook: {
+        isEnabled: false,
+        gpuResource: 1,
+        customPorts: [],
+        appPodName: "",
+        appEndpoint: "",
+        appFileManagerEndpoint: "",
+        appLog: "",
+      },
     },
     step2: {
       configureWorkspace: false,

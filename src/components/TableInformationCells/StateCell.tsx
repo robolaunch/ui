@@ -90,6 +90,7 @@ export default function StateCell({
         state === "ConfiguringEnvironment" ||
         state === "CreatingDevelopmentSuite" ||
         state === "ConfiguringWorkspaces" ||
+        state === "In Progress" ||
         state === "BuildingRobot" ? (
         <img
           className="h-2.5 w-2.5 scale-[3.4]"

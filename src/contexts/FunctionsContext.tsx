@@ -37,6 +37,8 @@ import {
   getNamespaces as getNamespacesDispatch,
 } from "../toolkit/FleetSlice";
 import {
+  IcreateDataScienceAppsRequest,
+  IdeleteDataScienceAppsRequest,
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
 } from "../interfaces/environmentInterfaces";
@@ -44,6 +46,9 @@ import {
   getEnvironments as getEnvironmentsDispatch,
   getEnvironment as getEnvironmentDispatch,
   createEnvironment as createEnvironmentDispatch,
+  getDataScienceApps as getDataScienceAppsDispatch,
+  createDataScienceApp as createDataScienceAppDispatch,
+  deleteDataScienceApp as deleteDataScienceAppDispatch,
 } from "../toolkit/EnvironmentSlice";
 import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
 import {
@@ -1139,6 +1144,39 @@ export default ({ children }: any) => {
                         backendPort: item?.split("-")[1].split(":")[0],
                       };
                     }),
+                jupyterNotebook: {
+                  isEnabled:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.notebookEnabled,
+                  customPorts:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.notebookCustomPorts
+                      ?.split("/")
+                      ?.map((item: string) => {
+                        return {
+                          name: item?.split("-")[0],
+                          port: item?.split("-")[1].split(":")[1],
+                          backendPort: item?.split("-")[1].split(":")[0],
+                        };
+                      }),
+                  gpuResource:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.notebookGpuResource,
+                  appEndpoint:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]
+                      ?.notebookIngressEndpoint,
+                  appFileManagerEndpoint:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]
+                      ?.notebookFileBrowserIngressEndpoint,
+                  appPodName:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.notebookPodName,
+                  appLog:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]
+                      ?.notebookApplicationLog,
+                },
               },
               step2: {
                 workspaces:
@@ -1308,6 +1346,15 @@ export default ({ children }: any) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
+
+            notebookEnabled: robotData?.step1?.jupyterNotebook?.isEnabled,
+            notebookGpuResource: robotData?.step1?.jupyterNotebook?.gpuResource,
+            notebookCustomPorts:
+              robotData.step1.jupyterNotebook?.customPorts
+                ?.map((port) => {
+                  return `${port.name}-${port.backendPort}:${port.port}`;
+                })
+                ?.join("/") || "",
           }),
         );
 
@@ -1332,6 +1379,68 @@ export default ({ children }: any) => {
         robotBuildSteps: robotData?.step3?.robotBuildSteps,
       }),
     );
+  }
+
+  async function deleteDataScienceApp(values: IdeleteDataScienceAppsRequest) {
+    await dispatch(
+      deleteDataScienceAppDispatch({
+        organizationId: selectedState.organization?.organizationId!,
+        roboticsCloudName: selectedState.roboticsCloud?.name!,
+        region: selectedState.instance?.region!,
+        instanceId: selectedState.instance?.instanceId!,
+        fleetName: selectedState.fleet?.name!,
+        applicationName: values.applicationName,
+        applicationType: values.applicationName,
+      }),
+    );
+  }
+
+  async function createDataScienceApp(values: IcreateDataScienceAppsRequest) {
+    await dispatch(
+      createDataScienceAppDispatch({
+        organizationId: selectedState.organization?.organizationId!,
+        roboticsCloudName: selectedState.roboticsCloud?.name!,
+        region: selectedState.instance?.region!,
+        instanceId: selectedState.instance?.instanceId!,
+        fleetName: selectedState.fleet?.name!,
+        applicationName: values.applicationName,
+        applicationType: values.applicationName,
+      }),
+    );
+  }
+
+  async function getDataScienceApps(parameters?: ImultipleGetParameters) {
+    await dispatch(
+      getDataScienceAppsDispatch({
+        organizationId: selectedState.organization?.organizationId!,
+        roboticsCloudName: selectedState.roboticsCloud?.name!,
+        region: selectedState.instance?.region!,
+        instanceId: selectedState.instance?.instanceId!,
+        fleetName: selectedState.fleet?.name!,
+      }),
+    ).then((responseApps: any) => {
+      console.log("responseApps - get", responseApps);
+      if (
+        responseApps?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.environments
+      ) {
+        parameters?.setResponse &&
+          parameters?.setResponse(
+            responseApps?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+              ?.environments || [],
+          );
+
+        parameters?.setItemCount &&
+          parameters?.setItemCount(
+            responseApps?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+              ?.environments?.length || 0,
+          );
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse([]);
+        parameters?.setItemCount && parameters?.setItemCount(0);
+      }
+    });
   }
 
   async function getIP() {
@@ -1395,6 +1504,9 @@ export default ({ children }: any) => {
         createRobot,
         createEnvironment,
         createBuildManager,
+        createDataScienceApp,
+        deleteDataScienceApp,
+        getDataScienceApps,
         getIP,
         getFiles,
       }}

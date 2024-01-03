@@ -57,6 +57,9 @@ export const createEnvironment = createAsyncThunk(
                   robotWorkspaces: values?.workspaces,
                   ideCustomPorts: values?.ideCustomPorts,
                   vdiCustomPorts: values?.vdiCustomPorts,
+                  notebookEnabled: values?.notebookEnabled,
+                  notebookGpuResource: values?.notebookGpuResource,
+                  notebookCustomPorts: values?.notebookCustomPorts,
                 },
               ],
             },
@@ -148,6 +151,109 @@ export const deleteEnvironment = createAsyncThunk(
   },
 );
 
+export const createDataScienceApp = createAsyncThunk(
+  "environment/createDataScienceApp",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    applicationType: string;
+    applicationName: string;
+  }) => {
+    const response = await environmentApi.createDataScienceApp({
+      name: "environment/createDataScienceApp",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [
+                {
+                  name: values.applicationName,
+                  fleetName: values.fleetName,
+                  application: { name: values.applicationType },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const deleteDataScienceApp = createAsyncThunk(
+  "environment/deleteDataScienceApp",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    applicationType: string;
+    applicationName: string;
+  }) => {
+    const response = await environmentApi.deleteDataScienceApp({
+      name: "environment/deleteDataScienceApp",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [
+                {
+                  name: values.applicationName,
+                  fleetName: values.fleetName,
+                  application: { name: values.applicationType },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const getDataScienceApps = createAsyncThunk(
+  "environment/getDataScienceApps",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+  }) => {
+    const response = await environmentApi.getDataScienceApps({
+      name: "environment/getDataScienceApps",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [{ fleetName: values.fleetName }],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
 export const EnvironmentSlice = createSlice({
   name: "environment",
   initialState: {},
@@ -189,6 +295,34 @@ export const EnvironmentSlice = createSlice({
       })
       .addCase(deleteEnvironment.rejected, () => {
         toast.error("Something went wrong of deleting application");
+      })
+      .addCase(createDataScienceApp.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        } else {
+          toast.success(action?.payload?.message);
+        }
+      })
+      .addCase(createDataScienceApp.rejected, () => {
+        toast.error("Something went wrong of creating application");
+      })
+      .addCase(deleteDataScienceApp.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        } else {
+          toast.success(action?.payload?.message);
+        }
+      })
+      .addCase(deleteDataScienceApp.rejected, () => {
+        toast.error("Something went wrong of deleting application");
+      })
+      .addCase(getDataScienceApps.fulfilled, (_, action: any) => {
+        if (!action?.payload?.success) {
+          toast.error(action?.payload?.message);
+        }
+      })
+      .addCase(getDataScienceApps.rejected, () => {
+        toast.error("Something went wrong of getting applications");
       });
   },
 });

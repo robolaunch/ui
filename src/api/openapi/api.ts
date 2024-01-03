@@ -41,6 +41,30 @@ export interface Application {
      * @memberof Application
      */
     'version'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Application
+     */
+    'hasUi'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'alias'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Application
+     */
+    'icon'?: string;
 }
 /**
  * 
@@ -616,6 +640,12 @@ export interface Environment {
     'domainName'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'status'?: string;
+    /**
+     * 
      * @type {Application}
      * @memberof Environment
      */
@@ -914,6 +944,66 @@ export interface Environment {
      * @memberof Environment
      */
     'ideApplicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'internalServiceEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'externalServiceEndpoint'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Environment
+     */
+    'notebookEnabled'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Environment
+     */
+    'notebookGpuResource'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookFileBrowserIngressEndpoint'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookPodName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookApplicationLog'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookCustomPorts'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Environment
+     */
+    'notebookGpuResourceType'?: string;
 }
 /**
  * 
@@ -3724,6 +3814,39 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createDataScienceApp: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/createDataScienceApp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/environment/createEnvironment`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3757,8 +3880,74 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteDataScienceApp: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/deleteDataScienceApp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/environment/deleteEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataScienceApps: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/getDataScienceApps`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3899,6 +4088,16 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async createDataScienceApp(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDataScienceApp(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async createEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEnvironment(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -3909,8 +4108,28 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async deleteDataScienceApp(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDataScienceApp(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async deleteEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDataScienceApps(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDataScienceApps(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -3959,6 +4178,15 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createDataScienceApp(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createDataScienceApp(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.createEnvironment(organization, options).then((request) => request(axios, basePath));
         },
@@ -3968,8 +4196,26 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteDataScienceApp(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteDataScienceApp(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.deleteEnvironment(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDataScienceApps(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getDataScienceApps(organization, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4015,6 +4261,17 @@ export class EnvironmentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EnvironmentApi
      */
+    public createDataScienceApp(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).createDataScienceApp(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
     public createEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).createEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
     }
@@ -4026,8 +4283,30 @@ export class EnvironmentApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EnvironmentApi
      */
+    public deleteDataScienceApp(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).deleteDataScienceApp(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
     public deleteEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).deleteEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public getDataScienceApps(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).getDataScienceApps(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

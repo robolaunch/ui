@@ -1,4 +1,6 @@
 import {
+  IcreateDataScienceAppsRequest,
+  IdeleteDataScienceAppsRequest,
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
 } from "./environmentInterfaces";
@@ -219,6 +221,10 @@ export interface IuseFunctions {
     values: IgetEnvironmentRequest,
     parameters?: IsingleGetEnviromentParameters,
   ) => void;
+
+  createDataScienceApp: (values: IcreateDataScienceAppsRequest) => void;
+  getDataScienceApps: (parameters?: ImultipleGetParameters) => void;
+  deleteDataScienceApp: (values: IdeleteDataScienceAppsRequest) => void;
 
   addPhysicalInstanceToFleet: () => Promise<void>;
   getSystemStatus: () => Promise<void>;

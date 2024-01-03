@@ -7,9 +7,13 @@ import { BiSolidJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
+import { FaPython } from "react-icons/fa";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 export default function RobotHeaderTabs(): ReactElement {
   const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
+
+  const { robotData } = useCreateRobot();
 
   const tabs: IrobotTab[] = [
     {
@@ -97,6 +101,18 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden: false,
+    },
+    {
+      name: "Jupyter Notebook",
+      icon: <FaPython size={16} />,
+      isLoading:
+        !responseRobot ||
+        !(
+          robotData?.step1.jupyterNotebook?.isEnabled &&
+          robotData?.step1.jupyterNotebook?.appEndpoint &&
+          isSettedCookie
+        ),
+      isHidden: !robotData?.step1.jupyterNotebook?.isEnabled,
     },
   ];
 

@@ -9,6 +9,7 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;
@@ -20,6 +21,7 @@ export default function CFAdvancedSettings({
   disabled,
 }: ICFAdvancedSettings): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { robotData } = useCreateRobot();
 
   return (
     <Accordion
@@ -51,6 +53,17 @@ export default function CFAdvancedSettings({
           <CFHostDirectories2 formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
+
+        {robotData.step1.jupyterNotebook.isEnabled && (
+          <CFSection gap={4}>
+            <CFPortSetter
+              formik={formik}
+              isImportRobot={disabled}
+              type="jupyter-notebook"
+            />
+            <Seperator />
+          </CFSection>
+        )}
 
         <CFSection gap={4}>
           <CFPortSetter formik={formik} isImportRobot={disabled} type="ide" />

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -30,10 +30,10 @@ export default function SidebarStaticItem({
         to === "/marketplace"
           ? "marketplace-sidebar-menu-item"
           : to === "/billing"
-          ? "billing-sidebar-menu-item"
-          : to === "/user-role-management"
-          ? "user-role-management-sidebar-menu-item"
-          : "item"
+            ? "billing-sidebar-menu-item"
+            : to === "/user-role-management"
+              ? "user-role-management-sidebar-menu-item"
+              : "item"
       }
     >
       <img
@@ -48,19 +48,19 @@ export default function SidebarStaticItem({
             to === "/marketplace"
               ? "Marketplace"
               : to === "/billing"
-              ? "Billing"
-              : to === "/user-role-management"
-              ? "User Role Management"
-              : "Applications"
+                ? "Billing"
+                : to === "/user-role-management"
+                  ? "User Role Management"
+                  : "Applications"
           }
           description={
             to === "/marketplace"
               ? "You can access all your marketplace here."
               : to === "/billing"
-              ? "You can access all your bills here"
-              : to === "/user-role-management"
-              ? "You can access all users here."
-              : "You can access all your applications here."
+                ? "You can access all your bills here"
+                : to === "/user-role-management"
+                  ? "You can access all users here."
+                  : "You can access all your applications here."
           }
         />
       )}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 interface IInfoCell {
   title: string;
   titleURL?: string;
-  subtitle: string;
+  subtitle?: string;
   onClick?: () => void;
 }
 
@@ -43,7 +43,7 @@ export default function InfoCell({
         ) : (
           <span className="cursor-default">{titleComponent}</span>
         )}
-        <span className="text-xs">{subtitle}</span>
+        {subtitle && <span className="text-xs">{subtitle}</span>}
       </div>
     </div>
   );

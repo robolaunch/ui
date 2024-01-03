@@ -13,6 +13,7 @@ import BarcodeContext from "../../contexts/BarcodeContext";
 import TaskManagementLayout from "../TaskManagementLayout";
 import { ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";
+import JupyterNotebook from "../../pages/EnvironmentPage/JupyterNotebook/JupyterNotebook";
 
 export default function EnvironmentPageLayout(): ReactElement {
   const { activeTab, setActiveTab, isSettedCookie } = useRobot();
@@ -51,6 +52,8 @@ export default function EnvironmentPageLayout(): ReactElement {
             return <RemoteDesktop />;
           case "File Manager":
             return <FileManager />;
+          case "Jupyter Notebook":
+            return <JupyterNotebook />;
           case "Loading":
             return (
               <div>

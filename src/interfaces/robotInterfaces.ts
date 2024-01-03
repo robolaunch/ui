@@ -179,6 +179,15 @@ export interface IDetails {
   hostDirectories: IhostDirectories[];
   idePodName: string;
   vdiPodName: string;
+  jupyterNotebook: {
+    isEnabled: boolean;
+    gpuResource: number;
+    customPorts: any[];
+    appPodName: string;
+    appEndpoint: string;
+    appFileManagerEndpoint: string;
+    appLog: string;
+  };
 }
 
 export interface IhostDirectories {
@@ -247,7 +256,8 @@ export type IrobotTab = {
     | "Remote Desktop"
     | "Development Suite"
     | "Code Editor"
-    | "File Manager";
+    | "File Manager"
+    | "Jupyter Notebook";
   icon: ReactElement;
   isLoading: boolean;
   isHidden: boolean;

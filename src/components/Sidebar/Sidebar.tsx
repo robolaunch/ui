@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import useMain from "../../hooks/useMain";
@@ -9,7 +9,7 @@ export default function Sidebar(): ReactElement {
 
   return (
     <Fragment>
-      <div className="animate__animated animate__fadeInLeft border-light-200 bg-light-50 fixed z-40 flex h-screen w-16 select-none flex-col items-center gap-4 border-r py-2 shadow-2xl lg:w-20 ">
+      <div className="animate__animated animate__fadeInLeft fixed z-40 flex h-screen w-16 select-none flex-col items-center gap-4 border-r border-light-200 bg-light-50 py-2 shadow-2xl lg:w-20 ">
         <Link to={`/`}>
           <img
             draggable="false"

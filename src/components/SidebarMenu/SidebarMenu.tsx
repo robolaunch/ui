@@ -127,6 +127,10 @@ export default function PrivateSidebar(): ReactElement {
       </div>
       <div className="flex flex-col gap-2">
         <SidebarStaticItem
+          to="/data-science"
+          imgSrc={`/svg/general/datascience/datascience-dark.svg`}
+        />
+        <SidebarStaticItem
           to="/user-role-management"
           imgSrc={`/svg/general/users/users-gray.svg`}
         />

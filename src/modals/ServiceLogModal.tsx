@@ -20,7 +20,7 @@ export default function ServiceLogModal({
       className="h-full w-[90vw]"
       onHide={() => handleCloseModal()}
     >
-      <LazyLog text={log} height={752} scrollToLine={9999999} />
+      <LazyLog text={log || ""} height={752} scrollToLine={9999999} />
     </Dialog>
   );
 }
