@@ -1,13 +1,17 @@
 import ColorLabel from "../ColorLabel/ColorLabel";
-import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 export default function EnvironmentNameLabel(): ReactElement {
-  const url = useParams();
+  const { robotData } = useCreateRobot();
 
   return (
-    <span className="flex items-center gap-2">
-      <span className="text-lg font-medium">{url?.robotName}</span>
+    <span className="flex min-w-40 items-center gap-2">
+      <span className="min-w-32 text-lg font-medium">
+        {robotData?.step1?.robotName || <Skeleton />}
+      </span>
       <ColorLabel />
     </span>
   );

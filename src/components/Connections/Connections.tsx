@@ -1,10 +1,10 @@
 import ConnectionLabel from "../ConnectionLabel/ConnectionLabel";
 import StateCell from "../TableInformationCells/StateCell";
 import { envApplication } from "../../helpers/envProvider";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
-import useCreateRobot from "../../hooks/useCreateRobot";
 
 export default function Connections(): ReactElement {
   const { responseRobot, connectionsReducer } = useRobot();

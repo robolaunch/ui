@@ -1,11 +1,12 @@
 import EnvironmentObjectLabel from "../EnvironmentObjectLabel/EnvironmentObjectLabel";
 import EnvironmentNameLabel from "../EnvironmentNameLabel/EnvironmentNameLabel";
 import { envApplication } from "../../helpers/envProvider";
-import { useParams } from "react-router-dom";
+import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
+import { orgNameViewer } from "../../functions/GeneralFunctions";
 
 export default function EnvironmentLabels(): ReactElement {
-  const url = useParams();
+  const { selectedState } = useMain();
 
   return (
     <div className="flex items-center gap-7">
@@ -13,19 +14,22 @@ export default function EnvironmentLabels(): ReactElement {
       <div className="flex items-center gap-3.5">
         <EnvironmentObjectLabel
           icon="organization"
-          text={`Organization: ${url?.organizationName}`}
+          text={`Organization: ${orgNameViewer(
+            selectedState?.organization?.organizationName!,
+          )}`}
         />
         <EnvironmentObjectLabel
           icon="region"
-          text={`Region: ${url?.roboticsCloudName}`}
+          text={`Region: ${selectedState?.instance?.region}`}
         />
         <EnvironmentObjectLabel
           icon="instance"
-          text={`Instance: ${url?.instanceName}`}
+          text={`Instance: ${selectedState?.instance?.name}`}
         />
         <EnvironmentObjectLabel
           icon="fleet"
-          text={`${envApplication ? "Namespace" : "Fleet"}: ${url?.fleetName}`}
+          text={`${envApplication ? "Namespace" : "Fleet"}: ${selectedState
+            ?.fleet?.name}`}
         />
       </div>
     </div>

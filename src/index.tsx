@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
@@ -14,9 +13,10 @@ import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
 import App from "./App";
 import "animate.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 
 root.render(
@@ -24,5 +24,5 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>
+  </Provider>,
 );

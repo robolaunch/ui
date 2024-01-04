@@ -1,13 +1,13 @@
+import StartStopCell from "../components/TableInformationCells/StartStopCell";
+import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
 import StateCell from "../components/TableInformationCells/StateCell";
+import { IDataScienceApp } from "../interfaces/environmentInterfaces";
+import BasicCell from "../components/TableInformationCells/BasicCell";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import URLCell from "../components/TableInformationCells/URLCell";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import InfoCell from "../components/TableInformationCells/InfoCell";
-import { IDataScienceApp } from "../interfaces/environmentInterfaces";
-import BasicCell from "../components/TableInformationCells/BasicCell";
-import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
-import URLCell from "../components/TableInformationCells/URLCell";
-import StartStopCell from "../components/TableInformationCells/StartStopCell";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
@@ -127,52 +127,6 @@ export function DataScienceTableData() {
         body: (rowData: any) => {
           console.log(rowData);
           return (
-            // <ToggleCell
-            //   isChecked={(() => {
-            //     switch (rowData?.toggleState?.status) {
-            //       case "Ready":
-            //         return true;
-            //       default:
-            //         return false;
-            //     }
-            //   })()}
-            //   loading={(() => {
-            //     switch (rowData?.toggleState?.status) {
-            //       case "Not Deployed":
-            //         return false;
-            //       case "Ready":
-            //         return false;
-            //       default:
-            //         return true;
-            //     }
-            //   })()}
-            //   disabled={(() => {
-            //     switch (rowData?.status) {
-            //       case "Not Deployed":
-            //         return false;
-            //       case "Ready":
-            //         return false;
-            //       default:
-            //         return true;
-            //     }
-            //   })()}
-            //   onOpenHandle={() => {
-            //     createDataScienceApp({
-            //       applicationName: rowData?.toggleState?.name,
-            //     });
-            //     setTimeout(() => {
-            //       handleReload();
-            //     }, 1000);
-            //   }}
-            //   onCloseHandle={() => {
-            //     deleteDataScienceApp({
-            //       applicationName: rowData?.toggleState?.name,
-            //     });
-            //     setTimeout(() => {
-            //       handleReload();
-            //     }, 1000);
-            //   }}
-            // />
             <StartStopCell
               isRunning={(() => {
                 switch (rowData?.status) {
@@ -208,16 +162,14 @@ export function DataScienceTableData() {
                     return true;
                 }
               })()}
-              modalText={
-                (() => {
-                  switch (rowData?.status) {
-                    case "Ready":
-                      return "Are you sure you want to stop this application?";
-                    default:
-                      return "Are you sure you want to start this application?";
-                  }
-                })() || ""
-              }
+              modalText={(() => {
+                switch (rowData?.status) {
+                  case "Ready":
+                    return "Are you sure you want to stop this application?";
+                  default:
+                    return "Are you sure you want to start this application?";
+                }
+              })()}
             />
           );
         },

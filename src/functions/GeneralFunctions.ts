@@ -51,6 +51,19 @@ export function handleSplitOrganizationName(organizationName: string) {
   return organizationName?.split("_")[1];
 }
 
+export function orgNameViewer(
+  orgname: string,
+  capitalization: boolean = false,
+) {
+  if (capitalization) {
+    return stringCapitalization({
+      str: orgname?.split("_")[1],
+    });
+  }
+
+  return orgname?.split("_")[1];
+}
+
 export function handleLogout() {
   [
     "tokens",
