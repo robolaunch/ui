@@ -18,9 +18,9 @@ export default function CFJupyterNotebook({
       labelInfoTip="
         Jupyter Notebook is a web-based interactive development environment for Jupyter notebooks, code, and data."
       disabled={disabled}
-      checked={formik?.values?.jupyterNotebook.isEnabled}
+      checked={formik?.values?.services.jupyterNotebook.isEnabled}
       onChange={(e: boolean) => {
-        formik.setFieldValue("jupyterNotebook.isEnabled", e);
+        formik.setFieldValue("services.jupyterNotebook.isEnabled", e);
       }}
     />
   );

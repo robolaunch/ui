@@ -51,7 +51,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName || url?.robotName!,
+        robotName: robotData?.step1?.name || url?.robotName!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -77,8 +77,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
           window.location.href = `/${selectedState?.organization?.organizationName?.split(
             "_",
           )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1
-            ?.robotName}}`;
+            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.name}}`;
         }, 2000);
       } else if (!formik.values?.isVirtualRobot) {
         addPhysicalInstanceToFleet();

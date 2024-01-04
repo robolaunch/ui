@@ -26,7 +26,7 @@ export default function ServiceLogs({ type }: IServiceLogs): ReactElement {
               case "vdi":
                 return responseRobot?.vdiApplicationLog;
               case "jupyter-notebook":
-                return robotData?.step1?.jupyterNotebook?.appLog;
+                return robotData?.step1?.services.jupyterNotebook?.log;
               default:
                 return "";
             }

@@ -17,7 +17,7 @@ export default function CFGridItem({
 }: ICFGridItem): ReactElement {
   return (
     <div
-      className={`transition-300 animate__animated animate__fadeIn flex items-center justify-center rounded-lg border-2 px-1 py-2 text-xs text-light-700
+      className={`transition-300 animate-fadeIn flex items-center justify-center rounded-lg border-2 px-1 py-2 text-xs text-light-700
         ${selected && " shadow"}
         ${
           disabled ? "cursor-not-allowed" : "cursor-pointer hover:scale-[0.98] "

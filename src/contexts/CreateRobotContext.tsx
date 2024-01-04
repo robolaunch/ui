@@ -44,6 +44,9 @@ export default ({ children }: any) => {
           },
         },
       },
+      namespace: {
+        name: "",
+      },
 
       resources: {
         cpu: {
@@ -65,6 +68,7 @@ export default ({ children }: any) => {
           isEnabled: true,
           socketEndpoint: "",
           fileManagerEndpoint: "",
+          customPorts: [],
           gpuAllocation: 0,
           podName: "",
           sessionCount: 0,
@@ -74,60 +78,52 @@ export default ({ children }: any) => {
           isEnabled: true,
           httpsEndpoint: "",
           fileManagerEndpoint: "",
+          customPorts: [],
           gpuModelName: "",
+          gpuAllocation: 0,
+          maxGpuAllocation: 0,
+          podName: "",
+          log: "",
+        },
+        jupyterNotebook: {
+          isEnabled: false,
+          httpsEndpoint: "",
+          fileManagerEndpoint: "",
+          customPorts: [],
           gpuAllocation: 0,
           podName: "",
           log: "",
         },
       },
 
-      namespace: {
-        name: "",
+      directories: {
+        permittedDirectories: "/home/robolaunch",
+        persistentDirectories: "/var:/etc:/opt:/usr",
+        hostDirectories: [],
       },
+
+      applicationConfig: {
+        domainName: "",
+        application: {
+          name: "",
+          version: "",
+        },
+        devspace: {
+          ubuntuDistro: "",
+          desktop: "",
+          version: "",
+        },
+      },
+
+      rosDistros: [],
+      isEnabledROS2Bridge: true,
+
       name: "",
-      robotName: "",
       isVirtualRobot: true,
       physicalInstanceName: "",
-      robotStorage: 40,
-      isEnabledIde: true,
-      ideGpuResource: 0,
-      ideGpuResourceType: "",
-      ideGpuResourceMaxCore: 0,
       configureWorkspace: false,
-      isEnabledROS2Bridge: true,
-      remoteDesktop: {
-        isEnabled: true,
-        sessionCount: 2,
-      },
-      rosDistros: [],
       gpuEnabledForCloudInstance: true,
       isDevelopmentMode: envApplication,
-      domainName: "",
-      application: {
-        name: "",
-        version: "",
-      },
-      devspace: {
-        ubuntuDistro: "",
-        desktop: "",
-        version: "",
-      },
-      permittedDirectories: "/home/robolaunch",
-      persistentDirectories: "/var:/etc:/opt:/usr",
-      ideCustomPorts: [],
-      vdiCustomPorts: [],
-      hostDirectories: [],
-      idePodName: "",
-      vdiPodName: "",
-      jupyterNotebook: {
-        isEnabled: false,
-        gpuResource: 1,
-        customPorts: [],
-        appPodName: "",
-        appEndpoint: "",
-        appFileManagerEndpoint: "",
-        appLog: "",
-      },
     },
     step2: {
       configureWorkspace: false,

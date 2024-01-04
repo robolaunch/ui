@@ -14,7 +14,7 @@ export default function MarketplaceSingleİtemHeader({
       <div className="flex h-full items-center gap-6">
         {responseItem?.distro ? (
           <img
-            className="animate__animated animate__fadeIn h-40"
+            className="animate-fadeIn h-40"
             src={
               responseItem?.type === "Environment"
                 ? `/svg/apps/${responseItem?.family?.toLowerCase()}.svg`
@@ -50,7 +50,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
+                className={`w-fit rounded-lg bg-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-primary-500`}
               >
                 {responseItem?.type || (
                   <ContentLoader
@@ -65,7 +65,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
+                className={`w-fit rounded-lg bg-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-primary-500`}
               >
                 {typeof responseItem?.hasBuild === "boolean" ? (
                   `Build Steps: ${responseItem?.hasBuild ? "Include" : "None"}`
@@ -82,7 +82,7 @@ export default function MarketplaceSingleİtemHeader({
                 )}
               </div>
               <div
-                className={`bg-primary-100 text-primary-500 w-fit rounded-lg px-3 py-1 text-[0.64rem] font-medium capitalize`}
+                className={`w-fit rounded-lg bg-primary-100 px-3 py-1 text-[0.64rem] font-medium capitalize text-primary-500`}
               >
                 {typeof responseItem?.hasLaunch === "boolean" ? (
                   `Launch Steps: ${
@@ -102,7 +102,7 @@ export default function MarketplaceSingleİtemHeader({
               </div>
             </div>
           </div>
-          <div className="text-light-600 text-xs">
+          <div className="text-xs text-light-600">
             {typeof responseItem?.family === "string" ? (
               responseItem?.family + ` (${responseItem?.acronym})`
             ) : (
@@ -117,7 +117,7 @@ export default function MarketplaceSingleİtemHeader({
               </ContentLoader>
             )}
           </div>
-          <div className="text-light-700 text-xs">
+          <div className="text-xs text-light-700">
             {typeof responseItem?.distro === "string" ? (
               `ROS2 ${responseItem?.distro}`
             ) : (
@@ -133,7 +133,7 @@ export default function MarketplaceSingleİtemHeader({
             )}
           </div>
 
-          <div className="text-light-600 text-xs">
+          <div className="text-xs text-light-600">
             {typeof responseItem?.minStorageAmount === "number" ? (
               responseItem?.minStorageAmount / 1000 + " GB Storage"
             ) : (
@@ -148,7 +148,7 @@ export default function MarketplaceSingleİtemHeader({
               </ContentLoader>
             )}
           </div>
-          <div className="text-light-600 text-xs">
+          <div className="text-xs text-light-600">
             {responseItem?.version || (
               <ContentLoader
                 speed={1}

@@ -1,7 +1,7 @@
 import FormInputRange from "../FormInputRange/FormInputRange";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 
 interface ICFVDICount {
   formik: FormikProps<IDetails>;
@@ -12,14 +12,12 @@ export default function CFVDICount({
   formik,
   disabled,
 }: ICFVDICount): ReactElement {
-  useEffect(() => {}, [formik.values.remoteDesktop.sessionCount]);
-
   return (
     <FormInputRange
-      label={`VDI Session Count (${formik.values.remoteDesktop.sessionCount} Sessions):`}
+      label={`VDI Session Count (${formik.values.services.vdi.sessionCount} Sessions):`}
       tip="Here you can determine how many people can connect to your application's VDI service at the same time."
       dataTut="create-environment-vdi-session-count"
-      InputProps={formik.getFieldProps("remoteDesktop.sessionCount")}
+      InputProps={formik.getFieldProps("services.vdi.sessionCount")}
       min={2}
       max={10}
       disabled={formik.isSubmitting || disabled}

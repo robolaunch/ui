@@ -94,7 +94,7 @@ export default function SideBarMenuItem({
     <div
       data-tut={type + "-sidebar-menu-item"}
       onClick={() => !loading && !disabled && handleClick()}
-      className={`${activeSwitcher()} transition-500 animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 hover:scale-90 ${
+      className={`${activeSwitcher()} transition-500 animate-fadeInLeft relative cursor-pointer select-none rounded-md p-2 hover:scale-90 ${
         (loading || disabled) && "!cursor-not-allowed"
       }`}
       onMouseEnter={() => !loading && !disabled && setIsHover(true)}
@@ -103,14 +103,14 @@ export default function SideBarMenuItem({
       {loading ? (
         <img
           draggable="false"
-          className={`animate__animated animate__fadeInLeft w-9 lg:w-10`}
+          className={`animate-fadeInLeft w-9 lg:w-10`}
           src={`/svg/general/loading.svg`}
           alt="robolaunch"
         />
       ) : (
         <img
           draggable="false"
-          className={`animate__animated animate__fadeInLeft w-9 lg:w-10`}
+          className={`animate-fadeInLeft w-9 lg:w-10`}
           src={`/svg/general/${(() => {
             switch (type) {
               case "robot":
@@ -133,26 +133,26 @@ export default function SideBarMenuItem({
             type === "organization"
               ? "Organizations"
               : type === "roboticscloud"
-              ? "Regions"
-              : type === "instance"
-              ? "Instances"
-              : type === "fleet"
-              ? envApplication
-                ? "Namespaces"
-                : "Fleets"
-              : type === "robot"
-              ? envApplication
-                ? "Applications"
-                : "Robots"
-              : type === "workspacesmanager"
-              ? "Robot Workspace Managers"
-              : type === "buildsmanager"
-              ? "Robot Build Managers"
-              : type === "launchsmanager"
-              ? "Robot Launch Managers"
-              : type === "back"
-              ? "Back"
-              : type
+                ? "Regions"
+                : type === "instance"
+                  ? "Instances"
+                  : type === "fleet"
+                    ? envApplication
+                      ? "Namespaces"
+                      : "Fleets"
+                    : type === "robot"
+                      ? envApplication
+                        ? "Applications"
+                        : "Robots"
+                      : type === "workspacesmanager"
+                        ? "Robot Workspace Managers"
+                        : type === "buildsmanager"
+                          ? "Robot Build Managers"
+                          : type === "launchsmanager"
+                            ? "Robot Launch Managers"
+                            : type === "back"
+                              ? "Back"
+                              : type
           }
           description={description}
         />

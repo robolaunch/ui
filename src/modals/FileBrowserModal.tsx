@@ -32,7 +32,7 @@ export default function FileBrowserModal({
             case "vdi":
               return responseRobot?.vdiFileBrowserIngressEndpoint;
             case "jupyter-notebook":
-              return robotData?.step1?.jupyterNotebook?.appFileManagerEndpoint;
+              return robotData?.step1?.services.jupyterNotebook?.httpsEndpoint;
             default:
               return "";
           }

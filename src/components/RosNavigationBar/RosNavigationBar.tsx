@@ -12,12 +12,12 @@ export default function RosNavigationBar(): ReactElement {
   return (
     <Fragment>
       {activeMission !== -1 && missions[activeMission]?.waypoints.length ? (
-        <div className="animate__animated animate__fadeIn absolute top-4 flex w-full items-center justify-center overflow-auto">
-          <div className="border-light-200 bg-light-50 flex w-[96%] justify-around rounded-lg border p-1">
+        <div className="animate-fadeIn absolute top-4 flex w-full items-center justify-center overflow-auto">
+          <div className="flex w-[96%] justify-around rounded-lg border border-light-200 bg-light-50 p-1">
             <div className="flex items-center justify-center">
               <FaLocationArrow className="text-secondary-500" size={12} />
             </div>
-            <div className="animate__animated animate__fadeIn flex items-center justify-center">
+            <div className="animate-fadeIn flex items-center justify-center">
               <BsArrowRight />
             </div>
             {missions[activeMission]?.waypoints?.map(
@@ -28,9 +28,9 @@ export default function RosNavigationBar(): ReactElement {
                       key={waypointIndex}
                       onMouseEnter={() => setHoverWaypoint(waypointIndex)}
                       onMouseLeave={() => setHoverWaypoint(-1)}
-                      className="animate__animated animate__fadeIn hover:bg-light-100 flex cursor-pointer items-center justify-center gap-2 rounded-md px-3 py-1 transition-all duration-300"
+                      className="animate-fadeIn flex cursor-pointer items-center justify-center gap-2 rounded-md px-3 py-1 transition-all duration-300 hover:bg-light-100"
                     >
-                      <span className="text-light-50 bg-secondary-500 flex h-7 w-7 items-center justify-center rounded-full text-xs ">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-secondary-500 text-xs text-light-50 ">
                         {waypointIndex === 0 ? (
                           <CgFlagAlt className="text-light-50" size={17} />
                         ) : waypointIndex + 1 ===
@@ -59,7 +59,7 @@ export default function RosNavigationBar(): ReactElement {
                     </div>
                     {waypointIndex !==
                       missions[activeMission]?.waypoints.length - 1 && (
-                      <div className="animate__animated animate__fadeIn flex items-center justify-center">
+                      <div className="animate-fadeIn flex items-center justify-center">
                         <BsArrowRight />
                       </div>
                     )}

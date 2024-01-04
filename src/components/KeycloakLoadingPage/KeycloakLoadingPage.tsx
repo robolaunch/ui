@@ -2,11 +2,11 @@ import React, { ReactElement } from "react";
 
 export default function KeycloakLoadingPage(): ReactElement {
   return (
-    <div className="animate__animated animate__fadeIn absolute inset-0 z-50 flex flex-col items-center justify-center">
+    <div className="animate-fadeIn absolute inset-0 z-50 flex flex-col items-center justify-center">
       <img
         src="/images/ring.svg"
         alt=""
-        className="bg-light-50 w-28 animate-spin rounded-full shadow"
+        className="w-28 animate-spin rounded-full bg-light-50 shadow"
       />
       <img
         src="/images/rocket.svg"

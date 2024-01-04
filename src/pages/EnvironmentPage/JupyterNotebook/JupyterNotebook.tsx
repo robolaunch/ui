@@ -13,7 +13,7 @@ export default function JupyterNotebook(): ReactElement {
   const { robotData } = useCreateRobot();
 
   return (
-    <div className="animate__animated animate__fadeIn flex h-full flex-col gap-6">
+    <div className="animate-fadeIn flex h-full flex-col gap-6">
       <Card loading className="relative">
         <Fragment>
           {isRobotReady && isSettedCookie && (
@@ -24,7 +24,7 @@ export default function JupyterNotebook(): ReactElement {
               <iframe
                 title="Jupyter Notebook"
                 allow="clipboard-read"
-                className={`animate__animated animate__fadeIn h-full w-full
+                className={`animate-fadeIn h-full w-full
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={robotData?.step1?.jupyterNotebook?.appEndpoint}
               />

@@ -22,7 +22,7 @@ export default function WidgetLayout({
   return (
     <div
       data-tut={dataTut}
-      className="animate__animated animate__fadeIn flex h-80 flex-col rounded-lg border border-light-200 bg-light-50 shadow-md"
+      className="animate-fadeIn flex h-80 flex-col rounded-lg border border-light-200 bg-light-50 shadow-md"
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",

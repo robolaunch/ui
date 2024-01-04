@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const CFAppStep1Validations = Yup.object().shape({
-  robotName: Yup.string()
+  name: Yup.string()
     .required("Application name is required.")
     .min(3, "Minimum 3 characters.")
     .max(16, "Maximum 16 characters.")

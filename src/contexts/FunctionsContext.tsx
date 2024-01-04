@@ -901,13 +901,9 @@ export default ({ children }: any) => {
                       ?.robolaunchFederatedRobots?.[0]?.ideApplicationLog,
                   },
                 },
-
                 name: responseFederatedRobot?.payload?.data[0]
                   ?.roboticsClouds[0]?.cloudInstances[0]
                   ?.robolaunchFederatedRobots[0]?.name,
-                robotName:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.name,
                 isVirtualRobot: responseFederatedRobot?.payload?.data[0]
                   ?.roboticsClouds[0]?.cloudInstances[0]
                   ?.robolaunchFederatedRobots[0]?.physicalInstance
@@ -1287,6 +1283,16 @@ export default ({ children }: any) => {
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]
                         ?.vdiFileBrowserIngressEndpoint,
+                    customPorts:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
                     gpuAllocation:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]?.vdiGpuResource,
@@ -1312,9 +1318,20 @@ export default ({ children }: any) => {
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]
                         ?.ideFileBrowserIngressEndpoint,
+                    customPorts:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
                     gpuAllocation:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
+                    maxGpuAllocation: 0,
                     gpuModelName:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
@@ -1325,13 +1342,73 @@ export default ({ children }: any) => {
                       ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
                       ?.ideApplicationLog,
                   },
+                  jupyterNotebook: {
+                    isEnabled:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.notebookEnabled,
+                    httpsEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]
+                        ?.notebookIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]
+                        ?.notebookFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]
+                        ?.notebookGpuResource,
+                    customPorts:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.notebookCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
+                    podName:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.notebookPodName,
+                    log: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                      ?.notebookApplicationLog,
+                  },
+                },
+                directories: {
+                  permittedDirectories:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]
+                      ?.permittedDirectories,
+                  persistentDirectories:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]
+                      ?.persistentDirectories,
+                  hostDirectories:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.hostDirectories
+                      ?.split(",")
+                      ?.map((item: string) => {
+                        return {
+                          hostDirectory: item?.split(":")[0],
+                          mountPath: item?.split(":")[1],
+                        };
+                      }),
+                },
+                applicationConfig: {
+                  domainName:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.domainName,
+                  application:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.application,
+                  devspace:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.environments[0]?.devspace,
                 },
 
                 name: responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                   ?.cloudInstances[0]?.environments[0]?.name,
-                robotName:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.name,
                 isVirtualRobot: responseEnvironment?.payload?.data[0]
                   ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
                   ?.physicalInstance
@@ -1340,29 +1417,9 @@ export default ({ children }: any) => {
                 physicalInstanceName:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.physicalInstance,
-                robotStorage:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.storageAmount,
-                isEnabledIde:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.ideEnabled,
-                ideGpuResourceType:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
-                ideGpuResource:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
                 isEnabledROS2Bridge:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
-                remoteDesktop: {
-                  isEnabled:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.vdiEnabled,
-                  sessionCount:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.vdiSessionCount,
-                },
                 rosDistros:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.distributions,
@@ -1372,83 +1429,6 @@ export default ({ children }: any) => {
                     ? true
                     : false,
                 isDevelopmentMode: false,
-                domainName:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.domainName,
-                application:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.application,
-                devspace:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.devspace,
-                permittedDirectories:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.permittedDirectories,
-                persistentDirectories:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.persistentDirectories,
-                hostDirectories:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.hostDirectories
-                    ?.split(",")
-                    ?.map((item: string) => {
-                      return {
-                        hostDirectory: item?.split(":")[0],
-                        mountPath: item?.split(":")[1],
-                      };
-                    }),
-                ideCustomPorts:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
-                    ?.split("/")
-                    ?.map((item: string) => {
-                      return {
-                        name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[1],
-                        backendPort: item?.split("-")[1].split(":")[0],
-                      };
-                    }),
-                vdiCustomPorts:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
-                    ?.split("/")
-                    ?.map((item: string) => {
-                      return {
-                        name: item?.split("-")[0],
-                        port: item?.split("-")[1].split(":")[1],
-                        backendPort: item?.split("-")[1].split(":")[0],
-                      };
-                    }),
-                jupyterNotebook: {
-                  isEnabled:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.notebookEnabled,
-                  customPorts:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.notebookCustomPorts
-                      ?.split("/")
-                      ?.map((item: string) => {
-                        return {
-                          name: item?.split("-")[0],
-                          port: item?.split("-")[1].split(":")[1],
-                          backendPort: item?.split("-")[1].split(":")[0],
-                        };
-                      }),
-                  gpuResource:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.notebookGpuResource,
-                  appEndpoint:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]
-                      ?.notebookIngressEndpoint,
-                  appFileManagerEndpoint:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]
-                      ?.notebookFileBrowserIngressEndpoint,
-                  appPodName:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.notebookPodName,
-                  appLog:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]
-                      ?.notebookApplicationLog,
-                },
               },
               step2: {
                 workspaces:
@@ -1532,35 +1512,38 @@ export default ({ children }: any) => {
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
-            robotName: robotData?.step1?.robotName,
+            robotName: robotData?.step1?.name,
             physicalInstanceName: robotData?.step1?.isVirtualRobot
               ? undefined
               : robotData?.step1?.physicalInstanceName,
             distributions: robotData?.step1?.rosDistros,
             bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
-            vdiEnabled: robotData?.step1?.remoteDesktop?.isEnabled,
-            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-            ideEnabled: robotData?.step1?.isEnabledIde,
-            storageAmount: robotData?.step1?.robotStorage,
+            vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,
+            vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
+            ideEnabled: robotData?.step1?.services.ide?.isEnabled,
+            storageAmount:
+              robotData?.step1?.resources.storage.allocatedCapacity,
             gpuEnabledForCloudInstance:
               robotData?.step1?.gpuEnabledForCloudInstance,
             workspaces: robotData.step2.workspaces,
-            permittedDirectories: robotData?.step1?.permittedDirectories,
-            persistentDirectories: robotData?.step1?.persistentDirectories,
+            permittedDirectories:
+              robotData?.step1?.directories.permittedDirectories,
+            persistentDirectories:
+              robotData?.step1?.directories.persistentDirectories,
             hostDirectories:
-              robotData?.step1?.hostDirectories
+              robotData?.step1?.directories.hostDirectories
                 ?.map((directory) => {
                   return `${directory.hostDirectory}:${directory.mountPath}`;
                 })
                 ?.join(",") || "",
             ideCustomPorts:
-              robotData.step1.ideCustomPorts
+              robotData.step1.services.ide.customPorts
                 ?.map((port) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
             vdiCustomPorts:
-              robotData.step1.vdiCustomPorts
+              robotData.step1.services.vdi.customPorts
                 ?.map((port) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
@@ -1584,45 +1567,53 @@ export default ({ children }: any) => {
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
-            environmentName: robotData?.step1?.robotName,
-
-            storageAmount: robotData?.step1?.robotStorage,
-            vdiSessionCount: robotData?.step1?.remoteDesktop?.sessionCount,
-
-            domainName: robotData?.step1?.domainName,
-            ideGpuResource: robotData?.step1?.ideGpuResource,
-            ideGpuResourceType: robotData?.step1?.ideGpuResourceType,
-            applicationName: robotData?.step1?.application?.name,
-            applicationVersion: robotData?.step1?.application?.version,
-            devspaceUbuntuDistro: robotData?.step1?.devspace?.ubuntuDistro,
-            devspaceDesktop: robotData?.step1?.devspace?.desktop,
-            devspaceVersion: robotData?.step1?.devspace?.version,
+            environmentName: robotData?.step1?.name,
+            storageAmount:
+              robotData?.step1?.resources.storage.allocatedCapacity,
+            vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
+            domainName: robotData?.step1?.applicationConfig.domainName,
+            ideGpuResource: robotData?.step1?.services.ide.gpuAllocation,
+            ideGpuResourceType: robotData?.step1?.services.ide.gpuModelName,
+            applicationName:
+              robotData?.step1?.applicationConfig.application?.name,
+            applicationVersion:
+              robotData?.step1?.applicationConfig.application?.version,
+            devspaceUbuntuDistro:
+              robotData?.step1?.applicationConfig.devspace?.ubuntuDistro,
+            devspaceDesktop:
+              robotData?.step1?.applicationConfig.devspace?.desktop,
+            devspaceVersion:
+              robotData?.step1?.applicationConfig.devspace?.version,
             workspaces: withoutWorkspaces ? null : robotData?.step2.workspaces,
-            permittedDirectories: robotData?.step1?.permittedDirectories,
-            persistentDirectories: robotData?.step1?.persistentDirectories,
+            permittedDirectories:
+              robotData?.step1?.directories.permittedDirectories,
+            persistentDirectories:
+              robotData?.step1?.directories.persistentDirectories,
             hostDirectories:
-              robotData?.step1?.hostDirectories
+              robotData?.step1?.directories.hostDirectories
                 ?.map((directory) => {
                   return `${directory.hostDirectory}:${directory.mountPath}`;
                 })
                 ?.join(",") || "",
             ideCustomPorts:
-              robotData.step1.ideCustomPorts
+              robotData.step1.services.ide.customPorts
                 ?.map((port) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
             vdiCustomPorts:
-              robotData.step1.vdiCustomPorts
+              robotData.step1.services.vdi.customPorts
                 ?.map((port) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
 
-            notebookEnabled: robotData?.step1?.jupyterNotebook?.isEnabled,
-            notebookGpuResource: robotData?.step1?.jupyterNotebook?.gpuResource,
+            notebookEnabled:
+              robotData?.step1?.services.jupyterNotebook?.isEnabled,
+            notebookGpuResource:
+              robotData?.step1?.services.jupyterNotebook?.gpuAllocation,
             notebookCustomPorts:
-              robotData.step1.jupyterNotebook?.customPorts
+              robotData.step1.services.jupyterNotebook?.customPorts
                 ?.map((port) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
@@ -1644,7 +1635,7 @@ export default ({ children }: any) => {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.name,
         fleetName: selectedState?.fleet?.name,
         physicalInstanceName: robotData?.step1?.physicalInstanceName,
         buildManagerName: robotData?.step3?.buildManagerName,

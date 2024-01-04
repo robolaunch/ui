@@ -29,7 +29,7 @@ export default function GeneralTable({
   return (
     <div
       data-tut="general-table"
-      className="animate__animated animate__fadeIn flex flex-col rounded-lg border border-light-200 bg-light-50 px-4 pb-0 pt-4 shadow-md"
+      className="animate-fadeIn flex flex-col rounded-lg border border-light-200 bg-light-50 px-4 pb-0 pt-4 shadow-md"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex items-center gap-3 px-4 pb-8 pt-1">
@@ -45,7 +45,7 @@ export default function GeneralTable({
           data &&
           columns &&
           !loading &&
-          "animate__animated animate__fadeIn transition-all duration-500"
+          "animate-fadeIn transition-all duration-500"
         }`}
         value={data}
         paginator
@@ -72,7 +72,7 @@ export default function GeneralTable({
           return (
             <Column
               style={col?.style || {}}
-              className={`animate__animated animate__fadeIn ${col?.className}`}
+              className={`animate-fadeIn ${col?.className}`}
               key={index}
               field={col.key}
               header={col.header}

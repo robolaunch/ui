@@ -6,7 +6,7 @@ import Card from "../../components/Card/Card";
 export default function Page404(): ReactElement {
   return (
     <Card
-      className={`animate__animated animate__fadeIn flex h-full flex-col items-center justify-center gap-8 p-12 transition-all duration-500 `}
+      className={`animate-fadeIn flex h-full flex-col items-center justify-center gap-8 p-12 transition-all duration-500 `}
       style={{
         backgroundImage: `url("/images/abstract2-white.jpg")`,
         backgroundRepeat: "no-repeat",

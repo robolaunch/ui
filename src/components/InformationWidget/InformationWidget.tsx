@@ -16,7 +16,7 @@ export default function InformationWidget({
   return (
     <div
       data-tut="information-widget"
-      className={`animate__animated animate__fadeIn flex h-80 w-full flex-col justify-around rounded-lg border border-light-200 bg-light-50 p-8 shadow-md ${className}`}
+      className={`animate-fadeIn flex h-80 w-full flex-col justify-around rounded-lg border border-light-200 bg-light-50 p-8 shadow-md ${className}`}
       style={{
         backgroundImage: `url("/images/abstract-white.jpg")`,
         backgroundRepeat: "no-repeat",

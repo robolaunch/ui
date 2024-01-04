@@ -19,7 +19,7 @@ export default function SidebarStaticItem({
 
   return (
     <div
-      className={`animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 transition-all duration-500 hover:scale-90 ${
+      className={`animate-fadeInLeft relative cursor-pointer select-none rounded-md p-2 transition-all duration-500 hover:scale-90 ${
         location?.pathname?.includes(to) &&
         "bg-light-100 transition-all duration-500"
       }`}

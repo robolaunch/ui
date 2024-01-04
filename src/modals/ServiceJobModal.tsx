@@ -13,7 +13,7 @@ export default function ServiceJobModal({
 }: IServiceJobModal): ReactElement {
   return (
     <Dialog
-      header={`${type === "ide" ? "IDE" : "VDI"} Service Job`}
+      header={`${type} Service Job`}
       visible={true}
       className="w-[80vw]"
       onHide={() => handleCloseModal()}

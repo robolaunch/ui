@@ -105,7 +105,7 @@ export default function Visualization(): ReactElement {
   }, []);
 
   return (
-    <div className="animate__animated animate__fadeIn grid grid-cols-1 gap-4">
+    <div className="animate-fadeIn grid grid-cols-1 gap-4">
       <div className="grid-stack z-0 col-span-1 max-h-[40rem] min-h-[40rem]">
         <GridLayout
           gridLayout={gridLayout}

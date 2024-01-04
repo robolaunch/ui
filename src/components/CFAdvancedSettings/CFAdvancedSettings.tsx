@@ -54,7 +54,7 @@ export default function CFAdvancedSettings({
           <Seperator />
         </CFSection>
 
-        {robotData.step1.jupyterNotebook.isEnabled && (
+        {robotData.step1.services.jupyterNotebook.isEnabled && (
           <CFSection gap={4}>
             <CFPortSetter
               formik={formik}

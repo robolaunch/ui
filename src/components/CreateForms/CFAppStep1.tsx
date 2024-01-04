@@ -11,7 +11,7 @@ import useFunctions from "../../hooks/useFunctions";
 import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
 import CFVDICount from "../CFVDICount/CFVDICount";
 import Seperator from "../Seperator/Seperator";
-import CFAppName from "../CFAppName/CFAppName";
+import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
 import CFSection from "../CFSection/CFSection";
 import CFGpuCore from "../CFGpuCore/CFGpuCore";
 import { useParams } from "react-router-dom";
@@ -99,7 +99,7 @@ export default function CFAppStep1({
       formik={formik}
     >
       <CFSection>
-        <CFAppName formik={formik} disabled={isImportRobot} />
+        <CFEnvironmentName formik={formik} disabled={isImportRobot} />
         <Seperator />
       </CFSection>
 
@@ -114,7 +114,7 @@ export default function CFAppStep1({
       </CFSection>
 
       <Fragment>
-        {robotData.step1.ideGpuResourceType && (
+        {robotData.step1.services.ide.gpuModelName && (
           <CFSection>
             <CFGpuCore formik={formik} disabled={isImportRobot} />
             <Seperator />

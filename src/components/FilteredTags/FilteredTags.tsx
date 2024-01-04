@@ -6,7 +6,7 @@ export default function FilteredTags(): ReactElement {
   const { selectedState } = useMain();
 
   return (
-    <div className="animate__animated animate__fadeIn flex flex-wrap gap-2 pb-4">
+    <div className="animate-fadeIn flex flex-wrap gap-2 pb-4">
       {selectedState?.organization && (
         <div className="col-span-1 flex max-w-fit items-center gap-2 rounded border border-secondary-400 bg-secondary-100 p-1">
           <img

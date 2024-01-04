@@ -27,7 +27,7 @@ export default function RemoteDesktopChatTab({
               return (
                 <div
                   key={index}
-                  className="animate__animated animate__fadeIn grid grid-cols-6 gap-2 pb-2"
+                  className="animate-fadeIn grid grid-cols-6 gap-2 pb-2"
                 >
                   <div className="col-span-1 flex h-10 w-10 items-center justify-center rounded-full bg-primary-300 font-semibold text-primary-700">
                     {remoteDesktopReducer?.members

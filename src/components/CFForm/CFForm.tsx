@@ -11,7 +11,7 @@ export default function CFForm({ formik, children }: ICFForm): ReactElement {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="animate__animated animate__fadeIn flex flex-col gap-4"
+      className="animate-fadeIn flex flex-col gap-4"
     >
       {children}
       <CFButtons formik={formik} text="Connect Physical Instance" />

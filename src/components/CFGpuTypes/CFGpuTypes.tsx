@@ -101,14 +101,14 @@ export default function CFGpuTypes({
                     }
 
                     formik.setFieldValue(
-                      "ideGpuResourceType",
+                      "services.ide.gpuModelName",
                       type.resourceName,
                     );
 
-                    formik.setFieldValue("ideGpuResource", 0);
+                    formik.setFieldValue("services.ide.gpuAllocation", 0);
 
                     formik.setFieldValue(
-                      "ideGpuResourceMaxCore",
+                      "services.ide.maxGpuAllocation",
                       Number(type.capacity) -
                         Number(type.allocated) -
                         (type.resourceName.includes("mig") ? 0 : 1),
@@ -126,7 +126,7 @@ export default function CFGpuTypes({
             },
           )
         ) : (
-          <div className="animate__animated animate__fadeIn text-light-100 col-span-2 text-center text-sm font-bold">
+          <div className="animate-fadeIn col-span-2 text-center text-sm font-bold text-light-100">
             No Available GPU Types
           </div>
         )}

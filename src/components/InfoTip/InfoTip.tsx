@@ -24,7 +24,7 @@ export default function InfoTip({
     >
       {isHover && content && (
         <div
-          className={`animate__animated animate__fadeIn border-light-500  text-light-100 bg-light-500 absolute top-1 z-50 flex rounded border p-2 text-[0.66rem] opacity-90 ${
+          className={`animate-fadeIn absolute  top-1 z-50 flex rounded border border-light-500 bg-light-500 p-2 text-[0.66rem] text-light-100 opacity-90 ${
             rightTip ? "right-5" : "left-5"
           } ${content?.length > 42 ? "w-64" : "w-max"}`}
         >

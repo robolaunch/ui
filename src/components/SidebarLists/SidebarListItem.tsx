@@ -181,7 +181,7 @@ export default function SidebarListItem({
   return (
     <div
       key={name}
-      className={`animate__animated animate__fadeIn transition-300 flex w-full cursor-pointer select-none items-center justify-between rounded-lg border hover:scale-[0.985]
+      className={`animate-fadeIn transition-300 flex w-full cursor-pointer select-none items-center justify-between rounded-lg border hover:scale-[0.985]
       ${
         selected
           ? "border-light-300 bg-light-100 shadow"

@@ -142,7 +142,7 @@ export default function Teleoperation(): ReactElement {
       <Fragment>
         <FullScreen className="relative" handle={handleFullScreen}>
           <div
-            className="grid-stack animate__animated animate__fadeIn z-0 col-span-1 w-full rounded bg-light-900"
+            className="grid-stack animate-fadeIn z-0 col-span-1 w-full rounded bg-light-900"
             style={{
               height: handleFullScreen.active ? "100vh" : "unset",
               backgroundImage: `url(${cameraData})`,

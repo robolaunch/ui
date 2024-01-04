@@ -80,7 +80,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         </div>
       ) : (
         <Fragment>
-          <div className="animate__animated animate__fadeIn flex min-w-fit gap-1 text-xs font-medium text-light-700">
+          <div className="animate-fadeIn flex min-w-fit gap-1 text-xs font-medium text-light-700">
             Launch Steps:
             <InfoTip content="Launch Steps" />
           </div>
@@ -97,7 +97,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                   />
                 }
               >
-                <div className="animate__animated animate__fadeIn p-4">
+                <div className="animate-fadeIn p-4">
                   <CreateRobotFormStep4
                     isImportRobot
                     key={index}
@@ -119,7 +119,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
                 </span>
               }
             >
-              <div className="animate__animated animate__fadeIn p-4">
+              <div className="animate-fadeIn p-4">
                 <CreateRobotFormStep4
                   robotDataLaunchIndex={responseRobotLaunchManagers?.length}
                 />

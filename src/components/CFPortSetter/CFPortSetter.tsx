@@ -42,7 +42,7 @@ export default function CFPortSetter({
         formik.values.vdiCustomPorts
           ?.map((port: any) => port.backendPort)
           .includes(result.payload) ||
-        formik.values.jupyterNotebook.customPorts
+        formik.values.services.jupyterNotebook.customPorts
           ?.map((port: any) => port.backendPort)
           .includes(result.payload)
       ) {
@@ -79,7 +79,7 @@ export default function CFPortSetter({
           {(() => {
             switch (type) {
               case "jupyter-notebook":
-                return formik.values?.jupyterNotebook?.customPorts?.map(
+                return formik.values?.services.jupyterNotebook?.customPorts?.map(
                   (_: any, index: number) => {
                     return (
                       <CFPortInput
@@ -126,8 +126,8 @@ export default function CFPortSetter({
             );
           } else if (type === "jupyter-notebook") {
             await formik.setFieldValue(
-              `jupyterNotebook.customPorts`,
-              formik.values?.jupyterNotebook.customPorts?.concat({
+              `services.jupyterNotebook.customPorts`,
+              formik.values?.services.jupyterNotebook.customPorts?.concat({
                 name: "",
                 port: undefined,
                 backendPort: await getPort(),

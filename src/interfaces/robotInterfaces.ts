@@ -170,6 +170,9 @@ export interface IDetails {
       };
     };
   };
+  namespace: {
+    name: string;
+  };
 
   resources: {
     cpu: {
@@ -191,6 +194,7 @@ export interface IDetails {
       isEnabled: boolean;
       socketEndpoint: string;
       fileManagerEndpoint: string;
+      customPorts: any[];
       gpuAllocation: number;
       podName: string;
       sessionCount: number;
@@ -200,59 +204,49 @@ export interface IDetails {
       isEnabled: boolean;
       httpsEndpoint: string;
       fileManagerEndpoint: string;
+      customPorts: any[];
       gpuAllocation: number;
+      maxGpuAllocation: number;
       gpuModelName: string;
+      podName: string;
+      log: string;
+    };
+    jupyterNotebook: {
+      isEnabled: boolean;
+      httpsEndpoint: string;
+      fileManagerEndpoint: string;
+      customPorts: any[];
+      gpuAllocation: number;
       podName: string;
       log: string;
     };
   };
 
-  namespace: {
-    name: string;
-  };
   name: string;
-  robotName: string;
   isVirtualRobot: boolean;
   physicalInstanceName: string;
-  robotStorage: number;
-  isEnabledIde: boolean;
-  ideGpuResource: number;
-  ideGpuResourceType: string;
-  ideGpuResourceMaxCore: number;
-  isEnabledROS2Bridge: boolean;
   configureWorkspace: boolean;
-  remoteDesktop: {
-    isEnabled: boolean;
-    sessionCount: number;
-  };
+  isEnabledROS2Bridge: boolean;
   rosDistros: string[];
   gpuEnabledForCloudInstance: boolean;
   isDevelopmentMode: boolean;
-  domainName: string;
-  application: {
-    name: string;
-    version: string;
+
+  directories: {
+    permittedDirectories: string;
+    persistentDirectories: string;
+    hostDirectories: IhostDirectories[];
   };
-  devspace: {
-    ubuntuDistro: string;
-    desktop: string;
-    version: string;
-  };
-  permittedDirectories: string;
-  persistentDirectories: string;
-  ideCustomPorts: any[];
-  vdiCustomPorts: any[];
-  hostDirectories: IhostDirectories[];
-  idePodName: string;
-  vdiPodName: string;
-  jupyterNotebook: {
-    isEnabled: boolean;
-    gpuResource: number;
-    customPorts: any[];
-    appPodName: string;
-    appEndpoint: string;
-    appFileManagerEndpoint: string;
-    appLog: string;
+  applicationConfig: {
+    domainName: string;
+    application: {
+      name: string;
+      version: string;
+    };
+    devspace: {
+      ubuntuDistro: string;
+      desktop: string;
+      version: string;
+    };
   };
 }
 

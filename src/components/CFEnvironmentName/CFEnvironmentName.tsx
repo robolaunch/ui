@@ -3,15 +3,15 @@ import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement } from "react";
 
-interface ICFAppName {
+interface ICFEnvironmentName {
   formik: FormikProps<IDetails>;
   disabled?: boolean;
 }
 
-export default function CFAppName({
+export default function CFEnvironmentName({
   formik,
   disabled,
-}: ICFAppName): ReactElement {
+}: ICFEnvironmentName): ReactElement {
   return (
     <FormInputText
       labelName="Application Name:"
@@ -19,9 +19,9 @@ export default function CFAppName({
       dataTut="create-application-step1-name"
       disabled={formik.isSubmitting || disabled}
       inputHoverText="You can't change application name because this application is created before."
-      inputProps={formik.getFieldProps("robotName")}
-      inputError={formik.errors.robotName}
-      inputTouched={formik.touched.robotName}
+      inputProps={formik.getFieldProps("name")}
+      inputError={formik.errors.name}
+      inputTouched={formik.touched.name}
     />
   );
 }

@@ -17,7 +17,7 @@ export default function RemoteDesktopViewersTab({
       {remoteDesktopReducer?.members?.map((member: any, index: number) => {
         return (
           <div
-            className="animate__animated animate__fadeIn flex items-center justify-between p-2 text-sm"
+            className="animate-fadeIn flex items-center justify-between p-2 text-sm"
             key={index}
           >
             <div className="flex gap-2">

@@ -2,15 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-fadeIn {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-duration: var(--animate-duration);
-  animation-duration: var(--animate-duration);
+  -webkit-animation-duration: var(1s);
+  animation-duration: var(1s);
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
-  -webkit-animation-fill-mode: unset !important;
-  animation-fill-mode: unset !important;
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }

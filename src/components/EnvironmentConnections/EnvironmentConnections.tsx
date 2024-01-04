@@ -32,7 +32,7 @@ export default function EnvironmentConnections(): ReactElement {
           label={
             responseRobot?.physicalIdeIngressEndpoint ? "Virtual IDE" : "IDE"
           }
-          url={responseRobot?.ideIngressEndpoint}
+          url={robotData.step1.services.ide?.httpsEndpoint}
         />
         <StateCell
           state={
@@ -65,9 +65,9 @@ export default function EnvironmentConnections(): ReactElement {
         <ConnectionLabel
           label="VDI"
           url={
-            responseRobot?.vdiIngressEndpoint &&
+            robotData.step1.services.vdi?.socketEndpoint &&
             "https://" +
-              responseRobot?.vdiIngressEndpoint?.split("//")[1] +
+              robotData.step1.services.vdi?.socketEndpoint?.split("//")[1] +
               `?usr=${keycloak?.tokenParsed?.preferred_username}&pwd=admin`
           }
         />
@@ -81,11 +81,11 @@ export default function EnvironmentConnections(): ReactElement {
           }
         />
       </div>
-      {robotData.step1?.jupyterNotebook?.appEndpoint && (
+      {robotData.step1?.services.jupyterNotebook?.httpsEndpoint && (
         <div className="flex gap-1" id="jupyter">
           <ConnectionLabel
             label="Jupyter Notebook"
-            url={robotData.step1.jupyterNotebook.appEndpoint}
+            url={robotData.step1.services.jupyterNotebook.httpsEndpoint}
           />
           <StateCell
             state={

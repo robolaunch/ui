@@ -27,7 +27,7 @@ export default function WorldMapMarker({
       {isHovered && (
         <Fragment>
           <text
-            className="animate__animated animate__fadeIn"
+            className="animate-fadeIn"
             fontSize={18}
             y={-8}
             textAnchor="middle"
@@ -36,7 +36,7 @@ export default function WorldMapMarker({
             {city?.awsRegion}
           </text>
           <text
-            className="animate__animated animate__fadeIn"
+            className="animate-fadeIn"
             fontSize={18}
             y={28}
             textAnchor="middle"

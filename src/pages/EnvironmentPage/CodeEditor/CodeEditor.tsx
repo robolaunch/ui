@@ -22,7 +22,7 @@ export default function CodeEditor(): ReactElement {
     <div
       className={
         activeTab === "Code Editor"
-          ? "animate__animated animate__fadeIn flex h-full flex-col gap-6"
+          ? "animate-fadeIn flex h-full flex-col gap-6"
           : "absolute -top-[9999px]"
       }
     >
@@ -42,7 +42,7 @@ export default function CodeEditor(): ReactElement {
               <iframe
                 title="Virtual IDE"
                 allow="clipboard-read"
-                className={`animate__animated animate__fadeIn h-full w-full
+                className={`animate-fadeIn h-full w-full
                 ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={urls?.ide || robotData.step1.services.ide?.httpsEndpoint}
@@ -50,7 +50,7 @@ export default function CodeEditor(): ReactElement {
               <iframe
                 title="Physical IDE"
                 allow="clipboard-read"
-                className={`animate__animated animate__fadeIn h-full w-full
+                className={`animate-fadeIn h-full w-full
                 ${activeTabCodeEditor === 1 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={responseRobot?.physicalIdeIngressEndpoint}

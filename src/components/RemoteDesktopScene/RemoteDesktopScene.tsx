@@ -38,7 +38,7 @@ export default function RemoteDesktopScene({
           {isControllerActive && remoteDesktopReducer?.isMuted && (
             <div
               onClick={() => handleMute()}
-              className="animate__animated animate__fadeIn absolute top-0 z-10 flex h-full w-full cursor-pointer items-center justify-center bg-[#00000090] text-light-50"
+              className="animate-fadeIn absolute top-0 z-10 flex h-full w-full cursor-pointer items-center justify-center bg-[#00000090] text-light-50"
             >
               <GiSpeaker size={48} />
             </div>

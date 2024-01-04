@@ -13,7 +13,7 @@ export default function LaunchFormAccordionHeader({
   robotData,
 }: ILaunchFormAccordionHeader): ReactElement {
   return (
-    <div className="animate__animated animate__fadeIn flex justify-between">
+    <div className="animate-fadeIn flex justify-between">
       <span className="font-medium">
         {step?.name || `Launch Step # ${index + 1}`}
       </span>

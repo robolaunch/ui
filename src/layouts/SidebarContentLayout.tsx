@@ -146,8 +146,8 @@ export default function SidebarContentLayout(): ReactElement {
                 page: !selectedState?.organization
                   ? "organization"
                   : !selectedState?.roboticsCloud
-                  ? "robotics cloud"
-                  : "instance",
+                    ? "robotics cloud"
+                    : "instance",
                 instanceTab: "Cloud Instances",
               }));
 
@@ -156,8 +156,8 @@ export default function SidebarContentLayout(): ReactElement {
                   !selectedState?.organization
                     ? "organization"
                     : !selectedState?.roboticsCloud
-                    ? "robotics cloud"
-                    : "instance"
+                      ? "robotics cloud"
+                      : "instance"
                 } first.`,
               );
             }
@@ -174,16 +174,16 @@ export default function SidebarContentLayout(): ReactElement {
               page: !selectedState?.organization
                 ? "organization"
                 : !selectedState?.roboticsCloud
-                ? "robotics cloud"
-                : "instance",
+                  ? "robotics cloud"
+                  : "instance",
             }));
             return toast.error(
               `If you want to create a fleet, you need to select a ${
                 !selectedState?.organization
                   ? "organization"
                   : !selectedState?.roboticsCloud
-                  ? "robotics cloud"
-                  : "instance"
+                    ? "robotics cloud"
+                    : "instance"
               } first.`,
             );
           }
@@ -200,20 +200,20 @@ export default function SidebarContentLayout(): ReactElement {
               page: !selectedState?.organization
                 ? "organization"
                 : !selectedState?.roboticsCloud
-                ? "robotics cloud"
-                : !selectedState?.instance
-                ? "instance"
-                : "fleet",
+                  ? "robotics cloud"
+                  : !selectedState?.instance
+                    ? "instance"
+                    : "fleet",
             }));
             return toast.error(
               `If you want to create a robot, you need to select a ${
                 !selectedState?.organization
                   ? "organization"
                   : !selectedState?.roboticsCloud
-                  ? "robotics cloud"
-                  : !selectedState?.instance
-                  ? "instance"
-                  : "fleet"
+                    ? "robotics cloud"
+                    : !selectedState?.instance
+                      ? "instance"
+                      : "fleet"
               } first.`,
             );
           } else {
@@ -243,7 +243,7 @@ export default function SidebarContentLayout(): ReactElement {
 
   return (
     <div
-      className={`w-fill-available animate__animated animate__fadeInLeftBig animate__faster fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-light-200 bg-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
+      className={`w-fill-available animate-fadeInLeftBig animate__faster fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-light-200 bg-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
         url?.robotName || sidebarState?.isCreateMode ? "px-8 pb-2 pt-8" : "p-6"
       }`}
     >

@@ -22,7 +22,7 @@ export default function RobotOverviewLayout({
   const { width } = useWindow();
 
   return (
-    <div className="animate__animated animate__fadeIn grid grid-cols-1 gap-6 lg:grid-cols-12">
+    <div className="animate-fadeIn grid grid-cols-1 gap-6 lg:grid-cols-12">
       <div className="col-span-full lg:col-span-4">{widget1}</div>
       <div className="col-span-full lg:col-span-5">{widget2}</div>
       {width && width > 1024 && (

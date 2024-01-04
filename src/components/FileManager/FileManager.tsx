@@ -15,12 +15,12 @@ export default function CodeEditor(): ReactElement {
   const { urls } = useAppSelector((state) => state.robot);
 
   return (
-    <div className="animate__animated animate__fadeIn grid h-full">
+    <div className="animate-fadeIn grid h-full">
       <Card loading={true}>
         <FullScreen className="relative" handle={handleFullScreen}>
           <iframe
             allow="clipboard-read"
-            className={`animate__animated animate__fadeIn w-full ${
+            className={`animate-fadeIn w-full ${
               handleFullScreen?.active ? "h-screen" : "h-[45.4rem]"
             }`}
             src={urls?.ide || responseRobot?.ideIngressEndpoint}

@@ -17,7 +17,7 @@ export default function EnvironmentObjectLabels(): ReactElement {
           ?.name}`,
       ].map((item, index) => {
         return (
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5" key={index}>
             {robotData.step1?.name ? (
               <Fragment>
                 {(() => {

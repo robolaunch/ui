@@ -33,7 +33,7 @@ export default function DevelopmentSuite(): ReactElement {
         content={
           <iframe
             allow="clipboard-read"
-            className={`animate__animated animate__fadeIn h-full w-full ${
+            className={`animate-fadeIn h-full w-full ${
               isDragging && "pointer-events-none"
             }`}
             src={urls?.ide || responseRobot?.ideIngressEndpoint}

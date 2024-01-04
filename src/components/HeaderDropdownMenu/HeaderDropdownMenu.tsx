@@ -32,7 +32,7 @@ export default function HeaderDropdownMenu(): ReactElement {
       </div>
       {isOpen && (
         <ul
-          className="animate__animated animate__fadeInDown animate__faster absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border border-light-100 bg-light-50 p-2 text-sm shadow-lg"
+          className="animate-fadeInDown animate__faster absolute right-4 top-[3.6rem] flex w-72 flex-col gap-1 rounded border border-light-100 bg-light-50 p-2 text-sm shadow-lg"
           ref={ref}
         >
           <div onClick={() => setIsOpen(false)}>
