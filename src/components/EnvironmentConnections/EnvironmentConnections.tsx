@@ -6,7 +6,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 
-export default function Connections(): ReactElement {
+export default function EnvironmentConnections(): ReactElement {
   const { responseRobot, connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
   const { robotData } = useCreateRobot();

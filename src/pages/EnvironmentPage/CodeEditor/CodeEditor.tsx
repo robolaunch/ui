@@ -5,6 +5,7 @@ import { Fragment, ReactElement, useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
+import useCreateRobot from "../../../hooks/useCreateRobot";
 
 export default function CodeEditor(): ReactElement {
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<1 | 2>(1);
@@ -14,6 +15,8 @@ export default function CodeEditor(): ReactElement {
   const { activeTab, responseRobot, isRobotReady, isSettedCookie } = useRobot();
 
   const { urls } = useAppSelector((state) => state.robot);
+
+  const { robotData } = useCreateRobot();
 
   return (
     <div
@@ -42,7 +45,7 @@ export default function CodeEditor(): ReactElement {
                 className={`animate__animated animate__fadeIn h-full w-full
                 ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
-                src={urls?.ide || responseRobot?.ideIngressEndpoint}
+                src={urls?.ide || robotData.step1.services.ide?.httpsEndpoint}
               />
               <iframe
                 title="Physical IDE"

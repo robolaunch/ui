@@ -1165,6 +1165,22 @@ video {
   min-height: 100vh;
 }
 
+.min-h-8 {
+  min-height: 2rem;
+}
+
+.min-h-6 {
+  min-height: 1.5rem;
+}
+
+.min-h-5 {
+  min-height: 1.25rem;
+}
+
+.min-h-4 {
+  min-height: 1rem;
+}
+
 .\!w-24 {
   width: 6rem !important;
 }
@@ -1370,6 +1386,14 @@ video {
   width: max-content;
 }
 
+.min-w-16 {
+  min-width: 4rem;
+}
+
+.min-w-20 {
+  min-width: 5rem;
+}
+
 .min-w-\[12rem\] {
   min-width: 12rem;
 }
@@ -1389,12 +1413,40 @@ video {
   min-width: max-content;
 }
 
+.min-w-8 {
+  min-width: 2rem;
+}
+
+.min-w-6 {
+  min-width: 1.5rem;
+}
+
+.min-w-24 {
+  min-width: 6rem;
+}
+
+.min-w-28 {
+  min-width: 7rem;
+}
+
+.min-w-10 {
+  min-width: 2.5rem;
+}
+
 .min-w-40 {
   min-width: 10rem;
 }
 
+.min-w-5 {
+  min-width: 1.25rem;
+}
+
 .min-w-32 {
   min-width: 8rem;
+}
+
+.min-w-36 {
+  min-width: 9rem;
 }
 
 .max-w-fit {
@@ -2917,6 +2969,19 @@ video {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+.animate-fadeIn {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-duration: var(--animate-duration);
+  animation-duration: var(--animate-duration);
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-fill-mode: unset !important;
+  animation-fill-mode: unset !important;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
 }
 
 .transition-300 {

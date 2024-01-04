@@ -5,13 +5,86 @@ import {
 } from "../interfaces/robotInterfaces";
 import { createContext, useEffect, useState } from "react";
 import { envApplication } from "../helpers/envProvider";
+import { useParams } from "react-router-dom";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const url = useParams();
+
+  useEffect(() => {
+    console.log("url", url);
+  }, [url]);
+
   const initialRobotData: IRobotData = {
     step1: {
+      organization: {
+        id: "",
+        name: "",
+      },
+      region: {
+        name: "",
+      },
+      cloudInstance: {
+        id: "",
+        name: "",
+        resources: {
+          cpu: {
+            coreTotal: 0,
+          },
+          gpu: {
+            coreTotal: 0,
+          },
+          memory: {
+            capacityTotal: 0,
+          },
+          storage: {
+            capacityTotal: 0,
+          },
+        },
+      },
+
+      resources: {
+        cpu: {
+          allocatedCore: 0,
+        },
+        gpu: {
+          allocatedCore: 0,
+        },
+        memory: {
+          allocatedCapacity: 0,
+        },
+        storage: {
+          allocatedCapacity: 0,
+        },
+      },
+
+      services: {
+        vdi: {
+          isEnabled: true,
+          socketEndpoint: "",
+          fileManagerEndpoint: "",
+          gpuAllocation: 0,
+          podName: "",
+          sessionCount: 0,
+          log: "",
+        },
+        ide: {
+          isEnabled: true,
+          httpsEndpoint: "",
+          fileManagerEndpoint: "",
+          gpuModelName: "",
+          gpuAllocation: 0,
+          podName: "",
+          log: "",
+        },
+      },
+
+      namespace: {
+        name: "",
+      },
+      name: "",
       robotName: "",
       isVirtualRobot: true,
       physicalInstanceName: "",

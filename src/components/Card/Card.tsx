@@ -18,7 +18,7 @@ export default function Card({
   return (
     <div
       data-tut={dataTut}
-      className={`animate__animated animate__fadeIn h-full w-full rounded-lg border border-light-200 bg-light-50 p-1 shadow-md ${className}`}
+      className={`animate-fadeIn h-full w-full rounded-lg border border-light-200 bg-light-50 p-1 shadow-md ${className}`}
       style={
         loading
           ? {

@@ -66,6 +66,7 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { createContext } from "react";
 import { toast } from "sonner";
+import { orgNameViewer } from "../functions/GeneralFunctions";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -762,6 +763,148 @@ export default ({ children }: any) => {
               ...prevState,
               step1: {
                 ...prevState.step1,
+                organization: {
+                  id: selectedState?.organization?.organizationId,
+                  name: orgNameViewer(
+                    selectedState?.organization?.organizationName!,
+                  ),
+                },
+                region: {
+                  name: selectedState?.instance?.region,
+                },
+                cloudInstance: {
+                  id: selectedState?.instance?.instanceId,
+                  name: selectedState?.instance?.name,
+                  resources: {
+                    cpu: {
+                      coreTotal:
+                        selectedState?.instance?.cloudInstanceResource
+                          ?.cpuTotal,
+                    },
+                    gpu: {
+                      coreTotal:
+                        selectedState?.instance?.cloudInstanceResource?.gpuUsage
+                          ?.map(
+                            (gpu: any) =>
+                              Number(gpu?.allocated) + Number(gpu?.capacity),
+                          )
+                          .reduce((a: any, b: any) => a + b, 0),
+                    },
+                    memory: {
+                      capacityTotal:
+                        selectedState?.instance?.cloudInstanceResource
+                          ?.memoryTotal,
+                    },
+                    storage: {
+                      capacityTotal: 0,
+                    },
+                  },
+                },
+                namespace: {
+                  name: selectedState?.fleet?.name,
+                },
+
+                resources: {
+                  cpu: {
+                    allocatedCore: 0,
+                  },
+                  gpu: {
+                    allocatedCore:
+                      Number(
+                        responseFederatedRobot?.payload?.data[0]
+                          ?.roboticsClouds[0]?.cloudInstances[0]
+                          ?.robolaunchFederatedRobots[0].ideGpuResource || 0,
+                      ) +
+                      Number(
+                        responseFederatedRobot?.payload?.data[0]
+                          ?.roboticsClouds[0]?.cloudInstances[0]
+                          ?.robolaunchFederatedRobots[0].notebookGpuResource ||
+                          0,
+                      ) +
+                      Number(
+                        responseFederatedRobot?.payload?.data[0]
+                          ?.roboticsClouds[0]?.cloudInstances[0]
+                          ?.robolaunchFederatedRobots[0].vdiGpuResource || 0,
+                      ),
+                  },
+                  memory: {
+                    allocatedCapacity: 0,
+                  },
+                  storage: {
+                    allocatedCapacity: Number(
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots[0].storageAmount || 0,
+                    ),
+                  },
+                },
+
+                services: {
+                  vdi: {
+                    isEnabled:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.vdiEnabled,
+                    socketEndpoint:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.vdiIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]
+                        ?.vdiFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.vdiGpuResource,
+                    podName:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.vdiPodName,
+                    sessionCount:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.vdiSessionCount,
+                    log: responseFederatedRobot?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]
+                      ?.robolaunchFederatedRobots?.[0]?.vdiApplicationLog,
+                  },
+                  ide: {
+                    isEnabled:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.ideEnabled,
+                    httpsEndpoint:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.ideIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]
+                        ?.ideFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.ideGpuResource,
+                    gpuModelName:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.ideGpuModelName,
+                    podName:
+                      responseFederatedRobot?.payload?.data[0]
+                        ?.roboticsClouds[0]?.cloudInstances[0]
+                        ?.robolaunchFederatedRobots?.[0]?.idePodName,
+                    log: responseFederatedRobot?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]
+                      ?.robolaunchFederatedRobots?.[0]?.ideApplicationLog,
+                  },
+                },
+
+                name: responseFederatedRobot?.payload?.data[0]
+                  ?.roboticsClouds[0]?.cloudInstances[0]
+                  ?.robolaunchFederatedRobots[0]?.name,
                 robotName:
                   responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.name,
@@ -1057,6 +1200,135 @@ export default ({ children }: any) => {
               ...prevState,
               step1: {
                 ...prevState.step1,
+                organization: {
+                  id: selectedState?.organization?.organizationId,
+                  name: orgNameViewer(
+                    selectedState?.organization?.organizationName!,
+                  ),
+                },
+                region: {
+                  name: selectedState?.instance?.region,
+                },
+                cloudInstance: {
+                  id: selectedState?.instance?.instanceId,
+                  name: selectedState?.instance?.name,
+                  resources: {
+                    cpu: {
+                      coreTotal:
+                        selectedState?.instance?.cloudInstanceResource
+                          ?.cpuTotal,
+                    },
+                    gpu: {
+                      coreTotal:
+                        selectedState?.instance?.cloudInstanceResource?.gpuUsage
+                          ?.map(
+                            (gpu: any) =>
+                              Number(gpu?.allocated) + Number(gpu?.capacity),
+                          )
+                          .reduce((a: any, b: any) => a + b, 0),
+                    },
+                    memory: {
+                      capacityTotal:
+                        selectedState?.instance?.cloudInstanceResource
+                          ?.memoryTotal,
+                    },
+                    storage: {
+                      capacityTotal: 0,
+                    },
+                  },
+                },
+                namespace: {
+                  name: selectedState?.fleet?.name,
+                },
+
+                resources: {
+                  cpu: {
+                    allocatedCore: 0,
+                  },
+                  gpu: {
+                    allocatedCore:
+                      Number(
+                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.environments[0].ideGpuResource ||
+                          0,
+                      ) +
+                      Number(
+                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.environments[0]
+                          .notebookGpuResource || 0,
+                      ) +
+                      Number(
+                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.environments[0].vdiGpuResource ||
+                          0,
+                      ),
+                  },
+                  memory: {
+                    allocatedCapacity: 0,
+                  },
+                  storage: {
+                    allocatedCapacity: Number(
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0].storageAmount || 0,
+                    ),
+                  },
+                },
+
+                services: {
+                  vdi: {
+                    isEnabled:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.vdiEnabled,
+                    socketEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]
+                        ?.vdiIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]
+                        ?.vdiFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.vdiGpuResource,
+                    podName:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.vdiPodName,
+                    sessionCount:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.vdiSessionCount,
+                    log: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
+                      ?.vdiApplicationLog,
+                  },
+                  ide: {
+                    isEnabled:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.ideEnabled,
+                    httpsEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]
+                        ?.ideIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]
+                        ?.ideFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
+                    gpuModelName:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
+                    podName:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments?.[0]?.idePodName,
+                    log: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
+                      ?.ideApplicationLog,
+                  },
+                },
+
+                name: responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                  ?.cloudInstances[0]?.environments[0]?.name,
                 robotName:
                   responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.environments[0]?.name,

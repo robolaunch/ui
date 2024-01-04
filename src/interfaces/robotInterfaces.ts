@@ -145,6 +145,72 @@ export interface IRobotData {
 }
 
 export interface IDetails {
+  organization: {
+    id: string;
+    name: string;
+  };
+  region: {
+    name: string;
+  };
+  cloudInstance: {
+    name: string;
+    id: string;
+    resources: {
+      cpu: {
+        coreTotal: number;
+      };
+      gpu: {
+        coreTotal: number;
+      };
+      memory: {
+        capacityTotal: number;
+      };
+      storage: {
+        capacityTotal: number;
+      };
+    };
+  };
+
+  resources: {
+    cpu: {
+      allocatedCore: number;
+    };
+    gpu: {
+      allocatedCore: number;
+    };
+    memory: {
+      allocatedCapacity: number;
+    };
+    storage: {
+      allocatedCapacity: number;
+    };
+  };
+
+  services: {
+    vdi: {
+      isEnabled: boolean;
+      socketEndpoint: string;
+      fileManagerEndpoint: string;
+      gpuAllocation: number;
+      podName: string;
+      sessionCount: number;
+      log: string;
+    };
+    ide: {
+      isEnabled: boolean;
+      httpsEndpoint: string;
+      fileManagerEndpoint: string;
+      gpuAllocation: number;
+      gpuModelName: string;
+      podName: string;
+      log: string;
+    };
+  };
+
+  namespace: {
+    name: string;
+  };
+  name: string;
   robotName: string;
   isVirtualRobot: boolean;
   physicalInstanceName: string;

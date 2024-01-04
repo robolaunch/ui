@@ -3,8 +3,8 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useEffect, createContext, useRef, useReducer } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { toast } from "sonner";
-import useRobot from "../hooks/useRobot";
 import { useAppSelector } from "../hooks/redux";
+import useCreateRobot from "../hooks/useCreateRobot.tsx";
 
 export const VDIContext: any = createContext<any>(null);
 
@@ -24,7 +24,7 @@ export default ({ children }: IVDIContext) => {
 
   const { keycloak } = useKeycloak();
 
-  const { responseRobot } = useRobot();
+  const { robotData } = useCreateRobot();
 
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
     members: [],
@@ -152,7 +152,8 @@ export default ({ children }: IVDIContext) => {
     };
 
     client.current = new WebSocket(
-      (urls?.vdi || responseRobot?.vdiIngressEndpoint) + "ws?password=admin",
+      (urls?.vdi || robotData.step1.services.vdi.socketEndpoint) +
+        "ws?password=admin",
     );
 
     client.current.onmessage = (e: any) => {
@@ -267,7 +268,7 @@ export default ({ children }: IVDIContext) => {
       client.current.close();
     };
   }, [
-    responseRobot?.vdiIngressEndpoint,
+    robotData.step1.services.vdi.socketEndpoint,
     keycloak?.tokenParsed?.preferred_username,
     urls?.vdi,
   ]);
