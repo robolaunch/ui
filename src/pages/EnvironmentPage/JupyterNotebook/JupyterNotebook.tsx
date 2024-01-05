@@ -26,7 +26,7 @@ export default function JupyterNotebook(): ReactElement {
                 allow="clipboard-read"
                 className={`animate-fadeIn h-full w-full
                 ${handleFullScreen?.active && "!h-screen"}`}
-                src={robotData?.step1?.jupyterNotebook?.appEndpoint}
+                src={robotData?.step1?.services.jupyterNotebook?.httpsEndpoint}
               />
               <ControlBar type="ide" handleFullScreen={handleFullScreen} />
             </FullScreen>

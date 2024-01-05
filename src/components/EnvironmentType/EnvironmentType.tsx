@@ -8,9 +8,9 @@ export default function EnvironmentType(): ReactElement {
 
   return (
     <Fragment>
-      {robotData.step1?.name ? (
+      {robotData.step1.details?.name ? (
         <div className="animate-fadeIn transition-500 w-fit rounded-lg bg-primary-100 px-2 py-1 text-[0.58rem] font-medium capitalize text-primary-500">
-          {robotData?.step1?.isVirtualRobot
+          {robotData?.step1.details?.isVirtualRobot
             ? `Virtual ${envApplication ? "Application" : "Robot"}`
             : `Physical ${envApplication ? "Application" : "Robot"}`}
         </div>

@@ -47,7 +47,7 @@ export default function CFGpuTypes({
       label="GPU Models:"
       tip="You can choose the GPU model here."
       vertical
-      error={formik.errors.ideGpuResourceType}
+      error={formik.errors.services?.ide?.gpuModelName}
       touched={true}
     >
       <div className="grid grid-cols-2 gap-2">
@@ -58,7 +58,8 @@ export default function CFGpuTypes({
                 <CFGridItem
                   key={index}
                   selected={
-                    formik.values.ideGpuResourceType === type.resourceName
+                    formik.values.services?.ide?.gpuModelName ===
+                    type.resourceName
                   }
                   text={
                     <div className="grid w-full grid-cols-4">

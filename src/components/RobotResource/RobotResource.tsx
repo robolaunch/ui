@@ -18,24 +18,24 @@ export default function RobotResource(): ReactElement {
         {[
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.cpu?.allocatedCore}/${robotData.step1.cloudInstance.resources.cpu?.coreTotal} Core CPU`,
+            text: `${robotData.step1.resources.cpu?.allocatedCore}/${robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal} Core CPU`,
           },
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.gpu?.allocatedCore}/${robotData.step1.cloudInstance.resources.gpu?.coreTotal} vGPU/MIG`,
+            text: `${robotData.step1.resources.gpu?.allocatedCore}/${robotData.step1.tree.cloudInstance.resources.gpu?.coreTotal} vGPU/MIG`,
           },
           {
             icon: <FaMemory size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.memory?.allocatedCapacity}/${robotData.step1.cloudInstance.resources.memory?.capacityTotal} GB Memory`,
+            text: `${robotData.step1.resources.memory?.allocatedCapacity}/${robotData.step1.tree.cloudInstance.resources.memory?.capacityTotal} GB Memory`,
           },
           {
             icon: <MdOutlineStorage size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.storage?.allocatedCapacity}/${robotData.step1.cloudInstance.resources.storage?.capacityTotal} GB Storage`,
+            text: `${robotData.step1.resources.storage?.allocatedCapacity}/${robotData.step1.tree.cloudInstance.resources.storage?.capacityTotal} GB Storage`,
           },
         ].map((item, index) => {
           return (
             <Fragment key={index}>
-              {robotData.step1.cloudInstance.resources.cpu?.coreTotal ? (
+              {robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal ? (
                 <div
                   className="animate-fadeIn col-span-1 flex items-center gap-1.5"
                   key={index}

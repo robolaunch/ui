@@ -19,33 +19,38 @@ export default ({ children }: any) => {
 
   const initialRobotData: IRobotData = {
     step1: {
-      organization: {
-        id: "",
-        name: "",
-      },
-      region: {
-        name: "",
-      },
-      cloudInstance: {
-        id: "",
-        name: "",
-        resources: {
-          cpu: {
-            coreTotal: 0,
-          },
-          gpu: {
-            coreTotal: 0,
-          },
-          memory: {
-            capacityTotal: 0,
-          },
-          storage: {
-            capacityTotal: 0,
+      tree: {
+        organization: {
+          id: "",
+          name: "",
+        },
+        region: {
+          name: "",
+        },
+        cloudInstance: {
+          id: "",
+          name: "",
+          resources: {
+            cpu: {
+              coreTotal: 0,
+            },
+            gpu: {
+              coreTotal: 0,
+            },
+            memory: {
+              capacityTotal: 0,
+            },
+            storage: {
+              capacityTotal: 0,
+            },
           },
         },
-      },
-      namespace: {
-        name: "",
+        physicalInstance: {
+          name: "",
+        },
+        namespace: {
+          name: "",
+        },
       },
 
       resources: {
@@ -53,17 +58,23 @@ export default ({ children }: any) => {
           allocatedCore: 0,
         },
         gpu: {
+          enabledForCloudInstance: true,
           allocatedCore: 0,
         },
         memory: {
           allocatedCapacity: 0,
         },
         storage: {
-          allocatedCapacity: 0,
+          allocatedCapacity: 40,
         },
       },
 
       services: {
+        ros: {
+          isEnabled: true,
+          socketEndpoint: "",
+          rosDistros: [],
+        },
         vdi: {
           isEnabled: true,
           socketEndpoint: "",
@@ -95,7 +106,6 @@ export default ({ children }: any) => {
           log: "",
         },
       },
-
       directories: {
         permittedDirectories: "/home/robolaunch",
         persistentDirectories: "/var:/etc:/opt:/usr",
@@ -114,16 +124,12 @@ export default ({ children }: any) => {
           version: "",
         },
       },
-
-      rosDistros: [],
-      isEnabledROS2Bridge: true,
-
-      name: "",
-      isVirtualRobot: true,
-      physicalInstanceName: "",
-      configureWorkspace: false,
-      gpuEnabledForCloudInstance: true,
-      isDevelopmentMode: envApplication,
+      details: {
+        name: "",
+        isVirtualRobot: true,
+        configureWorkspace: false,
+        isDevelopmentMode: envApplication,
+      },
     },
     step2: {
       configureWorkspace: false,

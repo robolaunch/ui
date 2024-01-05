@@ -1,11 +1,11 @@
 import { getReadyEnvironments } from "../../toolkit/EnvironmentSlice";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IDetails } from "../../interfaces/robotInterfaces";
+import { FaDocker, FaLinux, FaTag } from "react-icons/fa";
 import { useAppDispatch } from "../../hooks/redux";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
-import { FaDocker, FaLinux, FaTag } from "react-icons/fa";
 
 interface ICFEnvCategories {
   formik: FormikProps<IDetails>;
@@ -27,7 +27,10 @@ export default function CFEnvCategories({
   }, [dispatch]);
 
   useEffect(() => {
-    if (formik.initialValues?.domainName !== formik.values?.domainName) {
+    if (
+      formik.initialValues?.applicationConfig?.domainName !==
+      formik.values?.applicationConfig?.domainName
+    ) {
       const initialApplication = { name: undefined, version: undefined };
       const initialDevspace = {
         desktop: undefined,
@@ -38,7 +41,10 @@ export default function CFEnvCategories({
       formik.setFieldValue("devspace", initialDevspace);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik?.values?.domainName, formik?.initialValues?.domainName]);
+  }, [
+    formik?.values?.applicationConfig?.domainName,
+    formik?.initialValues?.applicationConfig?.domainName,
+  ]);
 
   return (
     <Fragment>
@@ -46,7 +52,7 @@ export default function CFEnvCategories({
         label="Application Categories:"
         tip="You can choose the image category and application here."
         dataTut="create-application-step1-environment-selector"
-        error={formik.errors.application?.name}
+        error={formik.errors.applicationConfig?.application?.name}
         touched={true}
         vertical
       >
@@ -59,7 +65,9 @@ export default function CFEnvCategories({
             ).map((environment: any, index: number) => (
               <CFGridItem
                 key={index}
-                selected={formik.values?.domainName === environment}
+                selected={
+                  formik.values?.applicationConfig?.domainName === environment
+                }
                 disabled={disabled ? true : false}
                 text={(() => {
                   switch (environment) {
@@ -78,32 +86,39 @@ export default function CFEnvCategories({
                   }
                 })()}
                 onClick={() =>
-                  !disabled && formik.setFieldValue("domainName", environment)
+                  !disabled &&
+                  formik.setFieldValue(
+                    "applicationConfig.domainName",
+                    environment,
+                  )
                 }
                 className="!rounded-full !p-1.5"
               />
             ))}
           </div>
 
-          {formik.values?.domainName && (
+          {formik.values?.applicationConfig?.domainName && (
             <div className="grid grid-cols-2 gap-4">
               {responseReadyEnvironments
                 ?.filter(
-                  (env: any) => env?.domainName === formik.values?.domainName,
+                  (env: any) =>
+                    env?.domainName ===
+                    formik.values?.applicationConfig?.domainName,
                 )
                 ?.map((environment: any, index: number) => (
                   <CFGridItem
                     key={index}
                     selected={
-                      formik.values?.application?.name ===
+                      formik.values?.applicationConfig?.application?.name ===
                         environment?.application?.name &&
-                      formik.values?.application?.version ===
+                      formik.values?.applicationConfig?.application?.version ===
                         environment?.application?.version &&
-                      formik.values?.devspace?.desktop ===
+                      formik.values?.applicationConfig?.devspace?.desktop ===
                         environment?.devspace?.desktop &&
-                      formik.values?.devspace?.ubuntuDistro ===
+                      formik.values?.applicationConfig?.devspace
+                        ?.ubuntuDistro ===
                         environment?.devspace?.ubuntuDistro &&
-                      formik.values?.devspace?.version ===
+                      formik.values?.applicationConfig?.devspace?.version ===
                         environment?.devspace?.version
                     }
                     disabled={disabled ? true : false}
@@ -111,81 +126,24 @@ export default function CFEnvCategories({
                       !disabled &&
                         formik.setValues({
                           ...formik.values,
-                          application: {
-                            ...formik.values.application,
-                            name: environment?.application?.name,
-                            version: environment?.application?.version,
-                          },
-                          devspace: {
-                            ...formik.values.devspace,
-                            desktop: environment?.devspace?.desktop,
-                            ubuntuDistro: environment?.devspace?.ubuntuDistro,
-                            version: environment?.devspace?.version,
+                          applicationConfig: {
+                            ...formik.values.applicationConfig,
+                            application: {
+                              ...formik.values.applicationConfig.application,
+                              name: environment?.application?.name,
+                              version: environment?.application?.version,
+                            },
+                            devspace: {
+                              ...formik.values.applicationConfig.devspace,
+                              desktop: environment?.devspace?.desktop,
+                              ubuntuDistro: environment?.devspace?.ubuntuDistro,
+                              version: environment?.devspace?.version,
+                            },
                           },
                         });
                     }}
                     text={
                       <div className="flex w-full">
-                        {/* <img
-                          className="col-span-1 mx-auto w-11"
-                          src={`/svg/apps/${(() => {
-                            if (
-                              environment?.application?.name.includes(
-                                "carla",
-                              ) ||
-                              environment?.application?.version.includes(
-                                "carla",
-                              )
-                            ) {
-                              return "carla";
-                            }
-                            if (
-                              environment?.application?.name.includes("foxy") ||
-                              environment?.application?.version.includes("foxy")
-                            ) {
-                              return "foxy";
-                            }
-                            if (
-                              environment?.application?.name.includes(
-                                "galactic",
-                              ) ||
-                              environment?.application?.version.includes(
-                                "galactic",
-                              )
-                            ) {
-                              return "galactic";
-                            }
-                            if (
-                              environment?.application?.name.includes("iron") ||
-                              environment?.application?.version.includes("iron")
-                            ) {
-                              return "iron";
-                            }
-                            if (
-                              environment?.application?.name.includes(
-                                "humble",
-                              ) ||
-                              environment?.application?.version.includes(
-                                "humble",
-                              )
-                            ) {
-                              return "humble";
-                            }
-                            if (
-                              environment?.application?.name.includes(
-                                "isaac",
-                              ) ||
-                              environment?.application?.version.includes(
-                                "isaac",
-                              )
-                            ) {
-                              return "nvidia";
-                            }
-
-                            return "ubuntu";
-                          })()}.svg`}
-                          alt="img"
-                        /> */}
                         <img
                           className="flex h-full w-20 scale-75 items-center justify-center"
                           src={

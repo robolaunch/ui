@@ -7,9 +7,9 @@ export default function EnvironmentTitle(): ReactElement {
 
   return (
     <Fragment>
-      {robotData?.step1?.name ? (
+      {robotData?.step1.details?.name ? (
         <p className="animate-fadeIn text-lg font-medium">
-          {robotData?.step1?.name}
+          {robotData?.step1.details?.name}
         </p>
       ) : (
         <Skeleton className="min-h-5 min-w-24" />

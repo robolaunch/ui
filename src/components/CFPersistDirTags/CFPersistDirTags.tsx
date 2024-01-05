@@ -18,7 +18,7 @@ export default function CFPersistDirTags({
   const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
-    robotData.step1.persistentDirectories.split(":") || [
+    robotData.step1.directories.persistentDirectories.split(":") || [
       "/var",
       "/etc",
       "/opt",
@@ -48,7 +48,10 @@ export default function CFPersistDirTags({
   }, [selected]);
 
   useEffect(() => {
-    formik.setFieldValue("persistentDirectories", selected.join(":"));
+    formik.setFieldValue(
+      "directories.persistentDirectories",
+      selected.join(":"),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 

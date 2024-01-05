@@ -11,7 +11,10 @@ export const envKeycloakClientID: string =
   process.env.REACT_APP_KEYCLOAK_CLIENT_ID || "";
 
 export const envApplication: boolean =
-  process.env.REACT_APP_APPLICATION === "true" ? true : false;
+  process.env.REACT_APP_DEFAULT_MODE === "application" ? true : false;
+
+export const envSwitchable: boolean =
+  process.env.REACT_APP_SWITCHABLE === "switchable" ? true : false;
 
 export const envCreateOrganization: boolean =
   process.env.REACT_APP_CREATE_ORGANIZATION === "true" ? true : false;

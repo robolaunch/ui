@@ -4,15 +4,15 @@ import { useComponentSize } from "react-use-size/dist/useComponentSize";
 import StreamContext from "../../../contexts/VDIContext";
 import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
-import useRobot from "../../../hooks/useRobot";
 import { ReactElement, useState } from "react";
 import ImageSplitter from "./ImageSplitter";
+import useCreateRobot from "../../../hooks/useCreateRobot";
 
 export default function DevelopmentSuite(): ReactElement {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const { ref, width } = useComponentSize();
-  const { responseRobot } = useRobot();
   const { urls } = useAppSelector((state) => state.robot);
+  const { robotData } = useCreateRobot();
 
   return (
     <Card>
@@ -36,7 +36,7 @@ export default function DevelopmentSuite(): ReactElement {
             className={`animate-fadeIn h-full w-full ${
               isDragging && "pointer-events-none"
             }`}
-            src={urls?.ide || responseRobot?.ideIngressEndpoint}
+            src={urls?.ide || robotData.step1.services.ide.httpsEndpoint}
             title="Code Editor"
             style={{
               width: `${width}px`,

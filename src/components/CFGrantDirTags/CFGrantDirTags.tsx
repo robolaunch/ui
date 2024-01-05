@@ -18,13 +18,15 @@ export default function CFGrantDirTag({
   const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
-    robotData.step1.permittedDirectories.split(":") || ["/home/robolaunch"],
+    robotData.step1.directories.permittedDirectories.split(":") || [
+      "/home/robolaunch",
+    ],
   );
 
   useEffect(() => {
     if (!selected.includes("/home/robolaunch")) {
       formik.setFieldValue(
-        "permittedDirectories",
+        "directories.permittedDirectories",
         [...selected, "/home/robolaunch"].join(":"),
       );
 
@@ -32,7 +34,10 @@ export default function CFGrantDirTag({
       return;
     }
 
-    formik.setFieldValue("permittedDirectories", selected.join(":"));
+    formik.setFieldValue(
+      "directories.permittedDirectories",
+      selected.join(":"),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 

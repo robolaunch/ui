@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 interface IInformationWidget {
   title: string;
@@ -25,7 +25,7 @@ export default function InformationWidget({
       }}
     >
       <div className="flex flex-col gap-6">
-        <span className="text-2xl font-semibold text-light-600 ">{title}</span>
+        <span className="text-xl font-semibold text-light-900">{title}</span>
         <p className="text-xs !leading-6 text-light-500">{subtitle}</p>
       </div>
       {component}

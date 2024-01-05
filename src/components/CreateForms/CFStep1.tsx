@@ -51,7 +51,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.name || url?.robotName!,
+        robotName: robotData?.step1?.details?.name || url?.robotName!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -77,9 +77,10 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
           window.location.href = `/${selectedState?.organization?.organizationName?.split(
             "_",
           )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.name}}`;
+            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.details
+            ?.name}}`;
         }, 2000);
-      } else if (!formik.values?.isVirtualRobot) {
+      } else if (!formik.values?.details?.isVirtualRobot) {
         addPhysicalInstanceToFleet();
       }
 
@@ -98,11 +99,12 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
   }, [formik.values]);
 
   useEffect(() => {
-    if (formik.values.isVirtualRobot) {
-      formik.setFieldValue("physicalInstanceName", "");
+    if (formik.values.details.isVirtualRobot) {
+      formik.setFieldValue("tree.physicalInstance.name", "");
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values.isVirtualRobot]);
+  }, [formik.values.details.isVirtualRobot]);
 
   return (
     <Fragment>

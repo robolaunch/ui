@@ -16,40 +16,51 @@ export default function CFHostDirectoriesInput({
   disabled,
 }: ICFHostDirectoriesInput): ReactElement {
   return (
-    <div className="border-light-100 flex  w-full gap-3 rounded-md border p-4">
+    <div className="flex w-full  gap-3 rounded-md border border-light-100 p-4">
       <FormInputText
         labelName="Host Directory:"
         labelInfoTip="Type a host directory."
         inputProps={formik.getFieldProps(
-          `hostDirectories.${index}.hostDirectory`,
+          `directories.hostDirectories.${index}.hostDirectory`,
         )}
         disabled={disabled}
         inputError={
           // @ts-ignore
-          formik.errors.hostDirectories?.[index]?.hostDirectory
+          formik.errors.directories?.hostDirectories?.[index]?.hostDirectory
         }
-        inputTouched={formik.touched.hostDirectories?.[index]?.hostDirectory}
+        inputTouched={
+          formik.touched.directories?.hostDirectories?.[index]?.hostDirectory
+        }
       />
 
       <FormInputText
         labelName="Mount Path:"
         labelInfoTip="Type a mount path."
-        inputProps={formik.getFieldProps(`hostDirectories.${index}.mountPath`)}
+        inputProps={formik.getFieldProps(
+          `directories.hostDirectories.${index}.mountPath`,
+        )}
         disabled={disabled}
         inputError={
           // @ts-ignore
-          formik.errors.hostDirectories?.[index]?.mountPath
+          formik.errors.directories?.hostDirectories?.[index]?.mountPath
         }
-        inputTouched={formik.touched.hostDirectories?.[index]?.mountPath}
+        inputTouched={
+          formik.touched.directories?.hostDirectories?.[index]?.mountPath
+        }
       />
 
-      <div className="text-light-800 flex items-center justify-center pt-2.5 text-sm">
+      <div className="flex items-center justify-center pt-2.5 text-sm text-light-800">
         <CFDellButton
           disabled={disabled}
           onClick={() => {
-            const hostDirectories = [...formik.values.hostDirectories];
+            const hostDirectories = [
+              ...formik.values.directories.hostDirectories,
+            ];
             hostDirectories.splice(index, 1);
-            formik.setFieldValue("hostDirectories", hostDirectories);
+            formik.setFieldValue(
+              "directories.hostDirectories",
+              hostDirectories,
+            );
           }}
         />
       </div>

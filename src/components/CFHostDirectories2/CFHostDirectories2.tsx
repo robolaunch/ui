@@ -22,7 +22,7 @@ export default function CFHostDirectories({
         vertical
       >
         <div className="flex flex-col gap-2">
-          {formik.values.hostDirectories?.map((_, index) => {
+          {formik.values.directories.hostDirectories?.map((_, index) => {
             return (
               <CFHostDirectoriesInput
                 key={index}
@@ -37,8 +37,8 @@ export default function CFHostDirectories({
 
       <CreateRobotFormAddButton
         onClick={() => {
-          formik.setFieldValue("hostDirectories", [
-            ...formik.values.hostDirectories,
+          formik.setFieldValue("directories.hostDirectories", [
+            ...formik.values.directories.hostDirectories,
             {
               hostDirectory: "",
               mountPath: "",

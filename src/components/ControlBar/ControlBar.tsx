@@ -8,12 +8,11 @@ import {
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import FileBrowser from "../FileBrowser/FileBrowser";
-import ServiceJobs from "../ServiceJobs/ServiceJobs";
 import ServiceLogs from "../ServiceLogs/ServiceLogs";
 import { FullScreenHandle } from "react-full-screen";
 
 interface IControlBar {
-  type: "ide" | "vdi" | "jupyter-notebook";
+  type: "ide" | "vdi" | "jupyterNotebook";
   handleFullScreen: FullScreenHandle;
 }
 
@@ -38,9 +37,10 @@ export default function ControlBar({
       {isOpenMenu && (
         <div className="flex items-center gap-6 rounded-t-lg bg-light-100 px-6 pb-2 pt-3">
           <FileBrowser type={type} />
-          <ServiceJobs type={type} />
           <ServiceLogs type={type} />
           <RestartService type={type} />
+          {type === "vdi" && <RestartService type="soft-vdi" />}
+
           <FullScreenService handleFullScreen={handleFullScreen} />
 
           {type === "vdi" && <VDIVolumeControl />}

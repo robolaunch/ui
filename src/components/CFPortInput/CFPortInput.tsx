@@ -1,9 +1,9 @@
 import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
+import CFDellButton from "../CFDellButton/CFDellButton";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
-import CFDellButton from "../CFDellButton/CFDellButton";
 
 interface ICFPortInput {
   formik: FormikProps<IDetails>;
@@ -28,24 +28,26 @@ export default function CFPortInput({
           switch (type) {
             case "jupyter-notebook":
               return formik.getFieldProps(
-                `jupyterNotebook.customPorts[${portIndex}].name`,
+                `services.jupyterNotebook.customPorts.[${portIndex}].name`,
               );
             default:
               return formik.getFieldProps(
-                `${type}CustomPorts[${portIndex}].name`,
+                `services.${type}.customPorts.[${portIndex}].name`,
               );
           }
         })()}
         inputError={(() => {
           switch (type) {
             case "jupyter-notebook":
-              return (
+              return formik.errors?.services?.jupyterNotebook?.customPorts?.[
+                portIndex
                 // @ts-ignore
-                formik.errors?.jupyterNotebook?.customPorts?.[portIndex]?.name
-              );
+              ]?.name;
             default:
-              // @ts-ignore
-              return formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.name;
+              return formik.errors?.services?.[`${type}`]?.customPorts?.[
+                portIndex
+                // @ts-ignore
+              ]?.name;
           }
         })()}
         inputTouched={(() => {
@@ -53,11 +55,15 @@ export default function CFPortInput({
             case "jupyter-notebook":
               return (
                 // @ts-ignore
-                formik.touched?.jupyterNotebook?.customPorts?.[portIndex]?.name
+                formik.touched?.services?.jupyterNotebook?.customPorts?.[
+                  portIndex
+                ]?.name
               );
             default:
               // @ts-ignore
-              return formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.name;
+              return formik.touched?.services?.[`${type}`]?.customPorts?.[
+                portIndex
+              ]?.name;
           }
         })()}
         classNameContainer="w-1/3"
@@ -71,24 +77,26 @@ export default function CFPortInput({
           switch (type) {
             case "jupyter-notebook":
               return formik.getFieldProps(
-                `jupyterNotebook.customPorts[${portIndex}].port`,
+                `services.jupyterNotebook.customPorts[${portIndex}].port`,
               );
             default:
               return formik.getFieldProps(
-                `${type}CustomPorts[${portIndex}].port`,
+                `services.${type}.customPorts[${portIndex}].port`,
               );
           }
         })()}
         inputError={(() => {
           switch (type) {
             case "jupyter-notebook":
-              return (
+              return formik.errors?.services?.jupyterNotebook?.customPorts?.[
+                portIndex
                 // @ts-ignore
-                formik.errors?.jupyterNotebook?.customPorts?.[portIndex]?.port
-              );
+              ]?.port;
             default:
-              // @ts-ignore
-              return formik.errors?.[`${type}CustomPorts`]?.[portIndex]?.port;
+              return formik.errors?.services?.[`${type}`]?.customPorts?.[
+                portIndex
+                // @ts-ignore
+              ]?.port;
           }
         })()}
         inputTouched={(() => {
@@ -96,11 +104,15 @@ export default function CFPortInput({
             case "jupyter-notebook":
               return (
                 // @ts-ignore
-                formik.touched?.jupyterNotebook?.customPorts?.[portIndex]?.port
+                formik.touched?.services?.jupyterNotebook?.customPorts?.[
+                  portIndex
+                ]?.port
               );
             default:
               // @ts-ignore
-              return formik.touched?.[`${type}CustomPorts`]?.[portIndex]?.port;
+              return formik.touched?.services?.[`${type}`]?.customPorts?.[
+                portIndex
+              ]?.port;
           }
         })()}
         type="number"
@@ -120,10 +132,11 @@ export default function CFPortInput({
           {(() => {
             switch (type) {
               case "jupyter-notebook":
-                return formik.values?.jupyterNotebook?.customPorts?.[portIndex]
-                  ?.backendPort;
+                return formik.values?.services.jupyterNotebook?.customPorts?.[
+                  portIndex
+                ]?.backendPort;
               default:
-                return formik.values?.[`${type}CustomPorts`]?.[portIndex]
+                return formik.values?.services?.[type]?.customPorts?.[portIndex]
                   ?.backendPort;
             }
           })()}
@@ -136,18 +149,18 @@ export default function CFPortInput({
             switch (type) {
               case "jupyter-notebook":
                 formik.setFieldValue(
-                  `jupyterNotebook.customPorts`,
+                  `services.jupyterNotebook.customPorts`,
                   // @ts-ignore
-                  formik.values?.jupyterNotebook?.customPorts.filter(
+                  formik.values?.services.jupyterNotebook?.customPorts.filter(
                     (port: any, index: number) => index !== portIndex,
                   ),
                 );
                 break;
               default:
                 formik.setFieldValue(
-                  `${type}CustomPorts`,
+                  `services.${type}.customPorts`,
                   // @ts-ignore
-                  formik.values?.[`${type}CustomPorts`].filter(
+                  formik.values?.services?.[type].customPorts.filter(
                     (port: any, index: number) => index !== portIndex,
                   ),
                 );

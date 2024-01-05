@@ -36,10 +36,10 @@ export default function CFPortSetter({
       );
 
       if (
-        formik.values.ideCustomPorts
+        formik.values.services.ide.customPorts
           ?.map((port: any) => port.backendPort)
           .includes(result.payload) ||
-        formik.values.vdiCustomPorts
+        formik.values.services.vdi.customPorts
           ?.map((port: any) => port.backendPort)
           .includes(result.payload) ||
         formik.values.services.jupyterNotebook.customPorts
@@ -94,7 +94,7 @@ export default function CFPortSetter({
                 );
 
               default:
-                return formik.values?.[`${type}CustomPorts`]?.map(
+                return formik.values?.services?.[`${type}`]?.customPorts?.map(
                   (_: any, index: number) => {
                     return (
                       <CFPortInput
@@ -117,8 +117,8 @@ export default function CFPortSetter({
         onClick={async () => {
           if (type === "ide" || type === "vdi") {
             await formik.setFieldValue(
-              `${type}CustomPorts`,
-              formik.values?.[`${type}CustomPorts`]?.concat({
+              `services.${type}.customPorts`,
+              formik.values?.services?.[`${type}`]?.customPorts?.concat({
                 name: "",
                 port: undefined,
                 backendPort: await getPort(),

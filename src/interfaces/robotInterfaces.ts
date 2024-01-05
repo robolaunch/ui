@@ -145,40 +145,51 @@ export interface IRobotData {
 }
 
 export interface IDetails {
-  organization: {
-    id: string;
+  details: {
     name: string;
+    isVirtualRobot: boolean;
+    configureWorkspace: boolean;
+    isDevelopmentMode: boolean;
   };
-  region: {
-    name: string;
-  };
-  cloudInstance: {
-    name: string;
-    id: string;
-    resources: {
-      cpu: {
-        coreTotal: number;
-      };
-      gpu: {
-        coreTotal: number;
-      };
-      memory: {
-        capacityTotal: number;
-      };
-      storage: {
-        capacityTotal: number;
+  tree: {
+    organization: {
+      id: string;
+      name: string;
+    };
+    region: {
+      name: string;
+    };
+    cloudInstance: {
+      name: string;
+      id: string;
+      resources: {
+        cpu: {
+          coreTotal: number;
+        };
+        gpu: {
+          coreTotal: number;
+        };
+        memory: {
+          capacityTotal: number;
+        };
+        storage: {
+          capacityTotal: number;
+        };
       };
     };
+    physicalInstance: {
+      name: string;
+    };
+    namespace: {
+      name: string;
+    };
   };
-  namespace: {
-    name: string;
-  };
-
   resources: {
     cpu: {
       allocatedCore: number;
     };
     gpu: {
+      enabledForCloudInstance: boolean;
       allocatedCore: number;
     };
     memory: {
@@ -188,8 +199,12 @@ export interface IDetails {
       allocatedCapacity: number;
     };
   };
-
   services: {
+    ros: {
+      isEnabled: boolean;
+      rosDistros: any[];
+      socketEndpoint: string;
+    };
     vdi: {
       isEnabled: boolean;
       socketEndpoint: string;
@@ -221,16 +236,6 @@ export interface IDetails {
       log: string;
     };
   };
-
-  name: string;
-  isVirtualRobot: boolean;
-  physicalInstanceName: string;
-  configureWorkspace: boolean;
-  isEnabledROS2Bridge: boolean;
-  rosDistros: string[];
-  gpuEnabledForCloudInstance: boolean;
-  isDevelopmentMode: boolean;
-
   directories: {
     permittedDirectories: string;
     persistentDirectories: string;

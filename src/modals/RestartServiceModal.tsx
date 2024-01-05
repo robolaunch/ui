@@ -1,12 +1,12 @@
 import { restartService, vdiSoftReload } from "../toolkit/ServiceSlice";
+import useCreateRobot from "../hooks/useCreateRobot";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
-import useCreateRobot from "../hooks/useCreateRobot";
 interface IDeleteRobotModalModal {
-  type: "ide" | "vdi" | "soft-vdi" | "jupyter-notebook";
+  type: "ide" | "vdi" | "soft-vdi" | "jupyterNotebook";
   handleCloseModal: () => void;
 }
 
@@ -27,12 +27,12 @@ export default function RestartServiceModal({
     if (type === "soft-vdi") {
       await dispatch(
         vdiSoftReload({
-          organizationId: robotData.step1.organization.id,
-          roboticsCloudName: robotData.step1.region.name,
-          region: robotData.step1.region.name,
-          fleetName: robotData.step1.namespace.name,
-          instanceId: robotData.step1.cloudInstance.id,
-          environmentName: robotData.step1.name,
+          organizationId: robotData.step1.tree.organization.id,
+          roboticsCloudName: robotData.step1.tree.region.name,
+          region: robotData.step1.tree.region.name,
+          fleetName: robotData.step1.tree.namespace.name,
+          instanceId: robotData.step1.tree.cloudInstance.id,
+          environmentName: robotData.step1.details.name,
           podName: robotData.step1.services.vdi.podName,
         }),
       );
@@ -46,18 +46,18 @@ export default function RestartServiceModal({
 
     await dispatch(
       restartService({
-        organizationId: robotData.step1.organization.id,
-        roboticsCloudName: robotData.step1.region.name,
-        region: robotData.step1.region.name,
-        fleetName: robotData.step1.namespace.name,
-        instanceId: robotData.step1.cloudInstance.id,
+        organizationId: robotData.step1.tree.organization.id,
+        roboticsCloudName: robotData.step1.tree.region.name,
+        region: robotData.step1.tree.region.name,
+        fleetName: robotData.step1.tree.namespace.name,
+        instanceId: robotData.step1.tree.cloudInstance.id,
         environmentName: responseRobot.name,
         podName:
           type === "ide"
             ? robotData.step1.services.ide.podName
             : type === "vdi"
               ? robotData.step1.services.vdi.podName
-              : type === "jupyter-notebook"
+              : type === "jupyterNotebook"
                 ? robotData?.step1?.services.jupyterNotebook?.podName
                 : "",
       }),

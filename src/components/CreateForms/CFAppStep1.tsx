@@ -3,6 +3,8 @@ import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import { CFAppStep1Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
+import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
+import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -11,14 +13,12 @@ import useFunctions from "../../hooks/useFunctions";
 import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
 import CFVDICount from "../CFVDICount/CFVDICount";
 import Seperator from "../Seperator/Seperator";
-import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
 import CFSection from "../CFSection/CFSection";
 import CFGpuCore from "../CFGpuCore/CFGpuCore";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
-import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -41,7 +41,7 @@ export default function CFAppStep1({
     onSubmit: async () => {
       formik.setSubmitting(true);
 
-      if (!formik.values.configureWorkspace) {
+      if (!formik.values.details.configureWorkspace) {
         await createEnvironment(true).then(async () => {
           setSidebarState((prevState) => ({
             ...prevState,

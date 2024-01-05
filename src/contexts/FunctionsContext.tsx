@@ -1196,52 +1196,74 @@ export default ({ children }: any) => {
               ...prevState,
               step1: {
                 ...prevState.step1,
-                organization: {
-                  id: selectedState?.organization?.organizationId,
-                  name: orgNameViewer(
-                    selectedState?.organization?.organizationName!,
-                  ),
+                details: {
+                  name: responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.environments[0]?.name,
+                  isVirtualRobot: responseEnvironment?.payload?.data[0]
+                    ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                    ?.physicalInstance
+                    ? false
+                    : true,
+                  isDevelopmentMode: false,
+                  configureWorkspace: false,
                 },
-                region: {
-                  name: selectedState?.instance?.region,
-                },
-                cloudInstance: {
-                  id: selectedState?.instance?.instanceId,
-                  name: selectedState?.instance?.name,
-                  resources: {
-                    cpu: {
-                      coreTotal:
-                        selectedState?.instance?.cloudInstanceResource
-                          ?.cpuTotal,
-                    },
-                    gpu: {
-                      coreTotal:
-                        selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                          ?.map(
-                            (gpu: any) =>
-                              Number(gpu?.allocated) + Number(gpu?.capacity),
-                          )
-                          .reduce((a: any, b: any) => a + b, 0),
-                    },
-                    memory: {
-                      capacityTotal:
-                        selectedState?.instance?.cloudInstanceResource
-                          ?.memoryTotal,
-                    },
-                    storage: {
-                      capacityTotal: 0,
+                tree: {
+                  organization: {
+                    id: selectedState?.organization?.organizationId,
+                    name: orgNameViewer(
+                      selectedState?.organization?.organizationName!,
+                    ),
+                  },
+                  region: {
+                    name: selectedState?.instance?.region,
+                  },
+                  cloudInstance: {
+                    id: selectedState?.instance?.instanceId,
+                    name: selectedState?.instance?.name,
+                    resources: {
+                      cpu: {
+                        coreTotal:
+                          selectedState?.instance?.cloudInstanceResource
+                            ?.cpuTotal,
+                      },
+                      gpu: {
+                        coreTotal:
+                          selectedState?.instance?.cloudInstanceResource?.gpuUsage
+                            ?.map(
+                              (gpu: any) =>
+                                Number(gpu?.allocated) + Number(gpu?.capacity),
+                            )
+                            .reduce((a: any, b: any) => a + b, 0),
+                      },
+                      memory: {
+                        capacityTotal:
+                          selectedState?.instance?.cloudInstanceResource
+                            ?.memoryTotal,
+                      },
+                      storage: {
+                        capacityTotal: 0,
+                      },
                     },
                   },
+                  physicalInstance: {
+                    name: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                      ?.physicalInstance,
+                  },
+                  namespace: {
+                    name: selectedState?.fleet?.name,
+                  },
                 },
-                namespace: {
-                  name: selectedState?.fleet?.name,
-                },
-
                 resources: {
                   cpu: {
                     allocatedCore: 0,
                   },
                   gpu: {
+                    enabledForCloudInstance:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.vdiGpuResource > 0
+                        ? true
+                        : false,
                     allocatedCore:
                       Number(
                         responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
@@ -1269,8 +1291,15 @@ export default ({ children }: any) => {
                     ),
                   },
                 },
-
                 services: {
+                  ros: {
+                    isEnabled:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
+                    rosDistros:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.distributions,
+                  },
                   vdi: {
                     isEnabled:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
@@ -1406,29 +1435,6 @@ export default ({ children }: any) => {
                     responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                       ?.cloudInstances[0]?.environments[0]?.devspace,
                 },
-
-                name: responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                  ?.cloudInstances[0]?.environments[0]?.name,
-                isVirtualRobot: responseEnvironment?.payload?.data[0]
-                  ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                  ?.physicalInstance
-                  ? false
-                  : true,
-                physicalInstanceName:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.physicalInstance,
-                isEnabledROS2Bridge:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
-                rosDistros:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.distributions,
-                gpuEnabledForCloudInstance:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.vdiGpuResource > 0
-                    ? true
-                    : false,
-                isDevelopmentMode: false,
               },
               step2: {
                 workspaces:
@@ -1462,7 +1468,7 @@ export default ({ children }: any) => {
             region: selectedState?.roboticsCloud?.region,
             robolaunchFederatedFleetsName: selectedState?.fleet?.name,
             robolaunchPhysicalInstancesName:
-              robotData.step1.physicalInstanceName,
+              robotData.step1.tree.physicalInstance.name,
           }),
         );
         resolve();
@@ -1512,19 +1518,19 @@ export default ({ children }: any) => {
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
-            robotName: robotData?.step1?.name,
-            physicalInstanceName: robotData?.step1?.isVirtualRobot
+            robotName: robotData?.step1?.details.name,
+            physicalInstanceName: robotData?.step1?.details.isVirtualRobot
               ? undefined
-              : robotData?.step1?.physicalInstanceName,
-            distributions: robotData?.step1?.rosDistros,
-            bridgeEnabled: robotData?.step1?.isEnabledROS2Bridge,
+              : robotData?.step1?.tree.physicalInstance.name,
+            distributions: robotData?.step1?.services.ros.rosDistros,
+            bridgeEnabled: robotData?.step1?.services.ros.isEnabled,
             vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
             ideEnabled: robotData?.step1?.services.ide?.isEnabled,
             storageAmount:
               robotData?.step1?.resources.storage.allocatedCapacity,
             gpuEnabledForCloudInstance:
-              robotData?.step1?.gpuEnabledForCloudInstance,
+              robotData?.step1?.resources.gpu.enabledForCloudInstance,
             workspaces: robotData.step2.workspaces,
             permittedDirectories:
               robotData?.step1?.directories.permittedDirectories,
@@ -1567,7 +1573,7 @@ export default ({ children }: any) => {
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
             fleetName: selectedState?.fleet?.name,
-            environmentName: robotData?.step1?.name,
+            environmentName: robotData?.step1?.details.name,
             storageAmount:
               robotData?.step1?.resources.storage.allocatedCapacity,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
@@ -1635,9 +1641,9 @@ export default ({ children }: any) => {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        robotName: robotData?.step1?.name,
+        robotName: robotData?.step1?.details.name,
         fleetName: selectedState?.fleet?.name,
-        physicalInstanceName: robotData?.step1?.physicalInstanceName,
+        physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
         buildManagerName: robotData?.step3?.buildManagerName,
         robotBuildSteps: robotData?.step3?.robotBuildSteps,
       }),

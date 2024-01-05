@@ -243,7 +243,7 @@ export default function SidebarContentLayout(): ReactElement {
 
   return (
     <div
-      className={`w-fill-available animate-fadeInLeftBig animate__faster fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-light-200 bg-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
+      className={`w-fill-available animate-fadeInLeftBig fixed left-16 z-[32] flex h-full select-none flex-col justify-between rounded-r-xl border-r border-light-200 bg-light-50 shadow-2xl md:w-[38rem] lg:left-20 ${
         url?.robotName || sidebarState?.isCreateMode ? "px-8 pb-2 pt-8" : "p-6"
       }`}
     >

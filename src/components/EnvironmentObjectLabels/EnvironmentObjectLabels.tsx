@@ -9,19 +9,19 @@ export default function EnvironmentObjectLabels(): ReactElement {
   return (
     <Fragment>
       {[
-        `Organization: ${robotData.step1.organization?.name}
+        `Organization: ${robotData.step1.tree.organization?.name}
         `,
-        `Region: ${robotData.step1.region?.name}`,
-        `Instance: ${robotData.step1.cloudInstance?.name}`,
-        `${envApplication ? "Namespace" : "Fleet"}: ${robotData.step1.namespace
-          ?.name}`,
+        `Region: ${robotData.step1.tree.region?.name}`,
+        `Instance: ${robotData.step1.tree.cloudInstance?.name}`,
+        `${envApplication ? "Namespace" : "Fleet"}: ${robotData.step1.tree
+          .namespace?.name}`,
       ].map((item, index) => {
         return (
           <div className="flex items-center gap-1.5" key={index}>
-            {robotData.step1?.name ? (
+            {robotData.step1.details?.name ? (
               <Fragment>
                 {(() => {
-                  if (!robotData.step1?.name) {
+                  if (!robotData.step1.details?.name) {
                     return;
                   }
                   switch (index) {

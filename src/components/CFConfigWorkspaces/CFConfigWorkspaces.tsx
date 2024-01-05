@@ -18,9 +18,9 @@ export default function CFConfigWorkspaces({
       labelInfoTip="If you want to specify workspaces, you can do so here."
       dataTut="create-robot-step1-ros2-bridge"
       disabled={disabled}
-      checked={formik?.values?.configureWorkspace}
+      checked={formik?.values?.details.configureWorkspace}
       onChange={(e: boolean) => {
-        formik.setFieldValue("configureWorkspace", e);
+        formik.setFieldValue("details.configureWorkspace", e);
       }}
     />
   );

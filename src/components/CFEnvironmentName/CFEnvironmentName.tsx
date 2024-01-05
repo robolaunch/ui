@@ -19,9 +19,9 @@ export default function CFEnvironmentName({
       dataTut="create-application-step1-name"
       disabled={formik.isSubmitting || disabled}
       inputHoverText="You can't change application name because this application is created before."
-      inputProps={formik.getFieldProps("name")}
-      inputError={formik.errors.name}
-      inputTouched={formik.touched.name}
+      inputProps={formik.getFieldProps("details.name")}
+      inputError={formik.errors.details?.name}
+      inputTouched={formik.touched.details?.name}
     />
   );
 }

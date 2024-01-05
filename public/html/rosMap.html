@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -43,11 +43,11 @@
           gridClient.on("change", function () {
             viewer.scaleToDimensions(
               gridClient.currentGrid.width,
-              gridClient.currentGrid.height
+              gridClient.currentGrid.height,
             );
             viewer.shift(
               gridClient.currentGrid.pose.position.x,
-              gridClient.currentGrid.pose.position.y
+              gridClient.currentGrid.pose.position.y,
             );
           });
 
@@ -74,11 +74,11 @@
               gridClient2.on("change", function () {
                 viewer2.scaleToDimensions(
                   gridClient2.currentGrid.width,
-                  gridClient2.currentGrid.height
+                  gridClient2.currentGrid.height,
                 );
                 viewer2.shift(
                   gridClient2.currentGrid.pose.position.x,
-                  gridClient2.currentGrid.pose.position.y
+                  gridClient2.currentGrid.pose.position.y,
                 );
                 continuous = false;
                 gridClien2 = null;
@@ -89,10 +89,6 @@
               if (temp.children.length > 1) {
                 temp.removeChild(temp.children[0]);
               }
-
-              // temp.children[0].classList.add("animate__animated");
-              // temp.children[0].classList.add("animate__fadeIn");
-              // temp.children[0].classList.add("animate__animate__slower");
             }, 7000);
           }
 
