@@ -7,16 +7,17 @@ import CodeEditor from "../../pages/EnvironmentPage/CodeEditor/CodeEditor";
 import Overview from "../../pages/EnvironmentPage/Overview/Overview";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 import FileManager from "../../components/FileManager/FileManager";
-import { envApplication } from "../../helpers/envProvider";
 import MissionContext from "../../contexts/MissionContext";
 import BarcodeContext from "../../contexts/BarcodeContext";
 import TaskManagementLayout from "../TaskManagementLayout";
 import { ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";
 import JupyterNotebook from "../../pages/EnvironmentPage/JupyterNotebook/JupyterNotebook";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function EnvironmentPageLayout(): ReactElement {
   const { activeTab, setActiveTab, isSettedCookie } = useRobot();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <div className="flex h-full flex-col gap-6">
@@ -29,7 +30,7 @@ export default function EnvironmentPageLayout(): ReactElement {
                 informationWidgetAction={() => {
                   isSettedCookie &&
                     setActiveTab(
-                      envApplication ? "Development Suite" : "Teleoperation",
+                      applicationMode ? "Development Suite" : "Teleoperation",
                     );
                 }}
               />

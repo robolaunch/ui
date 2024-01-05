@@ -1,12 +1,14 @@
 import SidebarStaticItem from "../SidebarStaticItem/SidebarStaticItem";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
-import { envApplication } from "../../helpers/envProvider";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function PrivateSidebar(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   const { sidebarState } = useMain();
   const url = useParams();
 
@@ -39,7 +41,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="robot"
                 description={`You can access all your ${
-                  envApplication ? "applications" : "robots"
+                  applicationMode ? "applications" : "robots"
                 } here.`}
                 loading={isLoading}
                 disabled={
@@ -62,7 +64,7 @@ export default function PrivateSidebar(): ReactElement {
                     sidebarState?.page === "launchsmanager")
                 }
               />
-              {!envApplication && (
+              {!applicationMode && (
                 <Fragment>
                   <SideBarMenuItem
                     type="buildsmanager"
@@ -108,7 +110,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="fleet"
                 description={
-                  envApplication
+                  applicationMode
                     ? "You can access all your namespaces here."
                     : "You can access all your fleets here."
                 }
@@ -116,7 +118,7 @@ export default function PrivateSidebar(): ReactElement {
               <SideBarMenuItem
                 type="robot"
                 description={
-                  envApplication
+                  applicationMode
                     ? "You can access all your applications here."
                     : "You can access all your robots here."
                 }

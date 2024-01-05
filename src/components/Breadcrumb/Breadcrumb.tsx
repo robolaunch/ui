@@ -9,9 +9,11 @@ import {
   RiUser3Fill,
   RiUserSettingsFill,
 } from "react-icons/ri";
-import { envApplication } from "../../helpers/envProvider";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function Breadcrumb(): ReactElement {
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   const breadcrumbs = useBreadcrumbs();
   const params = useParams();
 
@@ -75,7 +77,7 @@ export default function Breadcrumb(): ReactElement {
                       <img
                         className="w-3"
                         src={
-                          envApplication
+                          applicationMode
                             ? "/svg/general/application/application-dark.svg"
                             : "/svg/general/robot/robot-dark.svg"
                         }
@@ -104,16 +106,17 @@ export default function Breadcrumb(): ReactElement {
                 {item?.breadcrumb?.props?.children === "Home"
                   ? item?.breadcrumb?.props?.children
                   : item?.breadcrumb?.props?.children === "Billing"
-                  ? item?.breadcrumb?.props?.children
-                  : item?.breadcrumb?.props?.children === "User role management"
-                  ? "User Role Management"
-                  : item?.breadcrumb?.props?.children === "Profile"
-                  ? item?.breadcrumb?.props?.children
-                  : item?.breadcrumb?.props?.children === "Marketplace"
-                  ? item?.breadcrumb?.props?.children
-                  : item?.breadcrumb?.props?.children === "Trial"
-                  ? item?.breadcrumb?.props?.children
-                  : stringSlugify(item?.breadcrumb?.props?.children)}
+                    ? item?.breadcrumb?.props?.children
+                    : item?.breadcrumb?.props?.children ===
+                        "User role management"
+                      ? "User Role Management"
+                      : item?.breadcrumb?.props?.children === "Profile"
+                        ? item?.breadcrumb?.props?.children
+                        : item?.breadcrumb?.props?.children === "Marketplace"
+                          ? item?.breadcrumb?.props?.children
+                          : item?.breadcrumb?.props?.children === "Trial"
+                            ? item?.breadcrumb?.props?.children
+                            : stringSlugify(item?.breadcrumb?.props?.children)}
               </span>
             </Link>
             <span className="mt-[0.1rem] scale-[1.32]">

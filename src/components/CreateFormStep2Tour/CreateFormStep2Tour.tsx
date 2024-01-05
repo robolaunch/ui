@@ -1,15 +1,17 @@
 import { getGuideItem } from "../../functions/handleGuide";
-import { envApplication } from "../../helpers/envProvider";
+import { useAppSelector } from "../../hooks/redux";
 import TourGuide from "../TourGuide/TourGuide";
 import { ReactElement } from "react";
 
 export default function CreateFormStep2Tour(): ReactElement {
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   return (
     <TourGuide
       hiddenButton
       type="createRobotStep2"
       tourConfig={
-        envApplication
+        applicationMode
           ? [
               getGuideItem("[data-tut='create-robot-step2-workspaces']"),
               getGuideItem(

@@ -3,11 +3,11 @@ import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { envApplication } from "../../helpers/envProvider";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -23,6 +23,7 @@ export default function CloudInstancesList({
   );
   const { selectedState } = useMain();
   const { getInstances } = useFunctions();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(
     () => {
@@ -63,7 +64,7 @@ export default function CloudInstancesList({
 
   return (
     <Fragment>
-      {!(envApplication || envApplication) && <SidebarInstancesTabs />}
+      {!(applicationMode || applicationMode) && <SidebarInstancesTabs />}
       {!selectedState?.organization || !selectedState?.roboticsCloud ? (
         <SidebarInfo
           text={`Select an ${

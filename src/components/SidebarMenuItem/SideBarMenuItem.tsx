@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import SidebarMenuItemToolTip from "../SidebarMenuItemToolTip/SidebarMenuItemToolTip";
-import { envApplication } from "../../helpers/envProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import { isDesktop } from "react-device-detect";
 import useTheme from "../../hooks/useTheme";
 import useMain from "../../hooks/useMain";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ISideBarMenuItem {
   type: string;
@@ -24,6 +24,7 @@ export default function SideBarMenuItem({
   const { sidebarState, setSidebarState, selectedState } = useMain();
   const navigate = useNavigate();
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     activeSwitcher();
@@ -114,14 +115,14 @@ export default function SideBarMenuItem({
           src={`/svg/general/${(() => {
             switch (type) {
               case "robot":
-                return envApplication ? "application" : "robot";
+                return applicationMode ? "application" : "robot";
               case "back":
-                return envApplication ? "back-application" : "back";
+                return applicationMode ? "back-application" : "back";
               default:
                 return type;
             }
           })()}/${
-            envApplication && type === "robot" ? "application" : type
+            applicationMode && type === "robot" ? "application" : type
           }-${colorSwitcher()}.svg`}
           alt="robolaunch"
           style={{ filter: "drop-shadow(0 0 0.5px #00000035" }}
@@ -137,11 +138,11 @@ export default function SideBarMenuItem({
                 : type === "instance"
                   ? "Instances"
                   : type === "fleet"
-                    ? envApplication
+                    ? applicationMode
                       ? "Namespaces"
                       : "Fleets"
                     : type === "robot"
-                      ? envApplication
+                      ? applicationMode
                         ? "Applications"
                         : "Robots"
                       : type === "workspacesmanager"

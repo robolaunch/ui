@@ -1,9 +1,9 @@
 import CFWorkspaceDistro from "../CFWorkspaceDistro/CFWorkspaceDistro";
 import CFWorkspaceName from "../CFWorkspaceName/CFWorkspaceName";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
-import { envApplication } from "../../helpers/envProvider";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement } from "react";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ICFWorkspaceNameDistro {
   formik: FormikProps<IWorkspaces>;
@@ -16,6 +16,8 @@ export default function CFWorkspaceNameDistro({
   workspaceIndex,
   disabled,
 }: ICFWorkspaceNameDistro): ReactElement {
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   return (
     <div className="flex gap-2">
       <CFWorkspaceName
@@ -24,7 +26,7 @@ export default function CFWorkspaceNameDistro({
         disabled={disabled}
       />
 
-      {!envApplication && (
+      {!applicationMode && (
         <CFWorkspaceDistro
           formik={formik}
           workspaceIndex={workspaceIndex}

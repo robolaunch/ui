@@ -10,17 +10,17 @@ export const envKeycloakRealm: string =
 export const envKeycloakClientID: string =
   process.env.REACT_APP_KEYCLOAK_CLIENT_ID || "";
 
-export const envApplication: boolean =
+export const envApplicationMode: boolean =
   process.env.REACT_APP_DEFAULT_MODE === "application" ? true : false;
 
-export const envSwitchable: boolean =
-  process.env.REACT_APP_SWITCHABLE === "switchable" ? true : false;
+export const envSwitchableMode: boolean =
+  process.env.REACT_APP_SWITCHABLE_MODE === "true" ? true : false;
 
-export const envCreateOrganization: boolean =
-  process.env.REACT_APP_CREATE_ORGANIZATION === "true" ? true : false;
+export const envCreatableOrganization: boolean =
+  process.env.REACT_APP_CREATABLE_ORGANIZATION === "true" ? true : false;
 
-export const envCreateRegion: boolean =
-  process.env.REACT_APP_CREATE_REGION === "true" ? true : false;
+export const envCreatableRegion: boolean =
+  process.env.REACT_APP_CREATABLE_REGION === "true" ? true : false;
 
-export const envCreateInstance: boolean =
-  process.env.REACT_APP_CREATE_INSTANCE === "true" ? true : false;
+export const envCreatableInstance: boolean =
+  process.env.REACT_APP_CREATABLE_INSTANCE === "true" ? true : false;

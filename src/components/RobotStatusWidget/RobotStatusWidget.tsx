@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
-import { envApplication } from "../../helpers/envProvider";
+import { useAppSelector } from "../../hooks/redux";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -17,6 +17,8 @@ export default function RobotStatusWidget({
 }: IRobotStatusWidget): ReactElement {
   const [responseLaunchManagersFiltered, setResponseLaunchManagersFiltered] =
     useState<any>(undefined);
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setResponseLaunchManagersFiltered(
@@ -34,8 +36,8 @@ export default function RobotStatusWidget({
   return (
     <WidgetLayout
       dataTut="robot-status-widget"
-      title={`${envApplication ? "Application" : "Robot"} Status`}
-      subtitle={`${envApplication ? "Application" : "Robot"} Status`}
+      title={`${applicationMode ? "Application" : "Robot"} Status`}
+      subtitle={`${applicationMode ? "Application" : "Robot"} Status`}
       icon={<VscHistory size={20} className="text-light-700" />}
     >
       <div className="flex h-full w-full items-center justify-around">
@@ -49,27 +51,27 @@ export default function RobotStatusWidget({
             )?.length
               ? "warning"
               : responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus === "Error",
-                )?.length
-              ? "error"
-              : "success"
+                    (robot: any) => robot?.robotStatus === "Error",
+                  )?.length
+                ? "error"
+                : "success"
           }
           stateText={
             !responseRobot
               ? "Loading..."
               : responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-                )?.length
-              ? responseRobot?.robotClusters?.filter(
-                  (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-                )[0]?.robotStatus
-              : "Ready"
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+                  )?.length
+                ? responseRobot?.robotClusters?.filter(
+                    (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+                  )[0]?.robotStatus
+                : "Ready"
           }
         />
         {/* Workspace */}
 
         {/* Build */}
-        {!envApplication && (
+        {!applicationMode && (
           <RobotStatusWidgetItem
             title="Build Manager"
             loading={!responseBuildManager}
@@ -80,31 +82,31 @@ export default function RobotStatusWidget({
                   )?.length
                   ? "warning"
                   : responseBuildManager?.robotClusters?.filter(
-                      (robot: any) => robot?.buildManagerStatus === "Error",
-                    )?.length
-                  ? "error"
-                  : "success"
+                        (robot: any) => robot?.buildManagerStatus === "Error",
+                      )?.length
+                    ? "error"
+                    : "success"
                 : "none"
             }
             stateText={
               !responseBuildManager
                 ? "Loading..."
                 : responseBuildManager?.robotClusters?.length
-                ? responseBuildManager?.robotClusters?.filter(
-                    (robot: any) => robot?.buildManagerStatus !== "Ready",
-                  )?.length
                   ? responseBuildManager?.robotClusters?.filter(
                       (robot: any) => robot?.buildManagerStatus !== "Ready",
-                    )[0]?.buildManagerStatus
-                  : "Ready"
-                : "None"
+                    )?.length
+                    ? responseBuildManager?.robotClusters?.filter(
+                        (robot: any) => robot?.buildManagerStatus !== "Ready",
+                      )[0]?.buildManagerStatus
+                    : "Ready"
+                  : "None"
             }
           />
         )}
         {/* Build */}
 
         {/* Launch */}
-        {!envApplication && (
+        {!applicationMode && (
           <RobotStatusWidgetItem
             title="Launch Manager"
             loading={!responseLaunchManagersFiltered}
@@ -115,24 +117,24 @@ export default function RobotStatusWidget({
                   )?.length
                   ? "warning"
                   : responseLaunchManagersFiltered?.filter(
-                      (status: any) => status === "Error",
-                    )?.length
-                  ? "error"
-                  : "success"
+                        (status: any) => status === "Error",
+                      )?.length
+                    ? "error"
+                    : "success"
                 : "none"
             }
             stateText={
               !responseLaunchManagersFiltered
                 ? "Loading..."
                 : responseLaunchManagersFiltered?.length
-                ? responseLaunchManagersFiltered?.filter(
-                    (status: any) => status !== "Running",
-                  )?.length
                   ? responseLaunchManagersFiltered?.filter(
                       (status: any) => status !== "Running",
-                    )[0]
-                  : "Ready"
-                : "None"
+                    )?.length
+                    ? responseLaunchManagersFiltered?.filter(
+                        (status: any) => status !== "Running",
+                      )[0]
+                    : "Ready"
+                  : "None"
             }
           />
         )}

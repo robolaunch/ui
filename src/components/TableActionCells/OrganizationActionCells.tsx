@@ -1,5 +1,5 @@
 import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
-import { envCreateOrganization } from "../../helpers/envProvider";
+import { envCreatableOrganization } from "../../helpers/envProvider";
 import { Fragment, ReactElement, useState } from "react";
 import { IOrganization } from "../../interfaces/organizationInterfaces";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
@@ -19,7 +19,7 @@ export default function OrganizationActionCells({
     <Fragment>
       <TableActionButtons
         showDeleteButton
-        disabledDeleteButton={!envCreateOrganization}
+        disabledDeleteButton={!envCreatableOrganization}
         onClickDeleteButton={() => setVisibleDeleteModal(true)}
       />
       {visibleDeleteModal && (

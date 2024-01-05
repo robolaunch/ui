@@ -5,7 +5,6 @@ import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
-import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
@@ -14,6 +13,7 @@ import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
@@ -22,6 +22,8 @@ interface ICFStep2 {
 export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useMain();
   const { robotData, setRobotData } = useCreateRobot();
@@ -38,14 +40,14 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const url = useParams();
 
   const formik = useFormik<IWorkspaces>({
-    validationSchema: envApplication
+    validationSchema: applicationMode
       ? CFAppStep2Validations
       : CFRobotStep2Validations,
     initialValues: robotData?.step2,
     onSubmit: async () => {
       formik.setSubmitting(true);
 
-      if (envApplication) {
+      if (applicationMode) {
         createEnvironment(false).then(async () => {
           await handleSubmit();
         });
@@ -65,7 +67,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       return window.location.reload();
     }
 
-    if (robotData?.step1?.isDevelopmentMode) {
+    if (robotData?.step1?.details.isDevelopmentMode) {
       setSidebarState((prevState: any) => {
         return {
           ...prevState,
@@ -89,19 +91,19 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   useEffect(
     () => {
       if (isImportRobot) {
-        envApplication ? handleGetEnvironment() : handleGetRobot();
+        applicationMode ? handleGetEnvironment() : handleGetRobot();
         setTimeout(() => {
           setIsLoadingImportRobot(false);
         }, 2000);
       } else {
         if (!responseFleet) {
-          envApplication ? handleGetNamespace() : handleGetFleet();
+          applicationMode ? handleGetNamespace() : handleGetFleet();
         }
       }
 
       const timer = setInterval(() => {
-        if (!isImportRobot && !robotData?.step1?.isVirtualRobot) {
-          envApplication ? handleGetNamespace() : handleGetFleet();
+        if (!isImportRobot && !robotData?.step1?.details.isVirtualRobot) {
+          applicationMode ? handleGetNamespace() : handleGetFleet();
         }
       }, 10000);
 
@@ -121,7 +123,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.details.name,
       },
       {
         ifErrorNavigateTo404: false,
@@ -188,7 +190,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         isImportRobot
           ? isLoadingImportRobot
           : !responseFleet ||
-            (envApplication
+            (applicationMode
               ? responseFleet?.namespaceStatus !== "Active"
               : responseFleet?.fleetStatus !== "Ready")
       }
@@ -210,7 +212,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       }
       formik={formik}
     >
-      {isImportRobot && envApplication && !formik.values.workspaces?.length ? (
+      {isImportRobot && applicationMode && !formik.values.workspaces?.length ? (
         <SidebarInfo text={`No Workspace Available`} />
       ) : (
         <Fragment>
@@ -225,7 +227,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       )}
 
       <Fragment>
-        {!(envApplication && url?.robotName) && (
+        {!(applicationMode && url?.robotName) && (
           <CFRobotButtons
             formik={formik}
             step={2}

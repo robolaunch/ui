@@ -1,10 +1,10 @@
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import { envApplication } from "../../helpers/envProvider";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ISidebarListItem {
   name: string;
@@ -30,6 +30,7 @@ export default function SidebarListItem({
   const { selectedState, setSelectedState, sidebarState, setSidebarState } =
     useMain();
   const navigate = useNavigate();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const handleSelectItem = () => {
     switch (type) {
@@ -200,8 +201,8 @@ export default function SidebarListItem({
           draggable="false"
           className="w-8"
           src={`/svg/general/${
-            envApplication && type === "robot" ? "application" : type
-          }/${envApplication && type === "robot" ? "application" : type}-${
+            applicationMode && type === "robot" ? "application" : type
+          }/${applicationMode && type === "robot" ? "application" : type}-${
             selected ? "blue" : "dark"
           }.svg`}
         />

@@ -171,7 +171,7 @@ export default function CFEnvCategories({
                           <div className="flex items-center gap-1">
                             <FaLinux className="text-light-600" size={12} />
 
-                            <p className="text-[0.66rem] font-light capitalize">
+                            <p className="text-[0.66rem] font-light">
                               {environment?.devspace?.ubuntuDistro.includes(
                                 "focal",
                               )

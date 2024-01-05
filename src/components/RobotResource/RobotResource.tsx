@@ -1,19 +1,20 @@
-import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { MdOutlineStorage } from "react-icons/md";
 import { Fragment, ReactElement } from "react";
 import { BsFillCpuFill } from "react-icons/bs";
 import Skeleton from "../Skeleton/Skeleton";
 import { FaMemory } from "react-icons/fa";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function RobotResource(): ReactElement {
   const { robotData } = useCreateRobot();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <div data-tut="robot-resources" className="flex flex-col items-end pb-2">
       <div className="flex items-center gap-3 pt-2">
         <span className="text-center text-xs font-semibold text-light-700">
-          {envApplication ? "Application" : "Robot"} Resources:
+          {applicationMode ? "Application" : "Robot"} Resources:
         </span>
         {[
           {

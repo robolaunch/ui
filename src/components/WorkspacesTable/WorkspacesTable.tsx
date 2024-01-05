@@ -1,11 +1,11 @@
 import WorkspacesCell from "../TableInformationCells/WorkspacesCell";
 import DistroCell from "../TableInformationCells/DistroCell";
-import { envApplication } from "../../helpers/envProvider";
 import StateCell from "../TableInformationCells/StateCell";
 import InfoCell from "../TableInformationCells/InfoCell";
 import GeneralTable from "../Table/GeneralTable";
 import { ReactElement, useMemo } from "react";
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux";
 interface IWorkspacesTable {
   responseRobot: any;
 }
@@ -14,6 +14,7 @@ export default function WorkspacesTable({
   responseRobot,
 }: IWorkspacesTable): ReactElement {
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const data: any = useMemo(
     () =>
@@ -46,7 +47,7 @@ export default function WorkspacesTable({
         },
       },
 
-      !envApplication && {
+      !applicationMode && {
         key: "distro",
         header: "distro",
         align: "center",
@@ -75,18 +76,21 @@ export default function WorkspacesTable({
                 !responseRobot
                   ? "Loading..."
                   : responseRobot?.robotClusters?.filter(
-                      (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-                    )?.length
-                  ? responseRobot?.robotClusters?.filter(
-                      (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-                    )[0]?.robotStatus
-                  : "Ready"
+                        (robot: any) =>
+                          robot?.robotStatus !== "EnvironmentReady",
+                      )?.length
+                    ? responseRobot?.robotClusters?.filter(
+                        (robot: any) =>
+                          robot?.robotStatus !== "EnvironmentReady",
+                      )[0]?.robotStatus
+                    : "Ready"
               }
             />
           );
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [responseRobot, url],
   );
 

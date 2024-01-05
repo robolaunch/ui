@@ -1,8 +1,7 @@
 import {
-  envApplication,
-  envCreateInstance,
-  envCreateOrganization,
-  envCreateRegion,
+  envCreatableInstance,
+  envCreatableOrganization,
+  envCreatableRegion,
 } from "../helpers/envProvider";
 import UpdateEnvironmentDetailsForm from "../components/UpdateEnvironmentDetailsForm/UpdateEnvironmentDetailsForm";
 import WorkspaceUpdateForm from "../components/UpdateRobotWorkspacesForm/UpdateRobotWorkspacesForm";
@@ -33,6 +32,7 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import { useAppSelector } from "../hooks/redux";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState } = useMain();
@@ -41,6 +41,7 @@ export default function SidebarContentLayout(): ReactElement {
   const [reload, setReload] = useState<boolean>(false);
   const { handleResetRobotForm } = useCreateRobot();
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setItemCount(0);
@@ -81,11 +82,11 @@ export default function SidebarContentLayout(): ReactElement {
             return "Region";
           }
 
-          if (sidebarState?.page === "fleet" && envApplication) {
+          if (sidebarState?.page === "fleet" && applicationMode) {
             return "Namespace";
           }
 
-          if (sidebarState?.page === "robot" && envApplication) {
+          if (sidebarState?.page === "robot" && applicationMode) {
             return "Application";
           }
 
@@ -303,7 +304,7 @@ export default function SidebarContentLayout(): ReactElement {
                   );
                 }
               case "fleet":
-                switch (envApplication) {
+                switch (applicationMode) {
                   case true:
                     if (sidebarState?.isCreateMode) {
                       return <CFNamespace />;
@@ -332,7 +333,7 @@ export default function SidebarContentLayout(): ReactElement {
                 }
 
                 if (url?.robotName) {
-                  if (envApplication) {
+                  if (applicationMode) {
                     return (
                       <UpdateEnvironmentDetailsForm
                         reload={reload}
@@ -349,7 +350,7 @@ export default function SidebarContentLayout(): ReactElement {
                   }
                 }
 
-                return envApplication ? (
+                return applicationMode ? (
                   <EnvironmentsList
                     reload={reload}
                     setItemCount={setItemCount}
@@ -396,16 +397,19 @@ export default function SidebarContentLayout(): ReactElement {
           return;
         }
 
-        if (!envCreateOrganization && sidebarState?.page === "organization") {
+        if (
+          !envCreatableOrganization &&
+          sidebarState?.page === "organization"
+        ) {
           return;
         }
 
-        if (!envCreateRegion && sidebarState?.page === "roboticscloud") {
+        if (!envCreatableRegion && sidebarState?.page === "roboticscloud") {
           return;
         }
 
         if (
-          !envCreateInstance &&
+          !envCreatableInstance &&
           sidebarState?.page === "instance" &&
           sidebarState?.instanceTab === "Cloud Instances"
         ) {

@@ -5,14 +5,15 @@ import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { useAppSelector } from "../hooks/redux";
 
 export function InstanceTableData() {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
   const [reload, setReload] = useState<boolean>(false);
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const {
     getOrganization,
@@ -35,11 +36,11 @@ export function InstanceTableData() {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else {
-      envApplication ? handleGetNamespaces() : handleGetFleets();
+      applicationMode ? handleGetNamespaces() : handleGetFleets();
     }
 
     const timer = setInterval(() => {
-      pagesState?.instance && envApplication
+      pagesState?.instance && applicationMode
         ? handleGetNamespaces()
         : handleGetFleets();
     }, 10000);
@@ -204,7 +205,7 @@ export function InstanceTableData() {
       },
       {
         key: "state",
-        header: envApplication ? "Namespace State" : "Fleet State",
+        header: applicationMode ? "Namespace State" : "Fleet State",
         sortable: false,
         filter: false,
         align: "left",
@@ -219,7 +220,7 @@ export function InstanceTableData() {
         body: (rowData: any) => {
           return (
             <Fragment>
-              {envApplication ? (
+              {applicationMode ? (
                 <NamespaceActionCells
                   reload={() => setReload((prevState: boolean) => !prevState)}
                   data={{

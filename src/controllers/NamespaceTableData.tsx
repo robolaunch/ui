@@ -5,17 +5,18 @@ import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { envApplication } from "../helpers/envProvider";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { useAppSelector } from "../hooks/redux";
 
 export function NamespaceTableData() {
   const { pagesState, selectedState } = useMain();
   const url = useParams();
   const [reload, setReload] = useState<boolean>(false);
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const {
     getOrganization,
@@ -38,9 +39,9 @@ export function NamespaceTableData() {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      envApplication ? handleGetNamespace() : handleGetFleet();
+      applicationMode ? handleGetNamespace() : handleGetFleet();
     } else {
-      envApplication ? handleGetEnvironments() : handleGetRobots();
+      applicationMode ? handleGetEnvironments() : handleGetRobots();
     }
 
     const timer =
@@ -49,7 +50,7 @@ export function NamespaceTableData() {
       selectedState?.instance &&
       selectedState?.fleet &&
       setInterval(() => {
-        pagesState?.fleet && envApplication
+        pagesState?.fleet && applicationMode
           ? handleGetEnvironments()
           : handleGetRobots();
       }, 10000);
@@ -266,7 +267,7 @@ export function NamespaceTableData() {
       },
       {
         key: "fleet",
-        header: envApplication ? "Namespace" : "Fleet",
+        header: applicationMode ? "Namespace" : "Fleet",
         sortable: false,
         filter: false,
         align: "left",
@@ -274,9 +275,9 @@ export function NamespaceTableData() {
           return <BasicCell text={rowData?.fleet} />;
         },
       },
-      !envApplication && {
+      !applicationMode && {
         key: "robotServices",
-        header: `${envApplication ? "Application" : "Robot"} Services`,
+        header: `${applicationMode ? "Application" : "Robot"} Services`,
         sortable: true,
         filter: false,
         align: "left",
@@ -291,7 +292,7 @@ export function NamespaceTableData() {
       },
       {
         key: "virtualState",
-        header: `Virtual ${envApplication ? "Application" : "Robot"} State`,
+        header: `Virtual ${applicationMode ? "Application" : "Robot"} State`,
         sortable: true,
         filter: false,
         align: "left",
@@ -299,9 +300,9 @@ export function NamespaceTableData() {
           return <StateCell state={rowData?.virtualState} />;
         },
       },
-      !envApplication && {
+      !applicationMode && {
         key: "physicalState",
-        header: `Physical ${envApplication ? "Application" : "Robot"} State`,
+        header: `Physical ${applicationMode ? "Application" : "Robot"} State`,
         sortable: true,
         filter: false,
         align: "left",
@@ -317,7 +318,7 @@ export function NamespaceTableData() {
         header: "Actions",
         align: "right",
         body: (rowData: any) => {
-          return envApplication ? (
+          return applicationMode ? (
             <EnvironmentActionCells
               data={rowData?.actions}
               reload={() => setReload((prevState: boolean) => !prevState)}

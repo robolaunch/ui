@@ -1,9 +1,9 @@
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
-import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useParams } from "react-router-dom";
 import Button from "../Button/Button";
 import { ReactElement } from "react";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ICFRobotButtons {
   step: 1 | 2 | 3 | 4;
@@ -17,6 +17,8 @@ export default function CFRobotButtons({
   isImportRobot,
 }: ICFRobotButtons): ReactElement {
   const url = useParams();
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const { robotData } = useCreateRobot();
 
@@ -35,7 +37,7 @@ export default function CFRobotButtons({
           formik.isSubmitting ||
           JSON.stringify(formik.initialValues) ===
             JSON.stringify(formik.values) ||
-          (envApplication && url?.robotName)
+          (applicationMode && url?.robotName)
         );
 
       case 3:
@@ -57,11 +59,11 @@ export default function CFRobotButtons({
       case 2:
         return isImportRobot
           ? "Update Robot"
-          : robotData?.step1?.isDevelopmentMode
-          ? envApplication
-            ? "Create Application with Workspaces"
-            : "Create Robot"
-          : "Next Step";
+          : robotData?.step1?.details.isDevelopmentMode
+            ? applicationMode
+              ? "Create Application with Workspaces"
+              : "Create Robot"
+            : "Next Step";
 
       case 3:
         return isImportRobot ? `Update Build Configration` : `Next Step`;

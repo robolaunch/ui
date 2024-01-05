@@ -3,11 +3,11 @@ import InformationWidget from "../../../components/InformationWidget/Information
 import ActivitiesWidget from "../../../components/ActivitiesWidget/ActivitiesWidget";
 import RobotOverviewLayout from "../../../layouts/RobotOverviewLayout";
 import TourGuide from "../../../components/TourGuide/TourGuide";
-import { envApplication } from "../../../helpers/envProvider";
 import { getGuideItem } from "../../../functions/handleGuide";
 import useRobot from "../../../hooks/useRobot";
 import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
+import { useAppSelector } from "../../../hooks/redux";
 
 interface IOverview {
   informationWidgetAction: () => void;
@@ -20,13 +20,15 @@ export default function Overview({
   const { responseRobot, responseBuildManager, responseLaunchManagers } =
     useRobot();
 
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   return (
     <RobotOverviewLayout
       widget1={
         <InformationWidget
           title={url?.robotName || ""}
           subtitle={
-            envApplication
+            applicationMode
               ? "From this page, you can see all the details of the application, control the application, control the environments running on the application or develop the application's software."
               : "From this page, you can see all the details of the robot, control the robot, assign tasks, control the environments running on the robot or develop the robot's software."
           }
@@ -34,7 +36,7 @@ export default function Overview({
             <TourGuide
               type="robot"
               tourConfig={
-                envApplication
+                applicationMode
                   ? [
                       getGuideItem('[data-tut="robot-header"]'),
                       getGuideItem('[data-tut="robot-information"]'),

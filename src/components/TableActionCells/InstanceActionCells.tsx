@@ -1,4 +1,4 @@
-import { envCreateInstance } from "../../helpers/envProvider";
+import { envCreatableInstance } from "../../helpers/envProvider";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 import { Fragment, ReactElement, useEffect, useState } from "react";
@@ -21,7 +21,7 @@ export default function InstanceActionCells({
     useState<boolean>(false);
 
   useEffect(() => {
-    if (!envCreateInstance) {
+    if (!envCreatableInstance) {
       return setDisabledSwitchButton(true);
     }
 
@@ -39,16 +39,16 @@ export default function InstanceActionCells({
     <Fragment>
       <TableActionButtons
         showDeleteButton
-        disabledDeleteButton={!envCreateInstance}
+        disabledDeleteButton={!envCreatableInstance}
         onClickDeleteButton={() => setIsTerminateModalVisible(true)}
         showStartStopButton
         disabledStartStopButton={
-          !envCreateInstance ? true : disabledSwitchButton
+          !envCreatableInstance ? true : disabledSwitchButton
         }
         onClickStartStopButton={() => setIsChangeStateModalVisible(true)}
         instanceState={data?.state}
         loadingStartStopButton={
-          !envCreateInstance ? false : disabledSwitchButton
+          !envCreatableInstance ? false : disabledSwitchButton
         }
       />
 

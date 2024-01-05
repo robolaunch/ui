@@ -1,11 +1,11 @@
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { envApplication } from "../../helpers/envProvider";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { useAppSelector } from "../../hooks/redux";
 
 interface IRobotsList {
   reload: boolean;
@@ -25,6 +25,7 @@ export default function RobotsList({
       physical: string;
     }[]
   >([]);
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setRobotsStatus(
@@ -109,7 +110,7 @@ export default function RobotsList({
                 : !selectedState?.instance
                   ? "Instance"
                   : "Fleet"
-          } to view ${envApplication ? "applications" : "robots"}.`}
+          } to view ${applicationMode ? "applications" : "robots"}.`}
         />
       ) : !Array.isArray(responseRobots) ? (
         <SidebarListLoader />

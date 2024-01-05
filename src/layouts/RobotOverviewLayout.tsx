@@ -1,10 +1,10 @@
 import LaunchManagerStepsTable from "../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import BuildManagerStepsTable from "../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import WorkspacesTable from "../components/WorkspacesTable/WorkspacesTable";
-import { envApplication } from "../helpers/envProvider";
 import { Fragment, ReactElement } from "react";
 import useWindow from "../hooks/useWindow";
 import useRobot from "../hooks/useRobot";
+import { useAppSelector } from "../hooks/redux";
 
 interface IRobotOverviewLayout {
   widget1?: ReactElement;
@@ -20,6 +20,7 @@ export default function RobotOverviewLayout({
   const { responseRobot, responseBuildManager, responseLaunchManagers } =
     useRobot();
   const { width } = useWindow();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <div className="animate-fadeIn grid grid-cols-1 gap-6 lg:grid-cols-12">
@@ -29,7 +30,7 @@ export default function RobotOverviewLayout({
         <div className="col-span-full lg:col-span-3">{widget3}</div>
       )}
 
-      {!envApplication && (
+      {!applicationMode && (
         <Fragment>
           <div data-tut="robot-workspaces-table" className="col-span-full">
             <WorkspacesTable responseRobot={responseRobot} />

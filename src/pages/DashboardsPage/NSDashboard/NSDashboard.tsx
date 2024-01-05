@@ -6,15 +6,16 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import CountWidget from "../../../components/CountWidget/CountWidget";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { getGuideItem } from "../../../functions/handleGuide";
-import { envApplication } from "../../../helpers/envProvider";
 import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
+import { useAppSelector } from "../../../hooks/redux";
 
 export default function NSDashboard(): ReactElement {
   const { data, columns, responseRobots, handleReload } = NamespaceTableData();
   const { selectedState } = useMain();
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <DashboardLayout
@@ -78,8 +79,8 @@ export default function NSDashboard(): ReactElement {
       }
       table={
         <GeneralTable
-          type={envApplication ? "application" : "robot"}
-          title={envApplication ? "Applications" : "Robots"}
+          type={applicationMode ? "application" : "robot"}
+          title={applicationMode ? "Applications" : "Robots"}
           data={data}
           columns={columns}
           loading={!Array.isArray(responseRobots)}

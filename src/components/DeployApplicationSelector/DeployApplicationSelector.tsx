@@ -4,10 +4,9 @@ import InputSelect from "../InputSelect/InputSelect";
 import { useFormik } from "formik";
 import { Separator } from "react-contexify";
 import Button from "../Button/Button";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
-import { envApplication } from "../../helpers/envProvider";
 
 interface IDeployApplicationSelector {
   item: any;
@@ -55,6 +54,8 @@ export default function DeployApplicationSelector({
     useFunctions();
   const dispatch = useAppDispatch();
   const { trialState } = useMain();
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const formik = useFormik<formikValues>({
     initialValues: {
@@ -406,7 +407,7 @@ export default function DeployApplicationSelector({
             alt="robolaunch"
           />
           <span className="text-xs capitalize">
-            {envApplication ? "Namespace" : "Fleet"}
+            {applicationMode ? "Namespace" : "Fleet"}
           </span>
         </div>
         <div className="flex items-center gap-3">

@@ -3,6 +3,7 @@ import SidebarContentLayout from "../../layouts/SidebarContentLayout";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import useMain from "../../hooks/useMain";
 import { Link } from "react-router-dom";
+import ModeSwitcher from "../ModeSwitcher/ModeSwitcher";
 
 export default function Sidebar(): ReactElement {
   const { sidebarState } = useMain();
@@ -19,6 +20,7 @@ export default function Sidebar(): ReactElement {
           />
         </Link>
         <SidebarMenu />
+        <ModeSwitcher />
       </div>
       {sidebarState?.isOpen && <SidebarContentLayout />}
     </Fragment>

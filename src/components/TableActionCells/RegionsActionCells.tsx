@@ -1,6 +1,6 @@
 import { Fragment, ReactElement, useState } from "react";
 import DeleteRegionModal from "../../modals/DeleteRegionModal";
-import { envCreateRegion } from "../../helpers/envProvider";
+import { envCreatableRegion } from "../../helpers/envProvider";
 import { IRegion } from "../../interfaces/regionInterfaces";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
 
@@ -20,7 +20,7 @@ export default function RegionsActionCells({
     <Fragment>
       <TableActionButtons
         showDeleteButton
-        disabledDeleteButton={!envCreateRegion}
+        disabledDeleteButton={!envCreatableRegion}
         onClickDeleteButton={() => setIsDeleteModalVisible(true)}
       />
       {isDeleteModalVisible && (

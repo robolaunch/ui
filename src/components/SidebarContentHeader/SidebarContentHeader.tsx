@@ -1,8 +1,8 @@
 import { stringCapitalization } from "../../functions/GeneralFunctions";
-import { envApplication } from "../../helpers/envProvider";
 import { Fragment, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ISidebarContentHeader {
   itemCount?: number;
@@ -17,6 +17,8 @@ export default function SidebarContentLayout({
   loading,
   handleShowDetails,
 }: ISidebarContentHeader): ReactElement {
+  const { applicationMode } = useAppSelector((state) => state.user);
+
   const { sidebarState } = useMain();
   const url = useParams();
 
@@ -32,7 +34,7 @@ export default function SidebarContentLayout({
       return "Physical Instances";
     }
 
-    if (sidebarState?.page === "fleet" && envApplication) {
+    if (sidebarState?.page === "fleet" && applicationMode) {
       return "Namespaces";
     }
 
@@ -40,16 +42,16 @@ export default function SidebarContentLayout({
       case "robot":
         if (url?.robotName) {
           return `${url.robotName} ${
-            envApplication ? "Application" : "Robot"
+            applicationMode ? "Application" : "Robot"
           } Details`;
         }
         return sidebarState?.isCreateMode
-          ? envApplication
+          ? applicationMode
             ? "Application Details"
             : "Robot Details"
-          : envApplication
-          ? "Applications"
-          : "Robots";
+          : applicationMode
+            ? "Applications"
+            : "Robots";
       case "workspacesmanager":
         return "Robot Workspace Configuration";
       case "buildsmanager":
@@ -72,7 +74,7 @@ export default function SidebarContentLayout({
       <h2 className="text-[1.75rem] font-semibold">{titleGenerator()}</h2>
       {handleShowDetails() && (
         <Fragment>
-          <span className="bg-primary-300 rounded-lg px-2.5 py-0.5">
+          <span className="rounded-lg bg-primary-300 px-2.5 py-0.5">
             {itemCount}
           </span>
           <i

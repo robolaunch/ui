@@ -1,6 +1,5 @@
 import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
-import { envApplication } from "../helpers/envProvider";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -23,6 +22,8 @@ export default ({ children }: any) => {
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const url = useParams();
 
@@ -95,13 +96,13 @@ export default ({ children }: any) => {
     } else if (pagesState?.instance?.name !== url?.instanceName) {
       return handleGetInstance();
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
-      return envApplication ? handleGetNamespace() : handleGetFleet();
+      return applicationMode ? handleGetNamespace() : handleGetFleet();
     } else if (!responseRobot) {
-      envApplication ? handleGetEnvironment() : handleGetRobot();
+      applicationMode ? handleGetEnvironment() : handleGetRobot();
     } else if (!responseBuildManager) {
-      !envApplication && handleGetBuildManager();
+      !applicationMode && handleGetBuildManager();
     } else if (!responseLaunchManagers) {
-      !envApplication && handleGetLaunchManagers();
+      !applicationMode && handleGetLaunchManagers();
     } else if (responseRobot?.physicalInstance && !responsePhysicalInstance) {
       handleGetPhysicalInstance();
     }
@@ -114,7 +115,7 @@ export default ({ children }: any) => {
           (robot: any) => robot?.robotStatus !== "EnvironmentReady",
         )?.length
       ) {
-        envApplication ? handleGetEnvironment() : handleGetRobot();
+        applicationMode ? handleGetEnvironment() : handleGetRobot();
       }
     }, 10000);
 
@@ -123,7 +124,7 @@ export default ({ children }: any) => {
         responseBuildManager?.robotClusters?.filter(
           (robot: any) => robot?.buildManagerStatus !== "Ready",
         )?.length &&
-        !envApplication &&
+        !applicationMode &&
         handleGetBuildManager();
     }, 10000);
 
@@ -138,7 +139,7 @@ export default ({ children }: any) => {
             return cluster?.launchManagerStatus;
           })
           ?.filter((status: any) => status !== "Running")?.length &&
-        !envApplication &&
+        !applicationMode &&
         handleGetLaunchManagers();
     }, 10000);
 
@@ -220,7 +221,7 @@ export default ({ children }: any) => {
   // ROS Bridge Connector
   useEffect(() => {
     const rosClient: ROSLIB.Ros | null =
-      !envApplication &&
+      !applicationMode &&
       isSettedCookie &&
       responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss"
         ? new ROSLIB.Ros({
@@ -253,7 +254,7 @@ export default ({ children }: any) => {
   // ROS Topic Setter
   useEffect(() => {
     function getTopics() {
-      if (ros && isSettedCookie && !envApplication) {
+      if (ros && isSettedCookie && !applicationMode) {
         const getTopics = new ROSLIB.Service({
           ros: ros,
           name: "/rosapi/topics",

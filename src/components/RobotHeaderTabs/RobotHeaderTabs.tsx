@@ -1,7 +1,6 @@
 import { MdDashboard, MdMap, MdScreenShare } from "react-icons/md";
 import RobotHeaderTab from "../RobotHeaderTab/RobotHeaderTab";
 import { IrobotTab } from "../../interfaces/robotInterfaces";
-import { envApplication } from "../../helpers/envProvider";
 import { AiFillCode, AiFillLayout } from "react-icons/ai";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
@@ -9,9 +8,11 @@ import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 import { FaPython } from "react-icons/fa";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function RobotHeaderTabs(): ReactElement {
   const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const { robotData } = useCreateRobot();
 
@@ -33,7 +34,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        // envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
+        // applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
         true,
     },
     {
@@ -47,7 +48,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
+        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Visualization",
@@ -60,7 +61,7 @@ export default function RobotHeaderTabs(): ReactElement {
           isSettedCookie
         ),
       isHidden:
-        envApplication || (responseRobot && !responseRobot?.bridgeEnabled),
+        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Development Suite",
@@ -108,11 +109,11 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          robotData?.step1.jupyterNotebook?.isEnabled &&
-          robotData?.step1.jupyterNotebook?.appEndpoint &&
+          robotData?.step1.services.jupyterNotebook?.isEnabled &&
+          robotData?.step1.services.jupyterNotebook?.httpsEndpoint &&
           isSettedCookie
         ),
-      isHidden: !robotData?.step1.jupyterNotebook?.isEnabled,
+      isHidden: !robotData?.step1.services.jupyterNotebook?.isEnabled,
     },
   ];
 

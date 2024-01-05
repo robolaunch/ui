@@ -1,10 +1,9 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
-import { envApplication } from "../../helpers/envProvider";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 
@@ -21,6 +20,7 @@ export default function FleetsList({
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { getFleets } = useFunctions();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(
     () => {
@@ -80,9 +80,9 @@ export default function FleetsList({
             !selectedState?.organization
               ? "Organization"
               : !selectedState?.roboticsCloud
-              ? "Robotics Cloud"
-              : "Instance"
-          } to view ${envApplication ? "namespaces" : "fleets"}.`}
+                ? "Robotics Cloud"
+                : "Instance"
+          } to view ${applicationMode ? "namespaces" : "fleets"}.`}
         />
       ) : (
         <Fragment>

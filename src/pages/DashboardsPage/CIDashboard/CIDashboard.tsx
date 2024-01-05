@@ -5,7 +5,6 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import { getGuideItem } from "../../../functions/handleGuide";
-import { envApplication } from "../../../helpers/envProvider";
 import { FaLinux, FaServer, FaUbuntu } from "react-icons/fa";
 import { SiKubernetes } from "react-icons/si";
 import useMain from "../../../hooks/useMain";
@@ -13,11 +12,13 @@ import { useParams } from "react-router-dom";
 import { RiCpuLine } from "react-icons/ri";
 import { ReactElement } from "react";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
+import { useAppSelector } from "../../../hooks/redux";
 
 export default function CIDashboard(): ReactElement {
   const { data, columns, responseFleets, handleReload } = InstanceTableData();
   const { pagesState } = useMain();
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <DashboardLayout
@@ -78,7 +79,7 @@ export default function CIDashboard(): ReactElement {
       table={
         <GeneralTable
           type="fleet"
-          title={envApplication ? "Namespaces" : "Fleets"}
+          title={applicationMode ? "Namespaces" : "Fleets"}
           data={data}
           columns={columns}
           loading={!Array.isArray(responseFleets)}

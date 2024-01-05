@@ -1,19 +1,20 @@
 import ConnectionLabel from "../ConnectionLabel/ConnectionLabel";
 import StateCell from "../TableInformationCells/StateCell";
-import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function EnvironmentConnections(): ReactElement {
   const { responseRobot, connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
   const { robotData } = useCreateRobot();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <div className="flex gap-4">
-      {!envApplication && (
+      {!applicationMode && (
         <div className="flex gap-1" id="ros">
           <ConnectionLabel label="ROS" />
           <StateCell

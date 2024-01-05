@@ -1,10 +1,11 @@
-import { envApplication } from "../../helpers/envProvider";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { Fragment, ReactElement } from "react";
 import Skeleton from "../Skeleton/Skeleton";
+import { useAppSelector } from "../../hooks/redux";
 
 export default function EnvironmentObjectLabels(): ReactElement {
   const { robotData } = useCreateRobot();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <Fragment>
@@ -13,7 +14,7 @@ export default function EnvironmentObjectLabels(): ReactElement {
         `,
         `Region: ${robotData.step1.tree.region?.name}`,
         `Instance: ${robotData.step1.tree.cloudInstance?.name}`,
-        `${envApplication ? "Namespace" : "Fleet"}: ${robotData.step1.tree
+        `${applicationMode ? "Namespace" : "Fleet"}: ${robotData.step1.tree
           .namespace?.name}`,
       ].map((item, index) => {
         return (

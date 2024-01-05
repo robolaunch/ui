@@ -4,14 +4,15 @@ import {
   IWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
 import { createContext, useEffect, useState } from "react";
-import { envApplication } from "../helpers/envProvider";
 import { useParams } from "react-router-dom";
+import { useAppSelector } from "../hooks/redux";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const url = useParams();
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     console.log("url", url);
@@ -128,7 +129,7 @@ export default ({ children }: any) => {
         name: "",
         isVirtualRobot: true,
         configureWorkspace: false,
-        isDevelopmentMode: envApplication,
+        isDevelopmentMode: applicationMode,
       },
     },
     step2: {
