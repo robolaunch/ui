@@ -19,6 +19,19 @@ export default ({ children }: any) => {
   const [barcodeItems, setBarcodeItems] = useState<any[]>([]);
 
   useEffect(() => {
+    const barcodes = new ROSLIB.Topic({
+      ros: ros,
+      name: "/barcode",
+      messageType: "std_msgs/msg/String",
+    });
+
+    ros &&
+      barcodes.subscribe(function (barcode: any) {
+        console.log("barcode", barcode);
+      });
+  }, [ros]);
+
+  useEffect(() => {
     const poseTopic = new ROSLIB.Topic({
       ros: ros,
       name: "/robot_position",

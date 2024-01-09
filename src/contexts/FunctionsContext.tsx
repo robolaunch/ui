@@ -1371,6 +1371,16 @@ export default ({ children }: any) => {
                     rosDistros:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments[0]?.distributions,
+                    socketEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]
+                        ?.bridgeIngressEndpoint,
+                    podName:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]?.bridgePodName,
+                    log: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                      ?.bridgeApplicationLog,
                   },
                   vdi: {
                     isEnabled:
@@ -1393,7 +1403,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     gpuAllocation:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]?.vdiGpuResource,
@@ -1428,7 +1438,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     gpuAllocation:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
@@ -1442,6 +1452,17 @@ export default ({ children }: any) => {
                     log: responseEnvironment?.payload?.data[0]
                       ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
                       ?.ideApplicationLog,
+                  },
+                  physicalIde: {
+                    isEnabled: responseEnvironment?.payload?.data[0]
+                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
+                      ?.physicalIdeIngressEndpoint
+                      ? true
+                      : false,
+                    httpsEndpoint:
+                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.environments[0]
+                        ?.physicalIdeIngressEndpoint,
                   },
                   jupyterNotebook: {
                     isEnabled:
@@ -1468,7 +1489,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     podName:
                       responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.environments[0]?.notebookPodName,
