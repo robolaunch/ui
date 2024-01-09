@@ -28,7 +28,8 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_URL=${{ secrets.REACT_APP_KEYCLOAK_URL }} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{ secrets.REACT_APP_KEYCLOAK_REALM }} \
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{ secrets.REACT_APP_KEYCLOAK_CLIENT_ID }} \
-            --build-arg REACT_APP_APPLICATION=${{ secrets.REACT_APP_APPLICATION }} \
+            --build-arg REACT_APP_DEFAULT_MODE=${{ secrets.REACT_APP_DEFAULT_MODE }} \
+            --build-arg REACT_APP_SWITCHABLE_MODE=${{ secrets.REACT_APP_SWITCHABLE_MODE }} \
             --build-arg REACT_APP_CREATE_ORGANIZATION=${{ secrets.REACT_APP_CREATE_ORGANIZATION }} \
             --build-arg REACT_APP_CREATE_REGION=${{ secrets.REACT_APP_CREATE_REGION }} \
             --build-arg REACT_APP_CREATE_INSTANCE=${{ secrets.REACT_APP_CREATE_INSTANCE }} \
