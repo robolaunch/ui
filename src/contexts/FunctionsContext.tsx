@@ -907,7 +907,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     gpuAllocation:
                       responseRobot?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
@@ -946,7 +946,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     gpuAllocation:
                       responseRobot?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
@@ -1001,7 +1001,7 @@ export default ({ children }: any) => {
                             port: item?.split("-")[1].split(":")[1],
                             backendPort: item?.split("-")[1].split(":")[0],
                           };
-                        }),
+                        }) || [],
                     podName:
                       responseRobot?.payload?.data[0]?.roboticsClouds[0]
                         ?.cloudInstances[0]?.robolaunchFederatedRobots[0]

@@ -9,7 +9,7 @@ interface ICFPortInput {
   formik: FormikProps<IDetails>;
   portIndex: number;
   disabled?: boolean;
-  type: "ide" | "vdi" | "jupyter-notebook";
+  type: "ide" | "vdi" | "jupyterNotebook";
 }
 
 export default function CFPortInput({
@@ -26,7 +26,7 @@ export default function CFPortInput({
         labelInfoTip="Type a port name."
         inputProps={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return formik.getFieldProps(
                 `services.jupyterNotebook.customPorts.[${portIndex}].name`,
               );
@@ -38,7 +38,7 @@ export default function CFPortInput({
         })()}
         inputError={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return formik.errors?.services?.jupyterNotebook?.customPorts?.[
                 portIndex
                 // @ts-ignore
@@ -52,7 +52,7 @@ export default function CFPortInput({
         })()}
         inputTouched={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return (
                 // @ts-ignore
                 formik.touched?.services?.jupyterNotebook?.customPorts?.[
@@ -75,7 +75,7 @@ export default function CFPortInput({
         labelInfoTip="Is the port that the application is listening on."
         inputProps={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return formik.getFieldProps(
                 `services.jupyterNotebook.customPorts[${portIndex}].port`,
               );
@@ -87,7 +87,7 @@ export default function CFPortInput({
         })()}
         inputError={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return formik.errors?.services?.jupyterNotebook?.customPorts?.[
                 portIndex
                 // @ts-ignore
@@ -101,7 +101,7 @@ export default function CFPortInput({
         })()}
         inputTouched={(() => {
           switch (type) {
-            case "jupyter-notebook":
+            case "jupyterNotebook":
               return (
                 // @ts-ignore
                 formik.touched?.services?.jupyterNotebook?.customPorts?.[
@@ -131,7 +131,7 @@ export default function CFPortInput({
           :
           {(() => {
             switch (type) {
-              case "jupyter-notebook":
+              case "jupyterNotebook":
                 return formik.values?.services.jupyterNotebook?.customPorts?.[
                   portIndex
                 ]?.backendPort;
@@ -147,7 +147,7 @@ export default function CFPortInput({
         <CFDellButton
           onClick={() => {
             switch (type) {
-              case "jupyter-notebook":
+              case "jupyterNotebook":
                 formik.setFieldValue(
                   `services.jupyterNotebook.customPorts`,
                   // @ts-ignore

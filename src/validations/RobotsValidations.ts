@@ -29,42 +29,38 @@ export const CFRobotStep1Validations = Yup.object().shape({
   }),
 
   services: Yup.object().shape({
+    vdi: Yup.object().shape({
+      sessionCount: Yup.number().min(2, "At least one session is required"),
+      customPorts: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string()
+            .required("Port name is required.")
+            .min(4, "Minimum 4 characters.")
+            .max(4, "Maximum 4 characters."),
+          port: Yup.number()
+            .required("Port is required.")
+            .min(0, "Minimum 0.")
+            .max(65535, "Maximum 65535."),
+        }),
+      ),
+    }),
+    ide: Yup.object().shape({
+      customPorts: Yup.array().of(
+        Yup.object().shape({
+          name: Yup.string()
+            .required("Port name is required.")
+            .min(4, "Minimum 4 characters.")
+            .max(4, "Maximum 4 characters.")
+            .matches(/^[a-z]+$/, "Must be lowercase and english letters only."),
+          port: Yup.number()
+            .required("Port is required.")
+            .min(0, "Minimum 0.")
+            .max(65535, "Maximum 65535."),
+        }),
+      ),
+    }),
     ros: Yup.object().shape({
       rosDistros: Yup.array().min(1, "At least one ROS Distro is required"),
-
-      vdi: Yup.object().shape({
-        sessionCount: Yup.number().min(2, "At least one session is required"),
-        customPorts: Yup.array().of(
-          Yup.object().shape({
-            name: Yup.string()
-              .required("Port name is required.")
-              .min(4, "Minimum 4 characters.")
-              .max(4, "Maximum 4 characters."),
-            port: Yup.number()
-              .required("Port is required.")
-              .min(0, "Minimum 0.")
-              .max(65535, "Maximum 65535."),
-          }),
-        ),
-      }),
-      ide: Yup.object().shape({
-        customPorts: Yup.array().of(
-          Yup.object().shape({
-            name: Yup.string()
-              .required("Port name is required.")
-              .min(4, "Minimum 4 characters.")
-              .max(4, "Maximum 4 characters.")
-              .matches(
-                /^[a-z]+$/,
-                "Must be lowercase and english letters only.",
-              ),
-            port: Yup.number()
-              .required("Port is required.")
-              .min(0, "Minimum 0.")
-              .max(65535, "Maximum 65535."),
-          }),
-        ),
-      }),
     }),
   }),
   directories: Yup.object().shape({

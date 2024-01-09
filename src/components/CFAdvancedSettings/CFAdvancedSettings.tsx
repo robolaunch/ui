@@ -4,12 +4,12 @@ import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortSetter from "../CFPortSetter/CFPortSetter";
+import useCreateRobot from "../../hooks/useCreateRobot";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
-import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IDetails>;
@@ -56,22 +56,18 @@ export default function CFAdvancedSettings({
 
         {robotData.step1.services.jupyterNotebook.isEnabled && (
           <CFSection gap={4}>
-            <CFPortSetter
-              formik={formik}
-              isImportRobot={disabled}
-              type="jupyter-notebook"
-            />
+            <CFPortSetter formik={formik} type="jupyterNotebook" />
             <Seperator />
           </CFSection>
         )}
 
         <CFSection gap={4}>
-          <CFPortSetter formik={formik} isImportRobot={disabled} type="ide" />
+          <CFPortSetter formik={formik} type="ide" />
           <Seperator />
         </CFSection>
 
         <CFSection>
-          <CFPortSetter formik={formik} isImportRobot={disabled} type="vdi" />
+          <CFPortSetter formik={formik} type="vdi" />
         </CFSection>
       </div>
     </Accordion>

@@ -72,7 +72,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1.details.name,
       },
       {
         ifErrorNavigateTo404: false,
@@ -90,7 +90,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.details.name,
       },
       {
         ifErrorNavigateTo404: false,
@@ -141,9 +141,9 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId!,
           region: selectedState?.instance?.region!,
-          robotName: robotData?.step1?.robotName,
+          robotName: robotData?.step1?.details?.name,
           fleetName: selectedState?.fleet?.name,
-          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
           buildManagerName: values?.buildManagerName,
           robotBuildSteps: values?.robotBuildSteps,
         }),
@@ -195,19 +195,19 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
           !responseRobot
             ? 1
             : responseRobot?.robotClusters?.filter(
-                (robotCluster: any) =>
-                  robotCluster?.robotStatus === "CreatingEnvironment" ||
-                  robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                  robotCluster?.robotStatus === "ConfiguringEnvironment",
-              )?.length
-            ? 1
-            : responseRobot?.robotClusters?.filter(
-                (robotCluster: any) =>
-                  robotCluster?.robotStatus === "CreatingBridge" ||
-                  robotCluster?.robotStatus === "CreatingDevelopmentSuite",
-              )?.length
-            ? 2
-            : 3
+                  (robotCluster: any) =>
+                    robotCluster?.robotStatus === "CreatingEnvironment" ||
+                    robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
+                    robotCluster?.robotStatus === "ConfiguringEnvironment",
+                )?.length
+              ? 1
+              : responseRobot?.robotClusters?.filter(
+                    (robotCluster: any) =>
+                      robotCluster?.robotStatus === "CreatingBridge" ||
+                      robotCluster?.robotStatus === "CreatingDevelopmentSuite",
+                  )?.length
+                ? 2
+                : 3
         }
         stepbarItems={[
           {
@@ -218,79 +218,84 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment",
+                      )?.length
+                    ? false
+                    : true,
               },
               {
                 name: "Creating Discovery Server",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus === "CreatingDiscoveryServer",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment" ||
+                          robotCluster?.robotStatus ===
+                            "CreatingDiscoveryServer",
+                      )?.length
+                    ? false
+                    : true,
               },
               {
                 name: "Pulling ROS2 Image",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus ===
-                          "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment" ||
+                          robotCluster?.robotStatus ===
+                            "CreatingDiscoveryServer" ||
+                          robotCluster?.robotStatus ===
+                            "ConfiguringEnvironment",
+                      )?.length
+                    ? false
+                    : true,
               },
               {
                 name: "Setting up ROS2 Environment",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus ===
-                          "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment" ||
+                          robotCluster?.robotStatus ===
+                            "CreatingDiscoveryServer" ||
+                          robotCluster?.robotStatus ===
+                            "ConfiguringEnvironment",
+                      )?.length
+                    ? false
+                    : true,
               },
               {
                 name: "Creating Directories",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus ===
-                          "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment" ||
+                          robotCluster?.robotStatus ===
+                            "CreatingDiscoveryServer" ||
+                          robotCluster?.robotStatus ===
+                            "ConfiguringEnvironment",
+                      )?.length
+                    ? false
+                    : true,
               },
               {
                 name: "Setting up Ubuntu",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
-                      (robotCluster: any) =>
-                        robotCluster?.robotStatus === "CreatingEnvironment" ||
-                        robotCluster?.robotStatus ===
-                          "CreatingDiscoveryServer" ||
-                        robotCluster?.robotStatus === "ConfiguringEnvironment",
-                    )?.length
-                  ? false
-                  : true,
+                        (robotCluster: any) =>
+                          robotCluster?.robotStatus === "CreatingEnvironment" ||
+                          robotCluster?.robotStatus ===
+                            "CreatingDiscoveryServer" ||
+                          robotCluster?.robotStatus ===
+                            "ConfiguringEnvironment",
+                      )?.length
+                    ? false
+                    : true,
               },
             ],
           },

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
@@ -19,7 +19,7 @@ export default function CFAddWorkspaceButton({
     <div data-tut="create-robot-step2-workspace-add-button">
       <CreateRobotFormAddButton
         onClick={() => handleAddWorkspaceStep(formik)}
-        disabled={disabled}
+        disabled={formik.isSubmitting}
       />
     </div>
   );

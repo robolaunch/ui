@@ -1,7 +1,7 @@
-import { Fragment, ReactElement, useState } from "react";
 import MissionManagement from "../pages/EnvironmentPage/TaskManagement/MissionManagement";
 import BarcodeManagement from "../pages/EnvironmentPage/TaskManagement/BarcodeManagement";
-import CardLayout from "./CardLayout";
+import { Fragment, ReactElement, useState } from "react";
+import Card from "../components/Card/Card";
 import useRobot from "../hooks/useRobot";
 
 export default function TaskManagementLayout(): ReactElement {
@@ -13,8 +13,8 @@ export default function TaskManagementLayout(): ReactElement {
 
   return (
     <Fragment>
-      <CardLayout className="mb-5 !pb-0">
-        <ul className="flex  overflow-x-auto pt-3 text-center">
+      <Card className="!h-fit flex-none p-3 !pb-0">
+        <ul className="flex  overflow-x-auto text-center">
           {[{ name: "Mission Management" }, { name: "Barcode Management" }].map(
             (tab: any, index: number) => {
               return (
@@ -43,7 +43,7 @@ export default function TaskManagementLayout(): ReactElement {
             },
           )}
         </ul>
-      </CardLayout>
+      </Card>
       {(() => {
         switch (activeTab) {
           case "Mission Management":

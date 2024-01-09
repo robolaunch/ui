@@ -28,7 +28,7 @@ export default function InputSelect({
   return (
     <div className={`relative ${wrapClassName}`}>
       <label
-        className={`text-light-700 pointer-events-none absolute z-10 transition-all duration-300 ${
+        className={`pointer-events-none absolute z-10 text-light-700 transition-all duration-300 ${
           isFocused || value
             ? "-top-6 left-0 text-xs"
             : "left-3 top-2.5 text-sm"
@@ -41,9 +41,9 @@ export default function InputSelect({
         {placeholder}
       </label>
       <select
-        className={`border-light-300 h-10 w-full rounded-md border bg-transparent p-2
-      text-sm outline-none transition-all
-      duration-500 focus:border-primary focus:ring-2 focus:ring-primary ${
+        className={`focus:border-primary focus:ring-primary h-9 w-full rounded border border-light-200
+      bg-transparent p-2 text-sm
+      outline-none transition-all duration-500 focus:ring-2 ${
         disabled ? "cursor-not-allowed" : "hover:cursor-pointer"
       } ${className}`}
         name={name}

@@ -62,9 +62,9 @@ export default function CFStep4({
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId!,
           region: selectedState?.instance?.region!,
-          physicalInstanceName: robotData?.step1?.physicalInstanceName,
+          physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
           fleetName: selectedState?.fleet?.name,
-          robotName: robotData?.step1?.robotName,
+          robotName: robotData?.step1?.details.name,
           launchManagerName: values?.name,
           robotLaunchSteps: [
             robotData?.step4?.robotLaunchSteps[
@@ -85,7 +85,8 @@ export default function CFStep4({
           organizationName: selectedState?.organization?.organizationName!,
           capitalization: false,
         })}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-          ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.robotName}`;
+          ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.details
+          .name}`;
       }, 1000);
     },
   });
@@ -150,7 +151,7 @@ export default function CFStep4({
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.details.name,
       },
       {
         ifErrorNavigateTo404: false,

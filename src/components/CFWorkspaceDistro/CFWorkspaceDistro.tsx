@@ -23,7 +23,7 @@ export default function CFWorkspaceDistro({
       dataTut="create-robot-step2-workspace-distro"
       labelName="Workspace Distro:"
       tip="Select a workspace ROS2 distro."
-      disabled={disabled}
+      disabled={formik.isSubmitting}
       classNameContainer="w-60"
       inputProps={formik.getFieldProps(
         `workspaces.${workspaceIndex}.workspaceDistro`,
@@ -40,7 +40,7 @@ export default function CFWorkspaceDistro({
           {!formik?.values?.workspaces[workspaceIndex]?.workspaceDistro && (
             <option value=""></option>
           )}
-          {robotData.step1.rosDistros?.map(
+          {robotData.step1.services.ros.rosDistros?.map(
             (rosDistro: string, index: number) => {
               return (
                 <option key={index} value={rosDistro} className="capitalize">

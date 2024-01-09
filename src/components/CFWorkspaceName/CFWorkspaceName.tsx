@@ -23,7 +23,7 @@ export default function CFWorkspaceName({
 "
       inputProps={formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
       classNameContainer="w-full"
-      disabled={disabled}
+      disabled={formik.isSubmitting}
       inputError={
         // @ts-ignore
         formik?.errors?.workspaces?.[workspaceIndex]?.name

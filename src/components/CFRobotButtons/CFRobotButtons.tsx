@@ -1,9 +1,9 @@
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { useAppSelector } from "../../hooks/redux";
 import { useParams } from "react-router-dom";
 import Button from "../Button/Button";
 import { ReactElement } from "react";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ICFRobotButtons {
   step: 1 | 2 | 3 | 4;

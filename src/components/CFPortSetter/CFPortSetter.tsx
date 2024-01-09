@@ -1,5 +1,6 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import { getPort as getFreePort } from "../../toolkit/PortSlice";
+import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortInput from "../CFPortInput/CFPortInput";
 import { useAppDispatch } from "../../hooks/redux";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
@@ -7,18 +8,15 @@ import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
 import { FormikProps } from "formik";
-import { IDetails } from "../../interfaces/robotInterfaces";
 
 interface ICFPortSetter {
   formik: FormikProps<IDetails>;
-  type: "ide" | "vdi" | "jupyter-notebook";
-  isImportRobot?: boolean;
+  type: "ide" | "vdi" | "jupyterNotebook";
 }
 
 export default function CFPortSetter({
   formik,
   type,
-  isImportRobot,
 }: ICFPortSetter): ReactElement {
   const { selectedState } = useMain();
 
@@ -61,7 +59,7 @@ export default function CFPortSetter({
         return "IDE";
       case "vdi":
         return "VDI";
-      case "jupyter-notebook":
+      case "jupyterNotebook":
         return "Jupyter Notebook";
       default:
         return "";
@@ -78,7 +76,7 @@ export default function CFPortSetter({
         <div className="flex flex-col gap-2">
           {(() => {
             switch (type) {
-              case "jupyter-notebook":
+              case "jupyterNotebook":
                 return formik.values?.services.jupyterNotebook?.customPorts?.map(
                   (_: any, index: number) => {
                     return (
@@ -87,7 +85,7 @@ export default function CFPortSetter({
                         formik={formik}
                         portIndex={index}
                         type={type}
-                        disabled={isImportRobot}
+                        disabled={formik.isSubmitting}
                       />
                     );
                   },
@@ -102,7 +100,7 @@ export default function CFPortSetter({
                         formik={formik}
                         portIndex={index}
                         type={type}
-                        disabled={isImportRobot}
+                        disabled={formik.isSubmitting}
                       />
                     );
                   },
@@ -113,27 +111,15 @@ export default function CFPortSetter({
       </CFInfoBar>
 
       <CreateRobotFormAddButton
-        disabled={isImportRobot}
         onClick={async () => {
-          if (type === "ide" || type === "vdi") {
-            await formik.setFieldValue(
-              `services.${type}.customPorts`,
-              formik.values?.services?.[`${type}`]?.customPorts?.concat({
-                name: "",
-                port: undefined,
-                backendPort: await getPort(),
-              }),
-            );
-          } else if (type === "jupyter-notebook") {
-            await formik.setFieldValue(
-              `services.jupyterNotebook.customPorts`,
-              formik.values?.services.jupyterNotebook.customPorts?.concat({
-                name: "",
-                port: undefined,
-                backendPort: await getPort(),
-              }),
-            );
-          }
+          await formik.setFieldValue(
+            `services.${type}.customPorts`,
+            formik.values?.services?.[`${type}`]?.customPorts?.concat({
+              name: "",
+              port: undefined,
+              backendPort: await getPort(),
+            }),
+          );
         }}
         className="!mt-1"
       />
