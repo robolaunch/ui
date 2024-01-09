@@ -246,14 +246,17 @@ export default ({ children }: any) => {
     setRos(rosClient);
 
     rosClient?.on("connection", function () {
+      console.log("Connected to websocket server.");
       connectionsReducer?.ros === null &&
         dispatcher({ type: "ros", payload: true });
     });
     rosClient?.on("error", function (error) {
+      console.log("Error connecting to websocket server: ", error);
       connectionsReducer?.ros === null &&
         dispatcher({ type: "ros", payload: false });
     });
     rosClient?.on("close", function () {
+      console.log("Connection to websocket server closed.");
       connectionsReducer?.ros === null &&
         dispatcher({ type: "ros", payload: false });
     });
