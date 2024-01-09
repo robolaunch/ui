@@ -400,7 +400,9 @@ export const RobotSlice = createSlice({
     urls: {
       vdi: isProduction ? "" : "ws://localhost:8080/",
       ide: isProduction ? "" : "https://robolaunch.io",
-      ros: isProduction ? "" : "ws://172.16.44.189:9090",
+      ros: isProduction
+        ? "ws://arcelik-dev-01.robolaunch.internal/org-arcelik-org/arcelik-cayirova/arcelik-dev-01/new-fleet/nemo-robot-dev-nemo-phy-robot-01-relay/relay/proxy/9090/"
+        : "ws://arcelik-dev-01.robolaunch.internal/org-arcelik-org/arcelik-cayirova/arcelik-dev-01/new-fleet/nemo-robot-dev-nemo-phy-robot-01-relay/relay/proxy/9090/",
     },
   },
   reducers: {},
