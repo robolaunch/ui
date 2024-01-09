@@ -1,18 +1,18 @@
 import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEditorSwitcher";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ControlBar from "../../../components/ControlBar/ControlBar";
+import useCreateRobot from "../../../hooks/useCreateRobot";
 import { Fragment, ReactElement, useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
-import useCreateRobot from "../../../hooks/useCreateRobot";
 
 export default function CodeEditor(): ReactElement {
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<1 | 2>(1);
 
   const handleFullScreen = useFullScreenHandle();
 
-  const { activeTab, responseRobot, isRobotReady, isSettedCookie } = useRobot();
+  const { activeTab, isRobotReady, isSettedCookie } = useRobot();
 
   const { urls } = useAppSelector((state) => state.robot);
 
@@ -26,7 +26,7 @@ export default function CodeEditor(): ReactElement {
           : "absolute -top-[9999px]"
       }
     >
-      {responseRobot?.physicalIdeIngressEndpoint && (
+      {robotData.step1.services.physicalIde?.isEnabled && (
         <CodeEditorSwitcher
           activeTabCodeEditor={activeTabCodeEditor}
           setActiveTabCodeEditor={setActiveTabCodeEditor}
@@ -53,7 +53,7 @@ export default function CodeEditor(): ReactElement {
                 className={`animate-fadeIn h-full w-full
                 ${activeTabCodeEditor === 1 && "absolute -top-[9999px]"}
                 ${handleFullScreen?.active && "!h-screen"}`}
-                src={responseRobot?.physicalIdeIngressEndpoint}
+                src={robotData.step1.services.physicalIde?.httpsEndpoint}
               />
               <ControlBar type="ide" handleFullScreen={handleFullScreen} />
             </FullScreen>

@@ -18,9 +18,9 @@ export default function CFBridgeToggle({
       labelInfoTip="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot."
       dataTut="create-robot-step1-ros2-bridge"
       disabled={isImportRobot}
-      checked={formik?.values?.isEnabledROS2Bridge}
+      checked={formik?.values?.services.ros.isEnabled}
       onChange={(e: any) => {
-        formik.setFieldValue("isEnabledROS2Bridge", e);
+        formik.setFieldValue("services.ros.isEnabled", e);
       }}
     />
   );

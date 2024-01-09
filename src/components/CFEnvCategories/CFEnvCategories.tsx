@@ -143,9 +143,9 @@ export default function CFEnvCategories({
                         });
                     }}
                     text={
-                      <div className="flex w-full">
+                      <div className="flex w-full gap-2 p-1">
                         <img
-                          className="flex h-full w-20 scale-75 items-center justify-center"
+                          className="flex h-full w-14 scale-90 items-center justify-center"
                           src={
                             environment?.application?.icon ||
                             "/svg/general/rocket.svg"
@@ -156,7 +156,7 @@ export default function CFEnvCategories({
                           }}
                         />
                         <div className=" flex flex-col justify-around">
-                          <div className="flex items-center justify-between gap-2  ">
+                          <div className="flex items-center justify-between gap-2">
                             <p className="font-medium">
                               {environment?.application?.alias ||
                                 environment?.application?.name}

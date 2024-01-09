@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
-import InfoTip from "../InfoTip/InfoTip";
-import { toast } from "sonner";
 import { stringSlugify } from "../../functions/GeneralFunctions";
-import { MdVerified } from "react-icons/md";
-import InputError from "../InputError/InputError";
 import { IDetails } from "../../interfaces/robotInterfaces";
+import InputError from "../InputError/InputError";
+import { MdVerified } from "react-icons/md";
+import InfoTip from "../InfoTip/InfoTip";
+import { ReactElement } from "react";
 import { FormikProps } from "formik";
+import { toast } from "sonner";
 
 interface ICFRosDistros {
   formik: FormikProps<IDetails>;
@@ -17,20 +17,16 @@ export default function CFRosDistros({
   isImportRobot,
 }: ICFRosDistros): ReactElement {
   function handleRosDistroFilter(item: string) {
+    const { rosDistros } = formik.values.services.ros;
+
     if (item === "HUMBLE" || item === "IRON") {
-      if (
-        formik.values.rosDistros?.includes("GALACTIC") ||
-        formik.values.rosDistros?.includes("FOXY")
-      ) {
+      if (rosDistros?.includes("GALACTIC") || rosDistros?.includes("FOXY")) {
         return 1;
       }
 
       return 0;
     } else {
-      if (
-        formik.values.rosDistros?.includes("IRON") ||
-        formik.values.rosDistros?.includes("HUMBLE")
-      ) {
+      if (rosDistros?.includes("IRON") || rosDistros?.includes("HUMBLE")) {
         return 1;
       }
 
@@ -43,7 +39,7 @@ export default function CFRosDistros({
       data-tut="create-robot-step1-ros-distrobutions"
       className="flex flex-col gap-2"
     >
-      <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+      <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
         Ros Distrobutions:
         <InfoTip
           content="
@@ -61,7 +57,7 @@ export default function CFRosDistros({
               }
               key={index}
               className={`relative flex w-full items-center justify-center gap-1 rounded  border-2 p-2 transition-all duration-300 ${
-                formik.values.rosDistros?.includes(item)
+                formik.values.services.ros.rosDistros?.includes(item)
                   ? isImportRobot
                     ? "border-primary-300"
                     : "border-primary-400 shadow"
@@ -74,11 +70,11 @@ export default function CFRosDistros({
                   );
                 }
 
-                const { rosDistros } = formik.values;
+                const { rosDistros } = formik.values.services.ros;
 
                 if (rosDistros.includes(item)) {
                   formik.setFieldValue(
-                    "rosDistros",
+                    "services.ros.rosDistros",
                     rosDistros.filter((ros: string) => ros !== item),
                   );
                 } else if (
@@ -96,7 +92,10 @@ export default function CFRosDistros({
                     "You can't select Galactic or Foxy with Humble or Iron",
                   );
                 } else {
-                  formik.setFieldValue("rosDistros", [...rosDistros, item]);
+                  formik.setFieldValue("services.ros.rosDistros", [
+                    ...rosDistros,
+                    item,
+                  ]);
                 }
               }}
             >
@@ -109,18 +108,18 @@ export default function CFRosDistros({
                     filter: `grayscale(${handleRosDistroFilter(item)})`,
                   }}
                 />
-                <span className="text-light-700 text-center text-[0.68rem]">
+                <span className="text-center text-[0.68rem] text-light-700">
                   ROS2{" "}
                   {item === "FOXY"
                     ? "Foxy"
                     : item === "HUMBLE"
-                    ? "Humble"
-                    : item === "GALACTIC"
-                    ? "Galactic"
-                    : item === "IRON" && "Iron"}
+                      ? "Humble"
+                      : item === "GALACTIC"
+                        ? "Galactic"
+                        : item === "IRON" && "Iron"}
                 </span>
               </div>
-              {formik.values.rosDistros?.includes(item) && (
+              {formik.values.services.ros.rosDistros?.includes(item) && (
                 <div className="absolute inset-0 flex items-start justify-end p-2">
                   <MdVerified
                     size={16}
@@ -136,7 +135,7 @@ export default function CFRosDistros({
       </div>
       <InputError
         // @ts-ignore
-        error={formik?.errors?.rosDistros}
+        error={formik?.errors?.services?.ros?.rosDistros}
         touched={true}
       />
     </div>

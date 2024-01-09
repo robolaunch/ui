@@ -752,9 +752,9 @@ export default ({ children }: any) => {
         fleetName: values?.fleetName,
         robotName: values?.robotName,
       }),
-    ).then((responseFederatedRobot: any) => {
+    ).then((responseRobot: any) => {
       if (
-        responseFederatedRobot?.payload?.data?.[0].roboticsClouds?.[0]
+        responseRobot?.payload?.data?.[0].roboticsClouds?.[0]
           ?.cloudInstances?.[0]?.robolaunchFederatedRobots
       ) {
         parameters?.setRobotData &&
@@ -763,45 +763,64 @@ export default ({ children }: any) => {
               ...prevState,
               step1: {
                 ...prevState.step1,
-                organization: {
-                  id: selectedState?.organization?.organizationId,
-                  name: orgNameViewer(
-                    selectedState?.organization?.organizationName!,
-                  ),
+
+                details: {
+                  name: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.name,
+                  isVirtualRobot: responseRobot?.payload?.data[0]
+                    ?.roboticsClouds[0]?.cloudInstances[0]
+                    ?.robolaunchFederatedRobots[0]?.physicalInstance
+                    ? false
+                    : true,
+                  isDevelopmentMode: false,
+                  configureWorkspace: false,
                 },
-                region: {
-                  name: selectedState?.instance?.region,
-                },
-                cloudInstance: {
-                  id: selectedState?.instance?.instanceId,
-                  name: selectedState?.instance?.name,
-                  resources: {
-                    cpu: {
-                      coreTotal:
-                        selectedState?.instance?.cloudInstanceResource
-                          ?.cpuTotal,
-                    },
-                    gpu: {
-                      coreTotal:
-                        selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                          ?.map(
-                            (gpu: any) =>
-                              Number(gpu?.allocated) + Number(gpu?.capacity),
-                          )
-                          .reduce((a: any, b: any) => a + b, 0),
-                    },
-                    memory: {
-                      capacityTotal:
-                        selectedState?.instance?.cloudInstanceResource
-                          ?.memoryTotal,
-                    },
-                    storage: {
-                      capacityTotal: 0,
+                tree: {
+                  organization: {
+                    id: selectedState?.organization?.organizationId,
+                    name: orgNameViewer(
+                      selectedState?.organization?.organizationName!,
+                    ),
+                  },
+                  region: {
+                    name: selectedState?.instance?.region,
+                  },
+                  cloudInstance: {
+                    id: selectedState?.instance?.instanceId,
+                    name: selectedState?.instance?.name,
+                    resources: {
+                      cpu: {
+                        coreTotal:
+                          selectedState?.instance?.cloudInstanceResource
+                            ?.cpuTotal,
+                      },
+                      gpu: {
+                        coreTotal:
+                          selectedState?.instance?.cloudInstanceResource?.gpuUsage
+                            ?.map(
+                              (gpu: any) =>
+                                Number(gpu?.allocated) + Number(gpu?.capacity),
+                            )
+                            .reduce((a: any, b: any) => a + b, 0),
+                      },
+                      memory: {
+                        capacityTotal:
+                          selectedState?.instance?.cloudInstanceResource
+                            ?.memoryTotal,
+                      },
+                      storage: {
+                        capacityTotal: 0,
+                      },
                     },
                   },
-                },
-                namespace: {
-                  name: selectedState?.fleet?.name,
+                  physicalInstance: {
+                    name: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.physicalInstance,
+                  },
+                  namespace: {
+                    name: selectedState?.fleet?.name,
+                  },
                 },
 
                 resources: {
@@ -809,22 +828,27 @@ export default ({ children }: any) => {
                     allocatedCore: 0,
                   },
                   gpu: {
+                    enabledForCloudInstance:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.vdiGpuResource > 0
+                        ? true
+                        : false,
                     allocatedCore:
                       Number(
-                        responseFederatedRobot?.payload?.data[0]
-                          ?.roboticsClouds[0]?.cloudInstances[0]
-                          ?.robolaunchFederatedRobots[0].ideGpuResource || 0,
+                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                          .ideGpuResource || 0,
                       ) +
                       Number(
-                        responseFederatedRobot?.payload?.data[0]
-                          ?.roboticsClouds[0]?.cloudInstances[0]
-                          ?.robolaunchFederatedRobots[0].notebookGpuResource ||
-                          0,
+                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                          .notebookGpuResource || 0,
                       ) +
                       Number(
-                        responseFederatedRobot?.payload?.data[0]
-                          ?.roboticsClouds[0]?.cloudInstances[0]
-                          ?.robolaunchFederatedRobots[0].vdiGpuResource || 0,
+                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                          .vdiGpuResource || 0,
                       ),
                   },
                   memory: {
@@ -832,169 +856,210 @@ export default ({ children }: any) => {
                   },
                   storage: {
                     allocatedCapacity: Number(
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots[0].storageAmount || 0,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        .storageAmount || 0,
                     ),
                   },
                 },
 
                 services: {
+                  ros: {
+                    isEnabled:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.bridgeEnabled,
+                    rosDistros:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.distributions,
+                    socketEndpoint:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.bridgeIngressEndpoint,
+                    podName:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.bridgePodName,
+                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.bridgeApplicationLog,
+                  },
                   vdi: {
                     isEnabled:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.vdiEnabled,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.vdiEnabled,
                     socketEndpoint:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.vdiIngressEndpoint,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.vdiIngressEndpoint,
                     fileManagerEndpoint:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
                         ?.vdiFileBrowserIngressEndpoint,
+                    customPorts:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.vdiCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
                     gpuAllocation:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.vdiGpuResource,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.vdiGpuResource,
                     podName:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.vdiPodName,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.vdiPodName,
                     sessionCount:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.vdiSessionCount,
-                    log: responseFederatedRobot?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]
-                      ?.robolaunchFederatedRobots?.[0]?.vdiApplicationLog,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.vdiSessionCount,
+                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                      ?.vdiApplicationLog,
                   },
                   ide: {
                     isEnabled:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.ideEnabled,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.ideEnabled,
                     httpsEndpoint:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.ideIngressEndpoint,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.ideIngressEndpoint,
                     fileManagerEndpoint:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
                         ?.ideFileBrowserIngressEndpoint,
+                    customPorts:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.ideCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
                     gpuAllocation:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.ideGpuResource,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.ideGpuResource,
+                    maxGpuAllocation: 0,
                     gpuModelName:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.ideGpuModelName,
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.ideGpuModelName,
                     podName:
-                      responseFederatedRobot?.payload?.data[0]
-                        ?.roboticsClouds[0]?.cloudInstances[0]
-                        ?.robolaunchFederatedRobots?.[0]?.idePodName,
-                    log: responseFederatedRobot?.payload?.data[0]
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                        ?.idePodName,
+                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
+                      ?.ideApplicationLog,
+                  },
+                  physicalIde: {
+                    isEnabled: responseRobot?.payload?.data[0]
                       ?.roboticsClouds[0]?.cloudInstances[0]
-                      ?.robolaunchFederatedRobots?.[0]?.ideApplicationLog,
+                      ?.robolaunchFederatedRobots[0]?.physicalIdeIngressEndpoint
+                      ? true
+                      : false,
+                    httpsEndpoint:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.physicalIdeIngressEndpoint,
+                  },
+                  jupyterNotebook: {
+                    isEnabled:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.notebookEnabled,
+                    httpsEndpoint:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.notebookIngressEndpoint,
+                    fileManagerEndpoint:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.notebookFileBrowserIngressEndpoint,
+                    gpuAllocation:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.notebookGpuResource,
+                    customPorts:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.notebookCustomPorts
+                        ?.split("/")
+                        ?.map((item: string) => {
+                          return {
+                            name: item?.split("-")[0],
+                            port: item?.split("-")[1].split(":")[1],
+                            backendPort: item?.split("-")[1].split(":")[0],
+                          };
+                        }),
+                    podName:
+                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                        ?.notebookPodName,
+                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.notebookApplicationLog,
                   },
                 },
-                name: responseFederatedRobot?.payload?.data[0]
-                  ?.roboticsClouds[0]?.cloudInstances[0]
-                  ?.robolaunchFederatedRobots[0]?.name,
-                isVirtualRobot: responseFederatedRobot?.payload?.data[0]
-                  ?.roboticsClouds[0]?.cloudInstances[0]
-                  ?.robolaunchFederatedRobots[0]?.physicalInstance
-                  ? false
-                  : true,
-                physicalInstanceName:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.physicalInstance,
-                robotStorage:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.storageAmount,
-                isEnabledIde:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.ideEnabled,
-                isEnabledROS2Bridge:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.bridgeEnabled,
-                remoteDesktop: {
-                  isEnabled:
-                    responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
+                directories: {
+                  permittedDirectories:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
                       ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.vdiEnabled,
-                  sessionCount:
-                    responseFederatedRobot?.payload?.data?.[0]
-                      ?.roboticsClouds?.[0]?.cloudInstances?.[0]
-                      ?.robolaunchFederatedRobots?.[0]?.vdiSessionCount,
+                      ?.permittedDirectories,
+                  persistentDirectories:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.persistentDirectories,
+                  hostDirectories:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.hostDirectories
+                      ?.split(",")
+                      ?.map((item: string) => {
+                        return {
+                          hostDirectory: item?.split(":")[0],
+                          mountPath: item?.split(":")[1],
+                        };
+                      }),
                 },
-                rosDistros:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.distributions,
-                gpuEnabledForCloudInstance:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.vdiGpuResource > 0
-                    ? true
-                    : false,
-                isDevelopmentMode: false,
-                vdiPodName:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.vdiPodName,
-                idePodName:
-                  responseFederatedRobot?.payload?.data?.[0]
-                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
-                    ?.robolaunchFederatedRobots?.[0]?.idePodName,
-                permittedDirectories:
-                  responseFederatedRobot?.payload?.data?.[0]
-                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
-                    ?.robolaunchFederatedRobots?.[0]?.permittedDirectories,
-                persistentDirectories:
-                  responseFederatedRobot?.payload?.data?.[0]
-                    ?.roboticsClouds?.[0]?.cloudInstances?.[0]
-                    ?.robolaunchFederatedRobots?.[0]?.persistentDirectories,
-                hostDirectories:
-                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.hostDirectories
-                    ?.split(",")
-                    ?.map((item: string) => {
-                      return {
-                        hostDirectory: item?.split(":")[0],
-                        mountPath: item?.split(":")[1],
-                      };
-                    }),
-                ideCustomPorts:
-                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.ideCustomPorts
-                    ?.split("/")
-                    ?.map((item: string) => {
-                      return {
-                        name: item?.split("-")?.[0],
-                        port: item?.split("-")?.[1].split(":")?.[1],
-                        backendPort: item?.split("-")?.[1].split(":")?.[0],
-                      };
-                    }),
-                vdiCustomPorts:
-                  responseFederatedRobot?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]?.vdiCustomPorts
-                    ?.split("/")
-                    ?.map((item: string) => {
-                      return {
-                        name: item?.split("-")?.[0],
-                        port: item?.split("-")?.[1].split(":")?.[1],
-                        backendPort: item?.split("-")?.[1].split(":")?.[0],
-                      };
-                    }),
+                applicationConfig: {
+                  domainName:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.domainName,
+                  application:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.application,
+                  devspace:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
+                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
+                      ?.devspace,
+                },
+
+                clusters: {
+                  environment:
+                    responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0].robotClusters?.map(
+                      (cluster: { name: string; robotStatus: string }) => {
+                        return {
+                          name: cluster.name,
+                          status: cluster.robotStatus,
+                        };
+                      },
+                    ),
+                },
               },
               step2: {
                 workspaces:
-                  responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]
+                  responseRobot?.payload?.data[0]?.roboticsClouds[0]
                     ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
                     ?.robotWorkspaces,
               },
@@ -1003,7 +1068,7 @@ export default ({ children }: any) => {
 
         parameters?.setResponse &&
           parameters?.setResponse(
-            responseFederatedRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.find(
+            responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.find(
               (robot: any) => robot?.name === values?.robotName,
             ) || {},
           );
@@ -1036,6 +1101,13 @@ export default ({ children }: any) => {
           setRobotData((prevState: any) => {
             return {
               ...prevState,
+              step1: {
+                ...prevState.step1,
+                clusters: {
+                  ...prevState.step1.clusters,
+                  build: [],
+                },
+              },
               step3: {
                 buildManagerName:
                   responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.buildManagerName?.split(
@@ -1434,6 +1506,18 @@ export default ({ children }: any) => {
                   devspace:
                     responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
                       ?.cloudInstances[0]?.environments[0]?.devspace,
+                },
+
+                clusters: {
+                  environment:
+                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0].robotClusters?.map(
+                      (cluster: { name: string; robotStatus: string }) => {
+                        return {
+                          name: cluster.name,
+                          status: cluster.robotStatus,
+                        };
+                      },
+                    ),
                 },
               },
               step2: {

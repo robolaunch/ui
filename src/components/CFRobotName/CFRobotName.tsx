@@ -17,11 +17,11 @@ export default function CFRobotName({
       dataTut="create-robot-step1-name"
       labelName="Robot Name:"
       labelInfoTip="Type a new robot name."
-      inputProps={formik.getFieldProps("robotName")}
+      inputProps={formik.getFieldProps("details.name")}
       disabled={formik.isSubmitting || isImportRobot}
       inputHoverText="You can't change robot name because this robot is created before."
-      inputError={formik.errors.robotName}
-      inputTouched={formik.touched.robotName}
+      inputError={formik.errors.details?.name}
+      inputTouched={formik.touched.details?.name}
     />
   );
 }

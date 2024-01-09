@@ -10,7 +10,7 @@ import { FaPython } from "react-icons/fa";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppSelector } from "../../hooks/redux";
 
-export default function RobotHeaderTabs(): ReactElement {
+export default function EnvironmentHeaderTabs(): ReactElement {
   const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -29,13 +29,12 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          responseRobot?.bridgeEnabled &&
-          responseRobot?.bridgeIngressEndpoint &&
+          robotData.step1.services.ros.isEnabled &&
+          robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
-        // applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
-        true,
+        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
     },
     {
       name: "Teleoperation",
@@ -43,8 +42,8 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          responseRobot?.bridgeEnabled &&
-          responseRobot?.bridgeIngressEndpoint &&
+          robotData.step1.services.ros.isEnabled &&
+          robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
@@ -56,8 +55,8 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          responseRobot?.bridgeEnabled &&
-          responseRobot?.bridgeIngressEndpoint &&
+          robotData.step1.services.ros.isEnabled &&
+          robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
@@ -69,10 +68,10 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          responseRobot?.ideEnabled &&
-          responseRobot?.ideIngressEndpoint &&
-          responseRobot?.vdiEnabled &&
-          responseRobot?.vdiIngressEndpoint &&
+          robotData.step1.services.ide.isEnabled &&
+          robotData.step1.services.ide.httpsEndpoint &&
+          robotData.step1.services.vdi.isEnabled &&
+          robotData.step1.services.vdi.socketEndpoint &&
           isSettedCookie
         ) ||
         !isRobotReady,
@@ -85,8 +84,8 @@ export default function RobotHeaderTabs(): ReactElement {
       isLoading:
         !responseRobot ||
         !(
-          responseRobot?.ideEnabled &&
-          responseRobot?.ideIngressEndpoint &&
+          robotData.step1.services.ide.isEnabled &&
+          robotData.step1.services.ide.httpsEndpoint &&
           isSettedCookie
         ),
       isHidden: false,

@@ -204,6 +204,8 @@ export interface IDetails {
       isEnabled: boolean;
       rosDistros: any[];
       socketEndpoint: string;
+      podName: string;
+      log: string;
     };
     vdi: {
       isEnabled: boolean;
@@ -225,6 +227,10 @@ export interface IDetails {
       gpuModelName: string;
       podName: string;
       log: string;
+    };
+    physicalIde: {
+      isEnabled: boolean;
+      httpsEndpoint: string;
     };
     jupyterNotebook: {
       isEnabled: boolean;
@@ -253,6 +259,16 @@ export interface IDetails {
       version: string;
     };
   };
+  clusters: {
+    environment: IEnvironmentCluster[];
+    build: any[];
+    launch: any[];
+  };
+}
+
+export interface IEnvironmentCluster {
+  name: string;
+  status: string;
 }
 
 export interface IhostDirectories {

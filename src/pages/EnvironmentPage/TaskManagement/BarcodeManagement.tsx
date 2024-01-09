@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import CardLayout from "../../../layouts/CardLayout";
 import BarcodeManagement3D from "./BarcodeManagement3D";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";

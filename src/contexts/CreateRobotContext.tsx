@@ -75,6 +75,8 @@ export default ({ children }: any) => {
           isEnabled: true,
           socketEndpoint: "",
           rosDistros: [],
+          podName: "",
+          log: "",
         },
         vdi: {
           isEnabled: true,
@@ -83,7 +85,7 @@ export default ({ children }: any) => {
           customPorts: [],
           gpuAllocation: 0,
           podName: "",
-          sessionCount: 0,
+          sessionCount: 2,
           log: "",
         },
         ide: {
@@ -96,6 +98,10 @@ export default ({ children }: any) => {
           maxGpuAllocation: 0,
           podName: "",
           log: "",
+        },
+        physicalIde: {
+          isEnabled: true,
+          httpsEndpoint: "",
         },
         jupyterNotebook: {
           isEnabled: false,
@@ -130,6 +136,12 @@ export default ({ children }: any) => {
         isVirtualRobot: true,
         configureWorkspace: false,
         isDevelopmentMode: applicationMode,
+      },
+
+      clusters: {
+        environment: [],
+        build: [],
+        launch: [],
       },
     },
     step2: {

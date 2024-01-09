@@ -6,7 +6,7 @@ import Skeleton from "../Skeleton/Skeleton";
 import { FaMemory } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/redux";
 
-export default function RobotResource(): ReactElement {
+export default function EnvironmentResource(): ReactElement {
   const { robotData } = useCreateRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 

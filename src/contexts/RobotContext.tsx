@@ -1,10 +1,11 @@
 import { useEffect, createContext, useState, useReducer } from "react";
-import { IrobotTab } from "../interfaces/robotInterfaces";
+import { IEnvironmentCluster, IrobotTab } from "../interfaces/robotInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
 import { useAppSelector } from "../hooks/redux";
+import useCreateRobot from "../hooks/useCreateRobot";
 
 export const RobotContext: any = createContext<any>(null);
 
@@ -38,6 +39,8 @@ export default ({ children }: any) => {
     useState<any>(undefined);
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
+
+  const { robotData } = useCreateRobot();
 
   const [iFrameId, setIFrameId] = useState<number>(0);
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
@@ -107,12 +110,13 @@ export default ({ children }: any) => {
       handleGetPhysicalInstance();
     }
 
-    const timerResponseRobot = setInterval(() => {
+    const timerEnvironment = setInterval(() => {
       if (
         !sidebarState?.isOpen &&
-        Array.isArray(responseRobot?.robotClusters) &&
-        responseRobot?.robotClusters?.filter(
-          (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+        Array.isArray(robotData.step1.clusters.environment) &&
+        robotData.step1.clusters.environment?.filter(
+          (cluster: IEnvironmentCluster) =>
+            cluster?.status !== "EnvironmentReady",
         )?.length
       ) {
         applicationMode ? handleGetEnvironment() : handleGetRobot();
@@ -144,26 +148,31 @@ export default ({ children }: any) => {
     }, 10000);
 
     if (sidebarState?.isOpen) {
-      clearInterval(timerResponseRobot);
+      clearInterval(timerEnvironment);
       clearInterval(timerResponseBuildManager);
       clearInterval(timerResponseLaunchManagers);
     }
 
     return () => {
-      clearInterval(timerResponseRobot);
+      clearInterval(timerEnvironment);
       clearInterval(timerResponseBuildManager);
       clearInterval(timerResponseLaunchManagers);
     };
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagesState, responseRobot, responseBuildManager, responseLaunchManagers]);
+  }, [
+    pagesState,
+    responseRobot,
+    responseBuildManager,
+    responseLaunchManagers,
+    robotData,
+  ]);
   // Main Functions
 
   // isRobotReady
   useEffect(() => {
-    const isWorkspaceReady =
-      responseRobot?.robotClusters?.filter(
-        (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+    const isEnvironmentReady =
+      robotData.step1.clusters.environment?.filter(
+        (robot: any) => robot?.status !== "EnvironmentReady",
       )?.length === 0
         ? true
         : false;
@@ -188,13 +197,18 @@ export default ({ children }: any) => {
         ? true
         : false;
 
-    if (isWorkspaceReady || isBuildManagerReady || isLaunchManagerReady) {
+    if (isEnvironmentReady || isBuildManagerReady || isLaunchManagerReady) {
       setIsRobotReady(true);
     } else {
       setIFrameId((prevState) => prevState + 1);
       setIsRobotReady(false);
     }
-  }, [responseRobot, responseBuildManager, responseLaunchManagers]);
+  }, [
+    responseRobot,
+    responseBuildManager,
+    responseLaunchManagers,
+    robotData.step1.clusters.environment,
+  ]);
   // isRobotReady
 
   // Cookies Reloader

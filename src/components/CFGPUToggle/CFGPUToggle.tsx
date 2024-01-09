@@ -18,9 +18,9 @@ export default function CFGPUToggle({
       labelInfoTip="If you want or need to GPU resource on cloud instance set active"
       dataTut="create-robot-step1-gpu-resource"
       disabled={formik.isSubmitting || isImportRobot}
-      checked={formik?.values?.gpuEnabledForCloudInstance}
+      checked={formik?.values?.resources.gpu.enabledForCloudInstance}
       onChange={(e: any) =>
-        formik.setFieldValue("gpuEnabledForCloudInstance", e)
+        formik.setFieldValue("resources.gpu.enabledForCloudInstance", e)
       }
     />
   );
