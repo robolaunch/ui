@@ -12,6 +12,7 @@ interface IMachine3D {
       x: number;
       y: number;
       z: number;
+      yaw?: number;
     };
   };
 }
@@ -64,7 +65,7 @@ export default function Machine3D({ item }: IMachine3D) {
       onPointerLeave={() => hovered && setHovered(false)}
       scale={1}
       position={[item?.waypoint?.y, item?.waypoint?.z + 0.5, item?.waypoint?.x]}
-      rotation={[0, item?.waypoint?.z || 0, 0]}
+      rotation={[0, item?.waypoint?.yaw || 0, 0]}
     >
       <boxBufferGeometry args={[1, 1, 1]} />
       <meshNormalMaterial

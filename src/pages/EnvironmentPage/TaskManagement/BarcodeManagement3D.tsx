@@ -12,6 +12,17 @@ export default function App({ ros }: any) {
         return <Machine3D key={barcodeItemIndex} item={barcodeItem} />;
       })}
       <Robot3D />
+      <Machine3D
+        item={{
+          barcode: "asd",
+          waypoint: {
+            x: 1,
+            y: 2,
+            z: 0,
+            yaw: 1.57,
+          },
+        }}
+      />
     </Scene3D>
   );
 }
