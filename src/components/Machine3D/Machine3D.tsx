@@ -64,10 +64,14 @@ export default function Machine3D({ item }: IMachine3D) {
       onPointerEnter={() => !hovered && setHovered(true)}
       onPointerLeave={() => hovered && setHovered(false)}
       scale={1}
-      position={[item?.waypoint?.y, item?.waypoint?.z + 0.5, item?.waypoint?.x]}
+      position={[
+        item?.waypoint?.y,
+        item?.waypoint?.z * 0.6 + 0.5,
+        item?.waypoint?.x,
+      ]}
       rotation={[0, item?.waypoint?.yaw || 0, 0]}
     >
-      <boxBufferGeometry args={[1, 1, 1]} />
+      <boxBufferGeometry args={[0.6, 0.6, 0.6]} />
       <meshNormalMaterial
         transparent={
           findBarcodeInput && item.barcode.includes(findBarcodeInput)
@@ -84,7 +88,7 @@ export default function Machine3D({ item }: IMachine3D) {
           <Html
             className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
-            position={[0, 0.1, -0.50001]}
+            position={[0, 0.1, -0.301]}
             transform
             occlude
           >
@@ -96,7 +100,7 @@ export default function Machine3D({ item }: IMachine3D) {
           <Html
             className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
-            position={[0, 0.1, 0.50001]}
+            position={[0, 0.1, 0.301]}
             transform
             occlude
           >
@@ -108,7 +112,7 @@ export default function Machine3D({ item }: IMachine3D) {
           <Html
             className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
-            position={[0.51, 0.1, 0]}
+            position={[0.301, 0.1, 0]}
             rotation={[0, Math.PI / 2, 0]}
             transform
             occlude
@@ -121,7 +125,7 @@ export default function Machine3D({ item }: IMachine3D) {
           <Html
             className="relative inset-0 flex h-full w-full flex-col items-center justify-center"
             distanceFactor={1.5}
-            position={[-0.51, 0.1, 0]}
+            position={[-0.301, 0.1, 0]}
             rotation={[0, -Math.PI / 2, 0]}
             transform
             occlude

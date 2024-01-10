@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import Barcode from "react-barcode";
 
 interface IMachineBarcode {
@@ -9,7 +9,7 @@ export default function MachineBarcode({
   barcode,
 }: IMachineBarcode): ReactElement {
   return (
-    <div className="border-light-800 flex h-20 w-40 items-center justify-center border-[2px] bg-yellow-400">
+    <div className="flex h-16 w-32 items-center justify-center border-[2px] border-light-800 bg-yellow-400">
       {barcode ? (
         <Barcode
           fontSize={16}
