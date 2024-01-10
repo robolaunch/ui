@@ -66,7 +66,7 @@ export default function Machine3D({ item }: IMachine3D) {
       scale={1}
       position={[
         item?.waypoint?.y,
-        item?.waypoint?.z * 0.6 + 0.5,
+        item?.waypoint?.z * 0.6 + 0.3,
         item?.waypoint?.x,
       ]}
       rotation={[0, item?.waypoint?.yaw || 0, 0]}
