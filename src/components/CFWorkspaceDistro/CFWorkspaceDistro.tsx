@@ -22,7 +22,7 @@ export default function CFWorkspaceDistro({
     <FormInputSelect
       dataTut="create-robot-step2-workspace-distro"
       labelName="Workspace Distro:"
-      tip="Select a workspace ROS2 distro."
+      tip="Select a workspace ROS 2 distro."
       disabled={formik.isSubmitting}
       classNameContainer="w-60"
       inputProps={formik.getFieldProps(

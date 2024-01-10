@@ -52,7 +52,7 @@ export default function CFRosDistros({
             <div
               title={
                 isImportRobot
-                  ? "You can't change Ros Distrobutions because this robot is created before."
+                  ? "You can't change ROS 2 Distribution because this robot is created before."
                   : undefined
               }
               key={index}
@@ -66,7 +66,7 @@ export default function CFRosDistros({
               onClick={(e: any) => {
                 if (isImportRobot) {
                   return toast.error(
-                    "You can't change Ros Distrobutions because this robot is created before.",
+                    "You can't change ROS 2 Distribution because this robot is created before.",
                   );
                 }
 

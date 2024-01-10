@@ -238,7 +238,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
                     : true,
               },
               {
-                name: "Pulling ROS2 Image",
+                name: "Pulling ROS 2 Image",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
@@ -253,7 +253,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
                     : true,
               },
               {
-                name: "Setting up ROS2 Environment",
+                name: "Setting up ROS 2 Environment",
                 isFinished: !responseRobot
                   ? false
                   : responseRobot?.robotClusters?.filter(
@@ -336,7 +336,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
                   : true,
               },
               {
-                name: "Setting up ROS2 Workspaces",
+                name: "Setting up ROS 2 Workspaces",
                 isFinished: responseRobot?.robotClusters?.filter(
                   (robotCluster: any) =>
                     robotCluster?.robotStatus === "ConfiguringWorkspaces",

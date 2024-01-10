@@ -14,8 +14,8 @@ export default function CFBridgeToggle({
 }: ICFBridgeToggle): ReactElement {
   return (
     <CFInputToggle
-      labelName="ROS2 Bridge:"
-      labelInfoTip="The ROS2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS2 tools to interact with your robot."
+      labelName="ROS 2 Bridge:"
+      labelInfoTip="The ROS 2 Bridge allows you to connect your robot to the ecosystem. This allows you to use ROS 2 tools to interact with your robot."
       dataTut="create-robot-step1-ros2-bridge"
       disabled={isImportRobot}
       checked={formik?.values?.services.ros.isEnabled}

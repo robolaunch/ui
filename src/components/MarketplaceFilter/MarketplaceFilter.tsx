@@ -16,10 +16,10 @@ export default function MarketplaceFilter(): ReactElement {
     <CardLayout className="!col-span-3 flex !h-fit flex-col gap-8 p-6">
       <div className="flex flex-col gap-1">
         <span className="font-medium">Filter Settings</span>
-        <div className="bg-primary-500 h-[2px] w-28" />
+        <div className="h-[2px] w-28 bg-primary-500" />
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-light-700 text-sm font-semibold">
+        <div className="text-sm font-semibold text-light-700">
           Template Type
         </div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
@@ -56,7 +56,7 @@ export default function MarketplaceFilter(): ReactElement {
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-light-700 text-sm font-semibold">Robot Type</div>
+        <div className="text-sm font-semibold text-light-700">Robot Type</div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
@@ -71,34 +71,34 @@ export default function MarketplaceFilter(): ReactElement {
         </div>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="text-light-700 text-sm font-semibold">Ros Distro</div>
+        <div className="text-sm font-semibold text-light-700">ROS 2 Distro</div>
         <div className="flex flex-col gap-3 pl-6 text-xs">
           <label className="flex items-center gap-2" htmlFor="humble">
             <InputCheckbox className="!scale-125" name="humble" />
             <img className="w-10" src="/svg/apps/humble.svg" alt="humble" />
-            <span>ROS2 Humble</span>
+            <span>ROS 2 Humble</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="foxy">
             <InputCheckbox className="!scale-125" name="foxy" />
             <img className="w-10" src="/svg/apps/foxy.svg" alt="foxy" />
-            <span>ROS2 Foxy</span>
+            <span>ROS 2 Foxy</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="galactic">
             <InputCheckbox className="!scale-125" name="galactic" />
             <img className="w-10" src="/svg/apps/galactic.svg" alt="galactic" />
-            <span>ROS2 Galactic</span>
+            <span>ROS 2 Galactic</span>
           </label>
           <label className="flex items-center gap-2" htmlFor="noetic">
             <InputCheckbox className="!scale-125" name="noetic" />
             <img className="w-10" src="/svg/apps/noetic.svg" alt="noetic" />
-            <span>ROS1 Noetic</span>
+            <span>ROS Noetic</span>
           </label>
         </div>
       </div>
 
       <div className="flex gap-4">
         <Button
-          className="!bg-light-50 !text-primary-500 border-primary-500 !h-11 border"
+          className="!h-11 border border-primary-500 !bg-light-50 !text-primary-500"
           text={"Reset Filter"}
         />
         <Button className="!h-11" text={"Apply Filter"} />

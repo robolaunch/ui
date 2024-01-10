@@ -60,7 +60,10 @@ export const CFRobotStep1Validations = Yup.object().shape({
       ),
     }),
     ros: Yup.object().shape({
-      rosDistros: Yup.array().min(1, "At least one ROS Distro is required"),
+      rosDistros: Yup.array().min(
+        1,
+        "At least one ROS 2 Distribution is required",
+      ),
     }),
   }),
   directories: Yup.object().shape({

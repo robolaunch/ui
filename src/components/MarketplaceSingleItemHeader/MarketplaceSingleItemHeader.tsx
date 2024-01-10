@@ -119,7 +119,7 @@ export default function MarketplaceSingleİtemHeader({
           </div>
           <div className="text-xs text-light-700">
             {typeof responseItem?.distro === "string" ? (
-              `ROS2 ${responseItem?.distro}`
+              `ROS 2 ${responseItem?.distro}`
             ) : (
               <ContentLoader
                 speed={1}

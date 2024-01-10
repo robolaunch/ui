@@ -386,8 +386,8 @@ export function getGuideItem(guide: string) {
         selector: guide,
         content: () => (
           <GuideContainer
-            title="Ros Distrobutions"
-            text="Select the ROS Distrobutions you want to use."
+            title="ROS 2 Distribution"
+            text="Select the ROS 2 Distribution you want to use."
           />
         ),
       };
@@ -451,7 +451,7 @@ export function getGuideItem(guide: string) {
             text={
               envApplicationMode
                 ? `If you want to use a workspace in your application, you can add it here.`
-                : `Workspaces are the ROS2 workspaces that you want to use in your robot.`
+                : `Workspaces are the ROS 2 workspaces that you want to use in your robot.`
             }
           />
         ),
@@ -482,7 +482,7 @@ export function getGuideItem(guide: string) {
         content: () => (
           <GuideContainer
             title="Workspace Distro"
-            text="Select a workspace ROS2 distro."
+            text="Select a workspace ROS 2 distro."
           />
         ),
       };
