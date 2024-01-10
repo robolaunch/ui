@@ -75,11 +75,11 @@ export default function Machine3D({ item }: IMachine3D) {
       <meshNormalMaterial
         transparent={
           findBarcodeInput && item.barcode.includes(findBarcodeInput)
-            ? true
-            : false
+            ? false
+            : true
         }
         opacity={
-          findBarcodeInput && item.barcode.includes(findBarcodeInput) ? 0.1 : 1
+          findBarcodeInput && item.barcode.includes(findBarcodeInput) ? 1 : 0.1
         }
       />
       {hovered && (
