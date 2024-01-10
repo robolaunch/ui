@@ -74,12 +74,18 @@ export default function Machine3D({ item }: IMachine3D) {
       <boxBufferGeometry args={[0.6, 0.6, 0.6]} />
       <meshNormalMaterial
         transparent={
-          findBarcodeInput && item.barcode.includes(findBarcodeInput)
-            ? false
-            : true
+          findBarcodeInput
+            ? item.barcode.includes(findBarcodeInput)
+              ? false
+              : true
+            : false
         }
         opacity={
-          findBarcodeInput && item.barcode.includes(findBarcodeInput) ? 1 : 0.1
+          findBarcodeInput
+            ? item.barcode.includes(findBarcodeInput)
+              ? 1
+              : 0.1
+            : 1
         }
       />
       {hovered && (
