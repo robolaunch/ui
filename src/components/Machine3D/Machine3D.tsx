@@ -52,10 +52,10 @@ export default function Machine3D({ item }: IMachine3D) {
       onPointerEnter={() => !hovered && setHovered(true)}
       onPointerLeave={() => hovered && setHovered(false)}
       scale={1}
-      position={[item?.waypoint?.y, item?.waypoint?.z, item?.waypoint?.x]}
+      position={[item?.waypoint?.y, item?.waypoint?.z + 0.5, item?.waypoint?.x]}
       rotation={[0, item?.waypoint?.z || 0, 0]}
     >
-      <boxBufferGeometry args={[0.75, 0.75, 0.75]} />
+      <boxBufferGeometry args={[1, 1, 1]} />
       <meshNormalMaterial />
       {hovered && (
         <group>
