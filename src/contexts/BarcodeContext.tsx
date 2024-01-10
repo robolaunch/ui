@@ -26,12 +26,10 @@ export default ({ children }: any) => {
     });
 
     ros &&
-      barcodes.subscribe(function (message: any) {
-        console.log("/barcode", message);
+      barcodes.subscribe(function ({ data }: any) {
+        const message = JSON.parse(data);
 
-        const messageWithScannerId = JSON.parse(message?.data);
-
-        handleBarcodeSetters(messageWithScannerId);
+        setBarcodeItems((prevData: any) => [...prevData, message]);
       });
   }, [ros]);
 
@@ -59,40 +57,6 @@ export default ({ children }: any) => {
   useEffect(() => {
     console.log(barcodeItems);
   }, [barcodeItems]);
-
-  function handleBarcodeSetters(message: any) {
-    setBarcodeItems((prevBarcodeItems: any) => {
-      const updatedBarcodeItems = [...prevBarcodeItems];
-
-      const barcodeIndex = prevBarcodeItems.findIndex(
-        (barcodeItem: any) =>
-          barcodeItem.waypoint &&
-          Math.sqrt(
-            Math.pow(barcodeItem.waypoint.x - message?.waypoint.x, 2) +
-              Math.pow(barcodeItem.waypoint.y - message?.waypoint.y, 2),
-          ) < 0.02,
-      );
-
-      if (barcodeIndex !== -1) {
-        updatedBarcodeItems[barcodeIndex] = {
-          ...prevBarcodeItems[barcodeIndex],
-          barcodes: prevBarcodeItems[barcodeIndex].barcodes.map(
-            (barcode: any, index: number) =>
-              index === message?.scannerId ? message?.barcode : barcode,
-          ),
-        };
-      } else {
-        updatedBarcodeItems.push({
-          barcodes: Array.apply(null, Array(3)).map((_, index: number) =>
-            index === message?.scannerId ? message?.barcode : "",
-          ),
-          waypoint: message?.waypoint,
-        });
-      }
-
-      return updatedBarcodeItems;
-    });
-  }
 
   function quaternionToEuler(q: {
     x: number;
