@@ -21,7 +21,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     const barcodes = new ROSLIB.Topic({
       ros: ros,
-      name: "/barcode",
+      name: "/all_barcodes",
       messageType: "std_msgs/msg/String",
     });
 
