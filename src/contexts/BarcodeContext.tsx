@@ -27,6 +27,8 @@ export default ({ children }: any) => {
 
     ros &&
       barcodes.subscribe(function (message: any) {
+        console.log("/barcode", message);
+
         const messageWithScannerId = JSON.parse(message?.data);
 
         handleBarcodeSetters(messageWithScannerId);
@@ -54,16 +56,20 @@ export default ({ children }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ros]);
 
+  useEffect(() => {
+    console.log(barcodeItems);
+  }, [barcodeItems]);
+
   function handleBarcodeSetters(message: any) {
     setBarcodeItems((prevBarcodeItems: any) => {
       const updatedBarcodeItems = [...prevBarcodeItems];
 
       const barcodeIndex = prevBarcodeItems.findIndex(
         (barcodeItem: any) =>
-          barcodeItem.coordinates &&
+          barcodeItem.waypoint &&
           Math.sqrt(
-            Math.pow(barcodeItem.coordinates.x - message?.coordinates.x, 2) +
-              Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2),
+            Math.pow(barcodeItem.waypoint.x - message?.waypoint.x, 2) +
+              Math.pow(barcodeItem.waypoint.y - message?.waypoint.y, 2),
           ) < 0.02,
       );
 
@@ -80,7 +86,7 @@ export default ({ children }: any) => {
           barcodes: Array.apply(null, Array(3)).map((_, index: number) =>
             index === message?.scannerId ? message?.barcode : "",
           ),
-          coordinates: message?.coordinates,
+          waypoint: message?.waypoint,
         });
       }
 

@@ -7,7 +7,7 @@ import MachineBarcode from "../MachineBarcode/MachineBarcode";
 interface IMachine3D {
   item: {
     barcodes: any[];
-    coordinates: {
+    waypoint: {
       x: number;
       y: number;
       z: number;
@@ -53,11 +53,11 @@ export default function Machine3D({ item }: IMachine3D) {
       onPointerLeave={() => hovered && setHovered(false)}
       scale={1}
       position={[
-        item?.coordinates?.y,
+        item?.waypoint?.y,
         item?.barcodes?.length / 3,
-        item?.coordinates?.x,
+        item?.waypoint?.x,
       ]}
-      rotation={[0, item?.coordinates?.z || 0, 0]}
+      rotation={[0, item?.waypoint?.z || 0, 0]}
     >
       <boxBufferGeometry args={[0.75, item.barcodes?.length / 1.5, 0.75]} />
       <meshNormalMaterial />
