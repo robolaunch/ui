@@ -40,7 +40,7 @@ export default function CFRosDistros({
       className="flex flex-col gap-2"
     >
       <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
-        Ros Distrobutions:
+        ROS 2 Distribution:
         <InfoTip
           content="
           ROS Distributions are the versions of ROS that are installed on the robot. Each ROS distribution is independent of the other, meaning that you can use multiple ROS distributions on the same robot."
@@ -109,7 +109,7 @@ export default function CFRosDistros({
                   }}
                 />
                 <span className="text-center text-[0.68rem] text-light-700">
-                  ROS2{" "}
+                  ROS 2{" "}
                   {item === "FOXY"
                     ? "Foxy"
                     : item === "HUMBLE"
