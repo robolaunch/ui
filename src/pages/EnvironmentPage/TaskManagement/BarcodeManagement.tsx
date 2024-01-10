@@ -7,6 +7,7 @@ import BarcodeModeToggle from "../../../components/BarcodeModeToggle/BarcodeMode
 
 export default function BarcodeManagement({ ros }: any): ReactElement {
   const [activeTab, setActiveTab] = useState<"2D" | "3D">("3D");
+
   const handleFullScreen = useFullScreenHandle();
 
   return (

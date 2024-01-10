@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { BsFullscreen } from "react-icons/bs";
 import useBarcode from "../../hooks/useBarcode";
 import saveAs from "file-saver";
@@ -45,9 +45,7 @@ export default function BarcodeModeToggle({
       >
         E
       </div>
-      <div className="flex h-9 w-9 cursor-pointer items-center justify-center rounded bg-light-100 transition-all duration-300">
-        <BarcodeFinder />
-      </div>
+      <BarcodeFinder />
     </div>
   );
 }

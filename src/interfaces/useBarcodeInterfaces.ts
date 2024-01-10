@@ -3,4 +3,6 @@ export interface IuseBarcode {
   setRobotLocation: any;
   barcodeItems: any;
   setBarcodeItems: any;
+  findBarcodeInput: any;
+  setFindBarcodeInput: any;
 }

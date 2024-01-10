@@ -7,6 +7,7 @@ export const BarcodeContext: any = createContext<any>(null);
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const { ros } = useRobot();
+  const [findBarcodeInput, setFindBarcodeInput] = useState<string>("");
   const [robotLocation, setRobotLocation] = useState<{
     x: number;
     y: number;
@@ -73,7 +74,14 @@ export default ({ children }: any) => {
 
   return (
     <BarcodeContext.Provider
-      value={{ robotLocation, setRobotLocation, barcodeItems, setBarcodeItems }}
+      value={{
+        robotLocation,
+        setRobotLocation,
+        barcodeItems,
+        setBarcodeItems,
+        findBarcodeInput,
+        setFindBarcodeInput,
+      }}
     >
       {children}
     </BarcodeContext.Provider>
