@@ -1,4 +1,4 @@
-import CodeEditorSwitcher from "../../../components/CodeEditorSwitcher/CodeEditorSwitcher";
+import LayoutTabSwitcher from "../../../components/LayoutTabSwitcher/LayoutTabSwitcher";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ControlBar from "../../../components/ControlBar/ControlBar";
 import useCreateRobot from "../../../hooks/useCreateRobot";
@@ -8,7 +8,9 @@ import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
 
 export default function CodeEditor(): ReactElement {
-  const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<1 | 2>(1);
+  const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
+    "Virtual IDE" | "Physical IDE"
+  >("Virtual IDE");
 
   const handleFullScreen = useFullScreenHandle();
 
@@ -27,9 +29,10 @@ export default function CodeEditor(): ReactElement {
       }
     >
       {robotData.step1.services.physicalIde?.isEnabled && (
-        <CodeEditorSwitcher
-          activeTabCodeEditor={activeTabCodeEditor}
-          setActiveTabCodeEditor={setActiveTabCodeEditor}
+        <LayoutTabSwitcher
+          tabs={["Virtual IDE", "Physical IDE"]}
+          activeTab={activeTabCodeEditor}
+          setActiveTab={setActiveTabCodeEditor}
         />
       )}
       <Card loading className="relative">
@@ -43,7 +46,10 @@ export default function CodeEditor(): ReactElement {
                 title="Virtual IDE"
                 allow="clipboard-read"
                 className={`animate-fadeIn h-full w-full
-                ${activeTabCodeEditor === 2 && "absolute -top-[9999px]"}
+                ${
+                  activeTabCodeEditor === "Physical IDE" &&
+                  "absolute -top-[9999px]"
+                }
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={urls?.ide || robotData.step1.services.ide?.httpsEndpoint}
               />
@@ -51,7 +57,10 @@ export default function CodeEditor(): ReactElement {
                 title="Physical IDE"
                 allow="clipboard-read"
                 className={`animate-fadeIn h-full w-full
-                ${activeTabCodeEditor === 1 && "absolute -top-[9999px]"}
+                ${
+                  activeTabCodeEditor === "Virtual IDE" &&
+                  "absolute -top-[9999px]"
+                }
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={robotData.step1.services.physicalIde?.httpsEndpoint}
               />

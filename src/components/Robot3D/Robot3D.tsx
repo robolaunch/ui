@@ -12,7 +12,7 @@ export default function Robot3D() {
   useMemo(() => {
     const loader = new GLTFLoader();
     loader.load(
-      "https://github.com/robolaunch/ui-models/raw/main/robot.glb",
+      "/models/robot.glb",
       (gltf: any) => {
         console.log("Robot model loaded:", gltf);
         setRobotModel(gltf.scene);

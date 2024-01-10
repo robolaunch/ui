@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
-import ROSLIB from "roslib";
+import { createContext, useEffect, useState } from "react";
 import useRobot from "../hooks/useRobot";
+import ROSLIB from "roslib";
 
 export const BarcodeContext: any = createContext<any>(null);
 
@@ -26,8 +26,10 @@ export default ({ children }: any) => {
     });
 
     ros &&
-      barcodes.subscribe(function (barcode: any) {
-        console.log("barcode", barcode);
+      barcodes.subscribe(function (message: any) {
+        const messageWithScannerId = JSON.parse(message?.data);
+
+        handleBarcodeSetters(messageWithScannerId);
       });
   }, [ros]);
 
@@ -40,7 +42,6 @@ export default ({ children }: any) => {
 
     ros &&
       poseTopic.subscribe(function (pose: any) {
-        console.log(pose);
         setRobotLocation({
           ...pose?.pose?.position,
           z: quaternionToEuler(pose?.pose?.orientation),
@@ -52,6 +53,40 @@ export default ({ children }: any) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ros]);
+
+  function handleBarcodeSetters(message: any) {
+    setBarcodeItems((prevBarcodeItems: any) => {
+      const updatedBarcodeItems = [...prevBarcodeItems];
+
+      const barcodeIndex = prevBarcodeItems.findIndex(
+        (barcodeItem: any) =>
+          barcodeItem.coordinates &&
+          Math.sqrt(
+            Math.pow(barcodeItem.coordinates.x - message?.coordinates.x, 2) +
+              Math.pow(barcodeItem.coordinates.y - message?.coordinates.y, 2),
+          ) < 0.02,
+      );
+
+      if (barcodeIndex !== -1) {
+        updatedBarcodeItems[barcodeIndex] = {
+          ...prevBarcodeItems[barcodeIndex],
+          barcodes: prevBarcodeItems[barcodeIndex].barcodes.map(
+            (barcode: any, index: number) =>
+              index === message?.scannerId ? message?.barcode : barcode,
+          ),
+        };
+      } else {
+        updatedBarcodeItems.push({
+          barcodes: Array.apply(null, Array(3)).map((_, index: number) =>
+            index === message?.scannerId ? message?.barcode : "",
+          ),
+          coordinates: message?.coordinates,
+        });
+      }
+
+      return updatedBarcodeItems;
+    });
+  }
 
   function quaternionToEuler(q: {
     x: number;

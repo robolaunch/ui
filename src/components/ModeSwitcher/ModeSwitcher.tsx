@@ -10,19 +10,17 @@ export default function ModeSwitcher(): ReactElement {
   const dispatch = useAppDispatch();
 
   return (
-    <>
-      <Toggle
-        defaultChecked={applicationMode}
-        icons={false}
-        className={`toggle-color`}
-        disabled={!envSwitchableMode}
-        onChange={(e) => {
-          setTimeout(() => {
-            dispatch(setApplicationMode(e.target.checked));
-            window.location.reload();
-          }, 1000);
-        }}
-      />
-    </>
+    <Toggle
+      defaultChecked={applicationMode}
+      icons={false}
+      className={`toggle-color`}
+      disabled={!envSwitchableMode}
+      onChange={(e) => {
+        setTimeout(() => {
+          dispatch(setApplicationMode(e.target.checked));
+          window.location.reload();
+        }, 1000);
+      }}
+    />
   );
 }

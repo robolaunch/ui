@@ -1,6 +1,6 @@
 import { Html, useCursor } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import React, { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import MachineBarcode from "../MachineBarcode/MachineBarcode";
 
