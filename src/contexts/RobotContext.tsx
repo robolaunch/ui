@@ -311,7 +311,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     const vdiClient: WebSocket | null =
       isSettedCookie &&
-      robotData.step1.services.vdi.socketEndpoint &&
+      responseRobot?.vdiIngressEndpoint &&
       connectionsReducer?.vdi === null
         ? new WebSocket(
             (urls?.vdi || responseRobot?.vdiIngressEndpoint) +
