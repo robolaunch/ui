@@ -7,7 +7,6 @@ import Card from "../../../components/Card/Card";
 
 export default function BarcodeManagement({ ros }: any): ReactElement {
   const [activeTab, setActiveTab] = useState<"2D" | "3D">("3D");
-
   const handleFullScreen = useFullScreenHandle();
 
   return (
@@ -17,7 +16,7 @@ export default function BarcodeManagement({ ros }: any): ReactElement {
           {activeTab === "2D" ? (
             <BarcodeManagement2D />
           ) : (
-            <BarcodeManagement3D ros={ros} />
+            <BarcodeManagement3D />
           )}
         </Fragment>
         <BarcodeManagementControls

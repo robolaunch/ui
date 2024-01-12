@@ -102,7 +102,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
             <div className="flex h-full flex-col gap-2 py-2">
               <div className="flex flex-col items-center justify-center gap-1 pb-1 font-medium ">
                 <span>Missions</span>
-                <span className="bg-primary-500 h-[2px] w-20" />
+                <span className="h-[2px] w-20 bg-primary-500" />
               </div>
               {missions?.length ? (
                 missions?.map((mission: any, missionIndex: number) => {
@@ -196,13 +196,15 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
             >
               <TransformComponent>
                 <div
-                  style={{
-                    backgroundImage: `url(/images/bg-transparent.png)`,
-                  }}
+                  style={
+                    {
+                      // backgroundImage: `url(/images/bg-transparent.png)`,
+                    }
+                  }
                   className="flex w-full items-center justify-center"
                 >
                   <div
-                    className="border-light-600 relative border-4"
+                    className="relative border-4 border-light-600"
                     style={{
                       width: `${rosMapDetails?.resolution?.x}px`,
                       height: `${rosMapDetails?.resolution?.y}px`,

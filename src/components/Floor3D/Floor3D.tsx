@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-export default function Floor3D(props: any) {
+export default function Floor3D() {
   return (
     <Fragment>
       <color attach="background" args={["#FFFFF0"]} />

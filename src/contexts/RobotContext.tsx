@@ -310,7 +310,9 @@ export default ({ children }: any) => {
   // VDI - vIDE Test Connection
   useEffect(() => {
     const vdiClient: WebSocket | null =
-      isSettedCookie && connectionsReducer?.vdi === null
+      isSettedCookie &&
+      robotData.step1.services.vdi.socketEndpoint &&
+      connectionsReducer?.vdi === null
         ? new WebSocket(
             (urls?.vdi || responseRobot?.vdiIngressEndpoint) +
               "ws?password=admin",

@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.30.3",
+  "version": "0.30.4",
   "private": true,
   "scripts": {
     "dev": "react-scripts start",
