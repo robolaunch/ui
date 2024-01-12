@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useRobot from "../hooks/useRobot";
 import ROSLIB from "roslib";
+import { IBarcodeItem } from "../interfaces/barcodeInterfaces";
 
 export const BarcodeContext: any = createContext<any>(null);
 
@@ -17,7 +18,7 @@ export default ({ children }: any) => {
     y: 0,
     z: 0,
   });
-  const [barcodeItems, setBarcodeItems] = useState<any[]>([]);
+  const [barcodeItems, setBarcodeItems] = useState<IBarcodeItem[]>([]);
 
   useEffect(() => {
     const barcodes = new ROSLIB.Topic({
@@ -30,8 +31,9 @@ export default ({ children }: any) => {
       barcodes.subscribe(function ({ data }: any) {
         const message = JSON.parse(data);
 
-        setBarcodeItems((prevData: any) => [...prevData, message]);
+        barcodeClustering(message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ros]);
 
   useEffect(() => {
@@ -70,6 +72,55 @@ export default ({ children }: any) => {
     const cosy_cosp = 1 - 2 * (y * y + z * z);
 
     return Math.atan2(siny_cosp, cosy_cosp);
+  }
+
+  function barcodeClustering(newBarcode: IBarcodeItem) {
+    const clusteringScale = 0.3;
+
+    setBarcodeItems((prevData: IBarcodeItem[]) => {
+      if (prevData.length > 0) {
+        const lastItemWaypoint = {
+          x: Math.abs(prevData[prevData.length - 1]?.waypoint?.x),
+          y: Math.abs(prevData[prevData.length - 1]?.waypoint?.y),
+          z: Math.abs(prevData[prevData.length - 1]?.waypoint?.z),
+        };
+
+        const newItemWaypoint = {
+          x: Math.abs(newBarcode?.waypoint?.x),
+          y: Math.abs(newBarcode?.waypoint?.y),
+          z: Math.abs(newBarcode?.waypoint?.z),
+        };
+
+        const diff = {
+          x: Math.abs(lastItemWaypoint.x - newItemWaypoint.x),
+          y: Math.abs(lastItemWaypoint.y - newItemWaypoint.y),
+          z: Math.abs(lastItemWaypoint.z - newItemWaypoint.z),
+        };
+
+        if (diff.x < clusteringScale && diff.y < clusteringScale) {
+          return [
+            ...prevData,
+            {
+              robotId: newBarcode.robotId,
+              fleetId: newBarcode.fleetId,
+              sensorId: newBarcode.sensorId,
+              barcode: newBarcode.barcode,
+              waypoint: {
+                x: prevData[prevData.length - 1]?.waypoint?.x,
+                y: prevData[prevData.length - 1]?.waypoint?.y,
+                z: newBarcode.waypoint.z,
+                yaw: prevData[prevData.length - 1]?.waypoint?.yaw,
+              },
+            },
+          ];
+        } else {
+          return [...prevData, newBarcode];
+        }
+      } else {
+        // If barcodeItems is initially empty, just return the newBarcode in an array
+        return [newBarcode];
+      }
+    });
   }
 
   return (

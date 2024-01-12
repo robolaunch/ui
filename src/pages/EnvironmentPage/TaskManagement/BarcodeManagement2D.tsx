@@ -19,7 +19,7 @@ export default function BarcodeManagement2D(): ReactElement {
           style={{
             backgroundRepeat: "repeat",
           }}
-          className="flex w-full items-center justify-center gap-10 "
+          className="animate-fadeIn flex w-full items-center justify-center gap-10"
         >
           {barcodeItems?.length
             ? barcodeItems?.map(
@@ -38,7 +38,7 @@ export default function BarcodeManagement2D(): ReactElement {
                                 backgroundSize: "contain",
                               }}
                             >
-                              <div className="border-light-800 flex h-10 w-full items-center justify-center border-[6px] bg-yellow-400">
+                              <div className="flex h-10 w-full items-center justify-center border-[6px] border-light-800 bg-yellow-400">
                                 {barcode ? (
                                   <Barcode
                                     fontSize={8}

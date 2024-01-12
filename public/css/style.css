@@ -917,6 +917,10 @@ video {
   margin-left: 0.5rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .mt-0 {
   margin-top: 0px;
 }
@@ -943,10 +947,6 @@ video {
 
 .mt-\[0\.1rem\] {
   margin-top: 0.1rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .block {
@@ -989,12 +989,20 @@ video {
   height: 7rem !important;
 }
 
+.\!h-6 {
+  height: 1.5rem !important;
+}
+
 .\!h-60 {
   height: 15rem !important;
 }
 
 .\!h-8 {
   height: 2rem !important;
+}
+
+.\!h-80 {
+  height: 20rem !important;
 }
 
 .\!h-9 {
@@ -1123,10 +1131,6 @@ video {
   height: 3px;
 }
 
-.h-\[40rem\] {
-  height: 40rem;
-}
-
 .h-\[42rem\] {
   height: 42rem;
 }
@@ -1157,16 +1161,28 @@ video {
   height: 100vh;
 }
 
-.\!h-7 {
-  height: 1.75rem !important;
-}
-
-.\!h-6 {
-  height: 1.5rem !important;
-}
-
 .max-h-\[40rem\] {
   max-height: 40rem;
+}
+
+.\!max-h-full {
+  max-height: 100% !important;
+}
+
+.\!max-h-fit {
+  max-height: -webkit-fit-content !important;
+  max-height: -moz-fit-content !important;
+  max-height: fit-content !important;
+}
+
+.\!max-h-min {
+  max-height: -webkit-min-content !important;
+  max-height: min-content !important;
+}
+
+.\!max-h-max {
+  max-height: -webkit-max-content !important;
+  max-height: max-content !important;
 }
 
 .min-h-4 {
@@ -1177,16 +1193,16 @@ video {
   min-height: 1.25rem;
 }
 
+.min-h-9 {
+  min-height: 2.25rem;
+}
+
 .min-h-\[40rem\] {
   min-height: 40rem;
 }
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-9 {
-  min-height: 2.25rem;
 }
 
 .\!w-24 {
@@ -1394,10 +1410,6 @@ video {
   width: max-content;
 }
 
-.\!w-60 {
-  width: 15rem !important;
-}
-
 .w-80 {
   width: 20rem;
 }
@@ -1412,6 +1424,10 @@ video {
 
 .min-w-36 {
   min-width: 9rem;
+}
+
+.min-w-9 {
+  min-width: 2.25rem;
 }
 
 .min-w-\[12rem\] {
@@ -1431,10 +1447,6 @@ video {
 .min-w-max {
   min-width: -webkit-max-content;
   min-width: max-content;
-}
-
-.min-w-9 {
-  min-width: 2.25rem;
 }
 
 .max-w-fit {
@@ -2407,6 +2419,10 @@ video {
   padding-left: 1.5rem;
 }
 
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
 .pr-6 {
   padding-right: 1.5rem;
 }
@@ -2445,14 +2461,6 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pl-4 {
-  padding-left: 1rem;
-}
-
-.pr-2 {
-  padding-right: 0.5rem;
 }
 
 .text-center {
@@ -2818,6 +2826,14 @@ video {
 
 .opacity-90 {
   opacity: 0.9;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-60 {
+  opacity: 0.6;
 }
 
 .\!shadow {

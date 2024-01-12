@@ -7,11 +7,13 @@ export default function App({ ros }: any) {
   const { barcodeItems } = useBarcode();
 
   return (
-    <Scene3D ros={ros}>
-      {barcodeItems?.map((barcodeItem: any, barcodeItemIndex: number) => {
-        return <Machine3D key={barcodeItemIndex} item={barcodeItem} />;
-      })}
-      <Robot3D />
-    </Scene3D>
+    <div className="animate-fadeIn absolute inset-0">
+      <Scene3D ros={ros}>
+        {barcodeItems?.map((barcodeItem: any, barcodeItemIndex: number) => {
+          return <Machine3D key={barcodeItemIndex} item={barcodeItem} />;
+        })}
+        <Robot3D />
+      </Scene3D>
+    </div>
   );
 }

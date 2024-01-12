@@ -1,7 +1,7 @@
 import MissionManagement from "../pages/EnvironmentPage/TaskManagement/MissionManagement";
 import BarcodeManagement from "../pages/EnvironmentPage/TaskManagement/BarcodeManagement";
 import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher";
-import { Fragment, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import useRobot from "../hooks/useRobot";
 
 export default function TaskManagementLayout(): ReactElement {
@@ -12,7 +12,7 @@ export default function TaskManagementLayout(): ReactElement {
   >("Mission Management");
 
   return (
-    <Fragment>
+    <div className={"animate-fadeIn flex h-full flex-col gap-6"}>
       <LayoutTabSwitcher
         tabs={["Mission Management", "Barcode Management"]}
         activeTab={activeTab}
@@ -26,6 +26,6 @@ export default function TaskManagementLayout(): ReactElement {
             return <BarcodeManagement ros={ros} />;
         }
       })()}
-    </Fragment>
+    </div>
   );
 }
