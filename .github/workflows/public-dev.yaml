@@ -30,9 +30,9 @@ jobs:
             --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{ secrets.REACT_APP_KEYCLOAK_CLIENT_ID }} \
             --build-arg REACT_APP_DEFAULT_MODE=${{ secrets.REACT_APP_DEFAULT_MODE }} \
             --build-arg REACT_APP_SWITCHABLE_MODE=${{ secrets.REACT_APP_SWITCHABLE_MODE }} \
-            --build-arg REACT_APP_CREATE_ORGANIZATION=${{ secrets.REACT_APP_CREATE_ORGANIZATION }} \
-            --build-arg REACT_APP_CREATE_REGION=${{ secrets.REACT_APP_CREATE_REGION }} \
-            --build-arg REACT_APP_CREATE_INSTANCE=${{ secrets.REACT_APP_CREATE_INSTANCE }} \
+            --build-arg REACT_APP_CREATABLE_ORGANIZATION=${{ secrets.REACT_APP_CREATABLE_ORGANIZATION }} \
+            --build-arg REACT_APP_CREATABLE_REGION=${{ secrets.REACT_APP_CREATABLE_REGION }} \
+            --build-arg REACT_APP_CREATABLE_INSTANCE=${{ secrets.REACT_APP_CREATABLE_INSTANCE }} \
             .
 
       - name: Login to Docker Hub
