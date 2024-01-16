@@ -43,6 +43,7 @@ export default function CodeEditor(): ReactElement {
               handle={handleFullScreen}
             >
               <iframe
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation"
                 title="Virtual IDE"
                 allow="clipboard-read"
                 className={`animate-fadeIn h-full w-full
@@ -54,6 +55,7 @@ export default function CodeEditor(): ReactElement {
                 src={urls?.ide || robotData.step1.services.ide?.httpsEndpoint}
               />
               <iframe
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation"
                 title="Physical IDE"
                 allow="clipboard-read"
                 className={`animate-fadeIn h-full w-full

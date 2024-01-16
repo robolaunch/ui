@@ -1,9 +1,9 @@
-import { Html, useCursor } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
 import MachineBarcode from "../MachineBarcode/MachineBarcode";
+import { useFrame, useThree } from "@react-three/fiber";
+import { Html, useCursor } from "@react-three/drei";
 import useBarcode from "../../hooks/useBarcode";
+import * as THREE from "three";
 
 interface IMachine3D {
   item: {
