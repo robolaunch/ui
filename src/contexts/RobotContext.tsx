@@ -237,9 +237,9 @@ export default ({ children }: any) => {
     const rosClient: ROSLIB.Ros | null =
       !applicationMode &&
       isSettedCookie &&
-      responseRobot?.bridgeIngressEndpoint?.split("://")[0] === "wss"
+      robotData?.step1?.services?.ros?.socketEndpoint?.split("://")[0] === "wss"
         ? new ROSLIB.Ros({
-            url: urls?.ros || responseRobot?.bridgeIngressEndpoint,
+            url: urls?.ros || robotData?.step1?.services?.ros?.socketEndpoint,
           })
         : null;
 
@@ -265,7 +265,7 @@ export default ({ children }: any) => {
       rosClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSettedCookie]);
+  }, [isSettedCookie, robotData?.step1?.services?.ros?.socketEndpoint]);
   // ROS Bridge Connector
 
   // ROS Topic Setter
@@ -311,10 +311,10 @@ export default ({ children }: any) => {
   useEffect(() => {
     const vdiClient: WebSocket | null =
       isSettedCookie &&
-      responseRobot?.vdiIngressEndpoint &&
+      robotData?.step1?.services?.vdi?.socketEndpoint &&
       connectionsReducer?.vdi === null
         ? new WebSocket(
-            (urls?.vdi || responseRobot?.vdiIngressEndpoint) +
+            (urls?.vdi || robotData?.step1?.services?.vdi?.socketEndpoint) +
               "ws?password=admin",
           )
         : null;
@@ -343,7 +343,11 @@ export default ({ children }: any) => {
       vdiClient?.close();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSettedCookie, connectionsReducer?.vdi]);
+  }, [
+    isSettedCookie,
+    connectionsReducer?.vdi,
+    robotData?.step1?.services?.vdi?.socketEndpoint,
+  ]);
   // VDI - vIDE Test Connection
 
   // Physical IDE Test Connection
