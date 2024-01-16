@@ -41,7 +41,7 @@
     "@uiw/react-markdown-preview": "^4.1.13",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.37.0",
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "dotenv": "^16.3.1",
     "file-saver": "^2.0.5",
