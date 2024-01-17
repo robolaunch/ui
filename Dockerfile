@@ -10,7 +10,7 @@ ARG REACT_APP_CREATABLE_REGION
 ARG REACT_APP_CREATABLE_INSTANCE
 COPY . /app
 WORKDIR /app
-RUN npm install
+RUN npm install -s
 RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 RUN rm -rf /app/build/static/js/*.map
 FROM nginx:alpine as production-stage

@@ -12,7 +12,7 @@ import "@fontsource/inter/700.css";
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/900.css";
 import App from "./App";
-// import "animate.css";
+import "animate.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const root = ReactDOM.createRoot(

@@ -1,11 +1,11 @@
 {
   "name": "ui",
-  "version": "0.32.0",
+  "version": "0.32.1",
   "private": true,
   "scripts": {
-    "dev": "react-scripts start",
+    "dev": "GENERATE_SOURCEMAP=false react-scripts start",
     "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
