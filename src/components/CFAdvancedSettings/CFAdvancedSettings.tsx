@@ -1,6 +1,6 @@
 import CFHostDirectories2 from "../CFHostDirectories2/CFHostDirectories2";
-// import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
+// import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortSetter from "../CFPortSetter/CFPortSetter";

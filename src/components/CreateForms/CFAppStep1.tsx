@@ -1,10 +1,10 @@
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import { CFAppStep1Validations } from "../../validations/AppsValidations";
-import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
 import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";

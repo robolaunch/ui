@@ -379,15 +379,9 @@ export const getFiles = createAsyncThunk(
   "robot/getFiles",
   async (values: { paths?: string[] }) => {
     const response = await axios.get(
-      `http://localhost:5500/api/resources${values?.paths?.join("") || ""}`,
+      `http://localhost:8086/api/resources${values?.paths?.join("") || "/"}`,
       {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Access-Control-Allow-Headers":
-            "X-Auth,DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-Amz-Date",
-          "Access-Control-Expose-Headers": "Content-Length,Content-Range",
-        },
+        withCredentials: true,
       },
     );
     return response.data;

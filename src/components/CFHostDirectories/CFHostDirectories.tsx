@@ -1,9 +1,9 @@
-import { ReactElement } from "react";
 import CFDirectoriesInputGroup from "../CFHostDirectoriesInputGroup/CFHostDirectoriesInputGroup";
-import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { FormikProps } from "formik";
 import { IDetails } from "../../interfaces/robotInterfaces";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { FormikProps } from "formik";
+import { ReactElement } from "react";
 
 interface ICFDirectories {
   formik: FormikProps<IDetails>;
@@ -22,7 +22,7 @@ export default function CFDirectories({
         vertical
       >
         <div className="flex flex-col gap-2">
-          {formik.values.hostDirectories?.map((_, index) => {
+          {formik.values.directories.hostDirectories?.map((_, index) => {
             return (
               <CFDirectoriesInputGroup
                 key={index}
@@ -37,8 +37,8 @@ export default function CFDirectories({
 
       <CreateRobotFormAddButton
         onClick={() => {
-          formik.setFieldValue("hostDirectories", [
-            ...formik.values.hostDirectories,
+          formik.setFieldValue("directories.hostDirectories", [
+            ...formik.values.directories.hostDirectories,
             {
               hostDirectory: "",
               mountPath: "",

@@ -8,12 +8,12 @@ import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
+import { useAppSelector } from "../../hooks/redux";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ICFStep2 {
   isImportRobot?: boolean;

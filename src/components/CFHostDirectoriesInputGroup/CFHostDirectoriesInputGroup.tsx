@@ -26,7 +26,7 @@ export default function CFDirectoriesInputGroup({
         classNameContainer="w-full"
         inputError={
           // @ts-ignore
-          formik.errors.hostDirectories?.[index]?.hostDirectory
+          formik.errors.directories?.hostDirectories?.[index]?.hostDirectory
         }
         inputTouched={true}
       />
@@ -40,7 +40,7 @@ export default function CFDirectoriesInputGroup({
         rightTip
         inputError={
           // @ts-ignore
-          formik.errors.hostDirectories?.[index]?.mountPath
+          formik.errors.directories?.hostDirectories?.[index]?.mountPath
         }
         inputTouched={true}
       />
@@ -48,9 +48,14 @@ export default function CFDirectoriesInputGroup({
         <CFDellButton
           disabled={disabled}
           onClick={() => {
-            const hostDirectories = [...formik.values.hostDirectories];
+            const hostDirectories = [
+              ...formik.values.directories.hostDirectories,
+            ];
             hostDirectories.splice(index, 1);
-            formik.setFieldValue("hostDirectories", hostDirectories);
+            formik.setFieldValue(
+              "directories.hostDirectories",
+              hostDirectories,
+            );
           }}
         />
       </div>

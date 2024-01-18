@@ -1,8 +1,9 @@
-import { envCreatableInstance } from "../../helpers/envProvider";
 import ChangeStateInstanceModal from "../../modals/ChangeStateInstanceModal";
+import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import TerminateInstanceModal from "../../modals/TerminateInstanceModal";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import TableActionButtons from "../TableActionButtons/TableActionButtons";
+import { envCreatableInstance } from "../../helpers/envProvider";
+
 interface IInstanceActionCells {
   data: any;
   reload: () => void;

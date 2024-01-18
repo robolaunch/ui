@@ -46,12 +46,12 @@ export default function CFDirectoriesSelectInput({
   useEffect(() => {
     if (type === "host") {
       formik.setFieldValue(
-        `hostDirectories.[${index}].hostDirectory`,
+        `directories.hostDirectories.[${index}].hostDirectory`,
         selectedItems?.join(""),
       );
     } else {
       formik.setFieldValue(
-        `hostDirectories.[${index}].mountPath`,
+        `directories.hostDirectories.[${index}].mountPath`,
         selectedItems?.join(""),
       );
     }

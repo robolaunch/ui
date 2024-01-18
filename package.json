@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "GENERATE_SOURCEMAP=false react-scripts start",
     "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
-    "build": "GENERATE_SOURCEMAP=false react-scripts --max_old_space_size=4096 build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "GENERATE_SOURCEMAP=false react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -33,7 +31,6 @@
     "@melloware/react-logviewer": "^5.0.2",
     "@monaco-editor/react": "^4.5.0",
     "@react-hook/mouse-position": "^4.1.3",
-    "@react-keycloak/core": "^3.2.0",
     "@react-keycloak/web": "^3.4.0",
     "@react-three/drei": "^9.74.11",
     "@react-three/fiber": "^8.13.4",
