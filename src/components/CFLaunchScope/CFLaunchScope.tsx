@@ -40,14 +40,14 @@ export default function CFLaunchScope({
         formik.setValues({
           ...formik.values,
           instancesName: formik.values.instancesName.includes(
-            robotData?.step1?.physicalInstanceName,
+            robotData?.step1?.tree.physicalInstance.name,
           )
             ? formik.values.instancesName.filter(
-                (item) => item !== robotData?.step1?.physicalInstanceName,
+                (item) => item !== robotData?.step1?.tree.physicalInstance.name,
               )
             : [
                 ...formik.values.instancesName,
-                robotData?.step1?.physicalInstanceName,
+                robotData?.step1?.tree.physicalInstance.name,
               ],
         });
       }}

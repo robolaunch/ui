@@ -28,9 +28,9 @@ export default function DeleteLaunchManagerModal({
         roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.details.name,
         fleetName: selectedState?.fleet?.name,
-        physicalInstanceName: robotData?.step1?.physicalInstanceName,
+        physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
         launchManagerName: launchManagerName,
       }),
     ).then(() => {

@@ -27,7 +27,7 @@ export default function BuildManagerStepsTable({
           workspace: step?.workspace,
           isRanCloud: step?.instancesName.includes(url?.instanceName),
           isRanPhysical: step?.instancesName.includes(
-            robotData?.step1?.physicalInstanceName,
+            robotData?.step1?.tree.physicalInstance.name,
           ),
           log: step?.buildLog,
           state: step?.buildStatus,
@@ -35,7 +35,7 @@ export default function BuildManagerStepsTable({
       }),
     [
       responseBuildManager?.robotBuildSteps,
-      robotData?.step1?.physicalInstanceName,
+      robotData?.step1?.tree.physicalInstance.name,
       url?.instanceName,
     ],
   );

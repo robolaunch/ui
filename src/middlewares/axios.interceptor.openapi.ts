@@ -6,7 +6,7 @@ axiosInterceptorOpenApi.interceptors.request.use((req: AxiosRequestConfig) => {
   const { tokens } = JSON.parse(localStorage.getItem("tokens") || "{}");
 
   if (tokens?.token) {
-    req.headers.Authorization = `Bearer ${tokens.token}`;
+    req.headers!.Authorization = `Bearer ${tokens.token}`;
   }
 
   return req;

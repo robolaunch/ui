@@ -18,7 +18,7 @@ export default function CFDevMode({
       labelInfoTip="Leave this option turned on if you want it to be able to build and launch on the robot you want"
       dataTut="create-robot-step1-development-mode"
       disabled={formik.isSubmitting || isImportRobot}
-      checked={formik?.values?.isDevelopmentMode}
+      checked={formik?.values?.details.isDevelopmentMode}
       onChange={(e: any) => formik.setFieldValue("isDevelopmentMode", e)}
     />
   );

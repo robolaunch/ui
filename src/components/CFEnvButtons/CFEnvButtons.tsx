@@ -22,7 +22,9 @@ export default function CFEnvButtons({
         className="!h-11 text-xs"
         loading={formik.isSubmitting}
         text={
-          formik.values.configureWorkspace ? "Next Step" : "Create Application"
+          formik.values.details.configureWorkspace
+            ? "Next Step"
+            : "Create Application"
         }
       />
     </div>

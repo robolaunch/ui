@@ -35,7 +35,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
         fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.robotName,
+        robotName: robotData?.step1?.details.name,
       },
       {
         ifErrorNavigateTo404: false,

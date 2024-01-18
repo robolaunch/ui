@@ -6,12 +6,12 @@ import OrgDashboard from "../pages/DashboardsPage/OrgDashboard/OrgDashboard";
 import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import CIDashboard from "../pages/DashboardsPage/CIDashboard/CIDashboard";
 import NSDashboard from "../pages/DashboardsPage/NSDashboard/NSDashboard";
+import EnvironmentPage from "../pages/EnvironmentPage/EnvironmentPage";
+import DataSciencePage from "../pages/DataSciencePage/DataSciencePage";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateProvider from "../providers/PrivateProvider";
-import EnvironmentPage from "../pages/EnvironmentPage/EnvironmentPage";
 import Page404 from "../pages/Page404/Page404";
 import { ReactElement } from "react";
-import DataSciencePage from "../pages/DataSciencePage/DataSciencePage";
 
 export default function AppRoutes(): ReactElement {
   return (
