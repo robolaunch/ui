@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
 import StateCell from "../TableInformationCells/StateCell";
+import { ReactElement } from "react";
 
 interface ICloudInstancesListItemDesc {
   instance: any;
@@ -17,6 +17,10 @@ export default function CloudInstancesListItemDesc({
       <div className="flex gap-1.5">
         <span className="font-medium">PS:</span>
         <StateCell state={instance?.instanceState} />
+      </div>
+      <div className="flex gap-1.5">
+        <span className="font-medium">Type:</span>
+        <p>{instance?.instanceType}</p>
       </div>
     </div>
   );
