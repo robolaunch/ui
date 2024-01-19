@@ -6,6 +6,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
+import useMain from "../hooks/useMain";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
@@ -13,10 +14,6 @@ export const CreateRobotContext: any = createContext<any>(null);
 export default ({ children }: any) => {
   const url = useParams();
   const { applicationMode } = useAppSelector((state) => state.user);
-
-  useEffect(() => {
-    console.log("url", url);
-  }, [url]);
 
   const initialRobotData: IRobotData = {
     step1: {
@@ -189,9 +186,22 @@ export default ({ children }: any) => {
 
   const [robotData, setRobotData] = useState<IRobotData>(initialRobotData);
 
+  const { sidebarState } = useMain();
+
   useEffect(() => {
     console.log("robotData", robotData);
   }, [robotData]);
+
+  useEffect(() => {
+    if (
+      !url.robotName &&
+      JSON.stringify(initialRobotData) !== JSON.stringify(robotData) &&
+      !sidebarState.isCreateMode
+    ) {
+      setRobotData(initialRobotData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarState.isCreateMode, url]);
 
   function handleResetRobotForm() {
     setRobotData(initialRobotData);

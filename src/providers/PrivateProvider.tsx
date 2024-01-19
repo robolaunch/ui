@@ -30,9 +30,6 @@ export default function PrivateProvider(): ReactElement {
         checkLoginIframe: false,
         prompt: "none",
       }}
-      onEvent={(event, error) => {
-        console.log("onKeycloakEvent", event, error);
-      }}
     >
       <MainContext>
         <GithubContext>
