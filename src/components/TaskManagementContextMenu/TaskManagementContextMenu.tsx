@@ -1,7 +1,7 @@
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Item, Menu, Separator, Submenu } from "react-contexify";
 import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { IoSettingsOutline } from "react-icons/io5";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { ReactElement } from "react";
 
 interface ITaskManagementContextMenu {

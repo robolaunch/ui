@@ -1,5 +1,4 @@
 import {
-  IgetBuildManager,
   IgetEnvironments,
   IgetFleet,
   IgetFleets,
@@ -784,6 +783,7 @@ export default ({ children }: any) => {
                   },
                   region: {
                     name: selectedState?.instance?.region,
+                    code: selectedState?.instance?.region,
                   },
                   cloudInstance: {
                     id: selectedState?.instance?.instanceId,
@@ -1079,24 +1079,25 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getBuildManager(
-    values: IgetBuildManager,
-    parameters?: IsingleGetBuildParameters,
-  ) {
+  async function getBuildManager(parameters?: IsingleGetBuildParameters) {
     await dispatch(
       getBuildManagerDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-        fleetName: values?.fleetName,
-        robotName: values?.robotName,
+        organizationId: robotData.step1.tree.organization.id,
+        roboticsCloudName: robotData.step1.tree.region.name,
+        instanceId: robotData.step1.tree.cloudInstance.id,
+        region: robotData.step1.tree.region.code,
+        fleetName: robotData.step1.tree.namespace.name,
+        robotName: robotData?.step1?.details.name,
       }),
     ).then((responseRobotBuildManager: any) => {
       if (
         responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
           ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
       ) {
+        const robotBuild =
+          responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
+            ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0];
+
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {
@@ -1105,18 +1106,29 @@ export default ({ children }: any) => {
                 ...prevState.step1,
                 clusters: {
                   ...prevState.step1.clusters,
-                  build: [],
+                  build:
+                    robotBuild?.robotClusters?.map((cluster: any) => {
+                      return {
+                        name: cluster?.name,
+                        status: cluster?.buildManagerStatus,
+                      };
+                    }) || [],
                 },
               },
               step3: {
-                buildManagerName:
-                  responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.buildManagerName?.split(
-                    "-",
-                  )[0],
-                robotBuildSteps:
-                  responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.robotBuildSteps || [],
+                name: robotBuild?.buildManagerName?.split("-")[0],
+                steps:
+                  robotBuild?.robotBuildSteps.map((step: any) => {
+                    return {
+                      workspace: step?.workspace,
+                      name: step?.name,
+                      command: step?.command,
+                      isShellCode: step?.isCommandCode,
+                      status: step?.buildStatus,
+                      log: step?.buildLog,
+                      instanceScope: step?.instancesName,
+                    };
+                  }) || [],
               },
             };
           });
@@ -1164,24 +1176,48 @@ export default ({ children }: any) => {
       ) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
+            const robotLaunch =
+              responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]
+                ?.cloudInstances[0]?.robolaunchFederatedRobots[0];
+
             return {
               ...prevState,
-              step4: {
-                robotLaunchSteps:
-                  responseRobotLaunchManagers?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.robotLaunchSteps?.map(
-                    (launchStep: any) => {
+
+              step1: {
+                ...prevState.step1,
+                clusters: {
+                  ...prevState.step1.clusters,
+                  launch: robotLaunch?.robotLaunchSteps
+                    .map((step: any) => step.robotClusters)
+                    ?.reduce(
+                      (acc: any, current: any) => acc.concat(current),
+                      [],
+                    )
+                    .map((cluster: any) => {
                       return {
-                        name: launchStep?.name,
-                        workspace: launchStep?.workspace,
-                        entryPointType: "custom",
-                        entryPointCmd: launchStep?.entryPointCmd,
-                        instancesName: launchStep?.robotClusters?.map(
-                          (instance: any) => instance?.name,
-                        ),
-                        robotLmEnvs: launchStep?.robotLmEnvs,
+                        name: cluster.name,
+                        status: cluster.launchManagerStatus,
+                        log: cluster.launchManagerLog,
                       };
-                    },
-                  ),
+                    }),
+                },
+              },
+
+              step4: {
+                robotLaunchSteps: robotLaunch?.robotLaunchSteps?.map(
+                  (launchStep: any) => {
+                    return {
+                      name: launchStep?.name,
+                      workspace: launchStep?.workspace,
+                      entryPointType: "custom",
+                      entryPointCmd: launchStep?.entryPointCmd,
+                      instancesName: launchStep?.robotClusters?.map(
+                        (instance: any) => instance?.name,
+                      ),
+                      robotLmEnvs: launchStep?.robotLmEnvs,
+                    };
+                  },
+                ),
               },
             };
           });
@@ -1739,20 +1775,27 @@ export default ({ children }: any) => {
     });
   }
 
-  async function createBuildManager() {
-    await dispatch(
-      createBuildManagerDispatch({
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
-        robotName: robotData?.step1?.details.name,
-        fleetName: selectedState?.fleet?.name,
-        physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
-        buildManagerName: robotData?.step3?.buildManagerName,
-        robotBuildSteps: robotData?.step3?.robotBuildSteps,
-      }),
-    );
+  function createBuildManager() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createBuildManagerDispatch({
+            organizationId: robotData.step1.tree.organization.id,
+            roboticsCloudName: robotData.step1.tree.region.name,
+            instanceId: robotData.step1.tree.cloudInstance.id,
+            region: robotData.step1.tree.region.code,
+            robotName: robotData?.step1?.details?.name,
+            fleetName: robotData.step1.tree.namespace.name,
+            physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
+            buildManagerName: robotData.step3.name,
+            robotBuildSteps: robotData.step3.steps,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   async function deleteDataScienceApp(values: IdeleteDataScienceAppsRequest) {

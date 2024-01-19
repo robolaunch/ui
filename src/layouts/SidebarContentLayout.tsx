@@ -32,16 +32,15 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
-import { useAppSelector } from "../hooks/redux";
 
 export default function SidebarContentLayout(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useMain();
+  const { sidebarState, setSidebarState, selectedState, applicationMode } =
+    useMain();
   const [loading, setLoading] = useState<boolean>(false);
   const [itemCount, setItemCount] = useState<number>(0);
   const [reload, setReload] = useState<boolean>(false);
   const { handleResetRobotForm } = useCreateRobot();
   const url = useParams();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setItemCount(0);

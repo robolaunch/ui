@@ -1,4 +1,5 @@
 import {
+  IBuildSteps,
   IRobotData,
   IWorkspace,
   IWorkspaceRepository,
@@ -7,6 +8,7 @@ import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import useMain from "../hooks/useMain";
+import { FormikProps } from "formik";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
@@ -24,6 +26,7 @@ export default ({ children }: any) => {
         },
         region: {
           name: "",
+          code: "",
         },
         cloudInstance: {
           id: "",
@@ -158,15 +161,17 @@ export default ({ children }: any) => {
       ],
     },
     step3: {
-      buildManagerName: "",
-      robotBuildSteps: [
+      name: "",
+      steps: [
         {
           name: "",
           workspace: "",
-          isCommandCode: true,
+          isShellCode: true,
           command: "",
           script: "",
-          instancesName: [],
+          instanceScope: [],
+          log: "",
+          status: "",
         },
       ],
     },
@@ -245,16 +250,18 @@ export default ({ children }: any) => {
     formik.setFieldValue("workspaces", robotWorkspaces);
   }
 
-  function handleAddStepToBuildStep(formik: any) {
-    formik.setFieldValue("robotBuildSteps", [
-      ...formik.values.robotBuildSteps,
+  function handleAddBuildStep(formik: FormikProps<IBuildSteps>) {
+    formik.setFieldValue("steps", [
+      ...formik.values.steps,
       {
-        name: "",
         workspace: "",
-        isCommandCode: true,
+        name: "",
         command: "",
         script: "",
-        instancesName: [],
+        isShellCode: true,
+        status: "",
+        log: "",
+        instanceScope: [],
       },
     ]);
   }
@@ -351,7 +358,7 @@ export default ({ children }: any) => {
         handleAddLaunchManager,
         handleAddRepositoryToWorkspaceStep,
         handleRemoveRepositoryFromWorkspaceStep,
-        handleAddStepToBuildStep,
+        handleAddBuildStep,
         handleRemoveStepFromBuildStep,
         handleAddENVToLaunchStep,
         handleRemoveENVFromLaunchStep,

@@ -1,9 +1,9 @@
-import { Fragment, ReactElement, useEffect, useState } from "react";
 import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 
@@ -17,10 +17,9 @@ export default function FleetsList({
   setItemCount,
 }: IFleetsList): ReactElement {
   const [responseFleets, setResponseFleets] = useState<any>(undefined);
-  const { selectedState } = useMain();
+  const { selectedState, applicationMode } = useMain();
   const dispatch = useAppDispatch();
   const { getFleets } = useFunctions();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(
     () => {
@@ -105,10 +104,13 @@ export default function FleetsList({
                         responseFleets={responseFleets}
                       />
                     }
-                    url={`${selectedState?.organization?.organizationName?.split(
-                      "_",
-                    )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
-                      ?.instance?.name}/${fleet?.name}`}
+                    url={`${
+                      selectedState?.organization?.organizationName?.split(
+                        "_",
+                      )[1]
+                    }/${selectedState?.roboticsCloud?.name}/${
+                      selectedState?.instance?.name
+                    }/${fleet?.name}`}
                     data={{
                       ...fleet,
                       physicalInstance: responseFleets?.filter(

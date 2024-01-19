@@ -1,9 +1,9 @@
-import { Fragment, ReactElement } from "react";
 import SidebarContentLayout from "../../layouts/SidebarContentLayout";
+import ModeSwitcher from "../ModeSwitcher/ModeSwitcher";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
+import { Fragment, ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import { Link } from "react-router-dom";
-import ModeSwitcher from "../ModeSwitcher/ModeSwitcher";
 
 export default function Sidebar(): ReactElement {
   const { sidebarState } = useMain();

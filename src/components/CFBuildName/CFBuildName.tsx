@@ -13,10 +13,10 @@ export default function CFBuildName({ formik }: ICFBuildName): ReactElement {
       dataTut="create-robot-step3-name"
       labelName="Build Manager Name:"
       labelInfoTip="Type a new build manager name."
-      inputError={formik.errors.buildManagerName}
-      inputTouched={formik.touched.buildManagerName}
+      inputError={formik.errors.name}
+      inputTouched={formik.touched.name}
       disabled={formik?.isSubmitting}
-      inputProps={formik.getFieldProps("buildManagerName")}
+      inputProps={formik.getFieldProps("name")}
       inputHoverText="Type a new build manager name."
     />
   );

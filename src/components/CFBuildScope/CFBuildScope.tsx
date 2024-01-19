@@ -2,8 +2,8 @@ import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFor
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps } from "formik/dist/types";
-import React, { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 
 interface ICFBuildScope {
   formik: FormikProps<IBuildSteps>;
@@ -21,22 +21,22 @@ export default function CFBuildScope({
     <CreateRobotFormCodeScope
       virtualInstanceDisabled={formik?.isSubmitting}
       physicalInstanceDisabled={formik?.isSubmitting}
-      virtualInstanceChecked={formik.values.robotBuildSteps[
+      virtualInstanceChecked={formik.values.steps[
         buildStepIndex
-      ]?.instancesName?.includes(selectedState?.instance?.name)}
-      physicalInstanceChecked={formik.values.robotBuildSteps[
+      ]?.instanceScope?.includes(selectedState?.instance?.name!)}
+      physicalInstanceChecked={formik.values.steps[
         buildStepIndex
-      ]?.instancesName?.includes(robotData?.step1?.tree.physicalInstance.name)}
+      ]?.instanceScope?.includes(robotData?.step1?.tree.physicalInstance.name)}
       virtualInstanceOnChange={(e) => {
         formik.setValues((prevValues) => ({
           ...prevValues,
-          robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
+          steps: prevValues.steps.map((item, index) => {
             if (index === buildStepIndex) {
               return {
                 ...item,
-                instancesName: e.target.checked
-                  ? [...item.instancesName, selectedState?.instance?.name]
-                  : item.instancesName.filter(
+                instanceScope: e.target.checked
+                  ? [...item.instanceScope, selectedState?.instance?.name!]
+                  : item.instanceScope.filter(
                       (name) => name !== selectedState?.instance?.name,
                     ),
               };
@@ -48,16 +48,16 @@ export default function CFBuildScope({
       physicalInstanceOnChange={(e) => {
         formik.setValues((prevValues) => ({
           ...prevValues,
-          robotBuildSteps: prevValues.robotBuildSteps.map((item, index) => {
+          steps: prevValues.steps.map((item, index) => {
             if (index === buildStepIndex) {
               return {
                 ...item,
-                instancesName: e.target.checked
+                instanceScope: e.target.checked
                   ? [
-                      ...item.instancesName,
+                      ...item.instanceScope,
                       robotData?.step1?.tree.physicalInstance.name,
                     ]
-                  : item.instancesName.filter(
+                  : item.instanceScope.filter(
                       (name) =>
                         name !== robotData?.step1?.tree.physicalInstance.name,
                     ),
@@ -69,7 +69,7 @@ export default function CFBuildScope({
       }}
       error={
         // @ts-ignore
-        formik?.errors?.robotBuildSteps?.[buildStepIndex]?.instancesName
+        formik?.errors?.steps?.[buildStepIndex]?.instanceScope
       }
     />
   );

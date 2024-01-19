@@ -158,6 +158,7 @@ export interface IDetails {
     };
     region: {
       name: string;
+      code: string;
     };
     cloudInstance: {
       name: string;
@@ -260,15 +261,26 @@ export interface IDetails {
     };
   };
   clusters: {
-    environment: IEnvironmentCluster[];
-    build: any[];
-    launch: any[];
+    environment: IClusterEnvironment[];
+    build: IClusterBuild[];
+    launch: IClusterLaunch[];
   };
 }
 
-export interface IEnvironmentCluster {
+export interface IClusterEnvironment {
   name: string;
   status: string;
+}
+
+export interface IClusterBuild {
+  name: string;
+  status: string;
+}
+
+export interface IClusterLaunch {
+  name: string;
+  status: string;
+  log: string;
 }
 
 export interface IhostDirectories {
@@ -293,19 +305,18 @@ export interface IWorkspaceRepository {
 }
 
 export interface IBuildSteps {
-  buildManagerName: string;
-  robotBuildSteps: IBuildStep[];
+  name: string;
+  steps: IBuildStep[];
 }
 export interface IBuildStep {
-  name: string;
   workspace: string;
-  isCommandCode: boolean;
+  name: string;
   command: string;
   script: string;
-  instancesName: any[];
-  robotClusters?: any;
-  buildLog?: string;
-  buildStatus?: string;
+  isShellCode: boolean;
+  status: string;
+  log: string;
+  instanceScope: string[];
 }
 
 export interface ILaunchSteps {
@@ -360,7 +371,7 @@ export interface IuseCreateRobot {
     workspaceIndex: number,
     repositoryIndex: number,
   ) => void;
-  handleAddStepToBuildStep: (formik: any) => void;
+  handleAddBuildStep: (formik: any) => void;
   handleRemoveStepFromBuildStep: (formik: any, buildStepIndex: number) => void;
   handleAddENVToLaunchStep: (formik: any) => void;
   handleRemoveENVFromLaunchStep: (formik: any, index: number) => void;

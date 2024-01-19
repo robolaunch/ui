@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { isDesktop } from "react-device-detect";
 import useTheme from "../../hooks/useTheme";
 import useMain from "../../hooks/useMain";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ISideBarMenuItem {
   type: string;
@@ -21,10 +20,10 @@ export default function SideBarMenuItem({
 }: ISideBarMenuItem) {
   const [isHover, setIsHover] = useState<boolean>(false);
   const { theme } = useTheme();
-  const { sidebarState, setSidebarState, selectedState } = useMain();
+  const { sidebarState, setSidebarState, selectedState, applicationMode } =
+    useMain();
   const navigate = useNavigate();
   const url = useParams();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     activeSwitcher();

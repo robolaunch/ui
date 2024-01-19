@@ -7,7 +7,6 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -21,9 +20,8 @@ export default function CloudInstancesList({
   const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
     undefined,
   );
-  const { selectedState } = useMain();
+  const { selectedState, applicationMode } = useMain();
   const { getInstances } = useFunctions();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(
     () => {

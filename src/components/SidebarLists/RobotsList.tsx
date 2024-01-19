@@ -5,7 +5,6 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { useAppSelector } from "../../hooks/redux";
 
 interface IRobotsList {
   reload: boolean;
@@ -17,7 +16,7 @@ export default function RobotsList({
   setItemCount,
 }: IRobotsList): ReactElement {
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { selectedState } = useMain();
+  const { selectedState, applicationMode } = useMain();
   const { getRobots } = useFunctions();
   const [robotsStatus, setRobotsStatus] = useState<
     {
@@ -25,7 +24,6 @@ export default function RobotsList({
       physical: string;
     }[]
   >([]);
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setRobotsStatus(

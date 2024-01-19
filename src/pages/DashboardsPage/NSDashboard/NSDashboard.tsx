@@ -9,13 +9,11 @@ import { getGuideItem } from "../../../functions/handleGuide";
 import useMain from "../../../hooks/useMain";
 import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
-import { useAppSelector } from "../../../hooks/redux";
 
 export default function NSDashboard(): ReactElement {
   const { data, columns, responseRobots, handleReload } = NamespaceTableData();
-  const { selectedState } = useMain();
+  const { selectedState, applicationMode } = useMain();
   const url = useParams();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <DashboardLayout

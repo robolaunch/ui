@@ -4,7 +4,7 @@ import InputSelect from "../InputSelect/InputSelect";
 import { useFormik } from "formik";
 import { Separator } from "react-contexify";
 import Button from "../Button/Button";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
 
@@ -53,9 +53,7 @@ export default function DeployApplicationSelector({
   const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
     useFunctions();
   const dispatch = useAppDispatch();
-  const { trialState } = useMain();
-
-  const { applicationMode } = useAppSelector((state) => state.user);
+  const { trialState, applicationMode } = useMain();
 
   const formik = useFormik<formikValues>({
     initialValues: {

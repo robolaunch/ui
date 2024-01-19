@@ -19,13 +19,11 @@ export default function CFBuildStepName({
       labelInfoTip="Type a unique build step name."
       inputError={
         // @ts-ignore
-        formik?.errors?.robotBuildSteps?.[buildStepIndex]?.name
+        formik?.errors?.steps?.[buildStepIndex]?.name
       }
-      inputTouched={formik?.touched?.robotBuildSteps?.[buildStepIndex]?.name}
+      inputTouched={formik?.touched?.steps?.[buildStepIndex]?.name}
       disabled={formik?.isSubmitting}
-      inputProps={formik.getFieldProps(
-        `robotBuildSteps.${buildStepIndex}.name`,
-      )}
+      inputProps={formik.getFieldProps(`steps.${buildStepIndex}.name`)}
       inputHoverText="Type a unique build step name."
     />
   );

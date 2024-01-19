@@ -74,7 +74,7 @@ export default function CFRobotButtons({
   }
 
   return (
-    <div className="mt-10 flex gap-2">
+    <div className="mt-10 flex w-full gap-2">
       {!isImportRobot && <CFCancelButton disabled={formik?.isSubmitting} />}
       <Button
         type="submit"

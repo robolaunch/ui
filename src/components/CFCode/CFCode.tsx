@@ -21,7 +21,7 @@ export default function CFCode({
       vertical
       error={
         // @ts-ignore
-        formik?.errors?.robotBuildSteps?.[buildStepIndex]?.isCommandCode
+        formik?.errors?.steps?.[buildStepIndex]?.isShellCode
       }
       touched={true}
     >
@@ -29,14 +29,14 @@ export default function CFCode({
         height="140px"
         defaultLanguage="shell"
         defaultValue={
-          formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-            ? formik.values.robotBuildSteps[buildStepIndex]?.command
-            : formik.values.robotBuildSteps[buildStepIndex]?.script
+          formik.values.steps[buildStepIndex]?.isShellCode
+            ? formik.values.steps[buildStepIndex]?.command
+            : formik.values.steps[buildStepIndex]?.script
         }
         value={
-          formik.values.robotBuildSteps[buildStepIndex]?.isCommandCode
-            ? formik.values.robotBuildSteps[buildStepIndex]?.command
-            : formik.values.robotBuildSteps[buildStepIndex]?.script
+          formik.values.steps[buildStepIndex]?.isShellCode
+            ? formik.values.steps[buildStepIndex]?.command
+            : formik.values.steps[buildStepIndex]?.script
         }
         options={{
           readOnly: formik?.isSubmitting,
@@ -58,21 +58,18 @@ export default function CFCode({
         onChange={(e: any) => {
           formik.setValues({
             ...formik.values,
-            robotBuildSteps: formik.values.robotBuildSteps.map(
-              (item: any, index: number) => {
-                if (index === buildStepIndex) {
-                  return {
-                    ...item,
-                    [formik.values.robotBuildSteps[buildStepIndex]
-                      ?.isCommandCode
-                      ? "command"
-                      : "script"]: e,
-                  };
-                } else {
-                  return item;
-                }
-              },
-            ),
+            steps: formik.values.steps.map((item: any, index: number) => {
+              if (index === buildStepIndex) {
+                return {
+                  ...item,
+                  [formik.values.steps[buildStepIndex]?.isShellCode
+                    ? "command"
+                    : "script"]: e,
+                };
+              } else {
+                return item;
+              }
+            }),
           });
         }}
       />

@@ -5,11 +5,9 @@ import CreateRobotFormStep2 from "../components/CreateForms/CFStep2";
 import CreateRobotFormStep3 from "../components/CreateForms/CFStep3";
 import CreateRobotFormStep4 from "../components/CreateForms/CFStep4";
 import useMain from "../hooks/useMain";
-import { useAppSelector } from "../hooks/redux";
 
 export default function CreateRobotLayout(): ReactElement {
-  const { sidebarState } = useMain();
-  const { applicationMode } = useAppSelector((state) => state.user);
+  const { sidebarState, applicationMode } = useMain();
 
   return (
     <Fragment>

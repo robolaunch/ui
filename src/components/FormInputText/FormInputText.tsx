@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import InfoTip from "../InfoTip/InfoTip";
-import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
+import InputText from "../InputText/InputText";
+import InfoTip from "../InfoTip/InfoTip";
+import { ReactElement } from "react";
 
 interface IFormInputText {
   dataTut?: string;

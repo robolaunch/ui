@@ -74,11 +74,11 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
           "Robot updated successfully. Redirecting to fleet page...",
         );
         setTimeout(() => {
-          window.location.href = `/${selectedState?.organization?.organizationName?.split(
-            "_",
-          )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-            ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.details
-            ?.name}}`;
+          window.location.href = `/${
+            selectedState?.organization?.organizationName?.split("_")[1]
+          }/${selectedState?.roboticsCloud?.name}/${
+            selectedState?.instance?.name
+          }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}}`;
         }, 2000);
       } else if (!formik.values?.details?.isVirtualRobot) {
         addPhysicalInstanceToFleet();
@@ -94,7 +94,6 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
       ...robotData,
       step1: formik.values,
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 

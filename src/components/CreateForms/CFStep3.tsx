@@ -2,7 +2,6 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
-import { createBuildManager } from "../../toolkit/RobotSlice";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
@@ -10,7 +9,6 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import CFBuildName from "../CFBuildName/CFBuildName";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppDispatch } from "../../hooks/redux";
 import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
@@ -21,22 +19,19 @@ interface ICFStep3 {
 }
 
 export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
-  const { robotData, setRobotData, handleAddStepToBuildStep } =
-    useCreateRobot();
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
+  const { robotData, setRobotData, handleAddBuildStep } = useCreateRobot();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useMain();
-  const { getRobot, getBuildManager } = useFunctions();
-  const dispatch = useAppDispatch();
+  const { getRobot, getBuildManager, createBuildManager } = useFunctions();
 
   useEffect(
     () => {
-      if (!responseRobot && isImportRobot) {
+      if (!robotData.step1.clusters.environment && isImportRobot) {
         handleGetRobot();
 
         handleGetBuildManager();
-      } else if (!responseRobot && !isImportRobot) {
+      } else if (!robotData.step1.clusters.environment && !isImportRobot) {
         setTimeout(() => {
           handleGetRobot();
         }, 10000);
@@ -47,9 +42,8 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       }, 10000);
 
       if (
-        !responseRobot?.robotClusters?.filter(
-          (robotCluster: any) =>
-            robotCluster?.robotStatus !== "EnvironmentReady",
+        !robotData.step1.clusters.environment?.filter(
+          (cluster) => cluster?.status !== "EnvironmentReady",
         )?.length &&
         !isImportRobot
       ) {
@@ -61,7 +55,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseRobot],
+    [robotData],
   );
 
   function handleGetRobot() {
@@ -77,55 +71,44 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       {
         ifErrorNavigateTo404: false,
         setRobotData: true,
-        setResponse: setResponseRobot,
       },
     );
   }
 
   function handleGetBuildManager() {
-    getBuildManager(
-      {
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.details.name,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setRobotData: true,
-        setResponse: setResponseBuildManager,
-      },
-    );
+    getBuildManager({
+      ifErrorNavigateTo404: false,
+      setRobotData: true,
+      setResponse: setResponseBuildManager,
+    });
   }
 
   const formik: FormikProps<IBuildSteps> = useFormik<IBuildSteps>({
     validationSchema: Yup.object().shape({
-      buildManagerName: Yup.string().required("Build Manager Name is required"),
-      robotBuildSteps: Yup.array().of(
+      name: Yup.string().required("Build Manager Name is required"),
+      steps: Yup.array().of(
         Yup.object().shape({
           name: Yup.string()
             .required("Step Name is required")
             .test("unique-name", "This name is already taken", (value) => {
-              const temp = formik.values.robotBuildSteps?.filter(
+              const temp = formik.values.steps?.filter(
                 (item: any) => item.name === value && item,
               );
               return temp.length > 1 ? false : true;
             }),
           workspace: Yup.string().required("Workspace is required"),
-          isCommandCode: Yup.boolean(),
-          command: Yup.string().when("isCommandCode", {
+          isShellCode: Yup.boolean(),
+          command: Yup.string().when("isShellCode", {
             is: true,
             then: Yup.string().required("Bash is required"),
             otherwise: Yup.string(),
           }),
-          script: Yup.string().when("isCommandCode", {
+          script: Yup.string().when("isShellCode", {
             is: false,
             then: Yup.string().required("Script is required"),
             otherwise: Yup.string(),
           }),
-          instancesName: Yup.array().min(
+          instanceScope: Yup.array().min(
             1,
             "At least one instance is required",
           ),
@@ -133,21 +116,9 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       ),
     }),
     initialValues: robotData?.step3,
-    onSubmit: async (values: any) => {
+    onSubmit: async () => {
       formik.setSubmitting(true);
-      await dispatch(
-        createBuildManager({
-          organizationId: selectedState?.organization?.organizationId!,
-          roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId!,
-          region: selectedState?.instance?.region!,
-          robotName: robotData?.step1?.details?.name,
-          fleetName: selectedState?.fleet?.name,
-          physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
-          buildManagerName: values?.buildManagerName,
-          robotBuildSteps: values?.robotBuildSteps,
-        }),
-      ).then(() => {
+      await createBuildManager().then(() => {
         if (isImportRobot) {
           toast.success("Robot updated successfully. Redirecting...");
           formik.setSubmitting(true);
@@ -179,177 +150,115 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
             : "Please wait while we create your robot. This may take a few minutes."
         }
         isLoading={
-          !responseRobot?.robotClusters ||
-          responseRobot?.robotClusters?.filter(
-            (robotCluster: any) =>
-              robotCluster?.robotStatus !== "EnvironmentReady",
-          )?.length
+          !robotData?.step1?.clusters?.environment?.length ||
+          robotData.step1.clusters.environment.some(
+            (cluster) => cluster?.status !== "EnvironmentReady",
+          )
         }
-        loadingItems={responseRobot?.robotClusters?.map((item: any) => {
-          return {
-            name: item?.name,
-            status: item?.robotStatus,
-          };
-        })}
+        loadingItems={robotData?.step1?.clusters?.environment}
         currentStep={
-          !responseRobot
+          !robotData?.step1?.clusters?.environment?.length
             ? 1
-            : responseRobot?.robotClusters?.filter(
-                  (robotCluster: any) =>
-                    robotCluster?.robotStatus === "CreatingEnvironment" ||
-                    robotCluster?.robotStatus === "CreatingDiscoveryServer" ||
-                    robotCluster?.robotStatus === "ConfiguringEnvironment",
-                )?.length
+            : robotData.step1.clusters.environment.some((cluster) =>
+                  [
+                    "CreatingEnvironment",
+                    "CreatingDiscoveryServer",
+                    "ConfiguringEnvironment",
+                  ].includes(cluster?.status),
+                )
               ? 1
-              : responseRobot?.robotClusters?.filter(
-                    (robotCluster: any) =>
-                      robotCluster?.robotStatus === "CreatingBridge" ||
-                      robotCluster?.robotStatus === "CreatingDevelopmentSuite",
-                  )?.length
+              : robotData.step1.clusters.environment.some((cluster) =>
+                    ["CreatingBridge", "CreatingDevelopmentSuite"].includes(
+                      cluster?.status,
+                    ),
+                  )
                 ? 2
                 : 3
         }
-        stepbarItems={[
-          {
-            name: "Creating Environment",
-            process: [
-              {
-                name: "Creating Environment",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment",
-                      )?.length
-                    ? false
-                    : true,
-              },
-              {
-                name: "Creating Discovery Server",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment" ||
-                          robotCluster?.robotStatus ===
-                            "CreatingDiscoveryServer",
-                      )?.length
-                    ? false
-                    : true,
-              },
-              {
-                name: "Pulling ROS 2 Image",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment" ||
-                          robotCluster?.robotStatus ===
-                            "CreatingDiscoveryServer" ||
-                          robotCluster?.robotStatus ===
-                            "ConfiguringEnvironment",
-                      )?.length
-                    ? false
-                    : true,
-              },
-              {
-                name: "Setting up ROS 2 Environment",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment" ||
-                          robotCluster?.robotStatus ===
-                            "CreatingDiscoveryServer" ||
-                          robotCluster?.robotStatus ===
-                            "ConfiguringEnvironment",
-                      )?.length
-                    ? false
-                    : true,
-              },
-              {
-                name: "Creating Directories",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment" ||
-                          robotCluster?.robotStatus ===
-                            "CreatingDiscoveryServer" ||
-                          robotCluster?.robotStatus ===
-                            "ConfiguringEnvironment",
-                      )?.length
-                    ? false
-                    : true,
-              },
-              {
-                name: "Setting up Ubuntu",
-                isFinished: !responseRobot
-                  ? false
-                  : responseRobot?.robotClusters?.filter(
-                        (robotCluster: any) =>
-                          robotCluster?.robotStatus === "CreatingEnvironment" ||
-                          robotCluster?.robotStatus ===
-                            "CreatingDiscoveryServer" ||
-                          robotCluster?.robotStatus ===
-                            "ConfiguringEnvironment",
-                      )?.length
-                    ? false
-                    : true,
-              },
-            ],
-          },
-          {
-            name: "Creating Development Suite",
-            process: [
-              {
-                name: "Creating ROS Bridge Suite",
-                isFinished: responseRobot?.robotClusters?.filter(
-                  (robotCluster: any) =>
-                    robotCluster?.robotStatus === "CreatingBridge",
-                )?.length
-                  ? false
-                  : true,
-              },
-              {
-                name: "Creating Development Suite",
-                isFinished: responseRobot?.robotClusters?.filter(
-                  (robotCluster: any) =>
-                    robotCluster?.robotStatus === "CreatingBridge" ||
-                    robotCluster?.robotStatus === "CreatingDevelopmentSuite",
-                )?.length
-                  ? false
-                  : true,
-              },
-            ],
-          },
-          {
-            name: "Configuring Workspaces",
-            process: [
-              {
-                name: "Cloning Repositories",
-                isFinished: responseRobot?.robotClusters?.filter(
-                  (robotCluster: any) =>
-                    robotCluster?.robotStatus === "ConfiguringWorkspaces",
-                )?.length
-                  ? false
-                  : true,
-              },
-              {
-                name: "Setting up ROS 2 Workspaces",
-                isFinished: responseRobot?.robotClusters?.filter(
-                  (robotCluster: any) =>
-                    robotCluster?.robotStatus === "ConfiguringWorkspaces",
-                )?.length
-                  ? false
-                  : true,
-              },
-            ],
-          },
-        ]}
+        stepbarItems={(() => {
+          function createProcessItem(statuses: string[], processName: string) {
+            return {
+              name: processName,
+              isFinished:
+                robotData?.step1?.clusters?.environment?.some((cluster) =>
+                  statuses.includes(cluster?.status),
+                ) ?? false,
+            };
+          }
+
+          return [
+            {
+              name: "Creating Environment",
+              process: [
+                createProcessItem(
+                  ["CreatingEnvironment"],
+                  "Creating Environment",
+                ),
+                createProcessItem(
+                  [
+                    "CreatingEnvironment",
+                    "CreatingDiscoveryServer",
+                    "ConfiguringEnvironment",
+                  ],
+                  "Pulling ROS 2 Image",
+                ),
+                createProcessItem(
+                  [
+                    "CreatingEnvironment",
+                    "CreatingDiscoveryServer",
+                    "ConfiguringEnvironment",
+                  ],
+                  "Setting up ROS 2 Environment",
+                ),
+                createProcessItem(
+                  [
+                    "CreatingEnvironment",
+                    "CreatingDiscoveryServer",
+                    "ConfiguringEnvironment",
+                  ],
+                  "Creating Directories",
+                ),
+                createProcessItem(
+                  [
+                    "CreatingEnvironment",
+                    "CreatingDiscoveryServer",
+                    "ConfiguringEnvironment",
+                  ],
+                  "Setting up Ubuntu",
+                ),
+              ],
+            },
+            {
+              name: "Creating Development Suite",
+              process: [
+                createProcessItem(
+                  ["CreatingBridge"],
+                  "Creating ROS Bridge Suite",
+                ),
+                createProcessItem(
+                  ["CreatingBridge", "CreatingDevelopmentSuite"],
+                  "Creating Development Suite",
+                ),
+              ],
+            },
+            {
+              name: "Configuring Workspaces",
+              process: [
+                createProcessItem(
+                  ["ConfiguringWorkspaces"],
+                  "Cloning Repositories",
+                ),
+                createProcessItem(
+                  ["ConfiguringWorkspaces"],
+                  "Setting up ROS 2 Workspaces",
+                ),
+              ],
+            },
+          ];
+        })()}
         formik={formik}
       >
-        {isImportRobot && robotData?.step3?.robotBuildSteps?.length === 0 ? (
+        {isImportRobot && robotData?.step3?.steps?.length === 0 ? (
           <div className="flex h-full w-full flex-col items-center gap-4">
             <SidebarInfo
               text="It seems that you have not configured any build steps for this
@@ -357,7 +266,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
               button below."
               component={
                 <CreateRobotFormAddButton
-                  onClick={() => handleAddStepToBuildStep(formik)}
+                  onClick={() => handleAddBuildStep(formik)}
                   disabled={formik?.isSubmitting}
                 />
               }
@@ -385,10 +294,9 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       </CreateRobotFormLoader>
       {!isImportRobot &&
         !(
-          !responseRobot?.robotClusters ||
-          responseRobot?.robotClusters?.filter(
-            (robotCluster: any) =>
-              robotCluster?.robotStatus !== "EnvironmentReady",
+          !robotData.step1.clusters.environment ||
+          robotData.step1.clusters.environment?.filter(
+            (cluster) => cluster?.status !== "EnvironmentReady",
           )?.length
         )}
     </Fragment>

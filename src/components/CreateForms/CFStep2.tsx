@@ -8,7 +8,6 @@ import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
-import { useAppSelector } from "../../hooks/redux";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
@@ -22,10 +21,13 @@ interface ICFStep2 {
 export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const [responseFleet, setResponseFleet] = useState<any>(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const { applicationMode } = useAppSelector((state) => state.user);
 
-  const { selectedState, handleCreateRobotNextStep, setSidebarState } =
-    useMain();
+  const {
+    selectedState,
+    handleCreateRobotNextStep,
+    setSidebarState,
+    applicationMode,
+  } = useMain();
   const { robotData, setRobotData } = useCreateRobot();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);

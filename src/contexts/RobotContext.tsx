@@ -1,5 +1,5 @@
 import { useEffect, createContext, useState, useReducer } from "react";
-import { IEnvironmentCluster, IrobotTab } from "../interfaces/robotInterfaces";
+import { IrobotTab } from "../interfaces/robotInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -115,8 +115,7 @@ export default ({ children }: any) => {
         !sidebarState?.isOpen &&
         Array.isArray(robotData.step1.clusters.environment) &&
         robotData.step1.clusters.environment?.filter(
-          (cluster: IEnvironmentCluster) =>
-            cluster?.status !== "EnvironmentReady",
+          (cluster) => cluster?.status !== "EnvironmentReady",
         )?.length
       ) {
         applicationMode ? handleGetEnvironment() : handleGetRobot();
@@ -504,21 +503,11 @@ export default ({ children }: any) => {
   }
 
   function handleGetBuildManager() {
-    getBuildManager(
-      {
-        organizationId: pagesState?.organization?.organizationId!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
-        robotName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseBuildManager,
-        setRobotData: true,
-      },
-    );
+    getBuildManager({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponseBuildManager,
+      setRobotData: true,
+    });
   }
 
   function handleGetLaunchManagers() {

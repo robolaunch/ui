@@ -205,10 +205,7 @@ export interface IuseFunctions {
   ) => void;
   getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
-  getBuildManager: (
-    values: IgetBuildManager,
-    parameters?: IsingleGetBuildParameters,
-  ) => void;
+  getBuildManager: (parameters?: IsingleGetBuildParameters) => void;
   getLaunchManagers: (
     values: IgetLaunchManagers,
     parameters?: ImultipleGetLaunchParameters,
@@ -230,7 +227,7 @@ export interface IuseFunctions {
   getSystemStatus: () => Promise<void>;
   createRobot: () => Promise<void>;
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
-  createBuildManager: () => void;
+  createBuildManager: () => Promise<void>;
   getIP: () => void;
   getFiles: (paths?: string[]) => Promise<any>;
 

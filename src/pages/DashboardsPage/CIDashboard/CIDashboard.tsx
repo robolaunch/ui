@@ -12,13 +12,11 @@ import { useParams } from "react-router-dom";
 import { RiCpuLine } from "react-icons/ri";
 import { ReactElement } from "react";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
-import { useAppSelector } from "../../../hooks/redux";
 
 export default function CIDashboard(): ReactElement {
   const { data, columns, responseFleets, handleReload } = InstanceTableData();
-  const { pagesState } = useMain();
+  const { pagesState, applicationMode } = useMain();
   const url = useParams();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <DashboardLayout

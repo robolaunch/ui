@@ -8,14 +8,12 @@ import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import { useAppSelector } from "../hooks/redux";
 
 export function NamespaceTableData() {
-  const { pagesState, selectedState } = useMain();
+  const { pagesState, selectedState, applicationMode } = useMain();
   const url = useParams();
   const [reload, setReload] = useState<boolean>(false);
   const [responseRobots, setResponseRobots] = useState<any>(undefined);
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   const {
     getOrganization,

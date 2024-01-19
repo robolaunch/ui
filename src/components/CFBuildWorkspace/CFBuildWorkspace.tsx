@@ -22,17 +22,13 @@ export default function CFBuildWorkspace({
       tip="Select a workspace name."
       inputError={
         // @ts-ignore
-        formik?.errors?.robotBuildSteps?.[buildStepIndex]?.workspace
+        formik?.errors?.steps?.[buildStepIndex]?.workspace
       }
-      inputTouched={
-        formik?.touched?.robotBuildSteps?.[buildStepIndex]?.workspace
-      }
-      inputProps={formik.getFieldProps(
-        `robotBuildSteps.${buildStepIndex}.workspace`,
-      )}
+      inputTouched={formik?.touched?.steps?.[buildStepIndex]?.workspace}
+      inputProps={formik.getFieldProps(`steps.${buildStepIndex}.workspace`)}
       options={
         <Fragment>
-          {!formik?.values?.robotBuildSteps[buildStepIndex]?.workspace && (
+          {!formik?.values?.steps[buildStepIndex]?.workspace && (
             <option value=""></option>
           )}
           {robotData?.step2?.workspaces?.map(

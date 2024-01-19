@@ -2,12 +2,15 @@ import { ISelectedState, ISidebarState } from "../interfaces/mainInterfaces";
 import { createContext, useEffect, useState } from "react";
 import { IpagesState } from "../interfaces/mainInterfaces";
 import { useLocation } from "react-router-dom";
+import { useAppSelector } from "../hooks/redux";
 
 export const MainContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const url = useLocation();
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
     isOpen: false,
@@ -110,6 +113,7 @@ export default ({ children }: any) => {
   return (
     <MainContext.Provider
       value={{
+        applicationMode,
         trialState,
         setTrialState,
         pagesState,

@@ -2,7 +2,6 @@ import { stringCapitalization } from "../../functions/GeneralFunctions";
 import { Fragment, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ISidebarContentHeader {
   itemCount?: number;
@@ -17,9 +16,7 @@ export default function SidebarContentLayout({
   loading,
   handleShowDetails,
 }: ISidebarContentHeader): ReactElement {
-  const { applicationMode } = useAppSelector((state) => state.user);
-
-  const { sidebarState } = useMain();
+  const { sidebarState, applicationMode } = useMain();
   const url = useParams();
 
   function titleGenerator() {

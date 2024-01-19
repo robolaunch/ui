@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
-import { useAppSelector } from "../../hooks/redux";
 
 interface ISidebarListItem {
   name: string;
@@ -27,10 +26,14 @@ export default function SidebarListItem({
   selected,
   notSelectable,
 }: ISidebarListItem): ReactElement {
-  const { selectedState, setSelectedState, sidebarState, setSidebarState } =
-    useMain();
+  const {
+    selectedState,
+    setSelectedState,
+    sidebarState,
+    setSidebarState,
+    applicationMode,
+  } = useMain();
   const navigate = useNavigate();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   const handleSelectItem = () => {
     switch (type) {
@@ -119,8 +122,9 @@ export default function SidebarListItem({
             organizationName: selectedState?.organization
               ?.organizationName as string,
             capitalization: false,
-          })}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-            ?.name}/${selectedState?.fleet?.name}/${data?.name}`,
+          })}/${selectedState?.roboticsCloud?.name}/${
+            selectedState?.instance?.name
+          }/${selectedState?.fleet?.name}/${data?.name}`,
         );
     }
   };

@@ -84,9 +84,9 @@ export default function CFStep4({
         window.location.href = `/${organizationNameViewer({
           organizationName: selectedState?.organization?.organizationName!,
           capitalization: false,
-        })}/${selectedState?.roboticsCloud?.name}/${selectedState?.instance
-          ?.name}/${selectedState?.fleet?.name}/${robotData?.step1?.details
-          .name}`;
+        })}/${selectedState?.roboticsCloud?.name}/${
+          selectedState?.instance?.name
+        }/${selectedState?.fleet?.name}/${robotData?.step1?.details.name}`;
       }, 1000);
     },
   });
@@ -144,21 +144,11 @@ export default function CFStep4({
   }, [formik.values]);
 
   function handleGetBuildManager() {
-    getBuildManager(
-      {
-        organizationId: selectedState?.organization?.organizationId!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
-        robotName: robotData?.step1?.details.name,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseBuildManager,
-        setRobotData: true,
-      },
-    );
+    getBuildManager({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponseBuildManager,
+      setRobotData: true,
+    });
   }
 
   return (
@@ -194,7 +184,7 @@ export default function CFStep4({
 
         <CFEnvMapper formik={formik} disabled={isImportRobot} />
 
-        <div className="mt-10 flex gap-2">
+        <div className="mt-10 flex w-full gap-2">
           {!isImportRobot ? (
             <CFRobotButtons
               formik={formik}

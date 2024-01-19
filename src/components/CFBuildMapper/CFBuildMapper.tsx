@@ -23,7 +23,7 @@ export default function CFBuildMapper({
       vertical
     >
       <div className="flex flex-col gap-2">
-        {formik?.values?.robotBuildSteps?.map(
+        {formik?.values?.steps?.map(
           (buildStep: any, buildStepIndex: number) => {
             return (
               <CFBuildStepItem

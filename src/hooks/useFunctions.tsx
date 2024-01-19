@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { FunctionsContext } from "../contexts/FunctionsContext";
 import { IuseFunctions } from "../interfaces/useFunctionsInterfaces";
+import { FunctionsContext } from "../contexts/FunctionsContext";
+import { useContext } from "react";
 
 const useFunctions = () => {
   const functions: IuseFunctions = useContext(FunctionsContext);

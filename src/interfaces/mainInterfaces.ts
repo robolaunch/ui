@@ -33,6 +33,7 @@ export interface IpagesState {
 }
 
 export interface IuseMain {
+  applicationMode: boolean;
   trialState: any;
   setTrialState: React.Dispatch<React.SetStateAction<any>>;
   pagesState: IpagesState;

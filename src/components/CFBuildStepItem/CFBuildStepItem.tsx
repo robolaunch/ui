@@ -1,14 +1,14 @@
-import { IBuildStep, IBuildSteps } from "../../interfaces/robotInterfaces";
 import CFBuildStepItemAccordionHeader from "../CFBuildStepItemAccordionHeader/CFBuildStepItemAccordionHeader";
 import CFDeleteBuildButton from "../CFDeleteBuildButton/CFDeleteBuildButton";
-import CFBuildStepName from "../CFBuildStepName/CFBuildStepName";
+import { IBuildStep, IBuildSteps } from "../../interfaces/robotInterfaces";
 import CFBuildWorkspace from "../CFBuildWorkspace/CFBuildWorkspace";
-import React, { ReactElement, useState } from "react";
+import CFBuildStepName from "../CFBuildStepName/CFBuildStepName";
+import CFBuildScope from "../CFBuildScope/CFBuildScope";
 import CFCodeType from "../CFCodeType/CFCodeType";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
+import { ReactElement, useState } from "react";
 import CFCode from "../CFCode/CFCode";
-import CFBuildScope from "../CFBuildScope/CFBuildScope";
 
 interface ICFBuildStepItem {
   formik: FormikProps<IBuildSteps>;
