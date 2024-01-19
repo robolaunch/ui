@@ -1,8 +1,8 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { BiTrash, BiPencil } from "react-icons/bi";
 import DeleteMemberFromOrganizationModal from "../../modals/DeleteMemberFromOrganizationModal";
 import ChangeRoleModal from "../../modals/ChangeRoleModal";
+import { Fragment, ReactElement, useState } from "react";
+import { BiTrash, BiPencil } from "react-icons/bi";
+import Button from "../Button/Button";
 interface IUserActionCells {
   data: any;
   onClickSee: any;
@@ -23,7 +23,7 @@ export default function UserActionCells({
     <Fragment>
       <div className="card float-right flex gap-4">
         <Button
-          className="!border-primary-500 !h-8 !w-8 !border !bg-transparent"
+          className="!h-8 !w-8 !border !border-primary-500 !bg-transparent"
           text={<BiPencil className="text-primary-500" />}
           onClick={() => setVisibleChangeRoleModal(true)}
         />

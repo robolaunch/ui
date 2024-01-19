@@ -1,5 +1,4 @@
 import EnvironmentActionCells from "../components/TableActionCells/EnvironmentActionCells";
-import RobotServicesCell from "../components/TableInformationCells/RobotServicesCell";
 import RobotActionCells from "../components/TableActionCells/RobotActionCells";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
@@ -229,8 +228,9 @@ export function NamespaceTableData() {
               subtitle={rowData?.name?.fleetName}
               titleURL={`/${handleSplitOrganizationName(
                 pagesState?.organization?.organizationName!,
-              )}/${pagesState.roboticsCloud?.name}/${pagesState.instance
-                ?.name}/${pagesState.fleet?.name}/${rowData?.name?.name}`}
+              )}/${pagesState.roboticsCloud?.name}/${
+                pagesState.instance?.name
+              }/${pagesState.fleet?.name}/${rowData?.name?.name}`}
             />
           );
         },
@@ -277,16 +277,13 @@ export function NamespaceTableData() {
       },
       !applicationMode && {
         key: "robotServices",
-        header: `${applicationMode ? "Application" : "Robot"} Services`,
+        header: `ROS 2 Bridge`,
         sortable: true,
         filter: false,
         align: "left",
         body: (rowData: any) => {
           return (
-            <RobotServicesCell
-              data={undefined}
-              states={rowData.robotServices}
-            />
+            <StateCell state={rowData.robotServices ? "Active" : "Deactive"} />
           );
         },
       },

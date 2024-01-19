@@ -1,8 +1,8 @@
-import React from "react";
 import { Item, Menu, Separator, Submenu } from "react-contexify";
 import getWaypointIcon from "../../helpers/GetWaypointIcon";
 import { IoSettingsOutline } from "react-icons/io5";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { ReactElement } from "react";
 
 interface ITaskManagementContextMenu {
   handleAddWaypointToMission: ({
@@ -26,11 +26,11 @@ export default function TaskManagementContextMenu({
   activeMission,
   handleCostMap,
   isCostMapActive,
-}: ITaskManagementContextMenu) {
+}: ITaskManagementContextMenu): ReactElement {
   return (
     <Menu className="flex flex-col gap-2" id={MENU_ID}>
       <Item className="hover:!bg-light-100" onClick={() => {}}>
-        <div className="text-light-500 flex items-center gap-2">
+        <div className="flex items-center gap-2 text-light-500">
           {getWaypointIcon({
             type: "go",
             size: 20,
@@ -42,7 +42,7 @@ export default function TaskManagementContextMenu({
         disabled={activeMission === -1 ? true : false}
         onClick={() => handleAddWaypointToMission({ type: "wait" })}
       >
-        <div className="text-light-500 flex items-center gap-2">
+        <div className="flex items-center gap-2 text-light-500">
           {getWaypointIcon({
             type: "wait",
             size: 20,
@@ -58,7 +58,7 @@ export default function TaskManagementContextMenu({
           })
         }
       >
-        <div className="text-light-500 flex items-center gap-2">
+        <div className="flex items-center gap-2 text-light-500">
           {getWaypointIcon({
             type: "move",
             size: 20,
@@ -74,7 +74,7 @@ export default function TaskManagementContextMenu({
           })
         }
       >
-        <div className="text-light-500 flex items-center gap-2">
+        <div className="flex items-center gap-2 text-light-500">
           {getWaypointIcon({
             type: "picture",
             size: 20,
@@ -85,14 +85,14 @@ export default function TaskManagementContextMenu({
       <Separator />
       <Submenu
         label={
-          <div className="text-light-500 flex items-center gap-2">
+          <div className="flex items-center gap-2 text-light-500">
             <IoSettingsOutline size={20} />
             <span className="text-sm">Map Settings</span>
           </div>
         }
       >
         <Item onClick={() => handleCostMap()}>
-          <div className="text-light-500 flex items-center gap-2">
+          <div className="flex items-center gap-2 text-light-500">
             {isCostMapActive ? (
               <AiOutlineEyeInvisible size={20} />
             ) : (

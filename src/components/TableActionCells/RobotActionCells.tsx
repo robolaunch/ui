@@ -1,7 +1,7 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { BiTrash } from "react-icons/bi";
 import DeleteRobotModalModal from "../../modals/DeleteRobotModal";
+import { Fragment, ReactElement, useState } from "react";
+import { BiTrash } from "react-icons/bi";
+import Button from "../Button/Button";
 
 interface IRobotActionCells {
   data: any;

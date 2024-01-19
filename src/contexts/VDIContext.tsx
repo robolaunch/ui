@@ -56,9 +56,11 @@ export default ({ children }: IVDIContext) => {
         };
       case "member/disconnected":
         toast.error(
-          `${state?.members?.filter(
-            (member: any) => member?.id === action?.payload?.id,
-          )[0]?.displayname} has left the room`,
+          `${
+            state?.members?.filter(
+              (member: any) => member?.id === action?.payload?.id,
+            )[0]?.displayname
+          } has left the room`,
         );
 
         return {
@@ -95,9 +97,11 @@ export default ({ children }: IVDIContext) => {
 
       case "control/locked":
         toast.success(
-          `${state?.members?.filter(
-            (member: any) => member?.id === action?.payload.id,
-          )[0]?.displayname} has taken control`,
+          `${
+            state?.members?.filter(
+              (member: any) => member?.id === action?.payload.id,
+            )[0]?.displayname
+          } has taken control`,
         );
 
         return {
@@ -416,7 +420,6 @@ export default ({ children }: IVDIContext) => {
     });
 
     video.current?.addEventListener("wheel", (key: any) => {
-      console.log(key);
       // 0x01;
       if (
         remoteDesktopReducer?.controller?.displayname ===

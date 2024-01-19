@@ -1,9 +1,9 @@
-import React, { Fragment, ReactElement, useState } from "react";
-import Button from "../Button/Button";
-import { MdPayment } from "react-icons/md";
+import InvoiceUtilizationModal from "../../modals/InvoiceUtilizationModal";
+import { Fragment, ReactElement, useState } from "react";
 import { TbCloudDownload } from "react-icons/tb";
 import { AiOutlineEye } from "react-icons/ai";
-import InvoiceUtilizationModal from "../../modals/InvoiceUtilizationModal";
+import { MdPayment } from "react-icons/md";
+import Button from "../Button/Button";
 
 interface IInvoiceActionCells {
   rowData: any;
@@ -19,8 +19,8 @@ export default function InvoiceActionCells({
     <Fragment>
       <div className="flex justify-end gap-3">
         <Button
-          className="disabled:!border-light-300 disabled:!text-light-300 !border-primary-500 !h-8 !w-8
-                !border !bg-transparent disabled:cursor-not-allowed
+          className="!h-8 !w-8 !border !border-primary-500 !bg-transparent
+                disabled:cursor-not-allowed disabled:!border-light-300 disabled:!text-light-300
                 "
           text={
             <MdPayment
@@ -32,7 +32,7 @@ export default function InvoiceActionCells({
           disabled={rowData?.status}
         />
         <Button
-          className="!border-secondary-600 !ring-secondary-200 !h-8 !w-8 !border !bg-transparent"
+          className="!h-8 !w-8 !border !border-secondary-600 !bg-transparent !ring-secondary-200"
           text={<TbCloudDownload className="text-secondary-600" />}
         />
         <Button

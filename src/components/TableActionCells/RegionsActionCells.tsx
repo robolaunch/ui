@@ -1,8 +1,8 @@
-import { Fragment, ReactElement, useState } from "react";
+import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import DeleteRegionModal from "../../modals/DeleteRegionModal";
 import { envCreatableRegion } from "../../helpers/envProvider";
 import { IRegion } from "../../interfaces/regionInterfaces";
-import TableActionButtons from "../TableActionButtons/TableActionButtons";
+import { Fragment, ReactElement, useState } from "react";
 
 interface IRegionsActionCells {
   data: IRegion;

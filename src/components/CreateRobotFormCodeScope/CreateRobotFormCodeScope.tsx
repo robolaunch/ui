@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import useMain from "../../hooks/useMain";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { ReactElement } from "react";
+import useMain from "../../hooks/useMain";
 
 interface ICreateRobotFormCodeScope {
   virtualInstanceChecked?: boolean;

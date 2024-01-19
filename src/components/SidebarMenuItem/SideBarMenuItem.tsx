@@ -95,7 +95,7 @@ export default function SideBarMenuItem({
     <div
       data-tut={type + "-sidebar-menu-item"}
       onClick={() => !loading && !disabled && handleClick()}
-      className={`${activeSwitcher()} transition-500 animate-fadeInLeft relative cursor-pointer select-none rounded-md p-2 hover:scale-90 ${
+      className={`${activeSwitcher()} transition-500 animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 hover:scale-90 ${
         (loading || disabled) && "!cursor-not-allowed"
       }`}
       onMouseEnter={() => !loading && !disabled && setIsHover(true)}

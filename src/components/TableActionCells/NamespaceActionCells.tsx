@@ -1,9 +1,9 @@
-import { Fragment, ReactElement, useState } from "react";
 import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import { IOrganization } from "../../interfaces/organizationInterfaces";
 import { IInstance } from "../../interfaces/instanceInferfaces";
 import { IRegion } from "../../interfaces/regionInterfaces";
+import { Fragment, ReactElement, useState } from "react";
 
 interface INSActionCells {
   data: {

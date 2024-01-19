@@ -43,7 +43,7 @@ export default function PrivateLayout(): ReactElement {
           onClick={() => handleCloseSidebar()}
         >
           <Header />
-          <div className="h-full bg-transparent p-6">
+          <div className="animate__animated animate__fadeInUp h-full bg-transparent p-6">
             <Outlet />
           </div>
         </div>

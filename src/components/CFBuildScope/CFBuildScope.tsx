@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
-import { FormikProps } from "formik/dist/types";
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
-import useMain from "../../hooks/useMain";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { FormikProps } from "formik/dist/types";
+import React, { ReactElement } from "react";
+import useMain from "../../hooks/useMain";
 
 interface ICFBuildScope {
   formik: FormikProps<IBuildSteps>;

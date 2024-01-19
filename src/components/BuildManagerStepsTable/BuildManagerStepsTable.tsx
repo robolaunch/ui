@@ -1,11 +1,11 @@
-import React, { ReactElement, useMemo } from "react";
-import GeneralTable from "../Table/GeneralTable";
-import InfoCell from "../TableInformationCells/InfoCell";
-import { useParams } from "react-router-dom";
 import BasicCell from "../TableInformationCells/BasicCell";
 import StateCell from "../TableInformationCells/StateCell";
 import LogsCell from "../TableInformationCells/LogsCell";
+import InfoCell from "../TableInformationCells/InfoCell";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import React, { ReactElement, useMemo } from "react";
+import GeneralTable from "../Table/GeneralTable";
+import { useParams } from "react-router-dom";
 import TickCell from "../TickCell/TickCell";
 
 interface IBuildManagerStepsTable {

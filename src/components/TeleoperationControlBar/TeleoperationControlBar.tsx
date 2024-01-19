@@ -1,7 +1,7 @@
-import React, { Fragment, ReactElement } from "react";
-import InputToggle from "../InputToggle/InputToggle";
 import { BsFullscreen, BsFullscreenExit } from "react-icons/bs";
+import InputToggle from "../InputToggle/InputToggle";
 import InputSelect from "../InputSelect/InputSelect";
+import { Fragment, ReactElement } from "react";
 
 interface ITeleoperationControlBar {
   selectedTopic: string;
@@ -21,7 +21,7 @@ export default function TeleoperationControlBar({
   handleFullScreen,
 }: ITeleoperationControlBar): ReactElement {
   return (
-    <div className="shadow-t-lg bg-light-50 absolute bottom-0 z-10 flex w-full items-center justify-between rounded-t px-4 py-3">
+    <div className="shadow-t-lg absolute bottom-0 z-10 flex w-full items-center justify-between rounded-t bg-light-50 px-4 py-3">
       <div className="flex gap-2">
         <InputSelect
           disabled={isRemoteDesktopStream}
@@ -563,14 +563,14 @@ export default function TeleoperationControlBar({
         <button onClick={handleFullScreen.exit}>
           <BsFullscreenExit
             size={24}
-            className="text-light-700 hover:text-primary-400 transition-all duration-200 hover:scale-90"
+            className="text-light-700 transition-all duration-200 hover:scale-90 hover:text-primary-400"
           />
         </button>
       ) : (
         <button onClick={handleFullScreen.enter}>
           <BsFullscreen
             size={24}
-            className="text-light-700 hover:text-primary-400 transition-all duration-200 hover:scale-90"
+            className="text-light-700 transition-all duration-200 hover:scale-90 hover:text-primary-400"
           />
         </button>
       )}

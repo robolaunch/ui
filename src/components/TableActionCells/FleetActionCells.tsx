@@ -1,7 +1,7 @@
-import { IOrganization } from "../../interfaces/organizationInterfaces";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
-import { IInstance } from "../../interfaces/instanceInferfaces";
+import { IOrganization } from "../../interfaces/organizationInterfaces";
 import DeleteFleetModalModal from "../../modals/DeleteFleetModal";
+import { IInstance } from "../../interfaces/instanceInferfaces";
 import { IRegion } from "../../interfaces/regionInterfaces";
 import { Fragment, ReactElement, useState } from "react";
 
