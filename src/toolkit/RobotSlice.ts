@@ -21,6 +21,7 @@ import {
 } from "../interfaces/robotInterfaces";
 import { isProduction } from "../helpers/envProvider";
 import axios from "axios";
+import getCookies from "../functions/getCookies";
 
 export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
@@ -375,14 +376,27 @@ export const deleteLaunchManager = createAsyncThunk(
   },
 );
 
-export const getFiles = createAsyncThunk(
-  "robot/getFiles",
-  async (values: { paths?: string[] }) => {
+export const getFilesFromFileManager = createAsyncThunk(
+  "robot/getFilesFromFileManager",
+  async (values: { instanceIP: string; paths?: string[] }) => {
+    async function getTokenFromCookies(): Promise<string | null> {
+      return (
+        (await getCookies()).find(
+          (cookie: { name: string; value: string }) =>
+            cookie.name === "fileManager",
+        )?.value || null
+      );
+    }
+
+    if ((await getTokenFromCookies()) === null) {
+      const { data: token } = await axios.get(
+        `http://${values.instanceIP}/api/login`,
+      );
+      document.cookie = `fileManager=${token}; expires=${new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toUTCString()}; path=*`;
+    }
+
     const response = await axios.get(
-      `http://localhost:8086/api/resources${values?.paths?.join("") || "/"}`,
-      {
-        withCredentials: true,
-      },
+      `http://${values.instanceIP}/api/resources${values?.paths?.join("") || "/"}?auth=${await getTokenFromCookies()}`,
     );
     return response.data;
   },

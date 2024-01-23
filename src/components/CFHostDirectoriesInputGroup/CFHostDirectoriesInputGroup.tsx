@@ -1,8 +1,10 @@
 import CFDirectoriesSelectInput from "../CFDirectoriesSelectInput/CFDirectoriesSelectInput";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import CFDellButton from "../CFDellButton/CFDellButton";
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { FormikProps } from "formik";
+import FormInputText from "../FormInputText/FormInputText";
+import useFunctions from "../../hooks/useFunctions";
 
 interface ICFDirectoriesInputGroup {
   formik: FormikProps<IDetails>;
@@ -15,34 +17,72 @@ export default function CFDirectoriesInputGroup({
   disabled,
   index,
 }: ICFDirectoriesInputGroup): ReactElement {
+  const { getFilesFromFileManager: getHealthFromFileManager } = useFunctions();
+  const [isFileManagerHealthly, setIsFileManagerHealthly] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    handleGetHealthFromFileManager();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function handleGetHealthFromFileManager() {
+    const { items: response } = await getHealthFromFileManager({
+      instanceIP: "3.125.19.156:2000",
+    });
+
+    setIsFileManagerHealthly(response?.length > 0);
+  }
+
   return (
     <div className="flex w-full  gap-4 rounded-md border border-light-100 p-4 shadow-sm">
-      <CFDirectoriesSelectInput
-        type="host"
-        formik={formik}
-        index={index}
-        labelName="Host Directory:"
-        labelInfoTip="Select a directory on your host machine to share with the environment."
-        classNameContainer="w-full"
-        inputError={
-          // @ts-ignore
-          formik.errors.directories?.hostDirectories?.[index]?.hostDirectory
-        }
-        inputTouched={true}
-      />
-      <CFDirectoriesSelectInput
-        type="mount"
-        formik={formik}
-        index={index}
+      {isFileManagerHealthly ? (
+        <CFDirectoriesSelectInput
+          formik={formik}
+          index={index}
+          labelName="Host Directory:"
+          labelInfoTip="Select a directory on your host machine to share with the environment."
+          classNameContainer="w-full"
+          inputError={
+            // @ts-ignore
+            formik.errors.directories?.hostDirectories?.[index]?.hostDirectory
+          }
+          inputTouched={true}
+        />
+      ) : (
+        <FormInputText
+          labelName="Host Directory:"
+          labelInfoTip="Type a host directory."
+          inputProps={formik.getFieldProps(
+            `directories.hostDirectories.${index}.hostDirectory`,
+          )}
+          disabled={disabled}
+          inputError={
+            // @ts-ignore
+            formik.errors.directories?.hostDirectories?.[index]?.hostDirectory
+          }
+          inputTouched={
+            formik.touched.directories?.hostDirectories?.[index]?.hostDirectory
+          }
+          classNameContainer="w-full"
+        />
+      )}
+
+      <FormInputText
         labelName="Mount Path:"
-        labelInfoTip="Select a directory on your host machine to share with the environment."
-        classNameContainer="w-full"
-        rightTip
+        labelInfoTip="Type a mount path."
+        inputProps={formik.getFieldProps(
+          `directories.hostDirectories.${index}.mountPath`,
+        )}
+        disabled={disabled}
         inputError={
           // @ts-ignore
           formik.errors.directories?.hostDirectories?.[index]?.mountPath
         }
-        inputTouched={true}
+        inputTouched={
+          formik.touched.directories?.hostDirectories?.[index]?.mountPath
+        }
+        classNameContainer="w-full"
       />
       <div className="flex items-center justify-center pt-3 text-sm text-light-800">
         <CFDellButton

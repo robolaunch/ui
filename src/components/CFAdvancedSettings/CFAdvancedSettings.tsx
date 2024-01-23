@@ -1,6 +1,5 @@
-import CFHostDirectories2 from "../CFHostDirectories2/CFHostDirectories2";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
-// import CFDirectories from "../CFHostDirectories/CFHostDirectories";
+import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortSetter from "../CFPortSetter/CFPortSetter";
@@ -44,13 +43,8 @@ export default function CFAdvancedSettings({
           <Seperator />
         </CFSection>
 
-        {/* <CFSection gap={4}>
-          <CFDirectories formik={formik} disabled={disabled} />
-          <Seperator />
-        </CFSection> */}
-
         <CFSection gap={4}>
-          <CFHostDirectories2 formik={formik} disabled={disabled} />
+          <CFDirectories formik={formik} disabled={disabled} />
           <Seperator />
         </CFSection>
 

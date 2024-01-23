@@ -7,7 +7,6 @@ import { FormikProps } from "formik";
 import Select from "react-select";
 
 interface ICFDirectoriesSelectInput {
-  type?: "host" | "mount";
   formik: FormikProps<IDetails>;
   index?: number;
   dataTut?: string;
@@ -21,7 +20,6 @@ interface ICFDirectoriesSelectInput {
 }
 
 export default function CFDirectoriesSelectInput({
-  type,
   formik,
   index,
   dataTut,
@@ -33,43 +31,34 @@ export default function CFDirectoriesSelectInput({
   inputError,
   inputTouched,
 }: ICFDirectoriesSelectInput): ReactElement {
-  const [selectableItems, setSelectableItems] = useState<string[]>([]);
+  const [selectableItems, setSelectableItems] = useState<string[] | null>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
-  const { getFiles } = useFunctions();
+  const { getFilesFromFileManager } = useFunctions();
 
   useEffect(() => {
-    console.log("selectableItems", selectableItems);
-    console.log("selectedItems", selectedItems);
-  }, [selectableItems, selectedItems]);
-
-  useEffect(() => {
-    if (type === "host") {
-      formik.setFieldValue(
-        `directories.hostDirectories.[${index}].hostDirectory`,
-        selectedItems?.join(""),
-      );
-    } else {
-      formik.setFieldValue(
-        `directories.hostDirectories.[${index}].mountPath`,
-        selectedItems?.join(""),
-      );
-    }
+    formik.setFieldValue(
+      `directories.hostDirectories.[${index}].hostDirectory`,
+      selectedItems?.join(""),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, selectedItems, type]);
+  }, [index, selectedItems]);
 
   async function handleGetSelectableItems(paths?: string[]) {
-    const { items } = await getFiles(paths);
+    setSelectableItems(null);
+    const { items } = await getFilesFromFileManager({
+      instanceIP: "3.125.19.156:2000",
+      paths: paths,
+    });
 
     if (items?.length) {
-      setSelectableItems(
-        items
-          ?.filter((item: any) => item.isDir)
-          ?.map((item: any) => `/${item.name}`),
-      );
+      const filteredItems = items
+        ?.filter((item: any) => item.isDir)
+        ?.map((item: any) => `/${item.name}`);
+
+      setSelectableItems(filteredItems);
     } else {
       setSelectableItems([]);
-      setMenuIsOpen(false);
     }
   }
 
@@ -86,7 +75,7 @@ export default function CFDirectoriesSelectInput({
         options={
           selectableItems?.map((item) => ({
             value: item,
-            label: selectedItems?.join() + item,
+            label: selectedItems?.join("") + item,
           })) ?? []
         }
         onMenuOpen={() => {
@@ -97,13 +86,13 @@ export default function CFDirectoriesSelectInput({
         onChange={(selected) => {
           if (selected) {
             setSelectedItems([...selectedItems, selected.value]);
+            setSelectableItems([]);
             handleGetSelectableItems([...selectedItems, selected.value]);
             setMenuIsOpen(true);
           } else {
             setSelectedItems([]);
             handleGetSelectableItems();
           }
-          console.log(selected);
         }}
         maxMenuHeight={160}
         isSearchable
@@ -112,6 +101,7 @@ export default function CFDirectoriesSelectInput({
         classNamePrefix="text-xs"
         placeholder="Select a directory..."
         required
+        isLoading={!selectableItems}
       />
       <InputError error={inputError} touched={inputTouched} />
     </div>

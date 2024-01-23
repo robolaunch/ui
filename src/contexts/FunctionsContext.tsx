@@ -28,7 +28,7 @@ import {
   getLaunchManagers as getLaunchManagerDispatch,
   createRobot as createRobotDispatch,
   createBuildManager as createBuildManagerDispatch,
-  getFiles as getFilesDispatch,
+  getFilesFromFileManager as getFilesFromFileManagerDispatch,
 } from "../toolkit/RobotSlice";
 import {
   getFederatedFleets,
@@ -275,31 +275,19 @@ export default ({ children }: any) => {
         details: values?.details,
       }),
     ).then((responseInstances: any) => {
-      if (
+      const instances =
         responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances || [],
-          );
+          ?.cloudInstances;
+
+      if (instances) {
+        parameters?.setResponse && parameters?.setResponse(instances || []);
 
         parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances?.length || 0,
-          );
+          parameters?.setItemCount(instances?.length || 0);
 
-        if (
-          responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances
-            ?.length === 1
-        ) {
+        if (instances?.length === 1) {
           parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(
-              responseInstances?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0],
-            );
+            parameters?.setFirstItemforTrial(instances?.[0]);
         } else {
           parameters?.setFirstItemforTrial &&
             parameters?.setFirstItemforTrial(null);
@@ -389,23 +377,25 @@ export default ({ children }: any) => {
         details: values?.details,
       }),
     ).then(async (responseInstances: any) => {
-      if (
+      const instances =
         responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances
-      ) {
+          ?.cloudInstances;
+
+      if (instances) {
+        console.log("XXX", instances);
         parameters?.isSetState &&
           (await setSelectedState((prevState: any) => {
             return {
               ...prevState,
               instance:
-                responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
+                instances?.find(
                   (instance: any) => instance?.name === values?.instanceName,
                 ) || {},
             };
           }));
         parameters?.setResponse &&
           (await parameters?.setResponse(
-            responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
+            instances?.find(
               (instance: any) => instance?.name === values?.instanceName,
             ) || {},
           ));
@@ -415,7 +405,7 @@ export default ({ children }: any) => {
             return {
               ...prevState,
               instance:
-                responseInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.find(
+                instances?.find(
                   (instance: any) => instance?.name === values?.instanceName,
                 ) || {},
             };
@@ -1871,12 +1861,16 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getFiles(paths?: string[]): Promise<any> {
+  async function getFilesFromFileManager(values: {
+    instanceIP: string;
+    paths?: string[];
+  }): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       try {
         const response = await dispatch(
-          getFilesDispatch({
-            paths: paths,
+          getFilesFromFileManagerDispatch({
+            instanceIP: values.instanceIP,
+            paths: values.paths,
           }),
         );
 
@@ -1925,7 +1919,7 @@ export default ({ children }: any) => {
         deleteDataScienceApp,
         getDataScienceApps,
         getIP,
-        getFiles,
+        getFilesFromFileManager,
       }}
     >
       {children}

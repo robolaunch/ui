@@ -229,7 +229,11 @@ export interface IuseFunctions {
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => Promise<void>;
   getIP: () => void;
-  getFiles: (paths?: string[]) => Promise<any>;
+
+  getFilesFromFileManager: (values: {
+    instanceIP: string;
+    paths?: string[];
+  }) => Promise<any>;
 
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,
