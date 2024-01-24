@@ -8,6 +8,7 @@ import URLCell from "../components/TableInformationCells/URLCell";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
+import TextCopy from "../components/TextCopy/TextCopy";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
@@ -50,6 +51,7 @@ export function DataScienceTableData() {
           name: app,
           internalIP: app?.internalServiceEndpoint,
           externalIP: app?.externalServiceEndpoint,
+          token: app?.application?.accessToken,
           log: app?.applicationLog,
           status: app?.status,
           actions: app,
@@ -92,6 +94,21 @@ export function DataScienceTableData() {
                   url={rowData?.externalIP}
                   target="_blank"
                 />
+              )}
+            </Fragment>
+          );
+        },
+      },
+      {
+        key: "token",
+        header: "Bearer Token",
+        body: ({ token }: any) => {
+          return (
+            <Fragment>
+              {token ? (
+                <TextCopy text={token} />
+              ) : (
+                <p className="w-fit text-xs text-light-700"> None</p>
               )}
             </Fragment>
           );

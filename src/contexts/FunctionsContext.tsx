@@ -1826,22 +1826,14 @@ export default ({ children }: any) => {
         fleetName: selectedState.fleet?.name!,
       }),
     ).then((responseApps: any) => {
-      console.log("responseApps - get", responseApps);
-      if (
+      const apps =
         responseApps?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.environments
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseApps?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.environments || [],
-          );
+          ?.cloudInstances?.[0]?.environments;
 
-        parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseApps?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
-              ?.environments?.length || 0,
-          );
+      if (apps) {
+        parameters?.setResponse && parameters?.setResponse(apps || []);
+
+        parameters?.setItemCount && parameters?.setItemCount(apps?.length || 0);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);

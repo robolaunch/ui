@@ -389,14 +389,12 @@ export const getFilesFromFileManager = createAsyncThunk(
     }
 
     if ((await getTokenFromCookies()) === null) {
-      const { data: token } = await axios.get(
-        `http://${values.instanceIP}/api/login`,
-      );
+      const { data: token } = await axios.get(`${values.instanceIP}/api/login`);
       document.cookie = `fileManager=${token}; expires=${new Date(new Date().getTime() + 2 * 60 * 60 * 1000).toUTCString()}; path=*`;
     }
 
     const response = await axios.get(
-      `http://${values.instanceIP}/api/resources${values?.paths?.join("") || "/"}?auth=${await getTokenFromCookies()}`,
+      `${values.instanceIP}/api/resources${values?.paths?.join("") || "/"}?auth=${await getTokenFromCookies()}`,
     );
     return response.data;
   },

@@ -47,7 +47,7 @@ export default function CFDirectoriesSelectInput({
   async function handleGetSelectableItems(paths?: string[]) {
     setSelectableItems(null);
     const { items } = await getFilesFromFileManager({
-      instanceIP: "3.125.19.156:2000",
+      instanceIP: "https://org-kaeorgan-25969076.robolaunch.cloud/host",
       paths: paths,
     });
 

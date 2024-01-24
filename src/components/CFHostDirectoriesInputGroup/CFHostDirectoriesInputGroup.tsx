@@ -28,7 +28,7 @@ export default function CFDirectoriesInputGroup({
 
   async function handleGetHealthFromFileManager() {
     const { items: response } = await getHealthFromFileManager({
-      instanceIP: "3.125.19.156:2000",
+      instanceIP: "https://org-kaeorgan-25969076.robolaunch.cloud/host",
     });
 
     setIsFileManagerHealthly(response?.length > 0);

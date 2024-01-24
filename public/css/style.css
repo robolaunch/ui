@@ -3528,6 +3528,11 @@ td {
   background-color: rgb(88 28 135 / var(--tw-bg-opacity));
 }
 
+.active\:text-green-600:active {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
 .disabled\:\!cursor-not-allowed:disabled {
   cursor: not-allowed !important;
 }

@@ -64,6 +64,9 @@ export interface IDataScienceApp {
   application: {
     hasUi: boolean;
     name: string;
+    isDeletable: boolean;
+    hasAccessToken: boolean;
+    accessToken: string;
   };
   internalServiceEndpoint: string;
   externalServiceEndpoint: string;
