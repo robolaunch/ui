@@ -33,10 +33,10 @@ export default function StartStopCell({
         <Button
           className={`!h-9 ${
             isRunning &&
-            "border border-primary-500 !bg-transparent !text-primary-500"
+            "border border-primary-500 !bg-transparent !text-primary-500 disabled:cursor-not-allowed disabled:!border-primary-200 disabled:!text-primary-200"
           }`}
           disabled={disabled}
-          loading={disabled}
+          loading={loading}
           text={isRunning ? "Stop" : "Start"}
           onClick={() => setIsOpenModal(true)}
         />

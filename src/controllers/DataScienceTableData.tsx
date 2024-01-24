@@ -52,7 +52,7 @@ export function DataScienceTableData() {
           externalIP: app?.externalServiceEndpoint,
           log: app?.applicationLog,
           status: app?.status,
-          toggleState: app,
+          actions: app,
         };
       }) || [],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +88,7 @@ export function DataScienceTableData() {
                 <p className="text-xs text-light-700">Not Deployed</p>
               ) : (
                 <URLCell
-                  text={rowData?.externalIP}
+                  text={rowData?.externalIP?.split("#")?.[0]}
                   url={rowData?.externalIP}
                   target="_blank"
                 />
@@ -122,10 +122,10 @@ export function DataScienceTableData() {
         },
       },
       {
-        key: "toggleState",
+        key: "actions",
         header: "Actions",
         body: (rowData: any) => {
-          console.log(rowData);
+          console.log("alo", rowData);
           return (
             <StartStopCell
               isRunning={(() => {
@@ -138,7 +138,7 @@ export function DataScienceTableData() {
               })()}
               handleStart={() => {
                 createDataScienceApp({
-                  applicationName: rowData?.toggleState?.name,
+                  applicationName: rowData?.actions?.name,
                 });
                 setTimeout(() => {
                   handleReload();
@@ -146,21 +146,25 @@ export function DataScienceTableData() {
               }}
               handleStop={() => {
                 deleteDataScienceApp({
-                  applicationName: rowData?.toggleState?.name,
+                  applicationName: rowData?.actions?.name,
                 });
                 setTimeout(() => {
                   handleReload();
                 }, 1000);
               }}
               disabled={(() => {
-                switch (rowData?.status) {
-                  case "Not Deployed":
-                    return false;
-                  case "Ready":
-                    return false;
-                  default:
-                    return true;
+                if (!rowData?.actions?.application?.isDeletable) {
+                  return true;
                 }
+              })()}
+              loading={(() => {
+                if (
+                  rowData?.status === "Ready" ||
+                  rowData?.status === "Not Deployed"
+                ) {
+                  return false;
+                }
+                return true;
               })()}
               modalText={(() => {
                 switch (rowData?.status) {
