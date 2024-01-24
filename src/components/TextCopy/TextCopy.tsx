@@ -7,7 +7,7 @@ interface ITextCopy {
 
 export default function TextCopy({ text }: ITextCopy) {
   function handleCopy() {
-    toast.success("Copied to clipboard");
+    toast.success("Copied token to clipboard");
     navigator.clipboard.writeText(text);
   }
 
@@ -17,7 +17,7 @@ export default function TextCopy({ text }: ITextCopy) {
         {text?.substring(0, 14)}...
       </p>
       <button
-        className="w-fit text-light-500 active:text-green-600"
+        className="transition-300 w-fit text-light-500 hover:text-green-600"
         onClick={() => handleCopy()}
       >
         <MdContentCopy />

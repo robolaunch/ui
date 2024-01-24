@@ -9,6 +9,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import TextCopy from "../components/TextCopy/TextCopy";
+import IconInfoCell from "../components/TableInformationCells/IconInfoCell";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
@@ -70,7 +71,12 @@ export function DataScienceTableData() {
         filter: false,
         align: "left",
         body: (rowData: any) => {
-          return <InfoCell title={rowData?.name?.name} />;
+          return (
+            <IconInfoCell
+              iconHref={`/svg/apps/${rowData?.name?.name?.split("-")[0]}.svg`}
+              title={rowData?.name?.name}
+            />
+          );
         },
       },
       {
