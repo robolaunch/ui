@@ -3,7 +3,6 @@ import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IDataScienceApp } from "../interfaces/environmentInterfaces";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import InfoCell from "../components/TableInformationCells/InfoCell";
 import URLCell from "../components/TableInformationCells/URLCell";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";

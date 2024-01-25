@@ -16,22 +16,24 @@ export default function RemoteDesktopScene({
   const handleFullScreen = useFullScreenHandle();
 
   return (
-    <FullScreen className="h-full w-full" handle={handleFullScreen}>
-      <div className="relative flex h-full w-full justify-center">
+    <FullScreen
+      className={`${handleFullScreen?.active && "h-full w-full"}`}
+      handle={handleFullScreen}
+    >
+      <div className="relative ">
         <span
-          className="relative appearance-none outline-none"
+          className="my-auto h-fit w-fit appearance-none outline-none"
           ref={overlay}
           tabIndex={1}
         >
           <video
             onContextMenu={(e) => e.preventDefault()}
-            className={`absolute bottom-0 top-0 h-full`}
             playsInline
             ref={video}
             autoPlay
             muted={remoteDesktopReducer?.isMuted}
             style={{
-              position: "relative",
+              width: "100%",
               backgroundColor: "#000",
             }}
           />
