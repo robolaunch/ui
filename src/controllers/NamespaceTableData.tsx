@@ -152,7 +152,7 @@ export function NamespaceTableData() {
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
+        fleetName: pagesState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: !responseRobots,
@@ -168,7 +168,7 @@ export function NamespaceTableData() {
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
+        fleetName: pagesState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: !responseRobots,

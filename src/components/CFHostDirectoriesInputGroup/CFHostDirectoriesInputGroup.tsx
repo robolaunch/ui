@@ -5,6 +5,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import FormInputText from "../FormInputText/FormInputText";
 import useFunctions from "../../hooks/useFunctions";
+import useMain from "../../hooks/useMain";
 
 interface ICFDirectoriesInputGroup {
   formik: FormikProps<IDetails>;
@@ -26,9 +27,11 @@ export default function CFDirectoriesInputGroup({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { selectedState } = useMain();
+
   async function handleGetHealthFromFileManager() {
     const { items: response } = await getHealthFromFileManager({
-      instanceIP: "https://org-kaeorgan-25969076.robolaunch.cloud/host",
+      instanceIP: `https://${selectedState?.instance?.hostname!}/host`,
     });
 
     setIsFileManagerHealthly(response?.length > 0);

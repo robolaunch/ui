@@ -32,7 +32,6 @@ import {
 } from "../toolkit/RobotSlice";
 import {
   getFederatedFleets,
-  createFederatedFleet,
   getNamespaces as getNamespacesDispatch,
 } from "../toolkit/FleetSlice";
 import {
@@ -58,7 +57,6 @@ import {
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
-import { ISelectedState } from "../interfaces/mainInterfaces";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
@@ -66,6 +64,12 @@ import useMain from "../hooks/useMain";
 import { createContext } from "react";
 import { toast } from "sonner";
 import { orgNameViewer } from "../functions/GeneralFunctions";
+import { INamespace } from "../interfaces/namespace.interface";
+import {
+  namespaceMapper,
+  namespacesMapper,
+} from "../handler/namespace.handler";
+import { fleetMapper, fleetsMapper } from "../handler/fleet.handler";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -429,49 +433,16 @@ export default ({ children }: any) => {
         region: values?.region,
       }),
     ).then((responseFederatedFleets: any) => {
-      if (
+      const fleets = fleetsMapper(
         responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedFleets
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets || [],
-          );
+          ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
+        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+      );
 
-        parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length || 0,
-          );
-
-        if (parameters?.setFirstItemforTrial) {
-          if (
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 1
-          ) {
-            parameters?.setFirstItemforTrial(
-              responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]?.robolaunchFederatedFleets[0],
-            );
-          } else if (
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedFleets?.length === 0
-          ) {
-            dispatch(
-              createFederatedFleet({
-                organizationId: values?.organizationId,
-                roboticsCloudName: values?.roboticsCloudName,
-                region: values?.region,
-                instanceId: values?.instanceId,
-                robolaunchFederatedFleetsName: "trial-fleet",
-              }),
-            );
-            parameters?.setFirstItemforTrial(null);
-          } else {
-            parameters?.setFirstItemforTrial(null);
-          }
-        }
+      if (fleets) {
+        parameters?.setResponse && parameters?.setResponse(fleets);
+        parameters?.setItemCount && parameters?.setItemCount(fleets?.length);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -492,35 +463,29 @@ export default ({ children }: any) => {
         region: values?.region,
       }),
     ).then((responseFederatedFleets: any) => {
-      if (
+      const fleet = fleetMapper(
         responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedFleets
-      ) {
+          ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
+        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+        values?.fleetName,
+      );
+
+      if (fleet) {
         parameters?.isSetState &&
-          setSelectedState((prevState: ISelectedState) => {
+          setSelectedState((prev) => {
             return {
-              ...prevState,
-              fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-                  (fleet: any) => fleet?.name === values?.fleetName,
-                ) || {},
+              ...prev,
+              fleet: fleet,
             };
           });
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-              (fleet: any) => fleet?.name === values?.fleetName,
-            ) || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(fleet);
 
         parameters?.setPages &&
-          setPagesState((prevState: any) => {
+          setPagesState((prev) => {
             return {
-              ...prevState,
-              fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedFleets?.find(
-                  (fleet: any) => fleet?.name === values?.fleetName,
-                ) || {},
+              ...prev,
+              fleet: fleet,
             };
           });
       } else {
@@ -541,50 +506,15 @@ export default ({ children }: any) => {
         instanceId: values?.instanceId,
         region: values?.region,
       }),
-    ).then((responseNamespaces: any) => {
-      if (
-        responseNamespaces?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchNamespaces
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces || [],
-          );
+    ).then((resNS: any) => {
+      const namespaces: INamespace[] = namespacesMapper(
+        resNS?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
+          ?.robolaunchNamespaces,
+      );
 
-        parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces?.length || 0,
-          );
-
-        if (parameters?.setFirstItemforTrial) {
-          if (
-            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces?.length === 1
-          ) {
-            parameters?.setFirstItemforTrial(
-              responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-                ?.cloudInstances[0]?.robolaunchNamespaces[0],
-            );
-          } else if (
-            responseNamespaces?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchNamespaces?.length === 0
-          ) {
-            dispatch(
-              createFederatedFleet({
-                organizationId: values?.organizationId,
-                roboticsCloudName: values?.roboticsCloudName,
-                region: values?.region,
-                instanceId: values?.instanceId,
-                robolaunchFederatedFleetsName: "trial-fleet",
-              }),
-            );
-            parameters?.setFirstItemforTrial(null);
-          } else {
-            parameters?.setFirstItemforTrial(null);
-          }
-        }
+      if (namespaces) {
+        parameters?.setResponse && parameters?.setResponse(namespaces);
+        parameters?.setItemCount && parameters?.setItemCount(namespaces.length);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -604,44 +534,28 @@ export default ({ children }: any) => {
         instanceId: values?.instanceId,
         region: values?.region,
       }),
-    ).then((responseFederatedFleets: any) => {
-      if (
-        Array.isArray(responseFederatedFleets?.payload?.data) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds,
-        ) &&
-        Array.isArray(
-          responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]
-            ?.cloudInstances,
-        ) &&
-        responseFederatedFleets?.payload?.data[0].roboticsClouds[0]
-          ?.cloudInstances[0]?.robolaunchNamespaces
-      ) {
+    ).then((resNS: any) => {
+      const namespace = namespaceMapper(
+        resNS?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+          ?.robolaunchNamespaces,
+        values?.namespaceName,
+      );
+
+      if (namespace) {
         parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
+          setSelectedState((prev) => {
             return {
-              ...prevState,
-              fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-                  (fleet: any) => fleet?.name === values?.namespaceName,
-                ) || {},
+              ...prev,
+              fleet: namespace,
             };
           });
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-              (fleet: any) => fleet?.name === values?.namespaceName,
-            ) || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(namespace);
 
         parameters?.setPages &&
-          setPagesState((prevState: any) => {
+          setPagesState((prev) => {
             return {
-              ...prevState,
-              fleet:
-                responseFederatedFleets?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchNamespaces?.find(
-                  (fleet: any) => fleet?.name === values?.namespaceName,
-                ) || {},
+              ...prev,
+              fleet: namespace,
             };
           });
       } else {
@@ -1648,7 +1562,7 @@ export default ({ children }: any) => {
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
-            fleetName: selectedState?.fleet?.name,
+            fleetName: selectedState?.fleet?.name!,
             robotName: robotData?.step1?.details.name,
             physicalInstanceName: robotData?.step1?.details.isVirtualRobot
               ? undefined
@@ -1703,7 +1617,7 @@ export default ({ children }: any) => {
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
-            fleetName: selectedState?.fleet?.name,
+            fleetName: selectedState?.fleet?.name!,
             environmentName: robotData?.step1?.details.name,
             storageAmount:
               robotData?.step1?.resources.storage.allocatedCapacity,

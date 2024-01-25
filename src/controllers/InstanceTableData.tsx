@@ -9,9 +9,13 @@ import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { useAppSelector } from "../hooks/redux";
+import { IFleet } from "../interfaces/fleet.interface";
+import { INamespace } from "../interfaces/namespace.interface";
 
 export function InstanceTableData() {
-  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const [responseFleets, setResponseFleets] = useState<
+    IFleet[] | INamespace[] | undefined
+  >(undefined);
   const [reload, setReload] = useState<boolean>(false);
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -136,14 +140,14 @@ export function InstanceTableData() {
 
   const data: any = useMemo(
     () =>
-      responseFleets?.map((fleet: any) => {
+      responseFleets?.map((fleet) => {
         return {
           key: fleet?.name,
           name: fleet,
           organization: pagesState?.organization?.organizationName,
           roboticsCloud: pagesState?.roboticsCloud?.name,
           instance: pagesState?.instance?.name,
-          state: fleet?.fleetStatus || fleet?.namespaceStatus,
+          state: fleet?.status || fleet?.status,
           actions: fleet,
         };
       }),
@@ -165,8 +169,9 @@ export function InstanceTableData() {
               subtitle={pagesState.organization?.organizationName!}
               titleURL={`/${handleSplitOrganizationName(
                 pagesState?.organization?.organizationName!,
-              )}/${pagesState?.roboticsCloud?.name}/${pagesState?.instance
-                ?.name}/${rowData?.name?.name}`}
+              )}/${pagesState?.roboticsCloud?.name}/${
+                pagesState?.instance?.name
+              }/${rowData?.name?.name}`}
             />
           );
         },

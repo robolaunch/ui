@@ -83,7 +83,7 @@ export default function RobotsList({
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: false,

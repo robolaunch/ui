@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import { useAppDispatch } from "../../hooks/redux";
 import { createTrial } from "../../toolkit/TrialSlice";
 import useMain from "../../hooks/useMain";
+import { IFleet } from "../../interfaces/fleet.interface";
 
 interface IDeployApplicationSelector {
   item: any;
@@ -49,7 +50,9 @@ export default function DeployApplicationSelector({
   const [responseRoboticsClouds, setResponseRoboticsClouds] =
     useState<any>(undefined);
   const [responseInstances, setResponseInstances] = useState<any>(undefined);
-  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const [responseFleets, setResponseFleets] = useState<IFleet[] | undefined>(
+    undefined,
+  );
   const { getOrganizations, getRoboticsClouds, getInstances, getFleets } =
     useFunctions();
   const dispatch = useAppDispatch();
@@ -430,8 +433,8 @@ export default function DeployApplicationSelector({
             onChange={(e) => {
               formik.setFieldValue(
                 `fleet`,
-                responseFleets.filter(
-                  (fleet: any) => fleet.name === e.target.value,
+                responseFleets?.filter(
+                  (fleet) => fleet.name === e.target.value,
                 )?.[0],
               );
             }}
@@ -440,7 +443,7 @@ export default function DeployApplicationSelector({
             <Fragment>
               {!formik?.values?.fleet && <option value=""></option>}
               {responseFleets
-                ?.filter((fleet: any) => fleet.fleetStatus === "Ready")
+                ?.filter((fleet) => fleet.status === "Ready")
                 ?.map((fleet: any, index: number) => (
                   <option key={index} value={fleet.name}>
                     {fleet.name}

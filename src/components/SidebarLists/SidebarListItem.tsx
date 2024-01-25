@@ -101,9 +101,12 @@ export default function SidebarListItem({
         break;
       case "fleet":
         if (
-          data?.namespaceStatus === "Active" ||
-          (data?.fleetStatus === "Ready" &&
-            data?.physicalInstance?.length === 0)
+          data?.status === "Active" ||
+          (data?.status === "Ready" && data?.physicalStatus
+            ? data?.physicalStatus === "Ready"
+              ? true
+              : false
+            : true)
         ) {
           if (selectedState?.fleet?.name === data?.name) {
             setSelectedState({ ...selectedState, fleet: null });
@@ -168,10 +171,7 @@ export default function SidebarListItem({
         }
         break;
       case "fleet":
-        if (
-          data?.fleetStatus === "Ready" ||
-          data?.namespaceStatus === "Active"
-        ) {
+        if (data?.status === "Ready" || data?.status === "Active") {
           setSelectedState({ ...selectedState, fleet: data });
           setSidebarState({ ...sidebarState, isOpen: false });
           navigate(url);

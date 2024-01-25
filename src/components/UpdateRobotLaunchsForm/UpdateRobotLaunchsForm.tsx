@@ -34,7 +34,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       },
       {
@@ -60,12 +60,12 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
         <div className="flex h-full w-full flex-col items-center gap-4">
           <SidebarInfo
             text={
-              robotData?.step3?.robotBuildSteps?.length === 0
+              robotData?.step3?.steps?.length === 0
                 ? "No build steps found. If you want to add launch step before add build manager."
                 : "It seems that you have not configured any launch steps for this robot. If you want to configure launch steps, please click on the + button below."
             }
             component={
-              robotData?.step3?.robotBuildSteps?.length === 0 ? (
+              robotData?.step3?.steps?.length === 0 ? (
                 <></>
               ) : (
                 <CreateRobotFormAddButton

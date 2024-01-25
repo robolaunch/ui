@@ -50,7 +50,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details?.name || url?.robotName!,
       },
       {

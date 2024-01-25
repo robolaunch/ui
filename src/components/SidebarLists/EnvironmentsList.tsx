@@ -55,7 +55,7 @@ export default function EnvironmentsList({
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -76,10 +76,10 @@ export default function EnvironmentsList({
             !selectedState?.organization
               ? "Organization"
               : !selectedState?.roboticsCloud
-              ? "Robotics Cloud"
-              : !selectedState?.instance
-              ? "Instance"
-              : "Fleet"
+                ? "Robotics Cloud"
+                : !selectedState?.instance
+                  ? "Instance"
+                  : "Fleet"
           } to view applications.`}
         />
       ) : !Array.isArray(responseEnvironments) ? (

@@ -5,6 +5,7 @@ import InputError from "../InputError/InputError";
 import InfoTip from "../InfoTip/InfoTip";
 import { FormikProps } from "formik";
 import Select from "react-select";
+import useMain from "../../hooks/useMain";
 
 interface ICFDirectoriesSelectInput {
   formik: FormikProps<IDetails>;
@@ -44,10 +45,12 @@ export default function CFDirectoriesSelectInput({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, selectedItems]);
 
+  const { selectedState } = useMain();
+
   async function handleGetSelectableItems(paths?: string[]) {
     setSelectableItems(null);
     const { items } = await getFilesFromFileManager({
-      instanceIP: "https://org-kaeorgan-25969076.robolaunch.cloud/host",
+      instanceIP: `https://${selectedState?.instance?.hostname!}/host`,
       paths: paths,
     });
 

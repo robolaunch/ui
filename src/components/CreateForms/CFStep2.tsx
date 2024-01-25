@@ -13,13 +13,17 @@ import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { IFleet } from "../../interfaces/fleet.interface";
+import { INamespace } from "../../interfaces/namespace.interface";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
 }
 
 export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
-  const [responseFleet, setResponseFleet] = useState<any>(undefined);
+  const [responseFleet, setResponseFleet] = useState<
+    IFleet | INamespace | undefined
+  >(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const {
@@ -124,7 +128,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       },
       {
@@ -142,7 +146,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         environmentName: url?.robotName as string,
       },
       {
@@ -160,7 +164,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -176,7 +180,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
-        namespaceName: selectedState?.fleet?.name,
+        namespaceName: selectedState?.fleet?.name!,
       },
       {
         ifErrorNavigateTo404: false,
@@ -193,8 +197,8 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
           ? isLoadingImportRobot
           : !responseFleet ||
             (applicationMode
-              ? responseFleet?.namespaceStatus !== "Active"
-              : responseFleet?.fleetStatus !== "Ready")
+              ? responseFleet?.status !== "Active"
+              : responseFleet?.status !== "Ready")
       }
       loadingText={
         isImportRobot
@@ -207,8 +211,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
           : [
               {
                 name: responseFleet?.name,
-                status:
-                  responseFleet?.fleetStatus || responseFleet?.namespaceStatus,
+                status: responseFleet?.status || responseFleet?.status,
               },
             ]
       }

@@ -6,6 +6,7 @@ import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { INamespace } from "../../interfaces/namespace.interface";
 
 interface INamespacesList {
   reload: boolean;
@@ -16,7 +17,9 @@ export default function NamespacesList({
   reload,
   setItemCount,
 }: INamespacesList): ReactElement {
-  const [responseNamespaces, setResponseNamespaces] = useState<any>(undefined);
+  const [responseNamespaces, setResponseNamespaces] = useState<
+    INamespace[] | undefined
+  >(undefined);
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { getNamespaces } = useFunctions();
@@ -79,8 +82,8 @@ export default function NamespacesList({
             !selectedState?.organization
               ? "Organization"
               : !selectedState?.roboticsCloud
-              ? "Robotics Cloud"
-              : "Instance"
+                ? "Robotics Cloud"
+                : "Instance"
           } to view namespaces.`}
         />
       ) : (
@@ -90,7 +93,7 @@ export default function NamespacesList({
           ) : responseNamespaces.length === 0 ? (
             <SidebarInfo text={`Create a Namespace.`} />
           ) : (
-            responseNamespaces?.map((fleet: any, index: number) => {
+            responseNamespaces?.map((fleet, index: number) => {
               return (
                 <SidebarListItem
                   key={index}
@@ -100,35 +103,35 @@ export default function NamespacesList({
                     <div className="flex gap-2">
                       <div className="flex gap-1.5">
                         <span className="font-medium">VI:</span>
-                        <StateCell state={fleet?.namespaceStatus} />
+                        <StateCell state={fleet?.status} />
                       </div>
                       {responseNamespaces?.filter(
-                        (pFleet: any) => fleet?.name === pFleet?.fleetName,
+                        (pFleet) => fleet?.name === pFleet?.status,
                       ).length > 0 && (
                         <div className="flex gap-1.5">
                           <span className="font-medium">PI:</span>
                           <StateCell
                             state={
                               responseNamespaces?.filter(
-                                (pFleet: any) =>
-                                  fleet?.name === pFleet?.fleetName,
-                              )[0]?.fleetStatus
+                                (pFleet) => fleet?.name === pFleet?.name,
+                              )[0]?.status
                             }
                           />
                         </div>
                       )}
                     </div>
                   }
-                  url={`${selectedState?.organization?.organizationName?.split(
-                    "_",
-                  )[1]}/${selectedState?.roboticsCloud?.name}/${selectedState
-                    ?.instance?.name}/${fleet?.name}`}
+                  url={`${
+                    selectedState?.organization?.organizationName?.split("_")[1]
+                  }/${selectedState?.roboticsCloud?.name}/${
+                    selectedState?.instance?.name
+                  }/${fleet?.name}`}
                   data={{
                     ...fleet,
                     physicalInstance: responseNamespaces?.filter(
-                      (pFleet: any) =>
-                        fleet?.name === pFleet?.fleetName &&
-                        pFleet?.fleetStatus !== "Ready",
+                      (pFleet) =>
+                        fleet?.name === pFleet?.name &&
+                        pFleet?.status !== "Ready",
                     ),
                   }}
                   selected={fleet.name === selectedState?.fleet?.name}

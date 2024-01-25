@@ -1,6 +1,7 @@
 export interface IInstance {
   name: string;
   region: string;
+  hostname: string;
   instanceId: string;
   instanceState: string;
   instanceType: string;

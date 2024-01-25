@@ -6,6 +6,7 @@ import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { IFleet } from "../../interfaces/fleet.interface";
 
 interface IFleetsList {
   reload: boolean;
@@ -16,7 +17,9 @@ export default function FleetsList({
   reload,
   setItemCount,
 }: IFleetsList): ReactElement {
-  const [responseFleets, setResponseFleets] = useState<any>(undefined);
+  const [responseFleets, setResponseFleets] = useState<IFleet[] | undefined>(
+    undefined,
+  );
   const { selectedState, applicationMode } = useMain();
   const dispatch = useAppDispatch();
   const { getFleets } = useFunctions();
@@ -90,39 +93,23 @@ export default function FleetsList({
           ) : responseFleets.length === 0 ? (
             <SidebarInfo text={`Create a Fleet.`} />
           ) : (
-            responseFleets
-              ?.filter((fleet: any) => !fleet.fleetName)
-              .map((fleet: any, index: number) => {
-                return (
-                  <SidebarListItem
-                    key={index}
-                    type="fleet"
-                    name={fleet?.name}
-                    description={
-                      <FleetsListItemDesc
-                        fleet={fleet}
-                        responseFleets={responseFleets}
-                      />
-                    }
-                    url={`${
-                      selectedState?.organization?.organizationName?.split(
-                        "_",
-                      )[1]
-                    }/${selectedState?.roboticsCloud?.name}/${
-                      selectedState?.instance?.name
-                    }/${fleet?.name}`}
-                    data={{
-                      ...fleet,
-                      physicalInstance: responseFleets?.filter(
-                        (pFleet: any) =>
-                          fleet?.name === pFleet?.fleetName &&
-                          pFleet?.fleetStatus !== "Ready",
-                      ),
-                    }}
-                    selected={fleet.name === selectedState?.fleet?.name}
-                  />
-                );
-              })
+            responseFleets.map((fleet, index: number) => {
+              return (
+                <SidebarListItem
+                  key={index}
+                  type="fleet"
+                  name={fleet?.name}
+                  description={<FleetsListItemDesc fleet={fleet} />}
+                  url={`${
+                    selectedState?.organization?.organizationName?.split("_")[1]
+                  }/${selectedState?.roboticsCloud?.name}/${
+                    selectedState?.instance?.name
+                  }/${fleet?.name}`}
+                  data={fleet}
+                  selected={fleet.name === selectedState?.fleet?.name}
+                />
+              );
+            })
           )}
         </Fragment>
       )}

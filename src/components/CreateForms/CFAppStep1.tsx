@@ -79,7 +79,7 @@ export default function CFAppStep1({
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         environmentName: url?.robotName!,
       },
       {

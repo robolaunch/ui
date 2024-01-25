@@ -63,7 +63,7 @@ export default function CFStep4({
           instanceId: selectedState?.instance?.instanceId!,
           region: selectedState?.instance?.region!,
           physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
-          fleetName: selectedState?.fleet?.name,
+          fleetName: selectedState?.fleet?.name!,
           robotName: robotData?.step1?.details.name,
           launchManagerName: values?.name,
           robotLaunchSteps: [
