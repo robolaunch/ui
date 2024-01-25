@@ -3,7 +3,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import { ReactElement } from "react";
 
 interface ICFInfoBar {
-  label: string;
+  label: string | ReactElement;
   tip: string;
   error?: string;
   touched?: boolean;

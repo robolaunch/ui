@@ -28,7 +28,10 @@ export default function JupyterNotebook(): ReactElement {
                 ${handleFullScreen?.active && "!h-screen"}`}
                 src={robotData?.step1?.services.jupyterNotebook?.httpsEndpoint}
               />
-              <ControlBar type="ide" handleFullScreen={handleFullScreen} />
+              <ControlBar
+                type="jupyterNotebook"
+                handleFullScreen={handleFullScreen}
+              />
             </FullScreen>
           )}
         </Fragment>

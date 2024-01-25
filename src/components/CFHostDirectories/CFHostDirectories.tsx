@@ -4,6 +4,7 @@ import { IDetails } from "../../interfaces/robotInterfaces";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { FormikProps } from "formik";
 import { ReactElement } from "react";
+import HostDirectoriesSearchIframe from "../HostDirectoriesSearchIframe/HostDirectoriesSearchIframe";
 
 interface ICFDirectories {
   formik: FormikProps<IDetails>;
@@ -17,7 +18,12 @@ export default function CFDirectories({
   return (
     <div>
       <CFInfoBar
-        label="Host Directories:"
+        label={
+          <div className="flex gap-1 text-xs text-light-900">
+            <p>Host Directories:</p>
+            <HostDirectoriesSearchIframe />
+          </div>
+        }
         tip="You can link a directory on the host to the directory specified in the application here."
         vertical
       >
