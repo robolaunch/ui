@@ -38,10 +38,7 @@ export default function SidebarListItem({
   const handleSelectItem = () => {
     switch (type) {
       case "organization":
-        if (
-          selectedState?.organization?.organizationName ===
-          data?.organizationName
-        ) {
+        if (selectedState?.organization?.name === data?.name) {
           setSelectedState({
             ...selectedState,
             organization: null,
@@ -122,8 +119,7 @@ export default function SidebarListItem({
         setSidebarState({ ...sidebarState, isOpen: false });
         navigate(
           `/${organizationNameViewer({
-            organizationName: selectedState?.organization
-              ?.organizationName as string,
+            organizationName: selectedState?.organization?.name as string,
             capitalization: false,
           })}/${selectedState?.roboticsCloud?.name}/${
             selectedState?.instance?.name

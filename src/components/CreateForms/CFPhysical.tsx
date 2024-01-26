@@ -27,7 +27,7 @@ export default function CFPhysical(): ReactElement {
       await keycloak.updateToken(-1);
       await dispatch(
         addPhysicalInstance({
-          organizationId: selectedState?.organization?.organizationId,
+          organizationId: selectedState?.organization?.id,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
           instanceId: selectedState?.instance?.instanceId,
           region: selectedState?.instance?.region,
@@ -69,7 +69,7 @@ export default function CFPhysical(): ReactElement {
           }}
           theme="vs-dark"
         />
-        <p className="text-light-600 text-sm font-medium">
+        <p className="text-sm font-medium text-light-600">
           Copy the code given below and run it on your physical device. After
           doing this, you can check and manage the status of your device.
         </p>
@@ -81,7 +81,7 @@ export default function CFPhysical(): ReactElement {
             />
           </CopyToClipboard>
           <Button
-            className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 border capitalize transition-all duration-500"
+            className="border border-primary-700 !bg-light-50 capitalize !text-primary-700 transition-all duration-500 hover:!bg-primary-100"
             text="Done"
             onClick={() => {
               setSidebarState({ ...sidebarState, isCreateMode: false });

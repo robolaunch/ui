@@ -1,7 +1,7 @@
 import Button from "../components/Button/Button";
 import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import { IOrganization } from "../interfaces/organizationInterfaces";
+import { IOrganization } from "../interfaces/organization.interface";
 
 interface IDeleteOrganizationModal {
   data: IOrganization;
@@ -36,9 +36,7 @@ export default function DeleteOrganizationModal({
       <div className="flex w-full flex-col gap-8">
         <p>
           Are you sure you want to delete the organization named "
-          <span className="font-bold">
-            {data?.organizationName?.split("_")[1]}
-          </span>
+          <span className="font-bold">{data?.name?.split("_")[1]}</span>
           "? This action permanently deletes all objects underneath.
         </p>
         <div className="flex items-center justify-end gap-4">

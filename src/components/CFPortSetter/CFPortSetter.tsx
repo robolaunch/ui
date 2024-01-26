@@ -26,7 +26,7 @@ export default function CFPortSetter({
     try {
       const result = await dispatch(
         getFreePort({
-          organizationId: selectedState?.organization?.organizationId!,
+          organizationId: selectedState?.organization?.id!,
           instanceId: selectedState?.instance?.instanceId!,
           region: selectedState?.roboticsCloud?.region!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,

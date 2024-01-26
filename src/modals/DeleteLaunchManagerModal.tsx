@@ -24,12 +24,12 @@ export default function DeleteLaunchManagerModal({
     setIsLoading(true);
     await dispatch(
       deleteLaunchManager({
-        organizationId: selectedState?.organization!.organizationId,
+        organizationId: selectedState?.organization!.id,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
         robotName: robotData?.step1?.details.name,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
         launchManagerName: launchManagerName,
       }),

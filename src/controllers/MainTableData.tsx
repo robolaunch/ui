@@ -4,7 +4,7 @@ import {
 } from "../interfaces/tableInterface";
 import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
 import StateCell from "../components/TableInformationCells/StateCell";
-import { IOrganization } from "../interfaces/organizationInterfaces";
+import { IOrganization } from "../interfaces/organization.interface";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
@@ -40,8 +40,8 @@ export function MainTableData() {
     () =>
       responseOrganizations?.map((organization: IOrganization) => {
         return {
-          key: organization?.organizationName,
-          name: organization?.organizationName,
+          key: organization?.name,
+          name: organization?.name,
           status: "Ready",
           actions: organization,
         };

@@ -124,7 +124,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -142,7 +142,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
@@ -160,7 +160,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -176,7 +176,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,

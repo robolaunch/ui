@@ -30,10 +30,7 @@ export function InstanceTableData() {
   const { pagesState, selectedState } = useMain();
 
   useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
+    if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
       handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       handleGetRoboticsCloud();
@@ -75,7 +72,7 @@ export function InstanceTableData() {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: url?.roboticsCloudName as string,
       },
       {
@@ -89,7 +86,7 @@ export function InstanceTableData() {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceName: url?.instanceName as string,
         region: pagesState?.roboticsCloud?.region!,
@@ -106,7 +103,7 @@ export function InstanceTableData() {
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -121,7 +118,7 @@ export function InstanceTableData() {
   function handleGetNamespaces() {
     getNamespaces(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -144,7 +141,7 @@ export function InstanceTableData() {
         return {
           key: fleet?.name,
           name: fleet,
-          organization: pagesState?.organization?.organizationName,
+          organization: pagesState?.organization?.name,
           roboticsCloud: pagesState?.roboticsCloud?.name,
           instance: pagesState?.instance?.name,
           state: fleet?.status || fleet?.status,
@@ -166,9 +163,9 @@ export function InstanceTableData() {
           return (
             <InfoCell
               title={rowData?.name?.name}
-              subtitle={pagesState.organization?.organizationName!}
+              subtitle={pagesState.organization?.name!}
               titleURL={`/${handleSplitOrganizationName(
-                pagesState?.organization?.organizationName!,
+                pagesState?.organization?.name!,
               )}/${pagesState?.roboticsCloud?.name}/${
                 pagesState?.instance?.name
               }/${rowData?.name?.name}`}
@@ -183,9 +180,7 @@ export function InstanceTableData() {
         filter: false,
         align: "left",
         body: () => {
-          return (
-            <BasicCell text={pagesState?.organization?.organizationName!} />
-          );
+          return <BasicCell text={pagesState?.organization?.name!} />;
         },
       },
       {

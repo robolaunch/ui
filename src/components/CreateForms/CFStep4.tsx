@@ -58,7 +58,7 @@ export default function CFStep4({
 
       await dispatch(
         createLaunchManager({
-          organizationId: selectedState?.organization?.organizationId!,
+          organizationId: selectedState?.organization?.id!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
           instanceId: selectedState?.instance?.instanceId!,
           region: selectedState?.instance?.region!,
@@ -82,7 +82,7 @@ export default function CFStep4({
 
       setTimeout(() => {
         window.location.href = `/${organizationNameViewer({
-          organizationName: selectedState?.organization?.organizationName!,
+          organizationName: selectedState?.organization?.name!,
           capitalization: false,
         })}/${selectedState?.roboticsCloud?.name}/${
           selectedState?.instance?.name

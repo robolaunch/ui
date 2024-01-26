@@ -17,7 +17,7 @@ export default function FilteredTags(): ReactElement {
           />
           <span className="cursor-default text-xs text-secondary-900">
             {organizationNameViewer({
-              organizationName: selectedState?.organization?.organizationName,
+              organizationName: selectedState?.organization?.name,
               capitalization: false,
             })}
           </span>

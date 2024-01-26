@@ -58,7 +58,7 @@ export default function PhysicalInstancesList({
   function handleGetPhysicalInstances() {
     getPhysicalInstances(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -82,8 +82,8 @@ export default function PhysicalInstancesList({
             !selectedState?.organization
               ? "Organization"
               : !selectedState?.roboticsCloud
-              ? "Robotics Cloud"
-              : "Cloud Instance"
+                ? "Robotics Cloud"
+                : "Cloud Instance"
           } to view Physical Instances.`}
         />
       ) : !Array.isArray(responsePhysicalInstances) ? (
@@ -105,11 +105,11 @@ export default function PhysicalInstancesList({
                   </div>
                 }
                 url={`/${organizationNameViewer({
-                  organizationName:
-                    selectedState?.organization?.organizationName!,
+                  organizationName: selectedState?.organization?.name!,
                   capitalization: false,
-                })}/${selectedState?.roboticsCloud
-                  ?.name}/${instance?.name}/physical-instances`}
+                })}/${
+                  selectedState?.roboticsCloud?.name
+                }/${instance?.name}/physical-instances`}
                 data={instance}
                 notSelectable
               />

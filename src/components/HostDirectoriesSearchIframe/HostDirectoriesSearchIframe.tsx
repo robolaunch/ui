@@ -10,9 +10,9 @@ export default function HostDirectoriesSearchIframe(): ReactElement {
 
   return (
     <Fragment>
-      <button onClick={() => setIsOpened(true)}>
+      <div className="cursor-pointer" onClick={() => setIsOpened(true)}>
         <IoSearch className="text-light-500" size={16} />
-      </button>
+      </div>
       {isOpened && (
         <IframeModal
           handleCloseModal={() => setIsOpened(false)}

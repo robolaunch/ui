@@ -18,7 +18,7 @@ export default function UsagesWidget(): ReactElement {
   const { getSystemStatus } = useFunctions();
 
   useEffect(() => {
-    pagesState?.organization?.organizationId &&
+    pagesState?.organization?.id &&
       pagesState?.roboticsCloud?.name &&
       pagesState?.instance?.instanceId &&
       !pagesState?.instance?.systemStatus?.length &&

@@ -46,7 +46,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,
@@ -75,7 +75,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
         );
         setTimeout(() => {
           window.location.href = `/${
-            selectedState?.organization?.organizationName?.split("_")[1]
+            selectedState?.organization?.name?.split("_")[1]
           }/${selectedState?.roboticsCloud?.name}/${
             selectedState?.instance?.name
           }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}}`;

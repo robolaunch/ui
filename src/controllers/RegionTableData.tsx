@@ -29,10 +29,7 @@ export function RegionTableData() {
   }
 
   useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
+    if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
       handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       handleGetRegion();
@@ -74,7 +71,7 @@ export function RegionTableData() {
   function handleGetRegion() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: url?.roboticsCloudName!,
       },
       {
@@ -88,7 +85,7 @@ export function RegionTableData() {
   function handleGetInstances() {
     getInstances(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: url?.roboticsCloudName!,
         region: pagesState?.roboticsCloud?.region!,
         details: true,
@@ -109,11 +106,11 @@ export function RegionTableData() {
             title: instance?.name,
             subtitle: instance?.instanceType,
             titleURL: `/${handleSplitOrganizationName(
-              pagesState?.organization?.organizationName!,
+              pagesState?.organization?.name!,
             )}/${pagesState.roboticsCloud?.name}/${instance?.name}`,
           },
           organization: handleSplitOrganizationName(
-            pagesState?.organization?.organizationName!,
+            pagesState?.organization?.name!,
           ),
           architecture: instance?.cloudInstanceResource?.architecture,
           OSResources:
@@ -303,7 +300,7 @@ export function RegionTableData() {
                 name: rowData?.actions?.name,
                 state: rowData?.providerState,
                 robolaunchState: rowData?.robolaunchState,
-                organizationId: pagesState?.organization?.organizationId,
+                organizationId: pagesState?.organization?.id,
                 roboticsCloudName: pagesState.roboticsCloud?.name,
                 instanceId: rowData?.actions?.instanceId,
                 region: rowData?.actions?.region,

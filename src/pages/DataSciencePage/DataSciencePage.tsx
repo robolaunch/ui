@@ -9,7 +9,7 @@ export default function DataSciencePage(): ReactElement {
 
   function handleSelectController(): boolean {
     if (
-      selectedState.organization?.organizationId &&
+      selectedState.organization?.id &&
       selectedState.roboticsCloud?.name &&
       selectedState.instance?.instanceId
     ) {

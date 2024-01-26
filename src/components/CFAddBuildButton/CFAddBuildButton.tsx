@@ -11,12 +11,12 @@ interface ICFAddBuildButton {
 export default function CFAddBuildButton({
   formik,
 }: ICFAddBuildButton): ReactElement {
-  const { handleAddStepToBuildStep } = useCreateRobot();
+  const { handleAddBuildStep } = useCreateRobot();
 
   return (
     <div data-tut="create-robot-step3-build-add-button">
       <CreateRobotFormAddButton
-        onClick={() => handleAddStepToBuildStep(formik)}
+        onClick={() => handleAddBuildStep(formik)}
         disabled={formik?.isSubmitting}
       />
     </div>

@@ -1,5 +1,5 @@
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
-import { IOrganization } from "../../interfaces/organizationInterfaces";
+import { IOrganization } from "../../interfaces/organization.interface";
 import DeleteFleetModalModal from "../../modals/DeleteFleetModal";
 import { IInstance } from "../../interfaces/instanceInferfaces";
 import { IRegion } from "../../interfaces/regionInterfaces";

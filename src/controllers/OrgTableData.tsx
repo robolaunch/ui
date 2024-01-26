@@ -28,10 +28,7 @@ export function OrgTableData() {
   }
 
   useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
+    if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
       handleGetOrganization();
     } else {
       handleGetRegions();
@@ -60,7 +57,7 @@ export function OrgTableData() {
   function handleGetRegions() {
     getRoboticsClouds(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
       },
       {
         setResponse: setResponseRegions,
@@ -77,30 +74,30 @@ export function OrgTableData() {
           name: {
             name: r?.name,
             organization: handleSplitOrganizationName(
-              pagesState?.organization?.organizationName!,
+              pagesState?.organization?.name!,
             ),
             titleURL: `/${handleSplitOrganizationName(
-              pagesState?.organization?.organizationName!,
+              pagesState?.organization?.name!,
             )}/${r?.name}`,
           },
           organization: handleSplitOrganizationName(
-            pagesState?.organization?.organizationName!,
+            pagesState?.organization?.name!,
           ),
           region: r?.region,
           country:
             r.region === "eu-central-1"
               ? "Frankfurt (Germany)"
               : r?.region === "eu-west-2"
-              ? "London (UK)"
-              : r?.region === "us-east-1"
-              ? "N. Virginia (US)"
-              : r?.region === "us-east-2"
-              ? "Ohio (US)"
-              : r?.region === "us-west-1"
-              ? "N. California (US)"
-              : r?.region === "ap-northeast-1"
-              ? "Tokyo (Japan)"
-              : "",
+                ? "London (UK)"
+                : r?.region === "us-east-1"
+                  ? "N. Virginia (US)"
+                  : r?.region === "us-east-2"
+                    ? "Ohio (US)"
+                    : r?.region === "us-west-1"
+                      ? "N. California (US)"
+                      : r?.region === "ap-northeast-1"
+                        ? "Tokyo (Japan)"
+                        : "",
           state: "Ready",
           actions: r,
         };

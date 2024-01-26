@@ -26,10 +26,7 @@ export function NamespaceTableData() {
   } = useFunctions();
 
   useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
+    if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
       handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       handleGetRoboticsCloud();
@@ -41,16 +38,16 @@ export function NamespaceTableData() {
       applicationMode ? handleGetEnvironments() : handleGetRobots();
     }
 
-    const timer =
+    const timer = setInterval(() => {
       selectedState?.organization &&
       selectedState?.roboticsCloud &&
       selectedState?.instance &&
       selectedState?.fleet &&
-      setInterval(() => {
-        pagesState?.fleet && applicationMode
-          ? handleGetEnvironments()
-          : handleGetRobots();
-      }, 10000);
+      pagesState?.fleet &&
+      applicationMode
+        ? handleGetEnvironments()
+        : handleGetRobots();
+    }, 10000);
 
     return () => {
       clearInterval(timer);
@@ -83,7 +80,7 @@ export function NamespaceTableData() {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: url?.roboticsCloudName!,
       },
       {
@@ -97,7 +94,7 @@ export function NamespaceTableData() {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceName: url?.instanceName!,
         region: pagesState?.roboticsCloud?.region!,
@@ -114,7 +111,7 @@ export function NamespaceTableData() {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -131,7 +128,7 @@ export function NamespaceTableData() {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -148,7 +145,7 @@ export function NamespaceTableData() {
   function handleGetRobots() {
     getRobots(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -164,7 +161,7 @@ export function NamespaceTableData() {
   function handleGetEnvironments() {
     getEnvironments(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -184,7 +181,7 @@ export function NamespaceTableData() {
           key: robot?.name,
           name: robot,
           organization: handleSplitOrganizationName(
-            pagesState?.organization?.organizationName!,
+            pagesState?.organization?.name!,
           ),
           roboticsCloud: pagesState?.roboticsCloud?.name!,
           instance: pagesState?.instance?.name!,
@@ -197,7 +194,7 @@ export function NamespaceTableData() {
             isEnabledVDI: robot?.vdiEnabled,
           },
           actions: {
-            organizationId: pagesState.organization?.organizationId!,
+            organizationId: pagesState.organization?.id!,
             roboticsCloudName: pagesState.roboticsCloud?.name!,
             instanceId: pagesState.instance?.instanceId!,
             region: pagesState.instance?.region!,
@@ -225,7 +222,7 @@ export function NamespaceTableData() {
               title={rowData?.name?.name}
               subtitle={rowData?.name?.fleetName}
               titleURL={`/${handleSplitOrganizationName(
-                pagesState?.organization?.organizationName!,
+                pagesState?.organization?.name!,
               )}/${pagesState.roboticsCloud?.name}/${
                 pagesState.instance?.name
               }/${pagesState.fleet?.name}/${rowData?.name?.name}`}

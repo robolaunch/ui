@@ -25,7 +25,7 @@ export default function CFInstance(): ReactElement {
       formik.setSubmitting(true);
       dispatch(
         createCloudInstance({
-          organizationId: selectedState.organization!.organizationId!,
+          organizationId: selectedState.organization!.id!,
           roboticsCloudName: selectedState.roboticsCloud!.name!,
           cloudInstanceName: values.cloudInstanceName,
           instanceType: values.instanceType,
@@ -52,7 +52,7 @@ export default function CFInstance(): ReactElement {
       />
 
       <div className="flex flex-col gap-3">
-        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
           Types:
           <InfoTip
             content="
@@ -80,7 +80,7 @@ export default function CFInstance(): ReactElement {
                 />
                 <div className="text-xs uppercase">{type.name}</div>
               </div>
-              <div className="text-light-700 flex gap-2.5">
+              <div className="flex gap-2.5 text-light-700">
                 <div className="flex items-center gap-1">
                   <BsCpu className="text-light-600" size={14} />
                   <span className="text-xs">{type.resources.cpu} CPU</span>

@@ -6,7 +6,7 @@ import {
   IgetOrganizationAdminsRequest,
   IgetOrganizationGuestsRequest,
   IgetOrganizationUsersRequest,
-} from "../interfaces/organizationInterfaces";
+} from "../interfaces/organization.interface";
 
 export const createOrganization = createAsyncThunk(
   "organizations/createOrganization",
@@ -15,7 +15,7 @@ export const createOrganization = createAsyncThunk(
       name: values.name,
     });
     return response.data;
-  }
+  },
 );
 
 export const getOrganizations = createAsyncThunk(
@@ -23,7 +23,7 @@ export const getOrganizations = createAsyncThunk(
   async () => {
     const response = await organizationApi.getOrganizations();
     return response.data;
-  }
+  },
 );
 
 export const getOrganizationUsers = createAsyncThunk(
@@ -34,7 +34,7 @@ export const getOrganizationUsers = createAsyncThunk(
       organizationId: values.organizationId,
     });
     return response.data;
-  }
+  },
 );
 
 export const getOrganizationAdmins = createAsyncThunk(
@@ -45,7 +45,7 @@ export const getOrganizationAdmins = createAsyncThunk(
       organizationId: values.organizationId,
     });
     return response.data;
-  }
+  },
 );
 
 export const getOrganizationGuests = createAsyncThunk(
@@ -56,7 +56,7 @@ export const getOrganizationGuests = createAsyncThunk(
       organizationId: values.organizationId,
     });
     return response.data;
-  }
+  },
 );
 
 export const moveAdminAsUserFromOrganization = createAsyncThunk(
@@ -68,7 +68,7 @@ export const moveAdminAsUserFromOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
-  }
+  },
 );
 
 export const moveUserAsAdminToOrganization = createAsyncThunk(
@@ -80,7 +80,7 @@ export const moveUserAsAdminToOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteUserFromOrganization = createAsyncThunk(
@@ -92,7 +92,7 @@ export const deleteUserFromOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteAdminFromOrganization = createAsyncThunk(
@@ -104,7 +104,7 @@ export const deleteAdminFromOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteGuestFromOrganization = createAsyncThunk(
@@ -116,14 +116,14 @@ export const deleteGuestFromOrganization = createAsyncThunk(
       invitedUserId: values.invitedUserId,
     });
     return response.data;
-  }
+  },
 );
 
 export const deleteOrganization = createAsyncThunk(
   "organizations/deleteOrganization",
   async (values: { organizationId: string }) => {
     return undefined;
-  }
+  },
 );
 
 export const organizationSlice = createSlice({

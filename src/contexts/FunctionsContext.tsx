@@ -70,6 +70,7 @@ import {
   namespacesMapper,
 } from "../handler/namespace.handler";
 import { fleetMapper, fleetsMapper } from "../handler/fleet.handler";
+import { orgMapper, orgsMapper } from "../handler/organization.handler";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -87,25 +88,13 @@ export default ({ children }: any) => {
   const { robotData, setRobotData } = useCreateRobot();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
-    await dispatch(getAllOrganizations()).then((organizationsResponse: any) => {
-      if (organizationsResponse?.payload?.data) {
-        parameters?.setResponse &&
-          parameters?.setResponse(organizationsResponse?.payload?.data || []);
+    await dispatch(getAllOrganizations()).then((resOrgs: any) => {
+      const organizations = orgsMapper(resOrgs?.payload?.data);
 
+      if (organizations) {
+        parameters?.setResponse && parameters?.setResponse(organizations);
         parameters?.setItemCount &&
-          parameters?.setItemCount(
-            organizationsResponse?.payload?.data?.length || 0,
-          );
-
-        if (organizationsResponse?.payload?.data?.length === 1) {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(
-              organizationsResponse?.payload?.data[0],
-            );
-        } else {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(null);
-        }
+          parameters?.setItemCount(organizations?.length);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -118,52 +107,34 @@ export default ({ children }: any) => {
     values: IgetOrganization,
     parameters?: IsingleGetParameters,
   ) {
-    await dispatch(getAllOrganizations()).then(
-      async (organizationsResponse: any) => {
-        if (
-          organizationsResponse?.payload?.data &&
-          organizationsResponse?.payload?.data?.find(
-            (organization: any) =>
-              organization?.organizationName ===
-              `org_${values?.organizationName}`,
-          )
-        ) {
-          parameters?.isSetState &&
-            setSelectedState((prevState: any) => {
-              return {
-                ...prevState,
-                organization: organizationsResponse?.payload?.data?.find(
-                  (organization: any) =>
-                    organization?.organizationName ===
-                    `org_${values?.organizationName}`,
-                ),
-              };
-            });
-          parameters?.setResponse &&
-            (await parameters?.setResponse(
-              organizationsResponse?.payload?.data?.find(
-                (organization: any) =>
-                  organization?.organizationName ===
-                  `org_${values?.organizationName}`,
-              ),
-            ));
-          parameters?.setPages &&
-            setPagesState((prevState: any) => {
-              return {
-                ...prevState,
-                organization: organizationsResponse?.payload?.data?.find(
-                  (organization: any) =>
-                    organization?.organizationName ===
-                    `org_${values?.organizationName}`,
-                ),
-              };
-            });
-        } else {
-          parameters?.ifErrorNavigateTo404 && navigateTo404();
-          parameters?.setResponse && parameters?.setResponse({});
-        }
-      },
-    );
+    await dispatch(getAllOrganizations()).then(async (resOrg: any) => {
+      const organization = orgMapper(
+        resOrg?.payload?.data,
+        values?.organizationName,
+      );
+
+      if (organization) {
+        parameters?.isSetState &&
+          setSelectedState((prevState: any) => {
+            return {
+              ...prevState,
+              organization: organization,
+            };
+          });
+        parameters?.setResponse &&
+          (await parameters?.setResponse(organization));
+        parameters?.setPages &&
+          setPagesState((prevState: any) => {
+            return {
+              ...prevState,
+              organization: organization,
+            };
+          });
+      } else {
+        parameters?.ifErrorNavigateTo404 && navigateTo404();
+        parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
   }
 
   async function getRoboticsClouds(
@@ -680,10 +651,8 @@ export default ({ children }: any) => {
                 },
                 tree: {
                   organization: {
-                    id: selectedState?.organization?.organizationId,
-                    name: orgNameViewer(
-                      selectedState?.organization?.organizationName!,
-                    ),
+                    id: selectedState?.organization?.id,
+                    name: orgNameViewer(selectedState?.organization?.name!),
                   },
                   region: {
                     name: selectedState?.instance?.region,
@@ -1221,10 +1190,8 @@ export default ({ children }: any) => {
                 },
                 tree: {
                   organization: {
-                    id: selectedState?.organization?.organizationId,
-                    name: orgNameViewer(
-                      selectedState?.organization?.organizationName!,
-                    ),
+                    id: selectedState?.organization?.id,
+                    name: orgNameViewer(selectedState?.organization?.name!),
                   },
                   region: {
                     name: selectedState?.instance?.region,
@@ -1507,7 +1474,7 @@ export default ({ children }: any) => {
       try {
         await dispatch(
           addPhysicalInstanceToFleetDispatch({
-            organizationId: selectedState?.organization?.organizationId,
+            organizationId: selectedState?.organization?.id,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
             instanceId: selectedState?.instance?.instanceId,
             region: selectedState?.roboticsCloud?.region,
@@ -1528,7 +1495,7 @@ export default ({ children }: any) => {
       try {
         await dispatch(
           getSystemStatusDispatch({
-            organizationId: pagesState?.organization?.organizationId!,
+            organizationId: pagesState?.organization?.id!,
             instanceId: pagesState?.instance?.instanceId!,
             region: pagesState?.roboticsCloud?.region!,
             roboticsCloudName: pagesState?.roboticsCloud?.name!,
@@ -1558,7 +1525,7 @@ export default ({ children }: any) => {
       try {
         await dispatch(
           createRobotDispatch({
-            organizationId: selectedState?.organization?.organizationId!,
+            organizationId: selectedState?.organization?.id!,
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
@@ -1613,7 +1580,7 @@ export default ({ children }: any) => {
       try {
         await dispatch(
           createEnvironmentDispatch({
-            organizationId: selectedState?.organization?.organizationId!,
+            organizationId: selectedState?.organization?.id!,
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.instanceId!,
@@ -1705,7 +1672,7 @@ export default ({ children }: any) => {
   async function deleteDataScienceApp(values: IdeleteDataScienceAppsRequest) {
     await dispatch(
       deleteDataScienceAppDispatch({
-        organizationId: selectedState.organization?.organizationId!,
+        organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
         region: selectedState.instance?.region!,
         instanceId: selectedState.instance?.instanceId!,
@@ -1719,7 +1686,7 @@ export default ({ children }: any) => {
   async function createDataScienceApp(values: IcreateDataScienceAppsRequest) {
     await dispatch(
       createDataScienceAppDispatch({
-        organizationId: selectedState.organization?.organizationId!,
+        organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
         region: selectedState.instance?.region!,
         instanceId: selectedState.instance?.instanceId!,
@@ -1733,7 +1700,7 @@ export default ({ children }: any) => {
   async function getDataScienceApps(parameters?: ImultipleGetParameters) {
     await dispatch(
       getDataScienceAppsDispatch({
-        organizationId: selectedState.organization?.organizationId!,
+        organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
         region: selectedState.instance?.region!,
         instanceId: selectedState.instance?.instanceId!,

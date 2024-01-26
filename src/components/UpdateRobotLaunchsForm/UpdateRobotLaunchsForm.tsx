@@ -30,7 +30,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: selectedState?.organization!.organizationId,
+        organizationId: selectedState?.organization!.id,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,

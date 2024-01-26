@@ -25,10 +25,10 @@ export default function DeleteBuildManagerModal({
 
     dispatch(
       deleteBuildManager({
-        organizationId: selectedState?.organization!.organizationId,
+        organizationId: selectedState?.organization!.id,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
         instanceId: selectedState?.instance?.instanceId!,
-        fleetName: selectedState?.fleet?.name,
+        fleetName: selectedState?.fleet?.name!,
         robotName: url?.robotName as string,
         physicalInstanceName: robotData?.step1.tree.physicalInstance.name,
         region: selectedState?.roboticsCloud!.region,

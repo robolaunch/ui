@@ -59,7 +59,7 @@ export default function FleetsList({
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.name!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -101,7 +101,7 @@ export default function FleetsList({
                   name={fleet?.name}
                   description={<FleetsListItemDesc fleet={fleet} />}
                   url={`${
-                    selectedState?.organization?.organizationName?.split("_")[1]
+                    selectedState?.organization?.name?.split("_")[1]
                   }/${selectedState?.roboticsCloud?.name}/${
                     selectedState?.instance?.name
                   }/${fleet?.name}`}

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IOrganization } from "./organizationInterfaces";
+import { IOrganization } from "./organization.interface";
 import { IInstance } from "./instanceInferfaces";
 
 export interface IMainDashboardData {

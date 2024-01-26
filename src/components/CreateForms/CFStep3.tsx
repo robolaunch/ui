@@ -61,7 +61,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.roboticsCloud?.region!,

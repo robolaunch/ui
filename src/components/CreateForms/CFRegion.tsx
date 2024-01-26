@@ -27,7 +27,7 @@ export default function CFRegion(): ReactElement {
 
       dispatch(
         createRoboticsCloud({
-          organizationId: selectedState.organization!.organizationId,
+          organizationId: selectedState.organization!.id,
           roboticsCloudName: values.roboticsCloudName,
           provider: values.provider,
           region: values.region,
@@ -52,7 +52,7 @@ export default function CFRegion(): ReactElement {
         inputTouched={!!formik.errors.roboticsCloudName}
       />
       <div className="flex flex-col gap-3">
-        <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+        <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
           Providers:
           <InfoTip
             content="
@@ -88,7 +88,7 @@ export default function CFRegion(): ReactElement {
                     filter: provider.isDisabled ? `grayscale(1)` : `none`,
                   }}
                 />
-                <span className="text-light-700 text-[0.68rem]">
+                <span className="text-[0.68rem] text-light-700">
                   {provider.fullName}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function CFRegion(): ReactElement {
       </div>
       {formik?.values?.provider && (
         <div className="flex flex-col gap-3">
-          <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+          <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
             Regions:
             <InfoTip
               content="
@@ -126,10 +126,10 @@ export default function CFRegion(): ReactElement {
                   }}
                 >
                   <div className="flex flex-col items-center gap-2">
-                    <span className="text-light-800 text-xs">
+                    <span className="text-xs text-light-800">
                       {region?.name}
                     </span>
-                    <span className="text-light-700 text-xs">
+                    <span className="text-xs text-light-700">
                       ({region?.city})
                     </span>
                   </div>

@@ -89,10 +89,7 @@ export default ({ children }: any) => {
 
   // Main Functions
   useEffect(() => {
-    if (
-      pagesState?.organization?.organizationName !==
-      `org_${url?.organizationName}`
-    ) {
+    if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
       return handleGetOrganization();
     } else if (pagesState?.roboticsCloud?.name !== url?.roboticsCloudName) {
       return handleGetRoboticsCloud();
@@ -388,7 +385,7 @@ export default ({ children }: any) => {
   function handleGetRoboticsCloud() {
     getRoboticsCloud(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: url?.roboticsCloudName!,
       },
       {
@@ -402,7 +399,7 @@ export default ({ children }: any) => {
   function handleGetInstance() {
     getInstance(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceName: url?.instanceName!,
         region: pagesState?.roboticsCloud?.region!,
@@ -419,7 +416,7 @@ export default ({ children }: any) => {
   function handleGetPhysicalInstance() {
     getPhysicalInstance(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         physicalInstanceName: responseRobot?.physicalInstance,
@@ -435,7 +432,7 @@ export default ({ children }: any) => {
   function handleGetFleet() {
     getFleet(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -452,7 +449,7 @@ export default ({ children }: any) => {
   function handleGetNamespace() {
     getNamespace(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
@@ -469,11 +466,11 @@ export default ({ children }: any) => {
   function handleGetRobot() {
     getRobot(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
+        fleetName: pagesState?.fleet?.name!,
         robotName: url?.robotName!,
       },
       {
@@ -487,11 +484,11 @@ export default ({ children }: any) => {
   function handleGetEnvironment() {
     getEnvironment(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
+        fleetName: pagesState?.fleet?.name!,
         environmentName: url?.robotName!,
       },
       {
@@ -513,11 +510,11 @@ export default ({ children }: any) => {
   function handleGetLaunchManagers() {
     getLaunchManagers(
       {
-        organizationId: pagesState?.organization?.organizationId!,
+        organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
         instanceId: pagesState?.instance?.instanceId!,
         region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name,
+        fleetName: pagesState?.fleet?.name!,
         robotName: url?.robotName!,
       },
       {

@@ -1,6 +1,6 @@
 import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
-import { IOrganization } from "../../interfaces/organizationInterfaces";
+import { IOrganization } from "../../interfaces/organization.interface";
 import { IInstance } from "../../interfaces/instanceInferfaces";
 import { IRegion } from "../../interfaces/regionInterfaces";
 import { Fragment, ReactElement, useState } from "react";

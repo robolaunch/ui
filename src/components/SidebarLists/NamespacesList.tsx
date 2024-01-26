@@ -59,7 +59,7 @@ export default function NamespacesList({
   function handleGetNamespaces() {
     getNamespaces(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.instanceId!,
         region: selectedState?.instance?.region!,
@@ -122,7 +122,7 @@ export default function NamespacesList({
                     </div>
                   }
                   url={`${
-                    selectedState?.organization?.organizationName?.split("_")[1]
+                    selectedState?.organization?.name?.split("_")[1]
                   }/${selectedState?.roboticsCloud?.name}/${
                     selectedState?.instance?.name
                   }/${fleet?.name}`}

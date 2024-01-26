@@ -1,0 +1,26 @@
+import {
+  IOrganization,
+  IOrganizationBE,
+} from "../interfaces/organization.interface";
+
+function handleMapper(orgs: IOrganizationBE[]): IOrganization[] {
+  return (
+    orgs?.map((org) => {
+      return {
+        id: org.organizationId,
+        name: org.organizationName,
+      };
+    }) || []
+  );
+}
+
+export function orgsMapper(orgs: IOrganizationBE[]): IOrganization[] {
+  return handleMapper(orgs);
+}
+
+export function orgMapper(
+  orgs: IOrganizationBE[],
+  filter: string,
+): null | IOrganization {
+  return handleMapper(orgs).find((org) => org.name === `org_${filter}`) || null;
+}

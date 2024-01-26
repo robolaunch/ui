@@ -1,5 +1,5 @@
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
-import { IOrganization } from "../../interfaces/organizationInterfaces";
+import { IOrganization } from "../../interfaces/organization.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
@@ -53,18 +53,17 @@ export default function OrganizationsList({
                 key={index}
                 type="organization"
                 name={organizationNameViewer({
-                  organizationName: organization?.organizationName,
+                  organizationName: organization?.name,
                   capitalization: false,
                 })}
                 description={<StateCell state={"Ready"} />}
                 url={`/${organizationNameViewer({
-                  organizationName: organization?.organizationName,
+                  organizationName: organization?.name,
                   capitalization: false,
                 })}`}
                 data={organization}
                 selected={
-                  organization.organizationName ===
-                  selectedState?.organization?.organizationName
+                  organization.name === selectedState?.organization?.name
                 }
               />
             );

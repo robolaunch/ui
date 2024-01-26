@@ -47,7 +47,7 @@ export default function CloudInstancesList({
   function handleGetCloudInstances() {
     getInstances(
       {
-        organizationId: selectedState?.organization?.organizationId!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         region: selectedState?.roboticsCloud?.region!,
         details: true,
@@ -83,8 +83,7 @@ export default function CloudInstancesList({
                 name={instance?.name}
                 description={<CloudInstancesListItemDesc instance={instance} />}
                 url={`/${organizationNameViewer({
-                  organizationName:
-                    selectedState?.organization?.organizationName!,
+                  organizationName: selectedState?.organization?.name!,
                   capitalization: false,
                 })}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}

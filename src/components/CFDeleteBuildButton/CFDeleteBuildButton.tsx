@@ -17,13 +17,13 @@ export default function CFDeleteBuildButton({
 
   return (
     <Fragment>
-      {formik.values?.robotBuildSteps?.length > 1 && (
+      {formik.values?.steps?.length > 1 && (
         <CreateRobotFormDeleteButton
           onClick={() => {
             handleRemoveStepFromBuildStep(formik, buildStepIndex);
           }}
           text={`Delete ${
-            formik.values.robotBuildSteps[buildStepIndex]?.name || "this"
+            formik.values.steps?.[buildStepIndex]?.name || "this"
           } Build Step`}
           disabled={formik?.isSubmitting}
         />
