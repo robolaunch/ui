@@ -670,10 +670,7 @@ export default ({ children }: any) => {
                       gpu: {
                         coreTotal:
                           selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                            ?.map(
-                              (gpu: any) =>
-                                Number(gpu?.allocated) + Number(gpu?.capacity),
-                            )
+                            ?.map((gpu: any) => Number(gpu?.capacity))
                             .reduce((a: any, b: any) => a + b, 0),
                       },
                       memory: {
@@ -1208,10 +1205,7 @@ export default ({ children }: any) => {
                       gpu: {
                         coreTotal:
                           selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                            ?.map(
-                              (gpu: any) =>
-                                Number(gpu?.allocated) + Number(gpu?.capacity),
-                            )
+                            ?.map((gpu: any) => Number(gpu?.capacity))
                             .reduce((a: any, b: any) => a + b, 0),
                       },
                       memory: {

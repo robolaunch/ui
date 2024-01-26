@@ -19,7 +19,7 @@ export default function EnvironmentResource(): ReactElement {
         {[
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.cpu?.allocatedCore}/${robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal} Core CPU`,
+            text: `${robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal} Core CPU`,
           },
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
@@ -27,11 +27,11 @@ export default function EnvironmentResource(): ReactElement {
           },
           {
             icon: <FaMemory size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.memory?.allocatedCapacity}/${robotData.step1.tree.cloudInstance.resources.memory?.capacityTotal} GB Memory`,
+            text: `${robotData.step1.tree.cloudInstance.resources.memory?.capacityTotal} GB Memory`,
           },
           {
             icon: <MdOutlineStorage size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.storage?.allocatedCapacity}/${robotData.step1.tree.cloudInstance.resources.storage?.capacityTotal} GB Storage`,
+            text: `${robotData.step1.resources.storage?.allocatedCapacity} GB Storage`,
           },
         ].map((item, index) => {
           return (
