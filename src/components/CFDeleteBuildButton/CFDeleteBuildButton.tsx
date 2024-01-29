@@ -2,7 +2,7 @@ import { Fragment, ReactElement } from "react";
 import { FormikProps } from "formik/dist/types";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFDeleteBuildButton {
   formik: FormikProps<IEnvironmentStep3>;

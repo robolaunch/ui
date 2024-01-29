@@ -4,7 +4,7 @@ import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { FormikProps } from "formik";
 import { ReactElement } from "react";
 import HostDirectoriesSearchIframe from "../HostDirectoriesSearchIframe/HostDirectoriesSearchIframe";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFDirectories {
   formik: FormikProps<IEnvironmentStep1>;

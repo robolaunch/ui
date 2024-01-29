@@ -8,7 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import { IEnvironment } from "../interfaces/environment.interface";
+import { IEnvironment } from "../interfaces/environment/environment.interface";
 
 export function NamespaceTableData() {
   const { pagesState, selectedState, applicationMode } = useMain();

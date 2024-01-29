@@ -2,7 +2,7 @@ import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { Editor } from "@monaco-editor/react";
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFCode {
   formik: FormikProps<IEnvironmentStep3>;

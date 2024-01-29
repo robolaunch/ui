@@ -1,7 +1,4 @@
-import {
-  IMainDashboardColumn,
-  IMainDashboardData,
-} from "../interfaces/tableInterface";
+import { IMainDashboardData } from "../interfaces/tableInterface";
 import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IOrganization } from "../interfaces/organization.interface";
@@ -9,71 +6,53 @@ import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { organizationNameViewer } from "../functions/GeneralFunctions";
+import { IMainDashboardTableRow } from "../interfaces/table/table.dashboard.main.interface";
+import { orgSplitter } from "../functions/string.splitter.function";
 
 export function MainTableData() {
-  const [responseOrganizations, setResponseOrganizations] = useState<
-    IOrganization[] | undefined
-  >();
-  const [reload, setReload] = useState<boolean>(false);
+  const [orgs, setOrgs] = useState<IOrganization[] | null>();
   const { getOrganizations } = useFunctions();
   const url = useParams();
 
   function handleReload() {
-    setResponseOrganizations(undefined);
-    setReload(!reload);
+    setOrgs(null);
   }
 
   useEffect(() => {
-    getOrganizations({
-      setResponse: setResponseOrganizations,
-      ifErrorNavigateTo404: false,
-    });
+    !Array.isArray(orgs) &&
+      getOrganizations({
+        setResponse: setOrgs,
+        ifErrorNavigateTo404: false,
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reload, url]);
+  }, [url, orgs]);
 
   useEffect(() => {
-    setResponseOrganizations(undefined);
+    setOrgs(null);
   }, [url]);
 
-  const data: IMainDashboardData[] = useMemo(
+  const rows: IMainDashboardTableRow[] = useMemo(
     () =>
-      responseOrganizations?.map((organization: IOrganization) => {
+      orgs?.map((org) => {
         return {
-          key: organization?.name,
-          name: organization?.name,
+          name: orgSplitter(org.name),
           status: "Ready",
-          actions: organization,
+          actions: org.id,
         };
       }) || [],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseOrganizations, reload, url],
+    [orgs, url],
   );
 
-  const columns: IMainDashboardColumn[] = useMemo(
+  const columns: any = useMemo(
     () => [
       {
         key: "name",
         header: "Name",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: IMainDashboardData) => {
+        body: ({ name }: { name: string }) => {
           return (
-            <InfoCell
-              title={organizationNameViewer({
-                organizationName: rowData?.name,
-                capitalization: false,
-              })}
-              subtitle={`${organizationNameViewer({
-                organizationName: rowData?.name,
-                capitalization: false,
-              })}`}
-              titleURL={`/${organizationNameViewer({
-                organizationName: rowData?.name,
-                capitalization: false,
-              })}`}
-            />
+            <InfoCell title={name} subtitle={name} titleURL={`/${name}`} />
           );
         },
       },
@@ -81,8 +60,8 @@ export function MainTableData() {
         key: "status",
         header: "Status",
         align: "left",
-        body: (rowData) => {
-          return <StateCell state={rowData?.status} />;
+        body: ({ status }: { status: string }) => {
+          return <StateCell state={status} />;
         },
       },
       {
@@ -100,13 +79,13 @@ export function MainTableData() {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseOrganizations, reload, url],
+    [orgs, url],
   );
 
   return {
-    data,
+    rows,
     columns,
-    responseOrganizations,
+    orgs,
     handleReload,
   };
 }

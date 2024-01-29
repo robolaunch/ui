@@ -4,7 +4,7 @@ import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFPersistDirTags {
   formik: FormikProps<IEnvironmentStep1>;

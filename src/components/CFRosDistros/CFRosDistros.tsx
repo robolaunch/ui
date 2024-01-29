@@ -5,7 +5,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
 import { toast } from "sonner";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFRosDistros {
   formik: FormikProps<IEnvironmentStep1>;

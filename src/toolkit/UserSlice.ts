@@ -15,6 +15,7 @@ export const UserSlice = createSlice({
       },
     ) => {
       state.applicationMode = action.payload;
+      localStorage.setItem("mode", action.payload.toString());
     },
   },
 });

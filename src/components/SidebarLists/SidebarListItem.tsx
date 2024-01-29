@@ -157,7 +157,7 @@ export default function SidebarListItem({
         navigate(url);
         break;
       case "instance":
-        if (data?.instanceCloudState === "ConnectionHub_Ready") {
+        if (data?.rlState === "ConnectionHub_Ready") {
           setSelectedState({
             ...selectedState,
             instance: data,

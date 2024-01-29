@@ -3,7 +3,7 @@ import CFDellButton from "../CFDellButton/CFDellButton";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFPortInput {
   formik: FormikProps<IEnvironmentStep1>;

@@ -2,7 +2,7 @@ import React, { Fragment, ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import InputSelect from "../InputSelect/InputSelect";
 import { FormikProps } from "formik/dist/types";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFCodeType {
   formik: FormikProps<IEnvironmentStep3>;

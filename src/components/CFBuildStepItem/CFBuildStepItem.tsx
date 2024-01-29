@@ -9,7 +9,7 @@ import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFCode from "../CFCode/CFCode";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFBuildStepItem {
   formik: FormikProps<IEnvironmentStep3>;

@@ -21,10 +21,10 @@ export default function CreateRobotLayout(): ReactElement {
             );
           case "workspacesmanager":
             return <CreateRobotFormStep2 />;
-          // case "buildsmanager":
-          //   return <CreateRobotFormStep3 />;
-          // case "launchsmanager":
-          //   return <CreateRobotFormStep4 />;
+          case "buildsmanager":
+            return <CreateRobotFormStep3 />;
+          case "launchsmanager":
+            return <CreateRobotFormStep4 />;
         }
       })()}
     </Fragment>

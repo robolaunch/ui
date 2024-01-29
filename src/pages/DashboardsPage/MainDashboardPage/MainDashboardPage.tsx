@@ -7,8 +7,7 @@ import GeneralTable from "../../../components/Table/GeneralTable";
 import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 
 export default function MainDashboardPage(): ReactElement {
-  const { data, columns, responseOrganizations, handleReload } =
-    MainTableData();
+  const { rows, columns, orgs, handleReload } = MainTableData();
 
   return (
     <DashboardLayout
@@ -24,7 +23,7 @@ export default function MainDashboardPage(): ReactElement {
         <Fragment>
           <CountWidget
             data={
-              responseOrganizations
+              orgs
                 ? [
                     {
                       label: "Pending",
@@ -33,7 +32,7 @@ export default function MainDashboardPage(): ReactElement {
                     },
                     {
                       label: "Ready",
-                      value: responseOrganizations?.length || 0,
+                      value: orgs?.length || 0,
                       color: "#AC2DFE99",
                     },
                     {
@@ -51,9 +50,9 @@ export default function MainDashboardPage(): ReactElement {
         <GeneralTable
           type="organization"
           title="Organizations"
-          data={data}
+          data={rows}
           columns={columns}
-          loading={!Array.isArray(responseOrganizations)}
+          loading={!Array.isArray(orgs)}
           handleReload={handleReload}
         />
       }

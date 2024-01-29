@@ -3,7 +3,7 @@ import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import { IWorkspace } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFBuildWorkspace {
   formik: FormikProps<IEnvironmentStep3>;

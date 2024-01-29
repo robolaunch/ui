@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import CFInputToggle from "../CFInputToggle/CFInputToggle";
 import { FormikProps } from "formik";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFDevMode {
   formik: FormikProps<IEnvironmentStep1>;

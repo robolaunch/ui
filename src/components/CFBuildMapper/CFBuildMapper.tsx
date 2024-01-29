@@ -2,7 +2,7 @@ import CFBuildStepItem from "../CFBuildStepItem/CFBuildStepItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFBuildMapper {
   formik: FormikProps<IEnvironmentStep3>;

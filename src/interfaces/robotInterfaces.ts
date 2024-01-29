@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IEnvironment } from "./environment.interface";
+import { IEnvironment } from "./environment/environment.interface";
 
 export interface IcreateRobotRequest {
   organizationId: string;

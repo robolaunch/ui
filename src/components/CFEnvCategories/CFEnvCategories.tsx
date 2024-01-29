@@ -5,7 +5,7 @@ import { useAppDispatch } from "../../hooks/redux";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFEnvCategories {
   formik: FormikProps<IEnvironmentStep1>;

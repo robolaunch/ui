@@ -1,9 +1,11 @@
-import {
-  IEnvironment,
-  IEnvironmentBE,
-} from "../interfaces/environment.interface";
+import { IEnvironmentBE } from "../interfaces/environment/environment.interface";
+import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
 
-function handleMapper(data: IEnvironmentBE[]): IEnvironment[] {
+function handleMapper(data: IEnvironmentBE[]): {
+  step1: IEnvironmentStep1;
+  step2: IEnvironmentStep2;
+}[] {
   return (
     data?.map((env) => {
       return {
@@ -136,10 +138,16 @@ function handleMapper(data: IEnvironmentBE[]): IEnvironment[] {
   );
 }
 
-export function environmentsMapper(data: IEnvironmentBE[]): IEnvironment[] {
+export function environmentsMapper(data: IEnvironmentBE[]): {
+  step1: IEnvironmentStep1;
+  step2: IEnvironmentStep2;
+}[] {
   return handleMapper(data);
 }
 
-export function environmentMapper(data: IEnvironmentBE): null | IEnvironment {
+export function environmentMapper(data: IEnvironmentBE): null | {
+  step1: IEnvironmentStep1;
+  step2: IEnvironmentStep2;
+} {
   return handleMapper([data])?.[0] || null;
 }

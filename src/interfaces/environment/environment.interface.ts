@@ -1,8 +1,8 @@
-import { IEnvironmentStep1 } from "./envitonment.step1.interface";
-import { IEnvironmentStep2 } from "./envitonment.step2.interface";
-import { IEnvironmentStep3 } from "./envitonment.step3.interface";
-import { IEnvironmentStep4 } from "./envitonment.step4.interface";
-import { IWorkspace } from "./robotInterfaces";
+import { IEnvironmentStep1 } from "./environment.step1.interface";
+import { IEnvironmentStep2 } from "./environment.step2.interface";
+import { IEnvironmentStep3 } from "./environment.step3.interface";
+import { IEnvironmentStep4 } from "./environment.step4.interface";
+import { IWorkspace } from "../robotInterfaces";
 
 export interface IEnvironment {
   step1: IEnvironmentStep1;

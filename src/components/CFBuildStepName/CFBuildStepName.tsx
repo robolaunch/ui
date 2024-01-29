@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik/dist/types";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFBuildStepName {
   formik: FormikProps<IEnvironmentStep3>;

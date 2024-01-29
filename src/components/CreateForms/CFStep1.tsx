@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFStep1 {
   isImportRobot?: boolean;

@@ -8,7 +8,7 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IEnvironmentStep1>;

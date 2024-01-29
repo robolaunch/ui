@@ -5,7 +5,7 @@ import { FormikProps } from "formik";
 import FormInputText from "../FormInputText/FormInputText";
 import useFunctions from "../../hooks/useFunctions";
 import useMain from "../../hooks/useMain";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFDirectoriesInputGroup {
   formik: FormikProps<IEnvironmentStep1>;

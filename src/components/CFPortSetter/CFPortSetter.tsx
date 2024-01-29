@@ -7,7 +7,7 @@ import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
 import { FormikProps } from "formik";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFPortSetter {
   formik: FormikProps<IEnvironmentStep1>;

@@ -5,153 +5,18 @@ import {
 } from "../interfaces/robotInterfaces";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAppSelector } from "../hooks/redux";
 import useMain from "../hooks/useMain";
 import { FormikProps } from "formik";
-import { IEnvironment } from "../interfaces/environment.interface";
+import { IEnvironment } from "../interfaces/environment/environment.interface";
+import { environmentInitialConfig } from "../configs/environment.initial.config";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const url = useParams();
-  const { applicationMode } = useAppSelector((state) => state.user);
 
-  const initialRobotData: IEnvironment = {
-    step1: {
-      resources: {
-        cpu: {
-          allocatedCore: 0,
-        },
-        gpu: {
-          enabledForCloudInstance: true,
-          allocatedCore: 0,
-        },
-        memory: {
-          allocatedCapacity: 0,
-        },
-        storage: {
-          allocatedCapacity: 40,
-        },
-      },
-
-      services: {
-        ros: {
-          isEnabled: true,
-          socketEndpoint: "",
-          rosDistros: [],
-          podName: "",
-          log: "",
-        },
-        vdi: {
-          isEnabled: true,
-          socketEndpoint: "",
-          fileManagerEndpoint: "",
-          customPorts: [],
-          gpuAllocation: 0,
-          podName: "",
-          sessionCount: 2,
-          log: "",
-        },
-        ide: {
-          isEnabled: true,
-          httpsEndpoint: "",
-          fileManagerEndpoint: "",
-          customPorts: [],
-          gpuModelName: "",
-          gpuAllocation: 0,
-          maxGpuAllocation: 0,
-          podName: "",
-          log: "",
-        },
-        physicalIde: {
-          isEnabled: true,
-          httpsEndpoint: "",
-        },
-        jupyterNotebook: {
-          isEnabled: false,
-          httpsEndpoint: "",
-          fileManagerEndpoint: "",
-          customPorts: [],
-          gpuAllocation: 0,
-          podName: "",
-          log: "",
-        },
-      },
-      directories: {
-        permittedDirectories: "/home/robolaunch",
-        persistentDirectories: "/var:/etc:/opt:/usr",
-        hostDirectories: [],
-      },
-
-      applicationConfig: {
-        domainName: "",
-        application: {
-          name: "",
-          version: "",
-        },
-        devspace: {
-          ubuntuDistro: "",
-          desktop: "",
-          version: "",
-        },
-      },
-      details: {
-        name: "",
-        isVirtualRobot: true,
-        configureWorkspace: false,
-        isDevelopmentMode: applicationMode,
-        physicalInstanceName: "",
-      },
-
-      clusters: {
-        environment: [],
-      },
-    },
-    step2: {
-      configureWorkspace: false,
-      workspaces: [
-        {
-          name: "",
-          workspaceDistro: "",
-          robotRepositories: [
-            {
-              name: "",
-              url: "",
-              branch: "",
-            },
-          ],
-        },
-      ],
-    },
-    step3: {
-      name: "",
-      steps: [
-        {
-          name: "",
-          workspace: "",
-          isShellCode: true,
-          command: "",
-          script: "",
-          instanceScope: [],
-          log: "",
-          status: "",
-        },
-      ],
-    },
-    step4: {
-      robotLaunchSteps: [
-        {
-          name: "",
-          workspace: "",
-          entryPointType: "custom",
-          entryPointCmd: "",
-          instancesName: [],
-          robotLmEnvs: [],
-        },
-      ],
-    },
-  };
+  const initialRobotData: IEnvironment = environmentInitialConfig;
 
   const [robotData, setRobotData] = useState<IEnvironment>(initialRobotData);
 

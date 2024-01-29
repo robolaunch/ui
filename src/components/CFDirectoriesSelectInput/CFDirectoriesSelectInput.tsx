@@ -5,7 +5,7 @@ import InfoTip from "../InfoTip/InfoTip";
 import { FormikProps } from "formik";
 import Select from "react-select";
 import useMain from "../../hooks/useMain";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFDirectoriesSelectInput {
   formik: FormikProps<IEnvironmentStep1>;

@@ -5,7 +5,7 @@ import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFGpuTypes {
   formik: FormikProps<IEnvironmentStep1>;

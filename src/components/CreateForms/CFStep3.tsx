@@ -12,7 +12,7 @@ import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFStep3 {
   isImportRobot?: boolean;

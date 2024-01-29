@@ -1,7 +1,7 @@
 import FormInputRange from "../FormInputRange/FormInputRange";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement } from "react";
-import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFVDICount {
   formik: FormikProps<IEnvironmentStep1>;
