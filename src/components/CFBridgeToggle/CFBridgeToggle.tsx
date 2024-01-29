@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik";
 import CFInputToggle from "../CFInputToggle/CFInputToggle";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFBridgeToggle {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   isImportRobot?: boolean;
 }
 

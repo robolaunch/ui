@@ -29,8 +29,8 @@ export default function CFPhysical(): ReactElement {
         addPhysicalInstance({
           organizationId: selectedState?.organization?.id,
           roboticsCloudName: selectedState?.roboticsCloud?.name,
-          instanceId: selectedState?.instance?.instanceId,
-          region: selectedState?.instance?.region,
+          instanceId: selectedState?.instance?.id,
+          region: selectedState?.roboticsCloud?.region,
           robolaunchPhysicalInstancesName: values.name,
         }),
       ).then((response: any) => {

@@ -4,6 +4,7 @@ import {
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
 } from "./environmentInterfaces";
+import { ISystemStatus } from "./system.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -224,7 +225,7 @@ export interface IuseFunctions {
   deleteDataScienceApp: (values: IdeleteDataScienceAppsRequest) => void;
 
   addPhysicalInstanceToFleet: () => Promise<void>;
-  getSystemStatus: () => Promise<void>;
+  getSystemStatus: () => Promise<ISystemStatus>;
   createRobot: () => Promise<void>;
   createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => Promise<void>;

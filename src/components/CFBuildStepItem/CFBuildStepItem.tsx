@@ -1,6 +1,6 @@
 import CFBuildStepItemAccordionHeader from "../CFBuildStepItemAccordionHeader/CFBuildStepItemAccordionHeader";
 import CFDeleteBuildButton from "../CFDeleteBuildButton/CFDeleteBuildButton";
-import { IBuildStep, IBuildSteps } from "../../interfaces/robotInterfaces";
+import { IBuildStep } from "../../interfaces/robotInterfaces";
 import CFBuildWorkspace from "../CFBuildWorkspace/CFBuildWorkspace";
 import CFBuildStepName from "../CFBuildStepName/CFBuildStepName";
 import CFBuildScope from "../CFBuildScope/CFBuildScope";
@@ -9,9 +9,10 @@ import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFCode from "../CFCode/CFCode";
+import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
 
 interface ICFBuildStepItem {
-  formik: FormikProps<IBuildSteps>;
+  formik: FormikProps<IEnvironmentStep3>;
   buildStepIndex: number;
   buildStep: IBuildStep;
   isImportRobot?: boolean;

@@ -1,14 +1,15 @@
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { MdOutlineStorage } from "react-icons/md";
 import { Fragment, ReactElement } from "react";
 import { BsFillCpuFill } from "react-icons/bs";
 import Skeleton from "../Skeleton/Skeleton";
 import { FaMemory } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/redux";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentResource(): ReactElement {
-  const { robotData } = useCreateRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
+
+  const { selectedState } = useMain();
 
   return (
     <div data-tut="robot-resources" className="flex flex-col items-end pb-2">
@@ -19,24 +20,24 @@ export default function EnvironmentResource(): ReactElement {
         {[
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
-            text: `${robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal} Core CPU`,
+            text: `${selectedState?.instance?.resources?.hardware?.cpu?.totalCore} Core CPU`,
           },
           {
             icon: <BsFillCpuFill size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.gpu?.allocatedCore}/${robotData.step1.tree.cloudInstance.resources.gpu?.coreTotal} vGPU/MIG`,
+            text: `${""} vGPU/MIG`,
           },
           {
             icon: <FaMemory size={16} className="text-light-500" />,
-            text: `${robotData.step1.tree.cloudInstance.resources.memory?.capacityTotal} GB Memory`,
+            text: `${selectedState?.instance?.resources?.hardware?.memory?.totalGB} GB Memory`,
           },
           {
             icon: <MdOutlineStorage size={16} className="text-light-500" />,
-            text: `${robotData.step1.resources.storage?.allocatedCapacity} GB Storage`,
+            text: `${selectedState?.instance?.resources?.hardware?.storage?.totalGB} GB Storage`,
           },
         ].map((item, index) => {
           return (
             <Fragment key={index}>
-              {robotData.step1.tree.cloudInstance.resources.cpu?.coreTotal ? (
+              {selectedState?.instance?.resources?.hardware?.cpu?.totalCore ? (
                 <div
                   className="animate-fadeIn col-span-1 flex items-center gap-1.5"
                   key={index}

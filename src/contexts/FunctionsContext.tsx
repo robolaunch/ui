@@ -63,7 +63,6 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { createContext } from "react";
 import { toast } from "sonner";
-import { orgNameViewer } from "../functions/GeneralFunctions";
 import { INamespace } from "../interfaces/namespace.interface";
 import {
   namespaceMapper,
@@ -71,6 +70,17 @@ import {
 } from "../handler/namespace.handler";
 import { fleetMapper, fleetsMapper } from "../handler/fleet.handler";
 import { orgMapper, orgsMapper } from "../handler/organization.handler";
+import { regionMapper, regionsMapper } from "../handler/region.handler";
+import {
+  cloudInstanceMapper,
+  cloudInstancesMapper,
+} from "../handler/cloudInstance.handler";
+import {
+  environmentMapper,
+  environmentsMapper,
+} from "../handler/environment.handler";
+import { systemStatusMapper } from "../handler/system.handler";
+import { ISystemStatus } from "../interfaces/system.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -145,28 +155,15 @@ export default ({ children }: any) => {
       getRoboticsCloudDispatch({
         organizationId: values?.organizationId,
       }),
-    ).then((responseRoboticsClouds: any) => {
-      if (responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds || [],
-          );
+    ).then((resRegion: any) => {
+      const regions = regionsMapper(
+        resRegion?.payload?.data?.[0]?.roboticsClouds,
+      );
 
-        parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.length ||
-              0,
-          );
+      if (regions) {
+        parameters?.setResponse && parameters?.setResponse(regions);
 
-        if (responseRoboticsClouds?.payload?.data?.length === 1) {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(
-              responseRoboticsClouds?.payload?.data[0]?.roboticsClouds[0],
-            );
-        } else {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(null);
-        }
+        parameters?.setItemCount && parameters?.setItemCount(regions?.length);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -184,53 +181,28 @@ export default ({ children }: any) => {
         organizationId: values?.organizationId,
       }),
     ).then((responseRoboticsClouds: any) => {
-      if (responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds) {
+      const region = regionMapper(
+        responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds,
+        values?.roboticsCloudName,
+      );
+
+      if (region) {
         parameters?.isSetState &&
           setSelectedState((prevState: any) => {
             return {
               ...prevState,
-              roboticsCloud:
-                responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
-                  (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName,
-                ) || {},
+              roboticsCloud: region,
             };
           });
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
-              (roboticsCloud: any) =>
-                roboticsCloud?.name === values?.roboticsCloudName,
-            ) || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(region);
 
         parameters?.setPages &&
           setPagesState((prevState: any) => {
             return {
               ...prevState,
-              roboticsCloud:
-                responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
-                  (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName,
-                ) || {},
+              roboticsCloud: region,
             };
           });
-
-        if (
-          parameters?.setPages &&
-          pagesState?.roboticsCloud?.name !== values?.roboticsCloudName
-        ) {
-          setPagesState((prevState: any) => {
-            return {
-              ...prevState,
-              roboticsCloud:
-                responseRoboticsClouds?.payload?.data[0]?.roboticsClouds?.find(
-                  (roboticsCloud: any) =>
-                    roboticsCloud?.name === values?.roboticsCloudName,
-                ) || {},
-            };
-          });
-        }
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -250,9 +222,10 @@ export default ({ children }: any) => {
         details: values?.details,
       }),
     ).then((responseInstances: any) => {
-      const instances =
+      const instances = cloudInstancesMapper(
         responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances;
+          ?.cloudInstances,
+      );
 
       if (instances) {
         parameters?.setResponse && parameters?.setResponse(instances || []);
@@ -352,37 +325,27 @@ export default ({ children }: any) => {
         details: values?.details,
       }),
     ).then(async (responseInstances: any) => {
-      const instances =
+      const instance = cloudInstanceMapper(
         responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances;
+          ?.cloudInstances,
+        values?.instanceName,
+      );
 
-      if (instances) {
-        console.log("XXX", instances);
+      if (instance) {
         parameters?.isSetState &&
           (await setSelectedState((prevState: any) => {
             return {
               ...prevState,
-              instance:
-                instances?.find(
-                  (instance: any) => instance?.name === values?.instanceName,
-                ) || {},
+              instance: instance,
             };
           }));
-        parameters?.setResponse &&
-          (await parameters?.setResponse(
-            instances?.find(
-              (instance: any) => instance?.name === values?.instanceName,
-            ) || {},
-          ));
+        parameters?.setResponse && (await parameters?.setResponse(instance));
 
         parameters?.setPages &&
           (await setPagesState((prevState: any) => {
             return {
               ...prevState,
-              instance:
-                instances?.find(
-                  (instance: any) => instance?.name === values?.instanceName,
-                ) || {},
+              instance: instance,
             };
           }));
       } else {
@@ -507,7 +470,7 @@ export default ({ children }: any) => {
       }),
     ).then((resNS: any) => {
       const namespace = namespaceMapper(
-        resNS?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]
+        resNS?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.[0]
           ?.robolaunchNamespaces,
         values?.namespaceName,
       );
@@ -589,22 +552,17 @@ export default ({ children }: any) => {
         region: values?.region,
         fleetName: values?.fleetName,
       }),
-    ).then((responseRobots: any) => {
-      if (
-        responseRobots?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedRobots
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseRobots?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots || [],
-          );
+    ).then((resRobots: any) => {
+      const robots = environmentsMapper(
+        resRobots?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+          ?.robolaunchFederatedRobots,
+      );
+
+      if (robots) {
+        parameters?.setResponse && parameters?.setResponse(robots || []);
 
         parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseRobots?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots?.length || 0,
-          );
+          parameters?.setItemCount(robots?.length || 0);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -626,322 +584,23 @@ export default ({ children }: any) => {
         fleetName: values?.fleetName,
         robotName: values?.robotName,
       }),
-    ).then((responseRobot: any) => {
-      if (
-        responseRobot?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedRobots
-      ) {
+    ).then((resRobot: any) => {
+      const robot = environmentMapper(
+        resRobot?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
+          ?.robolaunchFederatedRobots?.[0],
+      );
+
+      if (robot) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {
               ...prevState,
-              step1: {
-                ...prevState.step1,
-
-                details: {
-                  name: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.name,
-                  isVirtualRobot: responseRobot?.payload?.data[0]
-                    ?.roboticsClouds[0]?.cloudInstances[0]
-                    ?.robolaunchFederatedRobots[0]?.physicalInstance
-                    ? false
-                    : true,
-                  isDevelopmentMode: false,
-                  configureWorkspace: false,
-                },
-                tree: {
-                  organization: {
-                    id: selectedState?.organization?.id,
-                    name: orgNameViewer(selectedState?.organization?.name!),
-                  },
-                  region: {
-                    name: selectedState?.instance?.region,
-                    code: selectedState?.instance?.region,
-                  },
-                  cloudInstance: {
-                    id: selectedState?.instance?.instanceId,
-                    name: selectedState?.instance?.name,
-                    resources: {
-                      cpu: {
-                        coreTotal:
-                          selectedState?.instance?.cloudInstanceResource
-                            ?.cpuTotal,
-                      },
-                      gpu: {
-                        coreTotal:
-                          selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                            ?.map((gpu: any) => Number(gpu?.capacity))
-                            .reduce((a: any, b: any) => a + b, 0),
-                      },
-                      memory: {
-                        capacityTotal:
-                          selectedState?.instance?.cloudInstanceResource
-                            ?.memoryTotal,
-                      },
-                      storage: {
-                        capacityTotal: 0,
-                      },
-                    },
-                  },
-                  physicalInstance: {
-                    name: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.physicalInstance,
-                  },
-                  namespace: {
-                    name: selectedState?.fleet?.name,
-                  },
-                },
-
-                resources: {
-                  cpu: {
-                    allocatedCore: 0,
-                  },
-                  gpu: {
-                    enabledForCloudInstance:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.vdiGpuResource > 0
-                        ? true
-                        : false,
-                    allocatedCore:
-                      Number(
-                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                          .ideGpuResource || 0,
-                      ) +
-                      Number(
-                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                          .notebookGpuResource || 0,
-                      ) +
-                      Number(
-                        responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                          .vdiGpuResource || 0,
-                      ),
-                  },
-                  memory: {
-                    allocatedCapacity: 0,
-                  },
-                  storage: {
-                    allocatedCapacity: Number(
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        .storageAmount || 0,
-                    ),
-                  },
-                },
-
-                services: {
-                  ros: {
-                    isEnabled:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.bridgeEnabled,
-                    rosDistros:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.distributions,
-                    socketEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.bridgeIngressEndpoint,
-                    podName:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.bridgePodName,
-                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.bridgeApplicationLog,
-                  },
-                  vdi: {
-                    isEnabled:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiEnabled,
-                    socketEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiFileBrowserIngressEndpoint,
-                    customPorts:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.vdiCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    gpuAllocation:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiGpuResource,
-                    podName:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiPodName,
-                    sessionCount:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.vdiSessionCount,
-                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                      ?.vdiApplicationLog,
-                  },
-                  ide: {
-                    isEnabled:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.ideEnabled,
-                    httpsEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.ideIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.ideFileBrowserIngressEndpoint,
-                    customPorts:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.ideCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    gpuAllocation:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.ideGpuResource,
-                    maxGpuAllocation: 0,
-                    gpuModelName:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.ideGpuModelName,
-                    podName:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                        ?.idePodName,
-                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots?.[0]
-                      ?.ideApplicationLog,
-                  },
-                  physicalIde: {
-                    isEnabled: responseRobot?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]
-                      ?.robolaunchFederatedRobots[0]?.physicalIdeIngressEndpoint
-                      ? true
-                      : false,
-                    httpsEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.physicalIdeIngressEndpoint,
-                  },
-                  jupyterNotebook: {
-                    isEnabled:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.notebookEnabled,
-                    httpsEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.notebookIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.notebookFileBrowserIngressEndpoint,
-                    gpuAllocation:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.notebookGpuResource,
-                    customPorts:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.notebookCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    podName:
-                      responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                        ?.notebookPodName,
-                    log: responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.notebookApplicationLog,
-                  },
-                },
-                directories: {
-                  permittedDirectories:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.permittedDirectories,
-                  persistentDirectories:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.persistentDirectories,
-                  hostDirectories:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0]?.hostDirectories
-                      ?.split(",")
-                      ?.map((item: string) => {
-                        return {
-                          hostDirectory: item?.split(":")[0],
-                          mountPath: item?.split(":")[1],
-                        };
-                      }),
-                },
-                applicationConfig: {
-                  domainName:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.domainName,
-                  application:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.application,
-                  devspace:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                      ?.devspace,
-                },
-
-                clusters: {
-                  environment:
-                    responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots[0].robotClusters?.map(
-                      (cluster: { name: string; robotStatus: string }) => {
-                        return {
-                          name: cluster.name,
-                          status: cluster.robotStatus,
-                        };
-                      },
-                    ),
-                },
-              },
-              step2: {
-                workspaces:
-                  responseRobot?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.robolaunchFederatedRobots[0]
-                    ?.robotWorkspaces,
-              },
+              step1: robot.step1,
+              step2: robot.step2,
             };
           });
 
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseRobot?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchFederatedRobots?.find(
-              (robot: any) => robot?.name === values?.robotName,
-            ) || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(robot);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -952,11 +611,11 @@ export default ({ children }: any) => {
   async function getBuildManager(parameters?: IsingleGetBuildParameters) {
     await dispatch(
       getBuildManagerDispatch({
-        organizationId: robotData.step1.tree.organization.id,
-        roboticsCloudName: robotData.step1.tree.region.name,
-        instanceId: robotData.step1.tree.cloudInstance.id,
-        region: robotData.step1.tree.region.code,
-        fleetName: robotData.step1.tree.namespace.name,
+        organizationId: selectedState?.organization?.id!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
+        fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       }),
     ).then((responseRobotBuildManager: any) => {
@@ -1126,22 +785,17 @@ export default ({ children }: any) => {
         instanceId: values?.instanceId,
         fleetName: values?.fleetName,
       }),
-    ).then((responseEnvironments: any) => {
-      if (
-        responseEnvironments?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.environments
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.environments || [],
-          );
+    ).then((resEnvironments: any) => {
+      const environments = environmentsMapper(
+        resEnvironments?.payload?.data?.[0]?.roboticsClouds?.[0]
+          ?.cloudInstances?.[0]?.environments,
+      );
+
+      if (environments) {
+        parameters?.setResponse && parameters?.setResponse(environments);
 
         parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responseEnvironments?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.environments?.length || 0,
-          );
+          parameters?.setItemCount(environments?.length);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse([]);
@@ -1164,298 +818,22 @@ export default ({ children }: any) => {
         environmentName: values?.environmentName,
       }),
     ).then((responseEnvironment: any) => {
-      if (
+      const environment = environmentMapper(
         responseEnvironment?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.environments
-      ) {
+          ?.cloudInstances?.[0]?.environments?.[0],
+      );
+
+      if (environment) {
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
             return {
               ...prevState,
-              step1: {
-                ...prevState.step1,
-                details: {
-                  name: responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.name,
-                  isVirtualRobot: responseEnvironment?.payload?.data[0]
-                    ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                    ?.physicalInstance
-                    ? false
-                    : true,
-                  isDevelopmentMode: false,
-                  configureWorkspace: false,
-                },
-                tree: {
-                  organization: {
-                    id: selectedState?.organization?.id,
-                    name: orgNameViewer(selectedState?.organization?.name!),
-                  },
-                  region: {
-                    name: selectedState?.instance?.region,
-                  },
-                  cloudInstance: {
-                    id: selectedState?.instance?.instanceId,
-                    name: selectedState?.instance?.name,
-                    resources: {
-                      cpu: {
-                        coreTotal:
-                          selectedState?.instance?.cloudInstanceResource
-                            ?.cpuTotal,
-                      },
-                      gpu: {
-                        coreTotal:
-                          selectedState?.instance?.cloudInstanceResource?.gpuUsage
-                            ?.map((gpu: any) => Number(gpu?.capacity))
-                            .reduce((a: any, b: any) => a + b, 0),
-                      },
-                      memory: {
-                        capacityTotal:
-                          selectedState?.instance?.cloudInstanceResource
-                            ?.memoryTotal,
-                      },
-                      storage: {
-                        capacityTotal: 0,
-                      },
-                    },
-                  },
-                  physicalInstance: {
-                    name: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                      ?.physicalInstance,
-                  },
-                  namespace: {
-                    name: selectedState?.fleet?.name,
-                  },
-                },
-                resources: {
-                  cpu: {
-                    allocatedCore: 0,
-                  },
-                  gpu: {
-                    enabledForCloudInstance:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.vdiGpuResource > 0
-                        ? true
-                        : false,
-                    allocatedCore:
-                      Number(
-                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.environments[0].ideGpuResource ||
-                          0,
-                      ) +
-                      Number(
-                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.environments[0]
-                          .notebookGpuResource || 0,
-                      ) +
-                      Number(
-                        responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                          ?.cloudInstances[0]?.environments[0].vdiGpuResource ||
-                          0,
-                      ),
-                  },
-                  memory: {
-                    allocatedCapacity: 0,
-                  },
-                  storage: {
-                    allocatedCapacity: Number(
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0].storageAmount || 0,
-                    ),
-                  },
-                },
-                services: {
-                  ros: {
-                    isEnabled:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.bridgeEnabled,
-                    rosDistros:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.distributions,
-                    socketEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]
-                        ?.bridgeIngressEndpoint,
-                    podName:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.bridgePodName,
-                    log: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                      ?.bridgeApplicationLog,
-                  },
-                  vdi: {
-                    isEnabled:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.vdiEnabled,
-                    socketEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]
-                        ?.vdiIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]
-                        ?.vdiFileBrowserIngressEndpoint,
-                    customPorts:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.vdiCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    gpuAllocation:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.vdiGpuResource,
-                    podName:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.vdiPodName,
-                    sessionCount:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.vdiSessionCount,
-                    log: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
-                      ?.vdiApplicationLog,
-                  },
-                  ide: {
-                    isEnabled:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.ideEnabled,
-                    httpsEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]
-                        ?.ideIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]
-                        ?.ideFileBrowserIngressEndpoint,
-                    customPorts:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.ideCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    gpuAllocation:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.ideGpuResource,
-                    maxGpuAllocation: 0,
-                    gpuModelName:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.ideGpuModelName,
-                    podName:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments?.[0]?.idePodName,
-                    log: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments?.[0]
-                      ?.ideApplicationLog,
-                  },
-                  physicalIde: {
-                    isEnabled: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                      ?.physicalIdeIngressEndpoint
-                      ? true
-                      : false,
-                    httpsEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]
-                        ?.physicalIdeIngressEndpoint,
-                  },
-                  jupyterNotebook: {
-                    isEnabled:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.notebookEnabled,
-                    httpsEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]
-                        ?.notebookIngressEndpoint,
-                    fileManagerEndpoint:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]
-                        ?.notebookFileBrowserIngressEndpoint,
-                    gpuAllocation:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]
-                        ?.notebookGpuResource,
-                    customPorts:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.notebookCustomPorts
-                        ?.split("/")
-                        ?.map((item: string) => {
-                          return {
-                            name: item?.split("-")[0],
-                            port: item?.split("-")[1].split(":")[1],
-                            backendPort: item?.split("-")[1].split(":")[0],
-                          };
-                        }) || [],
-                    podName:
-                      responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                        ?.cloudInstances[0]?.environments[0]?.notebookPodName,
-                    log: responseEnvironment?.payload?.data[0]
-                      ?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]
-                      ?.notebookApplicationLog,
-                  },
-                },
-                directories: {
-                  permittedDirectories:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]
-                      ?.permittedDirectories,
-                  persistentDirectories:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]
-                      ?.persistentDirectories,
-                  hostDirectories:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0]?.hostDirectories
-                      ?.split(",")
-                      ?.map((item: string) => {
-                        return {
-                          hostDirectory: item?.split(":")[0],
-                          mountPath: item?.split(":")[1],
-                        };
-                      }),
-                },
-                applicationConfig: {
-                  domainName:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.domainName,
-                  application:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.application,
-                  devspace:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                      ?.cloudInstances[0]?.environments[0]?.devspace,
-                },
-
-                clusters: {
-                  environment:
-                    responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments[0].robotClusters?.map(
-                      (cluster: { name: string; robotStatus: string }) => {
-                        return {
-                          name: cluster.name,
-                          status: cluster.robotStatus,
-                        };
-                      },
-                    ),
-                },
-              },
-              step2: {
-                workspaces:
-                  responseEnvironment?.payload?.data[0]?.roboticsClouds[0]
-                    ?.cloudInstances[0]?.environments[0]?.robotWorkspaces || [],
-              },
+              step1: environment.step1,
+              step2: environment.step2,
             };
           });
 
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseEnvironment?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.environments?.find(
-              (robot: any) => robot?.name === values?.environmentName,
-            ) || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(environment);
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
@@ -1470,11 +848,11 @@ export default ({ children }: any) => {
           addPhysicalInstanceToFleetDispatch({
             organizationId: selectedState?.organization?.id,
             roboticsCloudName: selectedState?.roboticsCloud?.name,
-            instanceId: selectedState?.instance?.instanceId,
+            instanceId: selectedState?.instance?.id,
             region: selectedState?.roboticsCloud?.region,
             robolaunchFederatedFleetsName: selectedState?.fleet?.name,
             robolaunchPhysicalInstancesName:
-              robotData.step1.tree.physicalInstance.name,
+              robotData.step1.details?.physicalInstanceName,
           }),
         );
         resolve();
@@ -1484,30 +862,24 @@ export default ({ children }: any) => {
     });
   }
 
-  function getSystemStatus() {
-    return new Promise<void>(async (resolve, reject) => {
+  function getSystemStatus(): Promise<ISystemStatus> {
+    return new Promise(async (resolve, reject) => {
       try {
-        await dispatch(
+        const resStatus: any = await dispatch(
           getSystemStatusDispatch({
             organizationId: pagesState?.organization?.id!,
-            instanceId: pagesState?.instance?.instanceId!,
+            instanceId: pagesState?.instance?.id!,
             region: pagesState?.roboticsCloud?.region!,
             roboticsCloudName: pagesState?.roboticsCloud?.name!,
           }),
-        ).then((res: any) => {
-          setPagesState((prevState: any) => {
-            return {
-              ...prevState,
-              instance: {
-                ...prevState.instance,
-                systemStatus:
-                  res?.payload?.data?.[0]?.roboticsClouds?.[0]
-                    ?.cloudInstances?.[0]?.robolaunchPods,
-              },
-            };
-          });
-        });
-        resolve();
+        );
+
+        const systemStatus = systemStatusMapper(
+          resStatus?.payload?.data?.[0]?.roboticsClouds?.[0]
+            ?.cloudInstances?.[0]?.robolaunchPods,
+        );
+
+        resolve(systemStatus);
       } catch (error) {
         reject(error);
       }
@@ -1522,12 +894,12 @@ export default ({ children }: any) => {
             organizationId: selectedState?.organization?.id!,
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId!,
+            instanceId: selectedState?.instance?.id!,
             fleetName: selectedState?.fleet?.name!,
             robotName: robotData?.step1?.details.name,
             physicalInstanceName: robotData?.step1?.details.isVirtualRobot
               ? undefined
-              : robotData?.step1?.tree.physicalInstance.name,
+              : robotData?.step1?.details?.physicalInstanceName!,
             distributions: robotData?.step1?.services.ros.rosDistros,
             bridgeEnabled: robotData?.step1?.services.ros.isEnabled,
             vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,
@@ -1577,7 +949,7 @@ export default ({ children }: any) => {
             organizationId: selectedState?.organization?.id!,
             region: selectedState?.roboticsCloud?.region!,
             roboticsCloudName: selectedState?.roboticsCloud?.name!,
-            instanceId: selectedState?.instance?.instanceId!,
+            instanceId: selectedState?.instance?.id!,
             fleetName: selectedState?.fleet?.name!,
             environmentName: robotData?.step1?.details.name,
             storageAmount:
@@ -1645,15 +1017,16 @@ export default ({ children }: any) => {
       try {
         await dispatch(
           createBuildManagerDispatch({
-            organizationId: robotData.step1.tree.organization.id,
-            roboticsCloudName: robotData.step1.tree.region.name,
-            instanceId: robotData.step1.tree.cloudInstance.id,
-            region: robotData.step1.tree.region.code,
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            region: selectedState?.roboticsCloud?.region!,
             robotName: robotData?.step1?.details?.name,
-            fleetName: robotData.step1.tree.namespace.name,
-            physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
-            buildManagerName: robotData.step3.name,
-            robotBuildSteps: robotData.step3.steps,
+            fleetName: selectedState?.fleet?.name!,
+            physicalInstanceName:
+              robotData?.step1?.details?.physicalInstanceName!,
+            buildManagerName: robotData.step3!.name,
+            robotBuildSteps: robotData.step3!.steps,
           }),
         );
         resolve();
@@ -1668,8 +1041,8 @@ export default ({ children }: any) => {
       deleteDataScienceAppDispatch({
         organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.instance?.region!,
-        instanceId: selectedState.instance?.instanceId!,
+        region: selectedState.roboticsCloud?.name!,
+        instanceId: selectedState.instance?.id!,
         fleetName: selectedState.fleet?.name!,
         applicationName: values.applicationName,
         applicationType: values.applicationName,
@@ -1682,8 +1055,8 @@ export default ({ children }: any) => {
       createDataScienceAppDispatch({
         organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.instance?.region!,
-        instanceId: selectedState.instance?.instanceId!,
+        region: selectedState.roboticsCloud?.name!,
+        instanceId: selectedState.instance?.id!,
         fleetName: selectedState.fleet?.name!,
         applicationName: values.applicationName,
         applicationType: values.applicationName,
@@ -1696,8 +1069,8 @@ export default ({ children }: any) => {
       getDataScienceAppsDispatch({
         organizationId: selectedState.organization?.id!,
         roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.instance?.region!,
-        instanceId: selectedState.instance?.instanceId!,
+        region: selectedState.roboticsCloud?.name!,
+        instanceId: selectedState.instance?.id!,
         fleetName: selectedState.fleet?.name!,
       }),
     ).then((responseApps: any) => {

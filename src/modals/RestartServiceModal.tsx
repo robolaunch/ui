@@ -5,6 +5,7 @@ import { useAppDispatch } from "../hooks/redux";
 import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
 import useRobot from "../hooks/useRobot";
+import useMain from "../hooks/useMain";
 interface IDeleteRobotModalModal {
   type: "ide" | "vdi" | "soft-vdi" | "jupyterNotebook";
   handleCloseModal: () => void;
@@ -20,6 +21,7 @@ export default function RestartServiceModal({
   const { robotData } = useCreateRobot();
 
   const dispatch = useAppDispatch();
+  const { selectedState } = useMain();
 
   async function handleRestartService() {
     await setIsLoading(true);
@@ -27,11 +29,11 @@ export default function RestartServiceModal({
     if (type === "soft-vdi") {
       await dispatch(
         vdiSoftReload({
-          organizationId: robotData.step1.tree.organization.id,
-          roboticsCloudName: robotData.step1.tree.region.name,
-          region: robotData.step1.tree.region.name,
-          fleetName: robotData.step1.tree.namespace.name,
-          instanceId: robotData.step1.tree.cloudInstance.id,
+          organizationId: selectedState?.organization?.id!,
+          roboticsCloudName: selectedState?.roboticsCloud?.name!,
+          region: selectedState?.roboticsCloud?.region!,
+          fleetName: selectedState?.fleet?.name!,
+          instanceId: selectedState?.instance?.id!,
           environmentName: robotData.step1.details.name,
           podName: robotData.step1.services.vdi.podName,
         }),
@@ -46,11 +48,11 @@ export default function RestartServiceModal({
 
     await dispatch(
       restartService({
-        organizationId: robotData.step1.tree.organization.id,
-        roboticsCloudName: robotData.step1.tree.region.name,
-        region: robotData.step1.tree.region.name,
-        fleetName: robotData.step1.tree.namespace.name,
-        instanceId: robotData.step1.tree.cloudInstance.id,
+        organizationId: selectedState?.organization?.id!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
+        fleetName: selectedState?.fleet?.name!,
+        instanceId: selectedState?.instance?.id!,
         environmentName: responseRobot.name,
         podName:
           type === "ide"

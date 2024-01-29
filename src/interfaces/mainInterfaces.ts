@@ -1,8 +1,8 @@
 import { IOrganization } from "./organization.interface";
-import { IInstance } from "./instanceInferfaces";
-import { IRegion } from "./regionInterfaces";
+import { IRegion } from "./region.interface";
 import { INamespace } from "./namespace.interface";
 import { IFleet } from "./fleet.interface";
+import { ICloudInstance } from "./cloudInstance.interface";
 
 export interface ISidebarState {
   isOpen: boolean;
@@ -23,14 +23,14 @@ export interface ISidebarState {
 export interface ISelectedState {
   organization: IOrganization | null;
   roboticsCloud: IRegion | null;
-  instance: IInstance | null;
+  instance: ICloudInstance | null;
   fleet: INamespace | IFleet | null;
 }
 
 export interface IpagesState {
   organization: IOrganization | null;
   roboticsCloud: IRegion | null;
-  instance: IInstance | null;
+  instance: ICloudInstance | null;
   fleet: INamespace | IFleet | null;
 }
 

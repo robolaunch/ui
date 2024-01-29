@@ -60,9 +60,10 @@ export default function CFStep4({
         createLaunchManager({
           organizationId: selectedState?.organization?.id!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId!,
-          region: selectedState?.instance?.region!,
-          physicalInstanceName: robotData?.step1?.tree.physicalInstance.name,
+          instanceId: selectedState?.instance?.id!,
+          region: selectedState?.roboticsCloud?.region!,
+          physicalInstanceName:
+            robotData?.step1?.details?.physicalInstanceName!,
           fleetName: selectedState?.fleet?.name!,
           robotName: robotData?.step1?.details.name,
           launchManagerName: values?.name,

@@ -126,8 +126,8 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       },
@@ -144,7 +144,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
+        instanceId: selectedState?.instance?.id!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         environmentName: url?.robotName as string,
@@ -162,8 +162,8 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
       },
       {
@@ -178,8 +178,8 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
         namespaceName: selectedState?.fleet?.name!,
       },
       {

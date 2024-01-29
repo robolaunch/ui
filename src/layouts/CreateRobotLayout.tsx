@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import CreateEnvironmentFormStep1 from "../components/CreateForms/CFAppStep1";
 import CreateRobotFormStep1 from "../components/CreateForms/CFStep1";
 import CreateRobotFormStep2 from "../components/CreateForms/CFStep2";
@@ -21,10 +21,10 @@ export default function CreateRobotLayout(): ReactElement {
             );
           case "workspacesmanager":
             return <CreateRobotFormStep2 />;
-          case "buildsmanager":
-            return <CreateRobotFormStep3 />;
-          case "launchsmanager":
-            return <CreateRobotFormStep4 />;
+          // case "buildsmanager":
+          //   return <CreateRobotFormStep3 />;
+          // case "launchsmanager":
+          //   return <CreateRobotFormStep4 />;
         }
       })()}
     </Fragment>

@@ -60,8 +60,8 @@ export default function PhysicalInstancesList({
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
       },
       {
         ifErrorNavigateTo404: false,

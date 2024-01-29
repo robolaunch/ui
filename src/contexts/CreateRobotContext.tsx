@@ -1,6 +1,5 @@
 import {
   IBuildSteps,
-  IRobotData,
   IWorkspace,
   IWorkspaceRepository,
 } from "../interfaces/robotInterfaces";
@@ -9,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import useMain from "../hooks/useMain";
 import { FormikProps } from "formik";
+import { IEnvironment } from "../interfaces/environment.interface";
 
 export const CreateRobotContext: any = createContext<any>(null);
 
@@ -17,43 +17,8 @@ export default ({ children }: any) => {
   const url = useParams();
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const initialRobotData: IRobotData = {
+  const initialRobotData: IEnvironment = {
     step1: {
-      tree: {
-        organization: {
-          id: "",
-          name: "",
-        },
-        region: {
-          name: "",
-          code: "",
-        },
-        cloudInstance: {
-          id: "",
-          name: "",
-          resources: {
-            cpu: {
-              coreTotal: 0,
-            },
-            gpu: {
-              coreTotal: 0,
-            },
-            memory: {
-              capacityTotal: 0,
-            },
-            storage: {
-              capacityTotal: 0,
-            },
-          },
-        },
-        physicalInstance: {
-          name: "",
-        },
-        namespace: {
-          name: "",
-        },
-      },
-
       resources: {
         cpu: {
           allocatedCore: 0,
@@ -136,12 +101,11 @@ export default ({ children }: any) => {
         isVirtualRobot: true,
         configureWorkspace: false,
         isDevelopmentMode: applicationMode,
+        physicalInstanceName: "",
       },
 
       clusters: {
         environment: [],
-        build: [],
-        launch: [],
       },
     },
     step2: {
@@ -189,7 +153,7 @@ export default ({ children }: any) => {
     },
   };
 
-  const [robotData, setRobotData] = useState<IRobotData>(initialRobotData);
+  const [robotData, setRobotData] = useState<IEnvironment>(initialRobotData);
 
   const { sidebarState } = useMain();
 

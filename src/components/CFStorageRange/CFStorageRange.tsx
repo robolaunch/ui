@@ -1,10 +1,10 @@
 import FormInputRange from "../FormInputRange/FormInputRange";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement } from "react";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFStorageRange {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

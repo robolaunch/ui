@@ -1,10 +1,10 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFRobotName {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   isImportRobot?: boolean;
 }
 

@@ -1,13 +1,13 @@
 import CFDirectoriesInputGroup from "../CFHostDirectoriesInputGroup/CFHostDirectoriesInputGroup";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { FormikProps } from "formik";
 import { ReactElement } from "react";
 import HostDirectoriesSearchIframe from "../HostDirectoriesSearchIframe/HostDirectoriesSearchIframe";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFDirectories {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

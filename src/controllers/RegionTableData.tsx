@@ -1,22 +1,19 @@
-import {
-  IInstanceDashboardData,
-  IInstanceDashboardUsages,
-} from "../interfaces/tableInterface";
+import { IInstanceDashboardUsages } from "../interfaces/tableInterface";
 import InstanceActionCells from "../components/TableActionCells/InstanceActionCells";
 import InstanceUsagesCell from "../components/InstanceUsagesCell/InstanceUsagesCell";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { IInstance } from "../interfaces/instanceInferfaces";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { ICloudInstance } from "../interfaces/cloudInstance.interface";
 
 export function RegionTableData() {
   const [responseInstances, setResponseInstances] = useState<
-    IInstance[] | undefined
+    ICloudInstance[] | undefined
   >(undefined);
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
   const { pagesState, selectedState } = useMain();
@@ -97,14 +94,14 @@ export function RegionTableData() {
     );
   }
 
-  const data: IInstanceDashboardData[] = useMemo(
+  const data = useMemo(
     () =>
-      responseInstances?.map((instance: IInstance) => {
+      responseInstances?.map((instance) => {
         return {
           key: instance?.name,
           name: {
             title: instance?.name,
-            subtitle: instance?.instanceType,
+            subtitle: instance?.providerModel,
             titleURL: `/${handleSplitOrganizationName(
               pagesState?.organization?.name!,
             )}/${pagesState.roboticsCloud?.name}/${instance?.name}`,
@@ -112,57 +109,50 @@ export function RegionTableData() {
           organization: handleSplitOrganizationName(
             pagesState?.organization?.name!,
           ),
-          architecture: instance?.cloudInstanceResource?.architecture,
-          OSResources:
-            instance?.cloudInstanceResource?.operatingSystemDistro &&
-            `${instance?.cloudInstanceResource?.operatingSystemDistro}
-          (${instance?.cloudInstanceResource?.operatingSystem})
+          architecture: instance?.resources?.software?.architecture,
+          os:
+            instance?.resources?.software?.osDistro &&
+            `${instance?.resources?.software?.osDistro}
+          (${instance?.resources?.software?.os})
           `,
-          kernel: instance?.cloudInstanceResource?.kernelVersion,
-          k8s: instance?.cloudInstanceResource?.kubernetesVersion,
-          providerState: instance?.instanceState,
-          robolaunchState: instance?.instanceCloudState,
+          kernel: instance?.resources?.software?.kernelVersion,
+          k8s: instance?.resources?.software?.kubernetesVersion,
+          providerState: instance?.providerState,
+          robolaunchState: instance?.rlState,
           usages: {
             cpu: {
-              title: `CPU (${instance?.cloudInstanceResource?.cpuTotal} Core)`,
-              core: instance?.cloudInstanceResource?.cpuTotal,
-              percentage: instance?.cloudInstanceResource?.cpuUsage,
+              title: `CPU (${instance?.resources?.hardware?.cpu?.totalCore} Core)`,
+              core: instance?.resources?.hardware?.cpu?.totalCore,
+              percentage: instance?.resources?.hardware?.cpu?.usagePercent,
             },
             gpu: {
-              title: `GPU (${instance?.cloudInstanceResource?.cpuTotal} Core)`,
-              core: instance?.cloudInstanceResource?.cpuTotal,
-              percentage: instance?.cloudInstanceResource?.gpuUsage,
+              title: `GPU (${instance?.resources?.hardware?.gpu?.hardware?.[0]?.memory?.totalGB} GB)`,
+              core: instance?.resources?.hardware?.gpu?.hardware?.[0]?.memory
+                ?.totalGB,
+              percentage:
+                instance?.resources?.hardware?.gpu?.hardware?.[0]?.memory
+                  ?.percent,
             },
             memory: {
-              title: `Memory (${instance?.cloudInstanceResource?.memoryTotal} GB)`,
-              size: instance?.cloudInstanceResource?.memoryTotal,
-              percentage: instance?.cloudInstanceResource?.memoryUsage,
+              title: `Memory (${instance?.resources?.hardware?.memory?.totalGB} GB)`,
+              size: instance?.resources?.hardware?.memory?.totalGB,
+              percentage: instance?.resources?.hardware?.memory?.usagePercent,
             },
             storage: {
-              title: `Storage (${instance?.cloudInstanceResource?.storageTotal} GB)`,
-              size: instance?.cloudInstanceResource?.storageTotal,
-              percentage: instance?.cloudInstanceResource?.storageUsage,
+              title: `Storage (${instance?.resources?.hardware?.storage?.totalGB} GB)`,
+              size: instance?.resources?.hardware?.storage?.totalGB,
+              percentage: instance?.resources?.hardware?.storage?.usagePercent,
             },
             network: {
-              title:
-                instance?.cloudInstanceResource?.networkUsage?.[0]
-                  ?.interfaceName,
+              title: instance?.resources?.hardware?.network?.[0]?.name,
               in: Number(
-                (
-                  Number(
-                    instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficIn?.split(
-                      "Kbps",
-                    )?.[0],
-                  ) / 1024
+                Number(
+                  instance?.resources?.hardware?.network?.[0]?.in / 1024,
                 )?.toFixed(3),
               ),
               out: Number(
-                (
-                  Number(
-                    instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficOut?.split(
-                      "Kbps",
-                    )?.[0],
-                  ) / 1024
+                Number(
+                  instance?.resources?.hardware?.network?.[0]?.out / 1024,
                 )?.toFixed(3),
               ),
             },
@@ -210,8 +200,8 @@ export function RegionTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: { organization: string }) => {
-          return <BasicCell text={rowData?.organization || "Pending..."} />;
+        body: ({ organization }: { organization: string }) => {
+          return <BasicCell text={organization || "Pending..."} />;
         },
       },
       {
@@ -220,19 +210,18 @@ export function RegionTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: { architecture: string }) => {
-          return <BasicCell text={rowData?.architecture || "Pending..."} />;
+        body: ({ architecture }: { architecture: string }) => {
+          return <BasicCell text={architecture || "Pending..."} />;
         },
       },
       {
-        key: "OSResources",
+        key: "os",
         header: "OS Resources",
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: { OSResources: string }) => {
-          console.log("x", rowData?.OSResources);
-          return <BasicCell text={rowData?.OSResources || "Pending..."} />;
+        body: ({ os }: { os: string }) => {
+          return <BasicCell text={os || "Pending..."} />;
         },
       },
       {
@@ -241,8 +230,8 @@ export function RegionTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: { kernel: string }) => {
-          return <BasicCell text={rowData?.kernel || "Pending..."} />;
+        body: ({ kernel }: { kernel: string }) => {
+          return <BasicCell text={kernel || "Pending..."} />;
         },
       },
       {
@@ -251,8 +240,8 @@ export function RegionTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: { k8s: string }) => {
-          return <BasicCell text={rowData?.k8s || "Pending..."} />;
+        body: ({ k8s }: { k8s: string }) => {
+          return <BasicCell text={k8s || "Pending..."} />;
         },
       },
       {

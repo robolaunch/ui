@@ -9,10 +9,11 @@ export default function WidgetMemoryCell(): ReactElement {
 
   useEffect(() => {
     setMemoryState({
-      memory: pagesState?.instance?.cloudInstanceResource?.memoryTotal,
-      percentage: pagesState?.instance?.cloudInstanceResource?.memoryUsage,
+      memory: pagesState?.instance?.resources?.hardware?.memory?.totalGB,
+      percentage:
+        pagesState?.instance?.resources?.hardware?.memory?.usagePercent,
     });
-  }, [pagesState?.instance?.cloudInstanceResource]);
+  }, [pagesState?.instance?.resources?.hardware?.memory]);
 
   return (
     <div className="flex items-center justify-center">

@@ -1,11 +1,11 @@
 import { Fragment, ReactElement } from "react";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
 
 interface ICFDeleteBuildButton {
-  formik: FormikProps<IBuildSteps>;
+  formik: FormikProps<IEnvironmentStep3>;
   buildStepIndex: number;
 }
 

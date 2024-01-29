@@ -1,8 +1,9 @@
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
 import StateCell from "../TableInformationCells/StateCell";
 import { ReactElement } from "react";
 
 interface ICloudInstancesListItemDesc {
-  instance: any;
+  instance: ICloudInstance;
 }
 
 export default function CloudInstancesListItemDesc({
@@ -12,15 +13,15 @@ export default function CloudInstancesListItemDesc({
     <div className="flex gap-2">
       <div className="flex gap-1.5">
         <span className="font-medium">RS:</span>
-        <StateCell state={instance?.instanceCloudState} isRobolaunchState />
+        <StateCell state={instance?.rlState} isRobolaunchState />
       </div>
       <div className="flex gap-1.5">
         <span className="font-medium">PS:</span>
-        <StateCell state={instance?.instanceState} />
+        <StateCell state={instance?.providerState} />
       </div>
       <div className="flex gap-1.5">
         <span className="font-medium">Type:</span>
-        <p>{instance?.instanceType}</p>
+        <p>{instance?.providerModel}</p>
       </div>
     </div>
   );

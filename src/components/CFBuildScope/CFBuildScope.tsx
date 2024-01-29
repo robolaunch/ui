@@ -26,7 +26,9 @@ export default function CFBuildScope({
       ]?.instanceScope?.includes(selectedState?.instance?.name!)}
       physicalInstanceChecked={formik.values.steps[
         buildStepIndex
-      ]?.instanceScope?.includes(robotData?.step1?.tree.physicalInstance.name)}
+      ]?.instanceScope?.includes(
+        robotData?.step1?.details?.physicalInstanceName,
+      )}
       virtualInstanceOnChange={(e) => {
         formik.setValues((prevValues) => ({
           ...prevValues,
@@ -55,11 +57,12 @@ export default function CFBuildScope({
                 instanceScope: e.target.checked
                   ? [
                       ...item.instanceScope,
-                      robotData?.step1?.tree.physicalInstance.name,
+                      robotData?.step1?.details?.physicalInstanceName,
                     ]
                   : item.instanceScope.filter(
                       (name) =>
-                        name !== robotData?.step1?.tree.physicalInstance.name,
+                        name !==
+                        robotData?.step1?.details?.physicalInstanceName,
                     ),
               };
             }

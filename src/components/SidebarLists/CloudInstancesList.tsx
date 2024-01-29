@@ -7,6 +7,7 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -17,9 +18,9 @@ export default function CloudInstancesList({
   reload,
   setItemCount,
 }: ICloudInstancesList): ReactElement {
-  const [responseInstances, setResponseInstances] = useState<any[] | undefined>(
-    undefined,
-  );
+  const [responseInstances, setResponseInstances] = useState<
+    ICloudInstance[] | undefined
+  >(undefined);
   const { selectedState, applicationMode } = useMain();
   const { getInstances } = useFunctions();
 

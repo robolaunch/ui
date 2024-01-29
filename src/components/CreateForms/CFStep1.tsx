@@ -5,7 +5,6 @@ import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CFRosDistros from "../CFRosDistros/CFRosDistros";
@@ -20,6 +19,7 @@ import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFStep1 {
   isImportRobot?: boolean;
@@ -48,7 +48,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
+        instanceId: selectedState?.instance?.id!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details?.name || url?.robotName!,
@@ -61,7 +61,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
     );
   }
 
-  const formik = useFormik<IDetails>({
+  const formik = useFormik<IEnvironmentStep1>({
     validationSchema: CFRobotStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {

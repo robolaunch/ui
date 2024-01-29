@@ -37,7 +37,7 @@ export default function NSDashboard(): ReactElement {
       widget2={
         <RegionsWidget
           title="Robotics Cloud"
-          responseData={[selectedState?.instance?.region!]}
+          responseData={[selectedState?.roboticsCloud?.region!]}
         />
       }
       widget3={

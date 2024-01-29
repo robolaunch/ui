@@ -1,15 +1,15 @@
 import DeleteNamespaceModal from "../../modals/DeleteNamespaceModal";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import { IOrganization } from "../../interfaces/organization.interface";
-import { IInstance } from "../../interfaces/instanceInferfaces";
-import { IRegion } from "../../interfaces/regionInterfaces";
+import { IRegion } from "../../interfaces/region.interface";
 import { Fragment, ReactElement, useState } from "react";
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
 
 interface INSActionCells {
   data: {
     organization: IOrganization;
     roboticsCloud: IRegion;
-    instance: IInstance;
+    instance: ICloudInstance;
     fleet: any;
   };
   reload: () => void;

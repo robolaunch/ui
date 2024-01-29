@@ -12,24 +12,19 @@ export default function WidgetUploadCell(): ReactElement {
     setUploadState({
       upload: Number(
         (
-          Number(
-            pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]?.trafficOut?.split(
-              "Kbps",
-            )?.[0],
-          ) / 1024
+          Number(pagesState.instance?.resources?.hardware?.network?.[0]?.out) /
+          1024
         )?.toFixed(2),
       ),
-      name: pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-        ?.interfaceName,
+      name: pagesState.instance?.resources?.hardware?.network?.[0]?.name,
     });
-  }, [pagesState?.instance?.cloudInstanceResource]);
+  }, [pagesState.instance?.resources?.hardware?.network]);
 
   return (
     <div className="flex items-center justify-center">
       <div className=" flex w-full flex-col items-center gap-1 ">
         <p className="text-xs font-medium">Network (Upload)</p>
-        {pagesState.instance?.cloudInstanceResource?.networkUsage?.[0]
-          ?.trafficOut ? (
+        {pagesState.instance?.resources?.hardware?.network?.[0]?.out ? (
           <div className="flex items-center">
             <TiArrowUp size={28} className="-mr-2 mb-5 text-primary-400" />
             <PercentageWidget

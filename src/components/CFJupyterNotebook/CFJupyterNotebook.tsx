@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CFInputToggle from "../CFInputToggle/CFInputToggle";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFJupyterNotebook {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

@@ -1,12 +1,12 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import FormInputText from "../FormInputText/FormInputText";
 import CFDellButton from "../CFDellButton/CFDellButton";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFPortInput {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   portIndex: number;
   disabled?: boolean;
   type: "ide" | "vdi" | "jupyterNotebook";

@@ -1,7 +1,7 @@
 import { Dialog } from "primereact/dialog";
 import { ReactElement, useState } from "react";
 import Button from "../components/Button/Button";
-import { IRegion } from "../interfaces/regionInterfaces";
+import { IRegion } from "../interfaces/region.interface";
 
 interface IDeleteRegionModal {
   data: IRegion;

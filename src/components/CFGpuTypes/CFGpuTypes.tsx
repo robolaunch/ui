@@ -1,5 +1,3 @@
-import { IGpuUsage } from "../../interfaces/instanceInferfaces";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import useFunctions from "../../hooks/useFunctions";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { ReactElement, useEffect } from "react";
@@ -7,9 +5,10 @@ import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFGpuTypes {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 
@@ -51,15 +50,17 @@ export default function CFGpuTypes({
       touched={true}
     >
       <div className="grid grid-cols-2 gap-2">
-        {selectedState.instance?.cloudInstanceResource?.gpuUsage?.length ? (
-          selectedState.instance?.cloudInstanceResource?.gpuUsage?.map(
-            (type: IGpuUsage, index: number) => {
+        {selectedState.instance?.resources?.hardware?.gpu?.platform?.length ? (
+          selectedState.instance?.resources?.hardware?.gpu?.platform?.map(
+            (
+              type: { name: string; allocated: number; capacity: number },
+              index: number,
+            ) => {
               return (
                 <CFGridItem
                   key={index}
                   selected={
-                    formik.values.services?.ide?.gpuModelName ===
-                    type.resourceName
+                    formik.values.services?.ide?.gpuModelName === type.name
                   }
                   text={
                     <div className="grid w-full grid-cols-4">
@@ -69,19 +70,17 @@ export default function CFGpuTypes({
                         alt="img"
                       />
                       <div className="col-span-3 flex flex-col justify-around">
-                        <p className="lowercase">{type.resourceName}</p>
+                        <p className="lowercase">{type.name}</p>
                         <p className="text-[0.66rem] font-light">
                           {Number(type.capacity) - Number(type.allocated)}/
                           {type.capacity} Available{" "}
-                          {type.resourceName.includes("mig")
-                            ? "MIG Instance"
-                            : "vGPU"}
+                          {type.name.includes("mig") ? "MIG Instance" : "vGPU"}
                         </p>
                       </div>
                     </div>
                   }
                   onClick={() => {
-                    if (!type.resourceName.includes("mig")) {
+                    if (!type.name.includes("mig")) {
                       if (
                         !!disabled ||
                         Number(type.capacity) - Number(type.allocated) <= 1
@@ -103,7 +102,7 @@ export default function CFGpuTypes({
 
                     formik.setFieldValue(
                       "services.ide.gpuModelName",
-                      type.resourceName,
+                      type.name,
                     );
 
                     formik.setFieldValue("services.ide.gpuAllocation", 0);
@@ -112,14 +111,14 @@ export default function CFGpuTypes({
                       "services.ide.maxGpuAllocation",
                       Number(type.capacity) -
                         Number(type.allocated) -
-                        (type.resourceName.includes("mig") ? 0 : 1),
+                        (type.name.includes("mig") ? 0 : 1),
                     );
                   }}
                   disabled={
                     !!disabled ||
-                    (!type.resourceName.includes("mig") &&
+                    (!type.name.includes("mig") &&
                       Number(type.capacity) - Number(type.allocated) <= 1) ||
-                    (type.resourceName.includes("mig") &&
+                    (type.name.includes("mig") &&
                       Number(type.capacity) - Number(type.allocated) <= 0)
                   }
                 />

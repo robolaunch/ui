@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "GENERATE_SOURCEMAP=false react-scripts start",
     "watch": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
+    "debug": "tsc --watch",
     "build": "GENERATE_SOURCEMAP=false react-scripts build"
   },
   "eslintConfig": {

@@ -1,7 +1,7 @@
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import DeleteRegionModal from "../../modals/DeleteRegionModal";
 import { envCreatableRegion } from "../../helpers/envProvider";
-import { IRegion } from "../../interfaces/regionInterfaces";
+import { IRegion } from "../../interfaces/region.interface";
 import { Fragment, ReactElement, useState } from "react";
 
 interface IRegionsActionCells {

@@ -2,20 +2,22 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import { Fragment, ReactElement } from "react";
 import Skeleton from "../Skeleton/Skeleton";
 import { useAppSelector } from "../../hooks/redux";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentObjectLabels(): ReactElement {
   const { robotData } = useCreateRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 
+  const { selectedState } = useMain();
+
   return (
     <Fragment>
       {[
-        `Organization: ${robotData.step1.tree.organization?.name}
+        `Organization: ${selectedState?.organization?.name}
         `,
-        `Region: ${robotData.step1.tree.region?.name}`,
-        `Instance: ${robotData.step1.tree.cloudInstance?.name}`,
-        `${applicationMode ? "Namespace" : "Fleet"}: ${robotData.step1.tree
-          .namespace?.name}`,
+        `Region: ${selectedState?.roboticsCloud?.name}`,
+        `Instance: ${selectedState?.instance?.name}`,
+        `${applicationMode ? "Namespace" : "Fleet"}: ${selectedState?.fleet?.name}`,
       ].map((item, index) => {
         return (
           <div className="flex items-center gap-1.5" key={index}>

@@ -1,14 +1,14 @@
 import { stringSlugify } from "../../functions/GeneralFunctions";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import InputError from "../InputError/InputError";
 import { MdVerified } from "react-icons/md";
 import InfoTip from "../InfoTip/InfoTip";
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
 import { toast } from "sonner";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFRosDistros {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   isImportRobot?: boolean;
 }
 

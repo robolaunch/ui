@@ -1,6 +1,5 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import { getPort as getFreePort } from "../../toolkit/PortSlice";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortInput from "../CFPortInput/CFPortInput";
 import { useAppDispatch } from "../../hooks/redux";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
@@ -8,9 +7,10 @@ import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
 import { FormikProps } from "formik";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFPortSetter {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   type: "ide" | "vdi" | "jupyterNotebook";
 }
 
@@ -27,7 +27,7 @@ export default function CFPortSetter({
       const result = await dispatch(
         getFreePort({
           organizationId: selectedState?.organization?.id!,
-          instanceId: selectedState?.instance?.instanceId!,
+          instanceId: selectedState?.instance?.id!,
           region: selectedState?.roboticsCloud?.region!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
         }),

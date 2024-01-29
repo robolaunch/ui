@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
+import { IOrganization } from "../../interfaces/organization.interface";
+import { IRegion } from "../../interfaces/region.interface";
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { IFleet } from "../../interfaces/fleet.interface";
+import { INamespace } from "../../interfaces/namespace.interface";
 
 interface ISidebarListItem {
   name: string;
   description: string | ReactElement | ReactElement[];
   type: Itype;
   url: string;
-  data?: any;
+  data?: IOrganization | IRegion | ICloudInstance | IFleet | INamespace | any;
   selected?: boolean;
   notSelectable?: boolean;
 }
@@ -77,8 +82,8 @@ export default function SidebarListItem({
         break;
       case "instance":
         if (
-          data?.instanceCloudState === "ConnectionHub_Ready" &&
-          data?.instanceState === "running"
+          data?.rlState === "ConnectionHub_Ready" &&
+          data?.providerState === "running"
         ) {
           if (selectedState?.instance?.name === data?.name) {
             setSelectedState({
@@ -123,7 +128,7 @@ export default function SidebarListItem({
             capitalization: false,
           })}/${selectedState?.roboticsCloud?.name}/${
             selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${data?.name}`,
+          }/${selectedState?.fleet?.name}/${url}`,
         );
     }
   };

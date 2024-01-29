@@ -1,11 +1,11 @@
 import CFCancelButton from "../CFCancelButton/CFCancelButton";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import Button from "../Button/Button";
 import { ReactElement } from "react";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFEnvButtons {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

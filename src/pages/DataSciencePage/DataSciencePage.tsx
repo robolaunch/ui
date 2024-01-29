@@ -11,7 +11,7 @@ export default function DataSciencePage(): ReactElement {
     if (
       selectedState.organization?.id &&
       selectedState.roboticsCloud?.name &&
-      selectedState.instance?.instanceId
+      selectedState.instance?.id
     ) {
       return true;
     }

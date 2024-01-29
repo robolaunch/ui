@@ -61,8 +61,8 @@ export default function NamespacesList({
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.name!,
       },
       {
         ifErrorNavigateTo404: false,

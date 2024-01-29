@@ -23,8 +23,8 @@ export default function CreateNamespaceForm(): ReactElement {
           namespaceName: values.name,
           organizationId: selectedState?.organization?.id!,
           roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.instanceId!,
-          region: selectedState?.instance?.region!,
+          instanceId: selectedState?.instance?.id!,
+          region: selectedState?.roboticsCloud?.region!,
         }),
       ).then(() => {
         formik.setSubmitting(false);

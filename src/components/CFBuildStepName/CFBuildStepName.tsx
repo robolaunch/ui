@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
 
 interface ICFBuildStepName {
-  formik: FormikProps<IBuildSteps>;
+  formik: FormikProps<IEnvironmentStep3>;
   buildStepIndex: number;
 }
 

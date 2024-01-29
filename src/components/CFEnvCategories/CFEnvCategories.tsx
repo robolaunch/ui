@@ -1,14 +1,14 @@
 import { getReadyEnvironments } from "../../toolkit/EnvironmentSlice";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { FaDocker, FaLinux, FaTag } from "react-icons/fa";
 import { useAppDispatch } from "../../hooks/redux";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFEnvCategories {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 
@@ -37,8 +37,8 @@ export default function CFEnvCategories({
         ubuntuDistro: undefined,
         version: undefined,
       };
-      formik.setFieldValue("application", initialApplication);
-      formik.setFieldValue("devspace", initialDevspace);
+      formik.setFieldValue("applicationConfig.application", initialApplication);
+      formik.setFieldValue("applicationConfig.devspace", initialDevspace);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

@@ -418,7 +418,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         physicalInstanceName: responseRobot?.physicalInstance,
         region: pagesState?.roboticsCloud?.region!,
       },
@@ -434,7 +434,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: url?.fleetName!,
       },
@@ -451,7 +451,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         namespaceName: url?.fleetName!,
       },
@@ -468,7 +468,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name!,
         robotName: url?.robotName!,
@@ -486,7 +486,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name!,
         environmentName: url?.robotName!,
@@ -512,7 +512,7 @@ export default ({ children }: any) => {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name!,
         robotName: url?.robotName!,

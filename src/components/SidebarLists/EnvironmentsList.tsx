@@ -5,6 +5,7 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { IEnvironment } from "../../interfaces/environment.interface";
 
 interface IEnvironmentsList {
   reload: boolean;
@@ -15,8 +16,9 @@ export default function EnvironmentsList({
   reload,
   setItemCount,
 }: IEnvironmentsList): ReactElement {
-  const [responseEnvironments, setResponseEnvironments] =
-    useState<any>(undefined);
+  const [responseEnvironments, setResponseEnvironments] = useState<
+    IEnvironment[] | undefined
+  >(undefined);
   const { selectedState } = useMain();
   const { getEnvironments } = useFunctions();
 
@@ -53,8 +55,8 @@ export default function EnvironmentsList({
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
       },
       {
@@ -88,44 +90,52 @@ export default function EnvironmentsList({
         <SidebarInfo text={`Create a Application.`} />
       ) : (
         <Fragment>
-          {responseEnvironments?.map((environment: any, index: number) => {
+          {responseEnvironments?.map((environment, index: number) => {
+            console.log("environment", environment);
+
             return (
               <SidebarListItem
                 key={index}
                 type="robot"
-                name={environment?.name}
+                name={environment?.step1?.details?.name}
                 description={
                   <div className="flex gap-2">
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
                       <StateCell
                         state={
-                          Array.isArray(environment?.robotClusters) &&
-                          environment?.robotClusters?.[0]?.robotStatus ===
-                            "EnvironmentReady"
+                          Array.isArray(
+                            environment?.step1?.clusters?.environment,
+                          ) &&
+                          environment?.step1?.clusters?.environment?.[0]
+                            ?.status === "EnvironmentReady"
                             ? "Ready"
-                            : environment?.robotClusters?.[0]?.robotStatus
+                            : environment?.step1?.clusters?.environment?.[0]
+                                ?.status
                         }
                       />
                     </div>
-                    {Array.isArray(environment?.robotClusters) &&
-                      environment?.robotClusters.length > 1 && (
+                    {Array.isArray(environment?.step1?.clusters?.environment) &&
+                      environment?.step1?.clusters?.environment.length > 1 && (
                         <div className="flex gap-1.5">
                           <span className="font-medium">Physical:</span>
                           <StateCell
                             state={
-                              Array.isArray(environment?.robotClusters) &&
-                              environment?.robotClusters[1]?.robotStatus ===
-                                "EnvironmentReady"
+                              Array.isArray(
+                                environment?.step1?.clusters?.environment,
+                              ) &&
+                              environment?.step1?.clusters?.environment?.[1]
+                                ?.status === "EnvironmentReady"
                                 ? "Ready"
-                                : environment?.robotClusters[1]?.robotStatus
+                                : environment?.step1?.clusters?.environment?.[1]
+                                    ?.status
                             }
                           />
                         </div>
                       )}
                   </div>
                 }
-                url={`/${environment?.robotName}`}
+                url={environment?.step1?.details?.name}
                 data={environment}
                 notSelectable
               />

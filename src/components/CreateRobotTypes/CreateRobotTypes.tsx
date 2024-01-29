@@ -1,5 +1,4 @@
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import InputError from "../InputError/InputError";
@@ -7,9 +6,10 @@ import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import { FormikProps } from "formik";
 import { toast } from "sonner";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICreateRobotTypes {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   isImportRobot?: boolean;
 }
 
@@ -51,8 +51,8 @@ export default function CreateRobotTypes({
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
       },
       { setResponse: setResponsePhysicalInstances },
     );
@@ -131,7 +131,7 @@ export default function CreateRobotTypes({
                   <div
                     key={index}
                     className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
-                      formik.values.tree.physicalInstance.name ===
+                      formik.values.details.physicalInstanceName ===
                       instance?.name
                         ? "border-primary-400 shadow"
                         : "border-light-100"
@@ -159,7 +159,7 @@ export default function CreateRobotTypes({
               )}
             </div>
             <InputError
-              error={formik.errors.tree?.physicalInstance?.name}
+              error={formik.errors.details?.physicalInstanceName}
               touched={true}
             />
           </div>

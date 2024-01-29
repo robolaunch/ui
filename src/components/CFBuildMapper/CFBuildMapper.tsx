@@ -1,11 +1,11 @@
 import CFBuildStepItem from "../CFBuildStepItem/CFBuildStepItem";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
+import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
 
 interface ICFBuildMapper {
-  formik: FormikProps<IBuildSteps>;
+  formik: FormikProps<IEnvironmentStep3>;
   responseBuildManager: any;
   isImportRobot?: boolean;
 }

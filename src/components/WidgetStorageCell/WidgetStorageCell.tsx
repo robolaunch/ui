@@ -9,17 +9,11 @@ export default function WidgetStorageCell(): ReactElement {
 
   useEffect(() => {
     setMemoryState({
-      storage: pagesState?.instance?.cloudInstanceResource?.storageTotal,
+      storage: pagesState?.instance?.resources?.hardware?.storage?.totalGB,
       percentage:
-        pagesState?.instance?.cloudInstanceResource?.storageUsage &&
-        pagesState?.instance?.cloudInstanceResource?.storageTotal &&
-        Math.floor(
-          (pagesState?.instance?.cloudInstanceResource?.storageUsage /
-            pagesState?.instance?.cloudInstanceResource?.storageTotal) *
-            100,
-        ),
+        pagesState?.instance?.resources?.hardware?.storage?.usagePercent,
     });
-  }, [pagesState?.instance?.cloudInstanceResource]);
+  }, [pagesState?.instance?.resources?.hardware?.storage]);
 
   return (
     <div className="flex items-center justify-center">

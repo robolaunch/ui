@@ -1,14 +1,14 @@
 import CFDirectoriesSelectInput from "../CFDirectoriesSelectInput/CFDirectoriesSelectInput";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFDellButton from "../CFDellButton/CFDellButton";
 import { ReactElement, useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import FormInputText from "../FormInputText/FormInputText";
 import useFunctions from "../../hooks/useFunctions";
 import useMain from "../../hooks/useMain";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFDirectoriesInputGroup {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
   index: number;
 }
@@ -31,7 +31,7 @@ export default function CFDirectoriesInputGroup({
 
   async function handleGetHealthFromFileManager() {
     const { items: response } = await getHealthFromFileManager({
-      instanceIP: `https://${selectedState?.instance?.hostname!}/host`,
+      instanceIP: `https://${selectedState?.instance?.endpoint!}/host`,
     });
 
     setIsFileManagerHealthly(response?.length > 0);

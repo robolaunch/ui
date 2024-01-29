@@ -9,10 +9,10 @@ export default function WidgetCPUCell(): ReactElement {
 
   useEffect(() => {
     setCpuState({
-      coreCount: pagesState?.instance?.cloudInstanceResource?.cpuTotal,
-      percentage: pagesState?.instance?.cloudInstanceResource?.cpuUsage,
+      coreCount: pagesState?.instance?.resources?.hardware?.cpu?.totalCore,
+      percentage: pagesState?.instance?.resources?.hardware?.cpu?.usagePercent,
     });
-  }, [pagesState?.instance?.cloudInstanceResource]);
+  }, [pagesState?.instance?.resources?.hardware?.cpu]);
 
   return (
     <div className="flex items-center justify-center">

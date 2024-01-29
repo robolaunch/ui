@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { IEnvironment } from "./environment.interface";
 
 export interface IcreateRobotRequest {
   organizationId: string;
@@ -151,40 +152,7 @@ export interface IDetails {
     configureWorkspace: boolean;
     isDevelopmentMode: boolean;
   };
-  tree: {
-    organization: {
-      id: string;
-      name: string;
-    };
-    region: {
-      name: string;
-      code: string;
-    };
-    cloudInstance: {
-      name: string;
-      id: string;
-      resources: {
-        cpu: {
-          coreTotal: number;
-        };
-        gpu: {
-          coreTotal: number;
-        };
-        memory: {
-          capacityTotal: number;
-        };
-        storage: {
-          capacityTotal: number;
-        };
-      };
-    };
-    physicalInstance: {
-      name: string;
-    };
-    namespace: {
-      name: string;
-    };
-  };
+
   resources: {
     cpu: {
       allocatedCore: number;
@@ -356,8 +324,8 @@ export type IrobotTab = {
 };
 
 export interface IuseCreateRobot {
-  robotData: IRobotData;
-  setRobotData: React.Dispatch<React.SetStateAction<IRobotData>>;
+  robotData: IEnvironment;
+  setRobotData: React.Dispatch<React.SetStateAction<IEnvironment>>;
   handleResetRobotForm: () => void;
   handleAddWorkspaceStep: (formik: any) => void;
   handleRemoveWorkspaceStep: (formik: any, workspaceIndex: number) => void;

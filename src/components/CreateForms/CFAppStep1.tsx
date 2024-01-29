@@ -6,7 +6,6 @@ import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import CFEnvButtons from "../CFEnvButtons/CFEnvButtons";
 import useFunctions from "../../hooks/useFunctions";
@@ -19,6 +18,7 @@ import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -35,7 +35,7 @@ export default function CFAppStep1({
   const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
 
-  const formik = useFormik<IDetails>({
+  const formik = useFormik<IEnvironmentStep1>({
     validationSchema: CFAppStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
@@ -77,7 +77,7 @@ export default function CFAppStep1({
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
+        instanceId: selectedState?.instance?.id!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         environmentName: url?.robotName!,

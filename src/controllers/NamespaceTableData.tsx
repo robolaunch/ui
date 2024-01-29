@@ -8,12 +8,15 @@ import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { IEnvironment } from "../interfaces/environment.interface";
 
 export function NamespaceTableData() {
   const { pagesState, selectedState, applicationMode } = useMain();
   const url = useParams();
   const [reload, setReload] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = useState<any>(undefined);
+  const [responseRobots, setResponseRobots] = useState<
+    IEnvironment[] | undefined
+  >(undefined);
 
   const {
     getOrganization,
@@ -113,7 +116,7 @@ export function NamespaceTableData() {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: url?.fleetName!,
       },
@@ -130,8 +133,8 @@ export function NamespaceTableData() {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.name!,
         namespaceName: url?.fleetName!,
       },
       {
@@ -147,7 +150,7 @@ export function NamespaceTableData() {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name!,
       },
@@ -163,7 +166,7 @@ export function NamespaceTableData() {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
         fleetName: pagesState?.fleet?.name!,
       },
@@ -196,8 +199,8 @@ export function NamespaceTableData() {
           actions: {
             organizationId: pagesState.organization?.id!,
             roboticsCloudName: pagesState.roboticsCloud?.name!,
-            instanceId: pagesState.instance?.instanceId!,
-            region: pagesState.instance?.region!,
+            instanceId: pagesState.instance?.id!,
+            region: pagesState.roboticsCloud?.name!,
             fleetName: pagesState.fleet?.name!,
             robotName: robot?.name,
             virtualState: robot?.robotClusters?.[0] || undefined,

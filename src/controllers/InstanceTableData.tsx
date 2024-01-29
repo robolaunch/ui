@@ -105,7 +105,7 @@ export function InstanceTableData() {
       {
         organizationId: pagesState?.organization?.id!,
         roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.instanceId!,
+        instanceId: pagesState?.instance?.id!,
         region: pagesState?.roboticsCloud?.region!,
       },
       {
@@ -120,8 +120,8 @@ export function InstanceTableData() {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.name!,
       },
       {
         ifErrorNavigateTo404: !responseFleets,

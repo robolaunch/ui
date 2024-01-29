@@ -1,7 +1,6 @@
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
-import { IDetails } from "../../interfaces/robotInterfaces";
 import CFPortSetter from "../CFPortSetter/CFPortSetter";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import Accordion from "../Accordion/AccordionV2";
@@ -9,9 +8,10 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFAdvancedSettings {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

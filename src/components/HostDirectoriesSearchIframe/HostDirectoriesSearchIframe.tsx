@@ -16,7 +16,7 @@ export default function HostDirectoriesSearchIframe(): ReactElement {
       {isOpened && (
         <IframeModal
           handleCloseModal={() => setIsOpened(false)}
-          url={`https://${selectedState?.instance?.hostname!}/host`}
+          url={`https://${selectedState?.instance?.endpoint!}/host`}
         />
       )}
     </Fragment>

@@ -1,4 +1,3 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { ReactElement, useEffect, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import InputError from "../InputError/InputError";
@@ -6,9 +5,10 @@ import InfoTip from "../InfoTip/InfoTip";
 import { FormikProps } from "formik";
 import Select from "react-select";
 import useMain from "../../hooks/useMain";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFDirectoriesSelectInput {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   index?: number;
   dataTut?: string;
   labelName?: string;
@@ -50,7 +50,7 @@ export default function CFDirectoriesSelectInput({
   async function handleGetSelectableItems(paths?: string[]) {
     setSelectableItems(null);
     const { items } = await getFilesFromFileManager({
-      instanceIP: `https://${selectedState?.instance?.hostname!}/host`,
+      instanceIP: `https://${selectedState?.instance?.endpoint!}/host`,
       paths: paths,
     });
 

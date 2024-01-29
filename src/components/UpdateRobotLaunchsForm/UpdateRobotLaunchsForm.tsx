@@ -1,7 +1,7 @@
 import LaunchFormAccordionHeader from "../LaunchFormAccordionHeader/LaunchFormAccordionHeader";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormStep4 from "../CreateForms/CFStep4";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -32,8 +32,8 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
       {
         organizationId: selectedState?.organization!.id,
         roboticsCloudName: selectedState?.roboticsCloud!.name,
-        instanceId: selectedState?.instance?.instanceId!,
-        region: selectedState?.instance?.region!,
+        instanceId: selectedState?.instance?.id!,
+        region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       },

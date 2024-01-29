@@ -1,13 +1,13 @@
-import { IDetails } from "../../interfaces/robotInterfaces";
 import { ReactElement, useEffect, useState } from "react";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
+import { IEnvironmentStep1 } from "../../interfaces/envitonment.step1.interface";
 
 interface ICFGrantDirTag {
-  formik: FormikProps<IDetails>;
+  formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
 }
 

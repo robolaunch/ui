@@ -1,7 +1,6 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
@@ -13,6 +12,7 @@ import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { IEnvironmentStep3 } from "../../interfaces/envitonment.step3.interface";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
@@ -63,7 +63,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
       {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.instanceId!,
+        instanceId: selectedState?.instance?.id!,
         region: selectedState?.roboticsCloud?.region!,
         fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1.details.name,
@@ -83,7 +83,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
     });
   }
 
-  const formik: FormikProps<IBuildSteps> = useFormik<IBuildSteps>({
+  const formik: FormikProps<IEnvironmentStep3> = useFormik<IEnvironmentStep3>({
     validationSchema: Yup.object().shape({
       name: Yup.string().required("Build Manager Name is required"),
       steps: Yup.array().of(
@@ -115,7 +115,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
         }),
       ),
     }),
-    initialValues: robotData?.step3,
+    initialValues: robotData?.step3!,
     onSubmit: async () => {
       formik.setSubmitting(true);
       await createBuildManager().then(() => {
@@ -258,7 +258,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
         })()}
         formik={formik}
       >
-        {isImportRobot && robotData?.step3?.steps?.length === 0 ? (
+        {isImportRobot && robotData?.step3?.steps?.length! === 0 ? (
           <div className="flex h-full w-full flex-col items-center gap-4">
             <SidebarInfo
               text="It seems that you have not configured any build steps for this

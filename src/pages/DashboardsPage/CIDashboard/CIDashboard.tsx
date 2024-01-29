@@ -39,40 +39,41 @@ export default function CIDashboard(): ReactElement {
       }
       widget2={<UsagesWidget />}
       widget3={
-        <SoftwareDetailsWidget
-          title={pagesState?.instance?.name || ""}
-          data={[
-            {
-              icon: <FaServer size={16} />,
-              title: "Architecture",
-              value: pagesState?.instance?.cloudInstanceResource?.architecture,
-            },
-            {
-              icon: <FaLinux size={16} />,
-              title: "Operating System",
-              value:
-                pagesState?.instance?.cloudInstanceResource?.operatingSystem,
-            },
-            {
-              icon: <FaUbuntu size={16} />,
-              title: "OS Distro",
-              value:
-                pagesState?.instance?.cloudInstanceResource
-                  ?.operatingSystemDistro,
-            },
-            {
-              icon: <RiCpuLine size={16} />,
-              title: "Kernel Version",
-              value: pagesState?.instance?.cloudInstanceResource?.kernelVersion,
-            },
-            {
-              icon: <SiKubernetes size={16} />,
-              title: "K8S Version",
-              value:
-                pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
-            },
-          ]}
-        />
+        // <SoftwareDetailsWidget
+        //   title={pagesState?.instance?.name || ""}
+        //   data={[
+        //     {
+        //       icon: <FaServer size={16} />,
+        //       title: "Architecture",
+        //       value: pagesState?.instance?.cloudInstanceResource?.architecture,
+        //     },
+        //     {
+        //       icon: <FaLinux size={16} />,
+        //       title: "Operating System",
+        //       value:
+        //         pagesState?.instance?.cloudInstanceResource?.operatingSystem,
+        //     },
+        //     {
+        //       icon: <FaUbuntu size={16} />,
+        //       title: "OS Distro",
+        //       value:
+        //         pagesState?.instance?.cloudInstanceResource
+        //           ?.operatingSystemDistro,
+        //     },
+        //     {
+        //       icon: <RiCpuLine size={16} />,
+        //       title: "Kernel Version",
+        //       value: pagesState?.instance?.cloudInstanceResource?.kernelVersion,
+        //     },
+        //     {
+        //       icon: <SiKubernetes size={16} />,
+        //       title: "K8S Version",
+        //       value:
+        //         pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
+        //     },
+        //   ]}
+        // />
+        <></>
       }
       table={
         <GeneralTable

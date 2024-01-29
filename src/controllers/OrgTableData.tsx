@@ -7,7 +7,7 @@ import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { IRegion } from "../interfaces/regionInterfaces";
+import { IRegion } from "../interfaces/region.interface";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
