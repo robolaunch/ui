@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 export default function OrgDashboard(): ReactElement {
   const url = useParams();
 
-  const { data, columns, responseRegions, handleReload } = OrgTableData();
+  const { rows, columns, regions, handleReload } = OrgTableData();
 
   return (
     <DashboardLayout
@@ -41,22 +41,20 @@ export default function OrgDashboard(): ReactElement {
       widget2={
         <RegionsWidget
           title="Provider"
-          responseData={responseRegions?.map((item: any) => item.region) || []}
+          responseData={regions?.map((item: any) => item.region) || []}
         />
       }
       widget3={
         <CountWidget
           data={
-            responseRegions
+            regions
               ? Array?.from(
-                  new Set(
-                    responseRegions?.map((item: any) => item?.region) || [],
-                  ),
+                  new Set(regions?.map((item: any) => item?.region) || []),
                 )?.map((item: any, index: number) => {
                   return {
                     label: item || "",
                     value:
-                      responseRegions?.filter((rc: any) => rc?.region === item)
+                      regions?.filter((rc: any) => rc?.region === item)
                         ?.length || 0,
                     color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
                   };
@@ -69,9 +67,9 @@ export default function OrgDashboard(): ReactElement {
         <GeneralTable
           type="roboticscloud"
           title="Regions"
-          data={data}
+          data={rows}
           columns={columns}
-          loading={!Array.isArray(responseRegions)}
+          loading={!Array.isArray(regions)}
           handleReload={handleReload}
         />
       }

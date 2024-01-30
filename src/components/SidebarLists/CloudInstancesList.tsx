@@ -1,6 +1,5 @@
 import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInstancesListItemDesc";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -8,6 +7,7 @@ import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { orgSplitter } from "../../functions/string.splitter.function";
 
 interface ICloudInstancesList {
   reload: boolean;
@@ -18,16 +18,14 @@ export default function CloudInstancesList({
   reload,
   setItemCount,
 }: ICloudInstancesList): ReactElement {
-  const [responseInstances, setResponseInstances] = useState<
-    ICloudInstance[] | undefined
-  >(undefined);
+  const [instances, setInstances] = useState<ICloudInstance[] | null>(null);
   const { selectedState, applicationMode } = useMain();
   const { getInstances } = useFunctions();
 
   useEffect(
     () => {
       if (selectedState?.organization && selectedState?.roboticsCloud) {
-        setResponseInstances(undefined);
+        setInstances(null);
         handleGetCloudInstances();
       }
 
@@ -54,7 +52,7 @@ export default function CloudInstancesList({
         details: true,
       },
       {
-        setResponse: setResponseInstances,
+        setResponse: setInstances,
         ifErrorNavigateTo404: false,
         setItemCount: setItemCount,
       },
@@ -70,23 +68,20 @@ export default function CloudInstancesList({
             !selectedState?.organization ? "Organization" : "Robotics Cloud"
           } to view instances.`}
         />
-      ) : !Array.isArray(responseInstances) ? (
+      ) : !Array.isArray(instances) ? (
         <SidebarListLoader />
-      ) : responseInstances.length === 0 ? (
+      ) : instances.length === 0 ? (
         <SidebarInfo text={`Create an Cloud Instances.`} />
       ) : (
         <Fragment>
-          {responseInstances?.map((instance: any, index: number) => {
+          {instances?.map((instance, index: number) => {
             return (
               <SidebarListItem
                 key={index}
                 type="instance"
                 name={instance?.name}
                 description={<CloudInstancesListItemDesc instance={instance} />}
-                url={`/${organizationNameViewer({
-                  organizationName: selectedState?.organization?.name!,
-                  capitalization: false,
-                })}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
+                url={`/${orgSplitter(selectedState?.organization?.name!)}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}
                 selected={instance?.name === selectedState?.instance?.name}
               />

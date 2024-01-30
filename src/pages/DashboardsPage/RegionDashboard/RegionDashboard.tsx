@@ -11,7 +11,7 @@ import { ReactElement } from "react";
 
 export default function RegionDashboard(): ReactElement {
   const url = useParams();
-  const { data, columns, responseInstances, handleReload } = RegionTableData();
+  const { rows, columns, instances, handleReload } = RegionTableData();
 
   return (
     <DashboardLayout
@@ -35,20 +35,18 @@ export default function RegionDashboard(): ReactElement {
       widget2={
         <RegionsWidget
           title="Cloud Instance"
-          responseData={
-            responseInstances?.map((item: any) => item.region) || []
-          }
+          responseData={instances?.map((item: any) => item.region) || []}
         />
       }
       widget3={
         <CountWidget
           data={
-            responseInstances
+            instances
               ? [
                   {
                     label: "Preparing",
                     value:
-                      responseInstances?.filter(
+                      instances?.filter(
                         (item: any) =>
                           item?.instanceCloudState !== "ConnectionHub_Ready",
                       ).length || 0,
@@ -57,7 +55,7 @@ export default function RegionDashboard(): ReactElement {
                   {
                     label: "Ready",
                     value:
-                      responseInstances?.filter(
+                      instances?.filter(
                         (item: any) =>
                           item?.instanceCloudState === "ConnectionHub_Ready",
                       ).length || 0,
@@ -66,7 +64,7 @@ export default function RegionDashboard(): ReactElement {
                   {
                     label: "Error",
                     value:
-                      responseInstances?.filter(
+                      instances?.filter(
                         (item: any) =>
                           item?.instanceCloudState === "ConnectionHub_Error",
                       ).length || 0,
@@ -81,9 +79,9 @@ export default function RegionDashboard(): ReactElement {
         <GeneralTable
           type="instance"
           title="Cloud Instances"
-          data={data}
+          data={rows}
           columns={columns}
-          loading={!Array.isArray(responseInstances)}
+          loading={!Array.isArray(instances)}
           handleReload={handleReload}
         />
       }

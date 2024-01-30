@@ -103,14 +103,13 @@ function handleMapper(data: IEnvironmentBE[]): {
           directories: {
             permittedDirectories: env?.permittedDirectories,
             persistentDirectories: env?.persistentDirectories,
-            hostDirectories: env?.hostDirectories
-              ?.split(",")
-              ?.map((item: string) => {
+            hostDirectories:
+              env?.hostDirectories?.split(",")?.map((item: string) => {
                 return {
                   hostDirectory: item?.split(":")[0],
                   mountPath: item?.split(":")[1],
                 };
-              }),
+              }) || [],
           },
           applicationConfig: {
             domainName: env?.domainName,

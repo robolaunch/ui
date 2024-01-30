@@ -1,6 +1,21 @@
 import { envApplicationMode } from "../helpers/envProvider";
 import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
 
+export function AppMode(): boolean {
+  let userPersist = JSON.parse(
+    localStorage.getItem("persist:user") || "{}",
+  )?.applicationMode;
+
+  userPersist =
+    userPersist === "true" ? true : userPersist === "false" ? false : null;
+
+  if (userPersist === null) {
+    return envApplicationMode;
+  } else {
+    return userPersist;
+  }
+}
+
 export const environmentInitialStep1Config: IEnvironmentStep1 = {
   resources: {
     cpu: {
@@ -83,7 +98,7 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     name: "",
     isVirtualRobot: true,
     configureWorkspace: false,
-    isDevelopmentMode: envApplicationMode,
+    isDevelopmentMode: AppMode(),
     physicalInstanceName: "",
   },
 

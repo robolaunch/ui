@@ -18,7 +18,7 @@ export default function CFGrantDirTag({
   const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
-    robotData.step1.directories.permittedDirectories.split(":") || [
+    robotData.step1.directories.permittedDirectories?.split(":") || [
       "/home/robolaunch",
     ],
   );

@@ -1,27 +1,26 @@
-import { IInstanceDashboardUsages } from "../interfaces/tableInterface";
-import InstanceActionCells from "../components/TableActionCells/InstanceActionCells";
+import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 import InstanceUsagesCell from "../components/InstanceUsagesCell/InstanceUsagesCell";
-import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
+import CIActionCells from "../components/TableActionCells/CIActionCells";
+import { IInstanceDashboardUsages } from "../interfaces/tableInterface";
+import { ICloudInstance } from "../interfaces/cloudInstance.interface";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { useEffect, useMemo, useState } from "react";
+import { orgSplitter } from "../functions/string.splitter.function";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import { ICloudInstance } from "../interfaces/cloudInstance.interface";
 
 export function RegionTableData() {
-  const [responseInstances, setResponseInstances] = useState<
-    ICloudInstance[] | undefined
-  >(undefined);
+  const [instances, setInstances] = useState<ICloudInstance[] | null>(null);
   const { getOrganization, getRoboticsCloud, getInstances } = useFunctions();
   const { pagesState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
   function handleReload() {
-    setResponseInstances(undefined);
+    setInstances(null);
     setReload(!reload);
   }
 
@@ -49,7 +48,7 @@ export function RegionTableData() {
   }, [pagesState, url, reload]);
 
   useEffect(() => {
-    setResponseInstances(undefined);
+    setInstances(null);
   }, [url]);
 
   function handleGetOrganization() {
@@ -59,7 +58,7 @@ export function RegionTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseInstances,
+        ifErrorNavigateTo404: !instances,
         setPages: true,
       },
     );
@@ -73,7 +72,7 @@ export function RegionTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseInstances,
+        ifErrorNavigateTo404: !instances,
         setPages: true,
       },
     );
@@ -83,32 +82,27 @@ export function RegionTableData() {
     getInstances(
       {
         organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: url?.roboticsCloudName!,
+        roboticsCloudName: pagesState?.roboticsCloud?.name!,
         region: pagesState?.roboticsCloud?.region!,
         details: true,
       },
       {
-        setResponse: setResponseInstances,
-        ifErrorNavigateTo404: !responseInstances,
+        setResponse: setInstances,
+        ifErrorNavigateTo404: !instances,
       },
     );
   }
 
-  const data = useMemo(
+  const rows = useMemo(
     () =>
-      responseInstances?.map((instance) => {
+      instances?.map((instance) => {
         return {
-          key: instance?.name,
           name: {
-            title: instance?.name,
-            subtitle: instance?.providerModel,
-            titleURL: `/${handleSplitOrganizationName(
-              pagesState?.organization?.name!,
-            )}/${pagesState.roboticsCloud?.name}/${instance?.name}`,
+            instance: instance?.name,
+            model: instance?.providerModel,
+            url: `/${orgSplitter(pagesState?.organization?.name!)}/${pagesState?.roboticsCloud?.name}/${instance?.name}`,
           },
-          organization: handleSplitOrganizationName(
-            pagesState?.organization?.name!,
-          ),
+          organization: orgSplitter(pagesState?.organization?.name!),
           architecture: instance?.resources?.software?.architecture,
           os:
             instance?.resources?.software?.osDistro &&
@@ -118,7 +112,7 @@ export function RegionTableData() {
           kernel: instance?.resources?.software?.kernelVersion,
           k8s: instance?.resources?.software?.kubernetesVersion,
           providerState: instance?.providerState,
-          robolaunchState: instance?.rlState,
+          rlState: instance?.rlState,
           usages: {
             cpu: {
               title: `CPU (${instance?.resources?.hardware?.cpu?.totalCore} Core)`,
@@ -160,153 +154,121 @@ export function RegionTableData() {
           actions: instance,
         };
       }) || [],
-    [pagesState, responseInstances],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pagesState, instances, url],
   );
 
-  const columns: {
-    key: string;
-    header: string;
-    sortable?: boolean;
-    filter?: boolean;
-    align: "left" | "right" | "center";
-    body?: (rowData: any) => JSX.Element;
-  }[] = useMemo(
+  const columns = useMemo(
     () => [
       {
         key: "name",
         header: "Name",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: {
+        body: ({
+          name: { instance, model, url },
+        }: {
           name: {
-            title: string;
-            subtitle: string;
-            titleURL: string;
+            instance: string;
+            model: string;
+            url: string;
           };
         }) => {
-          return (
-            <InfoCell
-              title={rowData?.name?.title}
-              subtitle={rowData?.name?.subtitle}
-              titleURL={rowData?.name?.titleURL}
-            />
-          );
+          return <InfoCell title={instance} subtitle={model} titleURL={url} />;
         },
       },
       {
         key: "organization",
         header: "Organization",
-        sortable: false,
-        filter: false,
         align: "left",
         body: ({ organization }: { organization: string }) => {
-          return <BasicCell text={organization || "Pending..."} />;
+          return <BasicCell text={organization} />;
         },
       },
       {
         key: "architecture",
         header: "architecture",
-        sortable: false,
-        filter: false,
         align: "left",
         body: ({ architecture }: { architecture: string }) => {
-          return <BasicCell text={architecture || "Pending..."} />;
+          return <BasicCell text={architecture} />;
         },
       },
       {
         key: "os",
         header: "OS Resources",
-        sortable: false,
-        filter: false,
         align: "left",
         body: ({ os }: { os: string }) => {
-          return <BasicCell text={os || "Pending..."} />;
+          return <BasicCell text={os} />;
         },
       },
       {
         key: "kernel",
         header: "kernel",
-        sortable: false,
-        filter: false,
         align: "left",
         body: ({ kernel }: { kernel: string }) => {
-          return <BasicCell text={kernel || "Pending..."} />;
+          return <BasicCell text={kernel} />;
         },
       },
       {
         key: "k8s",
         header: "Kubernetes",
-        sortable: false,
-        filter: false,
         align: "left",
         body: ({ k8s }: { k8s: string }) => {
-          return <BasicCell text={k8s || "Pending..."} />;
-        },
-      },
-      {
-        key: "robolaunchState",
-        header: "robolaunch State",
-        sortable: false,
-        filter: false,
-        align: "left",
-        body: (rowData: { robolaunchState: string }) => {
-          return (
-            <StateCell state={rowData?.robolaunchState} isRobolaunchState />
-          );
+          return <BasicCell text={k8s} />;
         },
       },
       {
         key: "providerState",
         header: "Provider State",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: { providerState: string }) => {
-          return <StateCell state={rowData?.providerState || "Pending"} />;
+        body: ({ providerState }: { providerState: string }) => {
+          return <StateCell state={providerState} />;
+        },
+      },
+      {
+        key: "rlState",
+        header: "robolaunch State",
+        align: "left",
+        body: ({ rlState }: { rlState: string }) => {
+          return <StateCell state={rlState} isRobolaunchState />;
         },
       },
       {
         key: "usages",
         header: "Resources & Usages",
-        sortable: false,
-        filter: false,
         align: "center",
-        body: (rowData: { usages: IInstanceDashboardUsages }) => {
-          return <InstanceUsagesCell data={rowData?.usages} />;
+        body: ({ usages }: { usages: IInstanceDashboardUsages }) => {
+          return <InstanceUsagesCell data={usages} />;
         },
       },
       {
         key: "actions",
         header: "Actions",
         align: "right",
-        body: (rowData: any) => {
-          console.log("rowData", rowData);
-
+        body: ({ actions: instance }: { actions: ICloudInstance }) => {
           return (
-            <InstanceActionCells
-              data={{
-                name: rowData?.actions?.name,
-                state: rowData?.providerState,
-                robolaunchState: rowData?.robolaunchState,
-                organizationId: pagesState?.organization?.id,
-                roboticsCloudName: pagesState.roboticsCloud?.name,
-                instanceId: rowData?.actions?.instanceId,
-                region: rowData?.actions?.region,
-              }}
-              reload={() => setReload((prevState: boolean) => !prevState)}
-            />
+            <Fragment>
+              {instance?.providerModel === "on-premise" ? (
+                <TemporaryActionCells
+                  showStartStopButton
+                  showDeleteButton
+                  disabledStartStopButton
+                  disabledDeleteButton
+                />
+              ) : (
+                <CIActionCells instance={instance} reload={handleReload} />
+              )}
+            </Fragment>
           );
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pagesState, responseInstances],
+    [pagesState, instances, url],
   );
   return {
-    data,
+    rows,
     columns,
-    responseInstances,
+    instances,
     handleReload,
   };
 }

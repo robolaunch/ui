@@ -1,12 +1,12 @@
-import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
+import { INamespace } from "../../interfaces/namespace.interface";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { INamespace } from "../../interfaces/namespace.interface";
 
 interface INamespacesList {
   reload: boolean;
@@ -17,9 +17,7 @@ export default function NamespacesList({
   reload,
   setItemCount,
 }: INamespacesList): ReactElement {
-  const [responseNamespaces, setResponseNamespaces] = useState<
-    INamespace[] | undefined
-  >(undefined);
+  const [namespaces, setNamespaces] = useState<INamespace[] | null>(null);
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
   const { getNamespaces } = useFunctions();
@@ -31,7 +29,7 @@ export default function NamespacesList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
-        setResponseNamespaces(undefined);
+        setNamespaces(null);
         handleGetNamespaces();
       }
 
@@ -66,7 +64,7 @@ export default function NamespacesList({
       },
       {
         ifErrorNavigateTo404: false,
-        setResponse: setResponseNamespaces,
+        setResponse: setNamespaces,
         setItemCount: setItemCount,
       },
     );
@@ -88,12 +86,12 @@ export default function NamespacesList({
         />
       ) : (
         <Fragment>
-          {!Array.isArray(responseNamespaces) ? (
+          {!Array.isArray(namespaces) ? (
             <SidebarListLoader />
-          ) : responseNamespaces.length === 0 ? (
+          ) : namespaces.length === 0 ? (
             <SidebarInfo text={`Create a Namespace.`} />
           ) : (
-            responseNamespaces?.map((fleet, index: number) => {
+            namespaces?.map((fleet, index: number) => {
               return (
                 <SidebarListItem
                   key={index}
@@ -105,14 +103,14 @@ export default function NamespacesList({
                         <span className="font-medium">VI:</span>
                         <StateCell state={fleet?.status} />
                       </div>
-                      {responseNamespaces?.filter(
+                      {namespaces?.filter(
                         (pFleet) => fleet?.name === pFleet?.status,
                       ).length > 0 && (
                         <div className="flex gap-1.5">
                           <span className="font-medium">PI:</span>
                           <StateCell
                             state={
-                              responseNamespaces?.filter(
+                              namespaces?.filter(
                                 (pFleet) => fleet?.name === pFleet?.name,
                               )[0]?.status
                             }
@@ -128,7 +126,7 @@ export default function NamespacesList({
                   }/${fleet?.name}`}
                   data={{
                     ...fleet,
-                    physicalInstance: responseNamespaces?.filter(
+                    physicalInstance: namespaces?.filter(
                       (pFleet) =>
                         fleet?.name === pFleet?.name &&
                         pFleet?.status !== "Ready",

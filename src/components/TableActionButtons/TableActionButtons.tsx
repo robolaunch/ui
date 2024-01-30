@@ -1,7 +1,7 @@
 import TableActionButton from "../TableActionButton/TableActionButton";
 import { ReactElement } from "react";
 
-interface ITableActionButtons {
+export interface ITableActionButtons {
   showEditButton?: boolean;
   showDeleteButton?: boolean;
   showStartStopButton?: boolean;

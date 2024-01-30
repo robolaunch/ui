@@ -18,7 +18,7 @@ export default function CFPersistDirTags({
   const { robotData } = useCreateRobot();
 
   const [selected, setSelected] = useState<string[]>(
-    robotData.step1.directories.persistentDirectories.split(":") || [
+    robotData.step1.directories.persistentDirectories?.split(":") || [
       "/var",
       "/etc",
       "/opt",

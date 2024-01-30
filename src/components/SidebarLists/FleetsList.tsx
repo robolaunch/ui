@@ -17,9 +17,7 @@ export default function FleetsList({
   reload,
   setItemCount,
 }: IFleetsList): ReactElement {
-  const [responseFleets, setResponseFleets] = useState<IFleet[] | undefined>(
-    undefined,
-  );
+  const [fleets, setFleets] = useState<IFleet[] | null>(null);
   const { selectedState, applicationMode } = useMain();
   const dispatch = useAppDispatch();
   const { getFleets } = useFunctions();
@@ -31,7 +29,7 @@ export default function FleetsList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
-        setResponseFleets(undefined);
+        setFleets(null);
         handleGetFleets();
       }
 
@@ -59,14 +57,14 @@ export default function FleetsList({
   function handleGetFleets() {
     getFleets(
       {
-        organizationId: selectedState?.organization?.name!,
+        organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
       },
       {
         ifErrorNavigateTo404: false,
-        setResponse: setResponseFleets,
+        setResponse: setFleets,
         setItemCount: setItemCount,
       },
     );
@@ -88,12 +86,12 @@ export default function FleetsList({
         />
       ) : (
         <Fragment>
-          {!Array.isArray(responseFleets) ? (
+          {!Array.isArray(fleets) ? (
             <SidebarListLoader />
-          ) : responseFleets.length === 0 ? (
+          ) : fleets.length === 0 ? (
             <SidebarInfo text={`Create a Fleet.`} />
           ) : (
-            responseFleets.map((fleet, index: number) => {
+            fleets.map((fleet, index: number) => {
               return (
                 <SidebarListItem
                   key={index}

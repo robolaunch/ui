@@ -1,3 +1,4 @@
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import { CFAppStep1Validations } from "../../validations/AppsValidations";
@@ -18,7 +19,7 @@ import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { toast } from "sonner";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -42,6 +43,15 @@ export default function CFAppStep1({
       formik.setSubmitting(true);
 
       if (!formik.values.details.configureWorkspace) {
+        if (isImportRobot) {
+          await createEnvironment(false).then(async () => {
+            toast.success("Application updated successfully");
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          });
+        }
+
         await createEnvironment(true).then(async () => {
           setSidebarState((prevState) => ({
             ...prevState,
@@ -116,14 +126,14 @@ export default function CFAppStep1({
       <Fragment>
         {robotData.step1.services.ide.gpuModelName && (
           <CFSection>
-            <CFGpuCore formik={formik} disabled={isImportRobot} />
+            <CFGpuCore formik={formik} />
             <Seperator />
           </CFSection>
         )}
       </Fragment>
 
       <CFSection>
-        <CFVDICount formik={formik} disabled={isImportRobot} />
+        <CFVDICount formik={formik} />
         <Seperator />
       </CFSection>
 
@@ -135,7 +145,7 @@ export default function CFAppStep1({
       <Fragment>
         {!isImportRobot && (
           <CFSection>
-            <CFJupyterNotebook formik={formik} disabled={isImportRobot} />
+            <CFJupyterNotebook formik={formik} />
             <Seperator />
           </CFSection>
         )}
@@ -153,9 +163,7 @@ export default function CFAppStep1({
       <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
 
       <Fragment>
-        {!isImportRobot && (
-          <CFEnvButtons formik={formik} disabled={isImportRobot} />
-        )}
+        <CFEnvButtons formik={formik} isImportRobot={isImportRobot} />
       </Fragment>
     </CFLoader>
   );

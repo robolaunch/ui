@@ -39,12 +39,12 @@ export default function CFAdvancedSettings({
         </CFSection>
 
         <CFSection gap={4}>
-          <CFGrantDirTags formik={formik} disabled={disabled} />
+          <CFGrantDirTags formik={formik} />
           <Seperator />
         </CFSection>
 
         <CFSection gap={4}>
-          <CFDirectories formik={formik} disabled={disabled} />
+          <CFDirectories formik={formik} />
           <Seperator />
         </CFSection>
 

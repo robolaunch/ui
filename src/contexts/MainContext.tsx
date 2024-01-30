@@ -50,6 +50,10 @@ export default ({ children }: any) => {
   }, [selectedState]);
 
   useEffect(() => {
+    console.log("pagesState", pagesState);
+  }, [pagesState]);
+
+  useEffect(() => {
     setSidebarState({
       isOpen: false,
       page: undefined,

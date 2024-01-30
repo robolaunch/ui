@@ -50,15 +50,20 @@ export const getInstances = createAsyncThunk(
 
 export const stopInstance = createAsyncThunk(
   "instance/stopInstance",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+  }) => {
     const response = await createInstanceApi.stopInstance({
-      name: values.name,
+      name: "instance/stopInstance",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
           name: values?.roboticsCloudName,
           cloudInstances: [
-            { instanceId: values?.instanceId, region: "eu-central-1" },
+            { instanceId: values?.instanceId, region: values?.region },
           ],
         },
       ],
@@ -69,15 +74,20 @@ export const stopInstance = createAsyncThunk(
 
 export const startInstance = createAsyncThunk(
   "instance/startInstance",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+  }) => {
     const response = await createInstanceApi.startInstance({
-      name: values.name,
+      name: "instance/startInstance",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {
           name: values?.roboticsCloudName,
           cloudInstances: [
-            { instanceId: values?.instanceId, region: "eu-central-1" },
+            { instanceId: values?.instanceId, region: values?.region },
           ],
         },
       ],
@@ -88,9 +98,14 @@ export const startInstance = createAsyncThunk(
 
 export const terminateInstance = createAsyncThunk(
   "instance/terminateInstance",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+  }) => {
     const response = await createInstanceApi.terminateInstance({
-      name: values.name,
+      name: "instance/terminateInstance",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {

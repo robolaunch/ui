@@ -186,10 +186,16 @@ export interface IuseFunctions {
     values: IgetPhysicalInstance,
     parameters?: IsingleGetParameters,
   ) => void;
+
   getInstance: (
     values: IgetInstance,
     parameters?: IsingleGetParameters,
   ) => void;
+
+  startInstance: (organizationId: string) => Promise<void>;
+  stopInstance: (organizationId: string) => Promise<void>;
+  deleteInstance: (organizationId: string) => Promise<void>;
+
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
   getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
   getNamespaces: (

@@ -1,4 +1,3 @@
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import { IOrganization } from "../../interfaces/organization.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
@@ -7,6 +6,7 @@ import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { orgSplitter } from "../../functions/string.splitter.function";
 
 interface IOrganizationList {
   setItemCount: any;
@@ -17,9 +17,7 @@ export default function OrganizationsList({
   reload,
   setItemCount,
 }: IOrganizationList): ReactElement {
-  const [responseOrganizations, setResponseOrganizations] = useState<
-    IOrganization[] | undefined
-  >(undefined);
+  const [orgs, setOrgs] = useState<IOrganization[] | null>(null);
   const { selectedState } = useMain();
   const { getOrganizations } = useFunctions();
 
@@ -30,45 +28,34 @@ export default function OrganizationsList({
   }, [reload]);
 
   function handleGetOrganizations() {
-    setResponseOrganizations(undefined);
+    setOrgs(null);
     getOrganizations({
       ifErrorNavigateTo404: false,
-      setResponse: setResponseOrganizations,
+      setResponse: setOrgs,
       setItemCount: setItemCount,
     });
   }
 
   return (
     <Fragment>
-      {!Array.isArray(responseOrganizations) ? (
+      {!Array.isArray(orgs) ? (
         <SidebarListLoader />
-      ) : Array.isArray(responseOrganizations) &&
-        !responseOrganizations?.length ? (
+      ) : Array.isArray(orgs) && !orgs?.length ? (
         <SidebarSelectInfo text={`Create an Organization.`} />
       ) : (
-        responseOrganizations?.map(
-          (organization: IOrganization, index: number) => {
-            return (
-              <SidebarListItem
-                key={index}
-                type="organization"
-                name={organizationNameViewer({
-                  organizationName: organization?.name,
-                  capitalization: false,
-                })}
-                description={<StateCell state={"Ready"} />}
-                url={`/${organizationNameViewer({
-                  organizationName: organization?.name,
-                  capitalization: false,
-                })}`}
-                data={organization}
-                selected={
-                  organization.name === selectedState?.organization?.name
-                }
-              />
-            );
-          },
-        )
+        orgs?.map((organization, index: number) => {
+          return (
+            <SidebarListItem
+              key={index}
+              type="organization"
+              name={orgSplitter(organization.name)}
+              description={<StateCell state={"Ready"} />}
+              url={`/${orgSplitter(organization.name)}`}
+              data={organization}
+              selected={organization.name === selectedState?.organization?.name}
+            />
+          );
+        })
       )}
     </Fragment>
   );

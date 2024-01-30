@@ -53,6 +53,9 @@ import {
   getPhysicalInstances as getAllPhysicalInstances,
   addPhysicalInstanceToFleet as addPhysicalInstanceToFleetDispatch,
   getSystemStatus as getSystemStatusDispatch,
+  startInstance as startInstanceDispatch,
+  stopInstance as stopInstanceDispatch,
+  terminateInstance as deleteInstanceDispatch,
 } from "../toolkit/InstanceSlice";
 import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
 import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
@@ -125,7 +128,7 @@ export default ({ children }: any) => {
 
       if (organization) {
         parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
+          setSelectedState((prevState) => {
             return {
               ...prevState,
               organization: organization,
@@ -134,7 +137,7 @@ export default ({ children }: any) => {
         parameters?.setResponse &&
           (await parameters?.setResponse(organization));
         parameters?.setPages &&
-          setPagesState((prevState: any) => {
+          setPagesState((prevState) => {
             return {
               ...prevState,
               organization: organization,
@@ -351,6 +354,60 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function startInstance(instanceId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          startInstanceDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: instanceId,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function stopInstance(instanceId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          stopInstanceDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: instanceId,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function deleteInstance(instanceId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteInstanceDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: instanceId,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
       }
     });
   }
@@ -1133,24 +1190,40 @@ export default ({ children }: any) => {
       value={{
         getOrganizations,
         getOrganization,
+
         getRoboticsClouds,
         getRoboticsCloud,
+
         getInstances,
+        getInstance,
+
+        startInstance,
+        stopInstance,
+        deleteInstance,
+
         getPhysicalInstances,
         getPhysicalInstance,
-        getInstance,
+
         getFleets,
         getFleet,
+
         getNamespaces,
         getNamespace,
+
         getPhysicalFleet,
+
+        addPhysicalInstanceToFleet,
+
         getRobots,
         getRobot,
+
         getBuildManager,
+
         getLaunchManagers,
+
         getEnvironments,
         getEnvironment,
-        addPhysicalInstanceToFleet,
+
         getSystemStatus,
         createRobot,
         createEnvironment,

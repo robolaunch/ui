@@ -7,24 +7,30 @@ import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step
 interface ICFEnvButtons {
   formik: FormikProps<IEnvironmentStep1>;
   disabled?: boolean;
+  isImportRobot?: boolean;
 }
 
 export default function CFEnvButtons({
   formik,
   disabled,
+  isImportRobot,
 }: ICFEnvButtons): ReactElement {
   return (
     <div className="mt-10 flex gap-2">
-      <CFCancelButton disabled={formik.isSubmitting || disabled} />
+      {!isImportRobot && (
+        <CFCancelButton disabled={formik.isSubmitting || disabled} />
+      )}
       <Button
         disabled={!formik.isValid || formik.isSubmitting || disabled}
         type="submit"
         className="!h-11 text-xs"
         loading={formik.isSubmitting}
         text={
-          formik.values.details.configureWorkspace
-            ? "Next Step"
-            : "Create Application"
+          isImportRobot
+            ? "Update Application"
+            : formik.values.details.configureWorkspace
+              ? "Next Step"
+              : "Create Application"
         }
       />
     </div>

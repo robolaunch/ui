@@ -1,3 +1,4 @@
+import { IEnvironment } from "../../interfaces/environment/environment.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
@@ -15,38 +16,11 @@ export default function RobotsList({
   reload,
   setItemCount,
 }: IRobotsList): ReactElement {
-  const [responseRobots, setResponseRobots] = useState<any>(undefined);
+  const [responseRobots, setResponseRobots] = useState<IEnvironment[] | null>(
+    null,
+  );
   const { selectedState, applicationMode } = useMain();
   const { getRobots } = useFunctions();
-  const [robotsStatus, setRobotsStatus] = useState<
-    {
-      virtual: string;
-      physical: string;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    setRobotsStatus(
-      responseRobots?.map((robot: any, index: number) => {
-        const virtualStatus = robot.robotClusters.filter(
-          (robotCluster: any) =>
-            robotCluster.name === selectedState?.instance?.name,
-        )?.[0]?.robotStatus;
-
-        const physicalStatus = robot.robotClusters.filter(
-          (robotCluster: any) =>
-            robotCluster.name !== selectedState?.instance?.name,
-        )?.[0]?.robotStatus;
-
-        return {
-          virtual:
-            virtualStatus === "EnvironmentReady" ? "Ready" : virtualStatus,
-          physical:
-            physicalStatus === "EnvironmentReady" ? "Ready" : physicalStatus,
-        };
-      }),
-    );
-  }, [responseRobots, selectedState?.instance?.name]);
 
   useEffect(
     () => {
@@ -56,7 +30,7 @@ export default function RobotsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
-        setResponseRobots(undefined);
+        setResponseRobots(null);
         handleGetRobots();
       }
 
@@ -116,28 +90,21 @@ export default function RobotsList({
         <SidebarInfo text={`Create a Robot.`} />
       ) : (
         <Fragment>
-          {responseRobots?.map((robot: any, index: number) => {
+          {responseRobots?.map((robot, index: number) => {
             return (
               <SidebarListItem
                 key={index}
                 type="robot"
-                name={robot?.name}
+                name={robot?.step1?.details?.name}
                 description={
                   <div className="flex gap-2">
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
-                      <StateCell state={robotsStatus?.[index]?.virtual} />
+                      <StateCell state={""} />
                     </div>
-                    {Array.isArray(robot?.robotClusters) &&
-                      robot?.robotClusters.length > 1 && (
-                        <div className="flex gap-1.5">
-                          <span className="font-medium">Physical:</span>
-                          <StateCell state={robotsStatus?.[index]?.physical} />
-                        </div>
-                      )}
                   </div>
                 }
-                url={`/${robot?.robotName}`}
+                url={robot?.step1?.details?.name}
                 data={robot}
                 notSelectable
               />

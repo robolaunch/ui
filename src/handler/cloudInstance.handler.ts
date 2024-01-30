@@ -34,29 +34,31 @@ function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
               ),
             },
             gpu: {
-              hardware: item.cloudInstanceResource.gpuDeviceUsage.map((gpu) => {
-                return {
-                  id: gpu.device,
-                  uuid: gpu.uuid,
-                  model: gpu.model,
-                  watt: Number(Number(gpu.powerUsage).toFixed(1)),
-                  usagePercent: Number(gpu.gpuUtil),
-                  temperature: Number(Number(gpu.temp).toFixed(1)),
-                  memory: {
-                    totalGB: Number(
-                      (
-                        (Number(gpu.memoryUsed) + Number(gpu.memoryFree)) /
-                        1024
-                      ).toFixed(1),
-                    ),
-                    totalMB: Number(gpu.memoryUsed) + Number(gpu.memoryFree),
-                    usedMB: Number(gpu.memoryUsed),
-                    freeMB: Number(gpu.memoryFree),
-                    percent: Number(gpu.memoryUtil),
-                  },
-                };
-              }),
-              platform: item.cloudInstanceResource.gpuUsage.map((gpu) => {
+              hardware: item.cloudInstanceResource.gpuDeviceUsage?.map(
+                (gpu) => {
+                  return {
+                    id: gpu.device,
+                    uuid: gpu.uuid,
+                    model: gpu.model,
+                    watt: Number(Number(gpu.powerUsage).toFixed(1)),
+                    usagePercent: Number(gpu.gpuUtil),
+                    temperature: Number(Number(gpu.temp).toFixed(1)),
+                    memory: {
+                      totalGB: Number(
+                        (
+                          (Number(gpu.memoryUsed) + Number(gpu.memoryFree)) /
+                          1024
+                        ).toFixed(1),
+                      ),
+                      totalMB: Number(gpu.memoryUsed) + Number(gpu.memoryFree),
+                      usedMB: Number(gpu.memoryUsed),
+                      freeMB: Number(gpu.memoryFree),
+                      percent: Number(gpu.memoryUtil),
+                    },
+                  };
+                },
+              ),
+              platform: item.cloudInstanceResource.gpuUsage?.map((gpu) => {
                 return {
                   name: gpu.resourceName,
                   allocated: Number(gpu.allocated),
@@ -86,7 +88,7 @@ function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
                 ).toFixed(0),
               ),
             },
-            network: item.cloudInstanceResource.networkUsage.map((network) => {
+            network: item.cloudInstanceResource.networkUsage?.map((network) => {
               return {
                 name: network.interfaceName,
                 in: Number(network.trafficIn?.split(" ")[0]),

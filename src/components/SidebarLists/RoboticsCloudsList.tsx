@@ -7,6 +7,7 @@ import BasicCell from "../TableInformationCells/BasicCell";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { IRegion } from "../../interfaces/region.interface";
 
 interface IRoboticsCloudsList {
   reload: boolean;
@@ -17,15 +18,13 @@ export default function RoboticsCloudsList({
   reload,
   setItemCount,
 }: IRoboticsCloudsList): ReactElement {
-  const [responseRoboticsClouds, setResponseRoboticsClouds] = useState<
-    any[] | undefined
-  >(undefined);
+  const [regions, setRegions] = useState<IRegion[] | null>(null);
   const { selectedState } = useMain();
   const { getRoboticsClouds } = useFunctions();
 
   useEffect(() => {
     if (selectedState?.organization) {
-      setResponseRoboticsClouds(undefined);
+      setRegions(null);
       handleGetRoboticsClouds();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +37,7 @@ export default function RoboticsCloudsList({
       },
       {
         ifErrorNavigateTo404: false,
-        setResponse: setResponseRoboticsClouds,
+        setResponse: setRegions,
         setItemCount: setItemCount,
       },
     );
@@ -50,13 +49,12 @@ export default function RoboticsCloudsList({
         <SidebarSelectInfo text={`Select an Organization to view instances.`} />
       ) : (
         <Fragment>
-          {!Array.isArray(responseRoboticsClouds) ? (
+          {!Array.isArray(regions) ? (
             <SidebarListLoader />
-          ) : Array.isArray(responseRoboticsClouds) &&
-            !responseRoboticsClouds?.length ? (
+          ) : Array.isArray(regions) && !regions?.length ? (
             <SidebarSelectInfo text={`Create a Region.`} />
           ) : (
-            responseRoboticsClouds?.map((roboticsCloud: any, index: number) => {
+            regions?.map((roboticsCloud: any, index: number) => {
               return (
                 <SidebarListItem
                   key={index}

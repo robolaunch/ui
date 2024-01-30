@@ -1,0 +1,94 @@
+[
+  {
+    "country_code": "eu-central-1",
+    "region_name": "Frankfurt (Germany)"
+  },
+  {
+    "country_code": "eu-west-1",
+    "region_name": "Ireland (Ireland)"
+  },
+  {
+    "country_code": "eu-west-2",
+    "region_name": "London (UK)"
+  },
+  {
+    "country_code": "eu-west-3",
+    "region_name": "Paris (France)"
+  },
+  {
+    "country_code": "eu-north-1",
+    "region_name": "Stockholm (Sweden)"
+  },
+  {
+    "country_code": "ap-east-1",
+    "region_name": "Hong Kong (China)"
+  },
+  {
+    "country_code": "ap-south-1",
+    "region_name": "Mumbai (India)"
+  },
+  {
+    "country_code": "ap-northeast-2",
+    "region_name": "Seoul (South Korea)"
+  },
+  {
+    "country_code": "ap-southeast-1",
+    "region_name": "Singapore (Singapore)"
+  },
+  {
+    "country_code": "ap-southeast-2",
+    "region_name": "Sydney (Australia)"
+  },
+  {
+    "country_code": "ap-northeast-1",
+    "region_name": "Tokyo (Japan)"
+  },
+  {
+    "country_code": "ca-central-1",
+    "region_name": "Canada (Central)"
+  },
+  {
+    "country_code": "cn-north-1",
+    "region_name": "Beijing (China)"
+  },
+  {
+    "country_code": "cn-northwest-1",
+    "region_name": "Ningxia (China)"
+  },
+  {
+    "country_code": "me-south-1",
+    "region_name": "Bahrain (Bahrain)"
+  },
+  {
+    "country_code": "sa-east-1",
+    "region_name": "Sao Paulo (Brazil)"
+  },
+  {
+    "country_code": "us-east-1",
+    "region_name": "N. Virginia (USA)"
+  },
+  {
+    "country_code": "us-east-2",
+    "region_name": "Ohio (USA)"
+  },
+  {
+    "country_code": "us-west-1",
+    "region_name": "N. California (USA)"
+  },
+  {
+    "country_code": "us-west-2",
+    "region_name": "Oregon (USA)"
+  },
+  {
+    "country_code": "on-premise",
+    "region_name": "Turkey"
+  },
+  {
+    "country_code": "ankara-ostim-odtu",
+    "region_name": "Ankara Ostim ODTU"
+  },
+  {
+    "country_code": "arcelik-cayirova",
+    "region_name": "Arçelik Çayırova"
+  }
+]

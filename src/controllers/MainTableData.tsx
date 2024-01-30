@@ -1,50 +1,50 @@
-import { IMainDashboardData } from "../interfaces/tableInterface";
-import OrganizationActionCells from "../components/TableActionCells/OrganizationActionCells";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IOrganization } from "../interfaces/organization.interface";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import { orgSplitter } from "../functions/string.splitter.function";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import InfoCell from "../components/TableInformationCells/InfoCell";
-import { IMainDashboardTableRow } from "../interfaces/table/table.dashboard.main.interface";
-import { orgSplitter } from "../functions/string.splitter.function";
+
+import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 
 export function MainTableData() {
   const [orgs, setOrgs] = useState<IOrganization[] | null>();
+  const [reload, setReload] = useState<boolean>(false);
   const { getOrganizations } = useFunctions();
   const url = useParams();
 
   function handleReload() {
+    setReload(!reload);
     setOrgs(null);
   }
 
   useEffect(() => {
-    !Array.isArray(orgs) &&
-      getOrganizations({
-        setResponse: setOrgs,
-        ifErrorNavigateTo404: false,
-      });
+    getOrganizations({
+      setResponse: setOrgs,
+      ifErrorNavigateTo404: false,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, orgs]);
+  }, [url, reload]);
 
   useEffect(() => {
     setOrgs(null);
   }, [url]);
 
-  const rows: IMainDashboardTableRow[] = useMemo(
+  const rows = useMemo(
     () =>
       orgs?.map((org) => {
         return {
           name: orgSplitter(org.name),
           status: "Ready",
-          actions: org.id,
+          actions: null,
         };
       }) || [],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [orgs, url],
   );
 
-  const columns: any = useMemo(
+  const columns = useMemo(
     () => [
       {
         key: "name",
@@ -68,11 +68,13 @@ export function MainTableData() {
         key: "actions",
         header: "Actions",
         align: "right",
-        body: (rowData: IMainDashboardData) => {
+        body: () => {
           return (
-            <OrganizationActionCells
-              data={rowData?.actions}
-              reloadHandle={handleReload}
+            <TemporaryActionCells
+              showEditButton
+              showDeleteButton
+              disabledEditButton
+              disabledDeleteButton
             />
           );
         },
