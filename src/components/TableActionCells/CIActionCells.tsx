@@ -1,9 +1,9 @@
-import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { envCreatableInstance } from "../../helpers/envProvider";
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import VerifyModal from "../../modals/VerifyModal";
 import useFunctions from "../../hooks/useFunctions";
+import { envCreatableInstance } from "../../helpers/envProvider";
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
 
 interface ICIActionCells {
   instance: ICloudInstance;
@@ -18,26 +18,35 @@ export default function CIActionCells({
     useState<boolean>(false);
   const [isTerminateModalVisible, setIsTerminateModalVisible] =
     useState<boolean>(false);
-
   const [disabledSwitchButton, setDisabledSwitchButton] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    if (!envCreatableInstance) {
-      return setDisabledSwitchButton(true);
-    }
+  const { stopInstance, startInstance, deleteInstance } = useFunctions();
 
-    if (
-      (instance?.providerState === "running" &&
-        instance?.rlState === "ConnectionHub_Ready") ||
-      instance?.providerState === "stopped"
-    ) {
-      return setDisabledSwitchButton(false);
-    }
-    return setDisabledSwitchButton(true);
+  useEffect(() => {
+    setDisabledSwitchButton(
+      !envCreatableInstance ||
+        !(
+          (instance?.providerState === "running" &&
+            instance?.rlState === "ConnectionHub_Ready") ||
+          instance?.providerState === "stopped"
+        ),
+    );
   }, [instance]);
 
-  const { stopInstance, startInstance, deleteInstance } = useFunctions();
+  async function handleOnClick(action: "start" | "stop" | "delete") {
+    if (instance?.id) {
+      if (action === "start") await startInstance(instance?.id);
+      if (action === "stop") await stopInstance(instance?.id);
+      if (action === "delete") await deleteInstance(instance?.id);
+
+      setTimeout(() => {
+        reload();
+        setIsChangeStateModalVisible(false);
+        setIsTerminateModalVisible(false);
+      }, 1000);
+    }
+  }
 
   return (
     <Fragment>
@@ -46,52 +55,32 @@ export default function CIActionCells({
         disabledDeleteButton={!envCreatableInstance}
         onClickDeleteButton={() => setIsTerminateModalVisible(true)}
         showStartStopButton
-        disabledStartStopButton={
-          !envCreatableInstance ? true : disabledSwitchButton
-        }
+        disabledStartStopButton={!envCreatableInstance || disabledSwitchButton}
         onClickStartStopButton={() => setIsChangeStateModalVisible(true)}
         instanceState={
           instance?.providerState === "running" ? "running" : "stopped"
         }
-        loadingStartStopButton={
-          !envCreatableInstance ? false : disabledSwitchButton
-        }
+        loadingStartStopButton={!envCreatableInstance || disabledSwitchButton}
       />
 
       {isChangeStateModalVisible && (
         <VerifyModal
           handleCloseModal={() => setIsChangeStateModalVisible(false)}
           loading={
-            instance?.providerState === "running"
-              ? false
-              : instance?.providerState === "stopped"
-                ? false
-                : true
+            instance?.providerState === "running" ||
+            instance?.providerState === "stopped"
           }
           disabled={
-            instance?.providerState === "running"
-              ? false
-              : instance?.providerState === "stopped"
-                ? false
-                : true
+            instance?.providerState !== "running" &&
+            instance?.providerState !== "stopped"
           }
           header={`${instance?.providerState === "running" ? "Stop" : "Start"} Instance`}
-          handleOnClick={async () => {
-            if (instance?.providerState === "running") {
-              await stopInstance(instance?.id);
-            } else if (instance?.providerState === "stopped") {
-              await startInstance(instance?.id);
-            }
-            setTimeout(() => {
-              reload();
-              setIsChangeStateModalVisible(false);
-            }, 1000);
-          }}
-          text={
-            instance?.providerState === "running"
-              ? "Are you sure you want to stop this instance ?"
-              : "Are you sure you want to start this instance ?"
+          handleOnClick={() =>
+            handleOnClick(
+              instance?.providerState === "running" ? "stop" : "start",
+            )
           }
+          text={`Are you sure you want to ${instance?.providerState === "running" ? "stop" : "start"} this instance?`}
           buttonText={
             instance?.providerState === "running"
               ? "Stop Instance"
@@ -99,18 +88,13 @@ export default function CIActionCells({
           }
         />
       )}
+
       {isTerminateModalVisible && (
         <VerifyModal
           handleCloseModal={() => setIsTerminateModalVisible(false)}
           header={`Terminate Instance ${instance?.name}`}
-          handleOnClick={async () => {
-            await deleteInstance(instance?.id);
-            setTimeout(() => {
-              reload();
-              setIsTerminateModalVisible(false);
-            }, 1000);
-          }}
-          text={`If you terminate this instance, delete all data associated with it. Including all robots, fleets, and other resources. This action cannot be undone. Are you sure you want to terminate this instance?`}
+          handleOnClick={() => handleOnClick("delete")}
+          text={`If you terminate this instance, delete all data associated with it. This action cannot be undone. Are you sure you want to terminate this instance?`}
           buttonText={`Terminate Instance`}
         />
       )}

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import OrganizationActionCells from "../../components/TableActionCells/OrganizationActionCells";
+import OrgActionCells from "../../components/TableActionCells/OrgActionCells";
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import BasicCell from "../../components/TableInformationCells/BasicCell";
 import InfoCell from "../../components/TableInformationCells/InfoCell";
@@ -40,9 +40,9 @@ export default function OrganizationsPage({
               title={organizationNameViewer({
                 organizationName: rowData?.name?.organizationName || "",
               })}
-              titleURL={`/user-role-management/${rowData?.name?.organizationName.split(
-                "_",
-              )[1]}`}
+              titleURL={`/user-role-management/${
+                rowData?.name?.organizationName.split("_")[1]
+              }`}
               subtitle={`Member Count: ${rowData?.name?.userCount}`}
               onClick={() =>
                 handleChangeActiveTab({
@@ -70,10 +70,7 @@ export default function OrganizationsPage({
         align: "right",
         body: (rowData: any) => {
           return (
-            <OrganizationActionCells
-              data={rowData?.name}
-              reloadHandle={() => {}}
-            />
+            <OrgActionCells data={rowData?.name} reloadHandle={() => {}} />
           );
         },
       },

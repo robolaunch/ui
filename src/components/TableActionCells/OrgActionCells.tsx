@@ -4,15 +4,15 @@ import { IOrganization } from "../../interfaces/organization.interface";
 import { envCreatableOrganization } from "../../helpers/envProvider";
 import { Fragment, ReactElement, useState } from "react";
 
-interface IOrganizationActionCells {
+interface IOrgActionCells {
   data: IOrganization;
   reloadHandle: () => void;
 }
 
-export default function OrganizationActionCells({
+export default function OrgActionCells({
   data,
   reloadHandle,
-}: IOrganizationActionCells): ReactElement {
+}: IOrgActionCells): ReactElement {
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<boolean>(false);
 
   return (
