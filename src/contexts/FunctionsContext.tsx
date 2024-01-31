@@ -1037,8 +1037,8 @@ export default ({ children }: any) => {
             fleetName: selectedState?.fleet?.name!,
             robotName: robotData?.step1?.details.name,
             physicalInstanceName: robotData?.step1?.details.isVirtualRobot
-              ? undefined
-              : robotData?.step1?.details?.physicalInstanceName!,
+              ? ""
+              : robotData?.step1?.details?.physicalInstanceName ?? "",
             distributions: robotData?.step1?.services.ros.rosDistros,
             bridgeEnabled: robotData?.step1?.services.ros.isEnabled,
             vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,

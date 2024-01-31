@@ -1,8 +1,9 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
 import { useAppSelector } from "../../hooks/redux";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface IRobotStatusWidget {
   responseRobot: any;
@@ -33,6 +34,8 @@ export default function RobotStatusWidget({
     );
   }, [responseLaunchManagers]);
 
+  const { robotData } = useCreateRobot();
+
   return (
     <WidgetLayout
       dataTut="robot-status-widget"
@@ -46,12 +49,14 @@ export default function RobotStatusWidget({
           title="Workspace Manager"
           loading={!responseRobot}
           state={
-            responseRobot?.robotClusters?.filter(
-              (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+            robotData.step1.clusters?.environment?.filter(
+              (env: { name: string; status: string }) =>
+                env.status !== "EnvironmentReady",
             )?.length
               ? "warning"
-              : responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus === "Error",
+              : robotData.step1.clusters?.environment?.filter(
+                    (env: { name: string; status: string }) =>
+                      env.status === "Error",
                   )?.length
                 ? "error"
                 : "success"
@@ -59,12 +64,14 @@ export default function RobotStatusWidget({
           stateText={
             !responseRobot
               ? "Loading..."
-              : responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady",
+              : robotData.step1.clusters?.environment?.filter(
+                    (env: { name: string; status: string }) =>
+                      env.status !== "EnvironmentReady",
                   )?.length
-                ? responseRobot?.robotClusters?.filter(
-                    (robot: any) => robot?.robotStatus !== "EnvironmentReady",
-                  )[0]?.robotStatus
+                ? robotData.step1.clusters?.environment?.filter(
+                    (env: { name: string; status: string }) =>
+                      env.status !== "EnvironmentReady",
+                  )?.[0]?.status
                 : "Ready"
           }
         />

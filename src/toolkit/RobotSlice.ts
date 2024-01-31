@@ -18,7 +18,7 @@ export const createRobot = createAsyncThunk(
     region: string;
     robotName: string;
     fleetName: string;
-    workspaceUpdated: boolean;
+    workspaceUpdated?: boolean;
     physicalInstanceName: string;
     distributions: string[];
     bridgeEnabled: boolean;
@@ -27,10 +27,10 @@ export const createRobot = createAsyncThunk(
     ideEnabled: boolean;
     storageAmount: number;
     gpuEnabledForCloudInstance: boolean;
-    marketPlaceEnabled: boolean;
-    imageUser: string;
-    imageRepository: string;
-    imageTag: string;
+    marketPlaceEnabled?: boolean;
+    imageUser?: string;
+    imageRepository?: string;
+    imageTag?: string;
     workspaces: any[];
     permittedDirectories: string;
     persistentDirectories: string;
@@ -299,7 +299,6 @@ export const deleteBuildManager = createAsyncThunk(
     robotName: string;
     fleetName: string;
     physicalInstanceName: string;
-    buildManagerName: string;
   }) => {
     const response = await robotBuildManagerApi.deleteRobotBuildManager({
       name: "robot/deleteRobotBuildManager",

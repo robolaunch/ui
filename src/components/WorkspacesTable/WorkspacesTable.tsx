@@ -6,27 +6,27 @@ import GeneralTable from "../Table/GeneralTable";
 import { ReactElement, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
-interface IWorkspacesTable {
-  responseRobot: any;
-}
+import useCreateRobot from "../../hooks/useCreateRobot";
+import { IEnvironmentStep2WorkspaceRepository } from "../../interfaces/environment/environment.step2.interface";
 
-export default function WorkspacesTable({
-  responseRobot,
-}: IWorkspacesTable): ReactElement {
+export default function WorkspacesTable(): ReactElement {
   const url = useParams();
   const { applicationMode } = useAppSelector((state) => state.user);
 
+  const { robotData } = useCreateRobot();
+
   const data: any = useMemo(
     () =>
-      responseRobot?.robotWorkspaces?.map((workspace: any) => {
+      robotData?.step2?.workspaces?.map((workspace) => {
         return {
-          key: workspace?.name,
           name: workspace?.name,
-          distro: workspace?.workspaceDistro,
+          distro: workspace?.workspaceDistro?.toLowerCase(),
           repositories: workspace?.robotRepositories,
+          status: workspace,
         };
       }),
-    [responseRobot],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [robotData, url],
   );
 
   const columns: any = useMemo(
@@ -37,12 +37,9 @@ export default function WorkspacesTable({
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: ({ name }: { name: string }) => {
           return (
-            <InfoCell
-              title={rowData?.name}
-              subtitle={url?.robotName as string}
-            />
+            <InfoCell title={name} subtitle={robotData?.step1?.details?.name} />
           );
         },
       },
@@ -51,8 +48,8 @@ export default function WorkspacesTable({
         key: "distro",
         header: "distro",
         align: "center",
-        body: (rowData: any) => {
-          return <DistroCell distro={rowData?.distro?.toLowerCase()} />;
+        body: ({ distro }: { distro: string }) => {
+          return <DistroCell distro={distro} />;
         },
       },
 
@@ -60,29 +57,31 @@ export default function WorkspacesTable({
         key: "repositories",
         header: "repositories",
         align: "center",
-        body: (rowData: any) => {
-          return <WorkspacesCell workspaces={rowData?.repositories} />;
+        body: ({
+          repositories,
+        }: {
+          repositories: IEnvironmentStep2WorkspaceRepository[];
+        }) => {
+          return <WorkspacesCell workspaces={repositories} />;
         },
       },
 
       {
-        key: "state",
-        header: "State",
+        key: "status",
+        header: "Status",
         align: "left",
         body: () => {
           return (
             <StateCell
               state={
-                !responseRobot
+                !Array.isArray(robotData?.step1?.clusters?.environment)
                   ? "Loading..."
-                  : responseRobot?.robotClusters?.filter(
-                        (robot: any) =>
-                          robot?.robotStatus !== "EnvironmentReady",
+                  : robotData?.step1?.clusters?.environment?.filter(
+                        (robot) => robot?.status !== "EnvironmentReady",
                       )?.length
-                    ? responseRobot?.robotClusters?.filter(
-                        (robot: any) =>
-                          robot?.robotStatus !== "EnvironmentReady",
-                      )[0]?.robotStatus
+                    ? robotData?.step1?.clusters?.environment?.filter(
+                        (robot) => robot?.status !== "EnvironmentReady",
+                      )[0]?.status
                     : "Ready"
               }
             />
@@ -91,7 +90,7 @@ export default function WorkspacesTable({
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseRobot, url],
+    [robotData, url],
   );
 
   return (
@@ -100,7 +99,7 @@ export default function WorkspacesTable({
       title="Workspaces"
       data={data}
       columns={columns}
-      loading={Array.isArray(responseRobot?.robotWorkspaces) ? false : true}
+      loading={Array.isArray(robotData?.step2?.workspaces) ? false : true}
     />
   );
 }

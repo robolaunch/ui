@@ -17,8 +17,7 @@ export default function RobotOverviewLayout({
   widget2,
   widget3,
 }: IRobotOverviewLayout): ReactElement {
-  const { responseRobot, responseBuildManager, responseLaunchManagers } =
-    useRobot();
+  const { responseBuildManager, responseLaunchManagers } = useRobot();
   const { width } = useWindow();
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -33,7 +32,7 @@ export default function RobotOverviewLayout({
       {!applicationMode && (
         <Fragment>
           <div data-tut="robot-workspaces-table" className="col-span-full">
-            <WorkspacesTable responseRobot={responseRobot} />
+            <WorkspacesTable />
           </div>
           <div data-tut="robot-build-managers-table" className="col-span-full">
             <BuildManagerStepsTable

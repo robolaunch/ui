@@ -100,8 +100,20 @@ export default function RobotsList({
                   <div className="flex gap-2">
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
-                      <StateCell state={""} />
+                      <StateCell
+                        state={robot?.step1?.clusters?.environment?.[0]?.status}
+                      />
                     </div>
+                    {robot?.step1?.clusters?.environment?.[1]?.status && (
+                      <div className="flex gap-1.5">
+                        <span className="font-medium">Virtual:</span>
+                        <StateCell
+                          state={
+                            robot?.step1?.clusters?.environment?.[0]?.status
+                          }
+                        />
+                      </div>
+                    )}
                   </div>
                 }
                 url={robot?.step1?.details?.name}

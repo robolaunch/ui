@@ -1,9 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import axios from "axios";
+import { IEnvironmentStep2WorkspaceRepository } from "../../interfaces/environment/environment.step2.interface";
+import { ReactElement, useEffect, useState } from "react";
 import { GoGitBranch } from "react-icons/go";
+import axios from "axios";
 
 interface IWorkspacesCell {
-  workspaces: any[];
+  workspaces: IEnvironmentStep2WorkspaceRepository[];
 }
 
 export default function WorkspacesCell({
@@ -46,14 +47,14 @@ export default function WorkspacesCell({
         return (
           <div
             key={index}
-            className="border-light-200 w-fit rounded border px-4 py-1.5 shadow-md"
+            className="w-fit rounded border border-light-200 px-4 py-1.5 shadow-md"
           >
             <div className="flex gap-2">
               <a
                 target="_blank"
                 rel="noreferrer"
                 href={workspace?.url}
-                className="transition-300 text-secondary-700 hover:text-secondary-800 flex gap-3 text-xs font-medium hover:underline"
+                className="transition-300 flex gap-3 text-xs font-medium text-secondary-700 hover:text-secondary-800 hover:underline"
               >
                 <div className="flex items-center gap-1">
                   <img
