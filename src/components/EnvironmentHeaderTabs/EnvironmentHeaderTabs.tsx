@@ -11,7 +11,7 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppSelector } from "../../hooks/redux";
 
 export default function EnvironmentHeaderTabs(): ReactElement {
-  const { responseRobot, isSettedCookie, isRobotReady } = useRobot();
+  const { isSettedCookie, isRobotReady } = useRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 
   const { robotData } = useCreateRobot();
@@ -27,54 +27,56 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       name: "Task Management",
       icon: <MdMap size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData.step1.services.ros.isEnabled &&
           robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
-        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
+        applicationMode ||
+        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
     },
     {
       name: "Teleoperation",
       icon: <BiSolidJoystickButton size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData.step1.services.ros.isEnabled &&
           robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
-        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
+        applicationMode ||
+        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
     },
     {
       name: "Visualization",
       icon: <BsCameraVideoFill size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData.step1.services.ros.isEnabled &&
           robotData.step1.services.ros.socketEndpoint &&
           isSettedCookie
         ),
       isHidden:
-        applicationMode || (responseRobot && !responseRobot?.bridgeEnabled),
+        applicationMode ||
+        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
     },
     {
       name: "Development Suite",
       icon: <AiFillLayout size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData.step1.services.ide.isEnabled &&
           robotData.step1.services.ide.httpsEndpoint &&
           robotData.step1.services.vdi.isEnabled &&
           robotData.step1.services.vdi.socketEndpoint &&
           isSettedCookie
-        ) ||
-        !isRobotReady,
+        ),
 
       isHidden: false,
     },
@@ -82,7 +84,7 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       name: "Code Editor",
       icon: <AiFillCode size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData.step1.services.ide.isEnabled &&
           robotData.step1.services.ide.httpsEndpoint &&
@@ -94,10 +96,10 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       name: "Remote Desktop",
       icon: <MdScreenShare size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
-          responseRobot?.vdiEnabled &&
-          responseRobot?.vdiIngressEndpoint &&
+          robotData.step1.services.vdi.isEnabled &&
+          robotData.step1.services.vdi.socketEndpoint &&
           isSettedCookie
         ),
       isHidden: false,
@@ -106,7 +108,7 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       name: "Jupyter Notebook",
       icon: <FaPython size={16} />,
       isLoading:
-        !responseRobot ||
+        !isRobotReady ||
         !(
           robotData?.step1.services.jupyterNotebook?.isEnabled &&
           robotData?.step1.services.jupyterNotebook?.httpsEndpoint &&

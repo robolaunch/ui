@@ -1278,10 +1278,11 @@ export default ({ children }: any) => {
 
         getInstances,
         getInstance,
-
         startInstance,
         stopInstance,
         deleteInstance,
+
+        addPhysicalInstanceToFleet,
 
         getPhysicalInstances,
         getPhysicalInstance,
@@ -1296,8 +1297,12 @@ export default ({ children }: any) => {
 
         getPhysicalFleet,
 
-        addPhysicalInstanceToFleet,
+        createEnvironment,
+        getEnvironments,
+        getEnvironment,
+        deleteEnvironment,
 
+        createRobot,
         getRobots,
         getRobot,
         deleteRobot,
@@ -1307,13 +1312,7 @@ export default ({ children }: any) => {
 
         getLaunchManagers,
 
-        createEnvironment,
-        getEnvironments,
-        getEnvironment,
-        deleteEnvironment,
-
         getSystemStatus,
-        createRobot,
 
         createDataScienceApp,
         getDataScienceApps,

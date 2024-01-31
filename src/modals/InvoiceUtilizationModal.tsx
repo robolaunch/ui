@@ -1,8 +1,8 @@
-import { Dialog } from "primereact/dialog";
-import React, { ReactElement } from "react";
-import ReactApexChart from "react-apexcharts";
 import Button from "../components/Button/Button";
 import { TbCloudDownload } from "react-icons/tb";
+import ReactApexChart from "react-apexcharts";
+import { Dialog } from "primereact/dialog";
+import { ReactElement } from "react";
 
 interface IInvoiceUtilizationModal {
   visibleModal: boolean;
@@ -110,7 +110,7 @@ export default function InvoiceUtilizationModal({
         />
         <div className="flex items-center justify-center">
           <Button
-            className="!border-secondary-600 !ring-secondary-200 !h-8 !w-fit !border !bg-transparent"
+            className="!h-8 !w-fit !border !border-secondary-600 !bg-transparent !ring-secondary-200"
             text={
               <div className="flex items-center gap-1.5 p-3">
                 <TbCloudDownload size={20} className="text-secondary-600" />

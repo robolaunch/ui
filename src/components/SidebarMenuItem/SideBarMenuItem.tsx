@@ -145,9 +145,9 @@ export default function SideBarMenuItem({
                         ? "Applications"
                         : "Robots"
                       : type === "workspacesmanager"
-                        ? "Robot Workspace Managers"
+                        ? `${applicationMode ? "Application" : "Robot"} Workspace Managers`
                         : type === "buildsmanager"
-                          ? "Robot Build Managers"
+                          ? `${applicationMode ? "Application" : "Robot"} Build Managers`
                           : type === "launchsmanager"
                             ? "Robot Launch Managers"
                             : type === "back"
