@@ -5,26 +5,39 @@ import {
   robotLaunchManagerApi,
 } from "../api/api";
 import { toast } from "sonner";
-import {
-  IcreateBuildManagerRequest,
-  IcreateLaunchManagerRequest,
-  IcreateRobotRequest,
-  IgetBuildManagerRequest,
-  IgetBuildManagersRequest,
-  IgetLaunchManagerRequest,
-  IgetLaunchManagersRequest,
-  IgetRobotRequest,
-  IgetRobotsRequest,
-  IdeleteBuildManagerRequest,
-  IdeleteLaunchManagerRequest,
-} from "../interfaces/robotInterfaces";
 import { isProduction } from "../helpers/envProvider";
 import axios from "axios";
 import getCookies from "../functions/getCookies";
 
 export const createRobot = createAsyncThunk(
   "robot/createFederatedRobot",
-  async (values: IcreateRobotRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    workspaceUpdated: boolean;
+    physicalInstanceName: string;
+    distributions: string[];
+    bridgeEnabled: boolean;
+    vdiEnabled: boolean;
+    vdiSessionCount: number;
+    ideEnabled: boolean;
+    storageAmount: number;
+    gpuEnabledForCloudInstance: boolean;
+    marketPlaceEnabled: boolean;
+    imageUser: string;
+    imageRepository: string;
+    imageTag: string;
+    workspaces: any[];
+    permittedDirectories: string;
+    persistentDirectories: string;
+    hostDirectories: string;
+    ideCustomPorts: string;
+    vdiCustomPorts: string;
+  }) => {
     const response = await robotApi.createFederatedRobot({
       name: "robot/createFederatedRobot",
       organizationId: values?.organizationId,
@@ -75,7 +88,13 @@ export const createRobot = createAsyncThunk(
 
 export const getRobots = createAsyncThunk(
   "robot/getFederatedRobots",
-  async (values: IgetRobotsRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+  }) => {
     const response = await robotApi.getFederatedRobots({
       name: "robot/getFederatedRobots",
       organizationId: values?.organizationId,
@@ -98,7 +117,14 @@ export const getRobots = createAsyncThunk(
 
 export const getRobot = createAsyncThunk(
   "robot/getFederatedRobot",
-  async (values: IgetRobotRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+  }) => {
     const response = await robotApi.getFederatedRobot({
       name: "robot/getFederatedRobot",
       organizationId: values?.organizationId,
@@ -155,7 +181,17 @@ export const deleteRobot = createAsyncThunk(
 
 export const createBuildManager = createAsyncThunk(
   "robot/createRobotBuildManager",
-  async (values: IcreateBuildManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    physicalInstanceName: string;
+    buildManagerName: string;
+    robotBuildSteps: any[];
+  }) => {
     const response = await robotBuildManagerApi.createRobotBuildManager({
       name: "robot/createRobotBuildManager",
       organizationId: values?.organizationId,
@@ -186,7 +222,14 @@ export const createBuildManager = createAsyncThunk(
 
 export const getBuildManagers = createAsyncThunk(
   "robot/getRobotBuildManagers",
-  async (values: IgetBuildManagersRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+  }) => {
     const response = await robotBuildManagerApi.getRobotBuildManagers({
       name: "robot/getRobotBuildManagers",
       organizationId: values?.organizationId,
@@ -211,7 +254,15 @@ export const getBuildManagers = createAsyncThunk(
 
 export const getBuildManager = createAsyncThunk(
   "robot/getRobotBuildManager",
-  async (values: IgetBuildManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+    buildManagerName: string;
+  }) => {
     const response = await robotBuildManagerApi.getRobotBuildManager({
       name: "robot/getRobotBuildManager",
       organizationId: values?.organizationId,
@@ -240,7 +291,16 @@ export const getBuildManager = createAsyncThunk(
 
 export const deleteBuildManager = createAsyncThunk(
   "robot/deleteRobotBuildManager",
-  async (values: IdeleteBuildManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    physicalInstanceName: string;
+    buildManagerName: string;
+  }) => {
     const response = await robotBuildManagerApi.deleteRobotBuildManager({
       name: "robot/deleteRobotBuildManager",
       organizationId: values?.organizationId,
@@ -269,7 +329,17 @@ export const deleteBuildManager = createAsyncThunk(
 
 export const createLaunchManager = createAsyncThunk(
   "robot/createRobotLaunchManager",
-  async (values: IcreateLaunchManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    physicalInstanceName: string;
+    launchManagerName: string;
+    robotLaunchSteps: any[];
+  }) => {
     const response = await robotLaunchManagerApi.createRobotLaunchManager({
       name: "robot/createRobotLaunchManager",
       organizationId: values?.organizationId,
@@ -300,7 +370,14 @@ export const createLaunchManager = createAsyncThunk(
 
 export const getLaunchManagers = createAsyncThunk(
   "robot/getRobotLaunchManagers",
-  async (values: IgetLaunchManagersRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+  }) => {
     const response = await robotLaunchManagerApi.getRobotLaunchManagers({
       name: "robot/getRobotLaunchManagers",
       organizationId: values?.organizationId,
@@ -325,7 +402,15 @@ export const getLaunchManagers = createAsyncThunk(
 
 export const getLaunchManager = createAsyncThunk(
   "robot/getRobotLaunchManager",
-  async (values: IgetLaunchManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+    buildManagerName: string;
+  }) => {
     const response = await robotLaunchManagerApi.getRobotLaunchManager({
       name: "robot/getRobotLaunchManager",
       organizationId: values?.organizationId,
@@ -354,7 +439,16 @@ export const getLaunchManager = createAsyncThunk(
 
 export const deleteLaunchManager = createAsyncThunk(
   "robot/deleteRobotLaunchManager",
-  async (values: IdeleteLaunchManagerRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robotName: string;
+    fleetName: string;
+    physicalInstanceName: string;
+    launchManagerName: string;
+  }) => {
     const response = await robotLaunchManagerApi.deleteRobotLaunchManager({
       name: "robot/deleteRobotLaunchManager",
       organizationId: values?.organizationId,
