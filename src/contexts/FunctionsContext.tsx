@@ -29,10 +29,13 @@ import {
   createRobot as createRobotDispatch,
   createBuildManager as createBuildManagerDispatch,
   getFilesFromFileManager as getFilesFromFileManagerDispatch,
+  deleteRobot as deleteRobotDispatch,
 } from "../toolkit/RobotSlice";
 import {
   getFederatedFleets,
   getNamespaces as getNamespacesDispatch,
+  deleteNamespace as deleteNamespaceDispatch,
+  deleteFederatedFleet as deleteFederatedFleetDispatch,
 } from "../toolkit/FleetSlice";
 import {
   IcreateDataScienceAppsRequest,
@@ -47,6 +50,7 @@ import {
   getDataScienceApps as getDataScienceAppsDispatch,
   createDataScienceApp as createDataScienceAppDispatch,
   deleteDataScienceApp as deleteDataScienceAppDispatch,
+  deleteEnvironment as deleteEnvironmentDispatch,
 } from "../toolkit/EnvironmentSlice";
 import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
 import {
@@ -486,6 +490,25 @@ export default ({ children }: any) => {
     });
   }
 
+  async function deleteFleet(fleetName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteFederatedFleetDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: pagesState?.instance?.id!,
+            robolaunchFederatedFleetsName: fleetName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   async function getNamespaces(
     values: IgetNamespaces,
     parameters?: ImultipleGetParameters,
@@ -552,6 +575,25 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function deleteNamespace(nsName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteNamespaceDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: pagesState?.instance?.id!,
+            namespaceName: nsName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
       }
     });
   }
@@ -661,6 +703,26 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function deleteRobot(robotName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteRobotDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: pagesState?.instance?.id!,
+            fleetName: pagesState?.fleet?.name!,
+            robotName: robotName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
       }
     });
   }
@@ -894,6 +956,26 @@ export default ({ children }: any) => {
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
+      }
+    });
+  }
+
+  async function deleteEnvironment(envName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteEnvironmentDispatch({
+            organizationId: pagesState?.organization?.id!,
+            roboticsCloudName: pagesState?.roboticsCloud?.name!,
+            region: pagesState?.roboticsCloud?.region!,
+            instanceId: pagesState?.instance?.id!,
+            fleetName: pagesState?.fleet?.name!,
+            environmentName: envName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
       }
     });
   }
@@ -1206,9 +1288,11 @@ export default ({ children }: any) => {
 
         getFleets,
         getFleet,
+        deleteFleet,
 
         getNamespaces,
         getNamespace,
+        deleteNamespace,
 
         getPhysicalFleet,
 
@@ -1216,21 +1300,25 @@ export default ({ children }: any) => {
 
         getRobots,
         getRobot,
+        deleteRobot,
 
+        createBuildManager,
         getBuildManager,
 
         getLaunchManagers,
 
+        createEnvironment,
         getEnvironments,
         getEnvironment,
+        deleteEnvironment,
 
         getSystemStatus,
         createRobot,
-        createEnvironment,
-        createBuildManager,
+
         createDataScienceApp,
-        deleteDataScienceApp,
         getDataScienceApps,
+        deleteDataScienceApp,
+
         getIP,
         getFilesFromFileManager,
       }}

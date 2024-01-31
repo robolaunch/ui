@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo, useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import GeneralTable from "../../components/Table/GeneralTable";
 import BasicCell from "../../components/TableInformationCells/BasicCell";
 import ColorCell from "../../components/TableInformationCells/ColorCell";

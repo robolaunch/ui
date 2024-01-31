@@ -17,7 +17,6 @@ import {
   IgetRobotsRequest,
   IdeleteBuildManagerRequest,
   IdeleteLaunchManagerRequest,
-  IdeleteRobotRequest,
 } from "../interfaces/robotInterfaces";
 import { isProduction } from "../helpers/envProvider";
 import axios from "axios";
@@ -124,7 +123,14 @@ export const getRobot = createAsyncThunk(
 
 export const deleteRobot = createAsyncThunk(
   "robot/deleteFederatedRobot",
-  async (values: IdeleteRobotRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    robotName: string;
+  }) => {
     const response = await robotApi.deleteFederatedRobot({
       name: "robot/deleteFederatedRobot",
       organizationId: values?.organizationId,

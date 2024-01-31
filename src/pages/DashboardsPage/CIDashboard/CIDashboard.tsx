@@ -14,7 +14,7 @@ import { ReactElement } from "react";
 import UsagesWidget from "../../../components/UsagesWidget/UsagesWidget";
 
 export default function CIDashboard(): ReactElement {
-  const { data, columns, responseFleets, handleReload } = InstanceTableData();
+  const { rows, columns, fleets, handleReload } = InstanceTableData();
   const { pagesState, applicationMode } = useMain();
   const url = useParams();
 
@@ -39,49 +39,45 @@ export default function CIDashboard(): ReactElement {
       }
       widget2={<UsagesWidget />}
       widget3={
-        // <SoftwareDetailsWidget
-        //   title={pagesState?.instance?.name || ""}
-        //   data={[
-        //     {
-        //       icon: <FaServer size={16} />,
-        //       title: "Architecture",
-        //       value: pagesState?.instance?.cloudInstanceResource?.architecture,
-        //     },
-        //     {
-        //       icon: <FaLinux size={16} />,
-        //       title: "Operating System",
-        //       value:
-        //         pagesState?.instance?.cloudInstanceResource?.operatingSystem,
-        //     },
-        //     {
-        //       icon: <FaUbuntu size={16} />,
-        //       title: "OS Distro",
-        //       value:
-        //         pagesState?.instance?.cloudInstanceResource
-        //           ?.operatingSystemDistro,
-        //     },
-        //     {
-        //       icon: <RiCpuLine size={16} />,
-        //       title: "Kernel Version",
-        //       value: pagesState?.instance?.cloudInstanceResource?.kernelVersion,
-        //     },
-        //     {
-        //       icon: <SiKubernetes size={16} />,
-        //       title: "K8S Version",
-        //       value:
-        //         pagesState?.instance?.cloudInstanceResource?.kubernetesVersion,
-        //     },
-        //   ]}
-        // />
-        <></>
+        <SoftwareDetailsWidget
+          title={pagesState?.instance?.name || ""}
+          data={[
+            {
+              icon: <FaServer size={16} />,
+              title: "Architecture",
+              value: pagesState?.instance?.resources?.software?.architecture,
+            },
+            {
+              icon: <FaLinux size={16} />,
+              title: "Operating System",
+              value: pagesState?.instance?.resources?.software?.os,
+            },
+            {
+              icon: <FaUbuntu size={16} />,
+              title: "OS Distro",
+              value: pagesState?.instance?.resources?.software?.osDistro,
+            },
+            {
+              icon: <RiCpuLine size={16} />,
+              title: "Kernel Version",
+              value: pagesState?.instance?.resources?.software?.kernelVersion,
+            },
+            {
+              icon: <SiKubernetes size={16} />,
+              title: "K8S Version",
+              value:
+                pagesState?.instance?.resources?.software?.kubernetesVersion,
+            },
+          ]}
+        />
       }
       table={
         <GeneralTable
           type="fleet"
           title={applicationMode ? "Namespaces" : "Fleets"}
-          data={data}
+          data={rows!}
           columns={columns}
-          loading={!Array.isArray(responseFleets)}
+          loading={!Array.isArray(fleets)}
           handleReload={handleReload}
         />
       }

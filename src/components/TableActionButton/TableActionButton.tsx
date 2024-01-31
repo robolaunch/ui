@@ -31,12 +31,12 @@ export default function TableActionButton({
   }
 
   const props: IconBaseProps = {
-    size: 16,
+    size: 14,
   };
 
   return (
     <Button
-      className={`disabled:!border-light-500 !h-8 !w-8   !border !bg-transparent ${colorHandle()} `}
+      className={`!h-8 !w-8 !border !bg-transparent disabled:!border-light-500 ${colorHandle()} `}
       text={(() => {
         switch (type) {
           case "edit": {

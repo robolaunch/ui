@@ -950,6 +950,10 @@ video {
   margin-top: 1rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .mt-\[0\.1rem\] {
   margin-top: 0.1rem;
 }
@@ -1000,6 +1004,10 @@ video {
 
 .\!h-60 {
   height: 15rem !important;
+}
+
+.\!h-7 {
+  height: 1.75rem !important;
 }
 
 .\!h-8 {
@@ -1216,6 +1224,10 @@ video {
 
 .\!w-64 {
   width: 16rem !important;
+}
+
+.\!w-7 {
+  width: 1.75rem !important;
 }
 
 .\!w-8 {

@@ -1,21 +1,19 @@
-import NamespaceActionCells from "../components/TableActionCells/NamespaceActionCells";
-import FleetActionCells from "../components/TableActionCells/FleetActionCells";
-import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { useAppSelector } from "../hooks/redux";
 import { IFleet } from "../interfaces/fleet.interface";
 import { INamespace } from "../interfaces/namespace.interface";
+import { orgSplitter } from "../functions/string.splitter.function";
+import { getRegionFromProviderCode } from "../functions/instance.function";
+import NSActionCells from "../components/TableActionCells/NSActionCells";
 
 export function InstanceTableData() {
-  const [responseFleets, setResponseFleets] = useState<
-    IFleet[] | INamespace[] | undefined
-  >(undefined);
+  const [fleets, setFleets] = useState<IFleet[] | INamespace[] | null>();
   const [reload, setReload] = useState<boolean>(false);
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -53,7 +51,7 @@ export function InstanceTableData() {
   }, [pagesState, url, reload]);
 
   useEffect(() => {
-    setResponseFleets(undefined);
+    setFleets(null);
   }, [url]);
 
   function handleGetOrganization() {
@@ -63,7 +61,7 @@ export function InstanceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseFleets,
+        ifErrorNavigateTo404: !fleets,
         setPages: true,
       },
     );
@@ -77,7 +75,7 @@ export function InstanceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseFleets,
+        ifErrorNavigateTo404: !fleets,
         setPages: true,
       },
     );
@@ -94,7 +92,7 @@ export function InstanceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseFleets,
+        ifErrorNavigateTo404: !fleets,
         setPages: true,
       },
     );
@@ -109,8 +107,8 @@ export function InstanceTableData() {
         region: pagesState?.roboticsCloud?.region!,
       },
       {
-        ifErrorNavigateTo404: !responseFleets,
-        setResponse: setResponseFleets,
+        ifErrorNavigateTo404: !fleets,
+        setResponse: setFleets,
       },
     );
   }
@@ -124,34 +122,34 @@ export function InstanceTableData() {
         region: selectedState?.roboticsCloud?.name!,
       },
       {
-        ifErrorNavigateTo404: !responseFleets,
-        setResponse: setResponseFleets,
+        ifErrorNavigateTo404: !fleets,
+        setResponse: setFleets,
       },
     );
   }
 
   function handleReload() {
-    setResponseFleets(undefined);
+    setFleets(undefined);
     setReload((prevState: boolean) => !prevState);
   }
 
-  const data: any = useMemo(
+  const rows = useMemo(
     () =>
-      responseFleets?.map((fleet) => {
+      fleets?.map((fleet) => {
         return {
-          key: fleet?.name,
-          name: fleet,
-          organization: pagesState?.organization?.name,
-          roboticsCloud: pagesState?.roboticsCloud?.name,
+          name: fleet?.name,
+          organization: orgSplitter(pagesState?.organization?.name!),
+          region: getRegionFromProviderCode(pagesState?.roboticsCloud?.region!),
           instance: pagesState?.instance?.name,
-          state: fleet?.status || fleet?.status,
+          status: fleet?.status,
           actions: fleet,
         };
       }),
-    [pagesState, responseFleets],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pagesState, fleets, url],
   );
 
-  const columns: any = useMemo(
+  const columns = useMemo(
     () => [
       {
         key: "name",
@@ -159,16 +157,16 @@ export function InstanceTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: ({ name }: { name: string }) => {
           return (
             <InfoCell
-              title={rowData?.name?.name}
-              subtitle={pagesState.organization?.name!}
-              titleURL={`/${handleSplitOrganizationName(
+              title={name}
+              subtitle={orgSplitter(pagesState.organization?.name!)}
+              titleURL={`/${orgSplitter(
                 pagesState?.organization?.name!,
               )}/${pagesState?.roboticsCloud?.name}/${
                 pagesState?.instance?.name
-              }/${rowData?.name?.name}`}
+              }/${name}`}
             />
           );
         },
@@ -179,18 +177,18 @@ export function InstanceTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: () => {
-          return <BasicCell text={pagesState?.organization?.name!} />;
+        body: ({ organization }: { organization: string }) => {
+          return <BasicCell text={organization} />;
         },
       },
       {
-        key: "roboticsCloud",
+        key: "region",
         header: "Region",
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.roboticsCloud} />;
+        body: ({ region }: { region: string }) => {
+          return <BasicCell text={region} />;
         },
       },
       {
@@ -199,56 +197,37 @@ export function InstanceTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.instance} />;
+        body: ({ instance }: { instance: string }) => {
+          return <BasicCell text={instance} />;
         },
       },
       {
-        key: "state",
-        header: applicationMode ? "Namespace State" : "Fleet State",
+        key: "status",
+        header: applicationMode ? "Namespace Status" : "Fleet Status",
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <StateCell state={rowData?.state} />;
+        body: ({ status }: { status: string }) => {
+          return <StateCell state={status} />;
         },
       },
       {
         key: "actions",
         header: "Actions",
         align: "right",
-        body: (rowData: any) => {
+        body: ({ actions }: { actions: IFleet | INamespace }) => {
           return (
-            <Fragment>
-              {applicationMode ? (
-                <NamespaceActionCells
-                  reload={() => setReload((prevState: boolean) => !prevState)}
-                  data={{
-                    organization: pagesState?.organization!,
-                    roboticsCloud: pagesState?.roboticsCloud!,
-                    instance: pagesState?.instance!,
-                    fleet: rowData?.actions,
-                  }}
-                />
-              ) : (
-                <FleetActionCells
-                  reload={() => setReload((prevState: boolean) => !prevState)}
-                  data={{
-                    organization: pagesState?.organization!,
-                    roboticsCloud: pagesState?.roboticsCloud!,
-                    instance: pagesState?.instance!,
-                    fleet: rowData?.actions,
-                  }}
-                />
-              )}
-            </Fragment>
+            <NSActionCells
+              reload={() => setReload((prevState: boolean) => !prevState)}
+              data={actions}
+            />
           );
         },
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pagesState, responseFleets],
+    [pagesState, fleets, url],
   );
 
-  return { data, columns, responseFleets, handleReload };
+  return { rows, columns, fleets, handleReload };
 }

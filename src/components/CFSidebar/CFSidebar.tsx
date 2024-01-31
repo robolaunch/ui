@@ -15,7 +15,7 @@ export default function CFSidebar({
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="animate-fadeIn flex flex-col gap-8"
+      className="animate-fadeIn flex flex-col gap-2"
     >
       {children}
       <CFButtons formik={formik} text={text} />

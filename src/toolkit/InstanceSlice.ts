@@ -4,9 +4,16 @@ import { toast } from "sonner";
 
 export const createCloudInstance = createAsyncThunk(
   "instance/createCloudInstance",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceType: string;
+    cloudInstanceName: string;
+    region: string;
+    developmentMode: boolean;
+  }) => {
     const response = await createInstanceApi.createInstance({
-      name: values.name,
+      name: "instance/createCloudInstance",
       organizationId: values.organizationId,
       roboticsClouds: [
         {
@@ -16,6 +23,7 @@ export const createCloudInstance = createAsyncThunk(
               instanceType: values.instanceType,
               name: values.cloudInstanceName,
               region: values.region,
+              developmentMode: values.developmentMode,
             },
           ],
         },

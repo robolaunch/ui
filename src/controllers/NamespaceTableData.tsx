@@ -1,22 +1,21 @@
 import EnvironmentActionCells from "../components/TableActionCells/EnvironmentActionCells";
-import RobotActionCells from "../components/TableActionCells/RobotActionCells";
+import { IEnvironment } from "../interfaces/environment/environment.interface";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
+import { orgSplitter } from "../functions/string.splitter.function";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import { IEnvironment } from "../interfaces/environment/environment.interface";
 
 export function NamespaceTableData() {
+  const [environments, setEnviroments] = useState<IEnvironment[] | null>();
+  const [reload, setReload] = useState<boolean>(false);
+
   const { pagesState, selectedState, applicationMode } = useMain();
   const url = useParams();
-  const [reload, setReload] = useState<boolean>(false);
-  const [responseRobots, setResponseRobots] = useState<
-    IEnvironment[] | undefined
-  >(undefined);
 
   const {
     getOrganization,
@@ -59,11 +58,11 @@ export function NamespaceTableData() {
   }, [pagesState, url, reload]);
 
   useEffect(() => {
-    setResponseRobots(undefined);
+    setEnviroments(null);
   }, [url]);
 
   function handleReload() {
-    setResponseRobots(undefined);
+    setEnviroments(null);
     setReload((prevState: boolean) => !prevState);
   }
 
@@ -74,7 +73,7 @@ export function NamespaceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseRobots,
+        ifErrorNavigateTo404: !environments,
         setPages: true,
       },
     );
@@ -88,7 +87,7 @@ export function NamespaceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseRobots,
+        ifErrorNavigateTo404: !environments,
         setPages: true,
       },
     );
@@ -105,7 +104,7 @@ export function NamespaceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseRobots,
+        ifErrorNavigateTo404: !environments,
         setPages: true,
       },
     );
@@ -122,7 +121,7 @@ export function NamespaceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseRobots,
+        ifErrorNavigateTo404: !environments,
         setPages: true,
       },
     );
@@ -139,7 +138,7 @@ export function NamespaceTableData() {
       },
       {
         isSetState: true,
-        ifErrorNavigateTo404: !responseRobots,
+        ifErrorNavigateTo404: !environments,
         setPages: true,
       },
     );
@@ -155,8 +154,8 @@ export function NamespaceTableData() {
         fleetName: pagesState?.fleet?.name!,
       },
       {
-        ifErrorNavigateTo404: !responseRobots,
-        setResponse: setResponseRobots,
+        ifErrorNavigateTo404: !environments,
+        setResponse: setEnviroments,
       },
     );
   }
@@ -171,64 +170,46 @@ export function NamespaceTableData() {
         fleetName: pagesState?.fleet?.name!,
       },
       {
-        ifErrorNavigateTo404: !responseRobots,
-        setResponse: setResponseRobots,
+        ifErrorNavigateTo404: !environments,
+        setResponse: setEnviroments,
       },
     );
   }
 
-  const data: any = useMemo(
+  const rows = useMemo(
     () =>
-      responseRobots?.map((robot: any) => {
+      environments?.map((env) => {
         return {
-          key: robot?.name,
-          name: robot,
+          name: env?.step1?.details?.name,
           organization: handleSplitOrganizationName(
             pagesState?.organization?.name!,
           ),
-          roboticsCloud: pagesState?.roboticsCloud?.name!,
+          region: pagesState?.roboticsCloud?.name!,
           instance: pagesState?.instance?.name!,
           fleet: pagesState?.fleet?.name!,
-          virtualState: robot?.robotClusters?.[0]?.robotStatus || undefined,
-          physicalState: robot?.robotClusters?.[1]?.robotStatus || undefined,
-          robotServices: {
-            isEnabledRosBridge: robot?.bridgeEnabled,
-            isEnabledIDE: robot?.ideEnabled,
-            isEnabledVDI: robot?.vdiEnabled,
-          },
-          actions: {
-            organizationId: pagesState.organization?.id!,
-            roboticsCloudName: pagesState.roboticsCloud?.name!,
-            instanceId: pagesState.instance?.id!,
-            region: pagesState.roboticsCloud?.name!,
-            fleetName: pagesState.fleet?.name!,
-            robotName: robot?.name,
-            virtualState: robot?.robotClusters?.[0] || undefined,
-            physicalState: robot?.robotClusters?.[1] || undefined,
-          },
+          vStatus: env?.step1?.clusters?.environment?.[0]?.status,
+          pStatus: env?.step1?.clusters?.environment?.[1]?.status,
+          actions: env,
         };
       }),
-    [responseRobots, pagesState],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [environments, pagesState, url],
   );
 
-  const columns: any = useMemo(
+  const columns = useMemo(
     () => [
       {
         key: "name",
         header: "Name",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: ({ name }: { name: string }) => {
           return (
             <InfoCell
-              title={rowData?.name?.name}
-              subtitle={rowData?.name?.fleetName}
-              titleURL={`/${handleSplitOrganizationName(
-                pagesState?.organization?.name!,
-              )}/${pagesState.roboticsCloud?.name}/${
+              title={name}
+              subtitle={orgSplitter(pagesState.organization?.name!)}
+              titleURL={`/${orgSplitter(pagesState.organization?.name!)}/${pagesState.roboticsCloud?.name}/${
                 pagesState.instance?.name
-              }/${pagesState.fleet?.name}/${rowData?.name?.name}`}
+              }/${pagesState.fleet?.name}/${name}`}
             />
           );
         },
@@ -236,91 +217,62 @@ export function NamespaceTableData() {
       {
         key: "organization",
         header: "Organization",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.organization} />;
+        body: ({ organization }: { organization: string }) => {
+          return <BasicCell text={organization} />;
         },
       },
       {
-        key: "roboticsCloud",
+        key: "region",
         header: "Region",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.roboticsCloud} />;
+        body: ({ region }: { region: string }) => {
+          return <BasicCell text={region} />;
         },
       },
       {
         key: "instance",
         header: "Cloud Instance",
-        sortable: false,
-        filter: false,
         align: "left",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.instance} />;
+        body: ({ instance }: { instance: string }) => {
+          return <BasicCell text={instance} />;
         },
       },
       {
         key: "fleet",
         header: applicationMode ? "Namespace" : "Fleet",
-        sortable: false,
-        filter: false,
         align: "left",
         body: (rowData: any) => {
           return <BasicCell text={rowData?.fleet} />;
         },
       },
-      !applicationMode && {
-        key: "robotServices",
-        header: `ROS 2 Bridge`,
-        sortable: true,
-        filter: false,
-        align: "left",
-        body: (rowData: any) => {
-          return (
-            <StateCell state={rowData.robotServices ? "Active" : "Deactive"} />
-          );
-        },
-      },
       {
-        key: "virtualState",
-        header: `Virtual ${applicationMode ? "Application" : "Robot"} State`,
-        sortable: true,
-        filter: false,
+        key: "vStatus",
+        header: `${applicationMode ? "Application" : "Virtual Robot"} Status`,
         align: "left",
-        body: (rowData: any) => {
-          return <StateCell state={rowData?.virtualState} />;
+        body: ({ vStatus }: { vStatus: string }) => {
+          return <StateCell state={vStatus} />;
         },
       },
       !applicationMode && {
-        key: "physicalState",
-        header: `Physical ${applicationMode ? "Application" : "Robot"} State`,
-        sortable: true,
-        filter: false,
+        key: "pStatus",
+        header: `Physical ${applicationMode ? "Application" : "Robot"} Status`,
         align: "left",
-        body: (rowData: any) => {
-          if (!rowData?.physicalState) {
+        body: ({ pStatus }: { pStatus: string }) => {
+          if (!pStatus) {
             return <BasicCell text="None" />;
           }
-          return <StateCell state={rowData?.physicalState} />;
+          return <StateCell state={pStatus} />;
         },
       },
       {
         key: "actions",
         header: "Actions",
         align: "right",
-        body: (rowData: any) => {
-          return applicationMode ? (
+        body: ({ actions: environment }: { actions: IEnvironment }) => {
+          return (
             <EnvironmentActionCells
-              data={rowData?.actions}
-              reload={() => setReload((prevState: boolean) => !prevState)}
-            />
-          ) : (
-            <RobotActionCells
-              data={rowData?.actions}
+              data={environment}
               reload={() => setReload((prevState: boolean) => !prevState)}
             />
           );
@@ -328,13 +280,13 @@ export function NamespaceTableData() {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pagesState, setReload],
+    [pagesState, setReload, url],
   );
 
   return {
-    data,
+    rows,
     columns,
-    responseRobots,
+    environments,
     handleReload,
   };
 }

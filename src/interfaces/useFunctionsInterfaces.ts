@@ -198,6 +198,8 @@ export interface IuseFunctions {
 
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
   getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
+  deleteFleet: (fleetName: string) => Promise<void>;
+
   getNamespaces: (
     values: IgetNamespaces,
     parameters: ImultipleGetParameters,
@@ -206,12 +208,15 @@ export interface IuseFunctions {
     values: IgetNamespace,
     parameters?: IsingleGetParameters,
   ) => void;
+  deleteNamespace: (nsName: string) => Promise<void>;
+
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters,
   ) => void;
   getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
+  deleteRobot: (robotName: string) => Promise<void>;
   getBuildManager: (parameters?: IsingleGetBuildParameters) => void;
   getLaunchManagers: (
     values: IgetLaunchManagers,
@@ -225,6 +230,7 @@ export interface IuseFunctions {
     values: IgetEnvironmentRequest,
     parameters?: IsingleGetEnviromentParameters,
   ) => void;
+  deleteEnvironment: (envName: string) => Promise<void>;
 
   createDataScienceApp: (values: IcreateDataScienceAppsRequest) => void;
   getDataScienceApps: (parameters?: ImultipleGetParameters) => void;

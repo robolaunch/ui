@@ -10,7 +10,7 @@ interface ICFButtons {
 
 export default function CFButtons({ formik, text }: ICFButtons): ReactElement {
   return (
-    <div className="flex gap-2">
+    <div className="mt-6 flex gap-2">
       <CreateFormCancelButton disabled={formik.isSubmitting} />
       <Button
         type="submit"

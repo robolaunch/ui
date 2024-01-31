@@ -2,6 +2,7 @@ import { createInstanceSchema } from "../../validations/InstancesValidations";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 import { createCloudInstance } from "../../toolkit/InstanceSlice";
 import FormInputText from "../FormInputText/FormInputText";
+import CFInputToggle from "../CFInputToggle/CFInputToggle";
 import { useAppDispatch } from "../../hooks/redux";
 import InputError from "../InputError/InputError";
 import CFSidebar from "../CFSidebar/CFSidebar";
@@ -18,6 +19,7 @@ export default function CFInstance(): ReactElement {
   const formik: any = useFormik({
     initialValues: {
       cloudInstanceName: "",
+      developmentMode: false,
       instanceType: "",
     },
     validationSchema: createInstanceSchema,
@@ -29,7 +31,8 @@ export default function CFInstance(): ReactElement {
           roboticsCloudName: selectedState.roboticsCloud!.name!,
           cloudInstanceName: values.cloudInstanceName,
           instanceType: values.instanceType,
-          region: selectedState?.roboticsCloud?.region,
+          region: selectedState?.roboticsCloud?.region!,
+          developmentMode: values.developmentMode,
         }),
       ).then((response: any) => {
         if (response) {
@@ -50,7 +53,6 @@ export default function CFInstance(): ReactElement {
         inputError={formik.errors.cloudInstanceName}
         inputTouched={!!formik.errors.cloudInstanceName}
       />
-
       <div className="flex flex-col gap-3">
         <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
           Types:
@@ -99,6 +101,15 @@ export default function CFInstance(): ReactElement {
         </div>
         <InputError error={formik?.errors?.instanceType} touched={true} />
       </div>
+      <CFInputToggle
+        labelName="Development Mode:"
+        labelInfoTip=""
+        disabled={formik.isSubmitting}
+        checked={formik?.values?.developmentMode}
+        onChange={(e: boolean) => {
+          formik.setFieldValue("developmentMode", e);
+        }}
+      />
     </CFSidebar>
   );
 }

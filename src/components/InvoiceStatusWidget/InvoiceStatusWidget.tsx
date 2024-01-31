@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { BiErrorCircle } from "react-icons/bi";
 import Button from "../Button/Button";
@@ -20,7 +20,7 @@ export default function InvoiceStatusWidget(): ReactElement {
             return (
               <div className="flex h-full items-center justify-center">
                 <div className="flex flex-col items-center gap-5">
-                  <div className="border-secondary-500 flex h-32 w-32 items-center justify-center rounded-full border-4 text-3xl font-medium">
+                  <div className="flex h-32 w-32 items-center justify-center rounded-full border-4 border-secondary-500 text-3xl font-medium">
                     <span>104$</span>
                   </div>
                   <span className="text-sm font-medium">

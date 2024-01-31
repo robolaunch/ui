@@ -2,8 +2,8 @@ import InformationWidget from "../../../components/InformationWidget/Information
 import { NamespaceTableData } from "../../../controllers/NamespaceTableData";
 import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
-import GeneralTable from "../../../components/Table/GeneralTable";
 import CountWidget from "../../../components/CountWidget/CountWidget";
+import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import { getGuideItem } from "../../../functions/handleGuide";
 import useMain from "../../../hooks/useMain";
@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
 
 export default function NSDashboard(): ReactElement {
-  const { data, columns, responseRobots, handleReload } = NamespaceTableData();
+  const { rows, columns, environments, handleReload } = NamespaceTableData();
   const { selectedState, applicationMode } = useMain();
   const url = useParams();
 
@@ -43,12 +43,12 @@ export default function NSDashboard(): ReactElement {
       widget3={
         <CountWidget
           data={
-            responseRobots
+            environments
               ? [
                   {
                     label: "Creating",
                     value:
-                      responseRobots.filter(
+                      environments.filter(
                         (robot: any) =>
                           robot?.robotClusters?.[0]?.robotStatus !==
                           "EnvironmentReady",
@@ -58,7 +58,7 @@ export default function NSDashboard(): ReactElement {
                   {
                     label: "Ready",
                     value:
-                      responseRobots.filter(
+                      environments.filter(
                         (robot: any) =>
                           robot?.robotClusters?.[0]?.robotStatus ===
                           "EnvironmentReady",
@@ -79,9 +79,9 @@ export default function NSDashboard(): ReactElement {
         <GeneralTable
           type={applicationMode ? "application" : "robot"}
           title={applicationMode ? "Applications" : "Robots"}
-          data={data}
+          data={rows!}
           columns={columns}
-          loading={!Array.isArray(responseRobots)}
+          loading={!Array.isArray(environments)}
           handleReload={handleReload}
         />
       }

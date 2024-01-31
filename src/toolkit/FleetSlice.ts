@@ -63,7 +63,13 @@ export const getFederatedFleets = createAsyncThunk(
 
 export const deleteFederatedFleet = createAsyncThunk(
   "fleet/deleteFederatedFleet",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robolaunchFederatedFleetsName: string;
+  }) => {
     const response = await kubernetesApi.deleteFederatedFleet({
       name: "fleet/deleteFederatedFleet",
       organizationId: values?.organizationId,
@@ -130,7 +136,13 @@ export const getNamespaces = createAsyncThunk(
 
 export const deleteNamespace = createAsyncThunk(
   "fleet/deleteNamespace",
-  async (values: IgetNamespace) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    namespaceName: string;
+  }) => {
     const response = await kubernetesApi.deleteNamespace({
       name: "fleet/deleteNamespace",
       organizationId: values?.organizationId,
