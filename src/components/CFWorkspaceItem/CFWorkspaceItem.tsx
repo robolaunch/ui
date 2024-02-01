@@ -1,12 +1,12 @@
+import CFWorkspaceItemAccordionHeader from "../CFWorkspaceItemAccordionHeader/CFWorkspaceItemAccordionHeader";
+import CFDeleteWorkspaceButton from "../CFDeleteWorkspaceButton/CFDeleteWorkspaceButton";
+import CFWorkspaceNameDistro from "../CFWorkspaceNameDistro/CFWorkspaceNameDistro";
+import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
+import CFRepositoryMapper from "../CFRepositoryMapper/CFRepositoryMapper";
+import Accordion from "../Accordion/AccordionV2";
+import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
-import { FormikProps } from "formik/dist/types";
-import Accordion from "../Accordion/AccordionV2";
-import CFRepositoryMapper from "../CFRepositoryMapper/CFRepositoryMapper";
-import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
-import CFWorkspaceNameDistro from "../CFWorkspaceNameDistro/CFWorkspaceNameDistro";
-import CFDeleteWorkspaceButton from "../CFDeleteWorkspaceButton/CFDeleteWorkspaceButton";
-import CFWorkspaceItemAccordionHeader from "../CFWorkspaceItemAccordionHeader/CFWorkspaceItemAccordionHeader";
 
 interface ICFWorkspaceItem {
   formik: FormikProps<IWorkspaces>;
@@ -52,11 +52,16 @@ export default function CFWorkspaceItem({
           />
         </CFSection>
 
-        <CFRepositoryMapper formik={formik} workspaceIndex={workspaceIndex} />
+        <CFRepositoryMapper
+          formik={formik}
+          workspaceIndex={workspaceIndex}
+          disabled={isImportRobot}
+        />
 
         <CFDeleteWorkspaceButton
           formik={formik}
           workspaceIndex={workspaceIndex}
+          disabled={disabled}
         />
       </div>
     </Accordion>

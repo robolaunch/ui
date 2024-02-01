@@ -61,6 +61,7 @@ export default function CFRepositoryItem({
           formik={formik}
           workspaceIndex={workspaceIndex}
           repositoryIndex={repositoryIndex}
+          disabled={disabled}
         />
       </div>
     </Accordion>

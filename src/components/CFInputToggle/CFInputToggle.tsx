@@ -9,6 +9,7 @@ interface ICFInputToggle {
   disabled?: boolean;
   onChange?: any;
   checked: boolean;
+  rightTip?: boolean;
 }
 
 export default function CFInputToggle({
@@ -18,12 +19,13 @@ export default function CFInputToggle({
   disabled,
   onChange,
   checked,
+  rightTip,
 }: ICFInputToggle): ReactElement {
   return (
     <div data-tut={dataTut} className="flex items-center gap-1">
-      <div className="text-light-700 flex min-w-fit gap-1 text-xs font-medium">
+      <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
         {labelName}
-        <InfoTip content={labelInfoTip} />
+        <InfoTip content={labelInfoTip} rightTip={rightTip} />
       </div>
       <InputToggle disabled={disabled} checked={checked} onChange={onChange} />
     </div>

@@ -23,15 +23,12 @@ function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
           },
           hardware: {
             cpu: {
-              usageCore: item.cloudInstanceResource.cpuUsage,
+              usageCore:
+                (item.cloudInstanceResource.cpuUsage / 100) *
+                item.cloudInstanceResource.cpuTotal *
+                item.cloudInstanceResource.cpuTotal,
               totalCore: item.cloudInstanceResource.cpuTotal,
-              usagePercent: Number(
-                (
-                  (item.cloudInstanceResource.cpuUsage /
-                    item.cloudInstanceResource.cpuTotal) *
-                  100
-                ).toFixed(0),
-              ),
+              usagePercent: item.cloudInstanceResource.cpuUsage,
             },
             gpu: {
               hardware: item.cloudInstanceResource.gpuDeviceUsage?.map(
@@ -67,15 +64,12 @@ function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
               }),
             },
             memory: {
-              usageGB: item.cloudInstanceResource.memoryUsage,
+              usageGB:
+                (item.cloudInstanceResource.memoryUsage / 100) *
+                item.cloudInstanceResource.memoryTotal *
+                item.cloudInstanceResource.memoryTotal,
               totalGB: item.cloudInstanceResource.memoryTotal,
-              usagePercent: Number(
-                (
-                  (item.cloudInstanceResource.memoryUsage /
-                    item.cloudInstanceResource.memoryTotal) *
-                  100
-                ).toFixed(0),
-              ),
+              usagePercent: item.cloudInstanceResource.memoryUsage,
             },
             storage: {
               usageGB: item.cloudInstanceResource.storageUsage,

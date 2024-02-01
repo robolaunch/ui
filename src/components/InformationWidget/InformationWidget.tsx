@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import Card from "../Card/Card";
 
 interface IInformationWidget {
   title: string;
@@ -14,21 +15,15 @@ export default function InformationWidget({
   className,
 }: IInformationWidget): ReactElement {
   return (
-    <div
-      data-tut="information-widget"
+    <Card
       className={`animate-fadeIn flex h-80 w-full flex-col justify-around rounded-lg border border-light-200 bg-light-50 p-8 shadow-md ${className}`}
-      style={{
-        backgroundImage: `url("/images/abstract-white.jpg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
+      background
     >
       <div className="flex flex-col gap-6">
         <span className="text-xl font-semibold text-light-900">{title}</span>
         <p className="text-xs !leading-6 text-light-500">{subtitle}</p>
       </div>
       {component}
-    </div>
+    </Card>
   );
 }

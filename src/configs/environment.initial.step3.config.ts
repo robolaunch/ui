@@ -6,7 +6,7 @@ export const environmentInitialStep3Config: IEnvironmentStep3 = {
     {
       name: "",
       workspace: "",
-      isShellCode: true,
+      isCommandCode: true,
       command: "",
       script: "",
       instanceScope: [],

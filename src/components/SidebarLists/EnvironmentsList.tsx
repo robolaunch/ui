@@ -1,3 +1,4 @@
+import { IEnvironment } from "../../interfaces/environment/environment.interface";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import StateCell from "../TableInformationCells/StateCell";
@@ -5,7 +6,6 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { IEnvironment } from "../../interfaces/environment/environment.interface";
 
 interface IEnvironmentsList {
   reload: boolean;

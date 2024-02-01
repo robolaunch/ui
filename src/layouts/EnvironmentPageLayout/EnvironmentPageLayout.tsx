@@ -1,4 +1,5 @@
 import DevelopmentSuite from "../../pages/EnvironmentPage/DevelopmentSuite/DevelopmentSuite";
+import JupyterNotebook from "../../pages/EnvironmentPage/JupyterNotebook/JupyterNotebook";
 import EnvironmentHeader from "../../components/EnvironmentHeader/EnvironmentHeader";
 import Visualization from "../../pages/EnvironmentPage/Visualization/Visualization";
 import Teleoperation from "../../pages/EnvironmentPage/Teleoperation/Teleoperation";
@@ -7,17 +8,12 @@ import CodeEditor from "../../pages/EnvironmentPage/CodeEditor/CodeEditor";
 import Overview from "../../pages/EnvironmentPage/Overview/Overview";
 import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 import FileManager from "../../components/FileManager/FileManager";
-import MissionContext from "../../contexts/MissionContext";
-import BarcodeContext from "../../contexts/BarcodeContext";
-import TaskManagementLayout from "../TaskManagementLayout";
-import { ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";
-import JupyterNotebook from "../../pages/EnvironmentPage/JupyterNotebook/JupyterNotebook";
-import { useAppSelector } from "../../hooks/redux";
+import { ReactElement } from "react";
+import TaskManagement from "../../pages/EnvironmentPage/TaskManagement/TaskManagement";
 
 export default function EnvironmentPageLayout(): ReactElement {
-  const { activeTab, setActiveTab, isSettedCookie } = useRobot();
-  const { applicationMode } = useAppSelector((state) => state.user);
+  const { activeTab } = useRobot();
 
   return (
     <div className="flex h-full flex-col gap-6">
@@ -25,24 +21,9 @@ export default function EnvironmentPageLayout(): ReactElement {
       {(() => {
         switch (activeTab) {
           case "Overview":
-            return (
-              <Overview
-                informationWidgetAction={() => {
-                  isSettedCookie &&
-                    setActiveTab(
-                      applicationMode ? "Development Suite" : "Teleoperation",
-                    );
-                }}
-              />
-            );
+            return <Overview />;
           case "Task Management":
-            return (
-              <MissionContext>
-                <BarcodeContext>
-                  <TaskManagementLayout />
-                </BarcodeContext>
-              </MissionContext>
-            );
+            return <TaskManagement />;
           case "Visualization":
             return <Visualization />;
           case "Teleoperation":

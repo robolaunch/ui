@@ -737,14 +737,14 @@ export default ({ children }: any) => {
         fleetName: selectedState?.fleet?.name!,
         robotName: robotData?.step1?.details.name,
       }),
-    ).then((responseRobotBuildManager: any) => {
+    ).then((resBuild: any) => {
       if (
-        responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0]
+        resBuild?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+          ?.robolaunchFederatedRobots?.[0]
       ) {
         const robotBuild =
-          responseRobotBuildManager?.payload?.data?.[0]?.roboticsClouds?.[0]
-            ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0];
+          resBuild?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+            ?.robolaunchFederatedRobots?.[0];
 
         parameters?.setRobotData &&
           setRobotData((prevState: any) => {
@@ -771,7 +771,7 @@ export default ({ children }: any) => {
                       workspace: step?.workspace,
                       name: step?.name,
                       command: step?.command,
-                      isShellCode: step?.isCommandCode,
+                      isCommandCode: step?.isCommandCode,
                       status: step?.buildStatus,
                       log: step?.buildLog,
                       instanceScope: step?.instancesName,
@@ -781,21 +781,17 @@ export default ({ children }: any) => {
             };
           });
 
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responseRobotBuildManager?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchFederatedRobots[0] || {},
-          );
+        parameters?.setResponse && parameters?.setResponse(robotBuild || {});
       } else {
         parameters?.ifErrorNavigateTo404 && navigateTo404();
         parameters?.setResponse && parameters?.setResponse({});
         parameters?.setRobotData &&
-          setRobotData((prevState: any) => {
+          setRobotData((prevState) => {
             return {
               ...prevState,
               step3: {
-                buildManagerName: "",
-                robotBuildSteps: [],
+                name: "",
+                steps: [],
               },
             };
           });

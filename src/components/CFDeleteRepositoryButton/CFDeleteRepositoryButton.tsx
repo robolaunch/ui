@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { FormikProps } from "formik/dist/types";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
@@ -8,12 +8,14 @@ interface ICFDeleteRepositoryButton {
   formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
   repositoryIndex: number;
+  disabled?: boolean;
 }
 
 export default function CFDeleteRepositoryButton({
   formik,
   workspaceIndex,
   repositoryIndex,
+  disabled,
 }: ICFDeleteRepositoryButton): ReactElement {
   const { handleRemoveRepositoryFromWorkspaceStep } = useCreateRobot();
 
@@ -24,6 +26,7 @@ export default function CFDeleteRepositoryButton({
     >
       <CreateRobotFormDeleteButton
         disabled={
+          disabled ||
           formik.values?.workspaces?.[workspaceIndex]?.robotRepositories
             ?.length > 1
             ? false

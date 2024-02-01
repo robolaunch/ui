@@ -8,6 +8,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 //icons
 import "primeicons/primeicons.css";
+import Card from "../Card/Card";
 
 interface IGeneralTable {
   data: any[];
@@ -27,8 +28,8 @@ export default function GeneralTable({
   handleReload,
 }: IGeneralTable): ReactElement {
   return (
-    <div
-      data-tut="general-table"
+    <Card
+      dataTut="general-table"
       className="animate-fadeIn flex flex-col rounded-lg border border-light-200 bg-light-50 px-4 pb-0 pt-4 shadow-md"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
@@ -84,6 +85,6 @@ export default function GeneralTable({
           );
         })}
       </DataTable>
-    </div>
+    </Card>
   );
 }

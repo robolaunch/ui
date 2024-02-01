@@ -6,13 +6,11 @@ import { useAppSelector } from "../../hooks/redux";
 import useCreateRobot from "../../hooks/useCreateRobot";
 
 interface IRobotStatusWidget {
-  responseRobot: any;
   responseBuildManager: any;
   responseLaunchManagers: any;
 }
 
 export default function RobotStatusWidget({
-  responseRobot,
   responseBuildManager,
   responseLaunchManagers,
 }: IRobotStatusWidget): ReactElement {
@@ -47,7 +45,7 @@ export default function RobotStatusWidget({
         {/* Workspace */}
         <RobotStatusWidgetItem
           title="Workspace Manager"
-          loading={!responseRobot}
+          loading={!Array.isArray(robotData.step1.clusters?.environment)}
           state={
             robotData.step1.clusters?.environment?.filter(
               (env: { name: string; status: string }) =>
@@ -62,7 +60,7 @@ export default function RobotStatusWidget({
                 : "success"
           }
           stateText={
-            !responseRobot
+            !Array.isArray(robotData.step1.clusters?.environment)
               ? "Loading..."
               : robotData.step1.clusters?.environment?.filter(
                     (env: { name: string; status: string }) =>
@@ -81,7 +79,7 @@ export default function RobotStatusWidget({
         {!applicationMode && (
           <RobotStatusWidgetItem
             title="Build Manager"
-            loading={!responseBuildManager}
+            loading={!Array.isArray(robotData.step1.clusters?.build)}
             state={
               responseBuildManager?.robotClusters?.length
                 ? responseBuildManager?.robotClusters?.filter(
@@ -116,7 +114,7 @@ export default function RobotStatusWidget({
         {!applicationMode && (
           <RobotStatusWidgetItem
             title="Launch Manager"
-            loading={!responseLaunchManagersFiltered}
+            loading={!Array.isArray(robotData.step1.clusters?.launch)}
             state={
               responseLaunchManagersFiltered?.length
                 ? responseLaunchManagersFiltered?.filter(

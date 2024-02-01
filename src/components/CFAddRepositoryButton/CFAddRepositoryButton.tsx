@@ -7,11 +7,13 @@ import { FormikProps } from "formik/dist/types";
 interface ICFAddRepositoryButton {
   formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
+  disabled?: boolean;
 }
 
 export default function CFAddRepositoryButton({
   formik,
   workspaceIndex,
+  disabled,
 }: ICFAddRepositoryButton): ReactElement {
   const { handleAddRepositoryToWorkspaceStep } = useCreateRobot();
 
@@ -21,7 +23,7 @@ export default function CFAddRepositoryButton({
         onClick={() =>
           handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
         }
-        disabled={formik.isSubmitting}
+        disabled={formik.isSubmitting || disabled}
       />
     </div>
   );

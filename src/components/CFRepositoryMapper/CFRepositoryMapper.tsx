@@ -8,11 +8,13 @@ import CFAddRepositoryButton from "../CFAddRepositoryButton/CFAddRepositoryButto
 interface ICFRepositoryMapper {
   formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
+  disabled?: boolean;
 }
 
 export default function CFRepositoryMapper({
   formik,
   workspaceIndex,
+  disabled,
 }: ICFRepositoryMapper): ReactElement {
   return (
     <div
@@ -28,10 +30,15 @@ export default function CFRepositoryMapper({
             workspaceIndex={workspaceIndex}
             repositoryIndex={repositoryIndex}
             repository={repository}
+            disabled={disabled}
           />
         ),
       )}
-      <CFAddRepositoryButton formik={formik} workspaceIndex={workspaceIndex} />
+      <CFAddRepositoryButton
+        formik={formik}
+        workspaceIndex={workspaceIndex}
+        disabled={disabled}
+      />
     </div>
   );
 }

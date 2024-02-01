@@ -22,6 +22,7 @@ export default function CFGPUToggle({
       onChange={(e: any) =>
         formik.setFieldValue("resources.gpu.enabledForCloudInstance", e)
       }
+      rightTip
     />
   );
 }

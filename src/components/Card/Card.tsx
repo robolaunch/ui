@@ -6,6 +6,7 @@ interface ICard {
   style?: CSSProperties;
   loading?: boolean;
   dataTut?: string;
+  background?: boolean;
 }
 
 export default function Card({
@@ -14,11 +15,12 @@ export default function Card({
   style,
   loading,
   dataTut,
+  background,
 }: ICard): ReactElement {
   return (
     <div
       data-tut={dataTut}
-      className={`animate-fadeIn h-full w-full rounded-lg border border-light-200 bg-light-50 p-1 shadow-md ${className}`}
+      className={`animate-fadeIn h-full w-full rounded-lg border border-light-200 bg-light-50 p-1 shadow-sm ${className}`}
       style={
         loading
           ? {
@@ -27,7 +29,14 @@ export default function Card({
               backgroundPosition: "center",
               backgroundSize: "5%",
             }
-          : style
+          : background
+            ? {
+                backgroundImage: `url("/images/abstract-white.jpg")`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }
+            : style
       }
     >
       {children}

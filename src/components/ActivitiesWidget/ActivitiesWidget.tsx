@@ -2,39 +2,40 @@ import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
 import { ReactElement } from "react";
 import { useAppSelector } from "../../hooks/redux";
+import useCreateRobot from "../../hooks/useCreateRobot";
 
-interface IActivitiesWidget {
-  responseRobot: any;
-}
-
-export default function ActivitiesWidget({
-  responseRobot,
-}: IActivitiesWidget): ReactElement {
+export default function ActivitiesWidget(): ReactElement {
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const data: any[] = [
+  const { robotData } = useCreateRobot();
+
+  const data: {
+    show: boolean;
+    time: string;
+    description: string;
+  }[] = [
     {
-      show: responseRobot ? true : false,
+      show: robotData?.step1?.details?.name ? true : false,
       time: "",
       description: `${applicationMode ? "Application" : "Robot"} is created.`,
     },
     {
-      show: responseRobot ? true : false,
+      show: robotData?.step1?.details?.name ? true : false,
       time: "",
       description: "Workspaces are created.",
     },
     {
-      show: responseRobot?.ideEnabled,
+      show: robotData?.step1?.services?.ide?.isEnabled,
       time: "",
       description: "VDI and IDE is created.",
     },
     {
-      show: responseRobot?.ideEnabled,
+      show: robotData?.step1?.services?.ide?.isEnabled,
       time: "",
       description: "IDE is opened.",
     },
     {
-      show: responseRobot?.vdiEnabled,
+      show: robotData?.step1?.services?.vdi?.isEnabled,
       time: "",
       description: "VDI is opened.",
     },

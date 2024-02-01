@@ -19,7 +19,7 @@ export default function CFAddWorkspaceButton({
     <div data-tut="create-robot-step2-workspace-add-button">
       <CreateRobotFormAddButton
         onClick={() => handleAddWorkspaceStep(formik)}
-        disabled={formik.isSubmitting}
+        disabled={formik.isSubmitting || disabled}
       />
     </div>
   );

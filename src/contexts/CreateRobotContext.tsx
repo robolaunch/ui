@@ -87,7 +87,7 @@ export default ({ children }: any) => {
         name: "",
         command: "",
         script: "",
-        isShellCode: true,
+        isCommandCode: true,
         status: "",
         log: "",
         instanceScope: [],

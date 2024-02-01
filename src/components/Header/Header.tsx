@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 
 export default function Header(): ReactElement {
   return (
-    <div className="animate__animated animate__fadeInDown sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-light-200 bg-light-50 px-4 text-light-400 shadow-md">
+    <div className="animate__animated animate__fadeInDown sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-light-200 bg-light-50 px-4 text-light-400 shadow-sm">
       <Breadcrumb />
       <div className="flex items-center gap-3">
         <BugFeedbackButton />

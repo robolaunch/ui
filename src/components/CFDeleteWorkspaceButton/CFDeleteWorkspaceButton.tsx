@@ -7,11 +7,13 @@ import { FormikProps } from "formik/dist/types";
 interface ICFDeleteWorkspaceButton {
   formik: FormikProps<IWorkspaces>;
   workspaceIndex: number;
+  disabled?: boolean;
 }
 
 export default function CFDeleteWorkspaceButton({
   formik,
   workspaceIndex,
+  disabled,
 }: ICFDeleteWorkspaceButton): ReactElement {
   const { handleRemoveWorkspaceStep } = useCreateRobot();
 

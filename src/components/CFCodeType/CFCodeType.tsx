@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import InputSelect from "../InputSelect/InputSelect";
 import { FormikProps } from "formik/dist/types";
@@ -21,26 +21,26 @@ export default function CFCodeType({
       vertical
       error={
         // @ts-ignore
-        formik?.errors?.steps?.[buildStepIndex]?.isShellCode
+        formik?.errors?.steps?.[buildStepIndex]?.isCommandCode
       }
       touched={true}
     >
       <InputSelect
-        {...formik.getFieldProps(`steps.${buildStepIndex}.isShellCode`)}
+        {...formik.getFieldProps(`steps.${buildStepIndex}.isCommandCode`)}
         value={
-          formik.values.steps[buildStepIndex]?.isShellCode
-            ? "isShellCode"
+          formik.values.steps[buildStepIndex]?.isCommandCode
+            ? "isCommandCode"
             : "isScriptCode"
         }
         onChange={(e) => {
-          const isShellCode = e.target.value === "isShellCode";
-          const updateValue = isShellCode ? { script: "" } : { command: "" };
+          const isCommandCode = e.target.value === "isCommandCode";
+          const updateValue = isCommandCode ? { script: "" } : { command: "" };
 
           formik.setValues({
             ...formik.values,
             steps: formik.values.steps.map((item, index) => {
               if (index === buildStepIndex) {
-                return { ...item, isShellCode, ...updateValue };
+                return { ...item, isCommandCode, ...updateValue };
               }
               return item;
             }),
@@ -49,7 +49,7 @@ export default function CFCodeType({
         disabled={formik?.isSubmitting}
       >
         <Fragment>
-          <option value="isShellCode">Bash Code</option>
+          <option value="isCommandCode">Bash Code</option>
           <option value="isScriptCode">Script Code</option>
         </Fragment>
       </InputSelect>

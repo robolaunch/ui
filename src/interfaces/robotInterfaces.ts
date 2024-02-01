@@ -281,7 +281,7 @@ export interface IBuildStep {
   name: string;
   command: string;
   script: string;
-  isShellCode: boolean;
+  isCommandCode: boolean;
   status: string;
   log: string;
   instanceScope: string[];

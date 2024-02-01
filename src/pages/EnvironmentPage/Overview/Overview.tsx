@@ -9,16 +9,9 @@ import { useParams } from "react-router-dom";
 import { ReactElement } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 
-interface IOverview {
-  informationWidgetAction: () => void;
-}
-
-export default function Overview({
-  informationWidgetAction,
-}: IOverview): ReactElement {
+export default function Overview(): ReactElement {
   const url = useParams();
-  const { responseRobot, responseBuildManager, responseLaunchManagers } =
-    useRobot();
+  const { responseBuildManager, responseLaunchManagers } = useRobot();
 
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -93,12 +86,11 @@ export default function Overview({
       }
       widget2={
         <RobotStatusWidget
-          responseRobot={responseRobot}
           responseBuildManager={responseBuildManager}
           responseLaunchManagers={responseLaunchManagers}
         />
       }
-      widget3={<ActivitiesWidget responseRobot={responseRobot} />}
+      widget3={<ActivitiesWidget />}
     />
   );
 }

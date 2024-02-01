@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import Card from "../components/Card/Card";
 
 interface IWidgetLayout {
   icon?: ReactElement;
@@ -20,15 +21,10 @@ export default function WidgetLayout({
   dataTut,
 }: IWidgetLayout): ReactElement {
   return (
-    <div
-      data-tut={dataTut}
-      className="animate-fadeIn flex h-80 flex-col rounded-lg border border-light-200 bg-light-50 shadow-md"
-      style={{
-        backgroundImage: `url("/images/abstract-white.jpg")`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
+    <Card
+      background
+      dataTut={dataTut}
+      className="animate-fadeIn flex !h-80 flex-col rounded-lg border border-light-200 bg-light-50 shadow-md"
     >
       <div className="flex items-center justify-between border-b border-light-100 p-4">
         {icon}
@@ -41,6 +37,6 @@ export default function WidgetLayout({
       <div id="widgetBody" className={`h-full w-full px-8 pb-2 ${className}`}>
         {children}
       </div>
-    </div>
+    </Card>
   );
 }

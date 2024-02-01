@@ -1,3 +1,4 @@
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import { Fragment, ReactElement, useEffect, useState } from "react";
@@ -12,7 +13,6 @@ import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
@@ -97,13 +97,13 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
               return temp.length > 1 ? false : true;
             }),
           workspace: Yup.string().required("Workspace is required"),
-          isShellCode: Yup.boolean(),
-          command: Yup.string().when("isShellCode", {
+          isCommandCode: Yup.boolean(),
+          command: Yup.string().when("isCommandCode", {
             is: true,
             then: Yup.string().required("Bash is required"),
             otherwise: Yup.string(),
           }),
-          script: Yup.string().when("isShellCode", {
+          script: Yup.string().when("isCommandCode", {
             is: false,
             then: Yup.string().required("Script is required"),
             otherwise: Yup.string(),

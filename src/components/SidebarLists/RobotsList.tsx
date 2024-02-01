@@ -106,10 +106,10 @@ export default function RobotsList({
                     </div>
                     {robot?.step1?.clusters?.environment?.[1]?.status && (
                       <div className="flex gap-1.5">
-                        <span className="font-medium">Virtual:</span>
+                        <span className="font-medium">Physical:</span>
                         <StateCell
                           state={
-                            robot?.step1?.clusters?.environment?.[0]?.status
+                            robot?.step1?.clusters?.environment?.[1]?.status
                           }
                         />
                       </div>

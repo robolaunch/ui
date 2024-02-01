@@ -101,5 +101,13 @@ export interface IEnvironmentStep1 {
       name: string;
       status: string;
     }[];
+    build: {
+      name: string;
+      status: string;
+    }[];
+    launch: {
+      name: string;
+      status: string;
+    }[];
   };
 }
