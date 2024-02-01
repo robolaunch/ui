@@ -218,10 +218,7 @@ export interface IuseFunctions {
   getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
   deleteRobot: (robotName: string) => Promise<void>;
   getBuildManager: (parameters?: IsingleGetBuildParameters) => void;
-  getLaunchManagers: (
-    values: IgetLaunchManagers,
-    parameters?: ImultipleGetLaunchParameters,
-  ) => void;
+  getLaunchManagers: (parameters?: ImultipleGetLaunchParameters) => void;
   getEnvironments: (
     values: IgetEnvironments,
     parameters?: ImultipleGetParameters,

@@ -126,6 +126,8 @@ function handleMapper(data: IEnvironmentBE[]): {
                 };
               },
             ),
+            build: [],
+            launch: [],
           },
         },
         step2: {

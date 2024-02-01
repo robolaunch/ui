@@ -7,7 +7,6 @@ import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
-import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
@@ -17,7 +16,6 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   const { getLaunchManagers } = useFunctions();
   const url = useParams();
   const { robotData, handleAddLaunchManager } = useCreateRobot();
-  const { selectedState } = useMain();
 
   useEffect(() => {
     console.log(responseRobotLaunchManagers);
@@ -28,21 +26,11 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
   }, [responseRobotLaunchManagers, url]);
 
   function handleGetLaunchManagers() {
-    getLaunchManagers(
-      {
-        organizationId: selectedState?.organization!.id,
-        roboticsCloudName: selectedState?.roboticsCloud!.name,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        robotName: robotData?.step1?.details.name,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseRobotLaunchManagers,
-        setRobotData: true,
-      },
-    );
+    getLaunchManagers({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponseRobotLaunchManagers,
+      setRobotData: true,
+    });
   }
 
   return (

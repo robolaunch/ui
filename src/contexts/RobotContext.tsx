@@ -508,21 +508,11 @@ export default ({ children }: any) => {
   }
 
   function handleGetLaunchManagers() {
-    getLaunchManagers(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name!,
-        robotName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseLaunchManagers,
-        setRobotData: true,
-      },
-    );
+    getLaunchManagers({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponseLaunchManagers,
+      setRobotData: true,
+    });
   }
 
   function handleForceUpdate(page: IrobotTab["name"]) {

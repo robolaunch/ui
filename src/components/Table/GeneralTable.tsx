@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
@@ -30,7 +30,7 @@ export default function GeneralTable({
   return (
     <Card
       dataTut="general-table"
-      className="animate-fadeIn flex flex-col rounded-lg border border-light-200 bg-light-50 px-4 pb-0 pt-4 shadow-md"
+      className="animate-fadeIn flex !h-fit flex-col rounded-lg border border-light-200 bg-light-50 px-4 pb-0 pt-4 shadow-md"
       style={loading ? { backgroundColor: "rgba(0, 0, 0, 0.4)" } : {}}
     >
       <div className="flex items-center gap-3 px-4 pb-8 pt-1">

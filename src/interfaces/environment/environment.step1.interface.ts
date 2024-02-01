@@ -97,17 +97,13 @@ export interface IEnvironmentStep1 {
     };
   };
   clusters: {
-    environment: {
-      name: string;
-      status: string;
-    }[];
-    build: {
-      name: string;
-      status: string;
-    }[];
-    launch: {
-      name: string;
-      status: string;
-    }[];
+    environment: IEnvironmentStep1Cluster[];
+    build: IEnvironmentStep1Cluster[];
+    launch: IEnvironmentStep1Cluster[];
   };
+}
+
+export interface IEnvironmentStep1Cluster {
+  name: string;
+  status: string;
 }

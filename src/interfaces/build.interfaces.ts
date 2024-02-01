@@ -1,5 +1,9 @@
 export interface IBuildBE {
   name: string;
+  robotClusters: {
+    name: string;
+    buildManagerStatus: string;
+  }[];
   robotBuildSteps: {
     name: string;
     workspace: string;

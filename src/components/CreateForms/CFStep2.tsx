@@ -121,6 +121,10 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     [responseFleet],
   );
 
+  useEffect(() => {
+    console.log("ERROR", robotData);
+  }, [robotData]);
+
   function handleGetRobot() {
     getRobot(
       {
