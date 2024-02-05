@@ -31,7 +31,7 @@ import {
   deleteRobot as deleteRobotDispatch,
 } from "../toolkit/RobotSlice";
 import {
-  getFederatedFleets,
+  getFederatedFleets as getFleetsDispatch,
   getNamespaces as getNamespacesDispatch,
   deleteNamespace as deleteNamespaceDispatch,
   deleteFederatedFleet as deleteFederatedFleetDispatch,
@@ -55,7 +55,7 @@ import {
   deleteBuildManager as deleteAppBuildManagerDispatch,
   getTemplates as getTemplatesDispatch,
 } from "../toolkit/EnvironmentSlice";
-import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
+import { getRoboticsClouds as getRegionsDispatch } from "../toolkit/RoboticsCloudSlice";
 import {
   getPhysicalInstances as getAllPhysicalInstances,
   addPhysicalInstanceToFleet as addPhysicalInstanceToFleetDispatch,
@@ -64,8 +64,8 @@ import {
   stopInstance as stopInstanceDispatch,
   terminateInstance as deleteInstanceDispatch,
 } from "../toolkit/InstanceSlice";
-import { getOrganizations as getAllOrganizations } from "../toolkit/OrganizationSlice";
-import { getInstances as getAllInstances } from "../toolkit/InstanceSlice";
+import { getOrganizations as getOrganizationsDispatch } from "../toolkit/OrganizationSlice";
+import { getInstances as getCloudInstancesDispatch } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
 import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
@@ -92,9 +92,17 @@ import {
 import { systemStatusMapper } from "../handler/system.handler";
 import { ISystemStatus } from "../interfaces/system.interface";
 import { buildMapper } from "../handler/build.handler";
-import { IEnvironmentStep1Cluster } from "../interfaces/environment/environment.step1.interface";
+import {
+  IEnvironmentStep1,
+  IEnvironmentStep1Cluster,
+} from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
 import { templatesMapper } from "../handler/template.handler";
+import { IRegion } from "../interfaces/region.interface";
+import { ICloudInstance } from "../interfaces/cloudInstance.interface";
+import { IFleet } from "../interfaces/fleet.interface";
+import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
+import { IOrganization } from "../interfaces/organization.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -104,6 +112,7 @@ export default ({ children }: any) => {
   const {
     setTrialState,
     selectedState,
+    setItemCount,
     setSelectedState,
     pagesState,
     setPagesState,
@@ -112,7 +121,7 @@ export default ({ children }: any) => {
   const { robotData, setRobotData } = useCreateRobot();
 
   async function getOrganizations(parameters?: ImultipleGetParameters) {
-    await dispatch(getAllOrganizations()).then((resOrgs: any) => {
+    await dispatch(getOrganizationsDispatch()).then((resOrgs: any) => {
       const organizations = orgsMapper(resOrgs?.payload?.data);
 
       if (organizations) {
@@ -131,7 +140,7 @@ export default ({ children }: any) => {
     values: IgetOrganization,
     parameters?: IsingleGetParameters,
   ) {
-    await dispatch(getAllOrganizations()).then(async (resOrg: any) => {
+    await dispatch(getOrganizationsDispatch()).then(async (resOrg: any) => {
       const organization = orgMapper(
         resOrg?.payload?.data,
         values?.organizationName,
@@ -166,12 +175,12 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
-      getRoboticsCloudDispatch({
+      getRegionsDispatch({
         organizationId: values?.organizationId,
       }),
-    ).then((resRegion: any) => {
+    ).then((resRegions: any) => {
       const regions = regionsMapper(
-        resRegion?.payload?.data?.[0]?.roboticsClouds,
+        resRegions?.payload?.data?.[0]?.roboticsClouds,
       );
 
       if (regions) {
@@ -191,7 +200,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetParameters,
   ) {
     await dispatch(
-      getRoboticsCloudDispatch({
+      getRegionsDispatch({
         organizationId: values?.organizationId,
       }),
     ).then((responseRoboticsClouds: any) => {
@@ -229,7 +238,7 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
-      getAllInstances({
+      getCloudInstancesDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
@@ -332,7 +341,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetParameters,
   ) {
     await dispatch(
-      getAllInstances({
+      getCloudInstancesDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         region: values?.region,
@@ -428,7 +437,7 @@ export default ({ children }: any) => {
     parameters?: ImultipleGetParameters,
   ) {
     await dispatch(
-      getFederatedFleets({
+      getFleetsDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
@@ -458,7 +467,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetParameters,
   ) {
     await dispatch(
-      getFederatedFleets({
+      getFleetsDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
@@ -610,7 +619,7 @@ export default ({ children }: any) => {
     parameters?: IsingleGetParameters,
   ) {
     await dispatch(
-      getFederatedFleets({
+      getFleetsDispatch({
         organizationId: values?.organizationId,
         roboticsCloudName: values?.roboticsCloudName,
         instanceId: values?.instanceId,
@@ -1371,6 +1380,257 @@ export default ({ children }: any) => {
     navigate("/404");
   }
 
+  function getOrganizationsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<IOrganization[]> {
+    return new Promise((resolve, reject) => {
+      dispatch(getOrganizationsDispatch())
+        .then((resOrgs: any) => {
+          const organizations = orgsMapper(
+            resOrgs?.payload?.data?.[0]?.organizations,
+          );
+          !fromPage && setItemCount(organizations.length);
+          resolve(organizations);
+        })
+        .catch((error: any) => {
+          ErrorNav404 && navigateTo404();
+          !fromPage && setItemCount(0);
+          reject(error);
+        });
+    });
+  }
+
+  function getRegionsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<IRegion[]> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getRegionsDispatch({
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+        }),
+      )
+        .then((resRegions: any) => {
+          const regions = regionsMapper(
+            resRegions?.payload?.data?.[0]?.roboticsClouds,
+          );
+          !fromPage && setItemCount(regions.length);
+          resolve(regions);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
+  function getCloudInstancesFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<ICloudInstance[]> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getCloudInstancesDispatch({
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+          roboticsCloudName: fromPage
+            ? pagesState.roboticsCloud?.name!
+            : selectedState.roboticsCloud?.name!,
+          region: fromPage
+            ? pagesState.roboticsCloud?.region!
+            : selectedState.roboticsCloud?.region!,
+          details: true,
+        }),
+      )
+        .then((resCloudInstances: any) => {
+          const cloudInstances = cloudInstancesMapper(
+            resCloudInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+              ?.cloudInstances,
+          );
+          !fromPage && setItemCount(cloudInstances.length);
+          resolve(cloudInstances);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
+  function getFleetsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<IFleet[]> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getFleetsDispatch({
+          instanceId: fromPage
+            ? pagesState.instance?.id!
+            : selectedState.instance?.id!,
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+          region: fromPage
+            ? pagesState.roboticsCloud?.region!
+            : selectedState.roboticsCloud?.region!,
+          roboticsCloudName: fromPage
+            ? pagesState.roboticsCloud?.name!
+            : selectedState.roboticsCloud?.name!,
+        }),
+      )
+        .then((resFleets: any) => {
+          const fleets = fleetsMapper(
+            resFleets?.payload?.data?.[0].roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
+            resFleets?.payload?.data?.[0].roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+          );
+          !fromPage && setItemCount(fleets.length);
+          resolve(fleets);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
+  function getNamespacesFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<INamespace[]> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getNamespacesDispatch({
+          instanceId: fromPage
+            ? pagesState.instance?.id!
+            : selectedState.instance?.id!,
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+          region: fromPage
+            ? pagesState.roboticsCloud?.region!
+            : selectedState.roboticsCloud?.region!,
+          roboticsCloudName: fromPage
+            ? pagesState.roboticsCloud?.name!
+            : selectedState.roboticsCloud?.name!,
+        }),
+      )
+        .then((resNamespaces: any) => {
+          const namespaces = namespacesMapper(
+            resNamespaces?.payload?.data?.[0].roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.robolaunchNamespaces,
+          );
+          !fromPage && setItemCount(namespaces.length);
+          resolve(namespaces);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
+  function getRobotsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  > {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getRobotsDispatch({
+          instanceId: fromPage
+            ? pagesState.instance?.id!
+            : selectedState.instance?.id!,
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+          region: fromPage
+            ? pagesState.roboticsCloud?.region!
+            : selectedState.roboticsCloud?.region!,
+          roboticsCloudName: fromPage
+            ? pagesState.roboticsCloud?.name!
+            : selectedState.roboticsCloud?.name!,
+          fleetName: fromPage
+            ? pagesState.fleet?.name!
+            : selectedState.fleet?.name!,
+        }),
+      )
+        .then((resRobots: any) => {
+          const robots = environmentsMapper(
+            resRobots?.payload?.data?.[0]?.roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.robolaunchFederatedRobots,
+          );
+          !fromPage && setItemCount(robots.length);
+
+          resolve(robots);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
+  function getApplicationsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  > {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getEnvironmentsDispatch({
+          instanceId: fromPage
+            ? pagesState.instance?.id!
+            : selectedState.instance?.id!,
+          organizationId: fromPage
+            ? pagesState.organization?.id!
+            : selectedState.organization?.id!,
+          region: fromPage
+            ? pagesState.roboticsCloud?.region!
+            : selectedState.roboticsCloud?.region!,
+          roboticsCloudName: fromPage
+            ? pagesState.roboticsCloud?.name!
+            : selectedState.roboticsCloud?.name!,
+          fleetName: fromPage
+            ? pagesState.fleet?.name!
+            : selectedState.fleet?.name!,
+        }),
+      )
+        .then((resApps: any) => {
+          const apps = environmentsMapper(
+            resApps?.payload?.data?.[0]?.roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.environments,
+          );
+          !fromPage && setItemCount(apps.length);
+
+          resolve(apps);
+        })
+        .catch((error: any) => {
+          !fromPage && setItemCount(0);
+          ErrorNav404 && navigateTo404();
+          reject(error);
+        });
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1430,6 +1690,14 @@ export default ({ children }: any) => {
         getFilesFromFileManager,
 
         getTemplates,
+
+        getOrganizationsFC,
+        getRegionsFC,
+        getCloudInstancesFC,
+        getFleetsFC,
+        getNamespacesFC,
+        getRobotsFC,
+        getApplicationsFC,
       }}
     >
       {children}

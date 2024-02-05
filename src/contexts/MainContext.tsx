@@ -45,6 +45,8 @@ export default ({ children }: any) => {
     },
   });
 
+  const [itemCount, setItemCount] = useState<number>(0);
+
   useEffect(() => {
     console.log("SelectedState", selectedState);
   }, [selectedState]);
@@ -137,6 +139,8 @@ export default ({ children }: any) => {
         applicationMode,
         trialState,
         setTrialState,
+        itemCount,
+        setItemCount,
         pagesState,
         setPagesState,
         sidebarState,

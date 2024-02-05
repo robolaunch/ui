@@ -22,5 +22,10 @@ export function orgMapper(
   orgs: IOrganizationBE[],
   filter: string,
 ): null | IOrganization {
-  return handleMapper(orgs).find((org) => org.name === `org_${filter}`) || null;
+  return (
+    handleMapper(orgs).find(
+      (org) =>
+        org.name === (filter.includes("org_") ? filter : `org_${filter}`),
+    ) || null
+  );
 }

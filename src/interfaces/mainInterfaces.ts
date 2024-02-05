@@ -39,6 +39,8 @@ export interface IuseMain {
   applicationMode: boolean;
   trialState: any;
   setTrialState: React.Dispatch<React.SetStateAction<any>>;
+  itemCount: number;
+  setItemCount: React.Dispatch<React.SetStateAction<number>>;
   pagesState: IpagesState;
   setPagesState: React.Dispatch<React.SetStateAction<IpagesState>>;
   sidebarState: ISidebarState;

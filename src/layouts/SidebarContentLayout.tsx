@@ -35,16 +35,22 @@ import { toast } from "sonner";
 import CFStep0 from "../components/CFStep0/CFStep0";
 
 export default function SidebarContentLayout(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState, applicationMode } =
-    useMain();
+  const {
+    sidebarState,
+    itemCount,
+    setItemCount,
+    setSidebarState,
+    selectedState,
+    applicationMode,
+  } = useMain();
   const [loading, setLoading] = useState<boolean>(false);
-  const [itemCount, setItemCount] = useState<number>(0);
   const [reload, setReload] = useState<boolean>(false);
   const { handleResetRobotForm } = useCreateRobot();
   const url = useParams();
 
   useEffect(() => {
     setItemCount(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sidebarState]);
 
   useEffect(() => {

@@ -1,9 +1,16 @@
+import { ICloudInstance } from "./cloudInstance.interface";
+import { IEnvironmentStep1 } from "./environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "./environment/environment.step2.interface";
 import {
   IcreateDataScienceAppsRequest,
   IdeleteDataScienceAppsRequest,
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
 } from "./environmentInterfaces";
+import { IFleet } from "./fleet.interface";
+import { INamespace } from "./namespace.interface";
+import { IOrganization } from "./organization.interface";
+import { IRegion } from "./region.interface";
 import { ISystemStatus } from "./system.interface";
 
 export interface IsingleGetParameters {
@@ -277,4 +284,38 @@ export interface IuseFunctions {
     urlRobotName: string | undefined,
     setResponseLaunchManagers?: any,
   ) => void;
+
+  // // // // // // //
+  getOrganizationsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<IOrganization[]>;
+  getRegionsFC: (fromPage: boolean, ErrorNav404: boolean) => Promise<IRegion[]>;
+  getCloudInstancesFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<ICloudInstance[]>;
+  getFleetsFC: (fromPage: boolean, ErrorNav404: boolean) => Promise<IFleet[]>;
+  getNamespacesFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<INamespace[]>;
+  getRobotsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  >;
+  getApplicationsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  >;
 }
