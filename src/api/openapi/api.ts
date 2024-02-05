@@ -506,6 +506,12 @@ export interface CloudInstance {
      * @memberof CloudInstance
      */
     'developmentMode'?: boolean;
+    /**
+     * 
+     * @type {Array<Template>}
+     * @memberof CloudInstance
+     */
+    'templates'?: Array<Template>;
 }
 /**
  * 
@@ -3108,6 +3114,31 @@ export interface Team {
 /**
  * 
  * @export
+ * @interface Template
+ */
+export interface Template {
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'templateName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'templateContent'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'templateType'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TrialImage
  */
 export interface TrialImage {
@@ -4162,6 +4193,39 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplates: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/getTemplates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4252,6 +4316,16 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRobolaunchReadyEnvironments(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTemplates(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4333,6 +4407,15 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          */
         getRobolaunchReadyEnvironments(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getRobolaunchReadyEnvironments(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTemplates(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getTemplates(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4430,6 +4513,17 @@ export class EnvironmentApi extends BaseAPI {
      */
     public getRobolaunchReadyEnvironments(organization?: Organization, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).getRobolaunchReadyEnvironments(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public getTemplates(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).getTemplates(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

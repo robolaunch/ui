@@ -53,6 +53,7 @@ import {
   createBuildManager as createAppBuildManagerDispatch,
   getBuildManagers as getAppBuildManagerDispatch,
   deleteBuildManager as deleteAppBuildManagerDispatch,
+  getTemplates as getTemplatesDispatch,
 } from "../toolkit/EnvironmentSlice";
 import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
 import {
@@ -93,6 +94,7 @@ import { ISystemStatus } from "../interfaces/system.interface";
 import { buildMapper } from "../handler/build.handler";
 import { IEnvironmentStep1Cluster } from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
+import { templatesMapper } from "../handler/template.handler";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1339,6 +1341,31 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getTemplates(): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(
+          getTemplatesDispatch({
+            organizationId: selectedState.organization?.id!,
+            roboticsCloudName: selectedState.roboticsCloud?.name!,
+            region: selectedState.roboticsCloud?.region!,
+            instanceId: selectedState.instance?.id!,
+            fleetName: selectedState.fleet?.name!,
+          }),
+        );
+
+        resolve(
+          templatesMapper(
+            response?.payload?.data?.[0]?.roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.templates,
+          ) || [],
+        );
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   function navigateTo404() {
     toast.error("The current page does not exist or is not available to you.");
     navigate("/404");
@@ -1401,6 +1428,8 @@ export default ({ children }: any) => {
 
         getIP,
         getFilesFromFileManager,
+
+        getTemplates,
       }}
     >
       {children}

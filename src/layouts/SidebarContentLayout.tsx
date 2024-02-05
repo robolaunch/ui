@@ -32,6 +32,7 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import CFStep0 from "../components/CFStep0/CFStep0";
 
 export default function SidebarContentLayout(): ReactElement {
   const { sidebarState, setSidebarState, selectedState, applicationMode } =
@@ -223,6 +224,7 @@ export default function SidebarContentLayout(): ReactElement {
       setSidebarState((prev: any) => ({
         ...prev,
         isCreateMode: true,
+        page: applicationMode ? "importmanager" : "robot",
       }));
     }
   }
@@ -325,6 +327,9 @@ export default function SidebarContentLayout(): ReactElement {
                     );
                 }
                 break;
+
+              case "importmanager":
+                return <CFStep0 />;
 
               case "robot":
                 if (sidebarState?.isCreateMode) {

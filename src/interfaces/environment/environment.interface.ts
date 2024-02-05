@@ -64,4 +64,9 @@ export interface IEnvironmentBE {
   bridgeIngressEndpoint: string;
   bridgePodName: string;
   bridgeApplicationLog: string;
+  templateName: string;
+  templateContent: string;
+  templatePrivate: boolean;
+  templateOrganizationLevelAvailable: boolean;
+  templatePublicLevelAvailable: boolean;
 }

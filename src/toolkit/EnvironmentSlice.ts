@@ -372,6 +372,35 @@ export const getDataScienceApps = createAsyncThunk(
   },
 );
 
+export const getTemplates = createAsyncThunk(
+  "environment/getTemplates",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+  }) => {
+    const response = await environmentApi.getTemplates({
+      name: "environment/getTemplates",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [{ fleetName: values.fleetName }],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
 export const EnvironmentSlice = createSlice({
   name: "environment",
   initialState: {},

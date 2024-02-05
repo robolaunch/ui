@@ -13,6 +13,7 @@ export interface ISidebarState {
     | "instance"
     | "fleet"
     | "robot"
+    | "importmanager"
     | "workspacesmanager"
     | "buildsmanager"
     | "launchsmanager"

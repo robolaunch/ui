@@ -39,21 +39,21 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
             sidebarState?.page === "launchsmanager")
         }
       />
-      <SideBarMenuItem
-        type="workspacesmanager"
-        description="You can access all your workspaces here."
-        loading={isLoading}
-        disabled={
-          sidebarState?.isCreateMode &&
-          (sidebarState?.page === "robot" ||
-            sidebarState?.page === "workspacesmanager" ||
-            sidebarState?.page === "buildsmanager" ||
-            sidebarState?.page === "launchsmanager")
-        }
-      />
 
       {!applicationMode && (
         <Fragment>
+          <SideBarMenuItem
+            type="workspacesmanager"
+            description="You can access all your workspaces here."
+            loading={isLoading}
+            disabled={
+              sidebarState?.isCreateMode &&
+              (sidebarState?.page === "robot" ||
+                sidebarState?.page === "workspacesmanager" ||
+                sidebarState?.page === "buildsmanager" ||
+                sidebarState?.page === "launchsmanager")
+            }
+          />
           <SideBarMenuItem
             type="buildsmanager"
             description="You can access all your builds here."

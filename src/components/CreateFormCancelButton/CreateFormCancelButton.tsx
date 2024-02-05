@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 import Button from "../Button/Button";
 
@@ -23,7 +23,7 @@ export default function CFCancelButton({
       }}
       disabled={disabled}
       type="button"
-      className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 !h-11 border text-xs transition-all duration-500"
+      className="!h-11 border border-primary-700 !bg-light-50 text-xs !text-primary-700 transition-all duration-500 hover:!bg-primary-100"
       text="Cancel"
     />
   );

@@ -249,6 +249,8 @@ export interface IuseFunctions {
     paths?: string[];
   }) => Promise<any>;
 
+  getTemplates: () => Promise<any>;
+
   handleSetterCurrentOrganization: (
     urlOrganizationName: string | undefined,
   ) => void;

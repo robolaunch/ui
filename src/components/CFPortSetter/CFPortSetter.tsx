@@ -1,3 +1,4 @@
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import { getPort as getFreePort } from "../../toolkit/PortSlice";
 import CFPortInput from "../CFPortInput/CFPortInput";
@@ -7,7 +8,6 @@ import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
 import { FormikProps } from "formik";
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 
 interface ICFPortSetter {
   formik: FormikProps<IEnvironmentStep1>;

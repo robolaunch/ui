@@ -129,6 +129,13 @@ function handleMapper(data: IEnvironmentBE[]): {
             build: [],
             launch: [],
           },
+
+          sharing: {
+            alias: env?.templateName,
+            private: env?.templatePrivate,
+            organization: env?.templateOrganizationLevelAvailable,
+            public: env?.templatePublicLevelAvailable,
+          },
         },
         step2: {
           configureWorkspace: false,

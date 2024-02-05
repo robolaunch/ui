@@ -36,6 +36,8 @@ export default function SidebarContentLayout({
     }
 
     switch (sidebarState?.page) {
+      case "importmanager":
+        return "Import Manager";
       case "robot":
         if (url?.robotName) {
           return `${url.robotName} ${

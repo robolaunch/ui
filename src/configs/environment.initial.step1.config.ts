@@ -102,7 +102,7 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     physicalInstanceName: "",
   },
   sharing: {
-    private: true,
+    private: false,
     organization: false,
     public: false,
     alias: "",

@@ -64,6 +64,15 @@ export default ({ children }: any) => {
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {
+      case "importmanager":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "robot",
+            isCreateMode: false,
+          }),
+        );
+        break;
       case "workspacesmanager":
         setSidebarState(
           (prevState: ISidebarState): ISidebarState => ({
@@ -84,6 +93,14 @@ export default ({ children }: any) => {
 
   function handleCreateRobotNextStep() {
     switch (sidebarState?.page) {
+      case "importmanager":
+        setSidebarState(
+          (prevState: ISidebarState): ISidebarState => ({
+            ...prevState,
+            page: "robot",
+          }),
+        );
+        break;
       case "robot":
         setSidebarState(
           (prevState: ISidebarState): ISidebarState => ({

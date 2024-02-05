@@ -16,6 +16,7 @@ export default function PrivateSidebar(): ReactElement {
           {url?.robotName ||
           (sidebarState?.isCreateMode &&
             [
+              "importmanager",
               "robot",
               "workspacesmanager",
               "buildsmanager",
