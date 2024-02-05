@@ -9,6 +9,7 @@ export default function SidebarListLoader(): ReactElement {
       height={68 * 4}
       backgroundColor="#f6f6ef"
       foregroundColor="#e8e8e3"
+      animate
     >
       <rect width="100%" height="68" rx="6" ry="6" />
       <rect y={68 + 16} width="100%" height="68" rx="6" ry="6" />

@@ -6,9 +6,12 @@ import Button from "../Button/Button";
 import { IEnvironment } from "../../interfaces/environment/environment.interface";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
+import ContentLoader from "react-content-loader";
 
 export default function CFStep0(): ReactElement {
-  const [templates, setTemplates] = useState<ITemplate[]>([]);
+  const [templates, setTemplates] = useState<ITemplate[] | undefined>(
+    undefined,
+  );
   const [selectedTemplate, setSelectedTemplate] = useState<{
     category: "private" | "organizational" | "public";
     template: IEnvironment | undefined;
@@ -24,13 +27,63 @@ export default function CFStep0(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function handleGetTemplates() {
-    setTemplates(await getTemplates());
-  }
+  useEffect(() => {
+    if (Array.isArray(templates) && templates.length === 0) {
+      handleCreateRobotNextStep();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templates]);
+
+  useEffect(() => {
+    setSelectedTemplate((prev) => ({
+      ...prev,
+      template: undefined,
+    }));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTemplate?.category]);
 
   const { setRobotData } = useCreateRobot();
 
   const { handleCreateRobotNextStep } = useMain();
+
+  async function handleGetTemplates() {
+    setTemplates(await getTemplates());
+  }
+
+  const box = (template: ITemplate) => {
+    return (
+      <div className="flex h-full w-full items-center gap-6 p-2.5">
+        <img
+          src="/svg/general/application/application-dark.svg"
+          alt="app"
+          className="h-12 w-12"
+        />
+        <div className="flex h-full flex-col justify-evenly text-[10px]">
+          <p>Alias: {template?.alias}</p>
+          <p>
+            Create Date:
+            {new Date(template?.unixTimestamp * 1000)?.toLocaleString("en-US", {
+              month: "numeric",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </p>
+          <p>
+            Application:{" "}
+            {
+              template?.applicationObject?.step1?.applicationConfig?.application
+                ?.name
+            }{" "}
+            {
+              template?.applicationObject?.step1?.applicationConfig?.application
+                ?.version
+            }
+          </p>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Fragment>
@@ -65,7 +118,7 @@ export default function CFStep0(): ReactElement {
           })}
         </div>
         <div className="grid w-full grid-cols-2 gap-2">
-          {selectedTemplate?.category &&
+          {selectedTemplate?.category && Array.isArray(templates) ? (
             templates
               ?.filter(
                 (template) => template?.type === selectedTemplate?.category,
@@ -78,33 +131,7 @@ export default function CFStep0(): ReactElement {
                       selectedTemplate?.template === template?.applicationObject
                     }
                     disabled={false}
-                    text={
-                      <div className="flex h-full w-full justify-evenly">
-                        <img
-                          src="/svg/general/application/application-dark.svg"
-                          alt="app"
-                          className="h-10 w-10"
-                        />
-                        <div className="flex h-full flex-col justify-evenly">
-                          <div>Alias: {template?.alias}</div>
-                          <div>
-                            Application:{" "}
-                            {
-                              template?.applicationObject?.step1
-                                ?.applicationConfig?.application?.name
-                            }
-                          </div>
-                          <div>
-                            Version:{" "}
-                            {
-                              template?.applicationObject?.step1
-                                ?.applicationConfig?.application?.version
-                            }
-                          </div>
-                          <div>Save Type: {template?.type}</div>
-                        </div>
-                      </div>
-                    }
+                    text={box(template as ITemplate)}
                     onClick={() => {
                       setSelectedTemplate((prev: any) => {
                         return {
@@ -115,7 +142,22 @@ export default function CFStep0(): ReactElement {
                     }}
                   />
                 );
-              })}
+              })
+          ) : (
+            <ContentLoader
+              className="col-span-2"
+              speed={1}
+              width={"100%"}
+              height={68 * 4}
+              backgroundColor="#f6f6ef"
+              foregroundColor="#e8e8e3"
+              animate
+            >
+              <rect width="100%" height="68" rx="6" ry="6" />
+              <rect y={68 + 16} width="100%" height="68" rx="6" ry="6" />
+              <rect y={68 * 2 + 32} width="100%" height="68" rx="6" ry="6" />
+            </ContentLoader>
+          )}
         </div>
         <div className="flex w-full gap-2">
           <Button
@@ -128,7 +170,18 @@ export default function CFStep0(): ReactElement {
           <Button
             onClick={() => {
               setIsLoading(true);
-              setRobotData(selectedTemplate?.template!);
+              setRobotData({
+                ...selectedTemplate.template!,
+                step1: {
+                  ...selectedTemplate.template?.step1!,
+                  sharing: {
+                    alias: "",
+                    private: false,
+                    organization: false,
+                    public: false,
+                  },
+                },
+              });
               setTimeout(() => {
                 handleCreateRobotNextStep();
               }, 1000);

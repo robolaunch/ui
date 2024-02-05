@@ -7,7 +7,7 @@ import { ReactElement } from "react";
 import { useAppSelector } from "../../hooks/redux";
 
 export default function EnvironmentConnections(): ReactElement {
-  const { responseRobot, connectionsReducer } = useRobot();
+  const { connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
   const { robotData } = useCreateRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
@@ -31,7 +31,9 @@ export default function EnvironmentConnections(): ReactElement {
       <div className="flex gap-1" id="ide">
         <ConnectionLabel
           label={
-            responseRobot?.physicalIdeIngressEndpoint ? "Virtual IDE" : "IDE"
+            robotData?.step1?.services?.physicalIde?.httpsEndpoint
+              ? "Virtual IDE"
+              : "IDE"
           }
           url={robotData.step1.services.ide?.httpsEndpoint}
         />
@@ -45,11 +47,11 @@ export default function EnvironmentConnections(): ReactElement {
           }
         />
       </div>
-      {responseRobot?.physicalIdeIngressEndpoint && (
+      {robotData?.step1?.services?.physicalIde?.isEnabled && (
         <div className="flex gap-1" id="ide">
           <ConnectionLabel
             label="Physical IDE"
-            url={responseRobot?.physicalIdeIngressEndpoint}
+            url={robotData?.step1?.services?.physicalIde?.httpsEndpoint}
           />
           <StateCell
             state={

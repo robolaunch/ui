@@ -79,7 +79,15 @@ export default function CloudInstancesList({
               <SidebarListItem
                 key={index}
                 type="instance"
-                name={instance?.name}
+                name={
+                  <div className="flex items-center gap-2.5">
+                    <p>{instance?.name}</p>
+                    <div className="flex items-center gap-1 text-[0.66rem]">
+                      <span className="font-medium">Type:</span>
+                      <p className="font-light">{instance?.providerModel}</p>
+                    </div>
+                  </div>
+                }
                 description={<CloudInstancesListItemDesc instance={instance} />}
                 url={`/${orgSplitter(selectedState?.organization?.name!)}/${selectedState?.roboticsCloud?.name}/${instance?.name}`}
                 data={instance}

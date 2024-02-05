@@ -11,7 +11,7 @@ import { IFleet } from "../../interfaces/fleet.interface";
 import { INamespace } from "../../interfaces/namespace.interface";
 
 interface ISidebarListItem {
-  name: string;
+  name: string | ReactElement;
   description: string | ReactElement | ReactElement[];
   type: Itype;
   url: string;
@@ -186,7 +186,7 @@ export default function SidebarListItem({
 
   return (
     <div
-      key={name}
+      key={String(name)}
       className={`animate-fadeIn transition-300 flex w-full cursor-pointer select-none items-center justify-between rounded-lg border hover:scale-[0.985]
       ${
         selected
