@@ -21,7 +21,7 @@ export default function CFCode({
       vertical
       error={
         // @ts-ignore
-        formik?.errors?.steps?.[buildStepIndex]?.isShellCode
+        formik?.errors?.steps?.[buildStepIndex]?.isCommandCode
       }
       touched={true}
     >
@@ -29,12 +29,12 @@ export default function CFCode({
         height="140px"
         defaultLanguage="shell"
         defaultValue={
-          formik.values.steps[buildStepIndex]?.isShellCode
+          formik.values.steps[buildStepIndex]?.isCommandCode
             ? formik.values.steps[buildStepIndex]?.command
             : formik.values.steps[buildStepIndex]?.script
         }
         value={
-          formik.values.steps[buildStepIndex]?.isShellCode
+          formik.values.steps[buildStepIndex]?.isCommandCode
             ? formik.values.steps[buildStepIndex]?.command
             : formik.values.steps[buildStepIndex]?.script
         }
@@ -62,7 +62,7 @@ export default function CFCode({
               if (index === buildStepIndex) {
                 return {
                   ...item,
-                  [formik.values.steps[buildStepIndex]?.isShellCode
+                  [formik.values.steps[buildStepIndex]?.isCommandCode
                     ? "command"
                     : "script"]: e,
                 };

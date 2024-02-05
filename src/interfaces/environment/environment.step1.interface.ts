@@ -96,6 +96,12 @@ export interface IEnvironmentStep1 {
       version: string;
     };
   };
+  sharing: {
+    private: boolean;
+    organization: boolean;
+    public: boolean;
+    alias: string;
+  };
   clusters: {
     environment: IEnvironmentStep1Cluster[];
     build: IEnvironmentStep1Cluster[];

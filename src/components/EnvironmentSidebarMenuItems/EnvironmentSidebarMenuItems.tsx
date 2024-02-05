@@ -51,31 +51,34 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
             sidebarState?.page === "launchsmanager")
         }
       />
-      <SideBarMenuItem
-        type="buildsmanager"
-        description="You can access all your builds here."
-        loading={isLoading}
-        disabled={
-          sidebarState?.isCreateMode &&
-          (sidebarState?.page === "robot" ||
-            sidebarState?.page === "workspacesmanager" ||
-            sidebarState?.page === "buildsmanager" ||
-            sidebarState?.page === "launchsmanager")
-        }
-      />
+
       {!applicationMode && (
-        <SideBarMenuItem
-          type="launchsmanager"
-          description="You can access all your launches here."
-          loading={isLoading}
-          disabled={
-            sidebarState?.isCreateMode &&
-            (sidebarState?.page === "robot" ||
-              sidebarState?.page === "workspacesmanager" ||
-              sidebarState?.page === "buildsmanager" ||
-              sidebarState?.page === "launchsmanager")
-          }
-        />
+        <Fragment>
+          <SideBarMenuItem
+            type="buildsmanager"
+            description="You can access all your builds here."
+            loading={isLoading}
+            disabled={
+              sidebarState?.isCreateMode &&
+              (sidebarState?.page === "robot" ||
+                sidebarState?.page === "workspacesmanager" ||
+                sidebarState?.page === "buildsmanager" ||
+                sidebarState?.page === "launchsmanager")
+            }
+          />
+          <SideBarMenuItem
+            type="launchsmanager"
+            description="You can access all your launches here."
+            loading={isLoading}
+            disabled={
+              sidebarState?.isCreateMode &&
+              (sidebarState?.page === "robot" ||
+                sidebarState?.page === "workspacesmanager" ||
+                sidebarState?.page === "buildsmanager" ||
+                sidebarState?.page === "launchsmanager")
+            }
+          />
+        </Fragment>
       )}
     </Fragment>
   );

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { environmentApi } from "../api/api";
+import { environmentApi, robotBuildManagerApi } from "../api/api";
 import {
   IcreateEnvironmentRequest,
   IgetEnvironmentRequest,
@@ -60,6 +60,12 @@ export const createEnvironment = createAsyncThunk(
                   notebookEnabled: values?.notebookEnabled,
                   notebookGpuResource: values?.notebookGpuResource,
                   notebookCustomPorts: values?.notebookCustomPorts,
+                  templateContent: values?.applicationObject,
+                  templateName: values?.templateAlias,
+                  templatePrivate: values?.templatePrivateSharing,
+                  templateOrganizationLevelAvailable:
+                    values?.templateOrganizationSharing,
+                  templatePublicLevelAvailable: values?.templatePublicSharing,
                 },
               ],
             },
@@ -141,6 +147,118 @@ export const deleteEnvironment = createAsyncThunk(
               region: values?.region,
               environments: [
                 { fleetName: values?.fleetName, name: values?.environmentName },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const createBuildManager = createAsyncThunk(
+  "environment/createBuildManager",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    environmentName: string;
+    buildManagerName: string;
+    steps: {
+      name: string;
+      isCommandCode: boolean;
+      command: string;
+    }[];
+  }) => {
+    const response = await robotBuildManagerApi.createApplicationBuildManager({
+      name: "environment/createBuildManager",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: "frankfurt",
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [
+                {
+                  name: values.environmentName,
+                  fleetName: values.fleetName,
+                  buildManagerName: values.buildManagerName,
+                  robotBuildSteps: values.steps,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const getBuildManagers = createAsyncThunk(
+  "environment/createBuildManager",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    environmentName: string;
+  }) => {
+    const response = await robotBuildManagerApi.getApplicationBuildManagers({
+      name: "environment/createBuildManager",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [
+                { fleetName: values.fleetName, name: values.environmentName },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    return response.data;
+  },
+);
+
+export const deleteBuildManager = createAsyncThunk(
+  "environment/deleteBuildManager",
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    environmentName: string;
+    buildManagerName: string;
+  }) => {
+    const response = await robotBuildManagerApi.getApplicationBuildManagers({
+      name: "environment/deleteBuildManager",
+      organizationId: values.organizationId,
+      roboticsClouds: [
+        {
+          name: values.roboticsCloudName,
+          cloudInstances: [
+            {
+              instanceId: values.instanceId,
+              region: values.region,
+              environments: [
+                {
+                  name: values.environmentName,
+                  fleetName: values.fleetName,
+                  buildManagerName: values.buildManagerName,
+                },
               ],
             },
           ],

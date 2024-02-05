@@ -1,9 +1,9 @@
 import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
-import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
+import { Fragment, ReactElement, useEffect } from "react";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -16,12 +16,14 @@ import * as Yup from "yup";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
+  disabledLoading?: boolean;
 }
 
-export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
+export default function CFStep3({
+  isImportRobot,
+  disabledLoading,
+}: ICFStep3): ReactElement {
   const { robotData, setRobotData, handleAddBuildStep } = useCreateRobot();
-  const [responseBuildManager, setResponseBuildManager] =
-    useState<any>(undefined);
   const { handleCreateRobotNextStep, selectedState } = useMain();
   const { getRobot, getBuildManager, createBuildManager } = useFunctions();
 
@@ -79,7 +81,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
     getBuildManager({
       ifErrorNavigateTo404: false,
       setRobotData: true,
-      setResponse: setResponseBuildManager,
+      setResponse: false,
     });
   }
 
@@ -143,6 +145,7 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
   return (
     <Fragment>
       <CreateRobotFormLoader
+        disabledLoading={disabledLoading}
         type="build"
         loadingText={
           isImportRobot
@@ -276,19 +279,17 @@ export default function CFStep3({ isImportRobot }: ICFStep3): ReactElement {
           <Fragment>
             <CFBuildName formik={formik} />
 
-            <CFBuildMapper
-              formik={formik}
-              responseBuildManager={responseBuildManager}
-              isImportRobot={isImportRobot}
-            />
+            <CFBuildMapper formik={formik} isImportRobot={isImportRobot} />
 
             <CFAddBuildButton formik={formik} />
 
-            <CFRobotButtons
-              formik={formik}
-              step={3}
-              isImportRobot={isImportRobot}
-            />
+            {!disabledLoading && (
+              <CFRobotButtons
+                formik={formik}
+                step={3}
+                isImportRobot={isImportRobot}
+              />
+            )}
           </Fragment>
         )}
       </CreateRobotFormLoader>

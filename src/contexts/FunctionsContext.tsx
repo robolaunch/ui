@@ -50,6 +50,9 @@ import {
   createDataScienceApp as createDataScienceAppDispatch,
   deleteDataScienceApp as deleteDataScienceAppDispatch,
   deleteEnvironment as deleteEnvironmentDispatch,
+  createBuildManager as createAppBuildManagerDispatch,
+  getBuildManagers as getAppBuildManagerDispatch,
+  deleteBuildManager as deleteAppBuildManagerDispatch,
 } from "../toolkit/EnvironmentSlice";
 import { getRoboticsClouds as getRoboticsCloudDispatch } from "../toolkit/RoboticsCloudSlice";
 import {
@@ -552,7 +555,7 @@ export default ({ children }: any) => {
       }),
     ).then((resNS: any) => {
       const namespace = namespaceMapper(
-        resNS?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances?.[0]
+        resNS?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
           ?.robolaunchNamespaces,
         values?.namespaceName,
       );
@@ -979,6 +982,69 @@ export default ({ children }: any) => {
     });
   }
 
+  async function createAppBuildManager(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createAppBuildManagerDispatch({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            environmentName: robotData?.step1?.details?.name,
+            buildManagerName: robotData?.step3?.name,
+            steps: robotData?.step3?.steps,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getAppBuildManager(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          getAppBuildManagerDispatch({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            environmentName: robotData?.step1?.details?.name,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function deleteAppBuildManager(envName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteAppBuildManagerDispatch({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            environmentName: robotData?.step1?.details?.name,
+            buildManagerName: robotData?.step3?.name,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   function addPhysicalInstanceToFleet() {
     return new Promise<void>(async (resolve, reject) => {
       try {
@@ -1070,6 +1136,12 @@ export default ({ children }: any) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
+            templateAlias: robotData?.step1?.sharing?.alias,
+            applicationObject: robotData,
+            templatePrivateSharing: robotData?.step1?.sharing?.private,
+            templateOrganizationSharing:
+              robotData?.step1?.sharing?.organization,
+            templatePublicSharing: robotData?.step1?.sharing?.public,
           }),
         );
         resolve();
@@ -1140,6 +1212,12 @@ export default ({ children }: any) => {
                   return `${port.name}-${port.backendPort}:${port.port}`;
                 })
                 ?.join("/") || "",
+            templateAlias: robotData?.step1?.sharing?.alias,
+            applicationObject: JSON.stringify(robotData),
+            templatePrivateSharing: robotData?.step1?.sharing?.private,
+            templateOrganizationSharing:
+              robotData?.step1?.sharing?.organization,
+            templatePublicSharing: robotData?.step1?.sharing?.public,
           }),
         );
 
@@ -1300,6 +1378,10 @@ export default ({ children }: any) => {
         getEnvironments,
         getEnvironment,
         deleteEnvironment,
+
+        createAppBuildManager,
+        getAppBuildManager,
+        deleteAppBuildManager,
 
         createRobot,
         getRobots,

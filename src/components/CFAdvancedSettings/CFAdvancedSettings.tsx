@@ -9,6 +9,8 @@ import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import CFStep3 from "../CreateForms/CFStep3";
+import CFInfoBar from "../CFInfoBar/CFInfoBar";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IEnvironmentStep1>;
@@ -62,6 +64,18 @@ export default function CFAdvancedSettings({
 
         <CFSection>
           <CFPortSetter formik={formik} type="vdi" />
+        </CFSection>
+
+        <CFSection>
+          <CFInfoBar
+            label={`Build Managers:`}
+            tip={`Here you can specify the custom ports you want your application running in the  service to expose.`}
+            vertical
+          >
+            <div className="rounded-lg border border-primary-100 px-4 py-8">
+              <CFStep3 disabledLoading={true} />
+            </div>
+          </CFInfoBar>
         </CFSection>
       </div>
     </Accordion>

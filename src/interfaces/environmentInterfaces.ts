@@ -24,6 +24,11 @@ export interface IcreateEnvironmentRequest {
   notebookEnabled: boolean;
   notebookGpuResource: number;
   notebookCustomPorts: string;
+  applicationObject: any;
+  templateAlias: string;
+  templatePrivateSharing: boolean;
+  templateOrganizationSharing: boolean;
+  templatePublicSharing: boolean;
 }
 
 export interface IgetEnvironmentsRequest {

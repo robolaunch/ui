@@ -6,13 +6,11 @@ import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step
 
 interface ICFBuildMapper {
   formik: FormikProps<IEnvironmentStep3>;
-  responseBuildManager: any;
   isImportRobot?: boolean;
 }
 
 export default function CFBuildMapper({
   formik,
-  responseBuildManager,
   isImportRobot,
 }: ICFBuildMapper): ReactElement {
   return (

@@ -37,6 +37,11 @@ export const createRobot = createAsyncThunk(
     hostDirectories: string;
     ideCustomPorts: string;
     vdiCustomPorts: string;
+    templateAlias: string;
+    applicationObject: any;
+    templatePrivateSharing: boolean;
+    templateOrganizationSharing: boolean;
+    templatePublicSharing: boolean;
   }) => {
     const response = await robotApi.createFederatedRobot({
       name: "robot/createFederatedRobot",
@@ -75,6 +80,12 @@ export const createRobot = createAsyncThunk(
                   hostDirectories: values?.hostDirectories,
                   ideCustomPorts: values?.ideCustomPorts,
                   vdiCustomPorts: values?.vdiCustomPorts,
+                  templateContent: values?.applicationObject,
+                  templateName: values?.templateAlias,
+                  templatePrivate: values?.templatePrivateSharing,
+                  templateOrganizationLevelAvailable:
+                    values?.templateOrganizationSharing,
+                  templatePublicLevelAvailable: values?.templatePublicSharing,
                 },
               ],
             },

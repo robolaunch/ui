@@ -95,6 +95,12 @@ export default ({ children }: any) => {
     ]);
   }
 
+  function handleRemoveStepFromBuildStep(formik: any, buildStepIndex: number) {
+    const temp: any = [...formik.values.steps];
+    temp.splice(buildStepIndex, 1);
+    formik.setFieldValue("steps", temp);
+  }
+
   function handleAddLaunchManager() {
     setRobotData((prev: any) => {
       return {
@@ -150,12 +156,6 @@ export default ({ children }: any) => {
         (item: any, index: number) => index !== repositoryIndex,
       ),
     );
-  }
-
-  function handleRemoveStepFromBuildStep(formik: any, buildStepIndex: number) {
-    const temp: any = [...formik.values.robotBuildSteps];
-    temp.splice(buildStepIndex, 1);
-    formik.setFieldValue("robotBuildSteps", temp);
   }
 
   function handleRemoveStepFromLaunchStep(

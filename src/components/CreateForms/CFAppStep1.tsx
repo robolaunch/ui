@@ -1,10 +1,9 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
-import { CFAppStep1Validations } from "../../validations/AppsValidations";
 import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
 import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
-import { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect } from "react";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
 import useCreateRobot from "../../hooks/useCreateRobot";
@@ -15,11 +14,13 @@ import CFVDICount from "../CFVDICount/CFVDICount";
 import Seperator from "../Seperator/Seperator";
 import CFSection from "../CFSection/CFSection";
 import CFGpuCore from "../CFGpuCore/CFGpuCore";
+import CFSharing from "../CFSharing/CFSharing";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
+import * as Yup from "yup";
 
 interface ICFAppStep1 {
   isImportRobot?: boolean;
@@ -28,16 +29,94 @@ interface ICFAppStep1 {
 export default function CFAppStep1({
   isImportRobot = false,
 }: ICFAppStep1): ReactElement {
-  const [responseRobot, setResponseRobot] = useState<any>(undefined);
-
   const { selectedState, handleCreateRobotNextStep, setSidebarState } =
     useMain();
-  const { getEnvironment, createEnvironment } = useFunctions();
+  const { getEnvironment, createEnvironment, createAppBuildManager } =
+    useFunctions();
   const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
 
   const formik = useFormik<IEnvironmentStep1>({
-    validationSchema: CFAppStep1Validations,
+    validationSchema: Yup.object().shape({
+      details: Yup.object().shape({
+        name: Yup.string()
+          .required("Application name is required.")
+          .min(3, "Minimum 3 characters.")
+          .max(16, "Maximum 16 characters.")
+          .lowercase("Must be lowercase.")
+          .matches(
+            /^[a-z0-9]+(-[a-z0-9]+)*$/,
+            "Must be lowercase with hyphen (-) only in the middle.",
+          ),
+      }),
+
+      directories: Yup.object().shape({
+        hostDirectories: Yup.array().of(
+          Yup.object().shape({
+            hostDirectory: Yup.string()
+              .required("Directory is required.")
+              .matches(/^\//, "Path must start with a '/'"),
+            mountPath: Yup.string()
+              .required("Path is required.")
+              .matches(/^\//, "Path must start with a '/'"),
+          }),
+        ),
+      }),
+
+      applicationConfig: Yup.object().shape({
+        domainName: Yup.string().required("Categories is required."),
+        application: Yup.object().shape({
+          name: Yup.string().required("Application model is required."),
+        }),
+      }),
+
+      services: Yup.object().shape({
+        vdi: Yup.object().shape({
+          customPorts: Yup.array().of(
+            Yup.object().shape({
+              name: Yup.string()
+                .required("Port name is required.")
+                .min(4, "Minimum 4 characters.")
+                .max(4, "Maximum 4 characters."),
+              port: Yup.number()
+                .required("Port is required.")
+                .min(0, "Minimum 0.")
+                .max(65535, "Maximum 65535."),
+            }),
+          ),
+        }),
+        ide: Yup.object().shape({
+          customPorts: Yup.array().of(
+            Yup.object().shape({
+              name: Yup.string()
+                .required("Port name is required.")
+                .min(4, "Minimum 4 characters.")
+                .max(4, "Maximum 4 characters.")
+                .matches(
+                  /^[a-z]+$/,
+                  "Must be lowercase and english letters only.",
+                ),
+              port: Yup.number()
+                .required("Port is required.")
+                .min(0, "Minimum 0.")
+                .max(65535, "Maximum 65535."),
+            }),
+          ),
+          gpuModelName: Yup.string().required("GPU model is required."),
+          gpuAllocation: Yup.number().min(1, "Minimum 1 core is required."),
+        }),
+      }),
+      sharing: Yup.object().shape({
+        alias: Yup.string().when("private", {
+          is: false,
+          then: Yup.string(),
+          otherwise: Yup.string().required("Name is required."),
+        }),
+        private: Yup.boolean(),
+        organization: Yup.boolean(),
+        public: Yup.boolean(),
+      }),
+    }),
     initialValues: robotData?.step1,
     onSubmit: async () => {
       formik.setSubmitting(true);
@@ -46,7 +125,10 @@ export default function CFAppStep1({
         if (isImportRobot) {
           await createEnvironment(false).then(async () => {
             toast.success("Application updated successfully");
-            setTimeout(() => {
+
+            await createAppBuildManager();
+
+            await setTimeout(() => {
               window.location.reload();
             }, 1000);
           });
@@ -59,6 +141,8 @@ export default function CFAppStep1({
             page: "robot",
           }));
         });
+
+        await createAppBuildManager();
       } else {
         formik.setSubmitting(false);
         handleCreateRobotNextStep();
@@ -67,7 +151,7 @@ export default function CFAppStep1({
   });
 
   useEffect(() => {
-    if (!responseRobot && isImportRobot) {
+    if (!robotData?.step1?.details?.name && isImportRobot) {
       handleGetEnvironment();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,6 +166,11 @@ export default function CFAppStep1({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
+  useEffect(() => {
+    console.log("error", formik.errors);
+    console.log("touched", formik.touched);
+  }, [formik]);
+
   function handleGetEnvironment() {
     getEnvironment(
       {
@@ -93,8 +182,7 @@ export default function CFAppStep1({
         environmentName: url?.robotName!,
       },
       {
-        ifErrorNavigateTo404: !responseRobot,
-        setResponse: setResponseRobot,
+        ifErrorNavigateTo404: !robotData?.step1?.details?.name,
         setRobotData: true,
       },
     );
@@ -105,7 +193,7 @@ export default function CFAppStep1({
       type="step1-app"
       loadingText="Loading..."
       loadingItems={[]}
-      isLoading={isImportRobot ? !responseRobot : false}
+      isLoading={isImportRobot ? !robotData?.step1?.details?.name : false}
       formik={formik}
     >
       <CFSection>
@@ -158,6 +246,13 @@ export default function CFAppStep1({
             <Seperator />
           </CFSection>
         )}
+      </Fragment>
+
+      <Fragment>
+        <CFSection>
+          <CFSharing formik={formik} />
+          <Seperator />
+        </CFSection>
       </Fragment>
 
       <CFAdvancedSettings formik={formik} disabled={isImportRobot} />

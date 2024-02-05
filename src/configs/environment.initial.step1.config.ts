@@ -101,7 +101,12 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     isDevelopmentMode: AppMode(),
     physicalInstanceName: "",
   },
-
+  sharing: {
+    private: true,
+    organization: false,
+    public: false,
+    alias: "",
+  },
   clusters: {
     environment: [],
     build: [],

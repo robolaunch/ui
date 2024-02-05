@@ -10,6 +10,7 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFCode from "../CFCode/CFCode";
 import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
+import { useAppSelector } from "../../hooks/redux";
 
 interface ICFBuildStepItem {
   formik: FormikProps<IEnvironmentStep3>;
@@ -25,6 +26,8 @@ export default function CFBuildStepItem({
   isImportRobot,
 }: ICFBuildStepItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(true);
+
+  const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
     <Accordion
@@ -43,7 +46,9 @@ export default function CFBuildStepItem({
       <div className="flex flex-col gap-2 p-4">
         <CFBuildStepName formik={formik} buildStepIndex={buildStepIndex} />
 
-        <CFBuildWorkspace formik={formik} buildStepIndex={buildStepIndex} />
+        {!applicationMode && (
+          <CFBuildWorkspace formik={formik} buildStepIndex={buildStepIndex} />
+        )}
 
         <CFCodeType formik={formik} buildStepIndex={buildStepIndex} />
 

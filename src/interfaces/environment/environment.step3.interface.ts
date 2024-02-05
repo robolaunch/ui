@@ -6,7 +6,7 @@ export interface IEnvironmentStep3 {
 export interface IEnvironmentStep3BuildStep {
   name: string;
   workspace: string;
-  isShellCode: boolean;
+  isCommandCode: boolean;
   command: string;
   script: string;
   instanceScope: any[];

@@ -233,6 +233,10 @@ export interface IuseFunctions {
   getDataScienceApps: (parameters?: ImultipleGetParameters) => void;
   deleteDataScienceApp: (values: IdeleteDataScienceAppsRequest) => void;
 
+  createAppBuildManager: () => Promise<void>;
+  getAppBuildManager: () => Promise<void>;
+  deleteAppBuildManager: () => Promise<void>;
+
   addPhysicalInstanceToFleet: () => Promise<void>;
   getSystemStatus: () => Promise<ISystemStatus>;
   createRobot: () => Promise<void>;
