@@ -1,3 +1,4 @@
+import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IOrganization } from "../interfaces/organization.interface";
 import InfoCell from "../components/TableInformationCells/InfoCell";
@@ -6,30 +7,29 @@ import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 
-import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
-
 export function MainTableData() {
   const [orgs, setOrgs] = useState<IOrganization[] | null>();
   const [reload, setReload] = useState<boolean>(false);
-  const { getOrganizations } = useFunctions();
+  const { getOrganizationsFC } = useFunctions();
   const url = useParams();
 
-  function handleReload() {
-    setReload(!reload);
-    setOrgs(null);
-  }
-
   useEffect(() => {
-    getOrganizations({
-      setResponse: setOrgs,
-      ifErrorNavigateTo404: false,
-    });
+    handleGetOrganizations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url, reload]);
 
   useEffect(() => {
     setOrgs(null);
   }, [url]);
+
+  function handleReload() {
+    setReload(!reload);
+    setOrgs(null);
+  }
+
+  async function handleGetOrganizations() {
+    setOrgs(await getOrganizationsFC(true, false));
+  }
 
   const rows = useMemo(
     () =>

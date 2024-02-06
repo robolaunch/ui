@@ -1,4 +1,6 @@
 import EnvironmentActionCells from "../components/TableActionCells/EnvironmentActionCells";
+import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
 import { IEnvironment } from "../interfaces/environment/environment.interface";
 import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
@@ -11,7 +13,9 @@ import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 
 export function NamespaceTableData() {
-  const [environments, setEnviroments] = useState<IEnvironment[] | null>();
+  const [environments, setEnviroments] = useState<
+    { step1: IEnvironmentStep1; step2: IEnvironmentStep2 }[] | null
+  >();
   const [reload, setReload] = useState<boolean>(false);
 
   const { pagesState, selectedState, applicationMode } = useMain();
@@ -23,8 +27,8 @@ export function NamespaceTableData() {
     getInstance,
     getFleet,
     getNamespace,
-    getRobots,
-    getEnvironments,
+    getRobotsFC,
+    getApplicationsFC,
   } = useFunctions();
 
   useEffect(() => {
@@ -133,7 +137,7 @@ export function NamespaceTableData() {
         organizationId: selectedState?.organization?.id!,
         roboticsCloudName: selectedState?.roboticsCloud?.name!,
         instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
         namespaceName: url?.fleetName!,
       },
       {
@@ -144,36 +148,12 @@ export function NamespaceTableData() {
     );
   }
 
-  function handleGetRobots() {
-    getRobots(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: !environments,
-        setResponse: setEnviroments,
-      },
-    );
+  async function handleGetRobots() {
+    setEnviroments(await getRobotsFC(true, !environments));
   }
 
-  function handleGetEnvironments() {
-    getEnvironments(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: !environments,
-        setResponse: setEnviroments,
-      },
-    );
+  async function handleGetEnvironments() {
+    setEnviroments(await getApplicationsFC(true, !environments));
   }
 
   const rows = useMemo(

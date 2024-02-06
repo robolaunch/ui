@@ -10,17 +10,15 @@ import useMain from "../../hooks/useMain";
 
 interface INamespacesList {
   reload: boolean;
-  setItemCount: any;
 }
 
 export default function NamespacesList({
   reload,
-  setItemCount,
 }: INamespacesList): ReactElement {
   const [namespaces, setNamespaces] = useState<INamespace[] | null>(null);
   const { selectedState } = useMain();
   const dispatch = useAppDispatch();
-  const { getNamespaces } = useFunctions();
+  const { getNamespacesFC } = useFunctions();
 
   useEffect(
     () => {
@@ -54,20 +52,8 @@ export default function NamespacesList({
     ],
   );
 
-  function handleGetNamespaces() {
-    getNamespaces(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setNamespaces,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetNamespaces() {
+    setNamespaces(await getNamespacesFC(false, false));
   }
 
   return (

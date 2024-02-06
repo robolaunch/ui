@@ -1,26 +1,27 @@
-import { IEnvironment } from "../../interfaces/environment/environment.interface";
-import { Fragment, ReactElement, useEffect, useState } from "react";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 
-interface IEnvironmentsList {
+interface IAppsList {
   reload: boolean;
-  setItemCount: any;
 }
 
-export default function EnvironmentsList({
-  reload,
-  setItemCount,
-}: IEnvironmentsList): ReactElement {
-  const [responseEnvironments, setResponseEnvironments] = useState<
-    IEnvironment[] | undefined
+export default function AppsList({ reload }: IAppsList): ReactElement {
+  const [apps, setApps] = useState<
+    | {
+        step1: IEnvironmentStep1;
+        step2: IEnvironmentStep2;
+      }[]
+    | undefined
   >(undefined);
   const { selectedState } = useMain();
-  const { getEnvironments } = useFunctions();
+  const { getApplicationsFC } = useFunctions();
 
   useEffect(
     () => {
@@ -30,7 +31,7 @@ export default function EnvironmentsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
-        setResponseEnvironments(undefined);
+        setApps(undefined);
         handleGetEnvironments();
       }
 
@@ -50,21 +51,8 @@ export default function EnvironmentsList({
     [reload],
   );
 
-  function handleGetEnvironments() {
-    getEnvironments(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseEnvironments,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetEnvironments() {
+    setApps(await getApplicationsFC(false, false));
   }
 
   return (
@@ -84,13 +72,13 @@ export default function EnvironmentsList({
                   : "Fleet"
           } to view applications.`}
         />
-      ) : !Array.isArray(responseEnvironments) ? (
+      ) : !Array.isArray(apps) ? (
         <SidebarListLoader />
-      ) : responseEnvironments?.length === 0 ? (
+      ) : apps?.length === 0 ? (
         <SidebarInfo text={`Create a Application.`} />
       ) : (
         <Fragment>
-          {responseEnvironments?.map((environment, index: number) => {
+          {apps?.map((environment, index: number) => {
             console.log("environment", environment);
 
             return (

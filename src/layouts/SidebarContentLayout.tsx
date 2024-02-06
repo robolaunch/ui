@@ -13,7 +13,7 @@ import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesL
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
 import RegionsList from "../components/SidebarLists/RegionsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
-import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
+import AppsList from "../components/SidebarLists/AppsList";
 import NamespacesList from "../components/SidebarLists/NamespacesList";
 import CFOrganization from "../components/CreateForms/CFOrganization";
 import { stringCapitalization } from "../functions/GeneralFunctions";
@@ -306,20 +306,13 @@ export default function SidebarContentLayout(): ReactElement {
                       return <CFNamespace />;
                     }
 
-                    return (
-                      <NamespacesList
-                        reload={reload}
-                        setItemCount={setItemCount}
-                      />
-                    );
+                    return <NamespacesList reload={reload} />;
                   case false:
                     if (sidebarState?.isCreateMode) {
                       return <CFFleet />;
                     }
 
-                    return (
-                      <FleetsList reload={reload} setItemCount={setItemCount} />
-                    );
+                    return <FleetsList reload={reload} />;
                 }
                 break;
 
@@ -350,12 +343,9 @@ export default function SidebarContentLayout(): ReactElement {
                 }
 
                 return applicationMode ? (
-                  <EnvironmentsList
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
+                  <AppsList reload={reload} />
                 ) : (
-                  <RobotsList reload={reload} setItemCount={setItemCount} />
+                  <RobotsList reload={reload} />
                 );
               case "workspacesmanager":
                 if (sidebarState?.isCreateMode) {

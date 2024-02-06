@@ -1,16 +1,16 @@
-import BasicCell from "../components/TableInformationCells/BasicCell";
-import StateCell from "../components/TableInformationCells/StateCell";
-import InfoCell from "../components/TableInformationCells/InfoCell";
-import { useEffect, useMemo, useState } from "react";
-import useFunctions from "../hooks/useFunctions";
-import { useParams } from "react-router-dom";
-import useMain from "../hooks/useMain";
-import { useAppSelector } from "../hooks/redux";
-import { IFleet } from "../interfaces/fleet.interface";
-import { INamespace } from "../interfaces/namespace.interface";
-import { orgSplitter } from "../functions/string.splitter.function";
 import { getRegionFromProviderCode } from "../functions/instance.function";
 import NSActionCells from "../components/TableActionCells/NSActionCells";
+import BasicCell from "../components/TableInformationCells/BasicCell";
+import StateCell from "../components/TableInformationCells/StateCell";
+import { orgSplitter } from "../functions/string.splitter.function";
+import InfoCell from "../components/TableInformationCells/InfoCell";
+import { INamespace } from "../interfaces/namespace.interface";
+import { IFleet } from "../interfaces/fleet.interface";
+import { useEffect, useMemo, useState } from "react";
+import useFunctions from "../hooks/useFunctions";
+import { useAppSelector } from "../hooks/redux";
+import { useParams } from "react-router-dom";
+import useMain from "../hooks/useMain";
 
 export function InstanceTableData() {
   const [fleets, setFleets] = useState<IFleet[] | INamespace[] | null>();
@@ -21,11 +21,11 @@ export function InstanceTableData() {
     getOrganization,
     getRoboticsCloud,
     getInstance,
-    getFleets,
-    getNamespaces,
+    getNamespacesFC,
+    getFleetsFC,
   } = useFunctions();
   const url = useParams();
-  const { pagesState, selectedState } = useMain();
+  const { pagesState } = useMain();
 
   useEffect(() => {
     if (pagesState?.organization?.name !== `org_${url?.organizationName}`) {
@@ -98,34 +98,12 @@ export function InstanceTableData() {
     );
   }
 
-  function handleGetFleets() {
-    getFleets(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-      },
-      {
-        ifErrorNavigateTo404: !fleets,
-        setResponse: setFleets,
-      },
-    );
+  async function handleGetFleets() {
+    setFleets(await getFleetsFC(true, !fleets));
   }
 
-  function handleGetNamespaces() {
-    getNamespaces(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.name!,
-      },
-      {
-        ifErrorNavigateTo404: !fleets,
-        setResponse: setFleets,
-      },
-    );
+  async function handleGetNamespaces() {
+    setFleets(await getNamespacesFC(true, !fleets));
   }
 
   function handleReload() {

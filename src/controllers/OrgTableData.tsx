@@ -1,19 +1,19 @@
+import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
+import { getRegionFromProviderCode } from "../functions/instance.function";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
+import { orgSplitter } from "../functions/string.splitter.function";
 import { IRegion } from "../interfaces/region.interface";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
-import { orgSplitter } from "../functions/string.splitter.function";
-import { getRegionFromProviderCode } from "../functions/instance.function";
-import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 
 export function OrgTableData() {
   const [regions, setRegions] = useState<IRegion[] | null>(null);
   const { pagesState } = useMain();
-  const { getOrganization, getRoboticsClouds } = useFunctions();
+  const { getOrganization, getRegionsFC } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -49,16 +49,8 @@ export function OrgTableData() {
     );
   }
 
-  function handleGetRegions() {
-    getRoboticsClouds(
-      {
-        organizationId: pagesState?.organization?.id!,
-      },
-      {
-        setResponse: setRegions,
-        ifErrorNavigateTo404: !regions,
-      },
-    );
+  async function handleGetRegions() {
+    setRegions(await getRegionsFC(true, !regions));
   }
 
   const rows = useMemo(

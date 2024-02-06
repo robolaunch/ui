@@ -1,4 +1,3 @@
-import { IEnvironment } from "../../interfaces/environment/environment.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
@@ -6,21 +5,23 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface IRobotsList {
   reload: boolean;
-  setItemCount: any;
 }
 
-export default function RobotsList({
-  reload,
-  setItemCount,
-}: IRobotsList): ReactElement {
-  const [responseRobots, setResponseRobots] = useState<IEnvironment[] | null>(
-    null,
-  );
+export default function RobotsList({ reload }: IRobotsList): ReactElement {
+  const [robots, setRobots] = useState<
+    | {
+        step1: IEnvironmentStep1;
+        step2: IEnvironmentStep2;
+      }[]
+    | null
+  >(null);
   const { selectedState, applicationMode } = useMain();
-  const { getRobots } = useFunctions();
+  const { getRobotsFC } = useFunctions();
 
   useEffect(
     () => {
@@ -30,7 +31,7 @@ export default function RobotsList({
         selectedState?.instance &&
         selectedState?.fleet
       ) {
-        setResponseRobots(null);
+        setRobots(null);
         handleGetRobots();
       }
 
@@ -50,21 +51,8 @@ export default function RobotsList({
     [reload],
   );
 
-  function handleGetRobots() {
-    getRobots(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseRobots,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetRobots() {
+    setRobots(await getRobotsFC(false, false));
   }
 
   return (
@@ -84,13 +72,13 @@ export default function RobotsList({
                   : "Fleet"
           } to view ${applicationMode ? "applications" : "robots"}.`}
         />
-      ) : !Array.isArray(responseRobots) ? (
+      ) : !Array.isArray(robots) ? (
         <SidebarListLoader />
-      ) : responseRobots?.length === 0 ? (
+      ) : robots?.length === 0 ? (
         <SidebarInfo text={`Create a Robot.`} />
       ) : (
         <Fragment>
-          {responseRobots?.map((robot, index: number) => {
+          {robots?.map((robot, index: number) => {
             return (
               <SidebarListItem
                 key={index}

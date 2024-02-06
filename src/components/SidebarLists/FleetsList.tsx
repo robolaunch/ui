@@ -1,26 +1,22 @@
 import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
+import { IFleet } from "../../interfaces/fleet.interface";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { IFleet } from "../../interfaces/fleet.interface";
 
 interface IFleetsList {
   reload: boolean;
-  setItemCount: any;
 }
 
-export default function FleetsList({
-  reload,
-  setItemCount,
-}: IFleetsList): ReactElement {
+export default function FleetsList({ reload }: IFleetsList): ReactElement {
   const [fleets, setFleets] = useState<IFleet[] | null>(null);
   const { selectedState, applicationMode } = useMain();
   const dispatch = useAppDispatch();
-  const { getFleets } = useFunctions();
+  const { getFleetsFC } = useFunctions();
 
   useEffect(
     () => {
@@ -54,20 +50,8 @@ export default function FleetsList({
     ],
   );
 
-  function handleGetFleets() {
-    getFleets(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setFleets,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetFleets() {
+    setFleets(await getFleetsFC(false, false));
   }
 
   return (
