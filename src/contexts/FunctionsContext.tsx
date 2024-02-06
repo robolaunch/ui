@@ -1380,21 +1380,52 @@ export default ({ children }: any) => {
     navigate("/404");
   }
 
+  function handleSetter(
+    type: "organization" | "roboticsCloud" | "instance" | "fleet",
+    data: IOrganization | IRegion | ICloudInstance | IFleet | INamespace,
+  ) {
+    setPagesState((prev) => {
+      return {
+        ...prev,
+        [type]: data,
+      };
+    });
+
+    setSelectedState((prev) => {
+      return {
+        ...prev,
+        [type]: data,
+      };
+    });
+  }
+
+  function handleThrowError(fromPage: boolean, ErrorNav404: boolean) {
+    ErrorNav404 && navigateTo404();
+    !fromPage && setItemCount(0);
+    return;
+  }
+
   function getOrganizationsFC(
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ): Promise<IOrganization[]> {
     return new Promise((resolve, reject) => {
       dispatch(getOrganizationsDispatch())
         .then((resOrgs: any) => {
           const organizations = orgsMapper(resOrgs?.payload?.data);
+          const organization =
+            filter && orgMapper(resOrgs?.payload?.data, filter);
+
+          filter && organization && handleSetter("organization", organization);
+          filter && !organization && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(organizations.length);
+
           resolve(organizations);
         })
         .catch((error: any) => {
-          ErrorNav404 && navigateTo404();
-          !fromPage && setItemCount(0);
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1403,6 +1434,7 @@ export default ({ children }: any) => {
   function getRegionsFC(
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ): Promise<IRegion[]> {
     return new Promise((resolve, reject) => {
       dispatch(
@@ -1416,12 +1448,21 @@ export default ({ children }: any) => {
           const regions = regionsMapper(
             resRegions?.payload?.data?.[0]?.roboticsClouds,
           );
+          const region =
+            filter &&
+            regionMapper(
+              resRegions?.payload?.data?.[0]?.roboticsClouds,
+              filter,
+            );
+
+          filter && region && handleSetter("roboticsCloud", region);
+          filter && !region && handleThrowError(fromPage, ErrorNav404);
+
           !fromPage && setItemCount(regions.length);
           resolve(regions);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1430,6 +1471,7 @@ export default ({ children }: any) => {
   function getCloudInstancesFC(
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ): Promise<ICloudInstance[]> {
     return new Promise((resolve, reject) => {
       dispatch(
@@ -1451,12 +1493,22 @@ export default ({ children }: any) => {
             resCloudInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
               ?.cloudInstances,
           );
+          const cloudInstance =
+            filter &&
+            cloudInstanceMapper(
+              resCloudInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+                ?.cloudInstances,
+              filter,
+            );
+
+          filter && cloudInstance && handleSetter("instance", cloudInstance);
+          filter && !cloudInstance && handleThrowError(fromPage, ErrorNav404);
+
           !fromPage && setItemCount(cloudInstances.length);
           resolve(cloudInstances);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1465,6 +1517,7 @@ export default ({ children }: any) => {
   function getFleetsFC(
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ): Promise<IFleet[]> {
     return new Promise((resolve, reject) => {
       dispatch(
@@ -1490,12 +1543,25 @@ export default ({ children }: any) => {
             resFleets?.payload?.data?.[0].roboticsClouds?.[0]
               ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
           );
+
+          const fleet =
+            filter &&
+            fleetMapper(
+              resFleets?.payload?.data?.[0].roboticsClouds?.[0]
+                ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
+              resFleets?.payload?.data?.[0].roboticsClouds?.[0]
+                ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+              filter,
+            );
+
+          filter && fleet && handleSetter("fleet", fleet);
+          filter && !fleet && handleThrowError(fromPage, ErrorNav404);
+
           !fromPage && setItemCount(fleets.length);
           resolve(fleets);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1504,6 +1570,7 @@ export default ({ children }: any) => {
   function getNamespacesFC(
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ): Promise<INamespace[]> {
     return new Promise((resolve, reject) => {
       dispatch(
@@ -1527,12 +1594,22 @@ export default ({ children }: any) => {
             resNamespaces?.payload?.data?.[0].roboticsClouds?.[0]
               ?.cloudInstances?.[0]?.robolaunchNamespaces,
           );
+          const namespace =
+            filter &&
+            namespaceMapper(
+              resNamespaces?.payload?.data?.[0].roboticsClouds?.[0]
+                ?.cloudInstances?.[0]?.robolaunchNamespaces,
+              filter,
+            );
+
+          filter && namespace && handleSetter("fleet", namespace);
+          filter && !namespace && handleThrowError(fromPage, ErrorNav404);
+
           !fromPage && setItemCount(namespaces.length);
           resolve(namespaces);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1577,8 +1654,7 @@ export default ({ children }: any) => {
           resolve(robots);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });
@@ -1623,8 +1699,7 @@ export default ({ children }: any) => {
           resolve(apps);
         })
         .catch((error: any) => {
-          !fromPage && setItemCount(0);
-          ErrorNav404 && navigateTo404();
+          handleThrowError(fromPage, ErrorNav404);
           reject(error);
         });
     });

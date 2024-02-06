@@ -22,11 +22,11 @@ export function NamespaceTableData() {
   const url = useParams();
 
   const {
-    getOrganization,
-    getRoboticsCloud,
-    getInstance,
-    getFleet,
-    getNamespace,
+    getOrganizationsFC,
+    getRegionsFC,
+    getCloudInstancesFC,
+    getFleetsFC,
+    getNamespacesFC,
     getRobotsFC,
     getApplicationsFC,
   } = useFunctions();
@@ -71,81 +71,23 @@ export function NamespaceTableData() {
   }
 
   function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !environments,
-        setPages: true,
-      },
-    );
+    getOrganizationsFC(true, true, url?.organizationName as string);
   }
 
   function handleGetRoboticsCloud() {
-    getRoboticsCloud(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: url?.roboticsCloudName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !environments,
-        setPages: true,
-      },
-    );
+    getRegionsFC(true, true, url?.roboticsCloudName as string);
   }
 
   function handleGetInstance() {
-    getInstance(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceName: url?.instanceName!,
-        region: pagesState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !environments,
-        setPages: true,
-      },
-    );
+    getCloudInstancesFC(true, true, url?.instanceName as string);
   }
 
   function handleGetFleet() {
-    getFleet(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: url?.fleetName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !environments,
-        setPages: true,
-      },
-    );
+    getFleetsFC(true, true, url?.fleetName as string);
   }
 
   function handleGetNamespace() {
-    getNamespace(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        namespaceName: url?.fleetName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !environments,
-        setPages: true,
-      },
-    );
+    getNamespacesFC(true, true, url?.fleetName as string);
   }
 
   async function handleGetRobots() {

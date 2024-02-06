@@ -289,16 +289,27 @@ export interface IuseFunctions {
   getOrganizationsFC: (
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ) => Promise<IOrganization[]>;
-  getRegionsFC: (fromPage: boolean, ErrorNav404: boolean) => Promise<IRegion[]>;
+  getRegionsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IRegion[]>;
   getCloudInstancesFC: (
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ) => Promise<ICloudInstance[]>;
-  getFleetsFC: (fromPage: boolean, ErrorNav404: boolean) => Promise<IFleet[]>;
+  getFleetsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IFleet[]>;
   getNamespacesFC: (
     fromPage: boolean,
     ErrorNav404: boolean,
+    filter?: string,
   ) => Promise<INamespace[]>;
   getRobotsFC: (
     fromPage: boolean,

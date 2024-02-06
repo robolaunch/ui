@@ -18,9 +18,9 @@ export function InstanceTableData() {
   const { applicationMode } = useAppSelector((state) => state.user);
 
   const {
-    getOrganization,
-    getRoboticsCloud,
-    getInstance,
+    getOrganizationsFC,
+    getRegionsFC,
+    getCloudInstancesFC,
     getNamespacesFC,
     getFleetsFC,
   } = useFunctions();
@@ -55,47 +55,15 @@ export function InstanceTableData() {
   }, [url]);
 
   function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName as string,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !fleets,
-        setPages: true,
-      },
-    );
+    getOrganizationsFC(true, true, url?.organizationName as string);
   }
 
   function handleGetRoboticsCloud() {
-    getRoboticsCloud(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: url?.roboticsCloudName as string,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !fleets,
-        setPages: true,
-      },
-    );
+    getRegionsFC(true, true, url?.roboticsCloudName as string);
   }
 
   function handleGetInstance() {
-    getInstance(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceName: url?.instanceName as string,
-        region: pagesState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !fleets,
-        setPages: true,
-      },
-    );
+    getCloudInstancesFC(true, true, url?.instanceName as string);
   }
 
   async function handleGetFleets() {

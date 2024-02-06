@@ -14,7 +14,7 @@ import useMain from "../hooks/useMain";
 
 export function RegionTableData() {
   const [instances, setInstances] = useState<ICloudInstance[] | null>(null);
-  const { getOrganization, getRoboticsCloud, getCloudInstancesFC } =
+  const { getOrganizationsFC, getRegionsFC, getCloudInstancesFC } =
     useFunctions();
   const { pagesState, selectedState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
@@ -53,30 +53,11 @@ export function RegionTableData() {
   }, [url]);
 
   function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !instances,
-        setPages: true,
-      },
-    );
+    getOrganizationsFC(true, true, url?.organizationName as string);
   }
 
   function handleGetRegion() {
-    getRoboticsCloud(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: url?.roboticsCloudName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !instances,
-        setPages: true,
-      },
-    );
+    getRegionsFC(true, true, url?.roboticsCloudName as string);
   }
 
   async function handleGetInstances() {

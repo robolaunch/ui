@@ -13,7 +13,7 @@ import useMain from "../hooks/useMain";
 export function OrgTableData() {
   const [regions, setRegions] = useState<IRegion[] | null>(null);
   const { pagesState } = useMain();
-  const { getOrganization, getRegionsFC } = useFunctions();
+  const { getOrganizationsFC, getRegionsFC } = useFunctions();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -37,16 +37,7 @@ export function OrgTableData() {
   }, [url]);
 
   function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName!,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: !regions,
-        setPages: true,
-      },
-    );
+    getOrganizationsFC(true, true, url?.organizationName as string);
   }
 
   async function handleGetRegions() {
