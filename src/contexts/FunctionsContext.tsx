@@ -1387,9 +1387,8 @@ export default ({ children }: any) => {
     return new Promise((resolve, reject) => {
       dispatch(getOrganizationsDispatch())
         .then((resOrgs: any) => {
-          const organizations = orgsMapper(
-            resOrgs?.payload?.data?.[0]?.organizations,
-          );
+          const organizations = orgsMapper(resOrgs?.payload?.data);
+
           !fromPage && setItemCount(organizations.length);
           resolve(organizations);
         })

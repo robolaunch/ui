@@ -9,38 +9,25 @@ import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import { IRegion } from "../../interfaces/region.interface";
 
-interface IRoboticsCloudsList {
+interface IRegionsList {
   reload: boolean;
-  setItemCount: any;
 }
 
-export default function RoboticsCloudsList({
-  reload,
-  setItemCount,
-}: IRoboticsCloudsList): ReactElement {
+export default function RegionsList({ reload }: IRegionsList): ReactElement {
   const [regions, setRegions] = useState<IRegion[] | null>(null);
   const { selectedState } = useMain();
-  const { getRoboticsClouds } = useFunctions();
+  const { getRegionsFC } = useFunctions();
 
   useEffect(() => {
     if (selectedState?.organization) {
-      setRegions(null);
       handleGetRoboticsClouds();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload]);
 
-  function handleGetRoboticsClouds() {
-    getRoboticsClouds(
-      {
-        organizationId: selectedState?.organization?.id!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setRegions,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetRoboticsClouds() {
+    setRegions(null);
+    setRegions(await getRegionsFC(false, false));
   }
 
   return (

@@ -11,7 +11,7 @@ import UpdateRobotBuildsForm from "../components/UpdateRobotBuildsForm/UpdateRob
 import SidebarContentHeader from "../components/SidebarContentHeader/SidebarContentHeader";
 import PhysicalInstancesList from "../components/SidebarLists/PhysicalInstancesList";
 import CloudInstancesList from "../components/SidebarLists/CloudInstancesList";
-import RoboticsCloudsList from "../components/SidebarLists/RoboticsCloudsList";
+import RegionsList from "../components/SidebarLists/RegionsList";
 import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import EnvironmentsList from "../components/SidebarLists/EnvironmentsList";
 import NamespacesList from "../components/SidebarLists/NamespacesList";
@@ -225,12 +225,16 @@ export default function SidebarContentLayout(): ReactElement {
             );
           } else {
             handleResetRobotForm();
+            setSidebarState((prev: any) => ({
+              ...prev,
+              isCreateMode: true,
+              page: applicationMode ? "importmanager" : "robot",
+            }));
           }
       }
       setSidebarState((prev: any) => ({
         ...prev,
         isCreateMode: true,
-        page: applicationMode ? "importmanager" : "robot",
       }));
     }
   }
@@ -272,33 +276,18 @@ export default function SidebarContentLayout(): ReactElement {
                 if (sidebarState?.isCreateMode) {
                   return <CFOrganization />;
                 }
-                return (
-                  <OrganizationsList
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
-                );
+                return <OrganizationsList reload={reload} />;
               case "roboticscloud":
                 if (sidebarState?.isCreateMode) {
                   return <CFRegion />;
                 }
-                return (
-                  <RoboticsCloudsList
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
-                );
+                return <RegionsList reload={reload} />;
               case "instance":
                 if (sidebarState?.instanceTab === "Cloud Instances") {
                   if (sidebarState?.isCreateMode) {
                     return <CFInstance />;
                   }
-                  return (
-                    <CloudInstancesList
-                      reload={reload}
-                      setItemCount={setItemCount}
-                    />
-                  );
+                  return <CloudInstancesList reload={reload} />;
                 } else {
                   if (sidebarState?.isCreateMode) {
                     return <CFPhysical />;

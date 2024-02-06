@@ -2,25 +2,23 @@ import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInsta
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
+import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { orgSplitter } from "../../functions/string.splitter.function";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
-import { orgSplitter } from "../../functions/string.splitter.function";
 
 interface ICloudInstancesList {
   reload: boolean;
-  setItemCount: any;
 }
 
 export default function CloudInstancesList({
   reload,
-  setItemCount,
 }: ICloudInstancesList): ReactElement {
   const [instances, setInstances] = useState<ICloudInstance[] | null>(null);
   const { selectedState, applicationMode } = useMain();
-  const { getInstances } = useFunctions();
+  const { getCloudInstancesFC } = useFunctions();
 
   useEffect(
     () => {
@@ -43,20 +41,8 @@ export default function CloudInstancesList({
     [reload],
   );
 
-  function handleGetCloudInstances() {
-    getInstances(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        setResponse: setInstances,
-        ifErrorNavigateTo404: false,
-        setItemCount: setItemCount,
-      },
-    );
+  async function handleGetCloudInstances() {
+    setInstances(await getCloudInstancesFC(false, false));
   }
 
   return (

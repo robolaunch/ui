@@ -1,39 +1,33 @@
 import { IOrganization } from "../../interfaces/organization.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
+import { orgSplitter } from "../../functions/string.splitter.function";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { orgSplitter } from "../../functions/string.splitter.function";
 
 interface IOrganizationList {
-  setItemCount: any;
   reload: boolean;
 }
 
 export default function OrganizationsList({
   reload,
-  setItemCount,
 }: IOrganizationList): ReactElement {
   const [orgs, setOrgs] = useState<IOrganization[] | null>(null);
   const { selectedState } = useMain();
-  const { getOrganizations } = useFunctions();
+  const { getOrganizationsFC } = useFunctions();
 
   useEffect(() => {
+    setOrgs(null);
     handleGetOrganizations();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reload]);
 
-  function handleGetOrganizations() {
-    setOrgs(null);
-    getOrganizations({
-      ifErrorNavigateTo404: false,
-      setResponse: setOrgs,
-      setItemCount: setItemCount,
-    });
+  async function handleGetOrganizations() {
+    setOrgs(await getOrganizationsFC(false, false));
   }
 
   return (
