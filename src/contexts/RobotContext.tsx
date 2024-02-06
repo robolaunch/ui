@@ -1,25 +1,25 @@
 import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
+import useCreateRobot from "../hooks/useCreateRobot";
 import useFunctions from "../hooks/useFunctions";
+import { useAppSelector } from "../hooks/redux";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
-import { useAppSelector } from "../hooks/redux";
-import useCreateRobot from "../hooks/useCreateRobot";
 
 export const RobotContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const {
-    getOrganization,
-    getRoboticsCloud,
-    getInstance,
+    getOrganizationsFC,
+    getRegionsFC,
+    getCloudInstancesFC,
+    getFleetsFC,
+    getNamespacesFC,
+    getApplicationFC,
+    getRobotFC,
     getPhysicalInstance,
-    getFleet,
-    getNamespace,
-    getRobot,
-    getEnvironment,
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
@@ -370,47 +370,15 @@ export default ({ children }: any) => {
   // Physical IDE Test Connection
 
   function handleGetOrganization() {
-    getOrganization(
-      {
-        organizationName: url?.organizationName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        isSetState: true,
-        setPages: true,
-      },
-    );
+    getOrganizationsFC(true, true, url?.organizationName as string);
   }
 
   function handleGetRoboticsCloud() {
-    getRoboticsCloud(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: url?.roboticsCloudName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        isSetState: true,
-        setPages: true,
-      },
-    );
+    getRegionsFC(true, true, url?.roboticsCloudName as string);
   }
 
   function handleGetInstance() {
-    getInstance(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceName: url?.instanceName!,
-        region: pagesState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        isSetState: true,
-        setPages: true,
-      },
-    );
+    getCloudInstancesFC(true, true, url?.instanceName as string);
   }
 
   function handleGetPhysicalInstance() {
@@ -430,72 +398,22 @@ export default ({ children }: any) => {
   }
 
   function handleGetFleet() {
-    getFleet(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: url?.fleetName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        isSetState: true,
-        setPages: true,
-      },
-    );
+    getFleetsFC(true, true, url?.fleetName as string);
   }
 
   function handleGetNamespace() {
-    getNamespace(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        namespaceName: url?.fleetName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        isSetState: true,
-        setPages: true,
-      },
+    getNamespacesFC(true, true, url?.fleetName as string);
+  }
+
+  async function handleGetRobot() {
+    setResponseRobot(
+      await getRobotFC(!responseRobot, url?.robotName as string),
     );
   }
 
-  function handleGetRobot() {
-    getRobot(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name!,
-        robotName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        setRobotData: true,
-        setResponse: setResponseRobot,
-      },
-    );
-  }
-
-  function handleGetEnvironment() {
-    getEnvironment(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        region: pagesState?.roboticsCloud?.region!,
-        fleetName: pagesState?.fleet?.name!,
-        environmentName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        setResponse: setResponseRobot,
-        setRobotData: true,
-      },
+  async function handleGetEnvironment() {
+    setResponseRobot(
+      await getApplicationFC(!responseRobot, url?.robotName as string),
     );
   }
 

@@ -103,6 +103,8 @@ import { ICloudInstance } from "../interfaces/cloudInstance.interface";
 import { IFleet } from "../interfaces/fleet.interface";
 import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
 import { IOrganization } from "../interfaces/organization.interface";
+import { IEnvironmentStep4 } from "../interfaces/environment/environment.step4.interface";
+import { environmentGPUCoreUsagebility } from "../functions/environment.function";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1176,6 +1178,9 @@ export default ({ children }: any) => {
             storageAmount:
               robotData?.step1?.resources.storage.allocatedCapacity,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
+            vdiGpuResource: environmentGPUCoreUsagebility(
+              selectedState?.instance?.resources?.hardware?.gpu?.hardware!,
+            ),
             domainName: robotData?.step1?.applicationConfig.domainName,
             ideGpuResource: robotData?.step1?.services.ide.gpuAllocation,
             ideGpuResourceType: robotData?.step1?.services.ide.gpuModelName,
@@ -1380,7 +1385,7 @@ export default ({ children }: any) => {
     navigate("/404");
   }
 
-  function handleSetter(
+  function handleObjectSetter(
     type: "organization" | "roboticsCloud" | "instance" | "fleet",
     data: IOrganization | IRegion | ICloudInstance | IFleet | INamespace,
   ) {
@@ -1395,6 +1400,22 @@ export default ({ children }: any) => {
       return {
         ...prev,
         [type]: data,
+      };
+    });
+  }
+
+  function handleEnvironmentSetter(
+    step: "step1" | "step2" | "step3" | "step4",
+    data:
+      | IEnvironmentStep1
+      | IEnvironmentStep2
+      | IEnvironmentStep3
+      | IEnvironmentStep4,
+  ) {
+    setRobotData((prevState) => {
+      return {
+        ...prevState,
+        [step]: data,
       };
     });
   }
@@ -1417,7 +1438,9 @@ export default ({ children }: any) => {
           const organization =
             filter && orgMapper(resOrgs?.payload?.data, filter);
 
-          filter && organization && handleSetter("organization", organization);
+          filter &&
+            organization &&
+            handleObjectSetter("organization", organization);
           filter && !organization && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(organizations.length);
@@ -1455,7 +1478,7 @@ export default ({ children }: any) => {
               filter,
             );
 
-          filter && region && handleSetter("roboticsCloud", region);
+          filter && region && handleObjectSetter("roboticsCloud", region);
           filter && !region && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(regions.length);
@@ -1501,7 +1524,9 @@ export default ({ children }: any) => {
               filter,
             );
 
-          filter && cloudInstance && handleSetter("instance", cloudInstance);
+          filter &&
+            cloudInstance &&
+            handleObjectSetter("instance", cloudInstance);
           filter && !cloudInstance && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(cloudInstances.length);
@@ -1554,7 +1579,7 @@ export default ({ children }: any) => {
               filter,
             );
 
-          filter && fleet && handleSetter("fleet", fleet);
+          filter && fleet && handleObjectSetter("fleet", fleet);
           filter && !fleet && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(fleets.length);
@@ -1602,7 +1627,7 @@ export default ({ children }: any) => {
               filter,
             );
 
-          filter && namespace && handleSetter("fleet", namespace);
+          filter && namespace && handleObjectSetter("fleet", namespace);
           filter && !namespace && handleThrowError(fromPage, ErrorNav404);
 
           !fromPage && setItemCount(namespaces.length);
@@ -1705,6 +1730,80 @@ export default ({ children }: any) => {
     });
   }
 
+  function getRobotFC(
+    ErrorNav404: boolean,
+    robotName: string,
+  ): Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getRobotDispatch({
+          instanceId: selectedState.instance?.id!,
+          organizationId: selectedState.organization?.id!,
+          region: selectedState.roboticsCloud?.region!,
+          roboticsCloudName: selectedState.roboticsCloud?.name!,
+          fleetName: selectedState.fleet?.name!,
+          robotName: robotName,
+        }),
+      )
+        .then((resRobot: any) => {
+          const robot = environmentMapper(
+            resRobot?.payload?.data?.[0].roboticsClouds?.[0]
+              ?.cloudInstances?.[0]?.robolaunchFederatedRobots?.[0],
+          );
+
+          !robot && handleThrowError(true, ErrorNav404);
+          robot && handleEnvironmentSetter("step1", robot.step1);
+          robot && handleEnvironmentSetter("step2", robot.step2);
+
+          robot && resolve(robot);
+        })
+        .catch((error: any) => {
+          handleThrowError(true, ErrorNav404);
+          reject(error);
+        });
+    });
+  }
+
+  function getApplicationFC(
+    ErrorNav404: boolean,
+    appName: string,
+  ): Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }> {
+    return new Promise((resolve, reject) => {
+      dispatch(
+        getEnvironmentDispatch({
+          instanceId: selectedState.instance?.id!,
+          organizationId: selectedState.organization?.id!,
+          region: selectedState.roboticsCloud?.region!,
+          roboticsCloudName: selectedState.roboticsCloud?.name!,
+          fleetName: selectedState.fleet?.name!,
+          environmentName: appName,
+        }),
+      )
+        .then((resApp: any) => {
+          const app = environmentMapper(
+            resApp?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
+              ?.environments?.[0],
+          );
+
+          !app && handleThrowError(true, ErrorNav404);
+          app && handleEnvironmentSetter("step1", app.step1);
+          app && handleEnvironmentSetter("step2", app.step2);
+
+          app && resolve(app);
+        })
+        .catch((error: any) => {
+          handleThrowError(true, ErrorNav404);
+          reject(error);
+        });
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1772,6 +1871,8 @@ export default ({ children }: any) => {
         getNamespacesFC,
         getRobotsFC,
         getApplicationsFC,
+        getRobotFC,
+        getApplicationFC,
       }}
     >
       {children}

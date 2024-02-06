@@ -9,6 +9,7 @@ export interface IcreateEnvironmentRequest {
   ideGpuResource: number;
   ideGpuResourceType: string;
   vdiSessionCount: number;
+  vdiGpuResource: number;
   storageAmount: number;
   applicationName: string;
   applicationVersion: string;

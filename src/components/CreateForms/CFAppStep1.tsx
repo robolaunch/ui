@@ -166,11 +166,6 @@ export default function CFAppStep1({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
-  useEffect(() => {
-    console.log("error", formik.errors);
-    console.log("touched", formik.touched);
-  }, [formik]);
-
   function handleGetEnvironment() {
     getEnvironment(
       {

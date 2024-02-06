@@ -38,6 +38,7 @@ export const createEnvironment = createAsyncThunk(
                   gpuEnabledForCloudInstance: true,
                   vdiEnabled: true,
                   vdiSessionCount: values?.vdiSessionCount,
+                  vdiGpuResource: values?.vdiGpuResource,
                   ideEnabled: true,
                   ideGpuResource: values?.ideGpuResource,
                   ideGpuResourceType: values?.ideGpuResourceType,

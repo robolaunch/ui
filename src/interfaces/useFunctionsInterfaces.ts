@@ -329,4 +329,18 @@ export interface IuseFunctions {
       step2: IEnvironmentStep2;
     }[]
   >;
+  getRobotFC: (
+    ErrorNav404: boolean,
+    robotName: string,
+  ) => Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }>;
+  getApplicationFC: (
+    ErrorNav404: boolean,
+    appName: string,
+  ) => Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }>;
 }
