@@ -53,7 +53,6 @@ export interface IEnvironmentStep1 {
         backendPort: string;
       }[];
       gpuAllocation: number;
-      maxGpuAllocation: number;
       gpuModelName: string;
       podName: string;
       log: string;

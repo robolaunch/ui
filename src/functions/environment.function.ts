@@ -15,18 +15,13 @@ export function environmentGPUCoreUsagebility(
     };
   }[],
 ): number {
-  const supportedGPUModels = new Set([
-    "T4",
-    "A100",
-    "V100",
-    "A6000",
-    "A30",
-    "L40",
-  ]);
+  const supportedGPUModels = ["T4", "A100", "V100", "A6000", "A30", "L40"];
 
   for (const gpu of gpuList) {
-    if (supportedGPUModels.has(gpu.model)) {
-      return 1;
+    for (const model of supportedGPUModels) {
+      if (gpu.model.includes(model)) {
+        return 1;
+      }
     }
   }
 

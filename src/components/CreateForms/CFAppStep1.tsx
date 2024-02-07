@@ -1,5 +1,4 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import CFConfigWorkspaces from "../CFConfigWorkspaces/CFConfigWorkspaces";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import CFEnvironmentName from "../CFEnvironmentName/CFEnvironmentName";
 import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
@@ -29,9 +28,8 @@ interface ICFAppStep1 {
 export default function CFAppStep1({
   isImportRobot = false,
 }: ICFAppStep1): ReactElement {
-  const { selectedState, handleCreateRobotNextStep, setSidebarState } =
-    useMain();
-  const { getEnvironment, createEnvironment, createAppBuildManager } =
+  const { handleCreateRobotNextStep, setSidebarState } = useMain();
+  const { getApplicationFC, createEnvironment, createAppBuildManager } =
     useFunctions();
   const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
@@ -166,21 +164,8 @@ export default function CFAppStep1({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
-  function handleGetEnvironment() {
-    getEnvironment(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        environmentName: url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: !robotData?.step1?.details?.name,
-        setRobotData: true,
-      },
-    );
+  async function handleGetEnvironment() {
+    await getApplicationFC(!robotData?.step1?.details?.name, url?.robotName!);
   }
 
   return (
@@ -229,15 +214,6 @@ export default function CFAppStep1({
         {!isImportRobot && (
           <CFSection>
             <CFJupyterNotebook formik={formik} />
-            <Seperator />
-          </CFSection>
-        )}
-      </Fragment>
-
-      <Fragment>
-        {!isImportRobot && (
-          <CFSection>
-            <CFConfigWorkspaces formik={formik} disabled={isImportRobot} />
             <Seperator />
           </CFSection>
         )}

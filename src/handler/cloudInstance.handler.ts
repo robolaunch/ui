@@ -58,6 +58,7 @@ function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
               platform: item.cloudInstanceResource.gpuUsage?.map((gpu) => {
                 return {
                   name: gpu.resourceName,
+                  available: Number(gpu.capacity) - Number(gpu.allocated),
                   allocated: Number(gpu.allocated),
                   capacity: Number(gpu.capacity),
                 };

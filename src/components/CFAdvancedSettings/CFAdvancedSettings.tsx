@@ -1,3 +1,4 @@
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
@@ -8,7 +9,6 @@ import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CFStep3 from "../CreateForms/CFStep3";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 

@@ -74,7 +74,6 @@ function handleMapper(data: IEnvironmentBE[]): {
                   };
                 }) || [],
               gpuAllocation: env?.ideGpuResource,
-              maxGpuAllocation: 0,
               gpuModelName: env?.ideGpuModelName,
               podName: env?.idePodName,
               log: env?.ideApplicationLog,
@@ -105,6 +104,8 @@ function handleMapper(data: IEnvironmentBE[]): {
             persistentDirectories: env?.persistentDirectories,
             hostDirectories:
               env?.hostDirectories?.split(",")?.map((item: string) => {
+                console.log("hostDirectories", item?.split(":")[0]);
+
                 return {
                   hostDirectory: item?.split(":")[0],
                   mountPath: item?.split(":")[1],

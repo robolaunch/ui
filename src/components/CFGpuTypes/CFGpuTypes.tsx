@@ -53,7 +53,12 @@ export default function CFGpuTypes({
         {selectedState.instance?.resources?.hardware?.gpu?.platform?.length ? (
           selectedState.instance?.resources?.hardware?.gpu?.platform?.map(
             (
-              type: { name: string; allocated: number; capacity: number },
+              type: {
+                name: string;
+                available: number;
+                allocated: number;
+                capacity: number;
+              },
               index: number,
             ) => {
               return (
@@ -72,8 +77,7 @@ export default function CFGpuTypes({
                       <div className="col-span-3 flex flex-col justify-around">
                         <p className="lowercase">{type.name}</p>
                         <p className="text-[0.66rem] font-light">
-                          {Number(type.capacity) - Number(type.allocated)}/
-                          {type.capacity} Available{" "}
+                          {type.available}/{type.capacity} Available{" "}
                           {type.name.includes("mig") ? "MIG Instance" : "vGPU"}
                         </p>
                       </div>
@@ -81,19 +85,13 @@ export default function CFGpuTypes({
                   }
                   onClick={() => {
                     if (!type.name.includes("mig")) {
-                      if (
-                        !!disabled ||
-                        Number(type.capacity) - Number(type.allocated) <= 1
-                      ) {
+                      if (!!disabled || type.available <= 1) {
                         return toast.error(
-                          "You need minimum 2 vGPU for Application.",
+                          "You need minimum 2 MIG Instance for Application.",
                         );
                       }
                     } else {
-                      if (
-                        !!disabled ||
-                        Number(type.capacity) - Number(type.allocated) <= 0
-                      ) {
+                      if (!!disabled || type.available <= 0) {
                         return toast.error(
                           "You need minimum 1 vGPU for Application.",
                         );

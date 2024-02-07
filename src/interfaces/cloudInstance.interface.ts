@@ -37,6 +37,7 @@ export interface ICloudInstance {
         }[];
         platform: {
           name: string;
+          available: number;
           allocated: number;
           capacity: number;
         }[];
