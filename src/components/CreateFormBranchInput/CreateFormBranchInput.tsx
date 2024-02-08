@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik";
 import axios from "axios";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICreateFormBrachInput {
-  formik: FormikProps<IWorkspaces>;
+  formik: FormikProps<IEnvironmentStep2>;
   workspaceIndex: number;
   repositoryIndex: number;
   disabled?: boolean;

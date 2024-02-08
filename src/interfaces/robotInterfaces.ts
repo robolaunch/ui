@@ -4,22 +4,6 @@ export interface IhostDirectories {
   hostDirectory: string;
   mountPath: string;
 }
-export interface IWorkspaces {
-  configureWorkspace: boolean;
-  workspaces: IWorkspace[];
-}
-
-export interface IWorkspace {
-  name: string;
-  workspaceDistro: "IRON" | "HUMBLE" | "GALACTIC" | "FOXY" | "";
-  robotRepositories: IWorkspaceRepository[];
-}
-
-export interface IWorkspaceRepository {
-  name: string;
-  url: string;
-  branch: string;
-}
 
 export interface IBuildSteps {
   name: string;

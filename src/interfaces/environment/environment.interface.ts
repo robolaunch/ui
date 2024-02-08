@@ -2,7 +2,6 @@ import { IEnvironmentStep1 } from "./environment.step1.interface";
 import { IEnvironmentStep2 } from "./environment.step2.interface";
 import { IEnvironmentStep3 } from "./environment.step3.interface";
 import { IEnvironmentStep4 } from "./environment.step4.interface";
-import { IWorkspace } from "../robotInterfaces";
 
 export interface IEnvironment {
   step1: IEnvironmentStep1;
@@ -54,7 +53,15 @@ export interface IEnvironmentBE {
   vdiIngressEndpoint: string;
   vdiPodName: string;
   vdiSessionCount: number;
-  robotWorkspaces: IWorkspace[];
+  robotWorkspaces: {
+    name: string;
+    workspaceDistro: "IRON" | "HUMBLE" | "GALACTIC" | "FOXY" | "";
+    robotRepositories: {
+      name: string;
+      url: string;
+      branch: string;
+    }[];
+  }[];
   hostDirectories: string;
   physicalIdeIngressEndpoint: string;
   ideCustomPorts: string;

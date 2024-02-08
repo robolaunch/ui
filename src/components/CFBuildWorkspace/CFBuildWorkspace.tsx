@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
-import { IWorkspace } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
+import { IEnvironmentStep2Workspace } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFBuildWorkspace {
   formik: FormikProps<IEnvironmentStep3>;
@@ -33,7 +33,7 @@ export default function CFBuildWorkspace({
             <option value=""></option>
           )}
           {robotData?.step2?.workspaces?.map(
-            (workspace: IWorkspace, index: number) => (
+            (workspace: IEnvironmentStep2Workspace, index: number) => (
               <option key={index} value={workspace.name}>
                 {workspace.name}
               </option>

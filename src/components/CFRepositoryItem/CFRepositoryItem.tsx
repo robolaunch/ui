@@ -4,12 +4,15 @@ import CFSection from "../CFSection/CFSection";
 import { FormikProps } from "formik/dist/types";
 import Accordion from "../Accordion/AccordionV2";
 import CFRepositoryName from "../CFRepositoryName/CFRepositoryName";
-import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFRepositoryURLBranch from "../CFRepositoryURLBranch/CFRepositoryURLBranch";
 import CFDeleteRepositoryButton from "../CFDeleteRepositoryButton/CFDeleteRepositoryButton";
+import {
+  IEnvironmentStep2,
+  IEnvironmentStep2Workspace,
+} from "../../interfaces/environment/environment.step2.interface";
 interface ICFRepositoryItem {
-  formik: FormikProps<IWorkspaces>;
-  repository: IWorkspace;
+  formik: FormikProps<IEnvironmentStep2>;
+  repository: IEnvironmentStep2Workspace;
   repositoryIndex: number;
   workspaceIndex: number;
   disabled?: boolean;

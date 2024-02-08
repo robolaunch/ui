@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import { FormikProps } from "formik/dist/types";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFRepositoryItem from "../CFRepositoryItem/CFRepositoryItem";
 import CFWorkspaceHeader from "../CFWorkspaceHeader/CFWorkspaceHeader";
 import CFAddRepositoryButton from "../CFAddRepositoryButton/CFAddRepositoryButton";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFRepositoryMapper {
-  formik: FormikProps<IWorkspaces>;
+  formik: FormikProps<IEnvironmentStep2>;
   workspaceIndex: number;
   disabled?: boolean;
 }

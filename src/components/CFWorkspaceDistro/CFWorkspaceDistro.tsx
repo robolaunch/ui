@@ -1,12 +1,12 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFWorkspaceDistro {
-  formik: FormikProps<IWorkspaces>;
+  formik: FormikProps<IEnvironmentStep2>;
   workspaceIndex: number;
   disabled?: boolean;
 }

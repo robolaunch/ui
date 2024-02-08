@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
 import FormInputText from "../FormInputText/FormInputText";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFRepositoryName {
-  formik: FormikProps<IWorkspaces>;
+  formik: FormikProps<IEnvironmentStep2>;
   workspaceIndex: number;
   repositoryIndex: number;
   disabled?: boolean;
