@@ -1,8 +1,4 @@
-import {
-  IBuildSteps,
-  IWorkspace,
-  IWorkspaceRepository,
-} from "../interfaces/robotInterfaces";
+import { IBuildSteps, IWorkspace } from "../interfaces/robotInterfaces";
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -42,41 +38,42 @@ export default ({ children }: any) => {
   }
 
   function handleAddWorkspaceStep(formik: any) {
-    const temp: any = [...formik.values.workspaces];
-    temp.push({
-      name: "",
-      workspaceDistro: "",
-      robotRepositories: [
-        {
-          name: "",
-          url: "",
-          branch: "",
-        },
-      ],
-    });
-    formik.setFieldValue("workspaces", temp);
+    formik.setFieldValue("workspaces", [
+      ...formik.values.workspaces,
+      {
+        name: "",
+        workspaceDistro: "",
+        robotRepositories: [{ name: "", url: "", branch: "" }],
+      },
+    ]);
   }
 
   function handleRemoveWorkspaceStep(formik: any, workspaceIndex: number) {
-    const temp: any = [...formik.values.workspaces];
-    temp.splice(workspaceIndex, 1);
-    formik.setFieldValue("workspaces", temp);
+    formik.setFieldValue("workspaces", [
+      ...formik.values.workspaces.slice(0, workspaceIndex),
+      ...formik.values.workspaces.slice(workspaceIndex + 1),
+    ]);
   }
 
   function handleAddRepositoryToWorkspaceStep(
     formik: any,
     workspaceIndex: number,
   ): void {
-    const robotWorkspaces: IWorkspace[] = [...formik.values.workspaces];
-
-    const robotWorkspace: IWorkspaceRepository = {
-      name: "",
-      url: "",
-      branch: "",
-    };
-
-    robotWorkspaces[workspaceIndex].robotRepositories.push(robotWorkspace);
-    formik.setFieldValue("workspaces", robotWorkspaces);
+    formik.setFieldValue(
+      "workspaces",
+      formik.values.workspaces.map((workspace: IWorkspace, index: number) => {
+        if (index === workspaceIndex) {
+          return {
+            ...workspace,
+            robotRepositories: [
+              ...workspace.robotRepositories,
+              { name: "", url: "", branch: "" },
+            ],
+          };
+        }
+        return workspace;
+      }),
+    );
   }
 
   function handleAddBuildStep(formik: FormikProps<IBuildSteps>) {
@@ -96,30 +93,31 @@ export default ({ children }: any) => {
   }
 
   function handleRemoveStepFromBuildStep(formik: any, buildStepIndex: number) {
-    const temp: any = [...formik.values.steps];
-    temp.splice(buildStepIndex, 1);
-    formik.setFieldValue("steps", temp);
+    formik.setFieldValue(
+      "steps",
+      formik.values.steps.filter(
+        (_: any, index: number) => index !== buildStepIndex,
+      ),
+    );
   }
 
   function handleAddLaunchManager() {
-    setRobotData((prev: any) => {
-      return {
-        ...prev,
-        step4: {
-          ...prev.step4,
-          robotLaunchSteps: [
-            ...prev.step4.robotLaunchSteps,
-            {
-              workspace: "",
-              entryPointType: "custom",
-              entryPointCmd: "",
-              instancesName: [],
-              robotLmEnvs: [],
-            },
-          ],
-        },
-      };
-    });
+    setRobotData((prev: any) => ({
+      ...prev,
+      step4: {
+        ...prev.step4,
+        robotLaunchSteps: [
+          ...prev.step4.robotLaunchSteps,
+          {
+            workspace: "",
+            entryPointType: "custom",
+            entryPointCmd: "",
+            instancesName: [],
+            robotLmEnvs: [],
+          },
+        ],
+      },
+    }));
   }
 
   function handleAddStepToLaunchStep(formik: any) {
@@ -136,7 +134,7 @@ export default ({ children }: any) => {
   }
 
   function handleAddENVToLaunchStep(formik: any) {
-    formik.setFieldValue(`robotLmEnvs`, [
+    formik.setFieldValue("robotLmEnvs", [
       ...formik.values.robotLmEnvs,
       {
         name: "",
@@ -150,28 +148,31 @@ export default ({ children }: any) => {
     workspaceIndex: number,
     repositoryIndex: number,
   ) {
-    formik.setFieldValue(
-      `workspaces.${workspaceIndex}.robotRepositories`,
-      formik.values.workspaces[workspaceIndex].robotRepositories.filter(
-        (item: any, index: number) => index !== repositoryIndex,
-      ),
+    const updatedWorkspaces = [...formik.values.workspaces];
+    updatedWorkspaces[workspaceIndex].robotRepositories.splice(
+      repositoryIndex,
+      1,
     );
+    formik.setFieldValue(`workspaces`, updatedWorkspaces);
   }
 
   function handleRemoveStepFromLaunchStep(
     formik: any,
     launchStepIndex: number,
   ) {
-    const temp: any = [...formik.values.robotLaunchSteps];
-    temp.splice(launchStepIndex, 1);
-    formik.setFieldValue("robotLaunchSteps", temp);
+    formik.setFieldValue(
+      "robotLaunchSteps",
+      formik.values.robotLaunchSteps.filter(
+        (_: any, index: number) => index !== launchStepIndex,
+      ),
+    );
   }
 
   function handleRemoveENVFromLaunchStep(formik: any, index: number) {
     formik.setFieldValue(
-      `robotLmEnvs`,
+      "robotLmEnvs",
       formik.values.robotLmEnvs.filter(
-        (env: any, envIndex: number) => envIndex !== index,
+        (_: any, envIndex: number) => envIndex !== index,
       ),
     );
   }

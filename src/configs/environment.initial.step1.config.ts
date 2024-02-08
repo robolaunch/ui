@@ -58,7 +58,6 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
       customPorts: [],
       gpuModelName: "",
       gpuAllocation: 0,
-      maxGpuAllocation: 0,
       podName: "",
       log: "",
     },
