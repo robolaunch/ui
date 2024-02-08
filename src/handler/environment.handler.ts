@@ -53,7 +53,7 @@ function handleMapper(data: IEnvironmentBE[]): {
                   return {
                     name: item?.split("-")[0],
                     port: item?.split("-")[1].split(":")[1],
-                    backendPort: item?.split("-")[1].split(":")[0],
+                    backendPort: Number(item?.split("-")[1].split(":")[0]),
                   };
                 }) || [],
               gpuAllocation: env?.vdiGpuResource,
@@ -70,7 +70,7 @@ function handleMapper(data: IEnvironmentBE[]): {
                   return {
                     name: item?.split("-")[0],
                     port: item?.split("-")[1].split(":")[1],
-                    backendPort: item?.split("-")[1].split(":")[0],
+                    backendPort: Number(item?.split("-")[1].split(":")[0]),
                   };
                 }) || [],
               gpuAllocation: env?.ideGpuResource,
@@ -92,7 +92,7 @@ function handleMapper(data: IEnvironmentBE[]): {
                   return {
                     name: item?.split("-")[0],
                     port: item?.split("-")[1].split(":")[1],
-                    backendPort: item?.split("-")[1].split(":")[0],
+                    backendPort: Number(item?.split("-")[1].split(":")[0]),
                   };
                 }) || [],
               podName: env?.notebookPodName,

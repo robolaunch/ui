@@ -3,7 +3,6 @@ import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -15,6 +14,7 @@ import { useFormik } from "formik";
 import { toast } from "sonner";
 import { IFleet } from "../../interfaces/fleet.interface";
 import { INamespace } from "../../interfaces/namespace.interface";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
@@ -45,7 +45,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   } = useFunctions();
   const url = useParams();
 
-  const formik = useFormik<IWorkspaces>({
+  const formik = useFormik<IEnvironmentStep2>({
     validationSchema: applicationMode
       ? CFAppStep2Validations
       : CFRobotStep2Validations,

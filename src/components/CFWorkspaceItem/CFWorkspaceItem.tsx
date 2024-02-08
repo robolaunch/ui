@@ -1,15 +1,16 @@
 import CFWorkspaceItemAccordionHeader from "../CFWorkspaceItemAccordionHeader/CFWorkspaceItemAccordionHeader";
 import CFDeleteWorkspaceButton from "../CFDeleteWorkspaceButton/CFDeleteWorkspaceButton";
 import CFWorkspaceNameDistro from "../CFWorkspaceNameDistro/CFWorkspaceNameDistro";
-import { IWorkspace, IWorkspaces } from "../../interfaces/robotInterfaces";
+import { IWorkspace } from "../../interfaces/robotInterfaces";
 import CFRepositoryMapper from "../CFRepositoryMapper/CFRepositoryMapper";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
 import CFSection from "../CFSection/CFSection";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFWorkspaceItem {
-  formik: FormikProps<IWorkspaces>;
+  formik: FormikProps<IEnvironmentStep2>;
   workspace: IWorkspace;
   workspaceIndex: number;
   workspaceState: string[];

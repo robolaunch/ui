@@ -285,6 +285,8 @@ export interface IuseFunctions {
     setResponseLaunchManagers?: any,
   ) => void;
 
+  getFreePort: () => Promise<number | undefined>;
+
   // // // // // // //
   getOrganizationsFC: (
     fromPage: boolean,

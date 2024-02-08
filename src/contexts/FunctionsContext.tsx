@@ -74,6 +74,8 @@ import useMain from "../hooks/useMain";
 import { createContext } from "react";
 import { toast } from "sonner";
 import { INamespace } from "../interfaces/namespace.interface";
+import { getPort as getFreePortDispatch } from "../toolkit/PortSlice";
+
 import {
   namespaceMapper,
   namespacesMapper,
@@ -1380,6 +1382,44 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getFreePort(): Promise<number | undefined> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { payload: port } = await dispatch(
+          getFreePortDispatch({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            region: selectedState?.roboticsCloud?.region!,
+            instanceId: selectedState?.instance?.id!,
+          }),
+        );
+
+        console.log("port", port, typeof port);
+
+        if (typeof port !== "number") {
+          return reject();
+        } else if (
+          robotData.step1.services.ide.customPorts
+            ?.map((port: any) => port.backendPort)
+            .includes(port) ||
+          robotData.step1.services.vdi.customPorts
+            ?.map((port: any) => port.backendPort)
+            .includes(port) ||
+          robotData.step1.services.jupyterNotebook.customPorts
+            ?.map((port: any) => port.backendPort)
+            .includes(port)
+        ) {
+          getFreePort();
+        }
+
+        resolve(port);
+      } catch (error) {
+        toast.error("Error getting port. Please remove a port and try again.");
+        reject(error);
+      }
+    });
+  }
+
   function navigateTo404() {
     toast.error("The current page does not exist or is not available to you.");
     navigate("/404");
@@ -1863,6 +1903,8 @@ export default ({ children }: any) => {
         getFilesFromFileManager,
 
         getTemplates,
+
+        getFreePort,
 
         getOrganizationsFC,
         getRegionsFC,

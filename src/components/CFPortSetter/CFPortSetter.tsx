@@ -1,13 +1,10 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { getPort as getFreePort } from "../../toolkit/PortSlice";
 import CFPortInput from "../CFPortInput/CFPortInput";
-import { useAppDispatch } from "../../hooks/redux";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
-import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
-import { toast } from "sonner";
 import { FormikProps } from "formik";
+import useFunctions from "../../hooks/useFunctions";
 
 interface ICFPortSetter {
   formik: FormikProps<IEnvironmentStep1>;
@@ -18,40 +15,7 @@ export default function CFPortSetter({
   formik,
   type,
 }: ICFPortSetter): ReactElement {
-  const { selectedState } = useMain();
-
-  const dispatch = useAppDispatch();
-
-  async function getPort(): Promise<unknown> {
-    try {
-      const result = await dispatch(
-        getFreePort({
-          organizationId: selectedState?.organization?.id!,
-          instanceId: selectedState?.instance?.id!,
-          region: selectedState?.roboticsCloud?.region!,
-          roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        }),
-      );
-
-      if (
-        formik.values.services.ide.customPorts
-          ?.map((port: any) => port.backendPort)
-          .includes(result.payload) ||
-        formik.values.services.vdi.customPorts
-          ?.map((port: any) => port.backendPort)
-          .includes(result.payload) ||
-        formik.values.services.jupyterNotebook.customPorts
-          ?.map((port: any) => port.backendPort)
-          .includes(result.payload)
-      ) {
-        return getPort();
-      }
-
-      return result.payload;
-    } catch (error) {
-      toast.error("Error getting port. Please remove a port and try again.");
-    }
-  }
+  const { getFreePort } = useFunctions();
 
   function handleGetNameFromType(): string {
     switch (type) {
@@ -112,14 +76,18 @@ export default function CFPortSetter({
 
       <CreateRobotFormAddButton
         onClick={async () => {
-          await formik.setFieldValue(
-            `services.${type}.customPorts`,
-            formik.values?.services?.[`${type}`]?.customPorts?.concat({
-              name: "",
-              port: undefined,
-              backendPort: await getPort(),
-            }),
-          );
+          const backendPort = await getFreePort();
+
+          if (typeof backendPort === "number") {
+            await formik.setFieldValue(
+              `services.${type}.customPorts`,
+              (formik.values?.services?.[`${type}`]?.customPorts || []).concat({
+                name: "",
+                port: "",
+                backendPort: backendPort,
+              }),
+            );
+          }
         }}
         className="!mt-1"
       />

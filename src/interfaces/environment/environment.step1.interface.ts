@@ -36,7 +36,7 @@ export interface IEnvironmentStep1 {
       customPorts: {
         name: string;
         port: string;
-        backendPort: string;
+        backendPort: number;
       }[];
       gpuAllocation: number;
       podName: string;
@@ -50,7 +50,7 @@ export interface IEnvironmentStep1 {
       customPorts: {
         name: string;
         port: string;
-        backendPort: string;
+        backendPort: number;
       }[];
       gpuAllocation: number;
       gpuModelName: string;
@@ -69,7 +69,7 @@ export interface IEnvironmentStep1 {
       customPorts: {
         name: string;
         port: string;
-        backendPort: string;
+        backendPort: number;
       }[];
       podName: string;
       log: string;
