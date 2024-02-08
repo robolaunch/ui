@@ -1,7 +1,7 @@
 import {
   IOrganization,
   IOrganizationBE,
-} from "../interfaces/organization.interface";
+} from "../interfaces/global/organization.interface";
 
 function handleMapper(orgs: IOrganizationBE[]): IOrganization[] {
   return (

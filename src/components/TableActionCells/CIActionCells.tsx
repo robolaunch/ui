@@ -3,7 +3,7 @@ import TableActionButtons from "../TableActionButtons/TableActionButtons";
 import VerifyModal from "../../modals/VerifyModal";
 import useFunctions from "../../hooks/useFunctions";
 import { envCreatableInstance } from "../../helpers/envProvider";
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
 
 interface ICIActionCells {
   instance: ICloudInstance;
@@ -21,7 +21,7 @@ export default function CIActionCells({
   const [disabledSwitchButton, setDisabledSwitchButton] =
     useState<boolean>(false);
 
-  const { stopInstance, startInstance, deleteInstance } = useFunctions();
+  const { stopInstanceFC, startInstanceFC, deleteInstanceFC } = useFunctions();
 
   useEffect(() => {
     setDisabledSwitchButton(
@@ -36,9 +36,9 @@ export default function CIActionCells({
 
   async function handleOnClick(action: "start" | "stop" | "delete") {
     if (instance?.id) {
-      if (action === "start") await startInstance(instance?.id);
-      if (action === "stop") await stopInstance(instance?.id);
-      if (action === "delete") await deleteInstance(instance?.id);
+      if (action === "start") await startInstanceFC(instance?.id);
+      if (action === "stop") await stopInstanceFC(instance?.id);
+      if (action === "delete") await deleteInstanceFC(instance?.id);
 
       setTimeout(() => {
         reload();

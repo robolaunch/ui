@@ -1,6 +1,6 @@
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { INamespace } from "../../interfaces/namespace.interface";
+import { INamespace } from "../../interfaces/global/namespace.interface";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";

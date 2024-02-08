@@ -2,7 +2,7 @@ import {
   IFleet,
   IFleetBE,
   IPhysicalFleetBE,
-} from "../interfaces/fleet.interface";
+} from "../interfaces/global/fleet.interface";
 
 function handleMapper(
   vFleets: IFleetBE[],

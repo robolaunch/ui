@@ -3,23 +3,19 @@ import {
   IgetFleet,
   IgetFleets,
   IgetInstance,
-  IgetInstances,
   IgetNamespace,
   IgetNamespaces,
-  IgetOrganization,
   IgetPhysicalFleet,
   IgetPhysicalInstance,
   IgetPhysicalInstances,
   IgetRobot,
-  IgetRoboticsCloud,
-  IgetRoboticsClouds,
   IgetRobots,
   ImultipleGetLaunchParameters,
   ImultipleGetParameters,
   IsingleGetBuildParameters,
   IsingleGetParameters,
   IsingleGetRobotParameters,
-} from "../interfaces/useFunctionsInterfaces";
+} from "../interfaces/hook/functions.hook.interface";
 import {
   getRobot as getRobotDispatch,
   getRobots as getRobotsDispatch,
@@ -73,7 +69,7 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { createContext } from "react";
 import { toast } from "sonner";
-import { INamespace } from "../interfaces/namespace.interface";
+import { INamespace } from "../interfaces/global/namespace.interface";
 import { getPort as getFreePortDispatch } from "../toolkit/PortSlice";
 
 import {
@@ -92,7 +88,7 @@ import {
   environmentsMapper,
 } from "../handler/environment.handler";
 import { systemStatusMapper } from "../handler/system.handler";
-import { ISystemStatus } from "../interfaces/system.interface";
+import { ISystemStatus } from "../interfaces/global/system.interface";
 import { buildMapper } from "../handler/build.handler";
 import {
   IEnvironmentStep1,
@@ -100,11 +96,11 @@ import {
 } from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
 import { templatesMapper } from "../handler/template.handler";
-import { IRegion } from "../interfaces/region.interface";
-import { ICloudInstance } from "../interfaces/cloudInstance.interface";
-import { IFleet } from "../interfaces/fleet.interface";
+import { IRegion } from "../interfaces/global/region.interface";
+import { ICloudInstance } from "../interfaces/global/cloudInstance.interface";
+import { IFleet } from "../interfaces/global/fleet.interface";
 import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
-import { IOrganization } from "../interfaces/organization.interface";
+import { IOrganization } from "../interfaces/global/organization.interface";
 import { IEnvironmentStep4 } from "../interfaces/environment/environment.step4.interface";
 import { environmentGPUCoreUsagebility } from "../functions/environment.function";
 
@@ -123,157 +119,6 @@ export default ({ children }: any) => {
   } = useMain();
   const navigate = useNavigate();
   const { robotData, setRobotData } = useCreateRobot();
-
-  async function getOrganizations(parameters?: ImultipleGetParameters) {
-    await dispatch(getOrganizationsDispatch()).then((resOrgs: any) => {
-      const organizations = orgsMapper(resOrgs?.payload?.data);
-
-      if (organizations) {
-        parameters?.setResponse && parameters?.setResponse(organizations);
-        parameters?.setItemCount &&
-          parameters?.setItemCount(organizations?.length);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getOrganization(
-    values: IgetOrganization,
-    parameters?: IsingleGetParameters,
-  ) {
-    await dispatch(getOrganizationsDispatch()).then(async (resOrg: any) => {
-      const organization = orgMapper(
-        resOrg?.payload?.data,
-        values?.organizationName,
-      );
-
-      if (organization) {
-        parameters?.isSetState &&
-          setSelectedState((prevState) => {
-            return {
-              ...prevState,
-              organization: organization,
-            };
-          });
-        parameters?.setResponse &&
-          (await parameters?.setResponse(organization));
-        parameters?.setPages &&
-          setPagesState((prevState) => {
-            return {
-              ...prevState,
-              organization: organization,
-            };
-          });
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
-  async function getRoboticsClouds(
-    values: IgetRoboticsClouds,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getRegionsDispatch({
-        organizationId: values?.organizationId,
-      }),
-    ).then((resRegions: any) => {
-      const regions = regionsMapper(
-        resRegions?.payload?.data?.[0]?.roboticsClouds,
-      );
-
-      if (regions) {
-        parameters?.setResponse && parameters?.setResponse(regions);
-
-        parameters?.setItemCount && parameters?.setItemCount(regions?.length);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getRoboticsCloud(
-    values: IgetRoboticsCloud,
-    parameters?: IsingleGetParameters,
-  ) {
-    await dispatch(
-      getRegionsDispatch({
-        organizationId: values?.organizationId,
-      }),
-    ).then((responseRoboticsClouds: any) => {
-      const region = regionMapper(
-        responseRoboticsClouds?.payload?.data?.[0]?.roboticsClouds,
-        values?.roboticsCloudName,
-      );
-
-      if (region) {
-        parameters?.isSetState &&
-          setSelectedState((prevState: any) => {
-            return {
-              ...prevState,
-              roboticsCloud: region,
-            };
-          });
-        parameters?.setResponse && parameters?.setResponse(region);
-
-        parameters?.setPages &&
-          setPagesState((prevState: any) => {
-            return {
-              ...prevState,
-              roboticsCloud: region,
-            };
-          });
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
-  async function getInstances(
-    values: IgetInstances,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getCloudInstancesDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        region: values?.region,
-        details: values?.details,
-      }),
-    ).then((responseInstances: any) => {
-      const instances = cloudInstancesMapper(
-        responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances,
-      );
-
-      if (instances) {
-        parameters?.setResponse && parameters?.setResponse(instances || []);
-
-        parameters?.setItemCount &&
-          parameters?.setItemCount(instances?.length || 0);
-
-        if (instances?.length === 1) {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(instances?.[0]);
-        } else {
-          parameters?.setFirstItemforTrial &&
-            parameters?.setFirstItemforTrial(null);
-        }
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
 
   async function getPhysicalInstances(
     values: IgetPhysicalInstances,
@@ -382,7 +227,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function startInstance(instanceId: string): Promise<void> {
+  async function startInstanceFC(instanceId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -400,7 +245,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function stopInstance(instanceId: string): Promise<void> {
+  async function stopInstanceFC(instanceId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -418,7 +263,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function deleteInstance(instanceId: string): Promise<void> {
+  async function deleteInstanceFC(instanceId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -510,7 +355,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function deleteFleet(fleetName: string): Promise<void> {
+  async function deleteFleetFC(fleetName: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -599,7 +444,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function deleteNamespace(nsName: string): Promise<void> {
+  async function deleteNamespaceFC(nsName: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -1847,17 +1692,7 @@ export default ({ children }: any) => {
   return (
     <FunctionsContext.Provider
       value={{
-        getOrganizations,
-        getOrganization,
-
-        getRoboticsClouds,
-        getRoboticsCloud,
-
-        getInstances,
         getInstance,
-        startInstance,
-        stopInstance,
-        deleteInstance,
 
         addPhysicalInstanceToFleet,
 
@@ -1866,11 +1701,9 @@ export default ({ children }: any) => {
 
         getFleets,
         getFleet,
-        deleteFleet,
 
         getNamespaces,
         getNamespace,
-        deleteNamespace,
 
         getPhysicalFleet,
 
@@ -1905,7 +1738,7 @@ export default ({ children }: any) => {
         getTemplates,
 
         getFreePort,
-
+        /////
         getOrganizationsFC,
         getRegionsFC,
         getCloudInstancesFC,
@@ -1915,6 +1748,11 @@ export default ({ children }: any) => {
         getApplicationsFC,
         getRobotFC,
         getApplicationFC,
+        startInstanceFC,
+        stopInstanceFC,
+        deleteInstanceFC,
+        deleteFleetFC,
+        deleteNamespaceFC,
       }}
     >
       {children}

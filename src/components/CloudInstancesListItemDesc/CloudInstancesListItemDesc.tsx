@@ -1,4 +1,4 @@
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
 import StateCell from "../TableInformationCells/StateCell";
 import { ReactElement } from "react";
 

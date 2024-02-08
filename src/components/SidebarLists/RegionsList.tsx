@@ -7,7 +7,7 @@ import BasicCell from "../TableInformationCells/BasicCell";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { IRegion } from "../../interfaces/region.interface";
+import { IRegion } from "../../interfaces/global/region.interface";
 
 interface IRegionsList {
   reload: boolean;

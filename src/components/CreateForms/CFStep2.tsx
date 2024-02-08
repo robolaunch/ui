@@ -1,3 +1,4 @@
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
 import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
@@ -12,18 +13,12 @@ import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
-import { IFleet } from "../../interfaces/fleet.interface";
-import { INamespace } from "../../interfaces/namespace.interface";
-import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
 }
 
 export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
-  const [responseFleet, setResponseFleet] = useState<
-    IFleet | INamespace | undefined
-  >(undefined);
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const {
@@ -37,9 +32,9 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     useState<boolean>(true);
   const {
     getRobot,
-    getFleet,
+    getFleetsFC,
+    getNamespacesFC,
     getEnvironment,
-    getNamespace,
     createEnvironment,
     createRobot,
   } = useFunctions();
@@ -102,7 +97,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
           setIsLoadingImportRobot(false);
         }, 2000);
       } else {
-        if (!responseFleet) {
+        if (!selectedState?.fleet) {
           applicationMode ? handleGetNamespace() : handleGetFleet();
         }
       }
@@ -118,7 +113,7 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [responseFleet],
+    [selectedState?.fleet],
   );
 
   useEffect(() => {
@@ -161,36 +156,12 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     );
   }
 
-  function handleGetFleet() {
-    getFleet(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseFleet,
-      },
-    );
+  async function handleGetFleet() {
+    await getFleetsFC(false, false, selectedState?.fleet?.name!);
   }
 
-  function handleGetNamespace() {
-    getNamespace(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        namespaceName: selectedState?.fleet?.name!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseFleet,
-      },
-    );
+  async function handleGetNamespace() {
+    await getNamespacesFC(false, false, selectedState?.fleet?.name!);
   }
 
   return (
@@ -199,10 +170,10 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
       isLoading={
         isImportRobot
           ? isLoadingImportRobot
-          : !responseFleet ||
+          : !selectedState?.fleet ||
             (applicationMode
-              ? responseFleet?.status !== "Active"
-              : responseFleet?.status !== "Ready")
+              ? selectedState?.fleet?.status !== "Active"
+              : selectedState?.fleet?.status !== "Ready")
       }
       loadingText={
         isImportRobot
@@ -214,8 +185,9 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
           ? []
           : [
               {
-                name: responseFleet?.name,
-                status: responseFleet?.status || responseFleet?.status,
+                name: selectedState?.fleet?.name,
+                status:
+                  selectedState?.fleet?.status || selectedState?.fleet?.status,
               },
             ]
       }

@@ -1,4 +1,4 @@
-import { IBuildBE } from "../interfaces/build.interfaces";
+import { IBuildBE } from "../interfaces/global/build.interfaces";
 import { IEnvironmentStep1Cluster } from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
 

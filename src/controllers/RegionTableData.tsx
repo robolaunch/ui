@@ -1,8 +1,7 @@
 import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 import InstanceUsagesCell from "../components/InstanceUsagesCell/InstanceUsagesCell";
 import CIActionCells from "../components/TableActionCells/CIActionCells";
-import { IInstanceDashboardUsages } from "../interfaces/tableInterface";
-import { ICloudInstance } from "../interfaces/cloudInstance.interface";
+import { ICloudInstance } from "../interfaces/global/cloudInstance.interface";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
@@ -16,7 +15,7 @@ export function RegionTableData() {
   const [instances, setInstances] = useState<ICloudInstance[] | null>(null);
   const { getOrganizationsFC, getRegionsFC, getCloudInstancesFC } =
     useFunctions();
-  const { pagesState, selectedState } = useMain();
+  const { pagesState } = useMain();
   const [reload, setReload] = useState<boolean>(false);
   const url = useParams();
 
@@ -35,8 +34,8 @@ export function RegionTableData() {
     }
 
     const timer = setInterval(() => {
-      selectedState?.organization &&
-        selectedState?.roboticsCloud &&
+      pagesState?.organization &&
+        pagesState?.roboticsCloud &&
         pagesState?.roboticsCloud &&
         handleGetInstances();
     }, 20000);
@@ -207,7 +206,7 @@ export function RegionTableData() {
         key: "usages",
         header: "Resources & Usages",
         align: "center",
-        body: ({ usages }: { usages: IInstanceDashboardUsages }) => {
+        body: ({ usages }: { usages: any }) => {
           return <InstanceUsagesCell data={usages} />;
         },
       },

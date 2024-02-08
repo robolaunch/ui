@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
-import { IOrganization } from "../../interfaces/organization.interface";
-import { IRegion } from "../../interfaces/region.interface";
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
-import { IFleet } from "../../interfaces/fleet.interface";
-import { INamespace } from "../../interfaces/namespace.interface";
+import { IOrganization } from "../../interfaces/global/organization.interface";
+import { IRegion } from "../../interfaces/global/region.interface";
+import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
+import { IFleet } from "../../interfaces/global/fleet.interface";
+import { INamespace } from "../../interfaces/global/namespace.interface";
 
 interface ISidebarListItem {
   name: string | ReactElement;

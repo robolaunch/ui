@@ -1,4 +1,4 @@
-import { ProfileActiveTab } from "../../interfaces/profileInterfaces";
+import { ProfileActiveTab } from "../../interfaces/global/profile.interface";
 import { useKeycloak } from "@react-keycloak/web";
 import CardLayout from "../../layouts/CardLayout";
 import useProfile from "../../hooks/useProfile";
@@ -20,13 +20,13 @@ export default function ProfileHeader(): ReactElement {
           size={200}
         />
         <div className="flex flex-col justify-between py-2">
-          <p className="text-light-700 font-medium">
+          <p className="font-medium text-light-700">
             {keycloak?.tokenParsed?.name}
           </p>
-          <p className="text-light-500 text-sm">
+          <p className="text-sm text-light-500">
             {keycloak?.tokenParsed?.preferred_username}
           </p>
-          <p className="text-light-400 text-sm">
+          <p className="text-sm text-light-400">
             {keycloak?.tokenParsed?.email}
           </p>
         </div>

@@ -1,7 +1,7 @@
 import FleetsListItemDesc from "../FleetsListItemDesc/FleetsListItemDesc";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { IFleet } from "../../interfaces/fleet.interface";
+import { IFleet } from "../../interfaces/global/fleet.interface";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppDispatch } from "../../hooks/redux";

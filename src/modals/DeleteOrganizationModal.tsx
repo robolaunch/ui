@@ -1,7 +1,7 @@
 import Button from "../components/Button/Button";
 import { ReactElement, useState } from "react";
 import { Dialog } from "primereact/dialog";
-import { IOrganization } from "../interfaces/organization.interface";
+import { IOrganization } from "../interfaces/global/organization.interface";
 
 interface IDeleteOrganizationModal {
   data: IOrganization;

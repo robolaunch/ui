@@ -1,10 +1,9 @@
 import { ReactElement } from "react";
 import CirclePercentageBar from "../CirclePercentageBar/CirclePercentageBar";
-import { IInstanceDashboardUsages } from "../../interfaces/tableInterface";
 import InstanceNetworkCell from "../InstanceNetworkCell/InstanceNetworkCell";
 
 interface IInstanceUsagesCell {
-  data: IInstanceDashboardUsages;
+  data: any;
 }
 
 export default function InstanceUsagesCell({

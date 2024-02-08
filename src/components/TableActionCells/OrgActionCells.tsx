@@ -1,6 +1,6 @@
 import DeleteOrganizationModal from "../../modals/DeleteOrganizationModal";
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
-import { IOrganization } from "../../interfaces/organization.interface";
+import { IOrganization } from "../../interfaces/global/organization.interface";
 import { envCreatableOrganization } from "../../helpers/envProvider";
 import { Fragment, ReactElement, useState } from "react";
 

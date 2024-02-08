@@ -1,17 +1,17 @@
-import { ICloudInstance } from "./cloudInstance.interface";
-import { IEnvironmentStep1 } from "./environment/environment.step1.interface";
-import { IEnvironmentStep2 } from "./environment/environment.step2.interface";
+import { ICloudInstance } from "../global/cloudInstance.interface";
+import { IEnvironmentStep1 } from "../environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../environment/environment.step2.interface";
 import {
   IcreateDataScienceAppsRequest,
   IdeleteDataScienceAppsRequest,
   IgetEnvironmentRequest,
   IsingleGetEnviromentParameters,
-} from "./environmentInterfaces";
-import { IFleet } from "./fleet.interface";
-import { INamespace } from "./namespace.interface";
-import { IOrganization } from "./organization.interface";
-import { IRegion } from "./region.interface";
-import { ISystemStatus } from "./system.interface";
+} from "../environmentInterfaces";
+import { IFleet } from "../global/fleet.interface";
+import { INamespace } from "../global/namespace.interface";
+import { IOrganization } from "../global/organization.interface";
+import { IRegion } from "../global/region.interface";
+import { ISystemStatus } from "../global/system.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -168,23 +168,6 @@ export interface ImultipleGetLaunchParameters {
 }
 
 export interface IuseFunctions {
-  getOrganizations: (parameters?: ImultipleGetParameters) => void;
-  getOrganization: (
-    values: IgetOrganization,
-    parameters?: IsingleGetParameters,
-  ) => void;
-  getRoboticsClouds: (
-    values: IgetRoboticsClouds,
-    parameters?: ImultipleGetParameters,
-  ) => void;
-  getRoboticsCloud: (
-    values: IgetRoboticsCloud,
-    parameters?: IsingleGetParameters,
-  ) => void;
-  getInstances: (
-    values: IgetInstances,
-    parameters?: ImultipleGetParameters,
-  ) => void;
   getPhysicalInstances: (
     values: IgetPhysicalInstances,
     parameters?: ImultipleGetParameters,
@@ -199,13 +182,8 @@ export interface IuseFunctions {
     parameters?: IsingleGetParameters,
   ) => void;
 
-  startInstance: (organizationId: string) => Promise<void>;
-  stopInstance: (organizationId: string) => Promise<void>;
-  deleteInstance: (organizationId: string) => Promise<void>;
-
   getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
-  getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
-  deleteFleet: (fleetName: string) => Promise<void>;
+  // getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
 
   getNamespaces: (
     values: IgetNamespaces,
@@ -215,7 +193,6 @@ export interface IuseFunctions {
     values: IgetNamespace,
     parameters?: IsingleGetParameters,
   ) => void;
-  deleteNamespace: (nsName: string) => Promise<void>;
 
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
@@ -258,35 +235,14 @@ export interface IuseFunctions {
 
   getTemplates: () => Promise<any>;
 
-  handleSetterCurrentOrganization: (
-    urlOrganizationName: string | undefined,
-  ) => void;
-  handleSetterCurrentRoboticsCloud: (
-    urlRoboticsCloudName: string | undefined,
-  ) => void;
-  handleSetterCurrentInstance: (urlInstanceName: string | undefined) => void;
-  handleSetterCurrentFleet: (urlFleetName: string | undefined) => void;
-  handleSetterResponseOrganizations: (setResponseOrganizations: any) => void;
-  handleSetterResponseRoboticsClouds: (setResponseRoboticsClouds: any) => void;
-  handleSetterResponseInstances: (setResponseInstances: any) => void;
-  handleSetterResponseFleets: (setResponseFleets: any) => void;
-  handleSetterResponseFleet: (setResponseFleet: any) => void;
-  handleSetterResponseRobots: (setResponseRobots: any) => void;
-  handleSetterResponseRobot: (
-    urlRobotName: string | undefined,
-    setResponseRobot?: any,
-  ) => void;
-  handleSetterResponseBuildManager: (
-    urlRobotName: string | undefined,
-    setResponseBuildManager?: any,
-  ) => void;
-  handleSetterResponseLaunchManagers: (
-    urlRobotName: string | undefined,
-    setResponseLaunchManagers?: any,
-  ) => void;
-
   getFreePort: () => Promise<number | undefined>;
-
+  // // // // // // //
+  deleteNamespaceFC: (nsName: string) => Promise<void>;
+  deleteFleetFC: (fleetName: string) => Promise<void>;
+  // // // // // // //
+  startInstanceFC: (organizationId: string) => Promise<void>;
+  stopInstanceFC: (organizationId: string) => Promise<void>;
+  deleteInstanceFC: (organizationId: string) => Promise<void>;
   // // // // // // //
   getOrganizationsFC: (
     fromPage: boolean,

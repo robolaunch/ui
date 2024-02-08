@@ -6,7 +6,7 @@ import {
   IgetOrganizationAdminsRequest,
   IgetOrganizationGuestsRequest,
   IgetOrganizationUsersRequest,
-} from "../interfaces/organization.interface";
+} from "../interfaces/global/organization.interface";
 
 export const createOrganization = createAsyncThunk(
   "organizations/createOrganization",

@@ -18,7 +18,7 @@ export function NamespaceTableData() {
   >();
   const [reload, setReload] = useState<boolean>(false);
 
-  const { pagesState, selectedState, applicationMode } = useMain();
+  const { pagesState, applicationMode } = useMain();
   const url = useParams();
 
   const {
@@ -45,10 +45,10 @@ export function NamespaceTableData() {
     }
 
     const timer = setInterval(() => {
-      selectedState?.organization &&
-      selectedState?.roboticsCloud &&
-      selectedState?.instance &&
-      selectedState?.fleet &&
+      pagesState?.organization &&
+      pagesState?.roboticsCloud &&
+      pagesState?.instance &&
+      pagesState?.fleet &&
       pagesState?.fleet &&
       applicationMode
         ? handleGetEnvironments()

@@ -1,6 +1,6 @@
 import TemporaryActionCells from "../components/TableActionCells/TemporaryActionCells";
 import StateCell from "../components/TableInformationCells/StateCell";
-import { IOrganization } from "../interfaces/organization.interface";
+import { IOrganization } from "../interfaces/global/organization.interface";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { orgSplitter } from "../functions/string.splitter.function";
 import { useEffect, useMemo, useState } from "react";

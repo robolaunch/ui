@@ -1,7 +1,7 @@
 import {
   ICloudInstance,
   ICloudInstanceBE,
-} from "../interfaces/cloudInstance.interface";
+} from "../interfaces/global/cloudInstance.interface";
 
 function handleMapper(data: ICloudInstanceBE[]): ICloudInstance[] {
   return (

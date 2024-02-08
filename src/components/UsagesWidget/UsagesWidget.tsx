@@ -9,7 +9,7 @@ import WidgetDownloadCell from "../WidgetDownloadCell/WidgetDownloadCell";
 import useFunctions from "../../hooks/useFunctions";
 import useMain from "../../hooks/useMain";
 import WidgetGPUCell from "../WidgetGPUCell/WidgetGPUCell";
-import { ISystemStatus } from "../../interfaces/system.interface";
+import { ISystemStatus } from "../../interfaces/global/system.interface";
 import WidgetSystemCell from "../WidgetSystemCell/WidgetSystemCell";
 
 export default function UsagesWidget(): ReactElement {

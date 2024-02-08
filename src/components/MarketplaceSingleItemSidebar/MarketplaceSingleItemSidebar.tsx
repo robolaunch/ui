@@ -1,9 +1,8 @@
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement } from "react";
 import { FiDownload } from "react-icons/fi";
 import { VscSymbolNamespace } from "react-icons/vsc";
 import { BsCloudy } from "react-icons/bs";
 import { MdStorage } from "react-icons/md";
-import ImportRobotModal from "../../modals/DeployApplicationModal";
 import ContentLoader from "react-content-loader";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
@@ -15,9 +14,6 @@ interface IMarketplaceSingleItemSidebar {
 export default function MarketplaceSingleItemSidebar({
   item,
 }: IMarketplaceSingleItemSidebar): ReactElement {
-  const [isShowImportRobotModal, setIsShowImportRobotModal] =
-    useState<boolean>(false);
-
   return (
     <Card className="!col-span-3 flex !h-full flex-col gap-8 p-6">
       <Fragment>
@@ -27,7 +23,6 @@ export default function MarketplaceSingleItemSidebar({
         </div>
         <div className="flex gap-4 transition-all duration-500">
           <Button
-            onClick={() => setIsShowImportRobotModal(true)}
             className="!h-11 text-xs"
             text={`Deploy Application`}
             disabled={!item}
@@ -146,12 +141,6 @@ export default function MarketplaceSingleItemSidebar({
             </label>
           </div>
         </div>
-        {isShowImportRobotModal && (
-          <ImportRobotModal
-            handleCloseModal={() => setIsShowImportRobotModal(false)}
-            item={item}
-          />
-        )}
       </Fragment>
     </Card>
   );

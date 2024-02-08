@@ -8,7 +8,3 @@ export interface IGithubToken {
   token_type: string;
   userId: number;
 }
-export interface IuseGithub {
-  githubToken: IGithubToken | null;
-  githubAuth: boolean;
-}

@@ -1,4 +1,4 @@
-import { IRegion, IRegionBE } from "../interfaces/region.interface";
+import { IRegion, IRegionBE } from "../interfaces/global/region.interface";
 
 function handleMapper(data: IRegionBE[]): IRegion[] {
   return (

@@ -1,8 +1,11 @@
-import { ISelectedState, ISidebarState } from "../interfaces/mainInterfaces";
 import { createContext, useEffect, useState } from "react";
-import { IpagesState } from "../interfaces/mainInterfaces";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
+import {
+  ISelectedState,
+  ISidebarState,
+  IpagesState,
+} from "../interfaces/context/main.context.interface";
 
 export const MainContext: any = createContext<any>(null);
 

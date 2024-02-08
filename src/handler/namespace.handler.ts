@@ -1,4 +1,7 @@
-import { INamespace, INamespaceBE } from "../interfaces/namespace.interface";
+import {
+  INamespace,
+  INamespaceBE,
+} from "../interfaces/global/namespace.interface";
 
 function handleMapper(data: INamespaceBE[]): INamespace[] {
   return (

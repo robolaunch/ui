@@ -4,8 +4,8 @@ import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import { orgSplitter } from "../functions/string.splitter.function";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { INamespace } from "../interfaces/namespace.interface";
-import { IFleet } from "../interfaces/fleet.interface";
+import { INamespace } from "../interfaces/global/namespace.interface";
+import { IFleet } from "../interfaces/global/fleet.interface";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useAppSelector } from "../hooks/redux";
@@ -39,7 +39,10 @@ export function InstanceTableData() {
     }
 
     const timer = setInterval(() => {
-      pagesState?.instance && applicationMode
+      pagesState?.organization &&
+      pagesState?.roboticsCloud &&
+      pagesState?.instance &&
+      applicationMode
         ? handleGetNamespaces()
         : handleGetFleets();
     }, 10000);

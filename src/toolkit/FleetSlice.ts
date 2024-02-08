@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import {
   IgetNamespace,
   IgetNamespaces,
-} from "../interfaces/useFunctionsInterfaces";
+} from "../interfaces/hook/functions.hook.interface";
 
 export const createFederatedFleet = createAsyncThunk(
   "fleet/createFederatedFleet",

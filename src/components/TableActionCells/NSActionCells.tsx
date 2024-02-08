@@ -1,6 +1,6 @@
 import TableActionButtons from "../TableActionButtons/TableActionButtons";
-import { INamespace } from "../../interfaces/namespace.interface";
-import { IFleet } from "../../interfaces/fleet.interface";
+import { INamespace } from "../../interfaces/global/namespace.interface";
+import { IFleet } from "../../interfaces/global/fleet.interface";
 import { Fragment, ReactElement, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import { useAppSelector } from "../../hooks/redux";
@@ -18,12 +18,12 @@ export default function NSActionCells({
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false);
   const { applicationMode } = useAppSelector((state) => state.user);
-  const { deleteFleet, deleteNamespace } = useFunctions();
+  const { deleteFleetFC, deleteNamespaceFC } = useFunctions();
 
   async function handleDelete() {
     applicationMode
-      ? await deleteNamespace(data?.name)
-      : await deleteFleet(data?.name);
+      ? await deleteNamespaceFC(data?.name)
+      : await deleteFleetFC(data?.name);
 
     setTimeout(() => {
       reload();

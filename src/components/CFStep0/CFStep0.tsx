@@ -1,7 +1,7 @@
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFGridItem from "../CFGridItem/CFGridItem";
 import useFunctions from "../../hooks/useFunctions";
-import { ITemplate } from "../../interfaces/template.interface";
+import { ITemplate } from "../../interfaces/global/template.interface";
 import Button from "../Button/Button";
 import { IEnvironment } from "../../interfaces/environment/environment.interface";
 import useCreateRobot from "../../hooks/useCreateRobot";

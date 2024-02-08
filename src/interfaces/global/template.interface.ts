@@ -1,4 +1,4 @@
-import { IEnvironment } from "./environment/environment.interface";
+import { IEnvironment } from "../environment/environment.interface";
 
 export interface ITemplate {
   alias: string;

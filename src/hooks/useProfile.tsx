@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { IuseProfile } from "../interfaces/profileInterfaces";
 import { ProfileContext } from "../contexts/ProfileContext";
+import { IuseProfile } from "../interfaces/hook/profile.hook.interface";
 
 const useProfile = () => {
   const useProfile: IuseProfile = useContext(ProfileContext);

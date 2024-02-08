@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import useRobot from "../hooks/useRobot";
 import ROSLIB from "roslib";
-import { IBarcodeItem } from "../interfaces/barcodeInterfaces";
+import { IBarcodeItem } from "../interfaces/global/barcode.interface";
 
 export const BarcodeContext: any = createContext<any>(null);
 

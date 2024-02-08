@@ -1,4 +1,4 @@
-import { IOrganization } from "../../interfaces/organization.interface";
+import { IOrganization } from "../../interfaces/global/organization.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { orgSplitter } from "../../functions/string.splitter.function";
 import { Fragment, ReactElement, useEffect, useState } from "react";

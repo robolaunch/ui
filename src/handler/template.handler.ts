@@ -1,4 +1,7 @@
-import { ITemplate, ITemplateBE } from "../interfaces/template.interface";
+import {
+  ITemplate,
+  ITemplateBE,
+} from "../interfaces/global/template.interface";
 
 function handleMapper(data: ITemplateBE[]): ITemplate[] {
   return (

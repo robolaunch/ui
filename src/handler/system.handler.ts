@@ -1,4 +1,7 @@
-import { ISystemStatus, ISystemStatusBE } from "../interfaces/system.interface";
+import {
+  ISystemStatus,
+  ISystemStatusBE,
+} from "../interfaces/global/system.interface";
 
 export function systemStatusMapper(data: ISystemStatusBE[]): ISystemStatus {
   return {

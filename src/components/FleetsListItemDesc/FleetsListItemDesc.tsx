@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import StateCell from "../TableInformationCells/StateCell";
-import { IFleet } from "../../interfaces/fleet.interface";
+import { IFleet } from "../../interfaces/global/fleet.interface";
 
 interface IFleetsListItemDesc {
   fleet: IFleet;

@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { environmentApi, robotBuildManagerApi } from "../api/api";
-import {
-  IcreateEnvironmentRequest,
-  IgetEnvironmentRequest,
-  IgetEnvironmentsRequest,
-} from "../interfaces/environmentInterfaces";
 import { toast } from "sonner";
 
 export const getReadyEnvironments = createAsyncThunk(
@@ -19,7 +14,39 @@ export const getReadyEnvironments = createAsyncThunk(
 
 export const createEnvironment = createAsyncThunk(
   "environment/createEnvironment",
-  async (values: IcreateEnvironmentRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    environmentName: string;
+    domainName: string;
+    fleetName: string;
+    ideGpuResource: number;
+    ideGpuResourceType: string;
+    vdiSessionCount: number;
+    vdiGpuResource: number;
+    storageAmount: number;
+    applicationName: string;
+    applicationVersion: string;
+    devspaceUbuntuDistro: string;
+    devspaceDesktop: string;
+    devspaceVersion: string;
+    workspaces: any;
+    permittedDirectories: string;
+    persistentDirectories: string;
+    hostDirectories: string;
+    ideCustomPorts: string;
+    vdiCustomPorts: string;
+    notebookEnabled: boolean;
+    notebookGpuResource: number;
+    notebookCustomPorts: string;
+    applicationObject: any;
+    templateAlias: string;
+    templatePrivateSharing: boolean;
+    templateOrganizationSharing: boolean;
+    templatePublicSharing: boolean;
+  }) => {
     const response = await environmentApi.createEnvironment({
       name: "environment/createEnvironment",
       organizationId: values?.organizationId,
@@ -80,7 +107,13 @@ export const createEnvironment = createAsyncThunk(
 
 export const getEnvironments = createAsyncThunk(
   "environment/getEnvironments",
-  async (values: IgetEnvironmentsRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+  }) => {
     const response = await environmentApi.getEnvironments({
       name: "environment/getEnvironments",
       organizationId: values?.organizationId,
@@ -103,7 +136,14 @@ export const getEnvironments = createAsyncThunk(
 
 export const getEnvironment = createAsyncThunk(
   "environment/getEnvironment",
-  async (values: IgetEnvironmentRequest) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    fleetName: string;
+    environmentName: string;
+  }) => {
     const response = await environmentApi.getEnvironment({
       name: "environment/getEnvironment",
       organizationId: values?.organizationId,

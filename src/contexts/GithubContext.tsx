@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import queryString from "query-string";
-import { IGithubToken } from "../interfaces/githubInterfaces";
+import { IGithubToken } from "../interfaces/global/github.interface";
 import { useKeycloak } from "@react-keycloak/web";
 import { toast } from "sonner";
 import { useAppDispatch } from "../hooks/redux";
@@ -46,9 +46,12 @@ export default ({ children }: any) => {
     const tokenExpriationTimer =
       githubToken &&
       keycloak?.tokenParsed?.githubApp &&
-      setTimeout(() => {
-        handleRefreshToken();
-      }, (githubToken?.exp - Math.floor(Date.now() / 1000) - 900) * 1000);
+      setTimeout(
+        () => {
+          handleRefreshToken();
+        },
+        (githubToken?.exp - Math.floor(Date.now() / 1000) - 900) * 1000,
+      );
     return () => clearTimeout(tokenExpriationTimer || 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [githubToken]);
@@ -62,7 +65,7 @@ export default ({ children }: any) => {
       getGithubAccessTokenwithCode({
         code: queryParams.code,
         githubUserId: keycloak?.tokenParsed?.githubApp,
-      })
+      }),
     ).then((response: any) => {
       if (!response?.payload?.data?.error) {
         setGithubToken({
@@ -73,7 +76,7 @@ export default ({ children }: any) => {
       } else {
         setGithubToken(null);
         toast.error(
-          "Github App Auth failed. Please sign in your's github account."
+          "Github App Auth failed. Please sign in your's github account.",
         );
       }
     });
@@ -83,7 +86,7 @@ export default ({ children }: any) => {
     dispatch(
       getGithubAccessTokenwithRefreshToken({
         refresh_token: githubToken?.refresh_token,
-      })
+      }),
     )
       .then((response: any) => {
         if (!response?.payload?.data?.error) {

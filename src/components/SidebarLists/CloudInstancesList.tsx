@@ -2,7 +2,7 @@ import CloudInstancesListItemDesc from "../CloudInstancesListItemDesc/CloudInsta
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { ICloudInstance } from "../../interfaces/cloudInstance.interface";
+import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
 import { orgSplitter } from "../../functions/string.splitter.function";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
