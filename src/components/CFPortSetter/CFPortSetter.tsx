@@ -4,6 +4,7 @@ import CFPortInput from "../CFPortInput/CFPortInput";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
+import { handleAddPortForService } from "../../functions/form.port.function";
 import useFunctions from "../../hooks/useFunctions";
 
 interface ICFPortSetter {
@@ -31,66 +32,33 @@ export default function CFPortSetter({
   }
 
   return (
-    <div>
-      <CFInfoBar
-        label={`Custom Port Exposure From ${handleGetNameFromType()}:`}
-        tip={`Here you can specify the custom ports you want your application running in the ${handleGetNameFromType()} service to expose.`}
-        vertical
-      >
-        <div className="flex flex-col gap-2">
-          {(() => {
-            switch (type) {
-              case "jupyterNotebook":
-                return formik.values?.services.jupyterNotebook?.customPorts?.map(
-                  (_: any, index: number) => {
-                    return (
-                      <CFPortInput
-                        key={index}
-                        formik={formik}
-                        portIndex={index}
-                        type={type}
-                        disabled={formik.isSubmitting}
-                      />
-                    );
-                  },
-                );
-
-              default:
-                return formik.values?.services?.[`${type}`]?.customPorts?.map(
-                  (_: any, index: number) => {
-                    return (
-                      <CFPortInput
-                        key={index}
-                        formik={formik}
-                        portIndex={index}
-                        type={type}
-                        disabled={formik.isSubmitting}
-                      />
-                    );
-                  },
-                );
-            }
-          })()}
-        </div>
-      </CFInfoBar>
-
-      <CreateRobotFormAddButton
-        onClick={async () => {
-          const backendPort = await getFreePort();
-
-          if (typeof backendPort === "number") {
-            await formik.setFieldValue(
-              `services.${type}.customPorts`,
-              (formik.values?.services?.[`${type}`]?.customPorts || []).concat({
-                name: "",
-                port: "",
-                backendPort: backendPort,
-              }),
+    <CFInfoBar
+      label={`Custom Port Exposure From ${handleGetNameFromType()}:`}
+      tip={`Here you can specify the custom ports you want your application running in the ${handleGetNameFromType()} service to expose.`}
+      vertical
+    >
+      <div className="flex flex-col gap-2">
+        {formik.values?.services?.[`${type}`]?.customPorts?.map(
+          (_: any, index: number) => {
+            return (
+              <CFPortInput
+                key={index}
+                formik={formik}
+                portIndex={index}
+                type={type}
+                disabled={formik.isSubmitting}
+              />
             );
-          }
-        }}
-        className="!mt-1"
-      />
-    </div>
+          },
+        )}
+        <CreateRobotFormAddButton
+          onClick={async () => {
+            const portBE = await getFreePort();
+            handleAddPortForService(formik, type, portBE);
+          }}
+          className="!mt-1"
+        />
+      </div>
+    </CFInfoBar>
   );
 }

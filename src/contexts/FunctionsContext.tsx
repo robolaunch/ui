@@ -1394,8 +1394,6 @@ export default ({ children }: any) => {
           }),
         );
 
-        console.log("port", port, typeof port);
-
         if (typeof port !== "number") {
           return reject();
         } else if (
@@ -1414,7 +1412,9 @@ export default ({ children }: any) => {
 
         resolve(port);
       } catch (error) {
-        toast.error("Error getting port. Please remove a port and try again.");
+        toast.error(
+          "Error getting port. If Please remove a port and try again.",
+        );
         reject(error);
       }
     });

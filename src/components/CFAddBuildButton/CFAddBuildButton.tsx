@@ -1,22 +1,20 @@
 import { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import { IBuildSteps } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import { handleAddBuild } from "../../functions/form.build.function";
+import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 
 interface ICFAddBuildButton {
-  formik?: FormikProps<IBuildSteps>;
+  formik: FormikProps<IEnvironmentStep3>;
 }
 
 export default function CFAddBuildButton({
   formik,
 }: ICFAddBuildButton): ReactElement {
-  const { handleAddBuildStep } = useCreateRobot();
-
   return (
     <div data-tut="create-robot-step3-build-add-button">
       <CreateRobotFormAddButton
-        onClick={() => handleAddBuildStep(formik)}
+        onClick={() => handleAddBuild(formik)}
         disabled={formik?.isSubmitting}
       />
     </div>

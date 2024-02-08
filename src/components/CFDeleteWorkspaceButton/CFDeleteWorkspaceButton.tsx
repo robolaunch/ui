@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import { ReactElement } from "react";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { handleRemoveWorkspace } from "../../functions/form.workspace.function";
 
 interface ICFDeleteWorkspaceButton {
   formik: FormikProps<IWorkspaces>;
@@ -15,8 +15,6 @@ export default function CFDeleteWorkspaceButton({
   workspaceIndex,
   disabled,
 }: ICFDeleteWorkspaceButton): ReactElement {
-  const { handleRemoveWorkspaceStep } = useCreateRobot();
-
   return (
     <div
       className="flex items-center"
@@ -25,7 +23,7 @@ export default function CFDeleteWorkspaceButton({
       <CreateRobotFormDeleteButton
         disabled={formik.values.workspaces.length > 1 ? false : true}
         onClick={() => {
-          handleRemoveWorkspaceStep(formik, workspaceIndex);
+          handleRemoveWorkspace(formik, workspaceIndex);
         }}
         text={`Delete ${
           formik.values.workspaces[workspaceIndex]?.name || "this"

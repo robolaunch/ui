@@ -2,11 +2,11 @@ import { Fragment, ReactElement } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CreateRobotFormEnvItem from "../CreateRobotFormEnvItem/CreateRobotFormEnvItem";
 import CFAddEnvButton from "../CFAddEnvButton/CFAddEnvButton";
-import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
 
 interface ICFEnvMapper {
-  formik: FormikProps<ILaunchStep>;
+  formik: FormikProps<IEnvironmentStep4LaunchStep>;
   disabled?: boolean;
 }
 

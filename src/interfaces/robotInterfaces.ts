@@ -214,25 +214,7 @@ export interface IuseCreateRobot {
   robotData: IEnvironment;
   setRobotData: React.Dispatch<React.SetStateAction<IEnvironment>>;
   handleResetRobotForm: () => void;
-  handleAddWorkspaceStep: (formik: any) => void;
-  handleRemoveWorkspaceStep: (formik: any, workspaceIndex: number) => void;
-  handleAddRepositoryToWorkspaceStep: (
-    formik: any,
-    workspaceIndex: number,
-  ) => void;
   handleAddLaunchManager: () => void;
-  handleRemoveRepositoryFromWorkspaceStep: (
-    formik: any,
-    workspaceIndex: number,
-    repositoryIndex: number,
-  ) => void;
-  handleAddBuildStep: (formik: any) => void;
-  handleRemoveStepFromBuildStep: (formik: any, buildStepIndex: number) => void;
-  handleAddENVToLaunchStep: (formik: any) => void;
-  handleRemoveENVFromLaunchStep: (formik: any, index: number) => void;
-  handleAddStepToLaunchStep: (formik: any) => void;
-  handleRemoveStepFromLaunchStep: (
-    formik: any,
-    launchStepIndex: number,
-  ) => void;
+
+  /////
 }

@@ -2,7 +2,6 @@ import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/Ro
 import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import { Fragment, ReactElement, useEffect, useState } from "react";
-import { ILaunchStep } from "../../interfaces/robotInterfaces";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
@@ -17,6 +16,7 @@ import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
 
 interface ICFStep4 {
   isImportRobot?: boolean;
@@ -36,7 +36,7 @@ export default function CFStep4({
     useState<any>(undefined);
   const { getBuildManager } = useFunctions();
 
-  const formik = useFormik<ILaunchStep>({
+  const formik = useFormik<IEnvironmentStep4LaunchStep>({
     initialValues:
       robotData?.step4?.robotLaunchSteps[
         robotDataLaunchIndex ? robotDataLaunchIndex : 0

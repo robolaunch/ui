@@ -4,6 +4,7 @@ import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { handleRemovePortForService } from "../../functions/form.port.function";
 
 interface ICFPortInput {
   formik: FormikProps<IEnvironmentStep1>;
@@ -145,28 +146,7 @@ export default function CFPortInput({
 
       <div className="flex items-center justify-center pt-2.5 text-sm text-light-800">
         <CFDellButton
-          onClick={() => {
-            switch (type) {
-              case "jupyterNotebook":
-                formik.setFieldValue(
-                  `services.jupyterNotebook.customPorts`,
-                  // @ts-ignore
-                  formik.values?.services.jupyterNotebook?.customPorts.filter(
-                    (port: any, index: number) => index !== portIndex,
-                  ),
-                );
-                break;
-              default:
-                formik.setFieldValue(
-                  `services.${type}.customPorts`,
-                  // @ts-ignore
-                  formik.values?.services?.[type].customPorts.filter(
-                    (port: any, index: number) => index !== portIndex,
-                  ),
-                );
-                break;
-            }
-          }}
+          onClick={() => handleRemovePortForService(formik, type, portIndex)}
           disabled={disabled}
         />
       </div>

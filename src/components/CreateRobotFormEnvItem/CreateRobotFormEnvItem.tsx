@@ -1,10 +1,10 @@
-import React, { ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import InputText from "../InputText/InputText";
 import InputError from "../InputError/InputError";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CreateRobotFormDeleteButton from "../CreateRobotFormDeleteButton/CreateRobotFormDeleteButton";
 import InfoTip from "../InfoTip/InfoTip";
+import { handleRemoveEnv } from "../../functions/form.env.function";
 
 interface ICreateRobotFormEnvItem {
   formik: any;
@@ -19,8 +19,6 @@ export default function CreteRobotFormEnvItem({
 }: ICreateRobotFormEnvItem): ReactElement {
   const [isShowAccordion, setIsShowAccordion] = useState<boolean>(false);
 
-  const { handleRemoveENVFromLaunchStep } = useCreateRobot();
-
   return (
     <Accordion
       key={envIndex}
@@ -32,7 +30,7 @@ export default function CreteRobotFormEnvItem({
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center gap-3">
           <div>
-            <div className="text-light-700 flex min-w-fit gap-1 pb-3 text-xs font-medium">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-light-700">
               Env Name:
               <InfoTip content="Type a new env name." />
             </div>
@@ -51,7 +49,7 @@ export default function CreteRobotFormEnvItem({
           <span className="mt-4">=</span>
 
           <div>
-            <div className="text-light-700 flex min-w-fit gap-1 pb-3 text-xs font-medium">
+            <div className="flex min-w-fit gap-1 pb-3 text-xs font-medium text-light-700">
               Env Value:
               <InfoTip content="Type a new env value." />
             </div>
@@ -70,7 +68,7 @@ export default function CreteRobotFormEnvItem({
 
         <CreateRobotFormDeleteButton
           onClick={() => {
-            handleRemoveENVFromLaunchStep(formik, envIndex);
+            handleRemoveEnv(formik, envIndex);
           }}
           text="Delete this Env"
           disabled={disabled}

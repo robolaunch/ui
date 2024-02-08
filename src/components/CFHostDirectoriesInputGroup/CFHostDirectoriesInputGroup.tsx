@@ -6,6 +6,7 @@ import FormInputText from "../FormInputText/FormInputText";
 import useFunctions from "../../hooks/useFunctions";
 import useMain from "../../hooks/useMain";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { handleRemoveHostDirectory } from "../../functions/form.directory.host.function";
 
 interface ICFDirectoriesInputGroup {
   formik: FormikProps<IEnvironmentStep1>;
@@ -94,16 +95,7 @@ export default function CFDirectoriesInputGroup({
       <div className="flex items-center justify-center pt-3 text-sm text-light-800">
         <CFDellButton
           disabled={disabled}
-          onClick={() => {
-            const hostDirectories = [
-              ...formik.values.directories.hostDirectories,
-            ];
-            hostDirectories.splice(index, 1);
-            formik.setFieldValue(
-              "directories.hostDirectories",
-              hostDirectories,
-            );
-          }}
+          onClick={() => handleRemoveHostDirectory(formik, index)}
         />
       </div>
     </div>

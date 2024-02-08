@@ -79,8 +79,6 @@ export default function AppsList({ reload }: IAppsList): ReactElement {
       ) : (
         <Fragment>
           {apps?.map((environment, index: number) => {
-            console.log("environment", environment);
-
             return (
               <SidebarListItem
                 key={index}

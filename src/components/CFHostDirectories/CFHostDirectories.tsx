@@ -5,6 +5,7 @@ import { FormikProps } from "formik";
 import { ReactElement } from "react";
 import HostDirectoriesSearchIframe from "../HostDirectoriesSearchIframe/HostDirectoriesSearchIframe";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { handleAddHostDirectory } from "../../functions/form.directory.host.function";
 
 interface ICFDirectories {
   formik: FormikProps<IEnvironmentStep1>;
@@ -42,15 +43,7 @@ export default function CFDirectories({
       </CFInfoBar>
 
       <CreateRobotFormAddButton
-        onClick={() => {
-          formik.setFieldValue("directories.hostDirectories", [
-            ...formik.values.directories.hostDirectories,
-            {
-              hostDirectory: "",
-              mountPath: "",
-            },
-          ]);
-        }}
+        onClick={() => handleAddHostDirectory(formik)}
         disabled={disabled}
       />
     </div>

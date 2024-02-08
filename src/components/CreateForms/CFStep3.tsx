@@ -13,6 +13,7 @@ import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
 import { toast } from "sonner";
 import * as Yup from "yup";
+import { handleAddBuild } from "../../functions/form.build.function";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
@@ -23,7 +24,7 @@ export default function CFStep3({
   isImportRobot,
   disabledLoading,
 }: ICFStep3): ReactElement {
-  const { robotData, setRobotData, handleAddBuildStep } = useCreateRobot();
+  const { robotData, setRobotData } = useCreateRobot();
   const { handleCreateRobotNextStep, selectedState } = useMain();
   const { getRobot, getBuildManager, createBuildManager } = useFunctions();
 
@@ -269,7 +270,7 @@ export default function CFStep3({
               button below."
               component={
                 <CreateRobotFormAddButton
-                  onClick={() => handleAddBuildStep(formik)}
+                  onClick={() => handleAddBuild(formik)}
                   disabled={formik?.isSubmitting}
                 />
               }

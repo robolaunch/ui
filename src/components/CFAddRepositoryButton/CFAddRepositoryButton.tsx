@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { IWorkspaces } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
+import { handleAddRepository } from "../../functions/form.repository.function";
 
 interface ICFAddRepositoryButton {
   formik: FormikProps<IWorkspaces>;
@@ -15,14 +15,10 @@ export default function CFAddRepositoryButton({
   workspaceIndex,
   disabled,
 }: ICFAddRepositoryButton): ReactElement {
-  const { handleAddRepositoryToWorkspaceStep } = useCreateRobot();
-
   return (
     <div data-tut="create-robot-step2-repository-add-button">
       <CreateRobotFormAddButton
-        onClick={() =>
-          handleAddRepositoryToWorkspaceStep(formik, workspaceIndex)
-        }
+        onClick={() => handleAddRepository(formik, workspaceIndex)}
         disabled={formik.isSubmitting || disabled}
       />
     </div>

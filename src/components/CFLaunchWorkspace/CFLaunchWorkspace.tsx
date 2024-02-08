@@ -1,11 +1,12 @@
 import { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
-import { ILaunchStep, IWorkspace } from "../../interfaces/robotInterfaces";
+import { IWorkspace } from "../../interfaces/robotInterfaces";
 import { FormikProps } from "formik/dist/types";
 import useCreateRobot from "../../hooks/useCreateRobot";
+import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
 
 interface ICFBuildWorkspace {
-  formik: FormikProps<ILaunchStep>;
+  formik: FormikProps<IEnvironmentStep4LaunchStep>;
   disabled?: boolean;
 }
 
