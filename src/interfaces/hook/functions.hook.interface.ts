@@ -1,13 +1,13 @@
-import { ICloudInstance } from "../global/cloudInstance.interface";
 import { IEnvironmentStep1 } from "../environment/environment.step1.interface";
 import { IEnvironmentStep2 } from "../environment/environment.step2.interface";
-import { IFleet } from "../global/fleet.interface";
-import { INamespace } from "../global/namespace.interface";
-import { IOrganization } from "../global/organization.interface";
-import { IRegion } from "../global/region.interface";
-import { ISystemStatus } from "../global/system.interface";
 import { IPhysicalInstance } from "../global/physicalInstance.interface";
+import { ICloudInstance } from "../global/cloudInstance.interface";
 import { IDataScienceApp } from "../global/dataSciende.interface";
+import { IOrganization } from "../global/organization.interface";
+import { INamespace } from "../global/namespace.interface";
+import { ISystemStatus } from "../global/system.interface";
+import { IRegion } from "../global/region.interface";
+import { IFleet } from "../global/fleet.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
