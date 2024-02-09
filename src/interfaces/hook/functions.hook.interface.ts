@@ -25,25 +25,6 @@ export interface ImultipleGetParameters {
   setItemCount?: any;
 }
 
-export interface IgetOrganization {
-  organizationName: string;
-}
-
-export interface IgetRoboticsClouds {
-  organizationId: string;
-}
-export interface IgetRoboticsCloud {
-  organizationId: string;
-  roboticsCloudName: string;
-}
-
-export interface IgetInstances {
-  organizationId: string;
-  roboticsCloudName: string;
-  region: string;
-  details: boolean;
-}
-
 export interface IgetPhysicalInstances {
   organizationId: string;
   roboticsCloudName: string;
@@ -59,98 +40,12 @@ export interface IgetPhysicalInstance {
   region: string;
 }
 
-export interface IgetInstance {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceName: string;
-  region: string;
-  details: boolean;
-}
-
-export interface IgetFleets {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-}
-
-export interface IgetFleet {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-}
-
-export interface IgetNamespaces {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-}
-
-export interface IgetNamespace {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  namespaceName: string;
-}
-
 export interface IgetPhysicalFleet {
   organizationId: string;
   roboticsCloudName: string;
   instanceId: string;
   region: string;
   fleetName: string;
-}
-
-export interface IgetRobots {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-}
-export interface IgetRobot {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-  robotName: string;
-}
-
-export interface IgetBuildManager {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-  robotName: string;
-}
-
-export interface IgetLaunchManagers {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-  robotName: string;
-}
-
-export interface IgetEnvironments {
-  organizationId: string;
-  roboticsCloudName: string;
-  instanceId: string;
-  region: string;
-  fleetName: string;
-}
-
-export interface IsingleGetRobotParameters {
-  setRobotData?: boolean;
-  ifErrorNavigateTo404?: boolean;
-  setResponse?: any;
 }
 
 export interface IsingleGetBuildParameters {
@@ -250,10 +145,7 @@ export interface IuseFunctions {
   deleteRobotFC: (robotName: string) => Promise<void>;
   ////
 
-  getPhysicalInstances: (
-    values: IgetPhysicalInstances,
-    parameters?: ImultipleGetParameters,
-  ) => void;
+  getPhysicalInstances: (parameters?: ImultipleGetParameters) => void;
   getPhysicalInstance: (
     values: IgetPhysicalInstance,
     parameters?: IsingleGetParameters,
@@ -287,5 +179,4 @@ export interface IuseFunctions {
   getTemplates: () => Promise<any>;
 
   getFreePort: () => Promise<number | undefined>;
-  // // // // // // //
 }

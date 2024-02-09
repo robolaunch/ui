@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { kubernetesApi } from "../api/api";
 import { toast } from "sonner";
-import {
-  IgetNamespace,
-  IgetNamespaces,
-} from "../interfaces/hook/functions.hook.interface";
 
 export const createFederatedFleet = createAsyncThunk(
   "fleet/createFederatedFleet",
@@ -94,7 +90,13 @@ export const deleteFederatedFleet = createAsyncThunk(
 
 export const createNamespace = createAsyncThunk(
   "fleet/createNamespace",
-  async (values: IgetNamespace) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    namespaceName: string;
+  }) => {
     const response = await kubernetesApi.createNamespace({
       name: "fleet/createNamespace",
       organizationId: values?.organizationId,
@@ -117,7 +119,12 @@ export const createNamespace = createAsyncThunk(
 
 export const getNamespaces = createAsyncThunk(
   "fleet/getNamespaces",
-  async (values: IgetNamespaces) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+  }) => {
     const response = await kubernetesApi.getNamespaces({
       name: "fleet/getNamespaces",
       organizationId: values?.organizationId,

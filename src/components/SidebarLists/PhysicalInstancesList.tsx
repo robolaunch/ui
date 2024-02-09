@@ -56,19 +56,11 @@ export default function PhysicalInstancesList({
   );
 
   function handleGetPhysicalInstances() {
-    getPhysicalInstances(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponsePhysicalInstances,
-        setItemCount: setItemCount,
-      },
-    );
+    getPhysicalInstances({
+      ifErrorNavigateTo404: false,
+      setResponse: setResponsePhysicalInstances,
+      setItemCount: setItemCount,
+    });
   }
 
   return (

@@ -1,7 +1,6 @@
 import {
   IgetPhysicalFleet,
   IgetPhysicalInstance,
-  IgetPhysicalInstances,
   ImultipleGetLaunchParameters,
   ImultipleGetParameters,
   IsingleGetBuildParameters,
@@ -117,16 +116,13 @@ export default ({ children }: any) => {
   } = useMain();
   const navigate = useNavigate();
 
-  async function getPhysicalInstances(
-    values: IgetPhysicalInstances,
-    parameters?: ImultipleGetParameters,
-  ) {
+  async function getPhysicalInstances(parameters?: ImultipleGetParameters) {
     await dispatch(
       getAllPhysicalInstances({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
+        organizationId: selectedState?.organization?.id!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
+        instanceId: selectedState?.instance?.id!,
       }),
     ).then((responsePhysicalInstances: any) => {
       if (
@@ -158,10 +154,10 @@ export default ({ children }: any) => {
   ) {
     await dispatch(
       getAllPhysicalInstances({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
+        organizationId: selectedState?.organization?.id!,
+        roboticsCloudName: selectedState?.roboticsCloud?.name!,
+        region: selectedState?.roboticsCloud?.region!,
+        instanceId: selectedState?.instance?.id!,
       }),
     ).then((responsePhysicalInstances: any) => {
       if (
