@@ -16,7 +16,7 @@ export default function CFPortSetter({
   formik,
   type,
 }: ICFPortSetter): ReactElement {
-  const { getFreePort } = useFunctions();
+  const { getFreePortFC } = useFunctions();
 
   function handleGetNameFromType(): string {
     switch (type) {
@@ -53,7 +53,7 @@ export default function CFPortSetter({
         )}
         <CreateRobotFormAddButton
           onClick={async () => {
-            const portBE = await getFreePort();
+            const portBE = await getFreePortFC();
             handleAddPortForService(formik, type, portBE);
           }}
           className="!mt-1"

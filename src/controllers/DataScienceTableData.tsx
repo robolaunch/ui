@@ -1,7 +1,6 @@
 import StartStopCell from "../components/TableInformationCells/StartStopCell";
 import DataScienceLogs from "../components/DataScienceLogs/DataScienceLogs";
 import StateCell from "../components/TableInformationCells/StateCell";
-import { IDataScienceApp } from "../interfaces/environmentInterfaces";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import URLCell from "../components/TableInformationCells/URLCell";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -9,14 +8,18 @@ import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import TextCopy from "../components/TextCopy/TextCopy";
 import IconInfoCell from "../components/TableInformationCells/IconInfoCell";
+import { IDataScienceApp } from "../interfaces/global/dataSciende.interface";
 
 export function DataScienceTableData() {
   const [responseApps, setResponseApps] = useState<
     IDataScienceApp[] | undefined
   >();
   const [reload, setReload] = useState<boolean>(false);
-  const { getDataScienceApps, createDataScienceApp, deleteDataScienceApp } =
-    useFunctions();
+  const {
+    getDataScienceAppsFC,
+    createDataScienceAppFC,
+    deleteDataScienceAppFC,
+  } = useFunctions();
   const url = useParams();
 
   function handleReload() {
@@ -24,11 +27,8 @@ export function DataScienceTableData() {
     setReload(!reload);
   }
 
-  function handleGetApps() {
-    getDataScienceApps({
-      setResponse: setResponseApps,
-      ifErrorNavigateTo404: false,
-    });
+  async function handleGetApps() {
+    setResponseApps(await getDataScienceAppsFC(false, false));
   }
 
   useEffect(() => {
@@ -45,14 +45,14 @@ export function DataScienceTableData() {
 
   const data = useMemo(
     () =>
-      responseApps?.map((app: IDataScienceApp) => {
+      responseApps?.map((app) => {
         return {
           key: app?.name,
-          name: app,
-          internalIP: app?.internalServiceEndpoint,
-          externalIP: app?.externalServiceEndpoint,
-          token: app?.application?.accessToken,
-          log: app?.applicationLog,
+          name: app?.name,
+          internalIP: app?.internalEndpoint,
+          externalIP: app?.externalEndpoint,
+          token: app?.token,
+          log: app?.log,
           status: app?.status,
           actions: app,
         };
@@ -69,11 +69,11 @@ export function DataScienceTableData() {
         sortable: false,
         filter: false,
         align: "left",
-        body: (rowData: any) => {
+        body: ({ name }: { name: string }) => {
           return (
             <IconInfoCell
-              iconHref={`/svg/apps/${rowData?.name?.name?.split("-")[0]}.svg`}
-              title={rowData?.name?.name}
+              iconHref={`/svg/apps/${name?.split("-")[0]}.svg`}
+              title={name}
             />
           );
         },
@@ -81,22 +81,22 @@ export function DataScienceTableData() {
       {
         key: "internalIP",
         header: "Internal Endpoint",
-        body: (rowData: any) => {
-          return <BasicCell text={rowData?.internalIP} />;
+        body: ({ internalIP }: { internalIP: string }) => {
+          return <BasicCell text={internalIP} />;
         },
       },
       {
         key: "externalIP",
         header: "External Endpoint",
-        body: (rowData: any) => {
+        body: ({ externalIP }: { externalIP: string }) => {
           return (
             <Fragment>
-              {rowData?.externalIP === "Not Deployed" ? (
+              {externalIP === "Not Deployed" ? (
                 <p className="text-xs text-light-700">Not Deployed</p>
               ) : (
                 <URLCell
-                  text={rowData?.externalIP?.split("#")?.[0]}
-                  url={rowData?.externalIP}
+                  text={externalIP?.split("#")?.[0]}
+                  url={externalIP}
                   target="_blank"
                 />
               )}
@@ -107,7 +107,7 @@ export function DataScienceTableData() {
       {
         key: "token",
         header: "Bearer Token",
-        body: ({ token }: any) => {
+        body: ({ token }: { token: string }) => {
           return (
             <Fragment>
               {token ? (
@@ -123,11 +123,11 @@ export function DataScienceTableData() {
         key: "log",
         header: "Logs",
         align: "left",
-        body: (rowData: any) => {
+        body: ({ log }: { log: string }) => {
           return (
             <Fragment>
-              {rowData?.log ? (
-                <DataScienceLogs log={rowData?.log} />
+              {log ? (
+                <DataScienceLogs log={log} />
               ) : (
                 <p className="text-xs text-light-700">No logs available</p>
               )}
@@ -139,19 +139,18 @@ export function DataScienceTableData() {
         key: "status",
         header: "Status",
         align: "left",
-        body: (rowData: any) => {
-          return <StateCell state={rowData?.status} />;
+        body: ({ status }: { status: string }) => {
+          return <StateCell state={status} />;
         },
       },
       {
         key: "actions",
         header: "Actions",
-        body: (rowData: any) => {
-          console.log("alo", rowData);
+        body: ({ actions: app }: { actions: IDataScienceApp }) => {
           return (
             <StartStopCell
               isRunning={(() => {
-                switch (rowData?.status) {
+                switch (app?.status) {
                   case "Ready":
                     return true;
                   default:
@@ -159,37 +158,34 @@ export function DataScienceTableData() {
                 }
               })()}
               handleStart={() => {
-                createDataScienceApp({
-                  applicationName: rowData?.actions?.name,
+                createDataScienceAppFC({
+                  applicationName: app?.name,
                 });
                 setTimeout(() => {
                   handleReload();
                 }, 1000);
               }}
               handleStop={() => {
-                deleteDataScienceApp({
-                  applicationName: rowData?.actions?.name,
+                deleteDataScienceAppFC({
+                  applicationName: app?.name,
                 });
                 setTimeout(() => {
                   handleReload();
                 }, 1000);
               }}
               disabled={(() => {
-                if (!rowData?.actions?.application?.isDeletable) {
+                if (!app?.isDeletable) {
                   return true;
                 }
               })()}
               loading={(() => {
-                if (
-                  rowData?.status === "Ready" ||
-                  rowData?.status === "Not Deployed"
-                ) {
+                if (app?.status === "Ready" || app?.status === "Not Deployed") {
                   return false;
                 }
                 return true;
               })()}
               modalText={(() => {
-                switch (rowData?.status) {
+                switch (app?.status) {
                   case "Ready":
                     return "Are you sure you want to stop this application?";
                   default:

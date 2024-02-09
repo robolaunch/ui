@@ -32,7 +32,7 @@ export default ({ children }: any) => {
     createBuildManager,
     createRobotFC,
     createRobotFC: updateRobotFC,
-    addPhysicalInstanceToFleet,
+    addPhysicalInstanceToFleetFC,
   } = useFunctions();
 
   const url = useParams();
@@ -57,7 +57,7 @@ export default ({ children }: any) => {
           }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}}`;
         }, 2000);
       } else if (!step1Fromik.values?.details?.isVirtualRobot) {
-        addPhysicalInstanceToFleet();
+        addPhysicalInstanceToFleetFC();
       }
 
       step1Fromik.setSubmitting(false);

@@ -1,7 +1,6 @@
 import {
   IgetPhysicalFleet,
   ImultipleGetLaunchParameters,
-  ImultipleGetParameters,
   IsingleGetBuildParameters,
   IsingleGetParameters,
 } from "../interfaces/hook/functions.hook.interface";
@@ -23,10 +22,6 @@ import {
   createFederatedFleet as createFleetDispatch,
   createNamespace as createNamespaceDispatch,
 } from "../toolkit/FleetSlice";
-import {
-  IcreateDataScienceAppsRequest,
-  IdeleteDataScienceAppsRequest,
-} from "../interfaces/environmentInterfaces";
 import {
   getEnvironments as getEnvironmentsDispatch,
   getEnvironment as getEnvironmentDispatch,
@@ -104,6 +99,8 @@ import {
   physicalInstancesMapper,
 } from "../handler/physicalInstance.handler";
 import { IPhysicalInstance } from "../interfaces/global/physicalInstance.interface";
+import { dataScienceAppsMapper } from "../handler/dataScience.handler";
+import { IDataScienceApp } from "../interfaces/global/dataSciende.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -552,7 +549,7 @@ export default ({ children }: any) => {
     });
   }
 
-  function addPhysicalInstanceToFleet() {
+  function addPhysicalInstanceToFleetFC(): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -762,56 +759,79 @@ export default ({ children }: any) => {
     });
   }
 
-  async function deleteDataScienceApp(values: IdeleteDataScienceAppsRequest) {
-    await dispatch(
-      deleteDataScienceAppDispatch({
-        organizationId: selectedState.organization?.id!,
-        roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.roboticsCloud?.name!,
-        instanceId: selectedState.instance?.id!,
-        fleetName: selectedState.fleet?.name!,
-        applicationName: values.applicationName,
-        applicationType: values.applicationName,
-      }),
-    );
+  function deleteDataScienceAppFC(values: {
+    applicationName: string;
+  }): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        dispatch(
+          deleteDataScienceAppDispatch({
+            organizationId: selectedState.organization?.id!,
+            roboticsCloudName: selectedState.roboticsCloud?.name!,
+            region: selectedState.roboticsCloud?.name!,
+            instanceId: selectedState.instance?.id!,
+            fleetName: selectedState.fleet?.name!,
+            applicationName: values.applicationName,
+            applicationType: values.applicationName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  async function createDataScienceApp(values: IcreateDataScienceAppsRequest) {
-    await dispatch(
-      createDataScienceAppDispatch({
-        organizationId: selectedState.organization?.id!,
-        roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.roboticsCloud?.name!,
-        instanceId: selectedState.instance?.id!,
-        fleetName: selectedState.fleet?.name!,
-        applicationName: values.applicationName,
-        applicationType: values.applicationName,
-      }),
-    );
+  function createDataScienceAppFC(values: {
+    applicationName: string;
+  }): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        dispatch(
+          createDataScienceAppDispatch({
+            organizationId: selectedState.organization?.id!,
+            roboticsCloudName: selectedState.roboticsCloud?.name!,
+            region: selectedState.roboticsCloud?.name!,
+            instanceId: selectedState.instance?.id!,
+            fleetName: selectedState.fleet?.name!,
+            applicationName: values.applicationName,
+            applicationType: values.applicationName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
-  async function getDataScienceApps(parameters?: ImultipleGetParameters) {
-    await dispatch(
-      getDataScienceAppsDispatch({
-        organizationId: selectedState.organization?.id!,
-        roboticsCloudName: selectedState.roboticsCloud?.name!,
-        region: selectedState.roboticsCloud?.name!,
-        instanceId: selectedState.instance?.id!,
-        fleetName: selectedState.fleet?.name!,
-      }),
-    ).then((responseApps: any) => {
-      const apps =
-        responseApps?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.environments;
+  async function getDataScienceAppsFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<IDataScienceApp[]> {
+    return new Promise<IDataScienceApp[]>(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(
+          getDataScienceAppsDispatch({
+            organizationId: selectedState.organization?.id!,
+            roboticsCloudName: selectedState.roboticsCloud?.name!,
+            region: selectedState.roboticsCloud?.name!,
+            instanceId: selectedState.instance?.id!,
+            fleetName: selectedState.fleet?.name!,
+          }),
+        );
 
-      if (apps) {
-        parameters?.setResponse && parameters?.setResponse(apps || []);
+        const apps = dataScienceAppsMapper(
+          response?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+            ?.environments,
+        );
 
-        parameters?.setItemCount && parameters?.setItemCount(apps?.length || 0);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
+        !apps && handleThrowError(fromPage, ErrorNav404);
+
+        resolve(apps);
+      } catch (error) {
+        handleThrowError(fromPage, ErrorNav404);
+        reject(error);
       }
     });
   }
@@ -965,7 +985,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getFreePort(): Promise<number | undefined> {
+  async function getFreePortFC(): Promise<number | undefined> {
     return new Promise(async (resolve, reject) => {
       try {
         const { payload: port } = await dispatch(
@@ -990,7 +1010,7 @@ export default ({ children }: any) => {
             ?.map((port: any) => port.backendPort)
             .includes(port)
         ) {
-          getFreePort();
+          getFreePortFC();
         }
 
         resolve(port);
@@ -1465,6 +1485,7 @@ export default ({ children }: any) => {
         deleteInstanceFC,
         //// Physical Instances ////
         addPhysicalInstanceToCloudInstanceFC,
+        addPhysicalInstanceToFleetFC,
         getPhysicalInstancesFC,
         //// Fleets ////
         createFleetFC,
@@ -1479,6 +1500,10 @@ export default ({ children }: any) => {
         getApplicationsFC,
         getApplicationFC,
         deleteApplicationFC,
+        //// Data Science Apps ////
+        createDataScienceAppFC,
+        getDataScienceAppsFC,
+        deleteDataScienceAppFC,
         //// Robots ////
         createRobotFC,
         getRobotsFC,
@@ -1486,9 +1511,11 @@ export default ({ children }: any) => {
         deleteRobotFC,
         //// Tools ////
         getSystemStatusFC,
+        getFreePortFC,
         ////
-
-        addPhysicalInstanceToFleet,
+        ////
+        ////
+        ////
 
         getPhysicalFleet,
 
@@ -1501,16 +1528,9 @@ export default ({ children }: any) => {
 
         getLaunchManagers,
 
-        createDataScienceApp,
-        getDataScienceApps,
-        deleteDataScienceApp,
-
         getIP,
         getFilesFromFileManager,
-
         getTemplates,
-
-        getFreePort,
       }}
     >
       {children}

@@ -1,16 +1,13 @@
 import { ICloudInstance } from "../global/cloudInstance.interface";
 import { IEnvironmentStep1 } from "../environment/environment.step1.interface";
 import { IEnvironmentStep2 } from "../environment/environment.step2.interface";
-import {
-  IcreateDataScienceAppsRequest,
-  IdeleteDataScienceAppsRequest,
-} from "../environmentInterfaces";
 import { IFleet } from "../global/fleet.interface";
 import { INamespace } from "../global/namespace.interface";
 import { IOrganization } from "../global/organization.interface";
 import { IRegion } from "../global/region.interface";
 import { ISystemStatus } from "../global/system.interface";
 import { IPhysicalInstance } from "../global/physicalInstance.interface";
+import { IDataScienceApp } from "../global/dataSciende.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -92,6 +89,7 @@ export interface IuseFunctions {
   deleteInstanceFC: (organizationId: string) => Promise<void>;
   //// Physical Instances ////
   addPhysicalInstanceToCloudInstanceFC: (phyName: string) => Promise<string>;
+  addPhysicalInstanceToFleetFC: () => Promise<void>;
   getPhysicalInstancesFC: (
     fromPage: boolean,
     ErrorNav404: boolean,
@@ -132,6 +130,17 @@ export interface IuseFunctions {
     step2: IEnvironmentStep2;
   }>;
   deleteApplicationFC: (envName: string) => Promise<void>;
+  //// Data Science Apps ////
+  createDataScienceAppFC: (values: {
+    applicationName: string;
+  }) => Promise<void>;
+  getDataScienceAppsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<IDataScienceApp[]>;
+  deleteDataScienceAppFC: (values: {
+    applicationName: string;
+  }) => Promise<void>;
   //// Robots ////
   createRobotFC: () => Promise<void>;
   getRobotsFC: (
@@ -153,8 +162,8 @@ export interface IuseFunctions {
   deleteRobotFC: (robotName: string) => Promise<void>;
   //// Tools ////
   getSystemStatusFC: () => Promise<ISystemStatus>;
+  getFreePortFC: () => Promise<number | undefined>;
   ////
-
   ////
   ////
   ////
@@ -166,15 +175,10 @@ export interface IuseFunctions {
   getBuildManager: (parameters?: IsingleGetBuildParameters) => void;
   getLaunchManagers: (parameters?: ImultipleGetLaunchParameters) => void;
 
-  createDataScienceApp: (values: IcreateDataScienceAppsRequest) => void;
-  getDataScienceApps: (parameters?: ImultipleGetParameters) => void;
-  deleteDataScienceApp: (values: IdeleteDataScienceAppsRequest) => void;
-
   createAppBuildManager: () => Promise<void>;
   getAppBuildManager: () => Promise<void>;
   deleteAppBuildManager: () => Promise<void>;
 
-  addPhysicalInstanceToFleet: () => Promise<void>;
   createBuildManager: () => Promise<void>;
   getIP: () => void;
 
@@ -184,6 +188,4 @@ export interface IuseFunctions {
   }) => Promise<any>;
 
   getTemplates: () => Promise<any>;
-
-  getFreePort: () => Promise<number | undefined>;
 }

@@ -1,3 +1,4 @@
+// @ts-ignore
 import GuacamoleKeyboard from "../utils/GuacamoleKeyboard/guacamole-keyboard.ts";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { useEffect, createContext, useRef, useReducer } from "react";
