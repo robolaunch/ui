@@ -1,9 +1,8 @@
 import { createInstanceSchema } from "../../validations/InstancesValidations";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
-import { createCloudInstance } from "../../toolkit/InstanceSlice";
 import FormInputText from "../FormInputText/FormInputText";
 import CFInputToggle from "../CFInputToggle/CFInputToggle";
-import { useAppDispatch } from "../../hooks/redux";
+import useFunctions from "../../hooks/useFunctions";
 import InputError from "../InputError/InputError";
 import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
@@ -13,8 +12,9 @@ import { ReactElement } from "react";
 import { useFormik } from "formik";
 
 export default function CFInstance(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useMain();
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
+
+  const { createCloudInstanceFC } = useFunctions();
 
   const formik: any = useFormik({
     initialValues: {
@@ -25,20 +25,12 @@ export default function CFInstance(): ReactElement {
     validationSchema: createInstanceSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-      dispatch(
-        createCloudInstance({
-          organizationId: selectedState.organization!.id!,
-          roboticsCloudName: selectedState.roboticsCloud!.name!,
-          cloudInstanceName: values.cloudInstanceName,
-          instanceType: values.instanceType,
-          region: selectedState?.roboticsCloud?.region!,
-          developmentMode: values.developmentMode,
-        }),
-      ).then((response: any) => {
-        if (response) {
-          formik.setSubmitting(false);
-          setSidebarState({ ...sidebarState, isCreateMode: false });
-        }
+      createCloudInstanceFC(
+        values.instanceType,
+        values.cloudInstanceName,
+        values.developmentMode,
+      ).then(() => {
+        setSidebarState({ ...sidebarState, isCreateMode: false });
       });
     },
   });

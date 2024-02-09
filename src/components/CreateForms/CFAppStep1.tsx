@@ -33,7 +33,7 @@ export default function CFAppStep1({
     handleCreateRobotNextStep,
     setSidebarState,
   } = useMain();
-  const { getApplicationFC, createEnvironment, createAppBuildManager } =
+  const { getApplicationFC, createApplicationFC, createAppBuildManager } =
     useFunctions();
   const url = useParams();
 
@@ -124,7 +124,7 @@ export default function CFAppStep1({
 
       if (!formik.values.details.configureWorkspace) {
         if (isImportRobot) {
-          await createEnvironment(false).then(async () => {
+          await createApplicationFC(false).then(async () => {
             toast.success("Application updated successfully");
 
             await createAppBuildManager();
@@ -135,7 +135,7 @@ export default function CFAppStep1({
           });
         }
 
-        await createEnvironment(true).then(async () => {
+        await createApplicationFC(true).then(async () => {
           setSidebarState((prevState) => ({
             ...prevState,
             isCreateMode: false,

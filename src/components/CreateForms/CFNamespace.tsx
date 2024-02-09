@@ -1,15 +1,15 @@
 import { createFleetSchema } from "../../validations/FleetsValidations";
-import { createNamespace } from "../../toolkit/FleetSlice";
 import FormInputText from "../FormInputText/FormInputText";
-import { useAppDispatch } from "../../hooks/redux";
+import useFunctions from "../../hooks/useFunctions";
 import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { useFormik } from "formik";
 
 export default function CreateNamespaceForm(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useMain();
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
+
+  const { createNamespaceFC } = useFunctions();
 
   const formik = useFormik({
     initialValues: {
@@ -18,16 +18,7 @@ export default function CreateNamespaceForm(): ReactElement {
     validationSchema: createFleetSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-      dispatch(
-        createNamespace({
-          namespaceName: values.name,
-          organizationId: selectedState?.organization?.id!,
-          roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.id!,
-          region: selectedState?.roboticsCloud?.region!,
-        }),
-      ).then(() => {
-        formik.setSubmitting(false);
+      createNamespaceFC(values.name).then(() => {
         setSidebarState({ ...sidebarState, isCreateMode: false });
       });
     },

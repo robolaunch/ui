@@ -31,6 +31,8 @@ import {
   getNamespaces as getNamespacesDispatch,
   deleteNamespace as deleteNamespaceDispatch,
   deleteFederatedFleet as deleteFederatedFleetDispatch,
+  createFederatedFleet as createFleetDispatch,
+  createNamespace as createNamespaceDispatch,
 } from "../toolkit/FleetSlice";
 import {
   IcreateDataScienceAppsRequest,
@@ -51,7 +53,10 @@ import {
   deleteBuildManager as deleteAppBuildManagerDispatch,
   getTemplates as getTemplatesDispatch,
 } from "../toolkit/EnvironmentSlice";
-import { getRoboticsClouds as getRegionsDispatch } from "../toolkit/RoboticsCloudSlice";
+import {
+  getRoboticsClouds as getRegionsDispatch,
+  createRoboticsCloud as createRegionDispatch,
+} from "../toolkit/RoboticsCloudSlice";
 import {
   getPhysicalInstances as getAllPhysicalInstances,
   addPhysicalInstanceToFleet as addPhysicalInstanceToFleetDispatch,
@@ -59,8 +64,12 @@ import {
   startInstance as startInstanceDispatch,
   stopInstance as stopInstanceDispatch,
   terminateInstance as deleteInstanceDispatch,
+  createCloudInstance as createCloudInstanceDispatch,
 } from "../toolkit/InstanceSlice";
-import { getOrganizations as getOrganizationsDispatch } from "../toolkit/OrganizationSlice";
+import {
+  getOrganizations as getOrganizationsDispatch,
+  createOrganization as createOrganizationDispatch,
+} from "../toolkit/OrganizationSlice";
 import { getInstances as getCloudInstancesDispatch } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
 import { useAppDispatch } from "../hooks/redux";
@@ -1010,7 +1019,7 @@ export default ({ children }: any) => {
     });
   }
 
-  function createEnvironment(withoutWorkspaces: boolean) {
+  function createApplicationFC(withoutWorkspaces: boolean): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -1213,6 +1222,104 @@ export default ({ children }: any) => {
               ?.cloudInstances?.[0]?.templates,
           ) || [],
         );
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createOrganizationFC(orgName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createOrganizationDispatch({
+            name: orgName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createRegionFC(
+    providerRegion: string,
+    regionName: string,
+  ): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createRegionDispatch({
+            organizationId: selectedState?.organization?.id!,
+            provider: "aws",
+            region: providerRegion,
+            roboticsCloudName: regionName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createCloudInstanceFC(
+    type: string,
+    instanceName: string,
+    devMode: boolean,
+  ): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createCloudInstanceDispatch({
+            organizationId: selectedState?.organization?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceType: type,
+            cloudInstanceName: instanceName,
+            developmentMode: devMode,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createFleetFC(fleetName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createFleetDispatch({
+            organizationId: selectedState?.organization?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            robolaunchFederatedFleetsName: fleetName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createNamespaceFC(namespaceName: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createNamespaceDispatch({
+            organizationId: selectedState?.organization?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            namespaceName: namespaceName,
+          }),
+        );
+        resolve();
       } catch (error) {
         reject(error);
       }
@@ -1684,6 +1791,35 @@ export default ({ children }: any) => {
   return (
     <FunctionsContext.Provider
       value={{
+        //// Organizations ////
+        createOrganizationFC,
+        getOrganizationsFC,
+        //// Regions ////
+        createRegionFC,
+        getRegionsFC,
+        //// Cloud Instances ////
+        createCloudInstanceFC,
+        getCloudInstancesFC,
+        startInstanceFC,
+        stopInstanceFC,
+        deleteInstanceFC,
+        //// Fleets ////
+        createFleetFC,
+        getFleetsFC,
+        deleteFleetFC,
+        //// Namespaces ////
+        createNamespaceFC,
+        getNamespacesFC,
+        deleteNamespaceFC,
+        //// Applications ////
+        createApplicationFC,
+        getApplicationsFC,
+        getApplicationFC,
+        //// Robots ////
+        getRobotsFC,
+        getRobotFC,
+        ////
+
         getInstance,
 
         addPhysicalInstanceToFleet,
@@ -1699,7 +1835,6 @@ export default ({ children }: any) => {
 
         getPhysicalFleet,
 
-        createEnvironment,
         getEnvironments,
         getEnvironment,
         deleteEnvironment,
@@ -1730,21 +1865,6 @@ export default ({ children }: any) => {
         getTemplates,
 
         getFreePort,
-        /////
-        getOrganizationsFC,
-        getRegionsFC,
-        getCloudInstancesFC,
-        getFleetsFC,
-        getNamespacesFC,
-        getRobotsFC,
-        getApplicationsFC,
-        getRobotFC,
-        getApplicationFC,
-        startInstanceFC,
-        stopInstanceFC,
-        deleteInstanceFC,
-        deleteFleetFC,
-        deleteNamespaceFC,
       }}
     >
       {children}

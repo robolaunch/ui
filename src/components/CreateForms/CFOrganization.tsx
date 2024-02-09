@@ -1,16 +1,14 @@
 import { createOrganizationSchema } from "../../validations/OrganizationsValidations";
-import { createOrganization } from "../../toolkit/OrganizationSlice";
 import FormInputText from "../FormInputText/FormInputText";
-import { useAppDispatch } from "../../hooks/redux";
 import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { useFormik } from "formik";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function CFOrganization(): ReactElement {
-  const { sidebarState, setSidebarState }: any = useMain();
-
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
+  const { createOrganizationFC } = useFunctions();
 
   const formik = useFormik({
     initialValues: {
@@ -19,13 +17,7 @@ export default function CFOrganization(): ReactElement {
     validationSchema: createOrganizationSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-
-      dispatch(
-        createOrganization({
-          name: values.name,
-        }),
-      ).then(async () => {
-        formik.setSubmitting(false);
+      createOrganizationFC(values.name).then(() => {
         setSidebarState({ ...sidebarState, isCreateMode: false });
       });
     },

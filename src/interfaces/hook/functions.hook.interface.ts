@@ -168,6 +168,87 @@ export interface ImultipleGetLaunchParameters {
 }
 
 export interface IuseFunctions {
+  //// Organizations ////
+  createOrganizationFC: (orgName: string) => Promise<void>;
+  getOrganizationsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IOrganization[]>;
+  //// Regions ////
+  createRegionFC: (providerRegion: string, regionName: string) => Promise<void>;
+  getRegionsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IRegion[]>;
+  //// CloudInstances ////
+  createCloudInstanceFC: (
+    type: string,
+    instanceName: string,
+    devMode: boolean,
+  ) => Promise<void>;
+  getCloudInstancesFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<ICloudInstance[]>;
+  startInstanceFC: (organizationId: string) => Promise<void>;
+  stopInstanceFC: (organizationId: string) => Promise<void>;
+  deleteInstanceFC: (organizationId: string) => Promise<void>;
+  //// Fleets ////
+  createFleetFC: (fleetName: string) => Promise<void>;
+  getFleetsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IFleet[]>;
+  deleteFleetFC: (fleetName: string) => Promise<void>;
+  //// Namespaces ////
+  createNamespaceFC: (namespaceName: string) => Promise<void>;
+  getNamespacesFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<INamespace[]>;
+  deleteNamespaceFC: (nsName: string) => Promise<void>;
+  //// Applications ////
+  createApplicationFC: (withoutWorkspaces?: boolean) => Promise<void>;
+  getApplicationsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  >;
+  getApplicationFC: (
+    ErrorNav404: boolean,
+    appName: string,
+  ) => Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }>;
+  //// Robots ////
+  getRobotsFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ) => Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  >;
+  getRobotFC: (
+    ErrorNav404: boolean,
+    robotName: string,
+  ) => Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }>;
+  ////
+
   getPhysicalInstances: (
     values: IgetPhysicalInstances,
     parameters?: ImultipleGetParameters,
@@ -224,7 +305,6 @@ export interface IuseFunctions {
   addPhysicalInstanceToFleet: () => Promise<void>;
   getSystemStatus: () => Promise<ISystemStatus>;
   createRobot: () => Promise<void>;
-  createEnvironment: (withoutWorkspaces?: boolean) => Promise<void>;
   createBuildManager: () => Promise<void>;
   getIP: () => void;
 
@@ -237,68 +317,4 @@ export interface IuseFunctions {
 
   getFreePort: () => Promise<number | undefined>;
   // // // // // // //
-  deleteNamespaceFC: (nsName: string) => Promise<void>;
-  deleteFleetFC: (fleetName: string) => Promise<void>;
-  // // // // // // //
-  startInstanceFC: (organizationId: string) => Promise<void>;
-  stopInstanceFC: (organizationId: string) => Promise<void>;
-  deleteInstanceFC: (organizationId: string) => Promise<void>;
-  // // // // // // //
-  getOrganizationsFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-    filter?: string,
-  ) => Promise<IOrganization[]>;
-  getRegionsFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-    filter?: string,
-  ) => Promise<IRegion[]>;
-  getCloudInstancesFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-    filter?: string,
-  ) => Promise<ICloudInstance[]>;
-  getFleetsFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-    filter?: string,
-  ) => Promise<IFleet[]>;
-  getNamespacesFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-    filter?: string,
-  ) => Promise<INamespace[]>;
-  getRobotsFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-  ) => Promise<
-    {
-      step1: IEnvironmentStep1;
-      step2: IEnvironmentStep2;
-    }[]
-  >;
-  getApplicationsFC: (
-    fromPage: boolean,
-    ErrorNav404: boolean,
-  ) => Promise<
-    {
-      step1: IEnvironmentStep1;
-      step2: IEnvironmentStep2;
-    }[]
-  >;
-  getRobotFC: (
-    ErrorNav404: boolean,
-    robotName: string,
-  ) => Promise<{
-    step1: IEnvironmentStep1;
-    step2: IEnvironmentStep2;
-  }>;
-  getApplicationFC: (
-    ErrorNav404: boolean,
-    appName: string,
-  ) => Promise<{
-    step1: IEnvironmentStep1;
-    step2: IEnvironmentStep2;
-  }>;
 }

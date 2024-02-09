@@ -3,17 +3,17 @@ import { ReactElement } from "react";
 import InputError from "../InputError/InputError";
 import { createRoboticsCloudSchema } from "../../validations/RoboticsCloudsValidations";
 import useMain from "../../hooks/useMain";
-import { useAppDispatch } from "../../hooks/redux";
-import { createRoboticsCloud } from "../../toolkit/RoboticsCloudSlice";
 import { toast } from "sonner";
 import InfoTip from "../InfoTip/InfoTip";
 import responseProviders from "../../mock/CloudInstanceProviders.json";
 import FormInputText from "../FormInputText/FormInputText";
 import CFSidebar from "../CFSidebar/CFSidebar";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function CFRegion(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useMain();
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
+
+  const { createRegionFC } = useFunctions();
 
   const formik: any = useFormik({
     initialValues: {
@@ -24,19 +24,8 @@ export default function CFRegion(): ReactElement {
     validationSchema: createRoboticsCloudSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-
-      dispatch(
-        createRoboticsCloud({
-          organizationId: selectedState.organization!.id,
-          roboticsCloudName: values.roboticsCloudName,
-          provider: values.provider,
-          region: values.region,
-        }),
-      ).then((response: any) => {
-        if (response) {
-          formik.setSubmitting(false);
-          setSidebarState({ ...sidebarState, isCreateMode: false });
-        }
+      createRegionFC(values.region, values.roboticsCloudName).then(() => {
+        setSidebarState({ ...sidebarState, isCreateMode: false });
       });
     },
   });

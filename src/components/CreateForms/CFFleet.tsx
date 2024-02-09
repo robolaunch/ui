@@ -1,15 +1,14 @@
 import { createFleetSchema } from "../../validations/FleetsValidations";
-import { createFederatedFleet } from "../../toolkit/FleetSlice";
 import FormInputText from "../FormInputText/FormInputText";
-import { useAppDispatch } from "../../hooks/redux";
 import CFSidebar from "../CFSidebar/CFSidebar";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { useFormik } from "formik";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function CreateFleetForm(): ReactElement {
-  const { sidebarState, setSidebarState, selectedState } = useMain();
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
+  const { createFleetFC } = useFunctions();
 
   const formik = useFormik({
     initialValues: {
@@ -18,16 +17,7 @@ export default function CreateFleetForm(): ReactElement {
     validationSchema: createFleetSchema,
     onSubmit: (values) => {
       formik.setSubmitting(true);
-      dispatch(
-        createFederatedFleet({
-          robolaunchFederatedFleetsName: values.name,
-          organizationId: selectedState?.organization?.id!,
-          roboticsCloudName: selectedState?.roboticsCloud?.name!,
-          instanceId: selectedState?.instance?.id!,
-          region: selectedState?.roboticsCloud?.region!,
-        }),
-      ).then(() => {
-        formik.setSubmitting(false);
+      createFleetFC(values.name).then(() => {
         setSidebarState({ ...sidebarState, isCreateMode: false });
       });
     },
