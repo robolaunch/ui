@@ -32,6 +32,7 @@ import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import { toast } from "sonner";
+import FormContext from "../contexts/FormContext";
 
 export default function SidebarContentLayout(): ReactElement {
   const {
@@ -269,110 +270,112 @@ export default function SidebarContentLayout(): ReactElement {
       {handleShowDetails() && <FilteredTags />}
       <div className={`mb-4 h-full overflow-auto p-1 scrollbar-hide`}>
         <div className="flex h-full flex-col gap-2.5">
-          {(() => {
-            switch (sidebarState?.page) {
-              case "organization":
-                if (sidebarState?.isCreateMode) {
-                  return <CFOrganization />;
-                }
-                return <OrganizationsList reload={reload} />;
-              case "roboticscloud":
-                if (sidebarState?.isCreateMode) {
-                  return <CFRegion />;
-                }
-                return <RegionsList reload={reload} />;
-              case "instance":
-                if (sidebarState?.instanceTab === "Cloud Instances") {
+          <FormContext>
+            {(() => {
+              switch (sidebarState?.page) {
+                case "organization":
                   if (sidebarState?.isCreateMode) {
-                    return <CFInstance />;
+                    return <CFOrganization />;
                   }
-                  return <CloudInstancesList reload={reload} />;
-                } else {
+                  return <OrganizationsList reload={reload} />;
+                case "roboticscloud":
                   if (sidebarState?.isCreateMode) {
-                    return <CFPhysical />;
+                    return <CFRegion />;
+                  }
+                  return <RegionsList reload={reload} />;
+                case "instance":
+                  if (sidebarState?.instanceTab === "Cloud Instances") {
+                    if (sidebarState?.isCreateMode) {
+                      return <CFInstance />;
+                    }
+                    return <CloudInstancesList reload={reload} />;
+                  } else {
+                    if (sidebarState?.isCreateMode) {
+                      return <CFPhysical />;
+                    }
+                    return (
+                      <PhysicalInstancesList
+                        reload={reload}
+                        setItemCount={setItemCount}
+                      />
+                    );
+                  }
+                case "fleet":
+                  switch (applicationMode) {
+                    case true:
+                      if (sidebarState?.isCreateMode) {
+                        return <CFNamespace />;
+                      }
+
+                      return <NamespacesList reload={reload} />;
+                    case false:
+                      if (sidebarState?.isCreateMode) {
+                        return <CFFleet />;
+                      }
+
+                      return <FleetsList reload={reload} />;
+                  }
+                  break;
+
+                case "importmanager":
+                  return <CFStep0 />;
+
+                case "robot":
+                  if (sidebarState?.isCreateMode) {
+                    return <CreateRobotLayout />;
+                  }
+
+                  if (url?.robotName) {
+                    if (applicationMode) {
+                      return (
+                        <UpdateEnvironmentDetailsForm
+                          reload={reload}
+                          setItemCount={setItemCount}
+                        />
+                      );
+                    } else {
+                      return (
+                        <UpdateRobotDetailsForm
+                          reload={reload}
+                          setItemCount={setItemCount}
+                        />
+                      );
+                    }
+                  }
+
+                  return applicationMode ? (
+                    <AppsList reload={reload} />
+                  ) : (
+                    <RobotsList reload={reload} />
+                  );
+                case "workspacesmanager":
+                  if (sidebarState?.isCreateMode) {
+                    return <CreateRobotLayout />;
                   }
                   return (
-                    <PhysicalInstancesList
+                    <WorkspaceUpdateForm
                       reload={reload}
                       setItemCount={setItemCount}
                     />
                   );
-                }
-              case "fleet":
-                switch (applicationMode) {
-                  case true:
-                    if (sidebarState?.isCreateMode) {
-                      return <CFNamespace />;
-                    }
-
-                    return <NamespacesList reload={reload} />;
-                  case false:
-                    if (sidebarState?.isCreateMode) {
-                      return <CFFleet />;
-                    }
-
-                    return <FleetsList reload={reload} />;
-                }
-                break;
-
-              case "importmanager":
-                return <CFStep0 />;
-
-              case "robot":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateRobotLayout />;
-                }
-
-                if (url?.robotName) {
-                  if (applicationMode) {
-                    return (
-                      <UpdateEnvironmentDetailsForm
-                        reload={reload}
-                        setItemCount={setItemCount}
-                      />
-                    );
-                  } else {
-                    return (
-                      <UpdateRobotDetailsForm
-                        reload={reload}
-                        setItemCount={setItemCount}
-                      />
-                    );
+                case "buildsmanager":
+                  if (sidebarState?.isCreateMode) {
+                    return <CreateRobotLayout />;
                   }
-                }
-
-                return applicationMode ? (
-                  <AppsList reload={reload} />
-                ) : (
-                  <RobotsList reload={reload} />
-                );
-              case "workspacesmanager":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateRobotLayout />;
-                }
-                return (
-                  <WorkspaceUpdateForm
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
-                );
-              case "buildsmanager":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateRobotLayout />;
-                }
-                return (
-                  <UpdateRobotBuildsForm
-                    reload={reload}
-                    setItemCount={setItemCount}
-                  />
-                );
-              case "launchsmanager":
-                if (sidebarState?.isCreateMode) {
-                  return <CreateRobotLayout />;
-                }
-                return <UpdateRobotLaunchsForm />;
-            }
-          })()}
+                  return (
+                    <UpdateRobotBuildsForm
+                      reload={reload}
+                      setItemCount={setItemCount}
+                    />
+                  );
+                case "launchsmanager":
+                  if (sidebarState?.isCreateMode) {
+                    return <CreateRobotLayout />;
+                  }
+                  return <UpdateRobotLaunchsForm />;
+              }
+            })()}
+          </FormContext>
         </div>
       </div>
 

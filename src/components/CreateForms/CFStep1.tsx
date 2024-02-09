@@ -1,5 +1,3 @@
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import { CFRobotStep1Validations } from "../../validations/RobotsValidations";
 import CFAdvancedSettings from "../CFAdvancedSettings/CFAdvancedSettings";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
@@ -17,22 +15,16 @@ import Seperator from "../Seperator/Seperator";
 import CFDevMode from "../CFDevMode/CFDevMode";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
-import { useFormik } from "formik";
-import { toast } from "sonner";
+import useForm from "../../hooks/useForm";
 
 interface ICFStep1 {
   isImportRobot?: boolean;
 }
 
 export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
-  const { robotData, setRobotData, selectedState, handleCreateRobotNextStep } =
-    useMain();
+  const { robotData, setRobotData } = useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
-  const {
-    getRobot,
-    addPhysicalInstanceToFleet,
-    createRobot: updateRobot,
-  } = useFunctions();
+  const { getRobotFC } = useFunctions();
   const url = useParams();
 
   useEffect(() => {
@@ -42,51 +34,16 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleGetRobot() {
-    getRobot(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        robotName: robotData?.step1?.details?.name || url?.robotName!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponseRobot,
-        setRobotData: true,
-      },
+  async function handleGetRobot() {
+    setResponseRobot(
+      await getRobotFC(
+        false,
+        robotData?.step1?.details?.name || url?.robotName!,
+      ),
     );
   }
 
-  const formik = useFormik<IEnvironmentStep1>({
-    validationSchema: CFRobotStep1Validations,
-    initialValues: robotData?.step1,
-    onSubmit: async () => {
-      formik.setSubmitting(true);
-
-      if (isImportRobot) {
-        await updateRobot();
-
-        toast.success(
-          "Robot updated successfully. Redirecting to fleet page...",
-        );
-        setTimeout(() => {
-          window.location.href = `/${
-            selectedState?.organization?.name?.split("_")[1]
-          }/${selectedState?.roboticsCloud?.name}/${
-            selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}}`;
-        }, 2000);
-      } else if (!formik.values?.details?.isVirtualRobot) {
-        addPhysicalInstanceToFleet();
-      }
-
-      formik.setSubmitting(false);
-      handleCreateRobotNextStep();
-    },
-  });
+  const { step1Formik: formik } = useForm();
 
   useEffect(() => {
     setRobotData({

@@ -4,8 +4,6 @@ import { IEnvironmentStep2 } from "../environment/environment.step2.interface";
 import {
   IcreateDataScienceAppsRequest,
   IdeleteDataScienceAppsRequest,
-  IgetEnvironmentRequest,
-  IsingleGetEnviromentParameters,
 } from "../environmentInterfaces";
 import { IFleet } from "../global/fleet.interface";
 import { INamespace } from "../global/namespace.interface";
@@ -230,7 +228,9 @@ export interface IuseFunctions {
     step1: IEnvironmentStep1;
     step2: IEnvironmentStep2;
   }>;
+  deleteApplicationFC: (envName: string) => Promise<void>;
   //// Robots ////
+  createRobotFC: () => Promise<void>;
   getRobotsFC: (
     fromPage: boolean,
     ErrorNav404: boolean,
@@ -247,6 +247,7 @@ export interface IuseFunctions {
     step1: IEnvironmentStep1;
     step2: IEnvironmentStep2;
   }>;
+  deleteRobotFC: (robotName: string) => Promise<void>;
   ////
 
   getPhysicalInstances: (
@@ -258,41 +259,12 @@ export interface IuseFunctions {
     parameters?: IsingleGetParameters,
   ) => void;
 
-  getInstance: (
-    values: IgetInstance,
-    parameters?: IsingleGetParameters,
-  ) => void;
-
-  getFleets: (values: IgetFleets, parameters?: ImultipleGetParameters) => void;
-  // getFleet: (values: IgetFleet, parameters?: IsingleGetParameters) => void;
-
-  getNamespaces: (
-    values: IgetNamespaces,
-    parameters: ImultipleGetParameters,
-  ) => void;
-  getNamespace: (
-    values: IgetNamespace,
-    parameters?: IsingleGetParameters,
-  ) => void;
-
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters,
   ) => void;
-  getRobots: (values: IgetRobots, parameters?: ImultipleGetParameters) => void;
-  getRobot: (values: IgetRobot, parameters?: IsingleGetRobotParameters) => void;
-  deleteRobot: (robotName: string) => Promise<void>;
   getBuildManager: (parameters?: IsingleGetBuildParameters) => void;
   getLaunchManagers: (parameters?: ImultipleGetLaunchParameters) => void;
-  getEnvironments: (
-    values: IgetEnvironments,
-    parameters?: ImultipleGetParameters,
-  ) => void;
-  getEnvironment: (
-    values: IgetEnvironmentRequest,
-    parameters?: IsingleGetEnviromentParameters,
-  ) => void;
-  deleteEnvironment: (envName: string) => Promise<void>;
 
   createDataScienceApp: (values: IcreateDataScienceAppsRequest) => void;
   getDataScienceApps: (parameters?: ImultipleGetParameters) => void;
@@ -304,7 +276,6 @@ export interface IuseFunctions {
 
   addPhysicalInstanceToFleet: () => Promise<void>;
   getSystemStatus: () => Promise<ISystemStatus>;
-  createRobot: () => Promise<void>;
   createBuildManager: () => Promise<void>;
   getIP: () => void;
 

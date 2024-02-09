@@ -1,8 +1,5 @@
-import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 import CFAddWorkspaceButton from "../CFAddWorkspaceButton/CFAddWorkspaceButton";
-import { CFRobotStep2Validations } from "../../validations/RobotsValidations";
 import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
-import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -10,8 +7,7 @@ import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import CFLoader from "../CFLoader/CFLoader";
 import useMain from "../../hooks/useMain";
-import { useFormik } from "formik";
-import { toast } from "sonner";
+import useForm from "../../hooks/useForm";
 
 interface ICFStep2 {
   isImportRobot?: boolean;
@@ -20,66 +16,14 @@ interface ICFStep2 {
 export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
-  const {
-    robotData,
-    setRobotData,
-    selectedState,
-    handleCreateRobotNextStep,
-    setSidebarState,
-    applicationMode,
-  } = useMain();
+  const { robotData, setRobotData, selectedState, applicationMode } = useMain();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
-  const {
-    getRobot,
-    getFleetsFC,
-    getNamespacesFC,
-    getEnvironment,
-    createEnvironment,
-    createRobot,
-  } = useFunctions();
+  const { getRobotFC, getFleetsFC, getNamespacesFC, getApplicationFC } =
+    useFunctions();
   const url = useParams();
 
-  const formik = useFormik<IEnvironmentStep2>({
-    validationSchema: applicationMode
-      ? CFAppStep2Validations
-      : CFRobotStep2Validations,
-    initialValues: robotData?.step2,
-    onSubmit: async () => {
-      formik.setSubmitting(true);
-
-      if (applicationMode) {
-        createEnvironment(false).then(async () => {
-          await handleSubmit();
-        });
-      } else {
-        await createRobot().then(async () => {
-          await handleSubmit();
-        });
-      }
-    },
-  });
-
-  async function handleSubmit() {
-    formik.setSubmitting(false);
-
-    if (isImportRobot) {
-      toast.success("Robot updated successfully");
-      return window.location.reload();
-    }
-
-    if (robotData?.step1?.details.isDevelopmentMode) {
-      setSidebarState((prevState: any) => {
-        return {
-          ...prevState,
-          isCreateMode: false,
-          page: "robot",
-        };
-      });
-    } else {
-      handleCreateRobotNextStep();
-    }
-  }
+  const { step2Formik: formik } = useForm();
 
   useEffect(() => {
     setRobotData({
@@ -120,39 +64,18 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
     console.log("ERROR", robotData);
   }, [robotData]);
 
-  function handleGetRobot() {
-    getRobot(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        robotName: robotData?.step1?.details.name,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setRobotData: true,
-        setResponse: setResponseRobot,
-      },
+  async function handleGetRobot() {
+    setResponseRobot(
+      await getRobotFC(
+        false,
+        robotData?.step1?.details?.name || url?.robotName!,
+      ),
     );
   }
 
-  function handleGetEnvironment() {
-    getEnvironment(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        environmentName: url?.robotName as string,
-      },
-      {
-        ifErrorNavigateTo404: !responseRobot,
-        setResponse: setResponseRobot,
-        setRobotData: true,
-      },
+  async function handleGetEnvironment() {
+    setResponseRobot(
+      await getApplicationFC(!responseRobot, url?.robotName as string),
     );
   }
 

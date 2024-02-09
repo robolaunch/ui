@@ -1,4 +1,3 @@
-import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
@@ -8,11 +7,9 @@ import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import CFBuildName from "../CFBuildName/CFBuildName";
 import useFunctions from "../../hooks/useFunctions";
-import { FormikProps, useFormik } from "formik";
 import useMain from "../../hooks/useMain";
-import { toast } from "sonner";
-import * as Yup from "yup";
 import { handleAddBuild } from "../../functions/form.build.function";
+import useForm from "../../hooks/useForm";
 
 interface ICFStep3 {
   isImportRobot?: boolean;
@@ -23,9 +20,9 @@ export default function CFStep3({
   isImportRobot,
   disabledLoading,
 }: ICFStep3): ReactElement {
-  const { robotData, setRobotData, handleCreateRobotNextStep, selectedState } =
-    useMain();
-  const { getRobot, getBuildManager, createBuildManager } = useFunctions();
+  const { robotData, setRobotData } = useMain();
+  const { getRobotFC, getBuildManager } = useFunctions();
+  const { step3Formik: formik } = useForm();
 
   useEffect(
     () => {
@@ -61,20 +58,7 @@ export default function CFStep3({
   );
 
   function handleGetRobot() {
-    getRobot(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-        fleetName: selectedState?.fleet?.name!,
-        robotName: robotData?.step1.details.name,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setRobotData: true,
-      },
-    );
+    getRobotFC(false, robotData?.step1?.details?.name!);
   }
 
   function handleGetBuildManager() {
@@ -84,55 +68,6 @@ export default function CFStep3({
       setResponse: false,
     });
   }
-
-  const formik: FormikProps<IEnvironmentStep3> = useFormik<IEnvironmentStep3>({
-    validationSchema: Yup.object().shape({
-      name: Yup.string().required("Build Manager Name is required"),
-      steps: Yup.array().of(
-        Yup.object().shape({
-          name: Yup.string()
-            .required("Step Name is required")
-            .test("unique-name", "This name is already taken", (value) => {
-              const temp = formik.values.steps?.filter(
-                (item: any) => item.name === value && item,
-              );
-              return temp.length > 1 ? false : true;
-            }),
-          workspace: Yup.string().required("Workspace is required"),
-          isCommandCode: Yup.boolean(),
-          command: Yup.string().when("isCommandCode", {
-            is: true,
-            then: Yup.string().required("Bash is required"),
-            otherwise: Yup.string(),
-          }),
-          script: Yup.string().when("isCommandCode", {
-            is: false,
-            then: Yup.string().required("Script is required"),
-            otherwise: Yup.string(),
-          }),
-          instanceScope: Yup.array().min(
-            1,
-            "At least one instance is required",
-          ),
-        }),
-      ),
-    }),
-    initialValues: robotData?.step3!,
-    onSubmit: async () => {
-      formik.setSubmitting(true);
-      await createBuildManager().then(() => {
-        if (isImportRobot) {
-          toast.success("Robot updated successfully. Redirecting...");
-          formik.setSubmitting(true);
-          setTimeout(() => {
-            window.location.reload();
-          }, 4000);
-        } else {
-          handleCreateRobotNextStep();
-        }
-      });
-    },
-  });
 
   useEffect(() => {
     setRobotData({

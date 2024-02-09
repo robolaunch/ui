@@ -17,23 +17,10 @@ export default function CFGpuTypes({
   disabled,
 }: ICFGpuTypes): ReactElement {
   const { selectedState } = useMain();
-  const { getInstance } = useFunctions();
+  const { getCloudInstancesFC } = useFunctions();
 
   function handleGetInstance() {
-    getInstance(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceName: selectedState.instance?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        details: true,
-      },
-      {
-        isSetState: true,
-        ifErrorNavigateTo404: false,
-        setPages: true,
-      },
-    );
+    getCloudInstancesFC(false, false, selectedState.instance?.name!);
   }
 
   useEffect(() => {

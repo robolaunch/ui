@@ -19,12 +19,12 @@ export default function EnvironmentActionCells({
 
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const { deleteEnvironment, deleteRobot } = useFunctions();
+  const { deleteApplicationFC, deleteRobotFC } = useFunctions();
 
   async function handleDelete() {
     applicationMode
-      ? await deleteEnvironment(data?.step1?.details?.name)
-      : await deleteRobot(data?.step1?.details?.name);
+      ? await deleteApplicationFC(data?.step1?.details?.name)
+      : await deleteRobotFC(data?.step1?.details?.name);
 
     setTimeout(() => {
       reload();

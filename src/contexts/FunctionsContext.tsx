@@ -1,20 +1,11 @@
 import {
-  IgetEnvironments,
-  IgetFleet,
-  IgetFleets,
-  IgetInstance,
-  IgetNamespace,
-  IgetNamespaces,
   IgetPhysicalFleet,
   IgetPhysicalInstance,
   IgetPhysicalInstances,
-  IgetRobot,
-  IgetRobots,
   ImultipleGetLaunchParameters,
   ImultipleGetParameters,
   IsingleGetBuildParameters,
   IsingleGetParameters,
-  IsingleGetRobotParameters,
 } from "../interfaces/hook/functions.hook.interface";
 import {
   getRobot as getRobotDispatch,
@@ -37,8 +28,6 @@ import {
 import {
   IcreateDataScienceAppsRequest,
   IdeleteDataScienceAppsRequest,
-  IgetEnvironmentRequest,
-  IsingleGetEnviromentParameters,
 } from "../interfaces/environmentInterfaces";
 import {
   getEnvironments as getEnvironmentsDispatch,
@@ -193,48 +182,6 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getInstance(
-    values: IgetInstance,
-    parameters?: IsingleGetParameters,
-  ) {
-    await dispatch(
-      getCloudInstancesDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        region: values?.region,
-        details: values?.details,
-      }),
-    ).then(async (responseInstances: any) => {
-      const instance = cloudInstanceMapper(
-        responseInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances,
-        values?.instanceName,
-      );
-
-      if (instance) {
-        parameters?.isSetState &&
-          (await setSelectedState((prevState: any) => {
-            return {
-              ...prevState,
-              instance: instance,
-            };
-          }));
-        parameters?.setResponse && (await parameters?.setResponse(instance));
-
-        parameters?.setPages &&
-          (await setPagesState((prevState: any) => {
-            return {
-              ...prevState,
-              instance: instance,
-            };
-          }));
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
   async function startInstanceFC(instanceId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
@@ -289,80 +236,6 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getFleets(
-    values: IgetFleets,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getFleetsDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-      }),
-    ).then((responseFederatedFleets: any) => {
-      const fleets = fleetsMapper(
-        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
-        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
-      );
-
-      if (fleets) {
-        parameters?.setResponse && parameters?.setResponse(fleets);
-        parameters?.setItemCount && parameters?.setItemCount(fleets?.length);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getFleet(
-    values: IgetFleet,
-    parameters?: IsingleGetParameters,
-  ) {
-    await dispatch(
-      getFleetsDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-      }),
-    ).then((responseFederatedFleets: any) => {
-      const fleet = fleetMapper(
-        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchFederatedFleets,
-        responseFederatedFleets?.payload?.data?.[0].roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
-        values?.fleetName,
-      );
-
-      if (fleet) {
-        parameters?.isSetState &&
-          setSelectedState((prev) => {
-            return {
-              ...prev,
-              fleet: fleet,
-            };
-          });
-        parameters?.setResponse && parameters?.setResponse(fleet);
-
-        parameters?.setPages &&
-          setPagesState((prev) => {
-            return {
-              ...prev,
-              fleet: fleet,
-            };
-          });
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
   async function deleteFleetFC(fleetName: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
@@ -378,76 +251,6 @@ export default ({ children }: any) => {
         resolve();
       } catch (error) {
         reject(error);
-      }
-    });
-  }
-
-  async function getNamespaces(
-    values: IgetNamespaces,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getNamespacesDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-      }),
-    ).then((resNS: any) => {
-      const namespaces: INamespace[] = namespacesMapper(
-        resNS?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
-          ?.robolaunchNamespaces,
-      );
-
-      if (namespaces) {
-        parameters?.setResponse && parameters?.setResponse(namespaces);
-        parameters?.setItemCount && parameters?.setItemCount(namespaces.length);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getNamespace(
-    values: IgetNamespace,
-    parameters?: IsingleGetParameters,
-  ) {
-    await dispatch(
-      getNamespacesDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-      }),
-    ).then((resNS: any) => {
-      const namespace = namespaceMapper(
-        resNS?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
-          ?.robolaunchNamespaces,
-        values?.namespaceName,
-      );
-
-      if (namespace) {
-        parameters?.isSetState &&
-          setSelectedState((prev) => {
-            return {
-              ...prev,
-              fleet: namespace,
-            };
-          });
-        parameters?.setResponse && parameters?.setResponse(namespace);
-
-        parameters?.setPages &&
-          setPagesState((prev) => {
-            return {
-              ...prev,
-              fleet: namespace,
-            };
-          });
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
       }
     });
   }
@@ -512,81 +315,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getRobots(
-    values: IgetRobots,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getRobotsDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-        fleetName: values?.fleetName,
-      }),
-    ).then((resRobots: any) => {
-      const robots = environmentsMapper(
-        resRobots?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
-          ?.robolaunchFederatedRobots,
-      );
-
-      if (robots) {
-        parameters?.setResponse && parameters?.setResponse(robots || []);
-
-        parameters?.setItemCount &&
-          parameters?.setItemCount(robots?.length || 0);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getRobot(
-    values: IgetRobot,
-    parameters?: IsingleGetRobotParameters,
-  ) {
-    await dispatch(
-      getRobotDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        instanceId: values?.instanceId,
-        region: values?.region,
-        fleetName: values?.fleetName,
-        robotName: values?.robotName,
-      }),
-    ).then((resRobot: any) => {
-      const robot = environmentMapper(
-        resRobot?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
-          ?.robolaunchFederatedRobots?.[0],
-      );
-
-      if (robot) {
-        parameters?.setRobotData &&
-          setRobotData((prevState: any) => {
-            return {
-              ...prevState,
-              step1: {
-                ...robot?.step1,
-                clusters: {
-                  ...prevState.step1.clusters,
-                  environment: robot?.step1?.clusters?.environment,
-                },
-              },
-              step2: robot.step2,
-            };
-          });
-
-        parameters?.setResponse && parameters?.setResponse(robot);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
-  async function deleteRobot(robotName: string): Promise<void> {
+  async function deleteRobotFC(robotName: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -756,81 +485,7 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getEnvironments(
-    values: IgetEnvironments,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getEnvironmentsDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        region: values?.region,
-        instanceId: values?.instanceId,
-        fleetName: values?.fleetName,
-      }),
-    ).then((resEnvironments: any) => {
-      const environments = environmentsMapper(
-        resEnvironments?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.environments,
-      );
-
-      if (environments) {
-        parameters?.setResponse && parameters?.setResponse(environments);
-
-        parameters?.setItemCount &&
-          parameters?.setItemCount(environments?.length);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
-
-  async function getEnvironment(
-    values: IgetEnvironmentRequest,
-    parameters?: IsingleGetEnviromentParameters,
-  ) {
-    await dispatch(
-      getEnvironmentDispatch({
-        organizationId: values?.organizationId,
-        roboticsCloudName: values?.roboticsCloudName,
-        region: values?.region,
-        instanceId: values?.instanceId,
-        fleetName: values?.fleetName,
-        environmentName: values?.environmentName,
-      }),
-    ).then((resEnv: any) => {
-      const environment = environmentMapper(
-        resEnv?.payload?.data?.[0].roboticsClouds?.[0]?.cloudInstances?.[0]
-          ?.environments?.[0],
-      );
-
-      if (environment) {
-        parameters?.setRobotData &&
-          setRobotData((prevState) => {
-            return {
-              ...prevState,
-              step1: {
-                ...environment?.step1,
-                clusters: {
-                  ...prevState.step1.clusters,
-                  environment: environment?.step1?.clusters?.environment,
-                },
-              },
-              step2: environment.step2,
-            };
-          });
-
-        parameters?.setResponse && parameters?.setResponse(environment);
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
-  }
-
-  async function deleteEnvironment(envName: string): Promise<void> {
+  async function deleteApplicationFC(envName: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -958,7 +613,7 @@ export default ({ children }: any) => {
     });
   }
 
-  function createRobot() {
+  function createRobotFC() {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await dispatch(
@@ -1112,7 +767,7 @@ export default ({ children }: any) => {
             fleetName: selectedState?.fleet?.name!,
             physicalInstanceName:
               robotData?.step1?.details?.physicalInstanceName!,
-            buildManagerName: robotData.step3!.name,
+            buildManagerName: `build-manager-${Math.floor(Date.now() / 1000)}`,
             robotBuildSteps: robotData.step3!.steps,
           }),
         );
@@ -1815,38 +1470,24 @@ export default ({ children }: any) => {
         createApplicationFC,
         getApplicationsFC,
         getApplicationFC,
+        deleteApplicationFC,
         //// Robots ////
+        createRobotFC,
         getRobotsFC,
         getRobotFC,
+        deleteRobotFC,
         ////
-
-        getInstance,
 
         addPhysicalInstanceToFleet,
 
         getPhysicalInstances,
         getPhysicalInstance,
 
-        getFleets,
-        getFleet,
-
-        getNamespaces,
-        getNamespace,
-
         getPhysicalFleet,
-
-        getEnvironments,
-        getEnvironment,
-        deleteEnvironment,
 
         createAppBuildManager,
         getAppBuildManager,
         deleteAppBuildManager,
-
-        createRobot,
-        getRobots,
-        getRobot,
-        deleteRobot,
 
         createBuildManager,
         getBuildManager,
