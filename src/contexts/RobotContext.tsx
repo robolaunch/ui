@@ -1,6 +1,5 @@
 import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
-import useCreateRobot from "../hooks/useCreateRobot";
 import useFunctions from "../hooks/useFunctions";
 import { useAppSelector } from "../hooks/redux";
 import { useParams } from "react-router-dom";
@@ -28,7 +27,7 @@ export default ({ children }: any) => {
 
   const url = useParams();
 
-  const { pagesState, sidebarState } = useMain();
+  const { pagesState, sidebarState, robotData } = useMain();
 
   const [activeTab, setActiveTab] = useState<IrobotTab["name"]>("Overview");
 
@@ -39,8 +38,6 @@ export default ({ children }: any) => {
     useState<any>(undefined);
   const [responseLaunchManagers, setResponseLaunchManagers] =
     useState<any>(undefined);
-
-  const { robotData } = useCreateRobot();
 
   const [iFrameId, setIFrameId] = useState<number>(0);
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);

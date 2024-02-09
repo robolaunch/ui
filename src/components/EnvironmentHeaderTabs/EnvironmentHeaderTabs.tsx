@@ -7,14 +7,14 @@ import { BsCameraVideoFill } from "react-icons/bs";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement, useEffect } from "react";
 import { FaPython } from "react-icons/fa";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { useAppSelector } from "../../hooks/redux";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentHeaderTabs(): ReactElement {
   const { isSettedCookie, isRobotReady, connectionsReducer } = useRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   useEffect(() => {
     console.log("connectionsReducer", connectionsReducer);

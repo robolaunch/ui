@@ -5,7 +5,6 @@ import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import { Fragment, ReactElement, useEffect } from "react";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import CFBuildName from "../CFBuildName/CFBuildName";
 import useFunctions from "../../hooks/useFunctions";
@@ -24,8 +23,8 @@ export default function CFStep3({
   isImportRobot,
   disabledLoading,
 }: ICFStep3): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
-  const { handleCreateRobotNextStep, selectedState } = useMain();
+  const { robotData, setRobotData, handleCreateRobotNextStep, selectedState } =
+    useMain();
   const { getRobot, getBuildManager, createBuildManager } = useFunctions();
 
   useEffect(

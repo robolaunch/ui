@@ -2,12 +2,12 @@ import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
 import { ReactElement } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useMain from "../../hooks/useMain";
 
 export default function ActivitiesWidget(): ReactElement {
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const data: {
     show: boolean;

@@ -5,7 +5,6 @@ import CFJupyterNotebook from "../CFJupyterNotebook/CFJupyterNotebook";
 import CFEnvCategories from "../CFEnvCategories/CFEnvCategories";
 import CFStorageRange from "../CFStorageRange/CFStorageRange";
 import { Fragment, ReactElement, useEffect } from "react";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CFEnvButtons from "../CFEnvButtons/CFEnvButtons";
 import useFunctions from "../../hooks/useFunctions";
 import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
@@ -28,10 +27,14 @@ interface ICFAppStep1 {
 export default function CFAppStep1({
   isImportRobot = false,
 }: ICFAppStep1): ReactElement {
-  const { handleCreateRobotNextStep, setSidebarState } = useMain();
+  const {
+    robotData,
+    setRobotData,
+    handleCreateRobotNextStep,
+    setSidebarState,
+  } = useMain();
   const { getApplicationFC, createEnvironment, createAppBuildManager } =
     useFunctions();
-  const { robotData, setRobotData } = useCreateRobot();
   const url = useParams();
 
   const formik = useFormik<IEnvironmentStep1>({

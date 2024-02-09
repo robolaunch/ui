@@ -6,14 +6,14 @@ import GeneralTable from "../Table/GeneralTable";
 import { ReactElement, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { IEnvironmentStep2WorkspaceRepository } from "../../interfaces/environment/environment.step2.interface";
+import useMain from "../../hooks/useMain";
 
 export default function WorkspacesTable(): ReactElement {
   const url = useParams();
   const { applicationMode } = useAppSelector((state) => state.user);
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const data: any = useMemo(
     () =>

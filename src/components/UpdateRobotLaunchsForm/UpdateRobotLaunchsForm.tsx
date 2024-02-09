@@ -3,11 +3,11 @@ import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFor
 import UpdateLaunchAccordion from "../UpdateLaunchAccordion/UpdateLaunchAccordion";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CreateRobotFormStep4 from "../CreateForms/CFStep4";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import InfoTip from "../InfoTip/InfoTip";
+import useMain from "../../hooks/useMain";
 
 export default function UpdateRobotLaunchsForm(): ReactElement {
   const [isAddedForm, setIsAddedForm] = useState<boolean>(false);
@@ -15,7 +15,7 @@ export default function UpdateRobotLaunchsForm(): ReactElement {
     useState<any>(undefined);
   const { getLaunchManagers } = useFunctions();
   const url = useParams();
-  const { robotData, handleAddLaunchManager } = useCreateRobot();
+  const { robotData, handleAddLaunchManager } = useMain();
 
   useEffect(() => {
     console.log(responseRobotLaunchManagers);

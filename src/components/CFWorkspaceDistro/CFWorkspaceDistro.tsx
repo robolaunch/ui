@@ -2,8 +2,8 @@ import { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import { FormikProps } from "formik/dist/types";
 import { stringCapitalization } from "../../functions/GeneralFunctions";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
+import useMain from "../../hooks/useMain";
 
 interface ICFWorkspaceDistro {
   formik: FormikProps<IEnvironmentStep2>;
@@ -16,7 +16,7 @@ export default function CFWorkspaceDistro({
   workspaceIndex,
   disabled,
 }: ICFWorkspaceDistro): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <FormInputSelect

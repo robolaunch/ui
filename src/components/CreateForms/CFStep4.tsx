@@ -6,7 +6,6 @@ import { createLaunchManager } from "../../toolkit/RobotSlice";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CFLaunchName from "../CFLaunchName/CFLaunchName";
 import CFLaunchCode from "../CFLaunchCode/CFLaunchCode";
 import CFEnvMapper from "../CFEnvMapper/CFEnvMapper";
@@ -29,8 +28,7 @@ export default function CFStep4({
   robotDataLaunchIndex,
   robotClusters,
 }: ICFStep4): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
-  const { selectedState } = useMain();
+  const { robotData, setRobotData, selectedState } = useMain();
   const dispatch = useAppDispatch();
   const [responseBuildManager, setResponseBuildManager] =
     useState<any>(undefined);

@@ -4,7 +4,7 @@ import { useEffect, createContext, useRef, useReducer } from "react";
 import { useKeycloak } from "@react-keycloak/web";
 import { toast } from "sonner";
 import { useAppSelector } from "../hooks/redux";
-import useCreateRobot from "../hooks/useCreateRobot";
+import useMain from "../hooks/useMain";
 
 export const VDIContext: any = createContext<any>(null);
 
@@ -24,7 +24,7 @@ export default ({ children }: IVDIContext) => {
 
   const { keycloak } = useKeycloak();
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const [remoteDesktopReducer, dispatcher] = useReducer(handleReducer, {
     members: [],

@@ -1,5 +1,4 @@
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps } from "formik/dist/types";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
@@ -14,8 +13,7 @@ export default function CFLaunchScope({
   formik,
   disabled,
 }: ICFLaunchScope): ReactElement {
-  const { robotData } = useCreateRobot();
-  const { selectedState } = useMain();
+  const { robotData, selectedState } = useMain();
 
   return (
     <CreateRobotFormCodeScope

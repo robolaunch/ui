@@ -4,7 +4,6 @@ import useFunctions from "../../hooks/useFunctions";
 import { ITemplate } from "../../interfaces/global/template.interface";
 import Button from "../Button/Button";
 import { IEnvironment } from "../../interfaces/environment/environment.interface";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import useMain from "../../hooks/useMain";
 import ContentLoader from "react-content-loader";
 
@@ -43,7 +42,7 @@ export default function CFStep0(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTemplate?.category]);
 
-  const { setRobotData } = useCreateRobot();
+  const { setRobotData } = useMain();
 
   const { handleCreateRobotNextStep } = useMain();
 

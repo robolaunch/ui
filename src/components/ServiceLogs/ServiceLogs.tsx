@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import { RiListCheck } from "react-icons/ri";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import LogModal from "../../modals/LogModal";
+import useMain from "../../hooks/useMain";
 
 interface IServiceLogs {
   type: "ide" | "vdi" | "jupyterNotebook";
@@ -9,7 +9,7 @@ interface IServiceLogs {
 
 export default function ServiceLogs({ type }: IServiceLogs): ReactElement {
   const [isOpenedModal, setIsOpenedModal] = useState<boolean>(false);
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <button className=" transition-300 text-light-700 hover:scale-95 hover:text-primary-400">

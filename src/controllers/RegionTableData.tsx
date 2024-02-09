@@ -36,7 +36,6 @@ export function RegionTableData() {
     const timer = setInterval(() => {
       pagesState?.organization &&
         pagesState?.roboticsCloud &&
-        pagesState?.roboticsCloud &&
         handleGetInstances();
     }, 20000);
 

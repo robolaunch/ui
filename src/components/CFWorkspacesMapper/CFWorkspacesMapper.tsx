@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { FormikProps } from "formik";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CFWorkspaceItem from "../CFWorkspaceItem/CFWorkspaceItem";
 import {
   IEnvironmentStep2,
   IEnvironmentStep2Workspace,
 } from "../../interfaces/environment/environment.step2.interface";
+import useMain from "../../hooks/useMain";
 
 interface ICFWorkspacesMapper {
   formik: FormikProps<IEnvironmentStep2>;
@@ -18,7 +18,7 @@ export default function CFWorkspacesMapper({
   responseRobot,
   isImportRobot,
 }: ICFWorkspacesMapper): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <div

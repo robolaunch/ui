@@ -3,11 +3,10 @@ import {
   ISidebarState,
   IpagesState,
 } from "../context/main.context.interface";
+import { IEnvironment } from "../environment/environment.interface";
 
 export interface IuseMain {
   applicationMode: boolean;
-  trialState: any;
-  setTrialState: React.Dispatch<React.SetStateAction<any>>;
   itemCount: number;
   setItemCount: React.Dispatch<React.SetStateAction<number>>;
   pagesState: IpagesState;
@@ -18,4 +17,8 @@ export interface IuseMain {
   setSelectedState: React.Dispatch<React.SetStateAction<ISelectedState>>;
   handleCreateRobotPreviousStep: () => void;
   handleCreateRobotNextStep: () => void;
+  robotData: IEnvironment;
+  setRobotData: React.Dispatch<React.SetStateAction<IEnvironment>>;
+  handleResetRobotForm: () => void;
+  handleAddLaunchManager: () => void;
 }

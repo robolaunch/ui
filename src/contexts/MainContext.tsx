@@ -1,19 +1,25 @@
 import { createContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import {
   ISelectedState,
   ISidebarState,
   IpagesState,
 } from "../interfaces/context/main.context.interface";
+import { environmentInitialConfig } from "../configs/environment.initial.config";
+import { IEnvironment } from "../interfaces/environment/environment.interface";
 
 export const MainContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const url = useLocation();
+  const url = useParams();
 
   const { applicationMode } = useAppSelector((state) => state.user);
+
+  const initialRobotData: IEnvironment = environmentInitialConfig;
+
+  const [robotData, setRobotData] = useState<IEnvironment>(initialRobotData);
 
   const [sidebarState, setSidebarState] = useState<ISidebarState>({
     isOpen: false,
@@ -36,27 +42,7 @@ export default ({ children }: any) => {
     fleet: null,
   });
 
-  const [trialState, setTrialState] = useState<any>({
-    ip: null,
-    time: {
-      remainingTime: null,
-      viewer: {
-        h: 0,
-        m: 0,
-        s: 0,
-      },
-    },
-  });
-
   const [itemCount, setItemCount] = useState<number>(0);
-
-  useEffect(() => {
-    console.log("SelectedState", selectedState);
-  }, [selectedState]);
-
-  useEffect(() => {
-    console.log("pagesState", pagesState);
-  }, [pagesState]);
 
   useEffect(() => {
     setSidebarState({
@@ -66,6 +52,52 @@ export default ({ children }: any) => {
       instanceTab: "Cloud Instances",
     });
   }, [url]);
+
+  useEffect(() => {
+    if (
+      !url.robotName &&
+      JSON.stringify(initialRobotData) !== JSON.stringify(robotData) &&
+      !sidebarState.isCreateMode
+    ) {
+      setRobotData(initialRobotData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarState.isCreateMode, url]);
+
+  useEffect(() => {
+    console.log("selectedState", selectedState);
+  }, [selectedState]);
+
+  useEffect(() => {
+    console.log("pagesState", pagesState);
+  }, [pagesState]);
+
+  useEffect(() => {
+    console.log("robotData", robotData);
+  }, [robotData]);
+
+  function handleResetRobotForm() {
+    setRobotData(initialRobotData);
+  }
+
+  function handleAddLaunchManager() {
+    setRobotData((prev: any) => ({
+      ...prev,
+      step4: {
+        ...prev.step4,
+        robotLaunchSteps: [
+          ...prev.step4.robotLaunchSteps,
+          {
+            workspace: "",
+            entryPointType: "custom",
+            entryPointCmd: "",
+            instancesName: [],
+            robotLmEnvs: [],
+          },
+        ],
+      },
+    }));
+  }
 
   function handleCreateRobotPreviousStep() {
     switch (sidebarState?.page) {
@@ -140,8 +172,6 @@ export default ({ children }: any) => {
     <MainContext.Provider
       value={{
         applicationMode,
-        trialState,
-        setTrialState,
         itemCount,
         setItemCount,
         pagesState,
@@ -152,6 +182,10 @@ export default ({ children }: any) => {
         setSelectedState,
         handleCreateRobotPreviousStep,
         handleCreateRobotNextStep,
+        robotData,
+        setRobotData,
+        handleResetRobotForm,
+        handleAddLaunchManager,
       }}
     >
       {children}

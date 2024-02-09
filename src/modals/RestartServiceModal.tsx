@@ -1,5 +1,4 @@
 import { restartService, vdiSoftReload } from "../toolkit/ServiceSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { ReactElement, useState } from "react";
@@ -18,7 +17,7 @@ export default function RestartServiceModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { responseRobot, handleResetRobot } = useRobot();
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const dispatch = useAppDispatch();
   const { selectedState } = useMain();

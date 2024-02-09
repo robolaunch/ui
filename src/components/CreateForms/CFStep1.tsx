@@ -6,7 +6,6 @@ import CreateRobotStorage from "../CFStorageRange/CFStorageRange";
 import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CFRosDistros from "../CFRosDistros/CFRosDistros";
 import CFGPUToggle from "../CFGPUToggle/CFGPUToggle";
 import CFRobotName from "../CFRobotName/CFRobotName";
@@ -26,8 +25,8 @@ interface ICFStep1 {
 }
 
 export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
-  const { robotData, setRobotData } = useCreateRobot();
-  const { selectedState, handleCreateRobotNextStep } = useMain();
+  const { robotData, setRobotData, selectedState, handleCreateRobotNextStep } =
+    useMain();
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
   const {
     getRobot,

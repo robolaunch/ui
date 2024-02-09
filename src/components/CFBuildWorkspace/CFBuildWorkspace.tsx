@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import { FormikProps } from "formik/dist/types";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { IEnvironmentStep3 } from "../../interfaces/environment/environment.step3.interface";
 import { IEnvironmentStep2Workspace } from "../../interfaces/environment/environment.step2.interface";
+import useMain from "../../hooks/useMain";
 
 interface ICFBuildWorkspace {
   formik: FormikProps<IEnvironmentStep3>;
@@ -14,7 +14,7 @@ export default function CFBuildWorkspace({
   formik,
   buildStepIndex,
 }: ICFBuildWorkspace): React.ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <FormInputSelect

@@ -1,6 +1,5 @@
 import CreateRobotFormCodeScope from "../CreateRobotFormCodeScope/CreateRobotFormCodeScope";
 import { IBuildSteps } from "../../interfaces/robotInterfaces";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { FormikProps } from "formik/dist/types";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
@@ -14,8 +13,7 @@ export default function CFBuildScope({
   formik,
   buildStepIndex,
 }: ICFBuildScope): ReactElement {
-  const { selectedState } = useMain();
-  const { robotData } = useCreateRobot();
+  const { robotData, selectedState } = useMain();
 
   return (
     <CreateRobotFormCodeScope

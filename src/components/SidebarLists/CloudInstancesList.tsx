@@ -68,10 +68,6 @@ export default function CloudInstancesList({
                 name={
                   <div className="flex items-center gap-2.5">
                     <p>{instance?.name}</p>
-                    <div className="flex items-center gap-1 text-[0.66rem]">
-                      <span className="font-medium">Type:</span>
-                      <p className="font-light">{instance?.providerModel}</p>
-                    </div>
                   </div>
                 }
                 description={<CloudInstancesListItemDesc instance={instance} />}

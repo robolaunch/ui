@@ -1,5 +1,4 @@
 import InputCheckbox from "../InputCheckbox/InputCheckbox";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
@@ -25,8 +24,7 @@ export default function CreateRobotFormCodeScope({
   physicalInstanceOnChange,
   error,
 }: ICreateRobotFormCodeScope): ReactElement {
-  const { robotData } = useCreateRobot();
-  const { selectedState } = useMain();
+  const { robotData, selectedState } = useMain();
 
   return (
     <CFInfoBar

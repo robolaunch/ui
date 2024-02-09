@@ -1,6 +1,5 @@
 import KeycloakLoadingPage from "../components/KeycloakLoadingPage/KeycloakLoadingPage";
 import PrivateLayout from "../layouts/PrivateLayout/PrivateLayout";
-import CreateRobotContext from "../contexts/CreateRobotContext";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import FunctionsContext from "../contexts/FunctionsContext";
 import GithubContext from "../contexts/GithubContext";
@@ -33,11 +32,9 @@ export default function PrivateProvider(): ReactElement {
     >
       <MainContext>
         <GithubContext>
-          <CreateRobotContext>
-            <FunctionsContext>
-              <PrivateLayout />
-            </FunctionsContext>
-          </CreateRobotContext>
+          <FunctionsContext>
+            <PrivateLayout />
+          </FunctionsContext>
         </GithubContext>
       </MainContext>
     </ReactKeycloakProvider>

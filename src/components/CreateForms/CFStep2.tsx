@@ -5,7 +5,6 @@ import CFWorkspacesMapper from "../CFWorkspacesMapper/CFWorkspacesMapper";
 import { CFAppStep2Validations } from "../../validations/AppsValidations";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import { useParams } from "react-router-dom";
@@ -22,12 +21,13 @@ export default function CFStep2({ isImportRobot }: ICFStep2): ReactElement {
   const [responseRobot, setResponseRobot] = useState<any>(undefined);
 
   const {
+    robotData,
+    setRobotData,
     selectedState,
     handleCreateRobotNextStep,
     setSidebarState,
     applicationMode,
   } = useMain();
-  const { robotData, setRobotData } = useCreateRobot();
   const [isLoadingImportRobot, setIsLoadingImportRobot] =
     useState<boolean>(true);
   const {

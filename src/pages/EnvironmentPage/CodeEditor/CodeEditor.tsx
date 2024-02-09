@@ -1,11 +1,11 @@
 import LayoutTabSwitcher from "../../../components/LayoutTabSwitcher/LayoutTabSwitcher";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ControlBar from "../../../components/ControlBar/ControlBar";
-import useCreateRobot from "../../../hooks/useCreateRobot";
 import { Fragment, ReactElement, useState } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
+import useMain from "../../../hooks/useMain";
 
 export default function CodeEditor(): ReactElement {
   const [activeTabCodeEditor, setActiveTabCodeEditor] = useState<
@@ -18,7 +18,7 @@ export default function CodeEditor(): ReactElement {
 
   const { urls } = useAppSelector((state) => state.robot);
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <div

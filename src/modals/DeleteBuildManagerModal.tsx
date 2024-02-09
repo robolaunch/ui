@@ -1,5 +1,4 @@
 import { deleteBuildManager } from "../toolkit/RobotSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { ReactElement, useState } from "react";
@@ -18,7 +17,7 @@ export default function DeleteBuildManagerModal({
   const dispatch = useAppDispatch();
   const url = useParams();
   const { selectedState } = useMain();
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   function handleDeleteBuildManager() {
     setIsLoading(true);

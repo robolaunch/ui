@@ -26,7 +26,6 @@ import CFPhysical from "../components/CreateForms/CFPhysical";
 import { ReactElement, useEffect, useState } from "react";
 import CFRegion from "../components/CreateForms/CFRegion";
 import CFFleet from "../components/CreateForms/CFFleet";
-import useCreateRobot from "../hooks/useCreateRobot";
 import CFStep0 from "../components/CFStep0/CFStep0";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
@@ -45,7 +44,7 @@ export default function SidebarContentLayout(): ReactElement {
   } = useMain();
   const [loading, setLoading] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
-  const { handleResetRobotForm } = useCreateRobot();
+  const { handleResetRobotForm } = useMain();
   const url = useParams();
 
   useEffect(() => {

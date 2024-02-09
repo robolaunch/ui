@@ -3,7 +3,6 @@ import CFPersistDirTags from "../CFPersistDirTags/CFPersistDirTags";
 import CFDirectories from "../CFHostDirectories/CFHostDirectories";
 import CFGrantDirTags from "../CFGrantDirTags/CFGrantDirTags";
 import CFPortSetter from "../CFPortSetter/CFPortSetter";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import Accordion from "../Accordion/AccordionV2";
 import { FormikProps } from "formik/dist/types";
 import { ReactElement, useState } from "react";
@@ -11,6 +10,7 @@ import CFSection from "../CFSection/CFSection";
 import Seperator from "../Seperator/Seperator";
 import CFStep3 from "../CreateForms/CFStep3";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
+import useMain from "../../hooks/useMain";
 
 interface ICFAdvancedSettings {
   formik: FormikProps<IEnvironmentStep1>;
@@ -22,7 +22,7 @@ export default function CFAdvancedSettings({
   disabled,
 }: ICFAdvancedSettings): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <Accordion

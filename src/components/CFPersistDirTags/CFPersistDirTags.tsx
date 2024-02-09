@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { toast } from "sonner";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import useMain from "../../hooks/useMain";
 
 interface ICFPersistDirTags {
   formik: FormikProps<IEnvironmentStep1>;
@@ -15,7 +15,7 @@ export default function CFPersistDirTags({
   formik,
   disabled,
 }: ICFPersistDirTags): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const [selected, setSelected] = useState<string[]>(
     robotData.step1.directories.persistentDirectories?.split(":") || [

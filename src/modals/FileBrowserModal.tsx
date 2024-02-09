@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Dialog } from "primereact/dialog";
-import useCreateRobot from "../hooks/useCreateRobot";
+import useMain from "../hooks/useMain";
 
 interface IFileBrowserModal {
   type: "ide" | "vdi" | "jupyterNotebook";
@@ -11,7 +11,7 @@ export default function FileBrowserModal({
   type,
   handleCloseModal,
 }: IFileBrowserModal): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <Dialog

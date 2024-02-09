@@ -2,11 +2,11 @@ import BasicCell from "../TableInformationCells/BasicCell";
 import StateCell from "../TableInformationCells/StateCell";
 import LogsCell from "../TableInformationCells/LogsCell";
 import InfoCell from "../TableInformationCells/InfoCell";
-import useCreateRobot from "../../hooks/useCreateRobot";
-import React, { ReactElement, useMemo } from "react";
+import { ReactElement, useMemo } from "react";
 import GeneralTable from "../Table/GeneralTable";
 import { useParams } from "react-router-dom";
 import TickCell from "../TickCell/TickCell";
+import useMain from "../../hooks/useMain";
 
 interface IBuildManagerStepsTable {
   responseBuildManager: any;
@@ -16,7 +16,7 @@ export default function BuildManagerStepsTable({
   responseBuildManager,
 }: IBuildManagerStepsTable): ReactElement {
   const url = useParams();
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   const data: any = useMemo(
     () =>

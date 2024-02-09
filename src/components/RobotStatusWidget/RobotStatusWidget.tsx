@@ -2,8 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetItem";
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
-import { useAppSelector } from "../../hooks/redux";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useMain from "../../hooks/useMain";
 
 interface IRobotStatusWidget {
   responseBuildManager: any;
@@ -16,8 +15,6 @@ export default function RobotStatusWidget({
 }: IRobotStatusWidget): ReactElement {
   const [responseLaunchManagersFiltered, setResponseLaunchManagersFiltered] =
     useState<any>(undefined);
-
-  const { applicationMode } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setResponseLaunchManagersFiltered(
@@ -32,7 +29,7 @@ export default function RobotStatusWidget({
     );
   }, [responseLaunchManagers]);
 
-  const { robotData } = useCreateRobot();
+  const { applicationMode, robotData } = useMain();
 
   return (
     <WidgetLayout

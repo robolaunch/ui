@@ -63,7 +63,6 @@ import {
 import { getOrganizations as getOrganizationsDispatch } from "../toolkit/OrganizationSlice";
 import { getInstances as getCloudInstancesDispatch } from "../toolkit/InstanceSlice";
 import { getIP as getCurrentIP } from "../toolkit/TrialSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
 import { useAppDispatch } from "../hooks/redux";
 import { useNavigate } from "react-router-dom";
 import useMain from "../hooks/useMain";
@@ -110,15 +109,15 @@ export const FunctionsContext: any = createContext<any>(null);
 export default ({ children }: any) => {
   const dispatch = useAppDispatch();
   const {
-    setTrialState,
     selectedState,
     setItemCount,
     setSelectedState,
     pagesState,
     setPagesState,
+    robotData,
+    setRobotData,
   } = useMain();
   const navigate = useNavigate();
-  const { robotData, setRobotData } = useCreateRobot();
 
   async function getPhysicalInstances(
     values: IgetPhysicalInstances,
@@ -1170,14 +1169,7 @@ export default ({ children }: any) => {
   }
 
   async function getIP() {
-    await dispatch(getCurrentIP()).then((response: any) => {
-      setTrialState((prevState: any) => {
-        return {
-          ...prevState,
-          ip: response?.payload?.ip,
-        };
-      });
-    });
+    await dispatch(getCurrentIP()).then((response: any) => {});
   }
 
   async function getFilesFromFileManager(values: {

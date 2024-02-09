@@ -1,5 +1,4 @@
 import { deleteLaunchManager } from "../toolkit/RobotSlice";
-import useCreateRobot from "../hooks/useCreateRobot";
 import Button from "../components/Button/Button";
 import { useAppDispatch } from "../hooks/redux";
 import { ReactElement, useState } from "react";
@@ -18,7 +17,7 @@ export default function DeleteLaunchManagerModal({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { selectedState } = useMain();
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   async function handleDeleteLaunchManager() {
     setIsLoading(true);

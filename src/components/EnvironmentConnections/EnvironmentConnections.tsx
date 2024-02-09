@@ -1,15 +1,15 @@
 import ConnectionLabel from "../ConnectionLabel/ConnectionLabel";
 import StateCell from "../TableInformationCells/StateCell";
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { useKeycloak } from "@react-keycloak/web";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
 import { useAppSelector } from "../../hooks/redux";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentConnections(): ReactElement {
   const { connectionsReducer } = useRobot();
   const { keycloak } = useKeycloak();
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
   const { applicationMode } = useAppSelector((state) => state.user);
 
   return (

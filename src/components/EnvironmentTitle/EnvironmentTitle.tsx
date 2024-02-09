@@ -1,9 +1,9 @@
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { Fragment, ReactElement } from "react";
 import Skeleton from "../Skeleton/Skeleton";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentTitle(): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <Fragment>

@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import { RiFolder3Line } from "react-icons/ri";
 import IframeModal from "../../modals/IframeModal";
-import useCreateRobot from "../../hooks/useCreateRobot";
+import useMain from "../../hooks/useMain";
 
 interface IFileBrowser {
   type: "ide" | "vdi" | "jupyterNotebook";
@@ -10,8 +10,7 @@ interface IFileBrowser {
 export default function FileBrowser({ type }: IFileBrowser): ReactElement {
   const [isOpenedModal, setIsOpenedModal] = useState<boolean>(false);
 
-  const { robotData } = useCreateRobot();
-
+  const { robotData } = useMain();
   return (
     <button className="transition-300 text-light-700 hover:scale-95 hover:text-primary-400">
       <div

@@ -3,14 +3,14 @@ import ControlBar from "../../../components/ControlBar/ControlBar";
 import { Fragment, ReactElement } from "react";
 import Card from "../../../components/Card/Card";
 import useRobot from "../../../hooks/useRobot";
-import useCreateRobot from "../../../hooks/useCreateRobot";
+import useMain from "../../../hooks/useMain";
 
 export default function JupyterNotebook(): ReactElement {
   const handleFullScreen = useFullScreenHandle();
 
   const { isRobotReady, isSettedCookie } = useRobot();
 
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
 
   return (
     <div className="animate-fadeIn flex h-full flex-col gap-6">

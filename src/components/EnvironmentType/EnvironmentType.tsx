@@ -1,10 +1,10 @@
-import useCreateRobot from "../../hooks/useCreateRobot";
 import { Fragment, ReactElement } from "react";
 import Skeleton from "../Skeleton/Skeleton";
 import { useAppSelector } from "../../hooks/redux";
+import useMain from "../../hooks/useMain";
 
 export default function EnvironmentType(): ReactElement {
-  const { robotData } = useCreateRobot();
+  const { robotData } = useMain();
   const { applicationMode } = useAppSelector((state) => state.user);
 
   return (
