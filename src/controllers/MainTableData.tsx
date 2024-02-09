@@ -2,10 +2,10 @@ import TemporaryActionCells from "../components/TableActionCells/TemporaryAction
 import StateCell from "../components/TableInformationCells/StateCell";
 import { IOrganization } from "../interfaces/global/organization.interface";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { orgSplitter } from "../functions/string.splitter.function";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
+import { orgSplitter } from "../functions/general.function";
 
 export function MainTableData() {
   const [orgs, setOrgs] = useState<IOrganization[] | null>();

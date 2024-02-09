@@ -1,6 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import StateCell from "../TableInformationCells/StateCell";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
@@ -8,6 +7,7 @@ import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import { IPhysicalInstance } from "../../interfaces/global/physicalInstance.interface";
+import { orgSplitter } from "../../functions/general.function";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -95,10 +95,7 @@ export default function PhysicalInstancesList({
                     <StateCell state={instance?.phase} />
                   </div>
                 }
-                url={`/${organizationNameViewer({
-                  organizationName: selectedState?.organization?.name!,
-                  capitalization: false,
-                })}/${
+                url={`/${orgSplitter(selectedState?.organization?.name!)}/${
                   selectedState?.roboticsCloud?.name
                 }/${instance?.name}/physical-instances`}
                 data={instance}

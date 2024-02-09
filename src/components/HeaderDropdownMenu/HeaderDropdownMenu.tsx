@@ -1,4 +1,4 @@
-import { handleLogout } from "../../functions/GeneralFunctions";
+import { handleLogout } from "../../functions/general.function";
 import useOnclickOutside from "react-cool-onclickoutside";
 import { Fragment, ReactElement, useState } from "react";
 import { useKeycloak } from "@react-keycloak/web";

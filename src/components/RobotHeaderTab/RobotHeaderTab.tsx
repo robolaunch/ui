@@ -1,4 +1,4 @@
-import { stringSlugify } from "../../functions/GeneralFunctions";
+import { stringSlugify } from "../../functions/general.function";
 import { IrobotTab } from "../../interfaces/robotInterfaces";
 import { ReactElement } from "react";
 import useRobot from "../../hooks/useRobot";

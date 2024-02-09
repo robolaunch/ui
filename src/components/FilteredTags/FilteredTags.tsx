@@ -1,4 +1,4 @@
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import { orgSplitter } from "../../functions/general.function";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 
@@ -16,10 +16,7 @@ export default function FilteredTags(): ReactElement {
             alt="robolaunch"
           />
           <span className="cursor-default text-xs text-secondary-900">
-            {organizationNameViewer({
-              organizationName: selectedState?.organization?.name,
-              capitalization: false,
-            })}
+            {orgSplitter(selectedState?.organization?.name)}
           </span>
         </div>
       )}

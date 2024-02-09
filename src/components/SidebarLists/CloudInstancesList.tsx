@@ -3,11 +3,11 @@ import SidebarInstancesTabs from "../SidebarInstancesTabs/SidebarInstancesTabs";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
-import { orgSplitter } from "../../functions/string.splitter.function";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { orgSplitter } from "../../functions/general.function";
 
 interface ICloudInstancesList {
   reload: boolean;

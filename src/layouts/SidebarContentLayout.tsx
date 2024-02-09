@@ -16,7 +16,7 @@ import OrganizationsList from "../components/SidebarLists/OrganizationsList";
 import AppsList from "../components/SidebarLists/AppsList";
 import NamespacesList from "../components/SidebarLists/NamespacesList";
 import CFOrganization from "../components/CreateForms/CFOrganization";
-import { stringCapitalization } from "../functions/GeneralFunctions";
+import { stringCapitalization } from "../functions/general.function";
 import FilteredTags from "../components/FilteredTags/FilteredTags";
 import RobotsList from "../components/SidebarLists/RobotsList";
 import FleetsList from "../components/SidebarLists/FleetsList";

@@ -1,4 +1,4 @@
-import { stringSlugify } from "../../functions/GeneralFunctions";
+import { stringSlugify } from "../../functions/general.function";
 import InputError from "../InputError/InputError";
 import { MdVerified } from "react-icons/md";
 import InfoTip from "../InfoTip/InfoTip";

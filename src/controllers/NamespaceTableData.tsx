@@ -2,15 +2,14 @@ import EnvironmentActionCells from "../components/TableActionCells/EnvironmentAc
 import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
 import { IEnvironment } from "../interfaces/environment/environment.interface";
-import { handleSplitOrganizationName } from "../functions/GeneralFunctions";
 import StateCell from "../components/TableInformationCells/StateCell";
 import BasicCell from "../components/TableInformationCells/BasicCell";
-import { orgSplitter } from "../functions/string.splitter.function";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { orgSplitter } from "../functions/general.function";
 
 export function NamespaceTableData() {
   const [environments, setEnviroments] = useState<
@@ -103,9 +102,7 @@ export function NamespaceTableData() {
       environments?.map((env) => {
         return {
           name: env?.step1?.details?.name,
-          organization: handleSplitOrganizationName(
-            pagesState?.organization?.name!,
-          ),
+          organization: orgSplitter(pagesState?.organization?.name!),
           region: pagesState?.roboticsCloud?.name!,
           instance: pagesState?.instance?.name!,
           fleet: pagesState?.fleet?.name!,

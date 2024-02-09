@@ -4,7 +4,7 @@ import { BsShieldLockFill } from "react-icons/bs";
 import { MdPublic } from "react-icons/md";
 import { RiOrganizationChart } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { stringSlugify } from "../../functions/GeneralFunctions";
+import { stringSlugify } from "../../functions/general.function";
 
 interface IMarketplaceRobotAssetItem {
   robot: any;
@@ -38,7 +38,7 @@ export default function MarketplaceRobotAssetItem({
               {robot?.type}
             </span>
           </div>
-          <div className="text-secondary-500 -ml-1.5 flex items-center gap-1 rounded-lg px-1.5 text-[0.60rem] font-medium capitalize">
+          <div className="-ml-1.5 flex items-center gap-1 rounded-lg px-1.5 text-[0.60rem] font-medium capitalize text-secondary-500">
             {(() => {
               switch (robot?.access) {
                 case "public":
@@ -73,14 +73,14 @@ export default function MarketplaceRobotAssetItem({
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <ul className="text-light-500 flex flex-col gap-2 text-xs">
+          <ul className="flex flex-col gap-2 text-xs text-light-500">
             <li>Vendor: {robot?.vendor}</li>
             <li>Family: {robot?.family}</li>
             <li>Type: {robot?.type}</li>
             <li>Storage: {robot?.minStorageAmount / 1000} GB</li>
           </ul>
           <img
-            className="border-light-100 w-24 border"
+            className="w-24 border border-light-100"
             src={
               robot
                 ? robot.type === "Environment"

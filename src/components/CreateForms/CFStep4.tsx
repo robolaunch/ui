@@ -1,5 +1,4 @@
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
@@ -16,6 +15,7 @@ import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
 import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
+import { orgSplitter } from "../../functions/general.function";
 
 interface ICFStep4 {
   isImportRobot?: boolean;
@@ -80,10 +80,9 @@ export default function CFStep4({
       );
 
       setTimeout(() => {
-        window.location.href = `/${organizationNameViewer({
-          organizationName: selectedState?.organization?.name!,
-          capitalization: false,
-        })}/${selectedState?.roboticsCloud?.name}/${
+        window.location.href = `/${orgSplitter(
+          selectedState?.organization?.name!,
+        )}/${selectedState?.roboticsCloud?.name}/${
           selectedState?.instance?.name
         }/${selectedState?.fleet?.name}/${robotData?.step1?.details.name}`;
       }, 1000);

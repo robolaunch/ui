@@ -3,13 +3,13 @@ import CardLayout from "./CardLayout";
 import InformationWidget from "../components/InformationWidget/InformationWidget";
 import OrganizationsTable from "../pages/UserRoleManagement/OrganizationsPage";
 import OrganizationUsersPage from "../pages/UserRoleManagement/OrganizationUsersPage";
-import { organizationNameViewer } from "../functions/GeneralFunctions";
 import OrganizationGuestsPage from "../pages/UserRoleManagement/OrganizationGuestsPage";
 import OrganizationAdminsPage from "../pages/UserRoleManagement/OrganizationAdminsPage";
 import Button from "../components/Button/Button";
 import InviteUserToOrganizationModal from "../modals/IntiveUserToOrganizationModal";
 import { useAppDispatch } from "../hooks/redux";
 import { getOrganizations } from "../toolkit/OrganizationSlice";
+import { orgSplitter } from "../functions/general.function";
 
 export default function UserRoleManagementLayout(): ReactElement {
   const [responseOrganizations, setResponseOrganizations] = useState<
@@ -69,14 +69,12 @@ export default function UserRoleManagementLayout(): ReactElement {
               activePage?.page === "organizations"
                 ? "Organizations"
                 : activePage?.page === "organizationUsers"
-                ? `${organizationNameViewer({
-                    organizationName:
+                  ? `${orgSplitter(
                       activePage?.selectedOrganization?.organizationName,
-                  })} Users`
-                : `${organizationNameViewer({
-                    organizationName:
+                    )} Users`
+                  : `${orgSplitter(
                       activePage?.selectedOrganization?.organizationName,
-                  })} Guests`
+                    )} Guests`
             }
             subtitle="From this page, you can view, control or get information about all
             the details of the teams in your organization. If you need to create a new team or check the users in the team you
@@ -88,9 +86,9 @@ export default function UserRoleManagementLayout(): ReactElement {
                   onClick={() =>
                     setVisibleInviteUserModal(!visibleInviteUserModal)
                   }
-                  className="!bg-light-50 border-primary-700 !text-primary-700 hover:!bg-primary-100 !h-10 border transition-all duration-500 hover:scale-95"
+                  className="!h-10 border border-primary-700 !bg-light-50 !text-primary-700 transition-all duration-500 hover:scale-95 hover:!bg-primary-100"
                 />
-                <CardLayout className="border-light-100 border">
+                <CardLayout className="border border-light-100">
                   <div className="flex flex-col gap-4">
                     <ul className="flex flex-col gap-2 text-sm ">
                       {pages?.map((page: any) => {
@@ -101,7 +99,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                         return (
                           <li
                             key={page?.key}
-                            className={`hover:bg-light-200 text-light-900 cursor-pointer rounded p-2.5 transition-all ${
+                            className={`cursor-pointer rounded p-2.5 text-light-900 transition-all hover:bg-light-200 ${
                               page?.key === activePage?.page &&
                               "bg-light-100 font-medium"
                             } ${
@@ -119,7 +117,7 @@ export default function UserRoleManagementLayout(): ReactElement {
                             }
                           >
                             {page?.key !== "organizations" && (
-                              <span className="bg-primary-500 h-2 w-2 rounded-full" />
+                              <span className="h-2 w-2 rounded-full bg-primary-500" />
                             )}
                             {page?.key === "organizations"
                               ? "All Organizations"

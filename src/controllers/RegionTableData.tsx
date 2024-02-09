@@ -5,11 +5,11 @@ import { ICloudInstance } from "../interfaces/global/cloudInstance.interface";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
 import InfoCell from "../components/TableInformationCells/InfoCell";
-import { orgSplitter } from "../functions/string.splitter.function";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { orgSplitter } from "../functions/general.function";
 
 export function RegionTableData() {
   const [instances, setInstances] = useState<ICloudInstance[] | null>(null);

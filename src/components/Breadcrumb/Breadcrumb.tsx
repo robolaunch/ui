@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { stringSlugify } from "../../functions/GeneralFunctions";
+import { stringSlugify } from "../../functions/general.function";
 import { Link, useParams } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import {

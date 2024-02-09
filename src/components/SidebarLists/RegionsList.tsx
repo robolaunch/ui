@@ -1,5 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import SidebarSelectInfo from "../SidebarInfo/SidebarInfo";
 import StateCell from "../TableInformationCells/StateCell";
@@ -8,6 +7,7 @@ import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
 import { IRegion } from "../../interfaces/global/region.interface";
+import { orgSplitter } from "../../functions/general.function";
 
 interface IRegionsList {
   reload: boolean;
@@ -53,10 +53,9 @@ export default function RegionsList({ reload }: IRegionsList): ReactElement {
                       <BasicCell text={`Region: ${roboticsCloud?.region}`} />
                     </div>
                   }
-                  url={`/${organizationNameViewer({
-                    organizationName: selectedState?.organization?.name!,
-                    capitalization: false,
-                  })}/${roboticsCloud?.name}`}
+                  url={`/${orgSplitter(
+                    selectedState?.organization?.name!,
+                  )}/${roboticsCloud?.name}`}
                   data={roboticsCloud}
                   selected={
                     roboticsCloud?.name === selectedState?.roboticsCloud?.name

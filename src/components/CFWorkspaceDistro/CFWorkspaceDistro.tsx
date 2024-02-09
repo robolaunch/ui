@@ -1,7 +1,7 @@
 import { Fragment, ReactElement } from "react";
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import { FormikProps } from "formik/dist/types";
-import { stringCapitalization } from "../../functions/GeneralFunctions";
+import { stringCapitalization } from "../../functions/general.function";
 import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 import useMain from "../../hooks/useMain";
 

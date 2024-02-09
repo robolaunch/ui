@@ -2,7 +2,6 @@ import { getRegionFromProviderCode } from "../functions/instance.function";
 import NSActionCells from "../components/TableActionCells/NSActionCells";
 import BasicCell from "../components/TableInformationCells/BasicCell";
 import StateCell from "../components/TableInformationCells/StateCell";
-import { orgSplitter } from "../functions/string.splitter.function";
 import InfoCell from "../components/TableInformationCells/InfoCell";
 import { INamespace } from "../interfaces/global/namespace.interface";
 import { IFleet } from "../interfaces/global/fleet.interface";
@@ -11,6 +10,7 @@ import useFunctions from "../hooks/useFunctions";
 import { useAppSelector } from "../hooks/redux";
 import { useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
+import { orgSplitter } from "../functions/general.function";
 
 export function InstanceTableData() {
   const [fleets, setFleets] = useState<IFleet[] | INamespace[] | null>();

@@ -1,4 +1,4 @@
-import { stringCapitalization } from "../../functions/GeneralFunctions";
+import { stringCapitalization } from "../../functions/general.function";
 import { Fragment, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";

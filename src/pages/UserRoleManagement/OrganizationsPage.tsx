@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import OrgActionCells from "../../components/TableActionCells/OrgActionCells";
-import { organizationNameViewer } from "../../functions/GeneralFunctions";
 import BasicCell from "../../components/TableInformationCells/BasicCell";
 import InfoCell from "../../components/TableInformationCells/InfoCell";
 import GeneralTable from "../../components/Table/GeneralTable";
+import { orgSplitter } from "../../functions/general.function";
 
 interface IOrganizationsPage {
   responseOrganizations: any;
@@ -37,9 +37,7 @@ export default function OrganizationsPage({
         body: (rowData: any) => {
           return (
             <InfoCell
-              title={organizationNameViewer({
-                organizationName: rowData?.name?.organizationName || "",
-              })}
+              title={orgSplitter(rowData?.name?.organizationName)}
               titleURL={`/user-role-management/${
                 rowData?.name?.organizationName.split("_")[1]
               }`}
