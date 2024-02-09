@@ -2,11 +2,11 @@ import { Fragment, ReactElement, useEffect, useState } from "react";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import InputError from "../InputError/InputError";
-import useMain from "../../hooks/useMain";
 import InfoTip from "../InfoTip/InfoTip";
 import { FormikProps } from "formik";
 import { toast } from "sonner";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { IPhysicalInstance } from "../../interfaces/global/physicalInstance.interface";
 
 interface ICreateRobotTypes {
   formik: FormikProps<IEnvironmentStep1>;
@@ -17,11 +17,11 @@ export default function CreateRobotTypes({
   formik,
   isImportRobot,
 }: ICreateRobotTypes): ReactElement {
-  const [responsePhysicalInstances, setResponsePhysicalInstances] =
-    useState<any>(undefined);
-  const { selectedState } = useMain();
+  const [responsePhysicalInstances, setResponsePhysicalInstances] = useState<
+    IPhysicalInstance[] | null
+  >();
 
-  const { getPhysicalInstances } = useFunctions();
+  const { getPhysicalInstancesFC } = useFunctions();
 
   useEffect(() => {
     if (!responsePhysicalInstances && !formik.values.details.isVirtualRobot) {
@@ -29,32 +29,26 @@ export default function CreateRobotTypes({
     }
 
     responsePhysicalInstances?.filter(
-      (instance: any) =>
-        instance?.federationPhase !== "Connected" ||
-        instance?.multicastPhase !== "Connected" ||
-        instance?.phase !== "Connected",
+      (instance) =>
+        instance?.k8sStatus !== "Connected" ||
+        instance?.connectionStatus !== "Connected" ||
+        instance?.status !== "Connected",
     )?.length &&
       setResponsePhysicalInstances(
         responsePhysicalInstances?.filter(
-          (instance: any) =>
-            instance?.federationPhase === "Connected" &&
-            instance?.multicastPhase === "Connected" &&
-            instance?.phase === "Connected",
+          (instance) =>
+            instance?.k8sStatus === "Connected" &&
+            instance?.connectionStatus === "Connected" &&
+            instance?.status === "Connected",
         ) || [],
       );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [responsePhysicalInstances, formik.values.details.isVirtualRobot]);
 
-  function handleGetPhysicalInstances() {
-    getPhysicalInstances(
-      {
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        instanceId: selectedState?.instance?.id!,
-        region: selectedState?.roboticsCloud?.region!,
-      },
-      { setResponse: setResponsePhysicalInstances },
+  async function handleGetPhysicalInstances() {
+    setResponsePhysicalInstances(
+      (await getPhysicalInstancesFC(false, false)) as IPhysicalInstance[],
     );
   }
 

@@ -7,6 +7,7 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
+import { IPhysicalInstance } from "../../interfaces/global/physicalInstance.interface";
 
 interface IPhysicalInstancesList {
   reload: boolean;
@@ -18,10 +19,10 @@ export default function PhysicalInstancesList({
   setItemCount,
 }: IPhysicalInstancesList): ReactElement {
   const [responsePhysicalInstances, setResponsePhysicalInstances] = useState<
-    any[] | undefined
-  >(undefined);
+    IPhysicalInstance[] | null
+  >();
 
-  const { getPhysicalInstances } = useFunctions();
+  const { getPhysicalInstancesFC } = useFunctions();
   const { sidebarState, selectedState } = useMain();
 
   useEffect(
@@ -31,7 +32,7 @@ export default function PhysicalInstancesList({
         selectedState?.roboticsCloud &&
         selectedState?.instance
       ) {
-        setResponsePhysicalInstances(undefined);
+        setResponsePhysicalInstances(null);
         handleGetPhysicalInstances();
       }
 
@@ -55,12 +56,10 @@ export default function PhysicalInstancesList({
     ],
   );
 
-  function handleGetPhysicalInstances() {
-    getPhysicalInstances({
-      ifErrorNavigateTo404: false,
-      setResponse: setResponsePhysicalInstances,
-      setItemCount: setItemCount,
-    });
+  async function handleGetPhysicalInstances() {
+    setResponsePhysicalInstances(
+      (await getPhysicalInstancesFC(false, false)) as IPhysicalInstance[],
+    );
   }
 
   return (

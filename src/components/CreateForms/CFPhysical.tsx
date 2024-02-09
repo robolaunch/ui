@@ -1,6 +1,4 @@
-import { addPhysicalInstance } from "../../toolkit/InstanceSlice";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useAppDispatch } from "../../hooks/redux";
 import { useKeycloak } from "@react-keycloak/web";
 import { ReactElement, useState } from "react";
 import { Editor } from "@monaco-editor/react";
@@ -11,32 +9,25 @@ import { toast } from "sonner";
 import CFSection from "../CFSection/CFSection";
 import FormInputText from "../FormInputText/FormInputText";
 import CFForm from "../CFForm/CFForm";
+import useFunctions from "../../hooks/useFunctions";
 
 export default function CFPhysical(): ReactElement {
   const [code, setCode] = useState<string>("");
-  const { sidebarState, setSidebarState, selectedState } = useMain();
-  const dispatch = useAppDispatch();
+  const { sidebarState, setSidebarState } = useMain();
   const { keycloak } = useKeycloak();
+
+  const { addPhysicalInstanceToCloudInstanceFC } = useFunctions();
 
   const formik = useFormik({
     initialValues: {
       name: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async () => {
       formik.setSubmitting(true);
       await keycloak.updateToken(-1);
-      await dispatch(
-        addPhysicalInstance({
-          organizationId: selectedState?.organization?.id,
-          roboticsCloudName: selectedState?.roboticsCloud?.name,
-          instanceId: selectedState?.instance?.id,
-          region: selectedState?.roboticsCloud?.region,
-          robolaunchPhysicalInstancesName: values.name,
-        }),
-      ).then((response: any) => {
-        setCode(response?.payload);
-        formik.setSubmitting(false);
-      });
+
+      setCode(await addPhysicalInstanceToCloudInstanceFC(formik.values.name));
+      formik.setSubmitting(false);
     },
   });
 

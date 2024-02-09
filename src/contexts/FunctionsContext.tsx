@@ -1,6 +1,5 @@
 import {
   IgetPhysicalFleet,
-  IgetPhysicalInstance,
   ImultipleGetLaunchParameters,
   ImultipleGetParameters,
   IsingleGetBuildParameters,
@@ -53,6 +52,7 @@ import {
   stopInstance as stopInstanceDispatch,
   terminateInstance as deleteInstanceDispatch,
   createCloudInstance as createCloudInstanceDispatch,
+  addPhysicalInstance as addPhysicalInstanceDispatch,
 } from "../toolkit/InstanceSlice";
 import {
   getOrganizations as getOrganizationsDispatch,
@@ -99,6 +99,11 @@ import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.i
 import { IOrganization } from "../interfaces/global/organization.interface";
 import { IEnvironmentStep4 } from "../interfaces/environment/environment.step4.interface";
 import { environmentGPUCoreUsagebility } from "../functions/environment.function";
+import {
+  physicalInstanceMapper,
+  physicalInstancesMapper,
+} from "../handler/physicalInstance.handler";
+import { IPhysicalInstance } from "../interfaces/global/physicalInstance.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -116,66 +121,49 @@ export default ({ children }: any) => {
   } = useMain();
   const navigate = useNavigate();
 
-  async function getPhysicalInstances(parameters?: ImultipleGetParameters) {
-    await dispatch(
-      getAllPhysicalInstances({
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        instanceId: selectedState?.instance?.id!,
-      }),
-    ).then((responsePhysicalInstances: any) => {
-      if (
-        responsePhysicalInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchPhysicalInstances || [],
-          );
+  async function getPhysicalInstancesFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ): Promise<IPhysicalInstance | IPhysicalInstance[] | null> {
+    return new Promise<IPhysicalInstance | IPhysicalInstance[] | null>(
+      (resolve, reject) => {
+        dispatch(
+          getAllPhysicalInstances({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            region: selectedState?.roboticsCloud?.region!,
+            instanceId: selectedState?.instance?.id!,
+          }),
+        )
+          .then((resPhyInstances: any) => {
+            const phyInstances = physicalInstancesMapper(
+              resPhyInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+                ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+            );
 
-        parameters?.setItemCount &&
-          parameters?.setItemCount(
-            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]
-              ?.cloudInstances[0]?.robolaunchPhysicalInstances?.length || 0,
-          );
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse([]);
-        parameters?.setItemCount && parameters?.setItemCount(0);
-      }
-    });
-  }
+            const physicalInstance =
+              (filter &&
+                physicalInstanceMapper(
+                  resPhyInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
+                    ?.cloudInstances?.[0]?.robolaunchPhysicalInstances,
+                  filter,
+                )) ||
+              null;
 
-  async function getPhysicalInstance(
-    values: IgetPhysicalInstance,
-    parameters?: ImultipleGetParameters,
-  ) {
-    await dispatch(
-      getAllPhysicalInstances({
-        organizationId: selectedState?.organization?.id!,
-        roboticsCloudName: selectedState?.roboticsCloud?.name!,
-        region: selectedState?.roboticsCloud?.region!,
-        instanceId: selectedState?.instance?.id!,
-      }),
-    ).then((responsePhysicalInstances: any) => {
-      if (
-        responsePhysicalInstances?.payload?.data?.[0]?.roboticsClouds?.[0]
-          ?.cloudInstances?.[0]?.robolaunchPhysicalInstances
-      ) {
-        parameters?.setResponse &&
-          parameters?.setResponse(
-            responsePhysicalInstances?.payload?.data[0]?.roboticsClouds[0]?.cloudInstances[0]?.robolaunchPhysicalInstances?.find(
-              (physicalInstance: any) =>
-                physicalInstance?.name === values?.physicalInstanceName,
-            ) || {},
-          );
-      } else {
-        parameters?.ifErrorNavigateTo404 && navigateTo404();
-        parameters?.setResponse && parameters?.setResponse({});
-      }
-    });
+            filter &&
+              !physicalInstance &&
+              handleThrowError(fromPage, ErrorNav404);
+
+            !fromPage && setItemCount(phyInstances.length);
+            resolve(filter ? physicalInstance : phyInstances);
+          })
+          .catch((error: any) => {
+            handleThrowError(fromPage, ErrorNav404);
+            reject(error);
+          });
+      },
+    );
   }
 
   async function startInstanceFC(instanceId: string): Promise<void> {
@@ -585,7 +573,7 @@ export default ({ children }: any) => {
     });
   }
 
-  function getSystemStatus(): Promise<ISystemStatus> {
+  function getSystemStatusFC(): Promise<ISystemStatus> {
     return new Promise(async (resolve, reject) => {
       try {
         const resStatus: any = await dispatch(
@@ -1439,6 +1427,27 @@ export default ({ children }: any) => {
     });
   }
 
+  async function addPhysicalInstanceToCloudInstanceFC(
+    phyName: string,
+  ): Promise<string> {
+    return new Promise<string>(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(
+          addPhysicalInstanceDispatch({
+            organizationId: selectedState?.organization?.id!,
+            roboticsCloudName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            region: selectedState?.roboticsCloud?.region!,
+            robolaunchPhysicalInstancesName: phyName,
+          }),
+        );
+        resolve(response.payload);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1454,6 +1463,9 @@ export default ({ children }: any) => {
         startInstanceFC,
         stopInstanceFC,
         deleteInstanceFC,
+        //// Physical Instances ////
+        addPhysicalInstanceToCloudInstanceFC,
+        getPhysicalInstancesFC,
         //// Fleets ////
         createFleetFC,
         getFleetsFC,
@@ -1472,12 +1484,11 @@ export default ({ children }: any) => {
         getRobotsFC,
         getRobotFC,
         deleteRobotFC,
+        //// Tools ////
+        getSystemStatusFC,
         ////
 
         addPhysicalInstanceToFleet,
-
-        getPhysicalInstances,
-        getPhysicalInstance,
 
         getPhysicalFleet,
 
@@ -1489,8 +1500,6 @@ export default ({ children }: any) => {
         getBuildManager,
 
         getLaunchManagers,
-
-        getSystemStatus,
 
         createDataScienceApp,
         getDataScienceApps,

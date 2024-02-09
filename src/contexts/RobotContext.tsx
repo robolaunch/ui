@@ -18,7 +18,7 @@ export default ({ children }: any) => {
     getNamespacesFC,
     getApplicationFC,
     getRobotFC,
-    getPhysicalInstance,
+    getPhysicalInstancesFC,
     getBuildManager,
     getLaunchManagers,
   } = useFunctions();
@@ -378,19 +378,13 @@ export default ({ children }: any) => {
     getCloudInstancesFC(true, true, url?.instanceName as string);
   }
 
-  function handleGetPhysicalInstance() {
-    getPhysicalInstance(
-      {
-        organizationId: pagesState?.organization?.id!,
-        roboticsCloudName: pagesState?.roboticsCloud?.name!,
-        instanceId: pagesState?.instance?.id!,
-        physicalInstanceName: responseRobot?.physicalInstance,
-        region: pagesState?.roboticsCloud?.region!,
-      },
-      {
-        ifErrorNavigateTo404: false,
-        setResponse: setResponsePhysicalInstance,
-      },
+  async function handleGetPhysicalInstance() {
+    setResponsePhysicalInstance(
+      await getPhysicalInstancesFC(
+        false,
+        false,
+        responseRobot?.physicalInstance,
+      ),
     );
   }
 

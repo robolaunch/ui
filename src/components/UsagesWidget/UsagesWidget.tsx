@@ -15,7 +15,7 @@ import WidgetSystemCell from "../WidgetSystemCell/WidgetSystemCell";
 export default function UsagesWidget(): ReactElement {
   const { pagesState } = useMain();
 
-  const { getSystemStatus } = useFunctions();
+  const { getSystemStatusFC } = useFunctions();
 
   const [systemStatus, setSystemStatus] = useState<ISystemStatus>();
 
@@ -30,7 +30,7 @@ export default function UsagesWidget(): ReactElement {
   function handleGetSystemStatus(): Promise<void> {
     return new Promise(async (resolve, reject) => {
       try {
-        const systemStatus = await getSystemStatus();
+        const systemStatus = await getSystemStatusFC();
         setSystemStatus(systemStatus);
         resolve();
       } catch (error) {

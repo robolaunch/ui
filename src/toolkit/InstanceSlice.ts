@@ -130,9 +130,15 @@ export const terminateInstance = createAsyncThunk(
 
 export const addPhysicalInstance = createAsyncThunk(
   "instance/addPhysicalInstance",
-  async (values: any) => {
+  async (values: {
+    organizationId: string;
+    roboticsCloudName: string;
+    instanceId: string;
+    region: string;
+    robolaunchPhysicalInstancesName: string;
+  }) => {
     const response = await kubernetesApi.addPhysicalInstance({
-      name: values?.name,
+      name: "instance/addPhysicalInstance",
       organizationId: values?.organizationId,
       roboticsClouds: [
         {

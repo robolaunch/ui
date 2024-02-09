@@ -10,6 +10,7 @@ import { INamespace } from "../global/namespace.interface";
 import { IOrganization } from "../global/organization.interface";
 import { IRegion } from "../global/region.interface";
 import { ISystemStatus } from "../global/system.interface";
+import { IPhysicalInstance } from "../global/physicalInstance.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -89,6 +90,13 @@ export interface IuseFunctions {
   startInstanceFC: (organizationId: string) => Promise<void>;
   stopInstanceFC: (organizationId: string) => Promise<void>;
   deleteInstanceFC: (organizationId: string) => Promise<void>;
+  //// Physical Instances ////
+  addPhysicalInstanceToCloudInstanceFC: (phyName: string) => Promise<string>;
+  getPhysicalInstancesFC: (
+    fromPage: boolean,
+    ErrorNav404: boolean,
+    filter?: string,
+  ) => Promise<IPhysicalInstance | IPhysicalInstance[] | null>;
   //// Fleets ////
   createFleetFC: (fleetName: string) => Promise<void>;
   getFleetsFC: (
@@ -143,13 +151,13 @@ export interface IuseFunctions {
     step2: IEnvironmentStep2;
   }>;
   deleteRobotFC: (robotName: string) => Promise<void>;
+  //// Tools ////
+  getSystemStatusFC: () => Promise<ISystemStatus>;
   ////
 
-  getPhysicalInstances: (parameters?: ImultipleGetParameters) => void;
-  getPhysicalInstance: (
-    values: IgetPhysicalInstance,
-    parameters?: IsingleGetParameters,
-  ) => void;
+  ////
+  ////
+  ////
 
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
@@ -167,7 +175,6 @@ export interface IuseFunctions {
   deleteAppBuildManager: () => Promise<void>;
 
   addPhysicalInstanceToFleet: () => Promise<void>;
-  getSystemStatus: () => Promise<ISystemStatus>;
   createBuildManager: () => Promise<void>;
   getIP: () => void;
 
