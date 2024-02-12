@@ -100,18 +100,18 @@ export default function CFAppStep1({
         )}
       </Fragment>
 
-      <Fragment>
-        <CFSection>
-          <CFSharing formik={formik} />
-          <Seperator />
-        </CFSection>
-      </Fragment>
+      <CFSection>
+        <CFSharing formik={formik} />
+        <Seperator />
+      </CFSection>
 
-      <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
+      <CFSection>
+        <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
+      </CFSection>
 
-      <Fragment>
+      <CFSection>
         <CFStep1AppButtons isImportRobot={isImportRobot} />
-      </Fragment>
+      </CFSection>
     </CFLoader>
   );
 }

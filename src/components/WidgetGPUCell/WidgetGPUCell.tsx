@@ -22,7 +22,7 @@ export default function WidgetGPUCell(): ReactElement {
             {pagesState?.instance?.resources?.hardware?.gpu?.hardware?.map(
               (gpu, index: number) => {
                 return (
-                  <option value={index}>
+                  <option key={index} value={index}>
                     GPU {index + 1} {gpu?.model}
                   </option>
                 );

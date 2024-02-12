@@ -8,6 +8,7 @@ import { INamespace } from "../global/namespace.interface";
 import { ISystemStatus } from "../global/system.interface";
 import { IRegion } from "../global/region.interface";
 import { IFleet } from "../global/fleet.interface";
+import { ITemplate } from "../global/template.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -162,12 +163,12 @@ export interface IuseFunctions {
   deleteRobotFC: (robotName: string) => Promise<void>;
   //// Tools ////
   getSystemStatusFC: () => Promise<ISystemStatus>;
+  getTemplatesFC: () => Promise<ITemplate[]>;
   getFreePortFC: () => Promise<number | undefined>;
   ////
   ////
   ////
   ////
-
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters,
@@ -186,6 +187,4 @@ export interface IuseFunctions {
     instanceIP: string;
     paths?: string[];
   }) => Promise<any>;
-
-  getTemplates: () => Promise<any>;
 }

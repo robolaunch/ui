@@ -101,6 +101,7 @@ import {
 import { IPhysicalInstance } from "../interfaces/global/physicalInstance.interface";
 import { dataScienceAppsMapper } from "../handler/dataScience.handler";
 import { IDataScienceApp } from "../interfaces/global/dataSciende.interface";
+import { ITemplate } from "../interfaces/global/template.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -862,8 +863,8 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getTemplates(): Promise<any> {
-    return new Promise<any>(async (resolve, reject) => {
+  async function getTemplatesFC(): Promise<ITemplate[]> {
+    return new Promise<ITemplate[]>(async (resolve, reject) => {
       try {
         const response: any = await dispatch(
           getTemplatesDispatch({
@@ -1511,6 +1512,7 @@ export default ({ children }: any) => {
         deleteRobotFC,
         //// Tools ////
         getSystemStatusFC,
+        getTemplatesFC,
         getFreePortFC,
         ////
         ////
@@ -1530,7 +1532,6 @@ export default ({ children }: any) => {
 
         getIP,
         getFilesFromFileManager,
-        getTemplates,
       }}
     >
       {children}

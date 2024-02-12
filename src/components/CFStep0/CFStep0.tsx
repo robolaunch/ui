@@ -18,7 +18,7 @@ export default function CFStep0(): ReactElement {
     category: "private",
     template: undefined,
   });
-  const { getTemplates } = useFunctions();
+  const { getTemplatesFC } = useFunctions();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function CFStep0(): ReactElement {
   const { handleCreateRobotNextStep } = useMain();
 
   async function handleGetTemplates() {
-    setTemplates(await getTemplates());
+    setTemplates(await getTemplatesFC());
   }
 
   const box = (template: ITemplate) => {
