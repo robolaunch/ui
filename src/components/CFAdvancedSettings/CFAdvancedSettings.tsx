@@ -65,7 +65,7 @@ export default function CFAdvancedSettings({
         <CFSection>
           <CFPortSetter formik={formik} type="vdi" />
         </CFSection>
-
+        {/* 
         <CFSection>
           <CFInfoBar
             label={`Build Managers:`}
@@ -76,7 +76,7 @@ export default function CFAdvancedSettings({
               <CFStep3 disabledLoading={true} />
             </div>
           </CFInfoBar>
-        </CFSection>
+        </CFSection> */}
       </div>
     </Accordion>
   );
