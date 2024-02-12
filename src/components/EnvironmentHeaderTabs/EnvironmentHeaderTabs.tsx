@@ -20,6 +20,14 @@ export default function EnvironmentHeaderTabs(): ReactElement {
     console.log("connectionsReducer", connectionsReducer);
   }, [connectionsReducer]);
 
+  useEffect(() => {
+    console.log("isSettedCookie", isSettedCookie);
+  }, [isSettedCookie]);
+
+  useEffect(() => {
+    console.log("isRobotReady", isRobotReady);
+  }, [isRobotReady]);
+
   const tabs: IrobotTab[] = [
     {
       name: "Overview",
