@@ -27,9 +27,11 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
       )}
       <SideBarMenuItem
         type="robot"
-        description={`You can access all your ${
-          applicationMode ? "applications" : "robots"
-        } here.`}
+        description={
+          url?.robotName
+            ? `You can update your ${applicationMode ? "application" : "robot"} from here.`
+            : `You can access all your ${applicationMode ? "applications" : "robots"} here.`
+        }
         loading={isLoading}
         disabled={
           sidebarState?.isCreateMode &&

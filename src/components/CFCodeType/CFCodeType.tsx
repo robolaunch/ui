@@ -47,6 +47,7 @@ export default function CFCodeType({
           });
         }}
         disabled={formik?.isSubmitting}
+        className="!text-xs"
       >
         <Fragment>
           <option value="isCommandCode">Bash Code</option>

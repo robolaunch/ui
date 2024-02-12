@@ -38,10 +38,6 @@ export default function CFDirectoriesInputGroup({
     setIsFileManagerHealthly(response?.length > 0);
   }
 
-  useEffect(() => {
-    console.log("!!!!!!!!!", formik.values.directories?.hostDirectories?.[0]);
-  }, [formik]);
-
   return (
     <div className="flex w-full  gap-4 rounded-md border border-light-100 p-4 shadow-sm">
       {isFileManagerHealthly ? (

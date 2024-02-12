@@ -60,7 +60,9 @@ export default function SidebarStaticItem({
                 ? "You can access all your bills here"
                 : to === "/user-role-management"
                   ? "You can access all users here."
-                  : "You can access all your applications here."
+                  : to === "/data-science"
+                    ? "You can access all your data science apps here."
+                    : ""
           }
         />
       )}

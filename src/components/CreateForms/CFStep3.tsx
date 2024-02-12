@@ -1,14 +1,14 @@
 import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import { handleAddBuild } from "../../functions/form.build.function";
 import CFAddBuildButton from "../CFAddBuildButton/CFAddBuildButton";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFBuildMapper from "../CFBuildMapper/CFBuildMapper";
 import { Fragment, ReactElement, useEffect } from "react";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import SidebarInfo from "../SidebarInfo/SidebarInfo";
-import CFBuildName from "../CFBuildName/CFBuildName";
+// import CFBuildName from "../CFBuildName/CFBuildName";
 import useFunctions from "../../hooks/useFunctions";
 import useMain from "../../hooks/useMain";
-import { handleAddBuild } from "../../functions/form.build.function";
 import useForm from "../../hooks/useForm";
 
 interface ICFStep3 {
@@ -212,7 +212,7 @@ export default function CFStep3({
           </div>
         ) : (
           <Fragment>
-            <CFBuildName formik={formik} />
+            {/* <CFBuildName formik={formik} /> */}
 
             <CFBuildMapper formik={formik} isImportRobot={isImportRobot} />
 

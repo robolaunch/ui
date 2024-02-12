@@ -1,6 +1,8 @@
 import RobotDeleteLaunchManagerButton from "../RobotDeleteLaunchManagerButton/RobotDeleteLaunchManagerButton";
+import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
 import CFLaunchWorkspace from "../CFLaunchWorkspace/CFLaunchWorkspace";
 import { Fragment, ReactElement, useEffect, useState } from "react";
+import { orgSplitter } from "../../functions/general.function";
 import { createLaunchManager } from "../../toolkit/RobotSlice";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CFLaunchScope from "../CFLaunchScope/CFLaunchScope";
@@ -14,8 +16,6 @@ import useMain from "../../hooks/useMain";
 import { useFormik } from "formik";
 import { toast } from "sonner";
 import * as Yup from "yup";
-import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
-import { orgSplitter } from "../../functions/general.function";
 
 interface ICFStep4 {
   isImportRobot?: boolean;

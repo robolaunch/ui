@@ -27,7 +27,7 @@ export default function CFGpuCore({
           ({ name }) => name === formik.values.services?.ide?.gpuModelName!,
         )?.available! -
           environmentGPUCoreUsagebility(
-            selectedState.instance!.resources.hardware.gpu.hardware!,
+            selectedState.instance!.resources.hardware.gpu.hardware || [],
           ) || 0
       }
       disabled={formik.isSubmitting || disabled}

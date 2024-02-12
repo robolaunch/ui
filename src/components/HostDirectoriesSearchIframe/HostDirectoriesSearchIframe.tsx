@@ -8,6 +8,15 @@ export default function HostDirectoriesSearchIframe(): ReactElement {
 
   const { selectedState } = useMain();
 
+  function handleGenerateURL() {
+    if (window.location.hostname.split(".").length - 1) {
+      const url = window.location.hostname.split(".").slice(1).join(".");
+
+      return url;
+    }
+    return window.location.hostname;
+  }
+
   return (
     <Fragment>
       <div className="cursor-pointer" onClick={() => setIsOpened(true)}>
@@ -15,8 +24,13 @@ export default function HostDirectoriesSearchIframe(): ReactElement {
       </div>
       {isOpened && (
         <IframeModal
+          header="Host Directories Search"
           handleCloseModal={() => setIsOpened(false)}
-          url={`https://${selectedState?.instance?.endpoint!}/host`}
+          url={
+            selectedState?.instance?.endpoint
+              ? `https://${selectedState?.instance?.endpoint!}/host`
+              : `https://${selectedState?.instance?.name}.${handleGenerateURL()}/host`
+          }
         />
       )}
     </Fragment>

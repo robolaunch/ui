@@ -138,9 +138,9 @@ export default ({ children }: any) => {
         }),
         sharing: Yup.object().shape({
           alias: Yup.string().when("private", {
-            is: false,
-            then: Yup.string(),
-            // otherwise: Yup.string().required("Name is required."),
+            is: true,
+            then: Yup.string().required("Name is required."),
+            otherwise: Yup.string(),
           }),
           private: Yup.boolean(),
           organization: Yup.boolean(),
@@ -235,7 +235,7 @@ export default ({ children }: any) => {
                 );
                 return temp.length > 1 ? false : true;
               }),
-            workspace: Yup.string().required("Workspace is required"),
+            // workspace: Yup.string().required("Workspace is required"),
             isCommandCode: Yup.boolean(),
             command: Yup.string().when("isCommandCode", {
               is: true,

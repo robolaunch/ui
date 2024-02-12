@@ -497,7 +497,7 @@ export default ({ children }: any) => {
             region: selectedState?.roboticsCloud?.region!,
             fleetName: selectedState?.fleet?.name!,
             environmentName: robotData?.step1?.details?.name,
-            buildManagerName: robotData?.step3?.name,
+            buildManagerName: `build-manager-${Math.floor(Date.now() / 1000)}`,
             steps: robotData?.step3?.steps,
           }),
         );
@@ -670,7 +670,7 @@ export default ({ children }: any) => {
               robotData?.step1?.resources.storage.allocatedCapacity,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
             vdiGpuResource: environmentGPUCoreUsagebility(
-              selectedState?.instance?.resources?.hardware?.gpu?.hardware!,
+              selectedState?.instance?.resources?.hardware?.gpu?.hardware || [],
             ),
             domainName: robotData?.step1?.applicationConfig.domainName,
             ideGpuResource: robotData?.step1?.services.ide.gpuAllocation,
