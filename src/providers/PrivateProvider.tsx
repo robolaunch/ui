@@ -4,11 +4,22 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import FunctionsContext from "../contexts/FunctionsContext";
 import GithubContext from "../contexts/GithubContext";
 import MainContext from "../contexts/MainContext";
-import keycloak from "../api/keycloak";
 import { jwtDecode } from "jwt-decode";
 import { ReactElement } from "react";
+import Keycloak from "keycloak-js";
+import {
+  envKeycloakAuthURL,
+  envKeycloakClientID,
+  envKeycloakRealm,
+} from "../helpers/envProvider";
 
 export default function PrivateProvider(): ReactElement {
+  const keycloak = new Keycloak({
+    url: envKeycloakAuthURL,
+    realm: envKeycloakRealm,
+    clientId: envKeycloakClientID,
+  });
+
   return (
     <ReactKeycloakProvider
       LoadingComponent={<KeycloakLoadingPage />}
@@ -26,7 +37,7 @@ export default function PrivateProvider(): ReactElement {
       initOptions={{
         useNonce: true,
         onLoad: "login-required",
-        checkLoginIframe: false,
+        checkLoginIframe: true,
         prompt: "none",
       }}
     >

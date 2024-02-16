@@ -51,7 +51,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
       step1: formik.values,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values]);
+  }, [formik?.values]);
 
   useEffect(() => {
     if (formik.values.details.isVirtualRobot) {
@@ -59,7 +59,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formik.values.details.isVirtualRobot]);
+  }, [formik?.values.details.isVirtualRobot]);
 
   return (
     <Fragment>

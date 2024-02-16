@@ -37,11 +37,11 @@ export default ({ children }: any) => {
 
   const url = useParams();
 
-  const step1Fromik = useFormik<IEnvironmentStep1>({
+  const step1Formik = useFormik<IEnvironmentStep1>({
     validationSchema: CFRobotStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
-      step1Fromik.setSubmitting(true);
+      step1Formik.setSubmitting(true);
 
       if (url?.robotName) {
         await updateRobotFC();
@@ -56,11 +56,11 @@ export default ({ children }: any) => {
             selectedState?.instance?.name
           }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}}`;
         }, 2000);
-      } else if (!step1Fromik.values?.details?.isVirtualRobot) {
+      } else if (!step1Formik.values?.details?.isVirtualRobot) {
         addPhysicalInstanceToFleetFC();
       }
 
-      step1Fromik.setSubmitting(false);
+      step1Formik.setSubmitting(false);
       handleCreateRobotNextStep();
     },
   });
@@ -274,7 +274,7 @@ export default ({ children }: any) => {
   return (
     <FormContext.Provider
       value={{
-        step1Fromik,
+        step1Formik,
         step1AppFormik,
         step2Formik,
         step3Formik,

@@ -19,7 +19,9 @@ export default function CFDevMode({
       dataTut="create-robot-step1-development-mode"
       disabled={formik.isSubmitting || isImportRobot}
       checked={formik?.values?.details.isDevelopmentMode}
-      onChange={(e: any) => formik.setFieldValue("isDevelopmentMode", e)}
+      onChange={(e: any) =>
+        formik.setFieldValue("details.isDevelopmentMode", e)
+      }
     />
   );
 }
