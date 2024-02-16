@@ -83,7 +83,7 @@ export default function PhysicalInstancesList({
         <SidebarInfo text={`Add a Physical Instances.`} />
       ) : (
         <Fragment>
-          {responsePhysicalInstances?.map((instance: any, index: number) => {
+          {responsePhysicalInstances?.map((instance, index: number) => {
             return (
               <SidebarListItem
                 key={index}
@@ -92,7 +92,7 @@ export default function PhysicalInstancesList({
                 description={
                   <div className="flex gap-4">
                     <span>({selectedState?.instance?.name})</span>
-                    <StateCell state={instance?.phase} />
+                    <StateCell state={instance?.status} />
                   </div>
                 }
                 url={`/${orgSplitter(selectedState?.organization?.name!)}/${
