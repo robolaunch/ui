@@ -17,14 +17,10 @@ export const CFRobotStep1Validations = Yup.object().shape({
         /^[a-z0-9]+(-[a-z0-9]+)*$/,
         "Must be lowercase with hyphen (-) only in the middle.",
       ),
-  }),
-
-  tree: Yup.object().when("details.isVirtualRobot", {
-    is: false,
-    then: Yup.object().shape({
-      physicalInstance: Yup.object().shape({
-        name: Yup.string().required("Physical Instance is required"),
-      }),
+    physicalInstanceName: Yup.string().when("isVirtualRobot", {
+      is: false,
+      then: Yup.string().required("Physical Instance is required"),
+      otherwise: Yup.string().notRequired(),
     }),
   }),
 

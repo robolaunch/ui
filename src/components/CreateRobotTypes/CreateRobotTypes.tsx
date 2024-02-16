@@ -52,6 +52,13 @@ export default function CreateRobotTypes({
     );
   }
 
+  useEffect(() => {
+    if (formik.values.details.isVirtualRobot) {
+      formik.setFieldValue("details.physicalInstanceName", "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.details.isVirtualRobot]);
+
   return (
     <Fragment>
       <div
@@ -74,11 +81,12 @@ export default function CreateRobotTypes({
               isVirtualRobot: false,
               disabled: isImportRobot,
             },
-          ]?.map((robotType: any, index: number) => (
+          ]?.map((robotType, index: number) => (
             <div
               title={
-                robotType?.disabled &&
-                "You can't change robot type because this robot is created before."
+                robotType?.disabled
+                  ? "You can't change robot type because this robot is created before."
+                  : ""
               }
               key={index}
               className={`relative flex w-full items-center justify-center gap-1 rounded border-2 p-3 transition-all duration-300 ${
@@ -120,37 +128,35 @@ export default function CreateRobotTypes({
               <InfoTip content="Select the physical instance you want to hybrid robot to be deployed on." />
             </div>
             <div className="flex gap-6">
-              {responsePhysicalInstances?.map(
-                (instance: any, index: number) => (
-                  <div
-                    key={index}
-                    className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
-                      formik.values.details.physicalInstanceName ===
-                      instance?.name
-                        ? "border-primary-400 shadow"
-                        : "border-light-100"
-                    } transition-all duration-300
+              {responsePhysicalInstances?.map((instance, index: number) => (
+                <div
+                  key={index}
+                  className={`relative flex w-40 cursor-pointer items-center justify-center gap-1 rounded border-2 p-4  ${
+                    formik.values.details.physicalInstanceName ===
+                    instance?.name
+                      ? "border-primary-400 shadow"
+                      : "border-light-100"
+                  } transition-all duration-300
                `}
-                    onClick={() => {
-                      isImportRobot
-                        ? toast.error(
-                            "You can't change physical instance in update mode",
-                          )
-                        : formik.setFieldValue(
-                            "tree.physicalInstance.name",
-                            instance?.name,
-                          );
-                    }}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="text-xs text-light-800">
-                        {instance?.name}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 flex items-start justify-end p-2"></div>
+                  onClick={() => {
+                    isImportRobot
+                      ? toast.error(
+                          "You can't change physical instance in update mode",
+                        )
+                      : formik.setFieldValue(
+                          "details.physicalInstanceName",
+                          instance?.name,
+                        );
+                  }}
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="text-xs text-light-800">
+                      {instance?.name}
+                    </span>
                   </div>
-                ),
-              )}
+                  <div className="absolute inset-0 flex items-start justify-end p-2"></div>
+                </div>
+              ))}
             </div>
             <InputError
               error={formik.errors.details?.physicalInstanceName}
