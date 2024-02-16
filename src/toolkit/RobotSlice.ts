@@ -68,11 +68,11 @@ export const createRobot = createAsyncThunk(
                   gpuEnabledForCloudInstance:
                     values?.gpuEnabledForCloudInstance,
                   marketPlaceEnabled: values?.marketPlaceEnabled,
-                  trialImage: {
-                    imageUser: values?.imageUser,
-                    imageRepository: values?.imageRepository,
-                    imageTag: values?.imageTag,
-                  },
+                  // trialImage: {
+                  //   imageUser: values?.imageUser,
+                  //   imageRepository: values?.imageRepository,
+                  //   imageTag: values?.imageTag,
+                  // },
                   robotWorkspaces: values?.workspaces,
 
                   permittedDirectories: values?.permittedDirectories,
@@ -80,12 +80,12 @@ export const createRobot = createAsyncThunk(
                   hostDirectories: values?.hostDirectories,
                   ideCustomPorts: values?.ideCustomPorts,
                   vdiCustomPorts: values?.vdiCustomPorts,
-                  templateContent: values?.applicationObject,
-                  templateName: values?.templateAlias,
-                  templatePrivate: values?.templatePrivateSharing,
-                  templateOrganizationLevelAvailable:
-                    values?.templateOrganizationSharing,
-                  templatePublicLevelAvailable: values?.templatePublicSharing,
+                  // templateContent: values?.applicationObject,
+                  // templateName: values?.templateAlias,
+                  // templatePrivate: values?.templatePrivateSharing,
+                  // templateOrganizationLevelAvailable:
+                  //   values?.templateOrganizationSharing,
+                  // templatePublicLevelAvailable: values?.templatePublicSharing,
                 },
               ],
             },
