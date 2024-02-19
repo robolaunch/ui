@@ -1,5 +1,5 @@
 import useRobot from "../../hooks/useRobot";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 
 export default function HiddenFrame(): ReactElement {
   const {
@@ -8,7 +8,13 @@ export default function HiddenFrame(): ReactElement {
     setIsSettedCookie,
     isSettedCookie,
     iFrameId,
+    setIFrameId,
   } = useRobot();
+
+  useEffect(() => {
+    isRobotReady && !isSettedCookie && setIFrameId(iFrameId + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRobotReady]);
 
   return (
     <iframe

@@ -57,6 +57,22 @@ export default ({ children }: any) => {
 
   const { urls } = useAppSelector((state) => state.robot);
 
+  useEffect(() => {
+    console.log("isRobotReady", isRobotReady);
+  }, [isRobotReady]);
+
+  useEffect(() => {
+    console.log("isSettedCookie", isSettedCookie);
+  }, [isSettedCookie]);
+
+  useEffect(() => {
+    console.log("iFrameId", iFrameId);
+  }, [iFrameId]);
+
+  useEffect(() => {
+    console.log("connectionsReducer", connectionsReducer);
+  }, [connectionsReducer]);
+
   function handleReducer(state: any, action: any) {
     switch (action.type) {
       case "ros":
@@ -163,45 +179,38 @@ export default ({ children }: any) => {
 
   // isRobotReady
   useEffect(() => {
-    const isEnvironmentReady =
-      robotData.step1.clusters.environment?.filter(
-        (robot: any) => robot?.status !== "EnvironmentReady",
-      )?.length === 0
-        ? true
-        : false;
+    const isEnvironmentReady = !robotData.step1.clusters.environment?.some(
+      (robot) => robot?.status !== "EnvironmentReady",
+    );
 
-    const isBuildManagerReady =
-      responseBuildManager?.robotClusters?.filter(
-        (robot: any) => robot?.buildManagerStatus !== "Ready",
-      )?.length === 0
-        ? true
-        : false;
+    console.log(
+      "IN isEnvironmentReady",
+      robotData.step1.clusters.environment,
+      isEnvironmentReady,
+    );
 
-    const isLaunchManagerReady =
-      responseLaunchManagers
-        ?.map((launchStep: any) => {
-          return launchStep?.robotClusters;
-        })
-        .flat()
-        ?.map((cluster: any) => {
-          return cluster?.launchManagerStatus;
-        })
-        ?.filter((status: any) => status !== "Running")?.length === 0
-        ? true
-        : false;
+    const isBuildManagerReady = !responseBuildManager?.robotClusters?.some(
+      (robot: any) => robot?.buildManagerStatus !== "Ready",
+    );
+
+    const isLaunchManagerReady = !responseLaunchManagers
+      ?.flatMap((launchStep: any) => launchStep?.robotClusters)
+      ?.some((cluster: any) => cluster?.launchManagerStatus !== "Running");
 
     if (isEnvironmentReady || isBuildManagerReady || isLaunchManagerReady) {
-      setIsRobotReady(true);
+      setIFrameId((prevState) => prevState + 1);
+      setTimeout(() => {
+        setIsRobotReady(true);
+      }, 1000);
+      setIFrameId((prevState) => prevState + 1);
     } else {
       setIFrameId((prevState) => prevState + 1);
-      setIsRobotReady(false);
+      setTimeout(() => {
+        setIsRobotReady(true);
+      }, 1000);
+      setIFrameId((prevState) => prevState + 1);
     }
-  }, [
-    responseRobot,
-    responseBuildManager,
-    responseLaunchManagers,
-    robotData.step1.clusters.environment,
-  ]);
+  }, [responseRobot, responseBuildManager, responseLaunchManagers, robotData]);
   // isRobotReady
 
   // Cookies Reloader
@@ -432,6 +441,7 @@ export default ({ children }: any) => {
   }
 
   function handleResetRobot() {
+    console.log("RESET APP");
     setResponseRobot(undefined);
     setResponseBuildManager(undefined);
     setResponseLaunchManagers(undefined);
@@ -453,6 +463,7 @@ export default ({ children }: any) => {
         responseLaunchManagers,
         isRobotReady,
         iFrameId,
+        setIFrameId,
         ros,
         setRos,
         topicList,

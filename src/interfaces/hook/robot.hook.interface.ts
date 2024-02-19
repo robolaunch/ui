@@ -7,6 +7,7 @@ export interface IuseRobot {
   responseLaunchManagers: any;
   isRobotReady: boolean;
   iFrameId: number;
+  setIFrameId: any;
   ros: any;
   setRos: any;
   topicList: any;

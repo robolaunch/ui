@@ -37,7 +37,7 @@ export default function PrivateProvider(): ReactElement {
       initOptions={{
         useNonce: true,
         onLoad: "login-required",
-        checkLoginIframe: true,
+        checkLoginIframe: false,
         prompt: "none",
       }}
     >

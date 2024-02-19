@@ -5,28 +5,16 @@ import { AiFillCode, AiFillLayout } from "react-icons/ai";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
 import useRobot from "../../hooks/useRobot";
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { FaPython } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/redux";
 import useMain from "../../hooks/useMain";
 
 export default function EnvironmentHeaderTabs(): ReactElement {
-  const { isSettedCookie, isRobotReady, connectionsReducer } = useRobot();
+  const { isSettedCookie, isRobotReady } = useRobot();
   const { applicationMode } = useAppSelector((state) => state.user);
 
   const { robotData } = useMain();
-
-  useEffect(() => {
-    console.log("connectionsReducer", connectionsReducer);
-  }, [connectionsReducer]);
-
-  useEffect(() => {
-    console.log("isSettedCookie", isSettedCookie);
-  }, [isSettedCookie]);
-
-  useEffect(() => {
-    console.log("isRobotReady", isRobotReady);
-  }, [isRobotReady]);
 
   const tabs: IrobotTab[] = [
     {
