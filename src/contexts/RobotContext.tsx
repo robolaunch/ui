@@ -273,7 +273,12 @@ export default ({ children }: any) => {
   // ROS Topic Setter
   useEffect(() => {
     function getTopics() {
-      if (ros && isSettedCookie && !applicationMode) {
+      if (
+        ros &&
+        isSettedCookie
+
+        // && !applicationMode
+      ) {
         const getTopics = new ROSLIB.Service({
           ros: ros,
           name: "/rosapi/topics",

@@ -1,15 +1,134 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useRobot from "../hooks/useRobot";
 import randomstring from "randomstring";
 import saveAs from "file-saver";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
-
+import io from "socket.io-client";
+import {
+  IJob,
+  ILocation,
+} from "../interfaces/context/misssion.context.interface";
 export const MissionContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const { ros } = useRobot();
+  const [socketIO, setSocketIO] = useState<any>(null);
+
+  useEffect(() => {
+    const socket = io("ws://172.16.44.198:8080", { transports: ["websocket"] });
+    console.log("Connecting to server");
+
+    setSocketIO(socket);
+
+    socket.connect();
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
+    });
+
+    socket.on("error", (data: any) => {
+      console.log("Error", data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  function handleCreateLocation(values: {
+    locationID: string;
+    positionX: number;
+    positionY: number;
+    positionZ: number;
+    orientationX: number;
+    orientationY: number;
+    orientationZ: number;
+    orientationW: number;
+  }) {
+    socketIO &&
+      socketIO.emit("LocationCreate", {
+        messageType: "LocationCreate",
+        locationID: values.locationID,
+        position: {
+          x: values.positionX,
+          y: values.positionY,
+          z: values.positionZ,
+        },
+        orientation: {
+          x: values.orientationX,
+          y: values.orientationY,
+          z: values.orientationZ,
+          w: values.orientationW,
+        },
+        locationStatus: "UNCONNECTED",
+      });
+  }
+
+  function handleUpdateLocation(values: {
+    locationID: string;
+    positionX: number;
+    positionY: number;
+    positionZ: number;
+  }) {
+    socketIO &&
+      socketIO.emit("LocationUpdate", {
+        messageType: "LocationUpdate",
+        locationID: values.locationID,
+        locationStatus: "CONNECTED",
+        position: {
+          x: values.positionX,
+          y: values.positionY,
+          z: values.positionZ,
+        },
+      });
+  }
+
+  function handleCreateJob(values: {
+    jobID: string;
+    robotUrl: string | undefined;
+    taskList: {
+      ActionName: string;
+      LocationId: string;
+    }[];
+    deadline: string;
+    priority: 0 | 1 | 2 | 3 | 4 | 5;
+  }) {
+    socketIO &&
+      socketIO.emit("JobCreate", {
+        messageType: "JobCreate",
+        jobID: values.jobID,
+        robotUrl: values.robotUrl,
+        taskList: values.taskList,
+        deadline: values.deadline,
+        priority: values.priority,
+        jobStatus: "NULL",
+      });
+  }
+
+  function handleGetJobs(values: { since: string; until: string }) {
+    socketIO &&
+      socketIO.emit("JobQuery", {
+        since: values?.since, // JSON.stringify(new Date())
+        until: values?.until, // JSON.stringify(new Date())
+      });
+  }
+
+  function handleDeleteJob(values: { jobID: string }) {
+    socketIO &&
+      socketIO.emit("JobRemove", {
+        mesageType: "JobRemove",
+        jobID: values.jobID,
+      });
+  }
+
+  const [locations, setLocations] = useState<ILocation[]>([]);
+  const [jobs, setJobs] = useState<IJob[]>([]);
 
   const [missions, setMissions] = useState<any>([
     // {
@@ -31,7 +150,6 @@ export default ({ children }: any) => {
     //   waypoints: [],
     // },
   ]);
-
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [activeMission, setActiveMission] = useState<number>(-1);
   const [hoverWaypoint, setHoverWaypoint] = useState<number>(-1);
