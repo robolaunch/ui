@@ -1,11 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, ReactElement, useEffect, useRef, useState } from "react";
 import handleDomRosMouseCoordinatesConverter from "../../../functions/handleDomtoRosMouseCoordinatesConverter";
 import TaskManagementContextMenu from "../../../components/TaskManagementContextMenu/TaskManagementContextMenu";
 import RosMapWaypointLayout from "../../../components/RosMapWaypointLayout/RosMapWaypointLayout";
@@ -15,7 +8,6 @@ import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocat
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
 import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
-import { MissionContext } from "../../../contexts/MissionContext";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
 import InputToggle from "../../../components/InputToggle/InputToggle";
@@ -29,6 +21,8 @@ import { CgPlayButtonR } from "react-icons/cg";
 import { BsPlusCircle } from "react-icons/bs";
 import { EditText } from "react-edit-text";
 import ROSLIB from "roslib";
+import useMission from "../../../hooks/useMission";
+import SidebarMissionManagement from "../../../components/sidebar.missionmanagement.comp/sidebar.missionmanagement.comp";
 
 interface ITask {
   ros: any;
@@ -51,7 +45,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
     handleAddMissions,
     handleAddWaypointToMission,
     handleStartMission,
-  }: any = useContext(MissionContext);
+  } = useMission();
   const [isGrabbingMap, setIsGrabbingMap] = useState<boolean>(false);
   const mouseRef = useRef<any>(null);
   const mouse = useMouse(mouseRef, {
@@ -95,87 +89,10 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
   }
 
   return (
-    <div className="grid h-[42rem] w-full grid-cols-10 gap-6">
+    <div className="grid h-full w-full grid-cols-10 gap-6">
       <div className="col-span-10 h-full overflow-auto md:col-span-5 lg:col-span-4 xl:col-span-3  2xl:col-span-2">
-        <CardLayout className="h-full">
-          <Fragment>
-            <div className="flex h-full flex-col gap-2 py-2">
-              <div className="flex flex-col items-center justify-center gap-1 pb-1 font-medium ">
-                <span>Missions</span>
-                <span className="h-[2px] w-20 bg-primary-500" />
-              </div>
-              {missions?.length ? (
-                missions?.map((mission: any, missionIndex: number) => {
-                  return (
-                    <Accordion
-                      key={missionIndex}
-                      isOpen={activeMission}
-                      setIsOpen={setActiveMission}
-                      id={missionIndex}
-                      header={
-                        <div className="flex items-center justify-between">
-                          <EditText
-                            style={{
-                              maxWidth: "8rem",
-                            }}
-                            className="flex flex-col gap-1 !text-xs"
-                            type="text"
-                            value={mission?.name}
-                            onChange={(e: any) => {
-                              setMissions((prev: any) => {
-                                let temp = [...prev];
-                                temp[missionIndex].name = e?.target?.value;
-                                return temp;
-                              });
-                            }}
-                          />
-                          <InputToggle
-                            icons={false}
-                            checked={mission?.active}
-                            onChange={() => {
-                              setMissions((prev: any) => {
-                                let temp = [...prev];
-                                temp[missionIndex].active =
-                                  !temp[missionIndex].active;
-                                return temp;
-                              });
-                            }}
-                          />
-                          <CgPlayButtonR
-                            size={20}
-                            className="cursor-pointer"
-                            onClick={() => {
-                              const missionScope = mission;
-
-                              delete missionScope.active;
-
-                              handleStartMission(missionScope);
-                            }}
-                          />
-                        </div>
-                      }
-                    >
-                      <RosWaypointList
-                        setMissions={setMissions}
-                        missions={missions}
-                        mission={mission}
-                        missionIndex={missionIndex}
-                        activeMission={activeMission}
-                      />
-                    </Accordion>
-                  );
-                })
-              ) : (
-                <div className="mx-auto pt-3 text-xs">No missions yet</div>
-              )}
-
-              <BsPlusCircle
-                onClick={() => handleAddMissions()}
-                className="mx-auto mt-4 cursor-pointer transition-all duration-300 hover:scale-90"
-                size={20}
-              />
-            </div>
-          </Fragment>
+        <CardLayout className="!relative h-full p-4">
+          <SidebarMissionManagement />
         </CardLayout>
       </div>
       <div className="col-span-10 h-full md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">

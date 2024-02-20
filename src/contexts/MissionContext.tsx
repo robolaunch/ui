@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import useRobot from "../hooks/useRobot";
 import randomstring from "randomstring";
 import saveAs from "file-saver";
@@ -127,8 +127,12 @@ export default ({ children }: any) => {
       });
   }
 
-  const [locations, setLocations] = useState<ILocation[]>([]);
-  const [jobs, setJobs] = useState<IJob[]>([]);
+  function handleReducer(state: any, action: any) {}
+
+  const [missionReducer, dispatcher] = useReducer<any>(handleReducer, {
+    jobs: [],
+    locations: [],
+  });
 
   const [missions, setMissions] = useState<any>([
     // {
@@ -306,6 +310,7 @@ export default ({ children }: any) => {
         handleAddMissions,
         handleAddWaypointToMission,
         handleStartMission,
+        missionReducer,
       }}
     >
       {children}
