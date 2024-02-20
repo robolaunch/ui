@@ -91,9 +91,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
   return (
     <div className="grid h-full w-full grid-cols-10 gap-6">
       <div className="col-span-10 h-full overflow-auto md:col-span-5 lg:col-span-4 xl:col-span-3  2xl:col-span-2">
-        <CardLayout className="!relative h-full p-4">
-          <SidebarMissionManagement />
-        </CardLayout>
+        <SidebarMissionManagement ros={ros} />
       </div>
       <div className="col-span-10 h-full md:col-span-5 lg:col-span-6 xl:col-span-7 2xl:col-span-8">
         <CardLayout className="!relative h-full">

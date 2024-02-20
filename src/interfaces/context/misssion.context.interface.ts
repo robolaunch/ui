@@ -25,3 +25,13 @@ export interface IJob {
   priority: number;
   jobStatus: string; // "PENDING" | "IN_PROGRESS" | "COMPLETED" | "FAILED";
 }
+
+export interface ImissionReducer {
+  (
+    prevState: ImissionReducerState,
+    action: ImissionReducerAction,
+  ): ImissionReducerState;
+}
+
+export type ImissionReducerState = { jobs: IJob[]; locations: ILocation[] };
+export type ImissionReducerAction = any;

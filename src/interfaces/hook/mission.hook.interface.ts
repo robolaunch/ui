@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
-import { IJob, ILocation } from "../context/misssion.context.interface";
+import {
+  IJob,
+  ILocation,
+  ImissionReducerState,
+} from "../context/misssion.context.interface";
 
 export interface IuseMission {
   missions: any;
@@ -23,5 +27,33 @@ export interface IuseMission {
   handleAddMissions: any;
   handleAddWaypointToMission: any;
   handleStartMission: any;
-  missionReducer: any;
+  missionReducer: ImissionReducerState;
+  handleCreateLocation: (values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) => void;
+  handleUpdateLocation: (values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) => void;
 }

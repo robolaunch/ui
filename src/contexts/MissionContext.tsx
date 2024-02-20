@@ -8,6 +8,9 @@ import io from "socket.io-client";
 import {
   IJob,
   ILocation,
+  ImissionReducer,
+  ImissionReducerAction,
+  ImissionReducerState,
 } from "../interfaces/context/misssion.context.interface";
 export const MissionContext: any = createContext<any>(null);
 
@@ -43,28 +46,32 @@ export default ({ children }: any) => {
 
   function handleCreateLocation(values: {
     locationID: string;
-    positionX: number;
-    positionY: number;
-    positionZ: number;
-    orientationX: number;
-    orientationY: number;
-    orientationZ: number;
-    orientationW: number;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
   }) {
     socketIO &&
       socketIO.emit("LocationCreate", {
         messageType: "LocationCreate",
         locationID: values.locationID,
         position: {
-          x: values.positionX,
-          y: values.positionY,
-          z: values.positionZ,
+          x: values.position.x,
+          y: values.position.y,
+          z: values.position.z,
         },
         orientation: {
-          x: values.orientationX,
-          y: values.orientationY,
-          z: values.orientationZ,
-          w: values.orientationW,
+          x: values.orientation.x,
+          y: values.orientation.y,
+          z: values.orientation.z,
+          w: values.orientation.w,
         },
         locationStatus: "UNCONNECTED",
       });
@@ -72,9 +79,17 @@ export default ({ children }: any) => {
 
   function handleUpdateLocation(values: {
     locationID: string;
-    positionX: number;
-    positionY: number;
-    positionZ: number;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
   }) {
     socketIO &&
       socketIO.emit("LocationUpdate", {
@@ -82,12 +97,28 @@ export default ({ children }: any) => {
         locationID: values.locationID,
         locationStatus: "CONNECTED",
         position: {
-          x: values.positionX,
-          y: values.positionY,
-          z: values.positionZ,
+          x: values.position.x,
+          y: values.position.y,
+          z: values.position.z,
+        },
+        orientation: {
+          x: values.orientation.x,
+          y: values.orientation.y,
+          z: values.orientation.z,
+          w: values.orientation.w,
         },
       });
   }
+
+  function handleGetLocations() {
+    socketIO &&
+      socketIO.emit("LocationQuery", {
+        since: new Date("2023-01-01T00:00:00").toISOString(), // JSON.stringify(new Date())
+        until: new Date().toISOString(), // JSON.stringify(new Date())
+      });
+  }
+
+  console.log(new Date("2023-01-01T00:00:00").toISOString());
 
   function handleCreateJob(values: {
     jobID: string;
@@ -111,11 +142,11 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleGetJobs(values: { since: string; until: string }) {
+  function handleGetJobs() {
     socketIO &&
       socketIO.emit("JobQuery", {
-        since: values?.since, // JSON.stringify(new Date())
-        until: values?.until, // JSON.stringify(new Date())
+        since: new Date("2023-01-01T00:00:00").toISOString(), // JSON.stringify(new Date())
+        until: new Date().toISOString(), // JSON.stringify(new Date())
       });
   }
 
@@ -127,12 +158,50 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleReducer(state: any, action: any) {}
+  function handleReducer(
+    prevState: ImissionReducerState,
+    action: ImissionReducerAction,
+  ): ImissionReducerState {
+    return prevState;
+  }
 
-  const [missionReducer, dispatcher] = useReducer<any>(handleReducer, {
-    jobs: [],
-    locations: [],
-  });
+  const [missionReducer, dispatcher] = useReducer<ImissionReducer>(
+    handleReducer,
+    {
+      jobs: [
+        {
+          jobID: "123",
+          robotUrl: "",
+          taskList: [
+            {
+              ActionName: "ActionName",
+              LocationId: "LocationId",
+            },
+          ],
+          deadline: "2021-12-12",
+          priority: 0,
+          jobStatus: "PENDING",
+        },
+      ],
+      locations: [
+        {
+          locationID: "123",
+          position: {
+            x: 0,
+            y: 0,
+            z: 0,
+          },
+          orientation: {
+            x: 0,
+            y: 0,
+            z: 0,
+            w: 0,
+          },
+          locationStatus: "UNCONNECTED",
+        },
+      ],
+    },
+  );
 
   const [missions, setMissions] = useState<any>([
     // {
@@ -311,6 +380,8 @@ export default ({ children }: any) => {
         handleAddWaypointToMission,
         handleStartMission,
         missionReducer,
+        handleCreateLocation,
+        handleUpdateLocation,
       }}
     >
       {children}
