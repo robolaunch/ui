@@ -7,19 +7,13 @@ import RosBarcodeMapItems from "../../../components/RosBarcodeMapItems/RosBarcod
 import RosRobotLocation from "../../../components/RosRobotLocation/RosRobotLocation";
 import RosNavigationBar from "../../../components/RosNavigationBar/RosNavigationBar";
 import RosWaypointLine from "../../../components/RosWaypointLine/RosWaypointLine";
-import RosWaypointList from "../../../components/RosWaypointList/RosWaypointList";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import RosControlBar from "../../../components/RosControlBar/RosControlBar";
-import InputToggle from "../../../components/InputToggle/InputToggle";
-import Accordion from "../../../components/Accordion/Accordion";
 import GridLines from "../../../components/GridLines/GridLines";
 import CardLayout from "../../../layouts/CardLayout";
 import useMouse from "@react-hook/mouse-position";
 import "react-contexify/dist/ReactContexify.css";
 import { useContextMenu } from "react-contexify";
-import { CgPlayButtonR } from "react-icons/cg";
-import { BsPlusCircle } from "react-icons/bs";
-import { EditText } from "react-edit-text";
 import ROSLIB from "roslib";
 import useMission from "../../../hooks/useMission";
 import SidebarMissionManagement from "../../../components/sidebar.missionmanagement.comp/sidebar.missionmanagement.comp";
@@ -30,10 +24,7 @@ interface ITask {
 
 export default function MissionManagement({ ros }: ITask): ReactElement {
   const {
-    missions,
-    setMissions,
     activeMission,
-    setActiveMission,
     isCostMapActive,
     setIsCostMapActive,
     isDragging,
@@ -42,9 +33,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
     rosMapDetails,
     setRosMapDetails,
     setRightClickRosMapCoordinates,
-    handleAddMissions,
     handleAddWaypointToMission,
-    handleStartMission,
   } = useMission();
   const [isGrabbingMap, setIsGrabbingMap] = useState<boolean>(false);
   const mouseRef = useRef<any>(null);

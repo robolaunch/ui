@@ -27,33 +27,33 @@ export interface IuseMission {
   handleAddMissions: any;
   handleAddWaypointToMission: any;
   handleStartMission: any;
-  missionReducer: ImissionReducerState;
-  handleCreateLocation: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
-  handleUpdateLocation: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
+  // missionReducer: ImissionReducerState;
+  // handleCreateLocation: (values: {
+  //   locationID: string;
+  //   position: {
+  //     x: number;
+  //     y: number;
+  //     z: number;
+  //   };
+  //   orientation: {
+  //     x: number;
+  //     y: number;
+  //     z: number;
+  //     w: number;
+  //   };
+  // }) => void;
+  // handleUpdateLocation: (values: {
+  //   locationID: string;
+  //   position: {
+  //     x: number;
+  //     y: number;
+  //     z: number;
+  //   };
+  //   orientation: {
+  //     x: number;
+  //     y: number;
+  //     z: number;
+  //     w: number;
+  //   };
+  // }) => void;
 }

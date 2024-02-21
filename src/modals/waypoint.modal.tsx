@@ -1,11 +1,11 @@
 import { Dialog } from "primereact/dialog";
 import { ReactElement } from "react";
-import useMission from "../hooks/useMission";
 import { FormikProps, useFormik } from "formik";
 import CFSection from "../components/CFSection/CFSection";
 import FormInputText from "../components/FormInputText/FormInputText";
 import Button from "../components/Button/Button";
 import { ILocation } from "../interfaces/context/misssion.context.interface";
+import useTask from "../hooks/useTask";
 
 interface IAddWaypointModal {
   ros: any;
@@ -20,7 +20,7 @@ export default function AddWaypointModal({
   initialValues,
   handleCloseModal,
 }: IAddWaypointModal): ReactElement {
-  const { handleCreateLocation, handleUpdateLocation } = useMission();
+  const { handleCreateLocation, handleUpdateLocation } = useTask();
 
   const formik: FormikProps<ILocation> = useFormik<ILocation>({
     initialValues: initialValues || {
@@ -51,7 +51,7 @@ export default function AddWaypointModal({
     <Dialog
       header={header}
       visible={true}
-      className="h-full w-[60vw]"
+      className=" w-[60vw]"
       onHide={() => handleCloseModal()}
     >
       <form
@@ -67,69 +67,75 @@ export default function AddWaypointModal({
             labelInfoTip="Unique identifier for the location"
           />
         </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Position of the location"
-            labelName="Position X:"
-            inputProps={{
-              ...formik.getFieldProps("position.x"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Position of the location"
-            labelName="Position Y:"
-            inputProps={{
-              ...formik.getFieldProps("position.y"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Position of the location"
-            labelName="Position Z:"
-            inputProps={{
-              ...formik.getFieldProps("position.z"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Orientation of the location"
-            labelName="Orientation X:"
-            inputProps={{
-              ...formik.getFieldProps("orientation.x"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Orientation of the location"
-            labelName="Orientation Y:"
-            inputProps={{
-              ...formik.getFieldProps("orientation.y"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Orientation of the location"
-            labelName="Orientation Z:"
-            inputProps={{
-              ...formik.getFieldProps("orientation.z"),
-            }}
-          />
-        </CFSection>
-        <CFSection>
-          <FormInputText
-            labelInfoTip="Orientation of the location"
-            labelName="Orientation W:"
-            inputProps={{
-              ...formik.getFieldProps("orientation.w"),
-            }}
-          />
-        </CFSection>
+
+        <div className="flex w-full gap-4">
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Position of the location"
+              labelName="Position X:"
+              inputProps={{
+                ...formik.getFieldProps("position.x"),
+              }}
+            />
+          </CFSection>
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Position of the location"
+              labelName="Position Y:"
+              inputProps={{
+                ...formik.getFieldProps("position.y"),
+              }}
+            />
+          </CFSection>
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Position of the location"
+              labelName="Position Z:"
+              inputProps={{
+                ...formik.getFieldProps("position.z"),
+              }}
+            />
+          </CFSection>
+        </div>
+
+        <div className="flex w-full gap-4">
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Orientation of the location"
+              labelName="Orientation X:"
+              inputProps={{
+                ...formik.getFieldProps("orientation.x"),
+              }}
+            />
+          </CFSection>
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Orientation of the location"
+              labelName="Orientation Y:"
+              inputProps={{
+                ...formik.getFieldProps("orientation.y"),
+              }}
+            />
+          </CFSection>
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Orientation of the location"
+              labelName="Orientation Z:"
+              inputProps={{
+                ...formik.getFieldProps("orientation.z"),
+              }}
+            />
+          </CFSection>
+          <CFSection>
+            <FormInputText
+              labelInfoTip="Orientation of the location"
+              labelName="Orientation W:"
+              inputProps={{
+                ...formik.getFieldProps("orientation.w"),
+              }}
+            />
+          </CFSection>
+        </div>
         <Button type="submit" text={"Add Waypoint"} />
       </form>
     </Dialog>

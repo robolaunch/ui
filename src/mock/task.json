@@ -1,0 +1,34 @@
+{
+  "jobs": [
+    {
+      "jobID": "123",
+      "robotUrl": "",
+      "taskList": [
+        {
+          "ActionName": "ActionName",
+          "LocationId": "LocationId"
+        }
+      ],
+      "deadline": "2021-12-12",
+      "priority": 0,
+      "jobStatus": "PENDING"
+    }
+  ],
+  "locations": [
+    {
+      "locationID": "123",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      },
+      "locationStatus": "UNCONNECTED"
+    }
+  ]
+}

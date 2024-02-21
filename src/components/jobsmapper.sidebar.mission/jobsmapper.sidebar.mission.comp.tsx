@@ -1,15 +1,14 @@
 import { ReactElement } from "react";
-import useMission from "../../hooks/useMission";
 import CardLayout from "../../layouts/CardLayout";
-import { BsPlusCircle } from "react-icons/bs";
-import AddWaypoint from "../addwaypoint.sidebar.mission/addwaypoint.sidebar.mission";
+import useTask from "../../hooks/useTask";
+import AddJob from "../addjob.sidebar.mission/addwaypoint.sidebar.mission";
 
 export default function JobsMapper(): ReactElement {
-  const { missionReducer } = useMission();
+  const { missionReducer } = useTask();
 
   return (
     <div className="flex w-full flex-col gap-2">
-      {missionReducer.jobs.map((job, index) => (
+      {missionReducer.jobs?.map((job, index) => (
         <CardLayout
           key={index}
           className="flex flex-col gap-2 text-xs !shadow-sm"
@@ -21,6 +20,7 @@ export default function JobsMapper(): ReactElement {
           <p>Job Status: {job.jobStatus}</p>
         </CardLayout>
       ))}
+      <AddJob />
     </div>
   );
 }
