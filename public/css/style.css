@@ -1312,6 +1312,10 @@ video {
   width: 50vw;
 }
 
+.w-\[60vw\] {
+  width: 60vw;
+}
+
 .w-\[80vw\] {
   width: 80vw;
 }
@@ -1337,10 +1341,6 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
-}
-
-.w-\[60vw\] {
-  width: 60vw;
 }
 
 .min-w-24 {
@@ -2642,6 +2642,11 @@ video {
   color: rgb(172 45 254 / var(--tw-text-opacity));
 }
 
+.text-primary-600 {
+  --tw-text-opacity: 1;
+  color: rgb(147 1 242 / var(--tw-text-opacity));
+}
+
 .text-primary-700 {
   --tw-text-opacity: 1;
   color: rgb(113 1 186 / var(--tw-text-opacity));
@@ -2715,11 +2720,6 @@ video {
 .text-yellow-600 {
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
-}
-
-.text-primary-600 {
-  --tw-text-opacity: 1;
-  color: rgb(147 1 242 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -3582,6 +3582,10 @@ td {
 
   .\32xl\:col-span-9 {
     grid-column: span 9 / span 9;
+  }
+
+  .\32xl\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .\32xl\:inline {

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import useTask from "../../hooks/useTask";
-import AddJob from "../addjob.sidebar.mission/addwaypoint.sidebar.mission";
+import AddJob from "../addjob.sidebar.mission/addjob.sidebar.mission";
 
 export default function JobsMapper(): ReactElement {
   const { missionReducer } = useTask();

@@ -33,6 +33,36 @@ export interface IuseTask {
     };
   }) => void;
   ///
+  handleCreateWaitingPoint: (values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) => void;
+  handleGetWaitingPoints: () => void;
+  handleUpdateWaitingPoint: (values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) => void;
+  ///
   handleCreateJob: (values: {
     jobID: string;
     robotUrl: string | undefined;

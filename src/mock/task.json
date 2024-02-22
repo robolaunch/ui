@@ -14,7 +14,8 @@
       "jobStatus": "PENDING"
     }
   ],
-  "locations": [
+  "waitingPoints": [],
+  "waypoints": [
     {
       "locationID": "123",
       "position": {

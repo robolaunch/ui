@@ -2,19 +2,20 @@ import { ReactElement } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import AddWaypoint from "../addwaypoint.sidebar.mission/addwaypoint.sidebar.mission";
 import useTask from "../../hooks/useTask";
+import AddWaitingPoint from "../addwaitingpoint.sidebar.mission/addwaitingpoint.sidebar.mission";
 
-interface IWaypointMapper {
+interface IWaitingPointMapper {
   ros: any;
 }
 
-export default function WaypointsMapper({
+export default function WaitingPointsMapper({
   ros,
-}: IWaypointMapper): ReactElement {
+}: IWaitingPointMapper): ReactElement {
   const { missionReducer } = useTask();
 
   return (
     <div className="flex w-full flex-col gap-2">
-      {missionReducer.waypoints?.map((location, index) => (
+      {missionReducer.waitingPoints?.map((location, index) => (
         <CardLayout
           key={index}
           className="flex items-center justify-between p-4 !shadow-sm"
@@ -38,7 +39,7 @@ export default function WaypointsMapper({
           <AddWaypoint ros={ros} initialValues={location} />
         </CardLayout>
       ))}
-      <AddWaypoint ros={ros} />
+      <AddWaitingPoint ros={ros} />
     </div>
   );
 }

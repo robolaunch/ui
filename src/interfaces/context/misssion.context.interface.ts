@@ -33,5 +33,9 @@ export interface ImissionReducer {
   ): ImissionReducerState;
 }
 
-export type ImissionReducerState = { jobs: IJob[]; locations: ILocation[] };
+export type ImissionReducerState = {
+  jobs: IJob[];
+  waypoints: ILocation[];
+  waitingPoints: ILocation[];
+};
 export type ImissionReducerAction = any;

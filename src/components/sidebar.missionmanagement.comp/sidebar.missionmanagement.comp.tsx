@@ -2,6 +2,7 @@ import { Fragment, ReactElement, useState } from "react";
 import CardLayout from "../../layouts/CardLayout";
 import WaypointsMapper from "../waypointsmapper.sidebar.mission/waypointsmapper.sidebar.mission.comp";
 import JobsMapper from "../jobsmapper.sidebar.mission/jobsmapper.sidebar.mission.comp";
+import WaitingPointsMapper from "../waitingpointsmapper.sidebar.mission/waitingpointsmapper.sidebar.mission.comp";
 
 interface ISidebarMissionManagement {
   ros: any;
@@ -15,7 +16,7 @@ export default function SidebarMissionManagement({
   return (
     <CardLayout className="flex h-full  w-full flex-col gap-6 px-8 py-4">
       <div className="flex w-full gap-4">
-        {["Waypoints", "Jobs"].map((tab, index) => (
+        {["Waypoints", "Waiting Points", "Jobs"].map((tab, index) => (
           <div
             key={index}
             onClick={() => setActiveTab(tab)}
@@ -33,6 +34,8 @@ export default function SidebarMissionManagement({
           switch (activeTab) {
             case "Waypoints":
               return <WaypointsMapper ros={ros} />;
+            case "Waiting Points":
+              return <WaitingPointsMapper ros={ros} />;
             case "Jobs":
               return <JobsMapper />;
           }

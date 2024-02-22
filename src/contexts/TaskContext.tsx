@@ -28,7 +28,12 @@ export default ({ children }: any) => {
       case "LocationQuery":
         return {
           ...prevState,
-          locations: action.payload,
+          waypoints: action.payload,
+        };
+      case "WaitingPointQuery":
+        return {
+          ...prevState,
+          waitingPoints: action.payload,
         };
       case "JobQuery":
         return {
@@ -68,6 +73,15 @@ export default ({ children }: any) => {
       });
     });
 
+    socket.on("WaitingPointQuery", (data: ILocation[]) => {
+      dispatcher({
+        type: "WaitingPointQuery",
+        payload: data,
+      });
+    });
+
+    socket.on("JobQuery", (data: IJob[]) => {});
+
     socket.on("JobQuery", (data: IJob[]) => {
       dispatcher({
         type: "JobQuery",
@@ -83,6 +97,7 @@ export default ({ children }: any) => {
   useEffect(() => {
     socketIO && handleGetLocations();
     socketIO && handleGetJobs();
+    socketIO && handleGetWaitingPoints();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socketIO]);
 
@@ -116,6 +131,82 @@ export default ({ children }: any) => {
           w: values.orientation.w,
         },
         locationStatus: "UNCONNECTED",
+      });
+  }
+
+  function handleCreateWaitingPoint(values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) {
+    socketIO &&
+      socketIO.emit("WaitingPointCreate", {
+        messageType: "WaitingPointCreate",
+        waitingPointID: values.locationID,
+        position: {
+          x: values.position.x,
+          y: values.position.y,
+          z: values.position.z,
+        },
+        orientation: {
+          x: values.orientation.x,
+          y: values.orientation.y,
+          z: values.orientation.z,
+          w: values.orientation.w,
+        },
+        locationStatus: "UNCONNECTED",
+      });
+  }
+
+  function handleGetWaitingPoints() {
+    socketIO &&
+      socketIO.emit("WaitingPointQuery", {
+        since: new Date("2023-01-01T00:00:00").toISOString(), // JSON.stringify(new Date())
+        until: new Date(
+          new Date().getTime() + 3 * 60 * 60 * 1000,
+        ).toISOString(), // JSON.stringify(new Date())
+      });
+  }
+
+  function handleUpdateWaitingPoint(values: {
+    locationID: string;
+    position: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }) {
+    socketIO &&
+      socketIO.emit("WaitingPointUpdate", {
+        messageType: "WaitingPointUpdate",
+        waitingPointID: values.locationID,
+        waitingPointStatus: "CONNECTED",
+        position: {
+          x: values.position.x,
+          y: values.position.y,
+          z: values.position.z,
+        },
+        orientation: {
+          x: values.orientation.x,
+          y: values.orientation.y,
+          z: values.orientation.z,
+          w: values.orientation.w,
+        },
       });
   }
 
@@ -208,6 +299,10 @@ export default ({ children }: any) => {
         handleCreateLocation,
         handleGetLocations,
         handleUpdateLocation,
+        ///
+        handleCreateWaitingPoint,
+        handleGetWaitingPoints,
+        handleUpdateWaitingPoint,
         ///
         handleCreateJob,
         handleGetJobs,
