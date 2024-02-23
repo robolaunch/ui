@@ -45,23 +45,24 @@ export default function OrgDashboard(): ReactElement {
         />
       }
       widget3={
-        <CountWidget
-          data={
-            regions
-              ? Array?.from(
-                  new Set(regions?.map((item: any) => item?.region) || []),
-                )?.map((item: any, index: number) => {
-                  return {
-                    label: item || "",
-                    value:
-                      regions?.filter((rc: any) => rc?.region === item)
-                        ?.length || 0,
-                    color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
-                  };
-                })
-              : []
-          }
-        />
+        // <CountWidget
+        //   data={
+        //     regions
+        //       ? Array?.from(
+        //           new Set(regions?.map((item: any) => item?.region) || []),
+        //         )?.map((item: any, index: number) => {
+        //           return {
+        //             label: item || "",
+        //             value:
+        //               regions?.filter((rc: any) => rc?.region === item)
+        //                 ?.length || 0,
+        //             color: index % 2 === 0 ? "#35b8fa" : "#cb77ff",
+        //           };
+        //         })
+        //       : []
+        //   }
+        // />
+        <></>
       }
       table={
         <GeneralTable

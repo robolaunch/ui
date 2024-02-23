@@ -13,14 +13,21 @@ export default function ServiceLogModal({
   log,
   handleCloseModal,
 }: IServiceLogModal): ReactElement {
+  console.log(window.innerHeight, window.outerHeight);
+
   return (
     <Dialog
+      draggable={false}
       header={`${header || ""} Service Log`}
       visible={true}
-      className="h-full w-[90vw]"
+      className="h-fit w-[90vw]"
       onHide={() => handleCloseModal()}
     >
-      <LazyLog text={log} height={752} scrollToLine={9999999} />
+      <LazyLog
+        text={log}
+        height={(window.innerHeight / 3) * 2}
+        scrollToLine={9999999}
+      />
     </Dialog>
   );
 }

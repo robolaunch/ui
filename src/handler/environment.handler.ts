@@ -13,7 +13,7 @@ function handleMapper(data: IEnvironmentBE[]): {
           details: {
             name: env?.name,
             isVirtualRobot: env?.physicalInstance ? false : true,
-            isDevelopmentMode: false,
+            isDevelopmentMode: true,
             configureWorkspace: false,
             physicalInstanceName: env?.physicalInstance,
           },

@@ -61,11 +61,12 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
             description="You can access all your builds here."
             loading={isLoading}
             disabled={
-              sidebarState?.isCreateMode &&
-              (sidebarState?.page === "robot" ||
-                sidebarState?.page === "workspacesmanager" ||
-                sidebarState?.page === "buildsmanager" ||
-                sidebarState?.page === "launchsmanager")
+              // sidebarState?.isCreateMode &&
+              // (sidebarState?.page === "robot" ||
+              //   sidebarState?.page === "workspacesmanager" ||
+              //   sidebarState?.page === "buildsmanager" ||
+              //   sidebarState?.page === "launchsmanager")
+              true
             }
           />
           <SideBarMenuItem
@@ -73,11 +74,12 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
             description="You can access all your launches here."
             loading={isLoading}
             disabled={
-              sidebarState?.isCreateMode &&
-              (sidebarState?.page === "robot" ||
-                sidebarState?.page === "workspacesmanager" ||
-                sidebarState?.page === "buildsmanager" ||
-                sidebarState?.page === "launchsmanager")
+              // sidebarState?.isCreateMode &&
+              // (sidebarState?.page === "robot" ||
+              //   sidebarState?.page === "workspacesmanager" ||
+              //   sidebarState?.page === "buildsmanager" ||
+              //   sidebarState?.page === "launchsmanager")
+              true
             }
           />
         </Fragment>

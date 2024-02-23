@@ -611,6 +611,9 @@ export default ({ children }: any) => {
               : robotData?.step1?.details?.physicalInstanceName ?? "",
             distributions: robotData?.step1?.services.ros.rosDistros,
             bridgeEnabled: robotData?.step1?.services.ros.isEnabled,
+            vdiGpuResource: environmentGPUCoreUsagebility(
+              selectedState?.instance?.resources?.hardware?.gpu?.hardware || [],
+            ),
             vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
             ideEnabled: robotData?.step1?.services.ide?.isEnabled,

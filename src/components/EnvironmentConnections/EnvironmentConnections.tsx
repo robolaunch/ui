@@ -16,7 +16,7 @@ export default function EnvironmentConnections(): ReactElement {
     <div className="flex gap-4">
       {!applicationMode && (
         <div className="flex gap-1" id="ros">
-          <ConnectionLabel label="ROS" />
+          <ConnectionLabel label="ROS Bridge" />
           <StateCell
             state={
               connectionsReducer?.ros === null
@@ -32,8 +32,8 @@ export default function EnvironmentConnections(): ReactElement {
         <ConnectionLabel
           label={
             robotData?.step1?.services?.physicalIde?.httpsEndpoint
-              ? "Virtual IDE"
-              : "IDE"
+              ? "Virtual Code Editor"
+              : "Code Editor"
           }
           url={robotData.step1.services.ide?.httpsEndpoint}
         />
@@ -50,7 +50,7 @@ export default function EnvironmentConnections(): ReactElement {
       {robotData?.step1?.services?.physicalIde?.isEnabled && (
         <div className="flex gap-1" id="ide">
           <ConnectionLabel
-            label="Physical IDE"
+            label="Physical Code Editor"
             url={robotData?.step1?.services?.physicalIde?.httpsEndpoint}
           />
           <StateCell
@@ -66,7 +66,7 @@ export default function EnvironmentConnections(): ReactElement {
       )}
       <div className="flex gap-1" id="vdi">
         <ConnectionLabel
-          label="VDI"
+          label="Remote Desktop"
           url={
             robotData.step1.services.vdi?.socketEndpoint &&
             "https://" +

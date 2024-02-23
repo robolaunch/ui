@@ -16,7 +16,7 @@ export default function WidgetGPUCell(): ReactElement {
           onChange={(e) => {
             setSelectedGPUIndex(Number(e.target.value));
           }}
-          className="h-8 !border-light-200 text-xs font-medium"
+          className="!h-6 !border-light-200 !p-0 text-xs font-medium"
         >
           <Fragment>
             {pagesState?.instance?.resources?.hardware?.gpu?.hardware?.map(

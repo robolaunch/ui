@@ -13,7 +13,7 @@ export default function EnvironmentType(): ReactElement {
         <div className="animate-fadeIn transition-500 w-fit rounded-lg bg-primary-100 px-2 py-1 text-[0.58rem] font-medium capitalize text-primary-500">
           {robotData?.step1.details?.isVirtualRobot
             ? `Virtual ${applicationMode ? "Application" : "Robot"}`
-            : `Physical ${applicationMode ? "Application" : "Robot"}`}
+            : `Hybrid ${applicationMode ? "Application" : "Robot"}`}
         </div>
       ) : (
         <Skeleton className="min-h-5 min-w-24" />

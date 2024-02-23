@@ -39,41 +39,42 @@ export default function RegionDashboard(): ReactElement {
         />
       }
       widget3={
-        <CountWidget
-          data={
-            instances
-              ? [
-                  {
-                    label: "Preparing",
-                    value:
-                      instances?.filter(
-                        (item: any) =>
-                          item?.instanceCloudState !== "ConnectionHub_Ready",
-                      ).length || 0,
-                    color: "#ffa500",
-                  },
-                  {
-                    label: "Ready",
-                    value:
-                      instances?.filter(
-                        (item: any) =>
-                          item?.instanceCloudState === "ConnectionHub_Ready",
-                      ).length || 0,
-                    color: "#cb77ff",
-                  },
-                  {
-                    label: "Error",
-                    value:
-                      instances?.filter(
-                        (item: any) =>
-                          item?.instanceCloudState === "ConnectionHub_Error",
-                      ).length || 0,
-                    color: "#ff0000",
-                  },
-                ]
-              : []
-          }
-        />
+        // <CountWidget
+        //   data={
+        //     instances
+        //       ? [
+        //           {
+        //             label: "Preparing",
+        //             value:
+        //               instances?.filter(
+        //                 (item: any) =>
+        //                   item?.instanceCloudState !== "ConnectionHub_Ready",
+        //               ).length || 0,
+        //             color: "#ffa500",
+        //           },
+        //           {
+        //             label: "Ready",
+        //             value:
+        //               instances?.filter(
+        //                 (item: any) =>
+        //                   item?.instanceCloudState === "ConnectionHub_Ready",
+        //               ).length || 0,
+        //             color: "#cb77ff",
+        //           },
+        //           {
+        //             label: "Error",
+        //             value:
+        //               instances?.filter(
+        //                 (item: any) =>
+        //                   item?.instanceCloudState === "ConnectionHub_Error",
+        //               ).length || 0,
+        //             color: "#ff0000",
+        //           },
+        //         ]
+        //       : []
+        //   }
+        // />
+        <></>
       }
       table={
         <GeneralTable

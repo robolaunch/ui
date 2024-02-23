@@ -90,5 +90,9 @@
   {
     "country_code": "arcelik-cayirova",
     "region_name": "Arçelik Çayırova"
+  },
+  {
+    "country_code": "ankara-odtu",
+    "region_name": "Ankara ODTU"
   }
 ]

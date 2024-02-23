@@ -12,15 +12,8 @@ export default function FleetsListItemDesc({
   return (
     <div className="flex gap-2">
       <div className="flex gap-1.5">
-        <span className="font-medium">VI:</span>
         <StateCell state={fleet?.status} />
       </div>
-      {fleet?.physicalStatus && (
-        <div className="flex gap-1.5">
-          <span className="font-medium">PI:</span>
-          <StateCell state={fleet?.physicalStatus} />
-        </div>
-      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import EnvironmentConnections from "../EnvironmentConnections/EnvironmentConnections";
 import EnvironmentMainLabels from "../EnvironmentMainLabels/EnvironmentMainLabels";
 import EnvironmentHeaderTabs from "../EnvironmentHeaderTabs/EnvironmentHeaderTabs";
-import EnvironmentResource from "../EnvironmentResource/EnvironmentResource";
 import { ReactElement } from "react";
 import Card from "../Card/Card";
 
@@ -15,7 +14,6 @@ export default function EnvironmentHeader(): ReactElement {
         </div>
         <div className="flex items-center justify-between">
           <EnvironmentHeaderTabs />
-          <EnvironmentResource />
         </div>
       </div>
     </Card>

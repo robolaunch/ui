@@ -21,7 +21,7 @@ export default function MainDashboardPage(): ReactElement {
       }
       widget3={
         <Fragment>
-          <CountWidget
+          {/* <CountWidget
             data={
               orgs
                 ? [
@@ -43,7 +43,7 @@ export default function MainDashboardPage(): ReactElement {
                   ]
                 : []
             }
-          />
+          /> */}
         </Fragment>
       }
       table={

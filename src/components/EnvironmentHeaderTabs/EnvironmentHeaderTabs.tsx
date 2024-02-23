@@ -33,11 +33,11 @@ export default function EnvironmentHeaderTabs(): ReactElement {
         //   robotData.step1.services.ros.socketEndpoint &&
         //   isSettedCookie
         // )
-        false,
+        true,
       isHidden:
         // applicationMode ||
         // (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled)
-        false,
+        true,
     },
     {
       name: "Teleoperation",

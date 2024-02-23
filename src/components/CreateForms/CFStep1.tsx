@@ -16,6 +16,8 @@ import CFDevMode from "../CFDevMode/CFDevMode";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import useForm from "../../hooks/useForm";
+import CFGpuTypes from "../CFGpuTypes/CFGpuTypes";
+import CFGpuCore from "../CFGpuCore/CFGpuCore";
 
 interface ICFStep1 {
   isImportRobot?: boolean;
@@ -103,6 +105,20 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
             </div>
             <Seperator />
           </CFSection>
+
+          <CFSection>
+            <CFGpuTypes formik={formik} disabled={isImportRobot} />
+            <Seperator />
+          </CFSection>
+
+          <Fragment>
+            {robotData.step1.services.ide.gpuModelName && (
+              <CFSection>
+                <CFGpuCore formik={formik} />
+                <Seperator />
+              </CFSection>
+            )}
+          </Fragment>
 
           <Fragment>
             {!isImportRobot && (

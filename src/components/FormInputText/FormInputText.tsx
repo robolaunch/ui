@@ -16,6 +16,7 @@ interface IFormInputText {
   inputTouched?: boolean;
   classNameInput?: string;
   classNameContainer?: string;
+  placeholder?: string;
 }
 
 export default function FormInputText({
@@ -31,6 +32,7 @@ export default function FormInputText({
   inputTouched,
   classNameInput,
   classNameContainer,
+  placeholder,
 }: IFormInputText): ReactElement {
   return (
     <div data-tut={dataTut} className={classNameContainer}>
@@ -45,6 +47,7 @@ export default function FormInputText({
         disabled={disabled}
         inputHoverText={inputHoverText}
         type={type}
+        placeholder={placeholder}
       />
       <InputError error={inputError} touched={inputTouched} />
     </div>

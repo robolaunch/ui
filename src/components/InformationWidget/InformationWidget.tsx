@@ -16,7 +16,7 @@ export default function InformationWidget({
 }: IInformationWidget): ReactElement {
   return (
     <Card
-      className={`animate-fadeIn flex h-80 w-full flex-col justify-around rounded-lg border border-light-200 bg-light-50 p-8 shadow-md ${className}`}
+      className={`animate-fadeIn flex h-80 w-full flex-col justify-around gap-12 rounded-lg border border-light-200 bg-light-50 p-8 shadow-md ${className}`}
       background
     >
       <div className="flex flex-col gap-6">
