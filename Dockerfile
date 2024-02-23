@@ -11,7 +11,8 @@ ARG REACT_APP_CREATABLE_INSTANCE
 COPY . /app
 WORKDIR /app
 RUN npm install -s
-RUN "NODE_OPTIONS=--max_old_space_size=4096" npm run build
+ENV NODE_OPTIONS="--max_old_space_size=4096"
+RUN npm run build
 RUN rm -rf /app/build/static/js/*.map
 FROM nginx:alpine as production-stage
 COPY --from=build-stage /app/nginx.conf /etc/nginx/conf.d/default.conf
