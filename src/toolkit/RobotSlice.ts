@@ -43,6 +43,8 @@ export const createRobot = createAsyncThunk(
     templateOrganizationSharing: boolean;
     templatePublicSharing: boolean;
     vdiGpuResource: number;
+    ideGpuResource: number;
+    ideGpuResourceType: string;
   }) => {
     const response = await robotApi.createFederatedRobot({
       name: "robot/createFederatedRobot",
@@ -82,6 +84,8 @@ export const createRobot = createAsyncThunk(
                   //   values?.templateOrganizationSharing,
                   // templatePublicLevelAvailable: values?.templatePublicSharing,
                   vdiGpuResource: values?.vdiGpuResource,
+                  ideGpuResource: values?.ideGpuResource,
+                  ideGpuResourceType: values?.ideGpuResourceType,
                 },
               ],
             },

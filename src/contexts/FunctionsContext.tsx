@@ -614,6 +614,8 @@ export default ({ children }: any) => {
             vdiGpuResource: environmentGPUCoreUsagebility(
               selectedState?.instance?.resources?.hardware?.gpu?.hardware || [],
             ),
+            ideGpuResource: robotData?.step1?.services.ide.gpuAllocation,
+            ideGpuResourceType: robotData?.step1?.services.ide.gpuModelName,
             vdiEnabled: robotData?.step1?.services.vdi?.isEnabled,
             vdiSessionCount: robotData?.step1?.services.vdi?.sessionCount,
             ideEnabled: robotData?.step1?.services.ide?.isEnabled,
