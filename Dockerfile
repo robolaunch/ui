@@ -1,4 +1,4 @@
-FROM node:latest as build-stage
+FROM node:20.11-alpine as build-stage
 ARG REACT_APP_BACKEND_URL
 ARG REACT_APP_KEYCLOAK_URL
 ARG REACT_APP_KEYCLOAK_REALM
@@ -11,8 +11,6 @@ ARG REACT_APP_CREATABLE_INSTANCE
 COPY . /app
 WORKDIR /app
 RUN npm install -s
-RUN npm install n -g
-RUN n lts
 RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 RUN rm -rf /app/build/static/js/*.map
 FROM nginx:alpine as production-stage
