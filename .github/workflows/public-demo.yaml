@@ -17,7 +17,8 @@ jobs:
 
       - name: Extract Version from package.json
         id: project_version
-        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+        run: |
+          echo "VERSION=${{ steps.project_version.outputs.version }}" >> $GITHUB_ENV
 
       - name: Build the Docker Image
         run: |
