@@ -1,4 +1,3 @@
-import EnvironmentObjectLabels from "../EnvironmentObjectLabels/EnvironmentObjectLabels";
 import EnvironmentTitle from "../EnvironmentTitle/EnvironmentTitle";
 import EnvironmentType from "../EnvironmentType/EnvironmentType";
 import { ReactElement } from "react";

@@ -1,7 +1,6 @@
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { stringCapitalization } from "../../../functions/general.function";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import { ReactElement } from "react";
 import { OrgTableData } from "../../../controllers/OrgTableData";

@@ -1,7 +1,6 @@
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import RegionsWidget from "../../../components/RegionsWidget/RegionsWidget";
 import { RegionTableData } from "../../../controllers/RegionTableData";
-import CountWidget from "../../../components/CountWidget/CountWidget";
 import GeneralTable from "../../../components/Table/GeneralTable";
 import TourGuide from "../../../components/TourGuide/TourGuide";
 import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";

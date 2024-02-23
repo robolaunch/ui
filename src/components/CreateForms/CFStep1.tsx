@@ -6,7 +6,6 @@ import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 import CreateRobotFormLoader from "../CFLoader/CFLoader";
 import CFRosDistros from "../CFRosDistros/CFRosDistros";
-import CFGPUToggle from "../CFGPUToggle/CFGPUToggle";
 import CFRobotName from "../CFRobotName/CFRobotName";
 import useFunctions from "../../hooks/useFunctions";
 import CFVDICount from "../CFVDICount/CFVDICount";
