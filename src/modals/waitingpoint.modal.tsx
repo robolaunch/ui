@@ -136,7 +136,7 @@ export default function AddWaitingModal({
             />
           </CFSection>
         </div>
-        <Button type="submit" text={"Add Waypoint"} />
+        <Button type="submit" text={header} />
       </form>
     </Dialog>
   );

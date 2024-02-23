@@ -1,10 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-import {
-  IJob,
-  ILocation,
-  ImissionReducerState,
-} from "../context/misssion.context.interface";
-
 export interface IuseMission {
   missions: any;
   setMissions: any;

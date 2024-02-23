@@ -11,13 +11,28 @@ export default function JobsMapper(): ReactElement {
       {missionReducer.jobs?.map((job, index) => (
         <CardLayout
           key={index}
-          className="flex flex-col gap-2 text-xs !shadow-sm"
+          className="flex flex-col gap-2 p-4 text-xs !shadow-sm"
         >
-          <p>Job ID: {job.jobID}</p>
-          <p>Robot URL: {job.robotUrl}</p>
-          <p>Deadline: {job.deadline}</p>
-          <p>Priority: {job.priority}</p>
-          <p>Job Status: {job.jobStatus}</p>
+          <p>
+            <span className="font-medium">Job ID: </span>
+            {job.jobID}
+          </p>
+          <p>
+            <span className="font-medium">Robot URL: </span>
+            {job.robotUrl}
+          </p>
+          <p>
+            <span className="font-medium">Deadline: </span>
+            {job.deadline}
+          </p>
+          <p>
+            <span className="font-medium">Priority: </span>
+            {job.priority}
+          </p>
+          <p>
+            <span className="font-medium">Job Status: </span>
+            {job.jobStatus}
+          </p>
         </CardLayout>
       ))}
       <AddJob />
