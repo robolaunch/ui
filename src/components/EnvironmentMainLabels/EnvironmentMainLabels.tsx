@@ -10,9 +10,9 @@ export default function EnvironmentMainLabels(): ReactElement {
         <EnvironmentTitle />
         <EnvironmentType />
       </span>
-      <div className="flex items-center gap-3.5">
+      {/* <div className="flex items-center gap-3.5">
         <EnvironmentObjectLabels />
-      </div>
+      </div> */}
     </div>
   );
 }

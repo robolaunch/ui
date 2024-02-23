@@ -116,7 +116,7 @@ export default ({ children }: any) => {
       !applicationMode && handleGetBuildManager();
     } else if (!responseLaunchManagers) {
       !applicationMode && handleGetLaunchManagers();
-    } else if (responseRobot?.physicalInstance && !responsePhysicalInstance) {
+    } else if (!responseRobot?.physicalInstance) {
       handleGetPhysicalInstance();
     }
 
@@ -362,9 +362,9 @@ export default ({ children }: any) => {
     if (isSettedCookie && typeof connectionsReducer?.vdi === "boolean") {
       if (
         connectionsReducer?.vdi &&
-        responsePhysicalInstance?.federationPhase === "Connected" &&
-        responsePhysicalInstance?.multicastPhase === "Connected" &&
-        responsePhysicalInstance?.phase === "Connected"
+        responsePhysicalInstance?.connectionStatus === "Connected" &&
+        responsePhysicalInstance?.k8sStatus === "Connected" &&
+        responsePhysicalInstance?.status === "Connected"
       ) {
         dispatcher({
           type: "physicalIDE",
@@ -397,7 +397,7 @@ export default ({ children }: any) => {
       await getPhysicalInstancesFC(
         false,
         false,
-        responseRobot?.physicalInstance,
+        robotData?.step1?.details?.physicalInstanceName,
       ),
     );
   }
