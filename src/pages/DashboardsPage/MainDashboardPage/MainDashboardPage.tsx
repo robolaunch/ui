@@ -1,10 +1,9 @@
 import InformationWidget from "../../../components/InformationWidget/InformationWidget";
 import MainDashboardTour from "../../../components/MainDashboardTour/MainDashboardTour";
-import CountWidget from "../../../components/CountWidget/CountWidget";
-import { Fragment, ReactElement } from "react";
+import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import { MainTableData } from "../../../controllers/MainTableData";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
+import { Fragment, ReactElement } from "react";
 
 export default function MainDashboardPage(): ReactElement {
   const { rows, columns, orgs, handleReload } = MainTableData();

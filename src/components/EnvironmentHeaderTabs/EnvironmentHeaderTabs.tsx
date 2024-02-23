@@ -45,13 +45,12 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       isLoading:
         !isRobotReady ||
         !(
-          robotData.step1.services.ros.isEnabled &&
-          robotData.step1.services.ros.socketEndpoint &&
-          isSettedCookie
+          // robotData.step1.services.ros.isEnabled &&
+          (robotData.step1.services.ros.socketEndpoint && isSettedCookie)
         ),
       isHidden:
         applicationMode ||
-        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
+        (isRobotReady && !robotData?.step1?.services?.ros?.socketEndpoint),
     },
     {
       name: "Visualization",
@@ -59,13 +58,12 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       isLoading:
         !isRobotReady ||
         !(
-          robotData.step1.services.ros.isEnabled &&
-          robotData.step1.services.ros.socketEndpoint &&
-          isSettedCookie
+          // robotData.step1.services.ros.isEnabled &&
+          (robotData.step1.services.ros.socketEndpoint && isSettedCookie)
         ),
       isHidden:
         applicationMode ||
-        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
+        (isRobotReady && !robotData?.step1?.services?.ros?.socketEndpoint),
     },
     {
       name: "Development Suite",

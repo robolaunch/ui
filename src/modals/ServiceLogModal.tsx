@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { Dialog } from "primereact/dialog";
 import { LazyLog } from "@melloware/react-logviewer";
+import { Dialog } from "primereact/dialog";
+import { ReactElement } from "react";
 
 interface IServiceLogModal {
   header?: string;
