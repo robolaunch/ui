@@ -101,7 +101,7 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
           <CFSection>
             <div className="flex items-center gap-4">
               <CFBridgeToggle formik={formik} />
-              <CFGPUToggle formik={formik} isImportRobot={isImportRobot} />
+              {/* <CFGPUToggle formik={formik} isImportRobot={isImportRobot} /> */}
             </div>
             <Seperator />
           </CFSection>

@@ -22,7 +22,6 @@ export default function CFRepositoryURL({
       inputProps={formik.getFieldProps(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.url`,
       )}
-      placeholder="https://github.com/robolaunch/cloudy"
       disabled={disabled}
       inputError={
         //prettier-ignore

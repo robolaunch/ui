@@ -19,7 +19,6 @@ export default function CFWorkspaceName({
       dataTut="create-robot-step2-workspace-name"
       labelName="Workspace Name:"
       labelInfoTip="You can specify the name of your workspace here."
-      placeholder="ros2_ws"
       inputProps={formik.getFieldProps(`workspaces.${workspaceIndex}.name`)}
       classNameContainer="w-full"
       disabled={formik.isSubmitting}

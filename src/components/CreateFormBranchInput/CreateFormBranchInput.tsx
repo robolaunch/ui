@@ -121,7 +121,6 @@ export default function CreateFormBrachInput({
           labelName="Branch Name:"
           labelInfoTip="Type a repository branch name."
           disabled={disabled}
-          placeholder="main"
           inputProps={formik.getFieldProps(
             `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.branch`,
           )}

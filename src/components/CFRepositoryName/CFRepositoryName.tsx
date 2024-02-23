@@ -24,7 +24,6 @@ export default function CFRepositoryName({
       inputProps={formik.getFieldProps(
         `workspaces.${workspaceIndex}.robotRepositories.${repositoryIndex}.name`,
       )}
-      placeholder="cloudy"
       disabled={disabled}
       inputError={
         // @ts-ignore
