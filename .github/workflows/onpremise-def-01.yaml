@@ -1,4 +1,4 @@
-name: Docker Image (onpremise-def-01)
+name: Docker Image (onpremise-dds-01)
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment:
-      name: onpremise-def-01
+      name: onpremise-dds-01
 
     steps:
       - name: Checkout Code
@@ -17,14 +17,13 @@ jobs:
 
       - name: Extract Version from package.json
         id: project_version
-        run: |
-          echo "VERSION=${{ steps.project_version.outputs.version }}" >> $GITHUB_ENV
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
 
       - name: Build the Docker Image
         run: |
           docker build \
             --file Dockerfile \
-            --tag robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-def-01 \
+            --tag robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-dds-01 \
             --build-arg REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} \
             --build-arg REACT_APP_KEYCLOAK_URL=${{ secrets.REACT_APP_KEYCLOAK_URL }} \
             --build-arg REACT_APP_KEYCLOAK_REALM=${{ secrets.REACT_APP_KEYCLOAK_REALM }} \
@@ -40,4 +39,4 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push the Docker Image to Docker Hub
-        run: docker push robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-def-01
+        run: docker push robolaunchio/frontend-onpremise:${{ steps.project_version.outputs.version }}-dds-01
