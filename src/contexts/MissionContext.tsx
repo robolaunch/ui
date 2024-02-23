@@ -1,37 +1,15 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useRobot from "../hooks/useRobot";
 import randomstring from "randomstring";
 import saveAs from "file-saver";
 import { toast } from "sonner";
 import ROSLIB from "roslib";
-
 export const MissionContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
   const { ros } = useRobot();
-
-  const [missions, setMissions] = useState<any>([
-    // {
-    //   id: randomstring.generate(8),
-    //   name: "Mission 1",
-    //   active: true,
-    //   waypoints: [],
-    // },
-    // {
-    //   id: randomstring.generate(8),
-    //   name: "Mission 2",
-    //   active: true,
-    //   waypoints: [],
-    // },
-    // {
-    //   id: randomstring.generate(8),
-    //   name: "Mission 3",
-    //   active: true,
-    //   waypoints: [],
-    // },
-  ]);
-
+  const [missions, setMissions] = useState<any>([]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [activeMission, setActiveMission] = useState<number>(-1);
   const [hoverWaypoint, setHoverWaypoint] = useState<number>(-1);
@@ -97,6 +75,7 @@ export default ({ children }: any) => {
     });
     saveAs(blob, `missions.json`);
   }
+
   function handleImportJSON(file: any) {
     if (file.type === "application/json") {
       const fileReader = new FileReader();
@@ -108,55 +87,6 @@ export default ({ children }: any) => {
       toast.error("Invalid file type. Please upload a JSON file.");
     }
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const waypointRequest = {
-    id: "STRING OR INTEGER",
-    name: "STRING",
-    waypoints: [
-      {
-        id: "STRING OR INTEGER",
-        name: "STRING (WAYPOINT #1)",
-        taskType: "STRING",
-      },
-      {
-        id: "STRING OR INTEGER",
-        name: "STRING (WAYPOINT #2)",
-        taskType: "STRING",
-      },
-    ],
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const waypointResponse = {
-    id: "STRING OR INTEGER",
-    name: "STRING",
-    missionState: "STRING => `success` | `running` | `error` ",
-    waypoints: [
-      {
-        coordinates: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        id: "STRING OR INTEGER",
-        name: "STRING (WAYPOINT 1)",
-        taskType: "STRING",
-        taskState: "STRING => `waiting` | `success` | `running` | `error` ",
-      },
-      {
-        coordinates: {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        id: "STRING OR INTEGER",
-        name: "STRING (WAYPOINT 2)",
-        taskType: "STRING",
-        taskState: "STRING => `waiting` ||`success` || `running` || `error`",
-      },
-    ],
-  };
 
   function handleStartMission(mission: any) {
     rosWaypointsWeb.publish({

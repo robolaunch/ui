@@ -1080,10 +1080,6 @@ video {
   height: 3px;
 }
 
-.h-\[42rem\] {
-  height: 42rem;
-}
-
 .h-\[45\.4rem\] {
   height: 45.4rem;
 }
@@ -1314,6 +1310,10 @@ video {
 
 .w-\[50vw\] {
   width: 50vw;
+}
+
+.w-\[60vw\] {
+  width: 60vw;
 }
 
 .w-\[80vw\] {
@@ -2642,6 +2642,11 @@ video {
   color: rgb(172 45 254 / var(--tw-text-opacity));
 }
 
+.text-primary-600 {
+  --tw-text-opacity: 1;
+  color: rgb(147 1 242 / var(--tw-text-opacity));
+}
+
 .text-primary-700 {
   --tw-text-opacity: 1;
   color: rgb(113 1 186 / var(--tw-text-opacity));
@@ -2736,6 +2741,12 @@ video {
 .\!shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+.\!shadow-sm {
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color) !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
@@ -3571,6 +3582,10 @@ td {
 
   .\32xl\:col-span-9 {
     grid-column: span 9 / span 9;
+  }
+
+  .\32xl\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .\32xl\:inline {

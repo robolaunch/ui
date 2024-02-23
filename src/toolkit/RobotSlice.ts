@@ -68,13 +68,7 @@ export const createRobot = createAsyncThunk(
                   gpuEnabledForCloudInstance:
                     values?.gpuEnabledForCloudInstance,
                   marketPlaceEnabled: values?.marketPlaceEnabled,
-                  // trialImage: {
-                  //   imageUser: values?.imageUser,
-                  //   imageRepository: values?.imageRepository,
-                  //   imageTag: values?.imageTag,
-                  // },
                   robotWorkspaces: values?.workspaces,
-
                   permittedDirectories: values?.permittedDirectories,
                   persistentDirectories: values?.persistentDirectories,
                   hostDirectories: values?.hostDirectories,
@@ -516,7 +510,7 @@ export const RobotSlice = createSlice({
     urls: {
       vdi: isProduction ? "" : "ws://localhost:8080/",
       ide: isProduction ? "" : "http://localhost:3000/",
-      ros: isProduction ? "" : "ws://localhost:9090",
+      ros: isProduction ? "" : "ws://172.16.44.198:9090",
     },
   },
   reducers: {},

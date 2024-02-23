@@ -27,15 +27,17 @@ export default function EnvironmentHeaderTabs(): ReactElement {
       name: "Task Management",
       icon: <MdMap size={16} />,
       isLoading:
-        !isRobotReady ||
-        !(
-          robotData.step1.services.ros.isEnabled &&
-          robotData.step1.services.ros.socketEndpoint &&
-          isSettedCookie
-        ),
+        // !isRobotReady ||
+        // !(
+        //   robotData.step1.services.ros.isEnabled &&
+        //   robotData.step1.services.ros.socketEndpoint &&
+        //   isSettedCookie
+        // )
+        false,
       isHidden:
-        applicationMode ||
-        (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled),
+        // applicationMode ||
+        // (isRobotReady && !robotData?.step1?.services?.ros?.isEnabled)
+        false,
     },
     {
       name: "Teleoperation",
