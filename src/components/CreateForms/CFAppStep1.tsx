@@ -91,19 +91,19 @@ export default function CFAppStep1({
         <Seperator />
       </CFSection>
 
-      {/* <Fragment>
+      <Fragment>
         {!isImportRobot && (
           <CFSection>
             <CFJupyterNotebook formik={formik} />
             <Seperator />
           </CFSection>
         )}
-      </Fragment> */}
+      </Fragment>
 
-      {/* <CFSection>
+      <CFSection>
         <CFSharing formik={formik} />
         <Seperator />
-      </CFSection> */}
+      </CFSection>
 
       <CFSection>
         <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
