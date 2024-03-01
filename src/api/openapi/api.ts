@@ -3135,6 +3135,30 @@ export interface Template {
      * @memberof Template
      */
     'templateType'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'fleetName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'environmentName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'organizationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Template
+     */
+    'userName'?: string;
 }
 /**
  * 
@@ -3176,35 +3200,6 @@ export const CombinedFunctionsApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addUserAttribute: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/combined/addUserAttribute`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3236,35 +3231,6 @@ export const CombinedFunctionsApiAxiosParamCreator = function (configuration?: C
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserAttribute: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/combined/getUserAttribute`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -3277,30 +3243,12 @@ export const CombinedFunctionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async addUserAttribute(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addUserAttribute(options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createInfrastructure(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createInfrastructure(organization, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getUserAttribute(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserAttribute(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3315,28 +3263,12 @@ export const CombinedFunctionsApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addUserAttribute(options?: any): AxiosPromise<string> {
-            return localVarFp.addUserAttribute(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {Organization} [organization] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createInfrastructure(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.createInfrastructure(organization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserAttribute(options?: any): AxiosPromise<string> {
-            return localVarFp.getUserAttribute(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3350,16 +3282,6 @@ export const CombinedFunctionsApiFactory = function (configuration?: Configurati
 export class CombinedFunctionsApi extends BaseAPI {
     /**
      * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CombinedFunctionsApi
-     */
-    public addUserAttribute(options?: AxiosRequestConfig) {
-        return CombinedFunctionsApiFp(this.configuration).addUserAttribute(options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @param {Organization} [organization] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3367,16 +3289,6 @@ export class CombinedFunctionsApi extends BaseAPI {
      */
     public createInfrastructure(organization?: Organization, options?: AxiosRequestConfig) {
         return CombinedFunctionsApiFp(this.configuration).createInfrastructure(organization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CombinedFunctionsApi
-     */
-    public getUserAttribute(options?: AxiosRequestConfig) {
-        return CombinedFunctionsApiFp(this.configuration).getUserAttribute(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4226,6 +4138,72 @@ export const EnvironmentApiAxiosParamCreator = function (configuration?: Configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/startEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopEnvironment: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/environment/stopEnvironment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4326,6 +4304,26 @@ export const EnvironmentApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTemplates(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async startEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.startEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stopEnvironment(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stopEnvironment(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -4416,6 +4414,24 @@ export const EnvironmentApiFactory = function (configuration?: Configuration, ba
          */
         getTemplates(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getTemplates(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.startEnvironment(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopEnvironment(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.stopEnvironment(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4524,6 +4540,28 @@ export class EnvironmentApi extends BaseAPI {
      */
     public getTemplates(organization?: Organization, options?: AxiosRequestConfig) {
         return EnvironmentApiFp(this.configuration).getTemplates(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public startEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).startEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EnvironmentApi
+     */
+    public stopEnvironment(organization?: Organization, options?: AxiosRequestConfig) {
+        return EnvironmentApiFp(this.configuration).stopEnvironment(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4674,6 +4712,39 @@ export const KubernetesApiAxiosParamCreator = function (configuration?: Configur
          */
         createNamespace: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/kubernetes/createNamespace`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNamespacePublic: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/kubernetes/createNamespacePublic`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5062,6 +5133,16 @@ export const KubernetesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async createNamespacePublic(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createNamespacePublic(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async deleteFederatedFleet(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedFleet(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5207,6 +5288,15 @@ export const KubernetesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createNamespacePublic(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createNamespacePublic(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteFederatedFleet(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.deleteFederatedFleet(organization, options).then((request) => request(axios, basePath));
         },
@@ -5345,6 +5435,17 @@ export class KubernetesApi extends BaseAPI {
      */
     public createNamespace(organization?: Organization, options?: AxiosRequestConfig) {
         return KubernetesApiFp(this.configuration).createNamespace(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KubernetesApi
+     */
+    public createNamespacePublic(organization?: Organization, options?: AxiosRequestConfig) {
+        return KubernetesApiFp(this.configuration).createNamespacePublic(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
