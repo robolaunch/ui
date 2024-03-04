@@ -1393,6 +1393,14 @@ video {
   width: 60%;
 }
 
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .min-w-24 {
   min-width: 6rem;
 }
@@ -1777,6 +1785,14 @@ video {
 
 .rounded-md {
   border-radius: 0.375rem;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
+.rounded-none {
+  border-radius: 0px;
 }
 
 .rounded-l-lg {
@@ -2320,6 +2336,11 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.px-3\.5 {
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
 }
 
 .\!pb-0 {

@@ -40,6 +40,7 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
       rosDistros: [],
       podName: "",
       log: "",
+      bridgeDistro: "",
     },
     vdi: {
       isEnabled: true,

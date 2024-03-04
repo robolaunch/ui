@@ -8,6 +8,7 @@ import useMain from "../../hooks/useMain";
 import CFContainers from "../CFContainers/CFContainers";
 import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
 import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
+import CFBridgeDistro from "../CFBridgeDistro/CFBridgeDistro";
 
 interface ICFStep1Deploy {
   isImportRobot?: boolean;
@@ -38,8 +39,7 @@ export default function CFStep1Deploy({
         <Seperator />
       </CFSection>
       <CFSection>
-        <CFBridgeToggle formik={formik} />
-        <Seperator />
+        <CFBridgeDistro formik={formik} />
       </CFSection>
     </Fragment>
   );

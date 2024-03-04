@@ -7,6 +7,7 @@ interface ICard {
   loading?: boolean;
   dataTut?: string;
   background?: boolean;
+  onClick?: () => void;
 }
 
 export default function Card({
@@ -16,9 +17,11 @@ export default function Card({
   loading,
   dataTut,
   background,
+  onClick,
 }: ICard): ReactElement {
   return (
     <div
+      onClick={onClick}
       data-tut={dataTut}
       className={`animate-fadeIn h-full w-full rounded-lg border border-light-200 bg-light-50 p-1 shadow-md ${className}`}
       style={

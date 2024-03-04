@@ -29,6 +29,7 @@ export interface IEnvironmentStep1 {
       socketEndpoint: string;
       podName: string;
       log: string;
+      bridgeDistro: string;
     };
     vdi: {
       isEnabled: boolean;
@@ -120,6 +121,10 @@ export interface IEnvironmentStep1 {
     mountedVolumes: {
       name: string; // volume name
       path: string;
+    }[];
+    environmentVariables: {
+      name: string;
+      value: string;
     }[];
   }[];
 }
