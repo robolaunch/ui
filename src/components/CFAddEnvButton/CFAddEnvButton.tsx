@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CFAddButton from "../CFAddButton/CFAddButton";
 import { FormikProps } from "formik/dist/types";
 import { handleAddEnv } from "../../functions/form.env.function";
 import { IEnvironmentStep4LaunchStep } from "../../interfaces/environment/environment.step4.interface";
@@ -15,7 +15,7 @@ export default function CFAddEnvButton({
 }: ICFAddEnvButton): ReactElement {
   return (
     <div data-tut="create-robot-step4-environments-add-button">
-      <CreateRobotFormAddButton
+      <CFAddButton
         // @ts-ignore
         onClick={() => handleAddEnv(formik)}
         disabled={disabled || formik?.isSubmitting}

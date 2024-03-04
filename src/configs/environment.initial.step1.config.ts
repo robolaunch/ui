@@ -97,6 +97,7 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     name: "",
     isVirtualRobot: true,
     configureWorkspace: false,
+    isDeployMode: false,
     isDevelopmentMode: true || AppMode(),
     physicalInstanceName: "",
   },
@@ -111,4 +112,6 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     build: [],
     launch: [],
   },
+  volumes: [],
+  containers: [],
 };

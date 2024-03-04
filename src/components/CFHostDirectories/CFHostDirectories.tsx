@@ -1,5 +1,5 @@
 import CFDirectoriesInputGroup from "../CFHostDirectoriesInputGroup/CFHostDirectoriesInputGroup";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CreateRobotFormAddButton from "../CFAddButton/CFAddButton";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { FormikProps } from "formik";
 import { ReactElement } from "react";

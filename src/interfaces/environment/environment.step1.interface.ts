@@ -2,6 +2,7 @@ export interface IEnvironmentStep1 {
   details: {
     name: string;
     isVirtualRobot: boolean;
+    isDeployMode: boolean;
     isDevelopmentMode: boolean;
     configureWorkspace: boolean;
     physicalInstanceName: string;
@@ -106,6 +107,21 @@ export interface IEnvironmentStep1 {
     build: IEnvironmentStep1Cluster[];
     launch: IEnvironmentStep1Cluster[];
   };
+  volumes: {
+    name: string;
+    capacity: number;
+  }[];
+  containers: {
+    name: string;
+    replicaCount: number;
+    image: string;
+    command: string;
+    privileged: boolean;
+    mountedVolumes: {
+      name: string; // volume name
+      path: string;
+    }[];
+  }[];
 }
 
 export interface IEnvironmentStep1Cluster {

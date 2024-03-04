@@ -1,5 +1,5 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import CreateRobotFormAddButton from "../CreateRobotFormAddButton/CreateRobotFormAddButton";
+import CreateRobotFormAddButton from "../CFAddButton/CFAddButton";
 import CFPortInput from "../CFPortInput/CFPortInput";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import { ReactElement } from "react";

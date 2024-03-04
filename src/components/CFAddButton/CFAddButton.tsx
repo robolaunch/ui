@@ -1,19 +1,19 @@
 import React, { ReactElement } from "react";
 import { BsPlusCircle } from "react-icons/bs";
 
-interface ICreateRobotFormAddButton {
+interface ICFAddButton {
   onClick: () => void;
   description?: string;
   disabled?: boolean;
   className?: string;
 }
 
-export default function CreateRobotFormAddButton({
+export default function CFAddButton({
   onClick,
   description,
   disabled,
   className,
-}: ICreateRobotFormAddButton): ReactElement {
+}: ICFAddButton): ReactElement {
   return (
     <BsPlusCircle
       title={description}

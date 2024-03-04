@@ -1,13 +1,19 @@
-import React, { Fragment, ReactElement } from "react";
-import CreateRobotFormStep1Tour from "../CreateRobotFormStep1Tour/CreateRobotFormStep1Tour";
 import CreateEnvironmentFormStep1Tour from "../CreateEnvironmentFormStep1Tour/CreateEnvironmentFormStep1Tour";
+import CreateRobotFormStep1Tour from "../CreateRobotFormStep1Tour/CreateRobotFormStep1Tour";
 import CreateFormStep3Tour from "../CreateFormStep3Tour/CreateFormStep3Tour";
 import CreateFormStep2Tour from "../CreateFormStep2Tour/CreateFormStep2Tour";
 import CreateFormStep4Tour from "../CreateFormStep4Tour /CreateFormStep4Tour ";
+import { Fragment, ReactElement } from "react";
 
 interface ICreateFormTourSwither {
   isLoading?: boolean;
-  type: "step1-robot" | "step1-app" | "workspace" | "build" | "launch";
+  type:
+    | "step1-robot-development"
+    | "step1-robot-deploy"
+    | "step1-app"
+    | "workspace"
+    | "build"
+    | "launch";
 }
 
 export default function CreateFormTourSwither({
@@ -19,7 +25,7 @@ export default function CreateFormTourSwither({
       {(() => {
         if (!isLoading) {
           switch (type) {
-            case "step1-robot":
+            case "step1-robot-development":
               return <CreateRobotFormStep1Tour />;
             case "step1-app":
               return <CreateEnvironmentFormStep1Tour />;

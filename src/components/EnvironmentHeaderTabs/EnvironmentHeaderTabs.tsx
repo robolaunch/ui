@@ -4,11 +4,11 @@ import { IrobotTab } from "../../interfaces/robotInterfaces";
 import { AiFillCode, AiFillLayout } from "react-icons/ai";
 import { BiSolidJoystickButton } from "react-icons/bi";
 import { BsCameraVideoFill } from "react-icons/bs";
-import useRobot from "../../hooks/useRobot";
-import { ReactElement } from "react";
-import { FaPython } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/redux";
+import useRobot from "../../hooks/useRobot";
+import { FaPython } from "react-icons/fa";
 import useMain from "../../hooks/useMain";
+import { ReactElement } from "react";
 
 export default function EnvironmentHeaderTabs(): ReactElement {
   const { isSettedCookie, isRobotReady } = useRobot();
