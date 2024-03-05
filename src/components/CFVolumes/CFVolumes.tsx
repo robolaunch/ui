@@ -1,10 +1,9 @@
 import { FormikProps } from "formik";
-import { Fragment, ReactElement, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CFAddButton from "../CFAddButton/CFAddButton";
-import FormInputText from "../FormInputText/FormInputText";
-import Card from "../Card/Card";
+import CFVolumeMapper from "../CFVolumeMapper/CFVolumeMapper";
 
 interface ICFVolumes {
   formik: FormikProps<IEnvironmentStep1>;
@@ -27,56 +26,14 @@ export default function CFVolumes({
       vertical
       gap={4}
     >
-      <Fragment>
-        {formik.values.volumes.map((_, index) => {
-          return (
-            <Card
-              className="flex flex-col items-center gap-3 p-5 shadow-sm"
-              key={index}
-            >
-              <div className="flex w-full justify-between gap-4">
-                <FormInputText
-                  classNameContainer="w-full"
-                  labelName="Volume Name:"
-                  labelInfoTip="Type a new volume name."
-                  disabled
-                  inputProps={{
-                    ...formik.getFieldProps(`volumes[${index}].name`),
-                  }}
-                />
-                <FormInputText
-                  classNameContainer="w-full"
-                  labelName="Volume Path:"
-                  labelInfoTip="Type a new volume path."
-                  inputProps={{
-                    ...formik.getFieldProps(`volumes[${index}].mountPath`),
-                  }}
-                />
-              </div>
-              <p
-                className="cursor-pointer text-xs font-medium text-red-500 hover:underline"
-                onClick={() => {
-                  formik.setFieldValue(
-                    "volumes",
-                    formik.values.volumes.filter(
-                      (_, volumeIndex) => volumeIndex !== index,
-                    ),
-                  );
-                }}
-              >
-                Delete Volume
-              </p>
-            </Card>
-          );
-        })}
-      </Fragment>
+      <CFVolumeMapper formik={formik} />
       <CFAddButton
         // @ts-ignore
         onClick={() => {
           formik.setFieldValue("volumes", [
             ...formik.values.volumes,
             {
-              name: "",
+              name: `workload-pvc-${formik.values.volumes.length}`,
               mountPath: "",
             },
           ]);

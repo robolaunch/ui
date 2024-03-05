@@ -1,14 +1,13 @@
+import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
+import CFBridgeDistro from "../CFBridgeDistro/CFBridgeDistro";
+import CFContainers from "../CFContainers/CFContainers";
 import CFRobotName from "../CFRobotName/CFRobotName";
 import CFVolumes from "../CFVolumes/CFVolumes";
 import Seperator from "../Seperator/Seperator";
 import CFSection from "../CFSection/CFSection";
 import { Fragment, ReactElement } from "react";
 import useForm from "../../hooks/useForm";
-import useMain from "../../hooks/useMain";
-import CFContainers from "../CFContainers/CFContainers";
-import CreateRobotTypes from "../CreateRobotTypes/CreateRobotTypes";
-import CFBridgeToggle from "../CFBridgeToggle/CFBridgeToggle";
-import CFBridgeDistro from "../CFBridgeDistro/CFBridgeDistro";
+import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
 
 interface ICFStep1Deploy {
   isImportRobot?: boolean;
@@ -17,7 +16,6 @@ interface ICFStep1Deploy {
 export default function CFStep1Deploy({
   isImportRobot,
 }: ICFStep1Deploy): ReactElement {
-  const { robotData } = useMain();
   const { step1Formik: formik } = useForm();
 
   return (
@@ -27,7 +25,11 @@ export default function CFStep1Deploy({
         <Seperator />
       </CFSection>
       <CFSection>
-        <CreateRobotTypes formik={formik} isImportRobot={isImportRobot} />
+        <CreateRobotTypes
+          formik={formik}
+          isImportRobot={isImportRobot}
+          isDeployMode
+        />
         <Seperator />
       </CFSection>
       <CFSection>
@@ -40,6 +42,13 @@ export default function CFStep1Deploy({
       </CFSection>
       <CFSection>
         <CFBridgeDistro formik={formik} />
+      </CFSection>
+      <CFSection>
+        <CFRobotButtons
+          formik={formik}
+          step={1}
+          isImportRobot={isImportRobot}
+        />
       </CFSection>
     </Fragment>
   );

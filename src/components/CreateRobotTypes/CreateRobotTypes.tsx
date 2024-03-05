@@ -11,11 +11,13 @@ import { IPhysicalInstance } from "../../interfaces/global/physicalInstance.inte
 interface ICreateRobotTypes {
   formik: FormikProps<IEnvironmentStep1>;
   isImportRobot?: boolean;
+  isDeployMode?: boolean;
 }
 
 export default function CreateRobotTypes({
   formik,
   isImportRobot,
+  isDeployMode,
 }: ICreateRobotTypes): ReactElement {
   const [responsePhysicalInstances, setResponsePhysicalInstances] = useState<
     IPhysicalInstance[] | null
@@ -72,12 +74,12 @@ export default function CreateRobotTypes({
         <div className="flex gap-6">
           {[
             {
-              name: "Virtual Robot",
+              name: isDeployMode ? "Virtual Instance" : "Virtual Robot",
               isVirtualRobot: true,
               disabled: isImportRobot,
             },
             {
-              name: "Hybrid Robot",
+              name: isDeployMode ? "Physical Instance" : "Hybrid Robot",
               isVirtualRobot: false,
               disabled: isImportRobot,
             },
