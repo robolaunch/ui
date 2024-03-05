@@ -8,7 +8,7 @@ export default function CFStep1Tabs(): ReactElement {
     <ul className="flex h-10 w-full items-center">
       {[
         {
-          name: "Development",
+          name: "Develop",
           value: false,
         },
         {

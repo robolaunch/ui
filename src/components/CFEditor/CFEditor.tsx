@@ -37,6 +37,9 @@ export default function CFEditor({
           top: 6,
           bottom: 6,
         },
+        scrollbar: {
+          alwaysConsumeMouseWheel: false,
+        },
       }}
       theme="vs-dark"
       onChange={onChange}

@@ -33,6 +33,9 @@ export default function CFStep1Deploy({
         <Seperator />
       </CFSection>
       <CFSection>
+        <CFBridgeDistro formik={formik} />
+      </CFSection>
+      <CFSection>
         <CFVolumes formik={formik} isImportRobot={isImportRobot} />
         <Seperator />
       </CFSection>
@@ -40,9 +43,7 @@ export default function CFStep1Deploy({
         <CFContainers formik={formik} isImportRobot={isImportRobot} />
         <Seperator />
       </CFSection>
-      <CFSection>
-        <CFBridgeDistro formik={formik} />
-      </CFSection>
+
       <CFSection>
         <CFRobotButtons
           formik={formik}

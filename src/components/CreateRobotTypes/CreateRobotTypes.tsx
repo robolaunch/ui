@@ -68,13 +68,13 @@ export default function CreateRobotTypes({
         className="flex flex-col gap-2 pb-2"
       >
         <div className="flex min-w-fit gap-1 text-xs font-medium text-light-700">
-          Robot Type:
+          {isDeployMode ? "Instance Type" : "Robot Type:"}
           <InfoTip content="Select the type of robot you want to create." />
         </div>
         <div className="flex gap-6">
           {[
             {
-              name: isDeployMode ? "Virtual Instance" : "Virtual Robot",
+              name: isDeployMode ? "Cloud Instance" : "Virtual Robot",
               isVirtualRobot: true,
               disabled: isImportRobot,
             },

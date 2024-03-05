@@ -932,6 +932,10 @@ video {
   margin-top: 0.1rem;
 }
 
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1383,6 +1387,18 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
+}
+
+.w-1\/2 {
+  width: 50%;
+}
+
+.w-1\/6 {
+  width: 16.666667%;
+}
+
+.w-5\/6 {
+  width: 83.333333%;
 }
 
 .min-w-24 {
@@ -2396,6 +2412,10 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pt-1\.5 {
+  padding-top: 0.375rem;
 }
 
 .text-center {

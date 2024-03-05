@@ -11,6 +11,10 @@ interface IFormInputRange {
   disabled?: boolean;
   error?: any;
   touched?: boolean;
+  vertical?: boolean;
+  classNameContainer?: string;
+  classNameLabel?: string;
+  rightTip?: boolean;
 }
 
 export default function FormInputRange({
@@ -23,6 +27,10 @@ export default function FormInputRange({
   disabled,
   error,
   touched,
+  vertical,
+  classNameContainer,
+  classNameLabel,
+  rightTip = false,
 }: IFormInputRange): ReactElement {
   return (
     <CFInfoBar
@@ -31,6 +39,10 @@ export default function FormInputRange({
       dataTut={dataTut}
       error={error}
       touched={touched}
+      vertical={vertical}
+      classNameContainer={classNameContainer}
+      classNameLabel={classNameLabel}
+      rightTip={rightTip}
     >
       <input
         min={min}

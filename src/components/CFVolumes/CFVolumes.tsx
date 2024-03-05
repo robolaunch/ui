@@ -34,7 +34,7 @@ export default function CFVolumes({
             ...formik.values.volumes,
             {
               name: `workload-pvc-${formik.values.volumes.length}`,
-              mountPath: "",
+              capacity: 20,
             },
           ]);
         }}

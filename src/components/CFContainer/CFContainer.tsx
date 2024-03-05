@@ -2,12 +2,13 @@ import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step
 import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import FormInputText from "../FormInputText/FormInputText";
 import CFPrivileged from "../CFPrivileged/CFPrivileged";
-import CFAddButton from "../CFAddButton/CFAddButton";
 import { Fragment, ReactElement, useState } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CFEditor from "../CFEditor/CFEditor";
 import { FormikProps } from "formik";
 import Accordion from "../Accordion/AccordionV2";
+import CFContainerEnvMapper from "../CFContainerEnvMapper/CFContainerEnvMapper";
+import CFContainerVolumeMapper from "../CFContainerVolumeMapper/CFContainerVolumeMapper";
 
 interface ICFContainer {
   formik: FormikProps<IEnvironmentStep1>;
@@ -33,36 +34,17 @@ export default function CFContainer({
       >
         <div className="flex w-full flex-col justify-between gap-4">
           <div className="flex w-full gap-4">
-            <FormInputSelect
-              classNameContainer="w-3/4"
-              labelName="Volumes Name:"
-              tip="Type Volumes Name"
-              // @ts-ignore
-              inputError={formik.errors.containers?.[index]?.name}
-              inputTouched={formik.touched.containers?.[index]?.name}
-              options={
-                <Fragment>
-                  {!formik.values.containers?.[index]?.mountedVolumes && (
-                    <option selected value="">
-                      Select a volume
-                    </option>
-                  )}
-                  {formik.values.volumes.map((volume, index) => {
-                    return (
-                      <option key={index} value={volume.name}>
-                        {volume.name}
-                      </option>
-                    );
-                  })}
-                </Fragment>
-              }
+            <FormInputText
+              classNameContainer="w-5/6"
+              labelName="Image:"
+              labelInfoTip="Image for the container"
               inputProps={{
-                ...formik.getFieldProps(`containers[${index}].mountedVolumes`),
+                ...formik.getFieldProps(`containers[${index}].image`),
               }}
             />
             <FormInputText
               type="number"
-              classNameContainer="w-1/4"
+              classNameContainer="w-1/6"
               labelName="Replica Count:"
               labelInfoTip="Replica count for the container"
               inputProps={{
@@ -70,14 +52,8 @@ export default function CFContainer({
               }}
             />
           </div>
-          <FormInputText
-            classNameContainer="w-full"
-            labelName="Image:"
-            labelInfoTip="Image for the container"
-            inputProps={{
-              ...formik.getFieldProps(`containers[${index}].image`),
-            }}
-          />
+
+          <CFPrivileged formik={formik} index={index} />
           <CFInfoBar
             label="Command:"
             tip="Type Command"
@@ -94,41 +70,23 @@ export default function CFContainer({
               }}
             />
             <CFInfoBar
+              label="Volumes:"
+              tip="Type volumes"
+              vertical
+              touched={true}
+            >
+              <CFContainerVolumeMapper formik={formik} containerIndex={index} />
+            </CFInfoBar>
+            <CFInfoBar
               label="Environment Variables:"
               tip="Type Environment Variables"
               dataTut="create-robot-step4-environments"
               vertical
               touched={true}
             >
-              <Fragment>
-                {formik?.values?.containers[index]?.environmentVariables?.map(
-                  (_, envIndex: number) => {
-                    return <></>;
-                  },
-                )}
-                <div data-tut="create-robot-step4-environments-add-button">
-                  <CFAddButton
-                    onClick={() => {
-                      formik.setFieldValue(
-                        `containers[${index}].environmentVariables`,
-                        [
-                          ...formik?.values?.containers[index]
-                            ?.environmentVariables,
-                          {
-                            name: "",
-                            value: "",
-                          },
-                        ],
-                      );
-                    }}
-                    disabled={formik?.isSubmitting}
-                  />
-                </div>
-              </Fragment>
+              <CFContainerEnvMapper formik={formik} containerIndex={index} />
             </CFInfoBar>
           </CFInfoBar>
-
-          <CFPrivileged formik={formik} index={index} />
         </div>
         <p
           className="cursor-pointer text-xs font-medium text-red-500 hover:underline"

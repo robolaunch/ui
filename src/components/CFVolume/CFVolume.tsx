@@ -3,6 +3,7 @@ import { FormikProps } from "formik";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import FormInputText from "../FormInputText/FormInputText";
 import Accordion from "../Accordion/AccordionV2";
+import FormInputRange from "../FormInputRange/FormInputRange";
 
 interface ICFVolume {
   formik: FormikProps<IEnvironmentStep1>;
@@ -20,9 +21,9 @@ export default function CFVolume({ formik, index }: ICFVolume): ReactElement {
       header={`Volume (${formik.values.volumes?.[index]?.name})`}
     >
       <div className="flex flex-col items-center gap-3 p-5 shadow-sm">
-        <div className="flex w-full justify-between gap-4">
+        <div className="flex w-full gap-4">
           <FormInputText
-            classNameContainer="w-1/4"
+            classNameContainer="w-full"
             labelName="Volume Name:"
             labelInfoTip="Type a new volume name."
             disabled
@@ -30,13 +31,26 @@ export default function CFVolume({ formik, index }: ICFVolume): ReactElement {
               ...formik.getFieldProps(`volumes[${index}].name`),
             }}
           />
-          <FormInputText
-            classNameContainer="w-3/4"
-            labelName="Volume Path:"
-            labelInfoTip="Type a new volume path."
-            inputProps={{
-              ...formik.getFieldProps(`volumes[${index}].mountPath`),
+          <FormInputRange
+            rightTip
+            classNameContainer="w-full"
+            classNameLabel="pt-1.5"
+            vertical
+            label={`Storage (${formik?.values?.volumes?.[index]?.capacity} GB):`}
+            tip={`
+                Select the storage capacity for the volume. 
+                The capacity is the amount of storage that will be allocated to the volume.
+            `}
+            dataTut="create-robot-step1-storage"
+            InputProps={{
+              ...formik.getFieldProps(`volumes[${index}].capacity`),
             }}
+            min={20}
+            max={100}
+            disabled={formik.isSubmitting}
+            // @ts-ignore
+            error={formik.errors.volumes?.[index]?.capacity}
+            touched={formik.touched.volumes?.[index]?.capacity}
           />
         </div>
         <p
