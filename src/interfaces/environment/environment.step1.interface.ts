@@ -112,20 +112,22 @@ export interface IEnvironmentStep1 {
     name: string;
     capacity: number;
   }[];
-  containers: {
-    name: string;
+  launchContainers: {
     replicaCount: number;
-    image: string;
-    command: string;
-    privileged: boolean;
-    mountedVolumes: {
-      name: string; // volume name
-      path: string;
-    }[];
-    environmentVariables: {
+    container: {
       name: string;
-      value: string;
-    }[];
+      image: string;
+      command: string;
+      privileged: boolean;
+      mountedVolumes: {
+        name: string; // volume name
+        path: string;
+      }[];
+      environmentVariables: {
+        name: string;
+        value: string;
+      }[];
+    };
   }[];
 }
 

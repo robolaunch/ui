@@ -31,6 +31,16 @@ export default function CFContainer({
         className="flex flex-col items-center gap-3 p-5 shadow-sm"
         key={index}
       >
+        <FormInputText
+          classNameContainer="w-full"
+          labelName="Name:"
+          labelInfoTip="Name for the container"
+          inputProps={{
+            ...formik.getFieldProps(
+              `launchContainers[${index}].container.name`,
+            ),
+          }}
+        />
         <div className="flex w-full flex-col justify-between gap-4">
           <div className="flex w-full gap-4">
             <FormInputText
@@ -38,7 +48,9 @@ export default function CFContainer({
               labelName="Image:"
               labelInfoTip="Image for the container"
               inputProps={{
-                ...formik.getFieldProps(`containers[${index}].image`),
+                ...formik.getFieldProps(
+                  `launchContainers[${index}].container.image`,
+                ),
               }}
             />
             <FormInputText
@@ -47,7 +59,9 @@ export default function CFContainer({
               labelName="Replica Count:"
               labelInfoTip="Replica count for the container"
               inputProps={{
-                ...formik.getFieldProps(`containers[${index}].replicaCount`),
+                ...formik.getFieldProps(
+                  `launchContainers[${index}].replicaCount`,
+                ),
               }}
             />
           </div>
@@ -61,11 +75,16 @@ export default function CFContainer({
           >
             <CFEditor
               language="shell"
-              defaultValue={formik.values.containers[index].command}
-              value={formik.values.containers[index].command}
+              defaultValue={
+                formik.values.launchContainers[index].container.command
+              }
+              value={formik.values.launchContainers[index].container.command}
               readonly={formik.isSubmitting}
               onChange={(e: any) => {
-                formik.setFieldValue(`containers[${index}].command`, e);
+                formik.setFieldValue(
+                  `launchContainers[${index}].container.command`,
+                  e,
+                );
               }}
             />
             <CFInfoBar
@@ -91,10 +110,8 @@ export default function CFContainer({
           className="cursor-pointer text-xs font-medium text-red-500 hover:underline"
           onClick={() => {
             formik.setFieldValue(
-              "containers",
-              formik.values.containers.filter(
-                (_, contIndex) => contIndex !== index,
-              ),
+              `launchContainers`,
+              formik.values.launchContainers.filter((_, i) => i !== index),
             );
           }}
         >

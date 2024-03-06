@@ -15,28 +15,29 @@ export default function CFContainerVolumeMapper({
 }: ICFContainerVolumeMapper): ReactElement {
   return (
     <Fragment>
-      {formik?.values?.containers[containerIndex]?.mountedVolumes?.map(
-        (_, volumeIndex: number) => {
-          return (
-            <CFContainerVolume
-              containerIndex={containerIndex}
-              volumeIndex={volumeIndex}
-              formik={formik}
-              key={volumeIndex}
-            />
-          );
-        },
-      )}
+      {formik?.values?.launchContainers?.[
+        containerIndex
+      ]?.container?.mountedVolumes?.map((_, volumeIndex: number) => {
+        return (
+          <CFContainerVolume
+            containerIndex={containerIndex}
+            volumeIndex={volumeIndex}
+            formik={formik}
+            key={volumeIndex}
+          />
+        );
+      })}
       <div data-tut="create-robot-step4-environments-add-button">
         <CFAddButton
           onClick={() => {
             formik.setFieldValue(
-              `containers[${containerIndex}].mountedVolumes`,
+              `launchContainers[${containerIndex}].container.mountedVolumes`,
               [
-                ...formik?.values?.containers[containerIndex]?.mountedVolumes,
+                ...formik.values?.launchContainers[containerIndex]?.container
+                  ?.mountedVolumes,
                 {
                   name: "",
-                  path: "",
+                  mountPath: "",
                 },
               ],
             );

@@ -114,5 +114,5 @@ export const environmentInitialStep1Config: IEnvironmentStep1 = {
     launch: [],
   },
   volumes: [],
-  containers: [],
+  launchContainers: [],
 };

@@ -31,15 +31,13 @@ export default function CFContainerVolume({
             labelName="Volume"
             tip="Select Volume"
             inputTouched={
-              formik.touched?.containers?.[containerIndex]?.mountedVolumes?.[
-                volumeIndex
-              ]?.name
+              formik.touched?.launchContainers?.[containerIndex]?.container
+                ?.mountedVolumes?.[volumeIndex]?.name
             }
             inputError={
               // @ts-ignore
-              formik.errors?.containers?.[containerIndex]?.mountedVolumes?.[
-                volumeIndex
-              ]?.name
+              formik.errors?.launchContainers?.[containerIndex]?.container
+                ?.mountedVolumes?.[volumeIndex]?.name
             }
             inputProps={{
               ...formik.getFieldProps(
@@ -48,9 +46,10 @@ export default function CFContainerVolume({
             }}
             options={
               <Fragment>
-                {!formik.values?.containers?.[containerIndex]?.mountedVolumes?.[
-                  volumeIndex
-                ]?.name && <option value="">Select a volume</option>}
+                {!formik.values?.launchContainers?.[containerIndex]?.container
+                  ?.mountedVolumes?.[volumeIndex]?.name && (
+                  <option value="">Select a volume</option>
+                )}
                 {formik.values?.volumes?.map((volume, index) => (
                   <option key={index} value={volume.name}>
                     {volume.name}
@@ -65,7 +64,7 @@ export default function CFContainerVolume({
             labelInfoTip="Type Path"
             inputProps={{
               ...formik.getFieldProps(
-                `containers[${containerIndex}].volumes[${volumeIndex}].path`,
+                `launchContainers[${containerIndex}].container.mountedVolumes[${volumeIndex}].mountPath`,
               ),
             }}
           />
@@ -74,8 +73,10 @@ export default function CFContainerVolume({
           className="cursor-pointer text-xs font-medium text-red-500 hover:underline"
           onClick={() => {
             formik.setFieldValue(
-              `containers[${containerIndex}].volumes`,
-              formik.values.containers[containerIndex].mountedVolumes.filter(
+              `launchContainers[${containerIndex}].container.mountedVolumes`,
+              formik.values?.launchContainers[
+                containerIndex
+              ]?.container?.mountedVolumes?.filter(
                 (_, index) => index !== volumeIndex,
               ),
             );

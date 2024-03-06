@@ -15,25 +15,25 @@ export default function CFContainerEnvMapper({
 }: ICFContainerEnvMapper): ReactElement {
   return (
     <Fragment>
-      {formik?.values?.containers[containerIndex]?.environmentVariables?.map(
-        (_, envIndex: number) => {
-          return (
-            <CFContainerEnv
-              formik={formik}
-              containerIndex={containerIndex}
-              envIndex={envIndex}
-              key={envIndex}
-            />
-          );
-        },
-      )}
+      {formik?.values?.launchContainers?.[
+        containerIndex
+      ]?.container?.environmentVariables?.map((_, envIndex: number) => {
+        return (
+          <CFContainerEnv
+            formik={formik}
+            containerIndex={containerIndex}
+            envIndex={envIndex}
+            key={envIndex}
+          />
+        );
+      })}
       <div data-tut="create-robot-step4-environments-add-button">
         <CFAddButton
           onClick={() => {
             formik.setFieldValue(
-              `containers[${containerIndex}].environmentVariables`,
+              `launchContainers[${containerIndex}].container.environmentVariables`,
               [
-                ...formik?.values?.containers[containerIndex]
+                ...formik.values?.launchContainers[containerIndex]?.container
                   ?.environmentVariables,
                 {
                   name: "",

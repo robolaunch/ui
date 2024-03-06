@@ -24,18 +24,19 @@ export default function CFContainers({
     >
       <CFContainerMapper formik={formik} />
       <CFAddButton
-        // @ts-ignore
         onClick={() => {
-          formik.setFieldValue("containers", [
-            ...formik.values.containers,
+          formik.setFieldValue("launchContainers", [
+            ...formik.values?.launchContainers,
             {
-              name: "",
               replicaCount: 1,
-              image: "",
-              command: "",
-              privileged: false,
-              mountedVolumes: [],
-              environmentVariables: [],
+              container: {
+                name: "",
+                image: "",
+                mountedVolumes: [],
+                privileged: false,
+                command: "",
+                environmentVariables: [],
+              },
             },
           ]);
         }}

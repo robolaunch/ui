@@ -31,7 +31,7 @@ export default function CFContainerEnv({
             labelInfoTip="Type Environment Variable Name"
             inputProps={{
               ...formik.getFieldProps(
-                `containers[${containerIndex}].environmentVariables[${envIndex}].name`,
+                `launchContainers[${containerIndex}].container.environmentVariables[${envIndex}].name`,
               ),
             }}
           />
@@ -41,7 +41,7 @@ export default function CFContainerEnv({
             labelInfoTip="Type Environment Variable Value"
             inputProps={{
               ...formik.getFieldProps(
-                `containers[${containerIndex}].environmentVariables[${envIndex}].value`,
+                `launchContainers[${containerIndex}].container.environmentVariables[${envIndex}].value`,
               ),
             }}
           />
@@ -50,10 +50,12 @@ export default function CFContainerEnv({
           className="cursor-pointer text-xs font-medium text-red-500 hover:underline"
           onClick={() => {
             formik.setFieldValue(
-              `containers[${containerIndex}].environmentVariables`,
-              formik.values.containers[
+              `launchContainers[${containerIndex}].container.environmentVariables`,
+              formik.values?.launchContainers[
                 containerIndex
-              ].environmentVariables.filter((_, index) => index !== envIndex),
+              ]?.container?.environmentVariables?.filter(
+                (_, index) => index !== envIndex,
+              ),
             );
           }}
         >

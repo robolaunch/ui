@@ -18,9 +18,12 @@ export default function CFPrivileged({
       labelInfoTip="Privileged mode"
       dataTut="create-robot-step1-priviliged"
       disabled={formik.isSubmitting}
-      checked={formik?.values?.containers?.[index]?.privileged}
+      checked={formik?.values?.launchContainers?.[index]?.container?.privileged}
       onChange={(e: boolean) =>
-        formik.setFieldValue(`containers[${index}].privileged`, e)
+        formik.setFieldValue(
+          `launchContainers[${index}].container.privileged`,
+          e,
+        )
       }
     />
   );
