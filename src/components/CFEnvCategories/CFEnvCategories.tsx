@@ -81,6 +81,8 @@ export default function CFEnvCategories({
                       return "AI & ML";
                     case "data-science":
                       return "Data Science";
+                    case "cad":
+                      return "CAD";
                     default:
                       return environment;
                   }
