@@ -1,8 +1,7 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import FormInputSelect from "../FormInputSelect/FormInputSelect";
 import FormInputText from "../FormInputText/FormInputText";
 import CFPrivileged from "../CFPrivileged/CFPrivileged";
-import { Fragment, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CFEditor from "../CFEditor/CFEditor";
 import { FormikProps } from "formik";

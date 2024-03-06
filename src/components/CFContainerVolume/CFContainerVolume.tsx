@@ -1,8 +1,9 @@
-import { ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import Accordion from "../Accordion/AccordionV2";
 import FormInputText from "../FormInputText/FormInputText";
 import { FormikProps } from "formik";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import FormInputSelect from "../FormInputSelect/FormInputSelect";
 
 interface ICFContainerVolume {
   formik: FormikProps<IEnvironmentStep1>;
@@ -26,15 +27,37 @@ export default function CFContainerVolume({
     >
       <div className="flex flex-col items-center gap-3 pb-2">
         <div className="flex w-full gap-4 p-4">
-          <FormInputText
-            classNameContainer="w-full"
-            labelName="Volume:"
-            labelInfoTip="Volume"
+          <FormInputSelect
+            labelName="Volume"
+            tip="Select Volume"
+            inputTouched={
+              formik.touched?.containers?.[containerIndex]?.mountedVolumes?.[
+                volumeIndex
+              ]?.name
+            }
+            inputError={
+              // @ts-ignore
+              formik.errors?.containers?.[containerIndex]?.mountedVolumes?.[
+                volumeIndex
+              ]?.name
+            }
             inputProps={{
               ...formik.getFieldProps(
-                `containers[${containerIndex}].volumes[${volumeIndex}].name`,
+                `containers[${containerIndex}].mountedVolumes[${volumeIndex}].name`,
               ),
             }}
+            options={
+              <Fragment>
+                {!formik.values?.containers?.[containerIndex]?.mountedVolumes?.[
+                  volumeIndex
+                ]?.name && <option value="">Select a volume</option>}
+                {formik.values?.volumes?.map((volume, index) => (
+                  <option key={index} value={volume.name}>
+                    {volume.name}
+                  </option>
+                ))}
+              </Fragment>
+            }
           />
           <FormInputText
             classNameContainer="w-full"
