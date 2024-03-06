@@ -33,15 +33,28 @@ export default ({ children }: any) => {
     createRobotFC,
     createRobotFC: updateRobotFC,
     addPhysicalInstanceToFleetFC,
+    createDeployFC,
   } = useFunctions();
 
   const url = useParams();
 
   const step1Formik = useFormik<IEnvironmentStep1>({
-    validationSchema: CFRobotStep1Validations,
+    validationSchema: !robotData?.step1?.details?.isDeployMode
+      ? CFRobotStep1Validations
+      : null,
     initialValues: robotData?.step1,
     onSubmit: async () => {
       step1Formik.setSubmitting(true);
+
+      if (robotData?.step1?.details?.isDeployMode) {
+        await createDeployFC();
+        setSidebarState((prevState) => ({
+          ...prevState,
+          isCreateMode: false,
+          page: "robot",
+        }));
+        return;
+      }
 
       if (url?.robotName) {
         await updateRobotFC();

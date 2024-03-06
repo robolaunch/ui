@@ -102,6 +102,7 @@ import { IPhysicalInstance } from "../interfaces/global/physicalInstance.interfa
 import { dataScienceAppsMapper } from "../handler/dataScience.handler";
 import { IDataScienceApp } from "../interfaces/global/dataSciende.interface";
 import { ITemplate } from "../interfaces/global/template.interface";
+import { createDeploy } from "../toolkit/DeploySlice";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -991,6 +992,64 @@ export default ({ children }: any) => {
     });
   }
 
+  async function createDeployFC(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          createDeploy({
+            orgId: selectedState?.organization?.id!,
+            regionName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            providerRegion: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            bridgeDistro:
+              robotData?.step1?.services?.ros?.bridgeDistro.toLocaleUpperCase()!,
+            bridgeEnabled: robotData?.step1?.services?.ros?.isEnabled!,
+            instanceName:
+              robotData?.step1?.details?.physicalInstanceName ||
+              selectedState?.instance?.name!,
+            isPhysicalInstance: robotData?.step1?.details?.physicalInstanceName
+              ? true
+              : false,
+            robotName: robotData?.step1?.details?.name,
+            volumeClaimTemplates: robotData?.step1?.volumes?.map((volume) => {
+              return {
+                name: volume.name,
+                capacity: String(volume.capacity) + "Gi",
+              };
+            }),
+            launchContainers: robotData?.step1?.launchContainers?.map(
+              (container) => {
+                return {
+                  replicas: container.replicaCount,
+                  containers: [
+                    {
+                      name: container.container.name,
+                      image: container.container.image,
+                      command: container.container.command,
+                      volumeMounts: container.container.mountedVolumes?.map(
+                        (volume) => {
+                          return {
+                            name: volume.name,
+                            mountPath: volume.path,
+                          };
+                        },
+                      ),
+                      envs: container.container.environmentVariables,
+                    },
+                  ],
+                };
+              },
+            ),
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   async function getFreePortFC(): Promise<number | undefined> {
     return new Promise(async (resolve, reject) => {
       try {
@@ -1537,6 +1596,8 @@ export default ({ children }: any) => {
 
         getIP,
         getFilesFromFileManager,
+
+        createDeployFC,
       }}
     >
       {children}

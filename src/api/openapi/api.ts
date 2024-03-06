@@ -512,6 +512,12 @@ export interface CloudInstance {
      * @memberof CloudInstance
      */
     'templates'?: Array<Template>;
+    /**
+     * 
+     * @type {Array<RobolaunchFederatedRos2Workload>}
+     * @memberof CloudInstance
+     */
+    'robolaunchFederatedRos2Workloads'?: Array<RobolaunchFederatedRos2Workload>;
 }
 /**
  * 
@@ -619,6 +625,43 @@ export interface CloudInstanceResource {
 /**
  * 
  * @export
+ * @interface Container
+ */
+export interface Container {
+    /**
+     * 
+     * @type {string}
+     * @memberof Container
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Container
+     */
+    'image'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Container
+     */
+    'command'?: string;
+    /**
+     * 
+     * @type {Array<Env>}
+     * @memberof Container
+     */
+    'envs'?: Array<Env>;
+    /**
+     * 
+     * @type {Array<VolumeMount>}
+     * @memberof Container
+     */
+    'volumeMounts'?: Array<VolumeMount>;
+}
+/**
+ * 
+ * @export
  * @enum {string}
  */
 
@@ -655,6 +698,25 @@ export interface Devspace {
      * @memberof Devspace
      */
     'version'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Env
+ */
+export interface Env {
+    /**
+     * 
+     * @type {string}
+     * @memberof Env
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Env
+     */
+    'value'?: string;
 }
 /**
  * 
@@ -1223,6 +1285,50 @@ export interface GroupRepresentation {
      * @memberof GroupRepresentation
      */
     'access'?: { [key: string]: boolean; };
+}
+/**
+ * 
+ * @export
+ * @interface IntOrString
+ */
+export interface IntOrString {
+    /**
+     * 
+     * @type {object}
+     * @memberof IntOrString
+     */
+    'value'?: object;
+    /**
+     * 
+     * @type {number}
+     * @memberof IntOrString
+     */
+    'intVal'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof IntOrString
+     */
+    'strVal'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface LaunchContainer
+ */
+export interface LaunchContainer {
+    /**
+     * 
+     * @type {number}
+     * @memberof LaunchContainer
+     */
+    'replicas'?: number;
+    /**
+     * 
+     * @type {Array<Container>}
+     * @memberof LaunchContainer
+     */
+    'containers'?: Array<Container>;
 }
 /**
  * 
@@ -2567,6 +2673,61 @@ export interface RobolaunchFederatedRobot {
 /**
  * 
  * @export
+ * @interface RobolaunchFederatedRos2Workload
+ */
+export interface RobolaunchFederatedRos2Workload {
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'fleetName'?: string;
+    /**
+     * 
+     * @type {Array<LaunchContainer>}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'launchContainers'?: Array<LaunchContainer>;
+    /**
+     * 
+     * @type {Array<VolumeClaimTemplate>}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'volumeClaimTemplates'?: Array<VolumeClaimTemplate>;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'bridgeDistro'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'bridgeEnabled'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'instanceName'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RobolaunchFederatedRos2Workload
+     */
+    'isPhysicalInstance'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface RobolaunchNamespace
  */
 export interface RobolaunchNamespace {
@@ -3190,6 +3351,50 @@ export interface TrialImage {
      * @memberof TrialImage
      */
     'sampleRepository'?: SampleRepository;
+}
+/**
+ * 
+ * @export
+ * @interface VolumeClaimTemplate
+ */
+export interface VolumeClaimTemplate {
+    /**
+     * 
+     * @type {string}
+     * @memberof VolumeClaimTemplate
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VolumeClaimTemplate
+     */
+    'accessMode'?: string;
+    /**
+     * 
+     * @type {IntOrString}
+     * @memberof VolumeClaimTemplate
+     */
+    'capacity'?: IntOrString;
+}
+/**
+ * 
+ * @export
+ * @interface VolumeMount
+ */
+export interface VolumeMount {
+    /**
+     * 
+     * @type {string}
+     * @memberof VolumeMount
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VolumeMount
+     */
+    'mountPath'?: string;
 }
 
 /**
@@ -6909,6 +7114,39 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createFederatedRos2Workload: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robot/createFederatedRos2Workload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteFederatedRobot: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/deleteFederatedRobot`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7028,6 +7266,16 @@ export const RobotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async createFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createFederatedRos2Workload(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async deleteFederatedRobot(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedRobot(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -7077,6 +7325,15 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createFederatedRos2Workload(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.createFederatedRos2Workload(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         deleteFederatedRobot(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.deleteFederatedRobot(organization, options).then((request) => request(axios, basePath));
         },
@@ -7117,6 +7374,17 @@ export class RobotApi extends BaseAPI {
      */
     public createFederatedRobot(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotApiFp(this.configuration).createFederatedRobot(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotApi
+     */
+    public createFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).createFederatedRos2Workload(organization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

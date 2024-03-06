@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 import useMain from "../../hooks/useMain";
 
 interface ICFRobotButtons {
-  step: 1 | 2 | 3 | 4;
+  step: 1 | 2 | 3 | 4 | "1-deploy";
   formik: any;
   isImportRobot?: boolean;
 }
@@ -25,6 +25,13 @@ export default function CFRobotButtons({
   function handleDisabled(): boolean {
     switch (step) {
       case 1:
+        return (
+          !formik.isValid ||
+          formik.isSubmitting ||
+          JSON.stringify(formik.initialValues) === JSON.stringify(formik.values)
+        );
+
+      case "1-deploy":
         return (
           !formik.isValid ||
           formik.isSubmitting ||
@@ -55,6 +62,9 @@ export default function CFRobotButtons({
     switch (step) {
       case 1:
         return isImportRobot ? "Update Robot" : `Next Step`;
+
+      case "1-deploy":
+        return isImportRobot ? "Update Robot" : `Create Deploy`;
 
       case 2:
         return isImportRobot

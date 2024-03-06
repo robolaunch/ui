@@ -187,4 +187,6 @@ export interface IuseFunctions {
     instanceIP: string;
     paths?: string[];
   }) => Promise<any>;
+  //
+  createDeployFC: () => Promise<void>;
 }
