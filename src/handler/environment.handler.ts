@@ -16,6 +16,7 @@ function handleMapper(data: IEnvironmentBE[]): {
             isDevelopmentMode: true,
             configureWorkspace: false,
             physicalInstanceName: env?.physicalInstance,
+            isDeployMode: false,
           },
           resources: {
             cpu: {
@@ -42,6 +43,7 @@ function handleMapper(data: IEnvironmentBE[]): {
               socketEndpoint: env?.bridgeIngressEndpoint,
               podName: env?.bridgePodName,
               log: env?.bridgeApplicationLog,
+              bridgeDistro: "",
             },
 
             vdi: {
@@ -137,6 +139,8 @@ function handleMapper(data: IEnvironmentBE[]): {
             organization: env?.templateOrganizationLevelAvailable,
             public: env?.templatePublicLevelAvailable,
           },
+          launchContainers: [],
+          volumes: [],
         },
         step2: {
           configureWorkspace: false,
