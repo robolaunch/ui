@@ -8,7 +8,6 @@ import CFSection from "../CFSection/CFSection";
 import { Fragment, ReactElement } from "react";
 import useForm from "../../hooks/useForm";
 import CFRobotButtons from "../CFRobotButtons/CFRobotButtons";
-import Button from "../Button/Button";
 
 interface ICFStep1Deploy {
   isImportRobot?: boolean;
@@ -46,8 +45,6 @@ export default function CFStep1Deploy({
       </CFSection>
 
       <CFSection>
-        <Button text={"create"} type="submit" />
-
         <CFRobotButtons
           formik={formik}
           step={"1-deploy"}
