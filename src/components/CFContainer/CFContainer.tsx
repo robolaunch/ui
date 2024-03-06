@@ -34,7 +34,7 @@ export default function CFContainer({
         <div className="flex w-full flex-col justify-between gap-4">
           <div className="flex w-full gap-4">
             <FormInputText
-              classNameContainer="w-5/6"
+              classNameContainer="w-4/5"
               labelName="Image:"
               labelInfoTip="Image for the container"
               inputProps={{
@@ -43,7 +43,7 @@ export default function CFContainer({
             />
             <FormInputText
               type="number"
-              classNameContainer="w-1/6"
+              classNameContainer="w-1/5"
               labelName="Replica Count:"
               labelInfoTip="Replica count for the container"
               inputProps={{
