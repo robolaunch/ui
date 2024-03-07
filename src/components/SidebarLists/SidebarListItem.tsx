@@ -118,6 +118,16 @@ export default function SidebarListItem({
         }
         break;
       case "robot":
+        if (
+          deploy &&
+          data?.step1?.launchContainers?.find((cont: any) => {
+            return cont.container.status === "Creating";
+          })
+        ) {
+          return toast.error(
+            "Deploy is not ready now. Please wait until the deploy is ready.",
+          );
+        }
         setSidebarState({ ...sidebarState, isOpen: false });
 
         if (deploy) {
