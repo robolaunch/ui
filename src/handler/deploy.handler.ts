@@ -107,8 +107,38 @@ function handleMapper(data: IDeployBE[]): {
             organization: false,
             public: false,
           },
-          launchContainers: [],
-          volumes: [],
+          launchContainers: deploy?.launchContainers?.map((cont) => {
+            return {
+              replicaCount: cont.replicas,
+              container: {
+                name: cont.container.name,
+                image: cont.container.image,
+                command: cont.container.command,
+                privileged: false,
+                mountedVolumes:
+                  cont.container.volumeMounts?.map((vol) => {
+                    return {
+                      name: vol.name,
+                      mountPath: vol.mountPath,
+                    };
+                  }) || [],
+                environmentVariables:
+                  cont.container.envs?.map((env) => {
+                    return {
+                      name: env.name,
+                      value: env.value,
+                    };
+                  }) || [],
+              },
+            };
+          }),
+          volumes:
+            deploy?.volumeClaimTemplates?.map((vol) => {
+              return {
+                name: vol.name,
+                capacity: Number(vol.capacity.value?.split("Gi")[0]),
+              };
+            }) || [],
         },
         step2: {
           configureWorkspace: false,

@@ -53,7 +53,7 @@ export default function CFVolume({ formik, index }: ICFVolume): ReactElement {
             InputProps={{
               ...formik.getFieldProps(`volumes[${index}].capacity`),
             }}
-            min={20}
+            min={1}
             max={100}
             disabled={formik.isSubmitting}
             // @ts-ignore

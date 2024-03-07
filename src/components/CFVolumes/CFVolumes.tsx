@@ -34,7 +34,7 @@ export default function CFVolumes({
             ...formik.values.volumes,
             {
               name: `${formik.values.details.name}-pvc-${formik.values.volumes.length}`,
-              capacity: 20,
+              capacity: 2,
             },
           ]);
         }}

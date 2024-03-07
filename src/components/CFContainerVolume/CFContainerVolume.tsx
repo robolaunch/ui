@@ -41,7 +41,7 @@ export default function CFContainerVolume({
             }
             inputProps={{
               ...formik.getFieldProps(
-                `containers[${containerIndex}].mountedVolumes[${volumeIndex}].name`,
+                `launchContainers[${containerIndex}].container.mountedVolumes[${volumeIndex}].name`,
               ),
             }}
             options={

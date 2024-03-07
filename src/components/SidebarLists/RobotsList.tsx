@@ -131,6 +131,7 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
                 url={robot?.step1?.details?.name}
                 data={robot}
                 notSelectable
+                deploy={activeTab === "Deploy"}
               />
             );
           })}

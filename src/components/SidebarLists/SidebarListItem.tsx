@@ -18,6 +18,7 @@ interface ISidebarListItem {
   data?: IOrganization | IRegion | ICloudInstance | IFleet | INamespace | any;
   selected?: boolean;
   notSelectable?: boolean;
+  deploy?: boolean;
 }
 
 type Itype = "organization" | "roboticscloud" | "instance" | "fleet" | "robot";
@@ -30,6 +31,7 @@ export default function SidebarListItem({
   data,
   selected,
   notSelectable,
+  deploy,
 }: ISidebarListItem): ReactElement {
   const {
     selectedState,
@@ -117,6 +119,17 @@ export default function SidebarListItem({
         break;
       case "robot":
         setSidebarState({ ...sidebarState, isOpen: false });
+
+        if (deploy) {
+          return navigate(
+            `/${orgSplitter(
+              selectedState?.organization?.name as string,
+            )}/${selectedState?.roboticsCloud?.name}/${
+              selectedState?.instance?.name
+            }/${selectedState?.fleet?.name}/${url}?deploy=true`,
+          );
+        }
+
         navigate(
           `/${orgSplitter(
             selectedState?.organization?.name as string,

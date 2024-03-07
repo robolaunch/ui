@@ -102,8 +102,8 @@ export const getDeploy = createAsyncThunk(
     fleetName: string;
     deployName: string;
   }) => {
-    const response = await robotApi.getFederatedRos2Workloads({
-      name: "deploy/getDeploys",
+    const response = await robotApi.getFederatedRos2Workload({
+      name: "deploy/getDeploy",
       organizationId: values.orgId,
       roboticsClouds: [
         {

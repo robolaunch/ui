@@ -121,7 +121,7 @@ export interface IEnvironmentStep1 {
       privileged: boolean;
       mountedVolumes: {
         name: string; // volume name
-        path: string;
+        mountPath: string;
       }[];
       environmentVariables: {
         name: string;

@@ -2,7 +2,7 @@ import { useEffect, createContext, useState, useReducer } from "react";
 import { IrobotTab } from "../interfaces/robotInterfaces";
 import useFunctions from "../hooks/useFunctions";
 import { useAppSelector } from "../hooks/redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useMain from "../hooks/useMain";
 import ROSLIB from "roslib";
 
@@ -21,6 +21,7 @@ export default ({ children }: any) => {
     getPhysicalInstancesFC,
     getBuildManager,
     getLaunchManagers,
+    getDeployFC,
   } = useFunctions();
 
   const { applicationMode } = useAppSelector((state) => state.user);
@@ -43,6 +44,33 @@ export default ({ children }: any) => {
   const [isRobotReady, setIsRobotReady] = useState<boolean>(false);
   const [isSettedCookie, setIsSettedCookie] = useState<boolean | undefined>(
     undefined,
+  );
+
+  const location = useLocation();
+
+  const queryParams = location?.search
+    .replace("?", "")
+    ?.split("&")
+    ?.map((query: string) => {
+      return {
+        key: query.split("=")[0],
+        value: (() => {
+          if (
+            query.split("=")[1] === "true" ||
+            query.split("=")[1] === "false"
+          ) {
+            return query.split("=")[1] === "true" ? true : false;
+          }
+
+          return query.split("=")[1];
+        })(),
+      };
+    });
+
+  const [isDeploy, setIsDeploy] = useState<boolean>(
+    Boolean(
+      queryParams?.find((query) => query.key === "deploy")?.value || false,
+    ),
   );
 
   const [ros, setRos] = useState<ROSLIB.Ros | null>(null);
@@ -111,11 +139,15 @@ export default ({ children }: any) => {
     } else if (pagesState?.fleet?.name !== url?.fleetName) {
       return applicationMode ? handleGetNamespace() : handleGetFleet();
     } else if (!responseRobot) {
-      applicationMode ? handleGetEnvironment() : handleGetRobot();
+      applicationMode
+        ? handleGetEnvironment()
+        : isDeploy
+          ? handleGetDeploy()
+          : handleGetRobot();
     } else if (!responseBuildManager) {
-      !applicationMode && handleGetBuildManager();
+      !applicationMode && !isDeploy && handleGetBuildManager();
     } else if (!responseLaunchManagers) {
-      !applicationMode && handleGetLaunchManagers();
+      !applicationMode && !isDeploy && handleGetLaunchManagers();
     } else if (!responseRobot?.physicalInstance) {
       handleGetPhysicalInstance();
     }
@@ -181,12 +213,6 @@ export default ({ children }: any) => {
   useEffect(() => {
     const isEnvironmentReady = !robotData.step1.clusters.environment?.some(
       (robot) => robot?.status !== "EnvironmentReady",
-    );
-
-    console.log(
-      "IN isEnvironmentReady",
-      robotData.step1.clusters.environment,
-      isEnvironmentReady,
     );
 
     const isBuildManagerReady = !responseBuildManager?.robotClusters?.some(
@@ -419,6 +445,12 @@ export default ({ children }: any) => {
   async function handleGetEnvironment() {
     setResponseRobot(
       await getApplicationFC(!responseRobot, url?.robotName as string),
+    );
+  }
+
+  async function handleGetDeploy() {
+    setResponseRobot(
+      await getDeployFC(!responseRobot, url?.robotName as string),
     );
   }
 

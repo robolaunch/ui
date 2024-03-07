@@ -198,5 +198,5 @@ export interface IuseFunctions {
       step2: IEnvironmentStep2;
     }[]
   >;
-  getDeployFC: (values: { deployName: string }) => Promise<void>;
+  getDeployFC(ErrorNav404: boolean, deployName: string): Promise<void>;
 }

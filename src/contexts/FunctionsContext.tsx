@@ -108,7 +108,7 @@ import {
   getDeploy,
   getDeploys,
 } from "../toolkit/DeploySlice";
-import { deploysMapper } from "../handler/deploy.handler";
+import { deployMapper, deploysMapper } from "../handler/deploy.handler";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1036,7 +1036,7 @@ export default ({ children }: any) => {
                       (volume) => {
                         return {
                           name: volume.name,
-                          mountPath: volume.path,
+                          mountPath: volume.mountPath,
                         };
                       },
                     ),
@@ -1105,21 +1105,46 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getDeployFC(values: { deployName: string }): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
+  async function getDeployFC(
+    ErrorNav404: boolean,
+    deployName: string,
+  ): Promise<{
+    step1: IEnvironmentStep1;
+    step2: IEnvironmentStep2;
+  }> {
+    return new Promise<{
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }>(async (resolve, reject) => {
       try {
-        await dispatch(
+        const response: any = await dispatch(
           getDeploy({
             orgId: selectedState?.organization?.id!,
             regionName: selectedState?.roboticsCloud?.name!,
             instanceId: selectedState?.instance?.id!,
             providerRegion: selectedState?.roboticsCloud?.region!,
             fleetName: selectedState?.fleet?.name!,
-            deployName: values.deployName,
+            deployName: deployName,
           }),
         );
-        resolve();
+
+        console.log(response);
+
+        const deploy: {
+          step1: IEnvironmentStep1;
+          step2: IEnvironmentStep2;
+        } = deployMapper(
+          response?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+            ?.robolaunchFederatedRos2Workloads?.[0],
+        );
+
+        !deploy && handleThrowError(true, ErrorNav404);
+        deploy && handleEnvironmentSetter("step1", deploy.step1);
+        deploy && handleEnvironmentSetter("step2", deploy.step2);
+
+        deploy && resolve(deploy);
       } catch (error) {
+        handleThrowError(true, ErrorNav404);
         reject(error);
       }
     });

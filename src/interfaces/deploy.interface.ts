@@ -20,10 +20,10 @@ export interface IDeployBE {
       }[];
     };
   }[];
-  volumeClaimTeplates: {
+  volumeClaimTemplates: {
     name: string;
     capacity: {
       value: string;
     };
-  };
+  }[];
 }
