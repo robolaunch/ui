@@ -113,11 +113,22 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
                       <StateCell
-                        state={
-                          activeTab === "Deploy"
-                            ? "Ready"
-                            : robot?.step1?.clusters?.environment?.[0]?.status
-                        }
+                        state={(() => {
+                          switch (activeTab) {
+                            case "Develop":
+                              return robot?.step1?.clusters?.environment?.[0]
+                                ?.status;
+
+                            case "Deploy":
+                              const status =
+                                robot?.step1?.launchContainers?.find(
+                                  (container) =>
+                                    container.container.status === "Creating",
+                                );
+
+                              return status ? "Creating" : "Ready";
+                          }
+                        })()}
                       />
                     </div>
                     {robot?.step1?.clusters?.environment?.[1]?.status && (

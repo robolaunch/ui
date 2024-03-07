@@ -118,6 +118,7 @@ export interface IEnvironmentStep1 {
       name: string;
       image: string;
       command: string;
+      status: string;
       privileged: boolean;
       mountedVolumes: {
         name: string; // volume name

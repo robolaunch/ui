@@ -13,6 +13,7 @@ import {
   CFRobotStep1Validations,
   CFRobotStep2Validations,
 } from "../validations/RobotsValidations";
+import { CFDeployStep1Validations } from "../validations/deploy.validations";
 
 export const FormContext: any = createContext<any>(null);
 
@@ -41,7 +42,7 @@ export default ({ children }: any) => {
   const step1Formik = useFormik<IEnvironmentStep1>({
     validationSchema: !robotData?.step1?.details?.isDeployMode
       ? CFRobotStep1Validations
-      : null,
+      : CFDeployStep1Validations,
     initialValues: robotData?.step1,
     onSubmit: async () => {
       step1Formik.setSubmitting(true);

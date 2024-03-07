@@ -114,6 +114,7 @@ function handleMapper(data: IDeployBE[]): {
                 name: cont.container.name,
                 image: cont.container.image,
                 command: cont.container.command,
+                status: cont.container.containerStatus ? "Ready" : "Creating",
                 privileged: false,
                 mountedVolumes:
                   cont.container.volumeMounts?.map((vol) => {

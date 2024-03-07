@@ -11,6 +11,7 @@ export interface IDeployBE {
       name: string;
       command: string;
       image: string;
+      containerStatus: boolean;
       envs: {
         name: string;
         value: string;
