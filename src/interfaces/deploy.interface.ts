@@ -2,6 +2,7 @@ export interface IDeployBE {
   name: string;
   bridgeDistro: string;
   bridgeEnabled: boolean;
+  bridgeIngressEndpoint: string;
   fleetName: string;
   instanceName: string;
   launchContainers: {

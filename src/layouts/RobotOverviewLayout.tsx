@@ -5,6 +5,8 @@ import { Fragment, ReactElement } from "react";
 import useWindow from "../hooks/useWindow";
 import useRobot from "../hooks/useRobot";
 import { useAppSelector } from "../hooks/redux";
+import VolumesTable from "../components/VolumesTable/VolumesTable";
+import ContainersTable from "../components/ContainersTable/ContainersTable";
 
 interface IRobotOverviewLayout {
   widget1?: ReactElement;
@@ -17,7 +19,8 @@ export default function RobotOverviewLayout({
   widget2,
   widget3,
 }: IRobotOverviewLayout): ReactElement {
-  const { responseBuildManager, responseLaunchManagers } = useRobot();
+  const { responseBuildManager, responseLaunchManagers, isDeployMode } =
+    useRobot();
   const { width } = useWindow();
   const { applicationMode } = useAppSelector((state) => state.user);
 
@@ -29,7 +32,7 @@ export default function RobotOverviewLayout({
         <div className="col-span-full lg:col-span-3">{widget3}</div>
       )}
 
-      {!applicationMode && (
+      {!applicationMode && !isDeployMode && (
         <Fragment>
           <div data-tut="robot-workspaces-table" className="col-span-full">
             <WorkspacesTable />
@@ -43,6 +46,16 @@ export default function RobotOverviewLayout({
             <LaunchManagerStepsTable
               responseLaunchManagers={responseLaunchManagers}
             />
+          </div>
+        </Fragment>
+      )}
+      {isDeployMode && (
+        <Fragment>
+          <div className="col-span-full">
+            <VolumesTable />
+          </div>
+          <div className="col-span-full">
+            <ContainersTable />
           </div>
         </Fragment>
       )}

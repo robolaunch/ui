@@ -28,25 +28,27 @@ export default function EnvironmentConnections(): ReactElement {
           />
         </div>
       )}
-      <div className="flex gap-1" id="ide">
-        <ConnectionLabel
-          label={
-            robotData?.step1?.services?.physicalIde?.httpsEndpoint
-              ? "Virtual Code Editor"
-              : "Code Editor"
-          }
-          url={robotData.step1.services.ide?.httpsEndpoint}
-        />
-        <StateCell
-          state={
-            connectionsReducer?.virtualIDE === null
-              ? "Waiting"
-              : connectionsReducer?.virtualIDE
-                ? "Connected"
-                : "Warning"
-          }
-        />
-      </div>
+      {robotData?.step1?.services?.ide?.isEnabled && (
+        <div className="flex gap-1" id="ide">
+          <ConnectionLabel
+            label={
+              robotData?.step1?.services?.physicalIde?.httpsEndpoint
+                ? "Virtual Code Editor"
+                : "Code Editor"
+            }
+            url={robotData.step1.services.ide?.httpsEndpoint}
+          />
+          <StateCell
+            state={
+              connectionsReducer?.virtualIDE === null
+                ? "Waiting"
+                : connectionsReducer?.virtualIDE
+                  ? "Connected"
+                  : "Warning"
+            }
+          />
+        </div>
+      )}
       {robotData?.step1?.services?.physicalIde?.isEnabled && (
         <div className="flex gap-1" id="ide">
           <ConnectionLabel
@@ -64,26 +66,28 @@ export default function EnvironmentConnections(): ReactElement {
           />
         </div>
       )}
-      <div className="flex gap-1" id="vdi">
-        <ConnectionLabel
-          label="Remote Desktop"
-          url={
-            robotData.step1.services.vdi?.socketEndpoint &&
-            "https://" +
-              robotData.step1.services.vdi?.socketEndpoint?.split("//")[1] +
-              `?usr=${keycloak?.tokenParsed?.preferred_username}&pwd=admin`
-          }
-        />
-        <StateCell
-          state={
-            connectionsReducer?.vdi === null
-              ? "Waiting"
-              : connectionsReducer?.vdi
-                ? "Connected"
-                : "Warning"
-          }
-        />
-      </div>
+      {robotData.step1.services.vdi?.socketEndpoint && (
+        <div className="flex gap-1" id="vdi">
+          <ConnectionLabel
+            label="Remote Desktop"
+            url={
+              robotData.step1.services.vdi?.socketEndpoint &&
+              "https://" +
+                robotData.step1.services.vdi?.socketEndpoint?.split("//")[1] +
+                `?usr=${keycloak?.tokenParsed?.preferred_username}&pwd=admin`
+            }
+          />
+          <StateCell
+            state={
+              connectionsReducer?.vdi === null
+                ? "Waiting"
+                : connectionsReducer?.vdi
+                  ? "Connected"
+                  : "Warning"
+            }
+          />
+        </div>
+      )}
       {robotData.step1?.services.jupyterNotebook?.httpsEndpoint && (
         <div className="flex gap-1" id="jupyter">
           <ConnectionLabel

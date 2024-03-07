@@ -3,6 +3,7 @@ import RobotStatusWidgetItem from "../RobotStatusWidgetItem/RobotStatusWidgetIte
 import WidgetLayout from "../../layouts/WidgetLayout";
 import { VscHistory } from "react-icons/vsc";
 import useMain from "../../hooks/useMain";
+import useRobot from "../../hooks/useRobot";
 
 interface IRobotStatusWidget {
   responseBuildManager: any;
@@ -30,6 +31,8 @@ export default function RobotStatusWidget({
   }, [responseLaunchManagers]);
 
   const { applicationMode, robotData } = useMain();
+
+  const { isDeployMode } = useRobot();
 
   return (
     <WidgetLayout
@@ -73,7 +76,7 @@ export default function RobotStatusWidget({
         {/* Workspace */}
 
         {/* Build */}
-        {!applicationMode && (
+        {!applicationMode && !isDeployMode && (
           <RobotStatusWidgetItem
             title="Build Manager"
             loading={!Array.isArray(robotData.step1.clusters?.build)}
@@ -108,7 +111,7 @@ export default function RobotStatusWidget({
         {/* Build */}
 
         {/* Launch */}
-        {!applicationMode && (
+        {!applicationMode && !isDeployMode && (
           <RobotStatusWidgetItem
             title="Launch Manager"
             loading={!Array.isArray(robotData.step1.clusters?.launch)}

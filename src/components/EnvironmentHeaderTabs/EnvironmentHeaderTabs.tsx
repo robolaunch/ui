@@ -78,7 +78,7 @@ export default function EnvironmentHeaderTabs(): ReactElement {
           isSettedCookie
         ),
 
-      isHidden: false,
+      isHidden: robotData?.step1?.details?.isDeployMode || false,
     },
     {
       name: "Code Editor",
@@ -90,7 +90,7 @@ export default function EnvironmentHeaderTabs(): ReactElement {
           robotData.step1.services.ide.httpsEndpoint &&
           isSettedCookie
         ),
-      isHidden: false,
+      isHidden: robotData?.step1?.details?.isDeployMode || false,
     },
     {
       name: "Remote Desktop",
@@ -102,7 +102,7 @@ export default function EnvironmentHeaderTabs(): ReactElement {
           robotData.step1.services.vdi.socketEndpoint &&
           isSettedCookie
         ),
-      isHidden: false,
+      isHidden: robotData?.step1?.details?.isDeployMode || false,
     },
     {
       name: "Jupyter Notebook",

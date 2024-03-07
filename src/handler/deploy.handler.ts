@@ -35,12 +35,12 @@ function handleMapper(data: IDeployBE[]): {
           },
           services: {
             ros: {
-              isEnabled: deploy.bridgeEnabled,
+              isEnabled: Boolean(deploy?.bridgeEnabled),
               rosDistros: [],
-              socketEndpoint: "",
+              socketEndpoint: deploy?.bridgeIngressEndpoint,
               podName: "",
               log: "",
-              bridgeDistro: deploy.bridgeDistro,
+              bridgeDistro: deploy?.bridgeDistro || "",
             },
 
             vdi: {
