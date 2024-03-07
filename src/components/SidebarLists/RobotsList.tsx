@@ -1,3 +1,5 @@
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 import SidebarListLoader from "../SidebarListLoader/SidebarListLoader";
 import { Fragment, ReactElement, useEffect, useState } from "react";
 import StateCell from "../TableInformationCells/StateCell";
@@ -5,8 +7,6 @@ import SidebarInfo from "../SidebarInfo/SidebarInfo";
 import useFunctions from "../../hooks/useFunctions";
 import SidebarListItem from "./SidebarListItem";
 import useMain from "../../hooks/useMain";
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import { IEnvironmentStep2 } from "../../interfaces/environment/environment.step2.interface";
 
 interface IRobotsList {
   reload: boolean;
@@ -113,7 +113,11 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
                     <div className="flex gap-1.5">
                       <span className="font-medium">Virtual:</span>
                       <StateCell
-                        state={robot?.step1?.clusters?.environment?.[0]?.status}
+                        state={
+                          activeTab === "Deploy"
+                            ? "Ready"
+                            : robot?.step1?.clusters?.environment?.[0]?.status
+                        }
                       />
                     </div>
                     {robot?.step1?.clusters?.environment?.[1]?.status && (
