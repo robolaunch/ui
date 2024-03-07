@@ -62,14 +62,6 @@ export default ({ children }: any) => {
           page: "robot",
         }));
 
-        setTimeout(() => {
-          window.location.href = `/${
-            selectedState?.organization?.name?.split("_")[1]
-          }/${selectedState?.roboticsCloud?.name}/${
-            selectedState?.instance?.name
-          }/${selectedState?.fleet?.name}/${robotData?.step1?.details?.name}?deploy=true}`;
-        }, 2000);
-
         return;
       }
 
