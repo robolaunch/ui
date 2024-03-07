@@ -17,8 +17,14 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
   const { getRobotFC } = useFunctions();
   const url = useParams();
 
+  const { step1Formik: formik } = useForm();
+
   useEffect(() => {
-    if (!responseRobot && isImportRobot) {
+    if (
+      !responseRobot &&
+      isImportRobot &&
+      !formik.values.details.isDeployMode
+    ) {
       handleGetRobot();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,8 +38,6 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
       ),
     );
   }
-
-  const { step1Formik: formik } = useForm();
 
   useEffect(() => {
     setRobotData({
@@ -57,7 +61,13 @@ export default function CFStep1({ isImportRobot }: ICFStep1): ReactElement {
         type="step1-robot-development"
         loadingText="Loading..."
         loadingItems={[]}
-        isLoading={isImportRobot ? !responseRobot : false}
+        isLoading={
+          isImportRobot
+            ? formik.values.details.isDeployMode
+              ? false
+              : !responseRobot
+            : false
+        }
         formik={formik}
       >
         {robotData?.step1?.details?.isDeployMode ? (

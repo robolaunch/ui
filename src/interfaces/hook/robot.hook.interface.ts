@@ -5,6 +5,8 @@ export interface IuseRobot {
   responseRobot: any;
   responseBuildManager: any;
   responseLaunchManagers: any;
+  isDeployMode: boolean;
+  setIsDeployMode: boolean;
   isRobotReady: boolean;
   iFrameId: number;
   setIFrameId: any;

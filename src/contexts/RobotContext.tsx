@@ -67,7 +67,7 @@ export default ({ children }: any) => {
       };
     });
 
-  const [isDeploy, setIsDeploy] = useState<boolean>(
+  const [isDeployMode, setIsDeployMode] = useState<boolean>(
     Boolean(
       queryParams?.find((query) => query.key === "deploy")?.value || false,
     ),
@@ -141,13 +141,13 @@ export default ({ children }: any) => {
     } else if (!responseRobot) {
       applicationMode
         ? handleGetEnvironment()
-        : isDeploy
+        : isDeployMode
           ? handleGetDeploy()
           : handleGetRobot();
     } else if (!responseBuildManager) {
-      !applicationMode && !isDeploy && handleGetBuildManager();
+      !applicationMode && !isDeployMode && handleGetBuildManager();
     } else if (!responseLaunchManagers) {
-      !applicationMode && !isDeploy && handleGetLaunchManagers();
+      !applicationMode && !isDeployMode && handleGetLaunchManagers();
     } else if (!responseRobot?.physicalInstance) {
       handleGetPhysicalInstance();
     }
@@ -498,6 +498,8 @@ export default ({ children }: any) => {
         responseRobot,
         responseBuildManager,
         responseLaunchManagers,
+        isDeployMode,
+        setIsDeployMode,
         isRobotReady,
         iFrameId,
         setIFrameId,
