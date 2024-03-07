@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import FormInputText from "../FormInputText/FormInputText";
@@ -12,6 +12,14 @@ interface ICFVolume {
 
 export default function CFVolume({ formik, index }: ICFVolume): ReactElement {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    formik.setFieldValue(
+      `volumes[${index}].name`,
+      `${formik.values.details.name}-pvc-${index}`,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formik.values.details.name, index]);
 
   return (
     <Accordion

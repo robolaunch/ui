@@ -189,4 +189,14 @@ export interface IuseFunctions {
   }) => Promise<any>;
   //
   createDeployFC: () => Promise<void>;
+  getDeploysFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  >;
+  getDeployFC: (values: { deployName: string }) => Promise<void>;
 }

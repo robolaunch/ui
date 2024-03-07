@@ -102,7 +102,13 @@ import { IPhysicalInstance } from "../interfaces/global/physicalInstance.interfa
 import { dataScienceAppsMapper } from "../handler/dataScience.handler";
 import { IDataScienceApp } from "../interfaces/global/dataSciende.interface";
 import { ITemplate } from "../interfaces/global/template.interface";
-import { createDeploy } from "../toolkit/DeploySlice";
+import {
+  createDeploy,
+  deleteDeploy,
+  getDeploy,
+  getDeploys,
+} from "../toolkit/DeploySlice";
+import { deploysMapper } from "../handler/deploy.handler";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1022,25 +1028,113 @@ export default ({ children }: any) => {
               (container) => {
                 return {
                   replicas: container.replicaCount,
-                  containers: [
-                    {
-                      name: container.container.name,
-                      image: container.container.image,
-                      command: container.container.command,
-                      volumeMounts: container.container.mountedVolumes?.map(
-                        (volume) => {
-                          return {
-                            name: volume.name,
-                            mountPath: volume.path,
-                          };
-                        },
-                      ),
-                      envs: container.container.environmentVariables,
-                    },
-                  ],
+                  container: {
+                    name: container.container.name,
+                    image: container.container.image,
+                    command: container.container.command,
+                    volumeMounts: container.container.mountedVolumes?.map(
+                      (volume) => {
+                        return {
+                          name: volume.name,
+                          mountPath: volume.path,
+                        };
+                      },
+                    ),
+                    envs: container.container.environmentVariables,
+                  },
                 };
               },
             ),
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getDeploysFC(
+    fromPage: boolean,
+    ErrorNav404: boolean,
+  ): Promise<
+    {
+      step1: IEnvironmentStep1;
+      step2: IEnvironmentStep2;
+    }[]
+  > {
+    return new Promise<
+      {
+        step1: IEnvironmentStep1;
+        step2: IEnvironmentStep2;
+      }[]
+    >(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(
+          getDeploys({
+            orgId: fromPage
+              ? pagesState.organization?.id!
+              : selectedState.organization?.id!,
+            regionName: fromPage
+              ? pagesState.roboticsCloud?.name!
+              : selectedState.roboticsCloud?.name!,
+            instanceId: fromPage
+              ? pagesState.instance?.id!
+              : selectedState.instance?.id!,
+            providerRegion: fromPage
+              ? pagesState.roboticsCloud?.region!
+              : selectedState.roboticsCloud?.region!,
+            fleetName: fromPage
+              ? pagesState.fleet?.name!
+              : selectedState.fleet?.name!,
+          }),
+        );
+
+        const deploys: {
+          step1: IEnvironmentStep1;
+          step2: IEnvironmentStep2;
+        }[] = deploysMapper(
+          response?.payload?.data?.[0]?.roboticsClouds?.[0]?.cloudInstances?.[0]
+            ?.robolaunchFederatedRos2Workloads,
+        );
+
+        resolve(deploys);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getDeployFC(values: { deployName: string }): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          getDeploy({
+            orgId: selectedState?.organization?.id!,
+            regionName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            providerRegion: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            deployName: values.deployName,
+          }),
+        );
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  async function deleteDeployFC(values: { deployName: string }): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          deleteDeploy({
+            orgId: selectedState?.organization?.id!,
+            regionName: selectedState?.roboticsCloud?.name!,
+            instanceId: selectedState?.instance?.id!,
+            providerRegion: selectedState?.roboticsCloud?.region!,
+            fleetName: selectedState?.fleet?.name!,
+            deployName: values.deployName,
           }),
         );
         resolve();
@@ -1598,6 +1692,9 @@ export default ({ children }: any) => {
         getFilesFromFileManager,
 
         createDeployFC,
+        getDeploysFC,
+        getDeployFC,
+        deleteDeployFC,
       }}
     >
       {children}

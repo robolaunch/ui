@@ -33,7 +33,7 @@ export default function CFVolumes({
           formik.setFieldValue("volumes", [
             ...formik.values.volumes,
             {
-              name: `workload-pvc-${formik.values.volumes.length}`,
+              name: `${formik.values.details.name}-pvc-${formik.values.volumes.length}`,
               capacity: 20,
             },
           ]);

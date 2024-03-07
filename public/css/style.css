@@ -1222,8 +1222,8 @@ video {
   width: 33.333333%;
 }
 
-.w-1\/6 {
-  width: 16.666667%;
+.w-1\/5 {
+  width: 20%;
 }
 
 .w-10 {
@@ -1286,16 +1286,16 @@ video {
   width: 1rem;
 }
 
+.w-4\/5 {
+  width: 80%;
+}
+
 .w-40 {
   width: 10rem;
 }
 
 .w-5 {
   width: 1.25rem;
-}
-
-.w-5\/6 {
-  width: 83.333333%;
 }
 
 .w-6 {
@@ -1383,14 +1383,6 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
-}
-
-.w-1\/5 {
-  width: 20%;
-}
-
-.w-4\/5 {
-  width: 80%;
 }
 
 .min-w-24 {

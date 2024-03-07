@@ -1325,10 +1325,10 @@ export interface LaunchContainer {
     'replicas'?: number;
     /**
      * 
-     * @type {Array<Container>}
+     * @type {Container}
      * @memberof LaunchContainer
      */
-    'containers'?: Array<Container>;
+    'container'?: Container;
 }
 /**
  * 
@@ -7180,6 +7180,39 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteFederatedRos2Workload: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robot/deleteFederatedRos2Workload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getFederatedRobot: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/getFederatedRobot`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -7215,6 +7248,72 @@ export const RobotApiAxiosParamCreator = function (configuration?: Configuration
          */
         getFederatedRobots: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/robot/getFederatedRobots`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRos2Workload: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robot/getFederatedRos2Workload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(organization, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRos2Workloads: async (organization?: Organization, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/robot/getFederatedRos2Workloads`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7286,6 +7385,16 @@ export const RobotApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async deleteFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFederatedRos2Workload(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getFederatedRobot(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobot(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -7298,6 +7407,26 @@ export const RobotApiFp = function(configuration?: Configuration) {
          */
         async getFederatedRobots(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRobots(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRos2Workload(organization, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getFederatedRos2Workloads(organization?: Organization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFederatedRos2Workloads(organization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -7343,6 +7472,15 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        deleteFederatedRos2Workload(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.deleteFederatedRos2Workload(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getFederatedRobot(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getFederatedRobot(organization, options).then((request) => request(axios, basePath));
         },
@@ -7354,6 +7492,24 @@ export const RobotApiFactory = function (configuration?: Configuration, basePath
          */
         getFederatedRobots(organization?: Organization, options?: any): AxiosPromise<string> {
             return localVarFp.getFederatedRobots(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRos2Workload(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFederatedRos2Workload(organization, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Organization} [organization] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getFederatedRos2Workloads(organization?: Organization, options?: any): AxiosPromise<string> {
+            return localVarFp.getFederatedRos2Workloads(organization, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -7405,6 +7561,17 @@ export class RobotApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RobotApi
      */
+    public deleteFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).deleteFederatedRos2Workload(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotApi
+     */
     public getFederatedRobot(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotApiFp(this.configuration).getFederatedRobot(organization, options).then((request) => request(this.axios, this.basePath));
     }
@@ -7418,6 +7585,28 @@ export class RobotApi extends BaseAPI {
      */
     public getFederatedRobots(organization?: Organization, options?: AxiosRequestConfig) {
         return RobotApiFp(this.configuration).getFederatedRobots(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotApi
+     */
+    public getFederatedRos2Workload(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).getFederatedRos2Workload(organization, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Organization} [organization] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RobotApi
+     */
+    public getFederatedRos2Workloads(organization?: Organization, options?: AxiosRequestConfig) {
+        return RobotApiFp(this.configuration).getFederatedRos2Workloads(organization, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

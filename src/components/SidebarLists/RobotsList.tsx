@@ -13,6 +13,7 @@ interface IRobotsList {
 }
 
 export default function RobotsList({ reload }: IRobotsList): ReactElement {
+  const [activeTab, setActiveTab] = useState<"Develop" | "Deploy">("Develop");
   const [robots, setRobots] = useState<
     | {
         step1: IEnvironmentStep1;
@@ -21,7 +22,7 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
     | null
   >(null);
   const { selectedState, applicationMode } = useMain();
-  const { getRobotsFC } = useFunctions();
+  const { getRobotsFC, getDeploysFC } = useFunctions();
 
   useEffect(
     () => {
@@ -32,15 +33,17 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
         selectedState?.fleet
       ) {
         setRobots(null);
-        handleGetRobots();
+        activeTab === "Develop" ? handleGetRobots() : handleGetDeploys();
       }
 
       const timer = setInterval(() => {
         selectedState?.organization &&
-          selectedState?.roboticsCloud &&
-          selectedState?.instance &&
-          selectedState?.fleet &&
-          handleGetRobots();
+        selectedState?.roboticsCloud &&
+        selectedState?.instance &&
+        selectedState?.fleet &&
+        activeTab === "Develop"
+          ? handleGetRobots()
+          : handleGetDeploys();
       }, 10000);
 
       return () => {
@@ -48,15 +51,36 @@ export default function RobotsList({ reload }: IRobotsList): ReactElement {
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [reload],
+    [reload, activeTab],
   );
 
   async function handleGetRobots() {
     setRobots(await getRobotsFC(false, false));
   }
 
+  async function handleGetDeploys() {
+    setRobots(await getDeploysFC(false, false));
+  }
+
   return (
     <Fragment>
+      <div className="flex w-full flex-col gap-4">
+        <ul className="flex h-10 w-full items-center">
+          {["Develop", "Deploy"]?.map((tab, index) => {
+            return (
+              <li
+                className={`flex w-full min-w-max cursor-pointer flex-col items-center justify-center gap-3 px-1 text-xs font-medium  text-light-300 transition-all duration-500 hover:scale-95 ${activeTab === tab && "!text-primary-500"}`}
+                onClick={() => setActiveTab(tab as "Develop" | "Deploy")}
+              >
+                <p>{tab}</p>
+                <span
+                  className={`h-[2px] w-full bg-light-300 ${activeTab === tab && "!bg-primary-500"}`}
+                ></span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       {!selectedState?.organization ||
       !selectedState?.roboticsCloud ||
       !selectedState?.instance ||
