@@ -2,6 +2,7 @@ import { Fragment, ReactElement, useEffect, useState } from "react";
 import SideBarMenuItem from "../SidebarMenuItem/SideBarMenuItem";
 import { useParams } from "react-router-dom";
 import useMain from "../../hooks/useMain";
+import { handleDeployMode } from "../../functions/deploy.mode.function";
 
 export default function EnvironmentSidebarMenuItems(): ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,7 +43,7 @@ export default function EnvironmentSidebarMenuItems(): ReactElement {
         }
       />
 
-      {!applicationMode && (
+      {!applicationMode && !handleDeployMode() && (
         <Fragment>
           <SideBarMenuItem
             type="workspacesmanager"

@@ -1693,6 +1693,11 @@ export default ({ children }: any) => {
         getRobotsFC,
         getRobotFC,
         deleteRobotFC,
+        //// Deploy ////
+        createDeployFC,
+        getDeploysFC,
+        getDeployFC,
+        deleteDeployFC,
         //// Tools ////
         getSystemStatusFC,
         getTemplatesFC,
@@ -1715,11 +1720,6 @@ export default ({ children }: any) => {
 
         getIP,
         getFilesFromFileManager,
-
-        createDeployFC,
-        getDeploysFC,
-        getDeployFC,
-        deleteDeployFC,
       }}
     >
       {children}
