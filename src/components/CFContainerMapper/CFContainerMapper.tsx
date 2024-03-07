@@ -12,7 +12,7 @@ export default function CFContainerMapper({
 }: ICFContainerMapper): ReactElement {
   return (
     <Fragment>
-      {formik.values.launchContainers.map((_, index) => (
+      {formik.values.launchContainers?.map((_, index) => (
         <CFContainer formik={formik} index={index} key={index} />
       ))}
     </Fragment>
