@@ -40,6 +40,11 @@ export default function CFContainer({
               `launchContainers[${index}].container.name`,
             ),
           }}
+          inputTouched={
+            formik.touched.launchContainers?.[index]?.container?.name
+          }
+          // @ts-ignore
+          inputError={formik.errors.launchContainers?.[index]?.container?.name}
         />
         <div className="flex w-full flex-col justify-between gap-4">
           <div className="flex w-full gap-4">
@@ -52,6 +57,13 @@ export default function CFContainer({
                   `launchContainers[${index}].container.image`,
                 ),
               }}
+              inputTouched={
+                formik.touched.launchContainers?.[index]?.container?.image
+              }
+              inputError={
+                // @ts-ignore
+                formik.errors.launchContainers?.[index]?.container?.image
+              }
             />
             <FormInputText
               type="number"

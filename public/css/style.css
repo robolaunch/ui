@@ -1385,6 +1385,10 @@ video {
   width: max-content;
 }
 
+.w-2\/5 {
+  width: 40%;
+}
+
 .min-w-24 {
   min-width: 6rem;
 }

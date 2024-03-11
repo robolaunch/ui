@@ -34,6 +34,15 @@ export default function CFContainerEnv({
                 `launchContainers[${containerIndex}].container.environmentVariables[${envIndex}].name`,
               ),
             }}
+            inputTouched={
+              formik.touched.launchContainers?.[containerIndex]?.container
+                ?.environmentVariables?.[envIndex]?.name
+            }
+            inputError={
+              // @ts-ignore
+              formik.errors.launchContainers?.[containerIndex]?.container
+                ?.environmentVariables?.[envIndex]?.name
+            }
           />
           <FormInputText
             classNameContainer="w-full"
@@ -44,6 +53,15 @@ export default function CFContainerEnv({
                 `launchContainers[${containerIndex}].container.environmentVariables[${envIndex}].value`,
               ),
             }}
+            inputTouched={
+              formik.touched.launchContainers?.[containerIndex]?.container
+                ?.environmentVariables?.[envIndex]?.value
+            }
+            inputError={
+              // @ts-ignore
+              formik.errors.launchContainers?.[containerIndex]?.container
+                ?.environmentVariables?.[envIndex]?.value
+            }
           />
         </div>
         <p

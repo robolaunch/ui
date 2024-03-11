@@ -17,4 +17,34 @@ export const CFDeployStep1Validations = Yup.object().shape({
       otherwise: Yup.string().notRequired(),
     }),
   }),
+  services: Yup.object().shape({
+    ros: Yup.object().shape({
+      bridgeDistro: Yup.string().required("Bridge Distro is required."),
+    }),
+  }),
+  launchContainers: Yup.array().of(
+    Yup.object().shape({
+      container: Yup.object().shape({
+        name: Yup.string().required("Container name is required."),
+        image: Yup.string().required("Image is required."),
+        command: Yup.string().required("Command is required."),
+        mountedVolumes: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().required("Volume name is required."),
+            mountPath: Yup.string().required("Mount path is required."),
+          }),
+        ),
+        environmentVariables: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().required(
+              "Environment variable name is required.",
+            ),
+            value: Yup.string().required(
+              "Environment variable value is required.",
+            ),
+          }),
+        ),
+      }),
+    }),
+  ),
 });

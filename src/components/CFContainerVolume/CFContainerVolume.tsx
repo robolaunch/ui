@@ -28,12 +28,10 @@ export default function CFContainerVolume({
       <div className="flex flex-col items-center gap-3 pb-2">
         <div className="flex w-full gap-4 p-4">
           <FormInputSelect
+            classNameContainer="w-full"
             labelName="Volume"
             tip="Select Volume"
-            inputTouched={
-              formik.touched?.launchContainers?.[containerIndex]?.container
-                ?.mountedVolumes?.[volumeIndex]?.name
-            }
+            inputTouched={true}
             inputError={
               // @ts-ignore
               formik.errors?.launchContainers?.[containerIndex]?.container
@@ -67,6 +65,15 @@ export default function CFContainerVolume({
                 `launchContainers[${containerIndex}].container.mountedVolumes[${volumeIndex}].mountPath`,
               ),
             }}
+            inputTouched={
+              formik.touched?.launchContainers?.[containerIndex]?.container
+                ?.mountedVolumes?.[volumeIndex]?.mountPath
+            }
+            inputError={
+              // @ts-ignore
+              formik.errors?.launchContainers?.[containerIndex]?.container
+                ?.mountedVolumes?.[volumeIndex]?.mountPath
+            }
           />
         </div>
         <p

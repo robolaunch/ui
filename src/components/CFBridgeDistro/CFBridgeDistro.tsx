@@ -16,12 +16,13 @@ export default function CFBridgeDistro({
     <div className="flex w-full items-center justify-between">
       <CFBridgeToggle formik={formik} />
       <CFInfoBar
-        classNameContainer="flex items-center"
         label="Distro:"
         tip="Type Volumes"
         dataTut="create-robot-step1-bridgeDistro"
         gap={4}
         classNameLabel="items-center"
+        touched={true}
+        error={formik.errors?.services?.ros?.bridgeDistro}
       >
         <div className="flex gap-2">
           {[
