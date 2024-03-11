@@ -4,6 +4,7 @@ export interface IDeployBE {
   bridgeEnabled: boolean;
   bridgeIngressEndpoint: string;
   fleetName: string;
+  isPhysicalInstance: boolean;
   instanceName: string;
   launchContainers: {
     replicas: number;

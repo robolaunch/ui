@@ -1,6 +1,6 @@
-import { IDeployBE } from "../interfaces/deploy.interface";
 import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
 import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
+import { IDeployBE } from "../interfaces/deploy.interface";
 
 function handleMapper(data: IDeployBE[]): {
   step1: IEnvironmentStep1;
@@ -12,10 +12,12 @@ function handleMapper(data: IDeployBE[]): {
         step1: {
           details: {
             name: deploy?.name,
-            isVirtualRobot: true,
+            isVirtualRobot: deploy?.isPhysicalInstance ? false : true,
             isDevelopmentMode: true,
             configureWorkspace: false,
-            physicalInstanceName: "",
+            physicalInstanceName: deploy?.isPhysicalInstance
+              ? deploy?.instanceName
+              : "",
             isDeployMode: true,
           },
           resources: {
@@ -40,7 +42,7 @@ function handleMapper(data: IDeployBE[]): {
               socketEndpoint: deploy?.bridgeIngressEndpoint,
               podName: "",
               log: "",
-              bridgeDistro: deploy?.bridgeDistro || "",
+              bridgeDistro: deploy?.bridgeDistro?.toLowerCase() || "",
             },
 
             vdi: {
