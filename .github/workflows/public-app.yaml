@@ -1,0 +1,42 @@
+name: Docker Image (public-app-admin)
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: public-app-admin
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4.1.1
+
+      - name: Extract Version from package.json
+        id: project_version
+        run: echo "::set-output name=version::$(node -e 'console.log(require("./package.json").version)')"
+
+      - name: Build the Docker Image
+        run: |
+          docker build \
+            --file Dockerfile \
+            --tag robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-app-admin \
+            --build-arg REACT_APP_BACKEND_URL=${{ secrets.REACT_APP_BACKEND_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_URL=${{ secrets.REACT_APP_KEYCLOAK_URL }} \
+            --build-arg REACT_APP_KEYCLOAK_REALM=${{ secrets.REACT_APP_KEYCLOAK_REALM }} \
+            --build-arg REACT_APP_KEYCLOAK_CLIENT_ID=${{ secrets.REACT_APP_KEYCLOAK_CLIENT_ID }} \
+            --build-arg REACT_APP_DEFAULT_MODE=${{ secrets.REACT_APP_DEFAULT_MODE }} \
+            --build-arg REACT_APP_SWITCHABLE_MODE=${{ secrets.REACT_APP_SWITCHABLE_MODE }} \
+            --build-arg REACT_APP_CREATABLE_ORGANIZATION=${{ secrets.REACT_APP_CREATABLE_ORGANIZATION }} \
+            --build-arg REACT_APP_CREATABLE_REGION=${{ secrets.REACT_APP_CREATABLE_REGION }} \
+            --build-arg REACT_APP_CREATABLE_INSTANCE=${{ secrets.REACT_APP_CREATABLE_INSTANCE }} \
+            .
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push the Docker Image to Docker Hub
+        run: docker push robolaunchio/frontend-public:${{ steps.project_version.outputs.version }}-app-admin
