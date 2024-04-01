@@ -1,12 +1,12 @@
 import LaunchManagerStepsTable from "../components/LaunchManagerStepsTable/LaunchManagerStepsTable";
 import BuildManagerStepsTable from "../components/BuildManagerStepsTable/BuildManagerStepsTable";
 import WorkspacesTable from "../components/WorkspacesTable/WorkspacesTable";
+import ContainersTable from "../components/ContainersTable/ContainersTable";
+import VolumesTable from "../components/VolumesTable/VolumesTable";
+import { useAppSelector } from "../hooks/redux";
 import { Fragment, ReactElement } from "react";
 import useWindow from "../hooks/useWindow";
 import useRobot from "../hooks/useRobot";
-import { useAppSelector } from "../hooks/redux";
-import VolumesTable from "../components/VolumesTable/VolumesTable";
-import ContainersTable from "../components/ContainersTable/ContainersTable";
 
 interface IRobotOverviewLayout {
   widget1?: ReactElement;

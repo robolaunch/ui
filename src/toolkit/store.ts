@@ -1,13 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { persistStore, persistReducer } from "redux-persist";
 import RoboticsCloudReducer from "./RoboticsCloudSlice";
 import OrganizationReducer from "./OrganizationSlice";
 import MarketplaceReducer from "./MarketplaceSlice";
 import EnvironmentReducer from "./EnvironmentSlice";
+import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import InstanceReducer from "./InstanceSlice";
 import BarcodeReducer from "./BarcodeSlice";
+import ServiceReducer from "./ServiceSlice";
+import DeployReducer from "./DeploySlice";
 import GithubReducer from "./GithubSlice";
 import GuideReducer from "./GuideSlice";
 import TrialReducer from "./TrialSlice";
@@ -15,8 +17,6 @@ import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
 import PortReducer from "./PortSlice";
-import ServiceReducer from "./ServiceSlice";
-import DeployReducer from "./DeploySlice";
 
 const persistConfigDeploy = {
   key: "deploy",
