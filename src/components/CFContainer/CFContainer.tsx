@@ -1,13 +1,13 @@
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
+import CFContainerVolumeMapper from "../CFContainerVolumeMapper/CFContainerVolumeMapper";
+import CFContainerEnvMapper from "../CFContainerEnvMapper/CFContainerEnvMapper";
 import FormInputText from "../FormInputText/FormInputText";
 import CFPrivileged from "../CFPrivileged/CFPrivileged";
+import Accordion from "../Accordion/AccordionV2";
 import { ReactElement, useState } from "react";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
 import CFEditor from "../CFEditor/CFEditor";
 import { FormikProps } from "formik";
-import Accordion from "../Accordion/AccordionV2";
-import CFContainerEnvMapper from "../CFContainerEnvMapper/CFContainerEnvMapper";
-import CFContainerVolumeMapper from "../CFContainerVolumeMapper/CFContainerVolumeMapper";
 
 interface ICFContainer {
   formik: FormikProps<IEnvironmentStep1>;

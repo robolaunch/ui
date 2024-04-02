@@ -1,14 +1,14 @@
+import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
+import { IOrganization } from "../../interfaces/global/organization.interface";
+import { INamespace } from "../../interfaces/global/namespace.interface";
+import { IRegion } from "../../interfaces/global/region.interface";
+import { IFleet } from "../../interfaces/global/fleet.interface";
+import { orgSplitter } from "../../functions/general.function";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import useMain from "../../hooks/useMain";
 import { ReactElement } from "react";
 import { toast } from "sonner";
-import { IOrganization } from "../../interfaces/global/organization.interface";
-import { IRegion } from "../../interfaces/global/region.interface";
-import { ICloudInstance } from "../../interfaces/global/cloudInstance.interface";
-import { IFleet } from "../../interfaces/global/fleet.interface";
-import { INamespace } from "../../interfaces/global/namespace.interface";
-import { orgSplitter } from "../../functions/general.function";
 
 interface ISidebarListItem {
   name: string | ReactElement;

@@ -1,9 +1,8 @@
-import { FormikProps } from "formik";
-import { Fragment, ReactElement } from "react";
 import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
-import CFAddButton from "../CFAddButton/CFAddButton";
 import CFContainerEnv from "../CFContainerEnv/CFContainerEnv";
-
+import CFAddButton from "../CFAddButton/CFAddButton";
+import { Fragment, ReactElement } from "react";
+import { FormikProps } from "formik";
 interface ICFContainerEnvMapper {
   formik: FormikProps<IEnvironmentStep1>;
   containerIndex: number;

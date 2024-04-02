@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import RosEmergencyControlWidget from "../components/RosEmergencyControlWidget/RosEmergencyControlWidget";
 import RosResourceUsageWidget from "../components/RosResourceUsageWidget/RosResourceUsageWidget";
 import RosTopicListWidget from "../components/RosTopicListWidget/RosTopicListWidget";

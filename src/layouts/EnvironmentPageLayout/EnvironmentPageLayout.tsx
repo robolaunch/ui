@@ -1,5 +1,6 @@
 import DevelopmentSuite from "../../pages/EnvironmentPage/DevelopmentSuite/DevelopmentSuite";
 import JupyterNotebook from "../../pages/EnvironmentPage/JupyterNotebook/JupyterNotebook";
+import TaskManagement from "../../pages/EnvironmentPage/TaskManagement/TaskManagement";
 import EnvironmentHeader from "../../components/EnvironmentHeader/EnvironmentHeader";
 import Visualization from "../../pages/EnvironmentPage/Visualization/Visualization";
 import Teleoperation from "../../pages/EnvironmentPage/Teleoperation/Teleoperation";
@@ -10,7 +11,6 @@ import HiddenFrame from "../../components/HiddenFrame/HiddenFrame";
 import FileManager from "../../components/FileManager/FileManager";
 import useRobot from "../../hooks/useRobot";
 import { ReactElement } from "react";
-import TaskManagement from "../../pages/EnvironmentPage/TaskManagement/TaskManagement";
 
 export default function EnvironmentPageLayout(): ReactElement {
   const { activeTab } = useRobot();

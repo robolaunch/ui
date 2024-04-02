@@ -308,6 +308,7 @@ export default function SidebarContentLayout(): ReactElement {
                       }
 
                       return <NamespacesList reload={reload} />;
+
                     case false:
                       if (sidebarState?.isCreateMode) {
                         return <CFFleet />;

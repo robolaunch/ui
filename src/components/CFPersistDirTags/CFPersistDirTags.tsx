@@ -1,10 +1,10 @@
+import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import { ReactElement, useEffect, useState } from "react";
 import { TagsInput } from "react-tag-input-component";
 import { FormikProps } from "formik/dist/types";
 import CFInfoBar from "../CFInfoBar/CFInfoBar";
-import { toast } from "sonner";
-import { IEnvironmentStep1 } from "../../interfaces/environment/environment.step1.interface";
 import useMain from "../../hooks/useMain";
+import { toast } from "sonner";
 
 interface ICFPersistDirTags {
   formik: FormikProps<IEnvironmentStep1>;

@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import TeleoperationControlBar from "../../../components/TeleoperationControlBar/TeleoperationControlBar";
 import RemoteDesktopScene from "../../../components/RemoteDesktopScene/RemoteDesktopScene";
 import { FloatMenu } from "../../../components/FloatMenu/FloatMenu";

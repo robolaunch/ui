@@ -6,9 +6,9 @@ import { IDataScienceApp } from "../global/dataSciende.interface";
 import { IOrganization } from "../global/organization.interface";
 import { INamespace } from "../global/namespace.interface";
 import { ISystemStatus } from "../global/system.interface";
+import { ITemplate } from "../global/template.interface";
 import { IRegion } from "../global/region.interface";
 import { IFleet } from "../global/fleet.interface";
-import { ITemplate } from "../global/template.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;

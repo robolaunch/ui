@@ -1,19 +1,19 @@
-import { createContext } from "react";
-import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
-import { FormikProps, useFormik } from "formik";
-import * as Yup from "yup";
-import useMain from "../hooks/useMain";
-import useFunctions from "../hooks/useFunctions";
-import { useParams } from "react-router-dom";
-import { toast } from "sonner";
-import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
-import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
-import { CFAppStep2Validations } from "../validations/AppsValidations";
 import {
   CFRobotStep1Validations,
   CFRobotStep2Validations,
 } from "../validations/RobotsValidations";
+import { IEnvironmentStep3 } from "../interfaces/environment/environment.step3.interface";
+import { IEnvironmentStep2 } from "../interfaces/environment/environment.step2.interface";
+import { IEnvironmentStep1 } from "../interfaces/environment/environment.step1.interface";
 import { CFDeployStep1Validations } from "../validations/deploy.validations";
+import { CFAppStep2Validations } from "../validations/AppsValidations";
+import useFunctions from "../hooks/useFunctions";
+import { FormikProps, useFormik } from "formik";
+import { useParams } from "react-router-dom";
+import useMain from "../hooks/useMain";
+import { createContext } from "react";
+import { toast } from "sonner";
+import * as Yup from "yup";
 
 export const FormContext: any = createContext<any>(null);
 
