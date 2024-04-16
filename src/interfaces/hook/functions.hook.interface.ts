@@ -9,6 +9,7 @@ import { ISystemStatus } from "../global/system.interface";
 import { ITemplate } from "../global/template.interface";
 import { IRegion } from "../global/region.interface";
 import { IFleet } from "../global/fleet.interface";
+import { IBarcodeItem } from "../global/barcode.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -169,6 +170,8 @@ export interface IuseFunctions {
   ////
   ////
   ////
+  getBarcodesFC: () => Promise<IBarcodeItem[]>;
+
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters,

@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import { Fragment, ReactElement } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import useBarcode from "../../../hooks/useBarcode";
-import Barcode from "react-barcode";
+import { Tooltip } from "primereact/tooltip";
 
 export default function BarcodeManagement2D(): ReactElement {
   const { barcodeItems } = useBarcode();
@@ -19,48 +19,46 @@ export default function BarcodeManagement2D(): ReactElement {
           style={{
             backgroundRepeat: "repeat",
           }}
-          className="animate-fadeIn flex w-full items-center justify-center gap-10"
+          className="relative h-full gap-10"
         >
           {barcodeItems?.length
-            ? barcodeItems?.map(
-                (barcodeItem: any, barcodeItemIndex: number) => {
-                  return (
-                    <div key={barcodeItemIndex} className="flex flex-col gap-1">
-                      {barcodeItem?.barcodes?.map(
-                        (barcode: any, barcodeIndex: number) => {
+            ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
+                return (
+                  <Fragment key={barcodeItemIndex}>
+                    <Tooltip target={`.box-${barcodeItemIndex}`}>
+                      <ul>
+                        {barcodeItem.barcodes?.map((barcode, barcodeIndex) => {
                           return (
-                            <div
-                              key={barcodeIndex}
-                              className="flex h-44 w-36 items-center justify-center"
-                              style={{
-                                backgroundImage: `url(/svg/icons/washing-machine.svg)`,
-                                backgroundRepeat: "no-repeat",
-                                backgroundSize: "contain",
-                              }}
-                            >
-                              <div className="flex h-10 w-full items-center justify-center border-[6px] border-light-800 bg-yellow-400">
-                                {barcode ? (
-                                  <Barcode
-                                    fontSize={8}
-                                    height={8}
-                                    width={0.5}
-                                    value={barcode}
-                                    background="transparent"
-                                  />
-                                ) : (
-                                  <span className="text-xs">None</span>
-                                )}
-                              </div>
-                            </div>
+                            <li key={barcodeIndex}>
+                              <span>{barcode.location_z + 1}</span>
+                              <span> - </span>
+                              <span>{barcode.barcode}</span>
+                            </li>
                           );
-                        },
-                      )}
-                    </div>
-                  );
-                },
-              )
+                        })}
+                      </ul>
+                    </Tooltip>
+                    <div
+                      key={barcodeItemIndex}
+                      className={`absolute flex flex-col gap-1 box-${barcodeItemIndex}`}
+                      style={{
+                        backgroundImage: `url(/svg/icons/washing-machine.svg)`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "contain",
+                        left: barcodeItem.location_x * 200,
+                        top: barcodeItem.location_y * -200,
+                        height: "48px",
+                        width: "36px",
+                        backgroundColor: "#000",
+                        transition: "all 0.5s",
+                      }}
+                    />
+                  </Fragment>
+                );
+              })
             : "No Barcode Item"}
         </div>
+        <div className="h-8 w-8 rounded-full bg-primary-500" />
       </TransformComponent>
     </TransformWrapper>
   );

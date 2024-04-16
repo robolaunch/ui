@@ -1,118 +1,78 @@
-import { createContext, useEffect, useState } from "react";
-import useRobot from "../hooks/useRobot";
-import ROSLIB from "roslib";
 import { IBarcodeItem } from "../interfaces/global/barcode.interface";
+import { createContext, useEffect, useState } from "react";
+import useFunctions from "../hooks/useFunctions";
 
 export const BarcodeContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
-  const { ros } = useRobot();
   const [findBarcodeInput, setFindBarcodeInput] = useState<string>("");
-  const [robotLocation, setRobotLocation] = useState<{
-    x: number;
-    y: number;
-    z: number;
-  }>({
-    x: 0,
-    y: 0,
-    z: 0,
-  });
+
   const [barcodeItems, setBarcodeItems] = useState<IBarcodeItem[]>([]);
 
+  const { getBarcodesFC } = useFunctions();
+
   useEffect(() => {
-    const barcodes = new ROSLIB.Topic({
-      ros: ros,
-      name: "/all_barcodes",
-      messageType: "std_msgs/msg/String",
-    });
-
-    ros &&
-      barcodes.subscribe(function ({ data }: any) {
-        const message = JSON.parse(data);
-
-        barcodeClustering(message);
-      });
+    handleGetBarcodes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ros]);
+  }, []);
 
-  useEffect(() => {
-    const poseTopic = new ROSLIB.Topic({
-      ros: ros,
-      name: "/robot_position",
-      messageType: "geometry_msgs/msg/PoseStamped",
-    });
+  async function handleGetBarcodes() {
+    const barcodes = await getBarcodesFC();
 
-    ros &&
-      poseTopic.subscribe(function (pose: any) {
-        setRobotLocation({
-          ...pose?.pose?.position,
-          z: quaternionToEuler(pose?.pose?.orientation),
-        });
-      });
-
-    return () => {
-      poseTopic?.unsubscribe();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ros]);
-
-  useEffect(() => {
-    console.log(barcodeItems);
-  }, [barcodeItems]);
-
-  function quaternionToEuler(q: {
-    x: number;
-    y: number;
-    z: number;
-    w: number;
-  }) {
-    const { x, y, z, w } = q;
-    const siny_cosp = 2 * (w * z + x * y);
-    const cosy_cosp = 1 - 2 * (y * y + z * z);
-
-    return Math.atan2(siny_cosp, cosy_cosp);
+    barcodes?.map((barcode: IBarcodeItem) => barcodeClustering(barcode));
   }
+
+  useEffect(() => {
+    console.log("barcodeItems", barcodeItems);
+  }, [barcodeItems]);
 
   function barcodeClustering(newBarcode: IBarcodeItem) {
     const clusteringScale = 0.3;
 
     setBarcodeItems((prevData: IBarcodeItem[]) => {
       if (prevData.length > 0) {
-        const lastItemWaypoint = {
-          x: Math.abs(prevData[prevData.length - 1]?.waypoint?.x),
-          y: Math.abs(prevData[prevData.length - 1]?.waypoint?.y),
-          z: Math.abs(prevData[prevData.length - 1]?.waypoint?.z),
-        };
+        let shouldCluster = false;
 
-        const newItemWaypoint = {
-          x: Math.abs(newBarcode?.waypoint?.x),
-          y: Math.abs(newBarcode?.waypoint?.y),
-          z: Math.abs(newBarcode?.waypoint?.z),
-        };
+        const updatedData = prevData.map((item) => {
+          const itemWaypoint = {
+            x: Math.abs(item.location_x),
+            y: Math.abs(item.location_y),
+          };
 
-        const diff = {
-          x: Math.abs(lastItemWaypoint.x - newItemWaypoint.x),
-          y: Math.abs(lastItemWaypoint.y - newItemWaypoint.y),
-          z: Math.abs(lastItemWaypoint.z - newItemWaypoint.z),
-        };
+          const newItemWaypoint = {
+            x: Math.abs(newBarcode?.location_x),
+            y: Math.abs(newBarcode?.location_y),
+          };
 
-        if (diff.x < clusteringScale && diff.y < clusteringScale) {
-          return [
-            ...prevData,
-            {
-              robotId: newBarcode.robotId,
-              fleetId: newBarcode.fleetId,
-              sensorId: newBarcode.sensorId,
-              barcode: newBarcode.barcode,
-              waypoint: {
-                x: prevData[prevData.length - 1]?.waypoint?.x,
-                y: prevData[prevData.length - 1]?.waypoint?.y,
-                z: newBarcode.waypoint.z,
-                yaw: prevData[prevData.length - 1]?.waypoint?.yaw,
-              },
-            },
-          ];
+          const diff = {
+            x: Math.abs(itemWaypoint.x - newItemWaypoint.x),
+            y: Math.abs(itemWaypoint.y - newItemWaypoint.y),
+          };
+
+          if (diff.x < clusteringScale && diff.y < clusteringScale) {
+            shouldCluster = true;
+            return {
+              barcodes: [
+                ...(item.barcodes || []),
+                {
+                  barcode: newBarcode.barcode,
+                  location_z: newBarcode.location_z,
+                  time: newBarcode.time,
+                  sensorid: newBarcode.sensorId,
+                },
+              ],
+              location_x: item.location_x,
+              location_y: item.location_y,
+              yaw: item.yaw,
+            };
+          } else {
+            return item;
+          }
+        });
+
+        if (shouldCluster) {
+          return updatedData;
         } else {
           return [...prevData, newBarcode];
         }
@@ -123,11 +83,13 @@ export default ({ children }: any) => {
     });
   }
 
+  useEffect(() => {
+    console.log("barcodeItems", barcodeItems);
+  }, [barcodeItems]);
+
   return (
     <BarcodeContext.Provider
       value={{
-        robotLocation,
-        setRobotLocation,
         barcodeItems,
         setBarcodeItems,
         findBarcodeInput,

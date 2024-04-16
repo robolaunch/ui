@@ -109,6 +109,8 @@ import {
   getDeploys,
 } from "../toolkit/DeploySlice";
 import { deployMapper, deploysMapper } from "../handler/deploy.handler";
+import { getAllBarcodes } from "../toolkit/BarcodeSlice";
+import { IBarcodeItem } from "../interfaces/global/barcode.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1652,6 +1654,17 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getBarcodesFC(): Promise<IBarcodeItem[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getAllBarcodes());
+        resolve(response.payload.data.data || []);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1706,6 +1719,7 @@ export default ({ children }: any) => {
         ////
         ////
         ////
+        getBarcodesFC,
 
         getPhysicalFleet,
 

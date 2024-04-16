@@ -8,14 +8,10 @@ import { PiExport } from "react-icons/pi";
 
 interface IBarcodeModeToggle {
   handleFullScreen: any;
-  activeTab: string;
-  setActiveTab: any;
 }
 
 export default function BarcodeModeToggle({
   handleFullScreen,
-  activeTab,
-  setActiveTab,
 }: IBarcodeModeToggle): ReactElement {
   const { barcodeItems } = useBarcode();
 
@@ -28,13 +24,6 @@ export default function BarcodeModeToggle({
 
   return (
     <div className="absolute bottom-4 left-4 flex flex-col gap-4">
-      <BarcodeManagementButton
-        icon={
-          <span className="text-sm">{activeTab === "2D" ? "3D" : "2D"}</span>
-        }
-        onClick={() => setActiveTab(activeTab === "2D" ? "3D" : "2D")}
-      />
-
       <BarcodeManagementButton
         icon={<BsFullscreen size={20} />}
         onClick={handleFullScreen.enter}

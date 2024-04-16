@@ -263,7 +263,7 @@ export default ({ children }: any) => {
   // ROS Bridge Connector
   useEffect(() => {
     const rosClient: ROSLIB.Ros | null =
-      !applicationMode &&
+      // !applicationMode &&
       isSettedCookie &&
       robotData?.step1?.services?.ros?.socketEndpoint?.split("://")[0] === "wss"
         ? new ROSLIB.Ros({

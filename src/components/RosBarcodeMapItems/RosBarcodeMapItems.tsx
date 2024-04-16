@@ -1,15 +1,9 @@
-import React, { ReactElement, useEffect } from "react";
 import RosBarcodeMapItem from "../RosBarcodeMapItem/RosBarcodeMapItem";
-import saveAs from "file-saver";
 import useBarcodeManagement from "../../hooks/useBarcode";
+import { ReactElement, useEffect } from "react";
+import saveAs from "file-saver";
 
-interface IRosBarcodeMap {
-  ros: any;
-}
-
-export default function RosBarcodeMapItems({
-  ros,
-}: IRosBarcodeMap): ReactElement {
+export default function RosBarcodeMapItems(): ReactElement {
   const { barcodeItems } = useBarcodeManagement();
 
   useEffect(() => {
@@ -25,7 +19,7 @@ export default function RosBarcodeMapItems({
 
   return (
     <div className="absolute inset-0" id="barcode">
-      {barcodeItems.map((item: any, index: number) => {
+      {barcodeItems?.map((item: any, index: number) => {
         return <RosBarcodeMapItem item={item} key={index} />;
       })}
       <div
