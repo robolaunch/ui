@@ -156,7 +156,7 @@ export default function MissionManagement({ ros }: ITask): ReactElement {
                       />
                       <RosWaypointLine ros={ros} />
                       <RosMapWaypointLayout />
-                      <RosBarcodeMapItems ros={ros} />
+                      <RosBarcodeMapItems />
                       <RosRobotLocation
                         ros={ros}
                         rosMapWebsocketWidth={rosMapDetails?.resolution?.x}

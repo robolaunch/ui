@@ -1,6 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const getBarcodeSnapshots = createAsyncThunk(
+  "barcode/getSnapshots",
+  async (_) => {
+    const response = await axios.get("http://localhost:8077/barcode/snapshots");
+    return response;
+  },
+);
+
+export const getBarcodeAtSnapshot = createAsyncThunk(
+  "barcode/snapshots/getBarcodeAtSnapshot",
+  async ({ time }: { time: number }) => {
+    const response = await axios.get(
+      `http://localhost:8077/barcode/snapshots/${time}`,
+    );
+    return response;
+  },
+);
+
 export const getAllBarcodes = createAsyncThunk(
   "barcode/getAllBarcodes",
   async (_) => {
@@ -19,8 +37,8 @@ export const getBarcodesWithStartedID = createAsyncThunk(
   },
 );
 
-export const resetBarcodes = createAsyncThunk(
-  "barcode/resetBarcodes",
+export const createSnapshot = createAsyncThunk(
+  "barcode/createSnapshot",
   async (_) => {
     const response = await axios.delete("http://localhost:8077/barcode");
     return response;

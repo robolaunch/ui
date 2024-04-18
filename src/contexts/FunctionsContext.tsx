@@ -109,8 +109,16 @@ import {
   getDeploys,
 } from "../toolkit/DeploySlice";
 import { deployMapper, deploysMapper } from "../handler/deploy.handler";
-import { getAllBarcodes } from "../toolkit/BarcodeSlice";
-import { IBarcodeItem } from "../interfaces/global/barcode.interface";
+import {
+  createSnapshot,
+  getAllBarcodes,
+  getBarcodeAtSnapshot,
+  getBarcodeSnapshots,
+} from "../toolkit/BarcodeSlice";
+import {
+  IBarcodeItem,
+  IBarcodeSnapshot,
+} from "../interfaces/global/barcode.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1665,6 +1673,59 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getBarcodeSnapshotsFC(): Promise<IBarcodeSnapshot[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getBarcodeSnapshots());
+
+        const snapshots: IBarcodeSnapshot[] = response.payload.data.data.map(
+          (snapshot: string) => {
+            return {
+              name: snapshot,
+              time: Number(snapshot.split("_")[1]),
+              readableDate: new Date(
+                Number(snapshot.split("_")[1]) * 1000,
+              ).toLocaleString(),
+            };
+          },
+        );
+
+        resolve(snapshots || []);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getBarcodeAtSnapshotFC({
+    time,
+  }: {
+    time: number;
+  }): Promise<IBarcodeItem[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getBarcodeAtSnapshot({ time }));
+
+        const barcodes: IBarcodeItem[] = response.payload.data.data;
+
+        resolve(barcodes || []);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function createSnapshotFC(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(createSnapshot());
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1720,7 +1781,14 @@ export default ({ children }: any) => {
         ////
         ////
         getBarcodesFC,
-
+        getBarcodeSnapshotsFC,
+        getBarcodeAtSnapshotFC,
+        createSnapshotFC,
+        //
+        //
+        //
+        //
+        //
         getPhysicalFleet,
 
         createAppBuildManager,

@@ -1,4 +1,7 @@
-import { IBarcodeItem } from "../interfaces/global/barcode.interface";
+import {
+  IBarcodeItem,
+  IBarcodeSnapshot,
+} from "../interfaces/global/barcode.interface";
 import { createContext, useEffect, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
 
@@ -8,14 +11,33 @@ export const BarcodeContext: any = createContext<any>(null);
 export default ({ children }: any) => {
   const [findBarcodeInput, setFindBarcodeInput] = useState<string>("");
 
+  const [snapshots, setSnapshots] = useState<IBarcodeSnapshot[]>([]);
+
+  const [reload, setReload] = useState<boolean>(false);
+
+  const [selectedSnapshot, setSelectedSnapshot] =
+    useState<IBarcodeSnapshot | null>(null);
+
   const [barcodeItems, setBarcodeItems] = useState<IBarcodeItem[]>([]);
 
-  const { getBarcodesFC } = useFunctions();
+  const { getBarcodesFC, getBarcodeSnapshotsFC, getBarcodeAtSnapshotFC } =
+    useFunctions();
 
   useEffect(() => {
-    handleGetBarcodes();
+    setBarcodeItems([]);
+    if (selectedSnapshot) {
+      handleGetBarcodeAtSnapshot({ time: selectedSnapshot!.time });
+    } else {
+      handleGetBarcodes();
+    }
+
+    handleGetBarcodeSnapshots();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedSnapshot, reload]);
+
+  function handleReload() {
+    setReload((prev) => !prev);
+  }
 
   async function handleGetBarcodes() {
     const barcodes = await getBarcodesFC();
@@ -23,13 +45,20 @@ export default ({ children }: any) => {
     barcodes?.map((barcode: IBarcodeItem) => barcodeClustering(barcode));
   }
 
-  useEffect(() => {
-    console.log("barcodeItems", barcodeItems);
-  }, [barcodeItems]);
+  async function handleGetBarcodeSnapshots() {
+    setSnapshots(await getBarcodeSnapshotsFC());
+  }
+
+  async function handleGetBarcodeAtSnapshot({ time }: { time: number }) {
+    const barcodes = await getBarcodeAtSnapshotFC({ time: time });
+
+    barcodes?.map((barcode: IBarcodeItem) => barcodeClustering(barcode));
+  }
 
   function barcodeClustering(newBarcode: IBarcodeItem) {
     const clusteringScale = 0.3;
 
+    // @ts-ignore
     setBarcodeItems((prevData: IBarcodeItem[]) => {
       if (prevData.length > 0) {
         let shouldCluster = false;
@@ -85,7 +114,8 @@ export default ({ children }: any) => {
 
   useEffect(() => {
     console.log("barcodeItems", barcodeItems);
-  }, [barcodeItems]);
+    console.log("snapshots", snapshots);
+  }, [barcodeItems, snapshots]);
 
   return (
     <BarcodeContext.Provider
@@ -94,6 +124,11 @@ export default ({ children }: any) => {
         setBarcodeItems,
         findBarcodeInput,
         setFindBarcodeInput,
+        snapshots,
+        setSnapshots,
+        selectedSnapshot,
+        setSelectedSnapshot,
+        handleReload,
       }}
     >
       {children}

@@ -13,3 +13,9 @@ export interface IBarcodeItem {
   time?: number;
   yaw: number;
 }
+
+export interface IBarcodeSnapshot {
+  name: string;
+  time: number;
+  readableDate: string;
+}

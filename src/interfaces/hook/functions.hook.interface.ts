@@ -9,7 +9,7 @@ import { ISystemStatus } from "../global/system.interface";
 import { ITemplate } from "../global/template.interface";
 import { IRegion } from "../global/region.interface";
 import { IFleet } from "../global/fleet.interface";
-import { IBarcodeItem } from "../global/barcode.interface";
+import { IBarcodeItem, IBarcodeSnapshot } from "../global/barcode.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -171,7 +171,18 @@ export interface IuseFunctions {
   ////
   ////
   getBarcodesFC: () => Promise<IBarcodeItem[]>;
-
+  getBarcodeSnapshotsFC: () => Promise<IBarcodeSnapshot[]>;
+  getBarcodeAtSnapshotFC: ({
+    time,
+  }: {
+    time: number;
+  }) => Promise<IBarcodeItem[]>;
+  createSnapshotFC: () => Promise<void>;
+  //
+  //
+  //
+  //
+  //
   getPhysicalFleet: (
     values: IgetPhysicalFleet,
     parameters?: IsingleGetParameters,

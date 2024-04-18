@@ -1,11 +1,15 @@
+import { IBarcodeItem, IBarcodeSnapshot } from "../global/barcode.interface";
 import { SetStateAction } from "react";
-import { IBarcodeItem } from "../global/barcode.interface";
 
 export interface IuseBarcode {
-  robotLocation: any;
-  setRobotLocation: any;
   barcodeItems: IBarcodeItem[];
   setBarcodeItems: SetStateAction<IBarcodeItem[]>;
   findBarcodeInput: any;
   setFindBarcodeInput: any;
+  snapshots: IBarcodeSnapshot[];
+  setSnapshots: SetStateAction<IBarcodeSnapshot[]>;
+  selectedSnapshot: IBarcodeSnapshot | null;
+  setSelectedSnapshot: React.Dispatch<SetStateAction<IBarcodeSnapshot | null>>;
+  reload: boolean;
+  handleReload: () => void;
 }

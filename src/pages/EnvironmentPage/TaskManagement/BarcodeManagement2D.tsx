@@ -1,7 +1,7 @@
-import { Fragment, ReactElement } from "react";
+import { ReactElement } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import useBarcode from "../../../hooks/useBarcode";
-import { Tooltip } from "primereact/tooltip";
+import BarcodeItem from "../../../components/BarcodeItem/BarcodeItem";
 
 export default function BarcodeManagement2D(): ReactElement {
   const { barcodeItems } = useBarcode();
@@ -24,41 +24,16 @@ export default function BarcodeManagement2D(): ReactElement {
           {barcodeItems?.length
             ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
                 return (
-                  <Fragment key={barcodeItemIndex}>
-                    <Tooltip target={`.box-${barcodeItemIndex}`}>
-                      <ul>
-                        {barcodeItem.barcodes?.map((barcode, barcodeIndex) => {
-                          return (
-                            <li key={barcodeIndex}>
-                              <span>{barcode.location_z + 1}</span>
-                              <span> - </span>
-                              <span>{barcode.barcode}</span>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </Tooltip>
-                    <div
-                      key={barcodeItemIndex}
-                      className={`absolute flex flex-col gap-1 box-${barcodeItemIndex}`}
-                      style={{
-                        backgroundImage: `url(/svg/icons/washing-machine.svg)`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "contain",
-                        left: barcodeItem.location_x * 200,
-                        top: barcodeItem.location_y * -200,
-                        height: "48px",
-                        width: "36px",
-                        backgroundColor: "#000",
-                        transition: "all 0.5s",
-                      }}
-                    />
-                  </Fragment>
+                  <BarcodeItem
+                    key={barcodeItemIndex}
+                    barcodeItem={barcodeItem}
+                    barcodeItemIndex={barcodeItemIndex}
+                  />
                 );
               })
-            : "No Barcode Item"}
+            : ""}
         </div>
-        <div className="h-8 w-8 rounded-full bg-primary-500" />
+        <div className="h-7 w-7 rounded-full bg-primary-500" />
       </TransformComponent>
     </TransformWrapper>
   );
