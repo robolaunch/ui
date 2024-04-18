@@ -7,17 +7,25 @@ import useBarcode from "../../hooks/useBarcode";
 interface IUIBarcodeItem {
   barcodeItem: IBarcodeItem;
   barcodeItemIndex: number;
+  dragging: boolean;
 }
 
 export default function BarcodeItem({
   barcodeItem,
   barcodeItemIndex,
+  dragging,
 }: IUIBarcodeItem) {
   const { findBarcodeInput } = useBarcode();
 
   return (
     <Fragment key={barcodeItemIndex}>
-      <Tooltip target={`.box-${barcodeItemIndex}`}>
+      <Tooltip
+        className={dragging ? "hidden" : ""}
+        disabled={dragging}
+        autoHide
+        mouseTrack
+        target={`.box-${barcodeItemIndex}`}
+      >
         <ul className=" bg-white p-4 text-dark-800">
           {barcodeItem.barcodes
             ?.sort((a, b) => b.location_z - a.location_z)
