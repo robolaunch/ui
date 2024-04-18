@@ -23,7 +23,7 @@ export default function TaskManagementLayout(): ReactElement {
           case "Mission Management":
             return <MissionManagement ros={ros} />;
           case "Barcode Management":
-            return <BarcodeManagement ros={ros} />;
+            return <BarcodeManagement />;
         }
       })()}
     </div>

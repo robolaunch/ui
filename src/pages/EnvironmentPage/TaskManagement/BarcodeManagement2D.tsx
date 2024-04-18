@@ -15,12 +15,7 @@ export default function BarcodeManagement2D(): ReactElement {
       maxScale={2}
     >
       <TransformComponent>
-        <div
-          style={{
-            backgroundRepeat: "repeat",
-          }}
-          className="relative h-full gap-10"
-        >
+        <div className="relative h-full gap-10 bg-white">
           {barcodeItems?.length
             ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
                 return (

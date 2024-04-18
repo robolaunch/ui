@@ -38,11 +38,11 @@ export default function BarcodeModeToggle({
       />
       <BarcodeManagementButton
         icon={<BsFullscreen size={20} />}
-        onClick={handleFullScreen.enter}
+        onClick={handleFullScreen}
       />
 
       <BarcodeManagementButton
-        icon={<PiExport size={20} />}
+        icon={<PiExport className="rotate-180" size={20} />}
         onClick={handleExportJSON}
       />
 

@@ -32,6 +32,7 @@ export default ({ children }: any) => {
     }
 
     handleGetBarcodeSnapshots();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedSnapshot, reload]);
 
@@ -88,7 +89,8 @@ export default ({ children }: any) => {
                   barcode: newBarcode.barcode,
                   location_z: newBarcode.location_z,
                   time: newBarcode.time,
-                  sensorid: newBarcode.sensorId,
+                  sensorId: newBarcode.sensorid,
+                  taskId: newBarcode.taskid,
                 },
               ],
               location_x: item.location_x,
@@ -103,11 +105,43 @@ export default ({ children }: any) => {
         if (shouldCluster) {
           return updatedData;
         } else {
-          return [...prevData, newBarcode];
+          return [
+            ...prevData,
+            {
+              barcodes: [
+                ...(newBarcode.barcodes || []),
+                {
+                  barcode: newBarcode.barcode,
+                  location_z: newBarcode.location_z,
+                  time: newBarcode.time,
+                  sensorId: newBarcode.sensorid,
+                  taskId: newBarcode.taskid,
+                },
+              ],
+              location_x: newBarcode.location_x,
+              location_y: newBarcode.location_y,
+              yaw: newBarcode.yaw,
+            },
+          ];
         }
       } else {
         // If barcodeItems is initially empty, just return the newBarcode in an array
-        return [newBarcode];
+        return [
+          {
+            barcodes: [
+              {
+                barcode: newBarcode.barcode,
+                location_z: newBarcode.location_z,
+                time: newBarcode.time,
+                sensorId: newBarcode.sensorid,
+                taskId: newBarcode.taskid,
+              },
+            ],
+            location_x: newBarcode.location_x,
+            location_y: newBarcode.location_y,
+            yaw: newBarcode.yaw,
+          },
+        ];
       }
     });
   }

@@ -4,9 +4,11 @@ export interface IBarcodeItem {
     time: number;
     location_z: number;
     sensorId: number;
+    taskId: string;
   }[];
   barcode: string;
-  sensorId?: string;
+  sensorid?: string;
+  taskid?: string;
   location_x: number;
   location_y: number;
   location_z?: number;
