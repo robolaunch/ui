@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.hw-full {
+  @apply !h-full !w-full;
+}
+
+.wh-full {
+  @apply !h-full !w-full;
+}
+
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;

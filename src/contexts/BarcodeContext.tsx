@@ -4,6 +4,7 @@ import {
 } from "../interfaces/global/barcode.interface";
 import { createContext, useEffect, useState } from "react";
 import useFunctions from "../hooks/useFunctions";
+import { ILogItem } from "../interfaces/global/log.interface";
 
 export const BarcodeContext: any = createContext<any>(null);
 
@@ -146,10 +147,30 @@ export default ({ children }: any) => {
     });
   }
 
+  const [logs, setLogs] = useState<ILogItem[]>([]);
+  const [selectedLog, setSelectedLog] = useState<ILogItem | null>(null);
+  const [currentLog, setCurrentLog] = useState<string | null>(null);
+
+  const { getLogsFC, getLogFC } = useFunctions();
+
   useEffect(() => {
-    console.log("barcodeItems", barcodeItems);
-    console.log("snapshots", snapshots);
-  }, [barcodeItems, snapshots]);
+    handleGetLogs();
+  }, []);
+
+  useEffect(() => {
+    selectedLog &&
+      handleGetLog({
+        logName: selectedLog.name,
+      });
+  }, [selectedLog]);
+
+  async function handleGetLogs() {
+    setLogs(await getLogsFC());
+  }
+
+  async function handleGetLog({ logName }: { logName: string }) {
+    setCurrentLog(await getLogFC({ logName: logName }));
+  }
 
   return (
     <BarcodeContext.Provider
@@ -163,6 +184,12 @@ export default ({ children }: any) => {
         selectedSnapshot,
         setSelectedSnapshot,
         handleReload,
+        logs,
+        setLogs,
+        selectedLog,
+        setSelectedLog,
+        currentLog,
+        setCurrentLog,
       }}
     >
       {children}

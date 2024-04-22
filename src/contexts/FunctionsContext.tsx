@@ -114,11 +114,14 @@ import {
   getAllBarcodes,
   getBarcodeAtSnapshot,
   getBarcodeSnapshots,
+  getLog,
+  getLogs,
 } from "../toolkit/BarcodeSlice";
 import {
   IBarcodeItem,
   IBarcodeSnapshot,
 } from "../interfaces/global/barcode.interface";
+import { ILogItem } from "../interfaces/global/log.interface";
 
 export const FunctionsContext: any = createContext<any>(null);
 
@@ -1726,6 +1729,30 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getLogsFC(): Promise<ILogItem[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getLogs());
+
+        resolve(response.payload.data.data.data || []);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getLogFC({ logName }: { logName: string }): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getLog({ logName: logName }));
+
+        resolve(response.payload.data.data.data || "");
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1785,6 +1812,8 @@ export default ({ children }: any) => {
         getBarcodeAtSnapshotFC,
         createSnapshotFC,
         //
+        getLogsFC,
+        getLogFC,
         //
         //
         //

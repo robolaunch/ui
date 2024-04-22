@@ -10,6 +10,7 @@ import { ITemplate } from "../global/template.interface";
 import { IRegion } from "../global/region.interface";
 import { IFleet } from "../global/fleet.interface";
 import { IBarcodeItem, IBarcodeSnapshot } from "../global/barcode.interface";
+import { ILogItem } from "../global/log.interface";
 
 export interface IsingleGetParameters {
   isSetState?: boolean;
@@ -213,4 +214,6 @@ export interface IuseFunctions {
     }[]
   >;
   getDeployFC(ErrorNav404: boolean, deployName: string): Promise<void>;
+  getLogsFC(): Promise<ILogItem[]>;
+  getLogFC: ({ logName }: { logName: string }) => Promise<any>;
 }

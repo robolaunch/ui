@@ -8,6 +8,7 @@ interface ICard {
   dataTut?: string;
   background?: boolean;
   onClick?: () => void;
+  ref?: any;
 }
 
 export default function Card({
@@ -18,6 +19,7 @@ export default function Card({
   dataTut,
   background,
   onClick,
+  ref,
 }: ICard): ReactElement {
   return (
     <div
@@ -41,6 +43,7 @@ export default function Card({
               }
             : style
       }
+      ref={ref}
     >
       {children}
     </div>

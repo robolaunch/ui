@@ -53,6 +53,19 @@ export const getWaypoints = createAsyncThunk(
   },
 );
 
+export const getLogs = createAsyncThunk("barcode/getLogs", async (_) => {
+  const response = await axios.get("http://localhost:8077/log");
+  return response;
+});
+
+export const getLog = createAsyncThunk(
+  "barcode/getLogs",
+  async ({ logName }: { logName: string }) => {
+    const response = await axios.get(`http://localhost:8077/log/${logName}`);
+    return response;
+  },
+);
+
 export const barcodeSlice = createSlice({
   name: "barcode",
   initialState: {},

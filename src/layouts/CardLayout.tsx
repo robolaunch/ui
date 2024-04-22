@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-interface ICard {
+interface ICardLayout {
   children: ReactElement | ReactElement[];
   ref?: any;
   loading?: boolean;
@@ -18,7 +18,7 @@ export default function CardLayout({
   style,
   onMouseEnter,
   onMouseLeave,
-}: ICard): ReactElement {
+}: ICardLayout): ReactElement {
   return (
     <div
       ref={ref}
