@@ -60,8 +60,6 @@ export default function StateCell({
     );
   }
 
-  console.log("state", state);
-
   return (
     <div className="flex items-center gap-1">
       {state === "running" ||
