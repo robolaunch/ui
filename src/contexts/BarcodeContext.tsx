@@ -151,25 +151,19 @@ export default ({ children }: any) => {
   const [selectedLog, setSelectedLog] = useState<ILogItem | null>(null);
   const [currentLog, setCurrentLog] = useState<string | null>(null);
 
-  const { getLogsFC, getLogFC } = useFunctions();
+  const { getLogFC } = useFunctions();
 
   useEffect(() => {
-    handleGetLogs();
-  }, []);
-
-  useEffect(() => {
+    console.log(selectedLog);
     selectedLog &&
       handleGetLog({
-        logName: selectedLog.name,
+        logName: selectedLog.path,
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLog]);
 
-  async function handleGetLogs() {
-    setLogs(await getLogsFC());
-  }
-
   async function handleGetLog({ logName }: { logName: string }) {
-    setCurrentLog(await getLogFC({ logName: logName }));
+    setCurrentLog((await getLogFC({ logName: logName })) || "");
   }
 
   return (

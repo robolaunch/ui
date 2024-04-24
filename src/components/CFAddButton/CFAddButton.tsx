@@ -6,6 +6,7 @@ interface ICFAddButton {
   description?: string;
   disabled?: boolean;
   className?: string;
+  size?: number;
 }
 
 export default function CFAddButton({
@@ -13,12 +14,13 @@ export default function CFAddButton({
   description,
   disabled,
   className,
+  size,
 }: ICFAddButton): ReactElement {
   return (
     <BsPlusCircle
       title={description}
       onClick={disabled ? () => {} : onClick}
-      size={18}
+      size={size || 18}
       className={`animate-fadeIn mx-auto mt-4 cursor-pointer transition-all duration-500 ${
         disabled
           ? "text-light-600 hover:cursor-not-allowed"

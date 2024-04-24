@@ -15,13 +15,8 @@ export default function RobotManagementSidebar({
   children,
 }: IRobotManagementSidebar): ReactElement {
   return (
-    <Card
-      className="flex flex-col gap-2 overflow-auto p-5"
-      style={{
-        height: `${512 + 64 + 64 + 8}px`,
-      }}
-    >
-      <div className="flex gap-2 pb-6">
+    <Card className="flex h-full flex-col gap-2  p-5">
+      <div className="flex  gap-2 pb-6">
         {tabs?.map((tab, index) => (
           <div
             key={index}
@@ -36,7 +31,7 @@ export default function RobotManagementSidebar({
         ))}
       </div>
 
-      <div className="wh-full flex flex-col gap-4 overflow-auto">
+      <div className="wh-full flex max-h-[58vh] flex-col gap-4 overflow-auto">
         {children}
       </div>
     </Card>

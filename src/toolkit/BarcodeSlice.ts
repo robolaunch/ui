@@ -61,7 +61,24 @@ export const getLogs = createAsyncThunk("barcode/getLogs", async (_) => {
 export const getLog = createAsyncThunk(
   "barcode/getLogs",
   async ({ logName }: { logName: string }) => {
-    const response = await axios.get(`http://localhost:8077/log/${logName}`);
+    const response = await axios.post(`http://localhost:8077/log`, {
+      path: logName,
+    });
+    return response;
+  },
+);
+
+export const getConfig = createAsyncThunk("barcode/getConfig", async (_) => {
+  const response = await axios.get("http://localhost:8077/config");
+  return response;
+});
+
+export const updateConfig = createAsyncThunk(
+  "barcode/updateConfig",
+  async (values: { config: any }) => {
+    const response = await axios.post("http://localhost:8077/config", {
+      config: values.config,
+    });
     return response;
   },
 );

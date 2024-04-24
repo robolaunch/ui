@@ -114,8 +114,10 @@ import {
   getAllBarcodes,
   getBarcodeAtSnapshot,
   getBarcodeSnapshots,
+  getConfig,
   getLog,
   getLogs,
+  updateConfig,
 } from "../toolkit/BarcodeSlice";
 import {
   IBarcodeItem,
@@ -1669,7 +1671,7 @@ export default ({ children }: any) => {
     return new Promise(async (resolve, reject) => {
       try {
         const response: any = await dispatch(getAllBarcodes());
-        resolve(response.payload.data.data || []);
+        resolve(response?.payload?.data?.data || []);
       } catch (error) {
         reject(error);
       }
@@ -1681,8 +1683,8 @@ export default ({ children }: any) => {
       try {
         const response: any = await dispatch(getBarcodeSnapshots());
 
-        const snapshots: IBarcodeSnapshot[] = response.payload.data.data.map(
-          (snapshot: string) => {
+        const snapshots: IBarcodeSnapshot[] =
+          response?.payload?.data?.data?.map((snapshot: string) => {
             return {
               name: snapshot,
               time: Number(snapshot.split("_")[1]),
@@ -1690,8 +1692,7 @@ export default ({ children }: any) => {
                 Number(snapshot.split("_")[1]) * 1000,
               ).toLocaleString(),
             };
-          },
-        );
+          });
 
         resolve(snapshots || []);
       } catch (error) {
@@ -1709,7 +1710,7 @@ export default ({ children }: any) => {
       try {
         const response: any = await dispatch(getBarcodeAtSnapshot({ time }));
 
-        const barcodes: IBarcodeItem[] = response.payload.data.data;
+        const barcodes: IBarcodeItem[] = response?.payload?.data?.data;
 
         resolve(barcodes || []);
       } catch (error) {
@@ -1734,7 +1735,7 @@ export default ({ children }: any) => {
       try {
         const response: any = await dispatch(getLogs());
 
-        resolve(response.payload.data.data.data || []);
+        resolve(response?.payload?.data?.data?.data || []);
       } catch (error) {
         reject(error);
       }
@@ -1746,7 +1747,34 @@ export default ({ children }: any) => {
       try {
         const response: any = await dispatch(getLog({ logName: logName }));
 
-        resolve(response.payload.data.data.data || "");
+        resolve(response?.payload?.data?.data?.data || "");
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function getConfigFC(): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getConfig());
+
+        resolve(response?.payload?.data || "");
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async function updateConfigFC({ config }: { config: any }): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await dispatch(
+          updateConfig({
+            config: config,
+          }),
+        );
+        resolve();
       } catch (error) {
         reject(error);
       }
@@ -1815,6 +1843,8 @@ export default ({ children }: any) => {
         getLogsFC,
         getLogFC,
         //
+        getConfigFC,
+        updateConfigFC,
         //
         //
         //

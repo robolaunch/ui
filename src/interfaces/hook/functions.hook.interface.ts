@@ -216,4 +216,6 @@ export interface IuseFunctions {
   getDeployFC(ErrorNav404: boolean, deployName: string): Promise<void>;
   getLogsFC(): Promise<ILogItem[]>;
   getLogFC: ({ logName }: { logName: string }) => Promise<any>;
+  getConfigFC: () => Promise<any>;
+  updateConfigFC: ({ config }: { config: any }) => Promise<void>;
 }

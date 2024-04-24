@@ -1,11 +1,13 @@
 import { Fragment, ReactElement, useState } from "react";
-import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher";
-import RobotManagementSidebar from "../components/RobotManagementSidebar/RobotManagementSidebar";
-import Card from "../components/Card/Card";
-import useBarcode from "../hooks/useBarcode";
 import MissionManagementBoard from "../components/MissionManagementBoard/MissionManagementBoard";
 import BarcodeManagementBoard from "../components/BarcodeManagementBoard/BarcodeManagementBoard";
 import LogManagementBoard from "../components/LogManagementBoard/LogManagementBoard";
+import RobotManagementSidebar from "../components/RobotManagementSidebar/RobotManagementSidebar";
+import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher";
+import useBarcode from "../hooks/useBarcode";
+import Card from "../components/Card/Card";
+import RMSLogSettingsMapper from "../components/RMSLogSettingsMapper/RMSLogSettingsMapper";
+import RMSLogMapper from "../components/RMSLogMapper/RMSLogMapper";
 
 export default function RobotManagementLayout(): ReactElement {
   const [currentMainTab, setCurrentMainTab] =
@@ -16,14 +18,7 @@ export default function RobotManagementLayout(): ReactElement {
     useState<string>("Barcode Management");
   const [currentLogTab, setCurrentLogTab] = useState<string>("Robot Logs");
 
-  const {
-    snapshots,
-    selectedSnapshot,
-    setSelectedSnapshot,
-    logs,
-    setSelectedLog,
-    selectedLog,
-  } = useBarcode();
+  const { snapshots, selectedSnapshot, setSelectedSnapshot } = useBarcode();
 
   return (
     <div className="wh-full flex flex-col gap-6">
@@ -66,7 +61,7 @@ export default function RobotManagementLayout(): ReactElement {
                 case "Barcode Management":
                   return ["Barcode Management"];
                 case "Robot Logs":
-                  return ["Robot Logs"];
+                  return ["Robot Logs", "Settings"];
                 default:
                   return [];
               }
@@ -93,21 +88,12 @@ export default function RobotManagementLayout(): ReactElement {
                     </Fragment>
                   );
                 case "Robot Logs":
-                  return (
-                    <Fragment>
-                      {logs?.map((log, index: number) => {
-                        return (
-                          <Card
-                            key={index}
-                            onClick={() => setSelectedLog(log)}
-                            className={`flex !h-28 cursor-pointer flex-col items-center justify-center gap-1 p-2 py-5 text-xs font-medium shadow-sm ${selectedLog?.name === log?.name ? "border border-primary-500 text-primary-700" : "bg-white text-dark-700"}`}
-                          >
-                            <span>{log?.name}</span>
-                          </Card>
-                        );
-                      })}
-                    </Fragment>
-                  );
+                  switch (currentLogTab) {
+                    case "Robot Logs":
+                      return <RMSLogMapper />;
+                    case "Settings":
+                      return <RMSLogSettingsMapper />;
+                  }
               }
             })()}
           />
