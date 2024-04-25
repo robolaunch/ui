@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
 import { LazyLog } from "@melloware/react-logviewer";
 import Card from "../Card/Card";
-import useBarcode from "../../hooks/useBarcode";
+import useLog from "../../hooks/useLog";
 
 export default function LogManagementBoard(): ReactElement {
-  const { currentLog } = useBarcode();
+  const { currentLog } = useLog();
   const [key, setKey] = useState<number>(0);
 
   useEffect(() => {

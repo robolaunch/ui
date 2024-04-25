@@ -1,9 +1,9 @@
-import { Dispatch, ReactElement, SetStateAction } from "react";
+import { ReactElement } from "react";
 import Card from "../Card/Card";
 
 interface IRobotManagementSidebar {
   tabs: string[];
-  setter: Dispatch<SetStateAction<string>>;
+  setter: any;
   currentTab: string;
   children?: ReactElement | ReactElement[];
 }

@@ -67,13 +67,13 @@ export default ({ children }: any) => {
 
         const updatedData = prevData.map((item) => {
           const itemWaypoint = {
-            x: Math.abs(item.location_x),
-            y: Math.abs(item.location_y),
+            x: item.location_x,
+            y: item.location_y,
           };
 
           const newItemWaypoint = {
-            x: Math.abs(newBarcode?.location_x),
-            y: Math.abs(newBarcode?.location_y),
+            x: newBarcode.location_x,
+            y: newBarcode.location_y,
           };
 
           const diff = {
@@ -110,7 +110,6 @@ export default ({ children }: any) => {
             ...prevData,
             {
               barcodes: [
-                ...(newBarcode.barcodes || []),
                 {
                   barcode: newBarcode.barcode,
                   location_z: newBarcode.location_z,

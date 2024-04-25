@@ -1144,32 +1144,8 @@ video {
   height: 100vh;
 }
 
-.h-28 {
-  height: 7rem;
-}
-
-.\!h-20 {
-  height: 5rem !important;
-}
-
-.h-\[20\] {
-  height: 20;
-}
-
 .max-h-\[40rem\] {
   max-height: 40rem;
-}
-
-.max-h-\[50vh\] {
-  max-height: 50vh;
-}
-
-.max-h-full {
-  max-height: 100%;
-}
-
-.max-h-\[60vh\] {
-  max-height: 60vh;
 }
 
 .max-h-\[58vh\] {
@@ -2548,18 +2524,6 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-\[0\.5rem\] {
-  font-size: 0.5rem;
-}
-
-.text-\[0\.6rem\] {
-  font-size: 0.6rem;
-}
-
-.text-\[0\.7rem\] {
-  font-size: 0.7rem;
 }
 
 .\!font-semibold {

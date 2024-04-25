@@ -1,7 +1,7 @@
 import { Fragment, ReactElement, useEffect } from "react";
 import useFunctions from "../../hooks/useFunctions";
 import Card from "../Card/Card";
-import useBarcode from "../../hooks/useBarcode";
+import useLog from "../../hooks/useLog";
 
 export default function RMSLogMapper(): ReactElement {
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function RMSLogMapper(): ReactElement {
   }, []);
 
   const { getLogsFC } = useFunctions();
-  const { logs, setLogs, selectedLog, setSelectedLog } = useBarcode();
+  const { logs, setLogs, selectedLog, setSelectedLog } = useLog();
 
   async function handleGetLogs() {
     setLogs(await getLogsFC());

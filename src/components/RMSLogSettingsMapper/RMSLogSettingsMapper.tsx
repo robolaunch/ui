@@ -47,7 +47,6 @@ export default function RMSLogSettingsMapper(): ReactElement {
                   const newConfig = { ...prevConfig };
                   newConfig.log.paths = [...newConfig.log.paths];
                   newConfig.log.paths[index] = e.target.value;
-
                   return newConfig;
                 });
               }}

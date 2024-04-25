@@ -26,8 +26,8 @@ export default function BarcodeManagementBoard(): ReactElement {
       <div
         className="absolute h-5 w-5 rounded-full bg-primary-500"
         style={{
-          top: 100,
-          left: -100,
+          top: 0,
+          left: 0,
         }}
       />
     </BarcodeManagementWorkspace>
