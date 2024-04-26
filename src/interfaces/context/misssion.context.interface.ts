@@ -1,4 +1,4 @@
-export interface ILocation {
+export interface IWaypoint {
   locationID: string;
   position: {
     x: number;
@@ -35,7 +35,7 @@ export interface ImissionReducer {
 
 export type ImissionReducerState = {
   jobs: IJob[];
-  waypoints: ILocation[];
-  waitingPoints: ILocation[];
+  waypoints: IWaypoint[];
+  waitingPoints: IWaypoint[];
 };
 export type ImissionReducerAction = any;

@@ -1,13 +1,13 @@
 import { useEffect, createContext, useState, useReducer } from "react";
-import io from "socket.io-client";
 import {
   IJob,
-  ILocation,
+  IWaypoint,
   ImissionReducer,
   ImissionReducerAction,
   ImissionReducerState,
 } from "../interfaces/context/misssion.context.interface";
 import mockTasks from "../mock/task.json";
+import io from "socket.io-client";
 
 export const TaskContext: any = createContext<any>(null);
 
@@ -66,14 +66,14 @@ export default ({ children }: any) => {
       console.log("Error", data);
     });
 
-    socket.on("LocationQuery", (data: ILocation[]) => {
+    socket.on("LocationQuery", (data: IWaypoint[]) => {
       dispatcher({
         type: "LocationQuery",
         payload: data,
       });
     });
 
-    socket.on("WaitingPointQuery", (data: ILocation[]) => {
+    socket.on("WaitingPointQuery", (data: IWaypoint[]) => {
       dispatcher({
         type: "WaitingPointQuery",
         payload: data,

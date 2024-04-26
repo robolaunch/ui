@@ -4,7 +4,7 @@ import { FormikProps, useFormik } from "formik";
 import CFSection from "../components/CFSection/CFSection";
 import FormInputText from "../components/FormInputText/FormInputText";
 import Button from "../components/Button/Button";
-import { ILocation } from "../interfaces/context/misssion.context.interface";
+import { IWaypoint } from "../interfaces/context/misssion.context.interface";
 import useTask from "../hooks/useTask";
 
 interface IAddWaypointModal {
@@ -22,7 +22,7 @@ export default function AddWaypointModal({
 }: IAddWaypointModal): ReactElement {
   const { handleCreateLocation, handleUpdateLocation } = useTask();
 
-  const formik: FormikProps<ILocation> = useFormik<ILocation>({
+  const formik: FormikProps<IWaypoint> = useFormik<IWaypoint>({
     initialValues: initialValues || {
       locationID: "",
       position: {

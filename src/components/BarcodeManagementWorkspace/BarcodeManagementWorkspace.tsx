@@ -18,8 +18,14 @@ export default function BarcodeManagementWorkspace({
 
   return (
     <Card className="relative">
-      <FullScreen className="relative h-full w-full" handle={handleFullScreen}>
+      <FullScreen
+        className="relative h-full w-full bg-white"
+        handle={handleFullScreen}
+      >
         <TransformWrapper
+          initialPositionX={650}
+          initialPositionY={325}
+          smooth={true}
           centerOnInit={false}
           centerZoomedOut={false}
           limitToBounds={false}

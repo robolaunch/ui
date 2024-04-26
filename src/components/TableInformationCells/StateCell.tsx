@@ -64,7 +64,9 @@ export default function StateCell({
     <div className="flex items-center gap-1">
       {state === "running" ||
       state === "Ready" ||
+      state === "CONNECTED" ||
       state === "Connected" ||
+      state === "connected" ||
       state === "Completed" ||
       state === "Running" ||
       state === "Active" ||

@@ -14,10 +14,9 @@
       "jobStatus": "PENDING"
     }
   ],
-  "waitingPoints": [],
-  "waypoints": [
+  "waitingPoints": [
     {
-      "locationID": "123",
+      "locationID": "1234",
       "position": {
         "x": 0,
         "y": 0,
@@ -30,6 +29,23 @@
         "w": 0
       },
       "locationStatus": "UNCONNECTED"
+    }
+  ],
+  "waypoints": [
+    {
+      "locationID": "17467",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 0
+      },
+      "locationStatus": "CONNECTED"
     }
   ]
 }
