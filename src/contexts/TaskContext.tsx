@@ -219,16 +219,7 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleCreateJob(values: {
-    jobID: string;
-    robotUrl: string | undefined;
-    taskList: {
-      ActionName: string;
-      LocationId: string;
-    }[];
-    deadline: string;
-    priority: 0 | 1 | 2 | 3 | 4 | 5;
-  }) {
+  function handleCreateJob(values: IJob) {
     socketIO &&
       socketIO.emit("JobCreate", {
         messageType: "JobCreate",
