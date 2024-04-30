@@ -9,9 +9,15 @@ export default function RMTaskWaypointsMapper(): ReactElement {
   return (
     <Fragment>
       {missionReducer.waypoints?.map((waypoint, index) => {
-        return <RMTaskWaypointCard key={index} waypoint={waypoint} />;
+        return (
+          <RMTaskWaypointCard
+            type="waypoints"
+            key={index}
+            waypoint={waypoint}
+          />
+        );
       })}
-      <RMTaskWaypointAdd />
+      <RMTaskWaypointAdd type="waypoints" />
     </Fragment>
   );
 }

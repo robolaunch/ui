@@ -976,6 +976,10 @@ video {
   height: 7rem !important;
 }
 
+.\!h-32 {
+  height: 8rem !important;
+}
+
 .\!h-6 {
   height: 1.5rem !important;
 }
@@ -1144,24 +1148,16 @@ video {
   height: 100vh;
 }
 
-.\!h-32 {
-  height: 8rem !important;
-}
-
-.\!h-40 {
-  height: 10rem !important;
-}
-
-.\!h-36 {
-  height: 9rem !important;
-}
-
 .max-h-\[40rem\] {
   max-height: 40rem;
 }
 
 .max-h-\[58vh\] {
   max-height: 58vh;
+}
+
+.max-h-\[55vh\] {
+  max-height: 55vh;
 }
 
 .min-h-4 {
@@ -1750,6 +1746,10 @@ video {
 
 .gap-9 {
   gap: 2.25rem;
+}
+
+.gap-20 {
+  gap: 5rem;
 }
 
 .overflow-auto {

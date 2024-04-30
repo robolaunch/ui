@@ -1,67 +1,19 @@
-import { ImissionReducerState } from "../context/misssion.context.interface";
+import {
+  ImissionReducerState,
+  IWaypoint,
+} from "../context/misssion.context.interface";
 
 export interface IuseTask {
   missionReducer: ImissionReducerState;
-  ///
-  handleCreateLocation: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
+  handleCreateLocation(values: IWaypoint): void;
   handleGetLocations: () => void;
-  handleUpdateLocation: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
+  handleUpdateWaypoint: (values: IWaypoint) => void;
+  handleRemoveWaypoint: (values: IWaypoint) => void;
   ///
-  handleCreateWaitingPoint: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
+  handleCreateWaitingPoint(values: IWaypoint): void;
   handleGetWaitingPoints: () => void;
-  handleUpdateWaitingPoint: (values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) => void;
+  handleUpdateWaitingPoint(values: IWaypoint): void;
+  handleRemoveWaitingWaypoint: (values: IWaypoint) => void;
   ///
   handleCreateJob: (values: {
     jobID: string;
@@ -75,4 +27,5 @@ export interface IuseTask {
   }) => void;
   handleGetJobs: () => void;
   handleDeleteJob: (values: { jobID: string }) => void;
+  handleReload: () => void;
 }

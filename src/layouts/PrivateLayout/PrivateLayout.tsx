@@ -49,7 +49,9 @@ export default function PrivateLayout(): ReactElement {
         </div>
       </div>
       <TopLoadingBar />
-      {keycloak.authenticated && <ZohoSalesIQ />}
+      {keycloak.authenticated && process.env.NODE_ENV === "production" && (
+        <ZohoSalesIQ />
+      )}
     </Fragment>
   );
 }

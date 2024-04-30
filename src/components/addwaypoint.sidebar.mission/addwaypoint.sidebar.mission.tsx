@@ -1,6 +1,5 @@
 import { Fragment, ReactElement, useState } from "react";
 import AddButton from "../addbutton/addbutton.comp";
-import AddWaypointModal from "../../modals/waypoint.modal";
 import EditButton from "../editbutton/editbutton.comp";
 
 interface IAddWaypoint {
@@ -20,13 +19,6 @@ export default function AddWaypoint({
         <EditButton onClick={() => setIsOpen(!isOpen)} />
       ) : (
         <AddButton onClick={() => setIsOpen(!isOpen)} />
-      )}
-      {isOpen && (
-        <AddWaypointModal
-          ros={ros}
-          header="Add Waypoint"
-          handleCloseModal={() => setIsOpen(false)}
-        />
       )}
     </Fragment>
   );

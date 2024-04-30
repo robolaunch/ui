@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import Collapsible from "react-collapsible";
 import { SlArrowRight } from "react-icons/sl";
 

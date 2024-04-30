@@ -1,5 +1,6 @@
 export interface IWaypoint {
-  locationID: string;
+  locationID?: string;
+  waitingPointID?: string;
   position: {
     x: number;
     y: number;
@@ -11,7 +12,8 @@ export interface IWaypoint {
     z: number;
     w: number;
   };
-  locationStatus: string; // "UNCONNECTED" | "CONNECTED";
+  locationStatus?: string;
+  waitingPointStatus?: string;
 }
 
 export interface IJob {

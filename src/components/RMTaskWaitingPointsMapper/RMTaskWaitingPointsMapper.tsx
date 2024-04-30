@@ -1,6 +1,7 @@
 import { Fragment, ReactElement } from "react";
 import useTask from "../../hooks/useTask";
 import RMTaskWaypointCard from "../RMTaskWaypointCard/RMTaskWaypointCard";
+import RMTaskWaypointAdd from "../RMTaskWaypointAdd/RMTaskWaypointAdd";
 
 export default function RMTaskWaitingPointsMapper(): ReactElement {
   const { missionReducer } = useTask();
@@ -8,8 +9,15 @@ export default function RMTaskWaitingPointsMapper(): ReactElement {
   return (
     <Fragment>
       {missionReducer.waitingPoints?.map((waypoint, index) => {
-        return <RMTaskWaypointCard key={index} waypoint={waypoint} />;
+        return (
+          <RMTaskWaypointCard
+            type="waitingPoints"
+            key={index}
+            waypoint={waypoint}
+          />
+        );
       })}
+      <RMTaskWaypointAdd type="waitingPoints" />
     </Fragment>
   );
 }

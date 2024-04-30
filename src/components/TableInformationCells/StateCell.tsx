@@ -60,40 +60,48 @@ export default function StateCell({
     );
   }
 
+  const successStates = [
+    "running",
+    "Ready",
+    "CONNECTED",
+    "Connected",
+    "connected",
+    "Completed",
+    "Running",
+    "Active",
+    "EnvironmentReady",
+  ];
+
+  const loadingStates = [
+    "stopping",
+    "pending",
+    "Pending",
+    "creating",
+    "Creating",
+    "Waiting",
+    "CreatingNamespace",
+    "CheckingRemoteNamespace",
+    "CreatingDiscoveryServer",
+    "LookingForDeployer",
+    "Waiting Connection",
+    "Registered",
+    "Connecting",
+    "Pending",
+    "CreatingBridge",
+    "WaitingForMulticast",
+    "WaitingForCredentials",
+    "ConfiguringEnvironment",
+    "CreatingDevelopmentSuite",
+    "ConfiguringWorkspaces",
+    "In Progress",
+    "BuildingRobot",
+  ];
+
   return (
     <div className="flex items-center gap-1">
-      {state === "running" ||
-      state === "Ready" ||
-      state === "CONNECTED" ||
-      state === "Connected" ||
-      state === "connected" ||
-      state === "Completed" ||
-      state === "Running" ||
-      state === "Active" ||
-      state === "EnvironmentReady" ? (
+      {successStates.includes(state || "") ? (
         <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
-      ) : state === "stopping" ||
-        state === "pending" ||
-        state === "Pending" ||
-        state === "creating" ||
-        state === "Creating" ||
-        state === "Waiting" ||
-        state === "CreatingNamespace" ||
-        state === "CheckingRemoteNamespace" ||
-        state === "CreatingDiscoveryServer" ||
-        state === "LookingForDeployer" ||
-        state === "Waiting Connection" ||
-        state === "Registered" ||
-        state === "Connecting" ||
-        state === "Pending" ||
-        state === "CreatingBridge" ||
-        state === "WaitingForMulticast" ||
-        state === "WaitingForCredentials" ||
-        state === "ConfiguringEnvironment" ||
-        state === "CreatingDevelopmentSuite" ||
-        state === "ConfiguringWorkspaces" ||
-        state === "In Progress" ||
-        state === "BuildingRobot" ? (
+      ) : loadingStates.includes(state || "") ? (
         <img
           className="h-2.5 w-2.5 scale-[3.4]"
           alt="loading"

@@ -23,6 +23,10 @@ export function stringCapitalization({ str }: { str: string }) {
   return splitStr?.join(" ");
 }
 
+export function handleGenerateRandomString(length: number): string {
+  return [...Array(length)].map(() => Math.random().toString(36)[2]).join("");
+}
+
 export function handleLogout() {
   [
     "tokens",

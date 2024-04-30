@@ -1,14 +1,17 @@
-import { ReactElement } from "react";
-import Card from "../Card/Card";
 import { IWaypoint } from "../../interfaces/context/misssion.context.interface";
 import StateCell from "../TableInformationCells/StateCell";
+import { ReactElement } from "react";
+import Card from "../Card/Card";
+import RMTaskWaypointCardButtons from "../RMTaskWaypointCardButtons/RMTaskWaypointCardButtons";
 
 interface IRMTaskWaypointCard {
   waypoint: IWaypoint;
+  type: "waypoints" | "waitingPoints";
 }
 
 export default function RMTaskWaypointCard({
   waypoint,
+  type,
 }: IRMTaskWaypointCard): ReactElement {
   return (
     <Card className="!h-32 p-4 text-xs shadow-sm">
@@ -17,7 +20,7 @@ export default function RMTaskWaypointCard({
           {[
             {
               name: "Waypoint ID",
-              value: waypoint.locationID,
+              value: waypoint.locationID || waypoint.waitingPointID,
             },
             {
               name: "Orientation",
@@ -30,7 +33,13 @@ export default function RMTaskWaypointCard({
             {
               name: "Status",
               value: (
-                <StateCell state={waypoint.locationStatus?.toLowerCase()} />
+                <StateCell
+                  state={
+                    waypoint.locationStatus?.toLowerCase() ||
+                    waypoint.waitingPointStatus?.toLowerCase() ||
+                    "Connected"
+                  }
+                />
               ),
             },
           ].map((item, index) => {
@@ -44,7 +53,7 @@ export default function RMTaskWaypointCard({
             );
           })}
         </div>
-        <div>Buttons</div>
+        <RMTaskWaypointCardButtons type={type} waypoint={waypoint} />
       </div>
     </Card>
   );

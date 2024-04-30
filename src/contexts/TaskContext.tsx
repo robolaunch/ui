@@ -6,18 +6,21 @@ import {
   ImissionReducerAction,
   ImissionReducerState,
 } from "../interfaces/context/misssion.context.interface";
-import mockTasks from "../mock/task.json";
 import io from "socket.io-client";
 
 export const TaskContext: any = createContext<any>(null);
 
 // eslint-disable-next-line
 export default ({ children }: any) => {
+  const [reload, setReload] = useState<boolean>(false);
   const [socketIO, setSocketIO] = useState<any>(null);
-
   const [missionReducer, dispatcher] = useReducer<ImissionReducer>(
     handleReducer,
-    mockTasks as ImissionReducerState,
+    {
+      waypoints: [],
+      waitingPoints: [],
+      jobs: [],
+    },
   );
 
   function handleReducer(
@@ -46,7 +49,7 @@ export default ({ children }: any) => {
   }
 
   useEffect(() => {
-    const socket = io("ws://172.16.44.198:8080", {
+    const socket = io("ws://localhost:8076", {
       autoConnect: true,
       transports: ["websocket"],
     });
@@ -99,22 +102,9 @@ export default ({ children }: any) => {
     socketIO && handleGetJobs();
     socketIO && handleGetWaitingPoints();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socketIO]);
+  }, [socketIO, reload]);
 
-  function handleCreateLocation(values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) {
+  function handleCreateLocation(values: IWaypoint) {
     socketIO &&
       socketIO.emit("LocationCreate", {
         messageType: "LocationCreate",
@@ -130,28 +120,15 @@ export default ({ children }: any) => {
           z: values.orientation.z,
           w: values.orientation.w,
         },
-        locationStatus: "UNCONNECTED",
+        locationStatus: values.locationStatus,
       });
   }
 
-  function handleCreateWaitingPoint(values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) {
+  function handleCreateWaitingPoint(values: IWaypoint) {
     socketIO &&
       socketIO.emit("WaitingPointCreate", {
         messageType: "WaitingPointCreate",
-        waitingPointID: values.locationID,
+        waitingPointID: values.waitingPointID,
         position: {
           x: values.position.x,
           y: values.position.y,
@@ -163,7 +140,7 @@ export default ({ children }: any) => {
           z: values.orientation.z,
           w: values.orientation.w,
         },
-        locationStatus: "UNCONNECTED",
+        waitingPointStatus: values.waitingPointStatus,
       });
   }
 
@@ -177,25 +154,11 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleUpdateWaitingPoint(values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) {
+  function handleUpdateWaitingPoint(values: IWaypoint) {
     socketIO &&
       socketIO.emit("WaitingPointUpdate", {
         messageType: "WaitingPointUpdate",
-        waitingPointID: values.locationID,
-        waitingPointStatus: "CONNECTED",
+        waitingPointID: values.waitingPointID,
         position: {
           x: values.position.x,
           y: values.position.y,
@@ -220,25 +183,12 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleUpdateLocation(values: {
-    locationID: string;
-    position: {
-      x: number;
-      y: number;
-      z: number;
-    };
-    orientation: {
-      x: number;
-      y: number;
-      z: number;
-      w: number;
-    };
-  }) {
+  function handleUpdateWaypoint(values: IWaypoint) {
     socketIO &&
       socketIO.emit("LocationUpdate", {
         messageType: "LocationUpdate",
         locationID: values.locationID,
-        locationStatus: "CONNECTED",
+        locationStatus: values.locationStatus,
         position: {
           x: values.position.x,
           y: values.position.y,
@@ -250,6 +200,22 @@ export default ({ children }: any) => {
           z: values.orientation.z,
           w: values.orientation.w,
         },
+      });
+  }
+
+  function handleRemoveWaitingWaypoint(values: IWaypoint) {
+    socketIO &&
+      socketIO.emit("WaitingPointRemove", {
+        messageType: "WaitingPointRemove",
+        waitingPointID: values.waitingPointID,
+      });
+  }
+
+  function handleRemoveWaypoint(values: IWaypoint) {
+    socketIO &&
+      socketIO.emit("LocationRemove", {
+        messageType: "LocationRemove",
+        locationID: values.locationID,
       });
   }
 
@@ -291,6 +257,14 @@ export default ({ children }: any) => {
       });
   }
 
+  function handleReload() {
+    setTimeout(() => setReload(!reload), 1000);
+  }
+
+  useEffect(() => {
+    console.log("missionReducer", missionReducer);
+  }, [missionReducer]);
+
   return (
     <TaskContext.Provider
       value={{
@@ -298,15 +272,19 @@ export default ({ children }: any) => {
         ///
         handleCreateLocation,
         handleGetLocations,
-        handleUpdateLocation,
+        handleUpdateWaypoint,
+        handleRemoveWaypoint,
         ///
         handleCreateWaitingPoint,
         handleGetWaitingPoints,
         handleUpdateWaitingPoint,
+        handleRemoveWaitingWaypoint,
         ///
         handleCreateJob,
         handleGetJobs,
         handleDeleteJob,
+        ///
+        handleReload,
       }}
     >
       {children}

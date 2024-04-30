@@ -1,4 +1,3 @@
-import { handleGenerateRandomString } from "../functions/general.function";
 import CFCancelButton from "../components/CFCancelButton/CFCancelButton";
 import FormInputText from "../components/FormInputText/FormInputText";
 import { Fragment, ReactElement } from "react";
@@ -6,73 +5,29 @@ import Button from "../components/Button/Button";
 import { Dialog } from "primereact/dialog";
 import useTask from "../hooks/useTask";
 import { useFormik } from "formik";
+import { IWaypoint } from "../interfaces/context/misssion.context.interface";
 
-interface IRMTaskWaypointAddModal {
+interface IRMTaskWaypointUpdateModal {
   handleCloseModal: () => void;
   type: "waypoints" | "waitingPoints";
+  waypoint: IWaypoint;
 }
 
-export default function RMTaskWaypointAddModal({
+export default function RMTaskWaypointUpdateModal({
   handleCloseModal,
   type,
-}: IRMTaskWaypointAddModal): ReactElement {
-  //
-  //
-
-  const { handleCreateLocation, handleCreateWaitingPoint, handleReload } =
+  waypoint,
+}: IRMTaskWaypointUpdateModal): ReactElement {
+  const { handleUpdateWaitingPoint, handleUpdateWaypoint, handleReload } =
     useTask();
 
   const formik = useFormik({
-    initialValues: {
-      id: handleGenerateRandomString(16),
-      position: {
-        x: 0,
-        y: 0,
-        z: 0,
-      },
-      orientation: {
-        x: 0,
-        y: 0,
-        z: 0,
-        w: 0,
-      },
-      status: "CONNECTED",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-
+    initialValues: waypoint,
+    onSubmit: (editedWaypoint) => {
       if (type === "waypoints") {
-        handleCreateLocation({
-          locationID: values.id,
-          position: {
-            x: values.position.x,
-            y: values.position.y,
-            z: values.position.z,
-          },
-          orientation: {
-            x: values.orientation.x,
-            y: values.orientation.y,
-            z: values.orientation.z,
-            w: values.orientation.w,
-          },
-          locationStatus: values.status,
-        });
+        handleUpdateWaypoint(editedWaypoint);
       } else {
-        handleCreateWaitingPoint({
-          waitingPointID: values.id,
-          position: {
-            x: values.position.x,
-            y: values.position.y,
-            z: values.position.z,
-          },
-          orientation: {
-            x: values.orientation.x,
-            y: values.orientation.y,
-            z: values.orientation.z,
-            w: values.orientation.w,
-          },
-          waitingPointStatus: values.status,
-        });
+        handleUpdateWaitingPoint(editedWaypoint);
       }
 
       handleReload();
@@ -95,7 +50,7 @@ export default function RMTaskWaypointAddModal({
 
   return (
     <Dialog
-      header={type === "waypoints" ? "Add Waypoint" : "Add Waiting Point"}
+      header={type === "waypoints" ? "Update Waypoint" : "Update Waiting Point"}
       visible={true}
       className="flex h-fit w-[40vw] "
       onHide={handleCloseModal}
@@ -199,7 +154,9 @@ export default function RMTaskWaypointAddModal({
             type="submit"
             className="!h-11 text-xs"
             loading={formik.isSubmitting}
-            text={type === "waypoints" ? "Add Waypoint" : "Add Waiting Point"}
+            text={
+              type === "waypoints" ? "Update Waypoint" : "Update Waiting Point"
+            }
           />
         </div>
       </form>

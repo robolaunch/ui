@@ -31,7 +31,7 @@ export default function RobotManagementSidebar({
         ))}
       </div>
 
-      <div className="wh-full flex max-h-[58vh] flex-col gap-4 overflow-auto">
+      <div className="wh-full flex max-h-[55vh] flex-col gap-4 overflow-auto">
         {children}
       </div>
     </Card>
