@@ -4,7 +4,7 @@ import RMTaskJobCard from "../RMTaskJobCard/RMTaskJobCard";
 import RMTaskJobAdd from "../RMTaskJobAdd/RMTaskJobAdd";
 
 export default function RMTaskJobsMapper(): ReactElement {
-  const { missionReducer, handleCreateJob, handleRemoveJob } = useTask();
+  const { missionReducer, handleCreateJob } = useTask();
 
   return (
     <Fragment>

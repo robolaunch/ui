@@ -253,15 +253,15 @@ export default ({ children }: any) => {
   }
 
   useEffect(() => {
-    socketIO &&
-      socketIO.emit("RobotCreate", {
-        messageType: "RobotCreate",
-        robotID: "20",
-        robotType: "robolaunch",
-        robotUrl: "ws://172.16.44.202:9090",
-        currentActivity: "UNCONNECTED",
-        jobID: "3",
-      });
+    // socketIO &&
+    //   socketIO.emit("RobotCreate", {
+    //     messageType: "RobotCreate",
+    //     robotID: "20",
+    //     robotType: "robolaunch",
+    //     robotUrl: "ws://172.16.44.202:9090",
+    //     currentActivity: "UNCONNECTED",
+    //     jobID: "3",
+    //   });
     // socketIO &&
     //   socketIO.emit("RobotUpdate", {
     //     messageType: "RobotUpdate",
