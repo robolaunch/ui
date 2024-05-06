@@ -240,7 +240,7 @@ export default ({ children }: any) => {
       });
   }
 
-  function handleDeleteJob(values: { jobID: string }) {
+  function handleRemoveJob(values: IJob) {
     socketIO &&
       socketIO.emit("JobRemove", {
         mesageType: "JobRemove",
@@ -251,6 +251,27 @@ export default ({ children }: any) => {
   function handleReload() {
     setTimeout(() => setReload(!reload), 1000);
   }
+
+  useEffect(() => {
+    socketIO &&
+      socketIO.emit("RobotCreate", {
+        messageType: "RobotCreate",
+        robotID: "20",
+        robotType: "robolaunch",
+        robotUrl: "ws://172.16.44.202:9090",
+        currentActivity: "UNCONNECTED",
+        jobID: "3",
+      });
+    // socketIO &&
+    //   socketIO.emit("RobotUpdate", {
+    //     messageType: "RobotUpdate",
+    //     robotID: "1",
+    //     robotType: "robolaunch",
+    //     robotUrl: "ws://localhost:9090",
+    //     currentActivity: "CONNECTED",
+    //     jobID: "2",
+    //   });
+  }, [socketIO]);
 
   useEffect(() => {
     console.log("missionReducer", missionReducer);
@@ -273,7 +294,7 @@ export default ({ children }: any) => {
         ///
         handleCreateJob,
         handleGetJobs,
-        handleDeleteJob,
+        handleRemoveJob,
         ///
         handleReload,
       }}

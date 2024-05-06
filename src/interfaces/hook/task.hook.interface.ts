@@ -1,4 +1,5 @@
 import {
+  IJob,
   ImissionReducerState,
   IWaypoint,
 } from "../context/misssion.context.interface";
@@ -15,17 +16,8 @@ export interface IuseTask {
   handleUpdateWaitingPoint(values: IWaypoint): void;
   handleRemoveWaitingWaypoint: (values: IWaypoint) => void;
   ///
-  handleCreateJob: (values: {
-    jobID: string;
-    robotUrl: string | undefined;
-    taskList: {
-      ActionName: string;
-      LocationId: string;
-    }[];
-    deadline: string;
-    priority: 0 | 1 | 2 | 3 | 4 | 5;
-  }) => void;
+  handleCreateJob(values: IJob): void;
   handleGetJobs: () => void;
-  handleDeleteJob: (values: { jobID: string }) => void;
+  handleRemoveJob(values: IJob): void;
   handleReload: () => void;
 }

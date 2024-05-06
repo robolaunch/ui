@@ -21,7 +21,7 @@ export interface IJob {
   robotUrl: string | undefined;
   taskList: {
     ActionName: string;
-    LocationId: string;
+    LocationId: string | undefined;
   }[];
   deadline: string;
   priority: number;

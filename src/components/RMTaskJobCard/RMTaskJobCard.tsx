@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { IJob } from "../../interfaces/context/misssion.context.interface";
 import Card from "../Card/Card";
+import RMTaskJobCardButtons from "../RMTaskJobCardButtons/RMTaskJobCardButtons";
 
 interface IRMTaskJobCard {
   job: IJob;
@@ -59,7 +60,7 @@ export default function RMTaskJobCard({ job }: IRMTaskJobCard): ReactElement {
             </span>
           </label>
         </div>
-        <p>buttons</p>
+        <RMTaskJobCardButtons job={job} />
       </div>
     </Card>
   );
