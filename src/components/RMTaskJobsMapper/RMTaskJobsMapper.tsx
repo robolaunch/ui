@@ -25,7 +25,6 @@ export default function RMTaskJobsMapper(): ReactElement {
                 ActionName: "1",
                 LocationId: "1",
               },
-
               {
                 ActionName: "2",
                 LocationId: "2",

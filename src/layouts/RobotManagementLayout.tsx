@@ -10,6 +10,7 @@ import RMBarcodeMapper from "../components/RMBarcodeMapper/RMBarcodeMapper";
 import RMTaskWaypointsMapper from "../components/RMTaskWaypointsMapper/RMTaskWaypointsMapper";
 import RMTaskWaitingPointsMapper from "../components/RMTaskWaitingPointsMapper/RMTaskWaitingPointsMapper";
 import RMTaskJobsMapper from "../components/RMTaskJobsMapper/RMTaskJobsMapper";
+import MissionManagementBoardV2 from "../components/MissionManagementBoardV2/MissionManagementBoardV2";
 
 export default function RobotManagementLayout(): ReactElement {
   const [currentMainTab, setCurrentMainTab] = useState<
@@ -100,7 +101,8 @@ export default function RobotManagementLayout(): ReactElement {
           {(() => {
             switch (currentMainTab) {
               case "Mission Management":
-                return <MissionManagementBoard />;
+                // return <MissionManagementBoard />;
+                return <MissionManagementBoardV2 />;
               case "Barcode Management":
                 return <BarcodeManagementBoard />;
               case "Robot Logs":

@@ -117,6 +117,7 @@ import {
   getConfig,
   getLog,
   getLogs,
+  getMap,
   updateConfig,
 } from "../toolkit/BarcodeSlice";
 import {
@@ -1781,6 +1782,18 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getMapFC(): Promise<Buffer> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getMap());
+
+        resolve(response?.payload);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1861,6 +1874,7 @@ export default ({ children }: any) => {
 
         getIP,
         getFilesFromFileManager,
+        getMapFC,
       }}
     >
       {children}
