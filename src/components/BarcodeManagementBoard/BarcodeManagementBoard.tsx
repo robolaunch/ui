@@ -25,13 +25,22 @@ export default function BarcodeManagementBoard(): ReactElement {
           : ""}
       </div> */}
       <div
-        className="absolute h-5 w-5 rounded-full bg-primary-500"
+        className="absolute h-[2px] w-[2px] rounded-full bg-primary-500"
         style={{
           top: 0,
           left: 0,
           zIndex: 50,
         }}
       />
+      <div
+        className="absolute h-[2px] w-[2px] rounded-full bg-secondary-500"
+        style={{
+          left: "-199px",
+          top: "-49px",
+          zIndex: 50,
+        }}
+      />
+      {/* 
       <div
         style={{
           top: -475,
@@ -45,7 +54,7 @@ export default function BarcodeManagementBoard(): ReactElement {
         }}
       >
         <p>Region #1</p>
-      </div>
+      </div> */}
       <RosMapLayer />
       {/* <img
         style={{

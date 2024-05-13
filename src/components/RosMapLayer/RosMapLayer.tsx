@@ -21,35 +21,56 @@ export default function RosMapLayer(): ReactElement {
 
   async function handleGetRosMap() {
     try {
-      const response: any = await getMapFC();
+      const { map, meta } = await getMapFC();
+      console.log("response", { map, meta });
 
-      console.log("response", response);
+      const base64Image = await handleBufferToBase64(map as Buffer);
 
-      const base64Image = await handleBufferToBase64(response.map);
+      const mapDimensions = await getBase64ImageDimensions(base64Image);
 
-      const metaDesc = await getBase64ImageDimensions(base64Image);
+      const { originXPixel, originYPixel, mapWidthMeter, mapHeightMeter } =
+        handleCalcOrigin({
+          mapOrigin: meta?.origin,
+          mapResolution: meta?.resolution,
+          mapWidth: mapDimensions?.width,
+          mapHeight: mapDimensions?.height,
+        });
 
-      const originMeta = handleCalcOrigin({
-        mapOrigin: rosMap?.meta?.origin,
-        mapResolution: rosMap?.meta?.resolution,
-        mapWidth: rosMap?.meta?.width,
-        mapHeight: rosMap?.meta?.height,
+      console.log({
+        map: base64Image,
+        meta: {
+          ...meta,
+          width: mapDimensions?.width,
+          height: mapDimensions?.height,
+          originXPixel,
+          originYPixel,
+          mapWidthMeter,
+          mapHeightMeter,
+        },
       });
 
       setRosMap({
         map: base64Image,
         meta: {
-          ...response.meta,
-          width: metaDesc?.width,
-          height: metaDesc?.height,
-          originXPixel: originMeta?.originXPixel,
-          originYPixel: originMeta?.originYPixel,
+          ...meta,
+          width: mapDimensions?.width,
+          height: mapDimensions?.height,
+          originXPixel,
+          originYPixel,
+          mapWidthMeter,
+          mapHeightMeter,
+          originX: meta?.origin?.[0],
+          originY: meta?.origin?.[1],
         },
       });
     } catch (error) {
       console.error("Harita alınamadı:", error);
     }
   }
+
+  useEffect(() => {
+    console.log("rosMap", rosMap);
+  }, [rosMap]);
 
   async function handleBufferToBase64(buffer: Buffer): Promise<string> {
     const arrayBuffer: Uint8Array = new Uint8Array(buffer);
@@ -70,6 +91,10 @@ export default function RosMapLayer(): ReactElement {
   }): {
     originXPixel: number;
     originYPixel: number;
+    mapWidthMeter: number;
+    mapHeightMeter: number;
+    originX: number;
+    originY: number;
   } {
     console.log("mapOrigin", mapOrigin); // [-15.1, -25, 0]
     console.log("mapResolution", mapResolution); // 0.03
@@ -79,13 +104,23 @@ export default function RosMapLayer(): ReactElement {
     const originX = mapOrigin?.[0]; // -15.1
     const originY = mapOrigin?.[1]; // -25
 
-    const originXPixel = mapWidth * mapResolution + originX * mapResolution;
-    const originYPixel = mapHeight * mapResolution + originY * mapResolution;
+    const mapWidthMeter = mapWidth * mapResolution;
+    const mapHeightMeter = mapHeight * mapResolution;
+
+    console.log("mapWidthMeter", mapWidthMeter);
+    console.log("mapHeightMeter", mapHeightMeter);
+
+    const originXPixel = mapWidthMeter + originX;
+    const originYPixel = mapHeightMeter + originY;
 
     console.log("originXPixel", originXPixel);
     console.log("originYPixel", originYPixel);
 
     return {
+      mapWidthMeter,
+      mapHeightMeter,
+      originX,
+      originY,
       originXPixel,
       originYPixel,
     };
@@ -108,20 +143,27 @@ export default function RosMapLayer(): ReactElement {
     });
   }
 
+  const scale = 100;
+
   return (
-    <div>
-      <img
-        style={{
-          position: "absolute",
-          zIndex: 20,
-          opacity: 0.5,
-          left: rosMap?.meta?.originXPixel || 0,
-          width: rosMap?.meta?.width,
-          height: rosMap?.meta?.height,
-        }}
-        src={rosMap?.map}
-        alt="rosMap"
-      />
-    </div>
+    <img
+      style={{
+        position: "absolute",
+        zIndex: 20,
+        opacity: 0.5,
+        left:
+          (rosMap?.meta?.mapWidthMeter * scale +
+            rosMap?.meta?.originX * scale) *
+          -1,
+        top:
+          (rosMap?.meta?.mapHeightMeter * scale +
+            rosMap?.meta?.originY * scale) *
+          -1,
+        width: rosMap?.meta?.mapWidthMeter * scale,
+        height: rosMap?.meta?.mapHeightMeter * scale,
+      }}
+      src={rosMap?.map}
+      alt="rosMap"
+    />
   );
 }

@@ -1782,7 +1782,10 @@ export default ({ children }: any) => {
     });
   }
 
-  async function getMapFC(): Promise<Buffer> {
+  async function getMapFC(): Promise<{
+    map: Buffer;
+    meta: any;
+  }> {
     return new Promise(async (resolve, reject) => {
       try {
         const response: any = await dispatch(getMap());

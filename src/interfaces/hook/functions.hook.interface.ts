@@ -218,5 +218,8 @@ export interface IuseFunctions {
   getLogFC: ({ logName }: { logName: string }) => Promise<any>;
   getConfigFC: () => Promise<any>;
   updateConfigFC: ({ config }: { config: any }) => Promise<void>;
-  getMapFC: () => Promise<Buffer>;
+  getMapFC(): Promise<{
+    map: Buffer;
+    meta: any;
+  }>;
 }
