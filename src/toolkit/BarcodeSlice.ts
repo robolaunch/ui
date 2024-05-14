@@ -94,6 +94,15 @@ export const getMap = createAsyncThunk("barcode/getMap", async (_) => {
   };
 });
 
+export const getLocation = createAsyncThunk(
+  "barcode/getLocation",
+  async (_) => {
+    const response: any = await axios.get("http://localhost:8077/location");
+
+    return response?.data?.data;
+  },
+);
+
 export const barcodeSlice = createSlice({
   name: "barcode",
   initialState: {},

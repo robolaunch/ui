@@ -115,6 +115,7 @@ import {
   getBarcodeAtSnapshot,
   getBarcodeSnapshots,
   getConfig,
+  getLocation,
   getLog,
   getLogs,
   getMap,
@@ -1797,6 +1798,21 @@ export default ({ children }: any) => {
     });
   }
 
+  async function getLocationFC(): Promise<{
+    translation: { x: number; y: number; z: number };
+    orientation: { x: number; y: number; z: number; w: number };
+  }> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response: any = await dispatch(getLocation());
+
+        resolve(response?.payload);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return (
     <FunctionsContext.Provider
       value={{
@@ -1878,6 +1894,7 @@ export default ({ children }: any) => {
         getIP,
         getFilesFromFileManager,
         getMapFC,
+        getLocationFC,
       }}
     >
       {children}

@@ -11,7 +11,7 @@ export default function RosMapLayer(): ReactElement {
 
     const timer = setInterval(() => {
       handleGetRosMap();
-    }, 10000);
+    }, 6000);
 
     return () => {
       clearInterval(timer);
@@ -110,8 +110,8 @@ export default function RosMapLayer(): ReactElement {
     console.log("mapWidthMeter", mapWidthMeter);
     console.log("mapHeightMeter", mapHeightMeter);
 
-    const originXPixel = mapWidthMeter + originX;
-    const originYPixel = mapHeightMeter + originY;
+    const originXPixel = (mapWidthMeter + originX) * 100;
+    const originYPixel = (mapHeightMeter + originY) * 100;
 
     console.log("originXPixel", originXPixel);
     console.log("originYPixel", originYPixel);
@@ -149,18 +149,15 @@ export default function RosMapLayer(): ReactElement {
     <img
       style={{
         position: "absolute",
+        display: "block",
         zIndex: 20,
         opacity: 0.5,
-        left:
-          (rosMap?.meta?.mapWidthMeter * scale +
-            rosMap?.meta?.originX * scale) *
-          -1,
-        top:
-          (rosMap?.meta?.mapHeightMeter * scale +
-            rosMap?.meta?.originY * scale) *
-          -1,
+        left: rosMap?.meta?.originX * scale,
+        bottom: rosMap?.meta?.originY * scale,
         width: rosMap?.meta?.mapWidthMeter * scale,
         height: rosMap?.meta?.mapHeightMeter * scale,
+        minWidth: rosMap?.meta?.mapWidthMeter * scale,
+        minHeight: rosMap?.meta?.mapHeightMeter * scale,
       }}
       src={rosMap?.map}
       alt="rosMap"

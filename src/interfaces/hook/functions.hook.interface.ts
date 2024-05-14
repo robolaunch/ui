@@ -222,4 +222,17 @@ export interface IuseFunctions {
     map: Buffer;
     meta: any;
   }>;
+  getLocationFC(): Promise<{
+    translation: {
+      x: number;
+      y: number;
+      z: number;
+    };
+    orientation: {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
+  }>;
 }

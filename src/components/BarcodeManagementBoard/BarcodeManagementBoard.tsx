@@ -3,6 +3,7 @@ import BarcodeManagementWorkspace from "../BarcodeManagementWorkspace/BarcodeMan
 import useBarcode from "../../hooks/useBarcode";
 import BarcodeItem from "../BarcodeItem/BarcodeItem";
 import RosMapLayer from "../RosMapLayer/RosMapLayer";
+import RobotLocationLayer from "../RobotLocationLayer/RobotLocationLayer";
 
 export default function BarcodeManagementBoard(): ReactElement {
   const [dragging, setDragging] = useState<boolean>(false);
@@ -25,18 +26,18 @@ export default function BarcodeManagementBoard(): ReactElement {
           : ""}
       </div> */}
       <div
-        className="absolute h-[2px] w-[2px] rounded-full bg-primary-500"
+        className="absolute h-2 w-2 rounded-full bg-primary-500"
         style={{
-          top: 0,
           left: 0,
+          bottom: 0,
           zIndex: 50,
         }}
       />
       <div
-        className="absolute h-[2px] w-[2px] rounded-full bg-secondary-500"
+        className="absolute h-20 w-20 rounded-full bg-secondary-500"
         style={{
-          left: "-199px",
-          top: "-49px",
+          left: `5030px`,
+          bottom: `${16740 - 8330}px`,
           zIndex: 50,
         }}
       />
@@ -55,6 +56,7 @@ export default function BarcodeManagementBoard(): ReactElement {
       >
         <p>Region #1</p>
       </div> */}
+      <RobotLocationLayer />
       <RosMapLayer />
       {/* <img
         style={{
@@ -64,6 +66,20 @@ export default function BarcodeManagementBoard(): ReactElement {
         src="/images/global_map.png"
         alt="map"
       /> */}
+      {/* <div className="relative h-full">
+        <iframe
+          title="map"
+          style={{
+            minWidth: "100%",
+            minHeight: "100%",
+            position: "absolute",
+            zIndex: 50,
+            top: 0,
+            left: 0,
+          }}
+          src={`/html/rosMap.html?ws=ws://localhost:9090`}
+        />
+      </div> */}
     </BarcodeManagementWorkspace>
   );
 }

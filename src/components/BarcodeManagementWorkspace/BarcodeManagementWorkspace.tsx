@@ -29,8 +29,8 @@ export default function BarcodeManagementWorkspace({
           centerOnInit={false}
           centerZoomedOut={false}
           limitToBounds={false}
-          minScale={0.1}
-          maxScale={2}
+          minScale={0.01}
+          maxScale={10}
           onPanningStart={() => !dragging && setDragging(true)}
           onPanningStop={() => dragging && setDragging(false)}
           onPinchingStart={() => !dragging && setDragging(true)}
