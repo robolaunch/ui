@@ -11,7 +11,7 @@ export default function BarcodeManagementBoard(): ReactElement {
 
   return (
     <BarcodeManagementWorkspace dragging={dragging} setDragging={setDragging}>
-      {/* <div className="relative z-40 h-full gap-10 bg-white">
+      <div className="relative z-40 h-full gap-10 bg-white">
         {barcodeItems?.length
           ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
               return (
@@ -24,15 +24,15 @@ export default function BarcodeManagementBoard(): ReactElement {
               );
             })
           : ""}
-      </div> */}
-      <div
-        className="absolute h-2 w-2 rounded-full bg-primary-500"
+      </div>
+      {/* <div
+        className="absolute h-2 w-2 rounded-full bg-red-500"
         style={{
           left: 0,
           bottom: 0,
           zIndex: 50,
         }}
-      />
+      /> */}
       <div
         className="absolute h-20 w-20 rounded-full bg-secondary-500"
         style={{

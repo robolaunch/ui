@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { Fragment, ReactElement, useEffect, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
 
 export default function RosMapLayer(): ReactElement {
@@ -143,24 +143,96 @@ export default function RosMapLayer(): ReactElement {
     });
   }
 
+  const [staticMapDimensions, setStaticMapDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({
+    height: 0,
+    width: 0,
+  });
+
+  function handleGetFloorMapDimensions(): Promise<{
+    width: number;
+    height: number;
+  }> {
+    return new Promise<{ width: number; height: number }>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        console.log("img.width", img.width);
+        console.log("img.height", img.height);
+        resolve({ width: img.width, height: img.height });
+      };
+      img.onerror = () => {
+        reject(new Error("Fotoğraf yüklenirken bir hata oluştu."));
+      };
+      img.src = "/images/map.png";
+    });
+  }
+
+  async function handleSetterStaticMapDimensions() {
+    const values = await handleGetFloorMapDimensions();
+
+    setStaticMapDimensions(values);
+  }
+
+  useEffect(() => {
+    console.log("rosMap", rosMap);
+  }, [rosMap]);
+
+  useEffect(() => {
+    handleSetterStaticMapDimensions();
+  }, []);
+
   const scale = 100;
 
   return (
-    <img
-      style={{
-        position: "absolute",
-        display: "block",
-        zIndex: 20,
-        opacity: 0.5,
-        left: rosMap?.meta?.originX * scale,
-        bottom: rosMap?.meta?.originY * scale,
-        width: rosMap?.meta?.mapWidthMeter * scale,
-        height: rosMap?.meta?.mapHeightMeter * scale,
-        minWidth: rosMap?.meta?.mapWidthMeter * scale,
-        minHeight: rosMap?.meta?.mapHeightMeter * scale,
-      }}
-      src={rosMap?.map}
-      alt="rosMap"
-    />
+    <Fragment>
+      <img
+        style={{
+          position: "absolute",
+          display: "block",
+          zIndex: 20,
+          opacity: 0.2,
+          left: rosMap?.meta?.originX * scale,
+          bottom: rosMap?.meta?.originY * scale,
+          width: rosMap?.meta?.mapWidthMeter * scale,
+          height: rosMap?.meta?.mapHeightMeter * scale,
+          minWidth: rosMap?.meta?.mapWidthMeter * scale,
+          minHeight: rosMap?.meta?.mapHeightMeter * scale,
+        }}
+        src={rosMap?.map}
+        alt="rosMap"
+      />
+
+      <div
+        className="h-1 w-1 bg-yellow-500"
+        style={{
+          position: "absolute",
+          zIndex: 90,
+          left: rosMap?.meta?.originX * scale,
+          bottom: rosMap?.meta?.originY * scale,
+        }}
+      />
+
+      <img
+        src="/images/map.png"
+        alt="floorMap"
+        style={{
+          position: "absolute",
+          display: "block",
+          zIndex: 10,
+          height:
+            staticMapDimensions?.height * rosMap?.meta?.resolution * scale,
+          width: staticMapDimensions?.width * rosMap?.meta?.resolution * scale,
+
+          minHeight:
+            staticMapDimensions?.height * rosMap?.meta?.resolution * scale,
+          minWidth:
+            staticMapDimensions?.width * rosMap?.meta?.resolution * scale,
+          left: rosMap?.meta?.originX * scale,
+          bottom: rosMap?.meta?.originY * scale,
+        }}
+      />
+    </Fragment>
   );
 }
