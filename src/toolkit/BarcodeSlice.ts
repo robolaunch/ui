@@ -84,14 +84,18 @@ export const updateConfig = createAsyncThunk(
 );
 
 export const getMap = createAsyncThunk("barcode/getMap", async (_) => {
-  const map = await axios.get("http://localhost:8077/map/image");
+  try {
+    const map = await axios.get("http://localhost:8077/map/image");
 
-  const meta = await axios.get("http://localhost:8077/map/meta");
+    const meta = await axios.get("http://localhost:8077/map/meta");
 
-  return {
-    map: map?.data?.data?.data,
-    meta: await JSON.parse(await meta?.data?.data),
-  };
+    return {
+      map: map?.data?.data?.data,
+      meta: await JSON.parse(await meta?.data?.data),
+    };
+  } catch (error) {
+    return null;
+  }
 });
 
 export const getLocation = createAsyncThunk(
