@@ -5,19 +5,22 @@ import TaskManagementLayout from "../../../layouts/TaskManagementLayout";
 import TaskContext from "../../../contexts/TaskContext";
 import LogContext from "../../../contexts/LogContext";
 import RosContext from "../../../contexts/RosContext";
+import TaskManagementContext from "../../../contexts/TaskManagementContext";
 
 export default function TaskManagement(): ReactElement {
   return (
-    <MissionContext>
-      <BarcodeContext>
-        <RosContext>
-          <LogContext>
-            <TaskContext>
-              <TaskManagementLayout />
-            </TaskContext>
-          </LogContext>
-        </RosContext>
-      </BarcodeContext>
-    </MissionContext>
+    <TaskManagementContext>
+      <MissionContext>
+        <BarcodeContext>
+          <RosContext>
+            <LogContext>
+              <TaskContext>
+                <TaskManagementLayout />
+              </TaskContext>
+            </LogContext>
+          </RosContext>
+        </BarcodeContext>
+      </MissionContext>
+    </TaskManagementContext>
   );
 }

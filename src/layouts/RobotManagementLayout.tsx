@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import MissionManagementBoard from "../components/MissionManagementBoard/MissionManagementBoard";
+// import MissionManagementBoard from "../components/MissionManagementBoard/MissionManagementBoard";
 import BarcodeManagementBoard from "../components/BarcodeManagementBoard/BarcodeManagementBoard";
 import LogManagementBoard from "../components/LogManagementBoard/LogManagementBoard";
 import RobotManagementSidebar from "../components/RobotManagementSidebar/RobotManagementSidebar";
@@ -10,12 +10,17 @@ import RMBarcodeMapper from "../components/RMBarcodeMapper/RMBarcodeMapper";
 import RMTaskWaypointsMapper from "../components/RMTaskWaypointsMapper/RMTaskWaypointsMapper";
 import RMTaskWaitingPointsMapper from "../components/RMTaskWaitingPointsMapper/RMTaskWaitingPointsMapper";
 import RMTaskJobsMapper from "../components/RMTaskJobsMapper/RMTaskJobsMapper";
-import MissionManagementBoardV2 from "../components/MissionManagementBoardV2/MissionManagementBoardV2";
+import RMTaskWaypointsMapperV2 from "../components/RMTaskWaypointsMapperV2/RMTaskWaypointsMapperV2";
+import RMTaskJobsMapperV2 from "../components/RMTaskJobsMapperV2/RMTaskJobsMapperV2";
+// import MissionManagementBoardV2 from "../components/MissionManagementBoardV2/MissionManagementBoardV2";
 
 export default function RobotManagementLayout(): ReactElement {
   const [currentMainTab, setCurrentMainTab] = useState<
-    "Mission Management" | "Barcode Management" | "Robot Logs"
-  >("Mission Management");
+    | "Mission Management"
+    | "Task Management"
+    | "Barcode Management"
+    | "Robot Logs"
+  >("Task Management");
   const [currentMissionTab, setCurrentMissionTab] = useState<
     "Waypoints" | "Waiting Points" | "Jobs"
   >("Waypoints");
@@ -25,10 +30,19 @@ export default function RobotManagementLayout(): ReactElement {
     "Robot Logs",
   );
 
+  const [currentTaskTab, setCurrentTaskTab] = useState<"Waypoints" | "Jobs">(
+    "Waypoints",
+  );
+
   return (
     <div className="wh-full flex flex-col gap-6">
       <LayoutTabSwitcher
-        tabs={["Mission Management", "Barcode Management", "Robot Logs"]}
+        tabs={[
+          // "Mission Management",
+          "Task Management",
+          "Barcode Management",
+          "Robot Logs",
+        ]}
         activeTab={currentMainTab}
         setActiveTab={setCurrentMainTab}
       />
@@ -39,6 +53,8 @@ export default function RobotManagementLayout(): ReactElement {
               switch (currentMainTab) {
                 case "Mission Management":
                   return setCurrentMissionTab;
+                case "Task Management":
+                  return setCurrentTaskTab;
                 case "Barcode Management":
                   return setCurrentBarcodeTab;
                 case "Robot Logs":
@@ -51,6 +67,8 @@ export default function RobotManagementLayout(): ReactElement {
               switch (currentMainTab) {
                 case "Mission Management":
                   return currentMissionTab;
+                case "Task Management":
+                  return currentTaskTab;
                 case "Barcode Management":
                   return currentBarcodeTab;
                 case "Robot Logs":
@@ -63,6 +81,8 @@ export default function RobotManagementLayout(): ReactElement {
               switch (currentMainTab) {
                 case "Mission Management":
                   return ["Waypoints", "Waiting Points", "Jobs"];
+                case "Task Management":
+                  return ["Waypoints", "Jobs"];
                 case "Barcode Management":
                   return ["Barcode Management"];
                 case "Robot Logs":
@@ -84,6 +104,15 @@ export default function RobotManagementLayout(): ReactElement {
                     default:
                       return <RMTaskWaypointsMapper />;
                   }
+                case "Task Management":
+                  switch (currentTaskTab) {
+                    case "Waypoints":
+                      return <RMTaskWaypointsMapperV2 />;
+                    case "Jobs":
+                      return <RMTaskJobsMapperV2 />;
+                    default:
+                      return <RMTaskWaypointsMapperV2 />;
+                  }
                 case "Barcode Management":
                   return <RMBarcodeMapper />;
                 case "Robot Logs":
@@ -101,8 +130,9 @@ export default function RobotManagementLayout(): ReactElement {
           {(() => {
             switch (currentMainTab) {
               case "Mission Management":
-                // return <MissionManagementBoard />;
-                return <MissionManagementBoardV2 />;
+                return <BarcodeManagementBoard />;
+              case "Task Management":
+                return <BarcodeManagementBoard />;
               case "Barcode Management":
                 return <BarcodeManagementBoard />;
               case "Robot Logs":

@@ -9,6 +9,7 @@ import storage from "redux-persist/lib/storage";
 import InstanceReducer from "./InstanceSlice";
 import BarcodeReducer from "./BarcodeSlice";
 import ServiceReducer from "./ServiceSlice";
+import WaypointReducer from "./WaypointSlice";
 import DeployReducer from "./DeploySlice";
 import GithubReducer from "./GithubSlice";
 import GuideReducer from "./GuideSlice";
@@ -17,6 +18,17 @@ import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
 import PortReducer from "./PortSlice";
+
+const persistConfigWaypoint = {
+  key: "waypoint",
+  version: 1,
+  storage,
+};
+
+const persistedReducerWaypoint = persistReducer<any, any>(
+  persistConfigWaypoint,
+  WaypointReducer,
+);
 
 const persistConfigDeploy = {
   key: "deploy",
@@ -192,6 +204,7 @@ const store = configureStore({
     port: persistedReducerPort,
     service: persistedReducerService,
     deploy: persistedReducerDeploy,
+    waypoint: persistedReducerWaypoint,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

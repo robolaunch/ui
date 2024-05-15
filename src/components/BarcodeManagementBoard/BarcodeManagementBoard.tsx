@@ -1,14 +1,16 @@
-import { ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import BarcodeManagementWorkspace from "../BarcodeManagementWorkspace/BarcodeManagementWorkspace";
 import useBarcode from "../../hooks/useBarcode";
 import BarcodeItem from "../BarcodeItem/BarcodeItem";
 import RosMapLayer from "../RosMapLayer/RosMapLayer";
 import RobotLocationLayer from "../RobotLocationLayer/RobotLocationLayer";
 import RosFloorMapLayer from "../RosFloorMapLayer/RosFloorMapLayer";
+import useTaskManagement from "../../hooks/useTaskManagement";
 
 export default function BarcodeManagementBoard(): ReactElement {
   const [dragging, setDragging] = useState<boolean>(false);
   const { barcodeItems } = useBarcode();
+  const { waypoints } = useTaskManagement();
 
   return (
     <BarcodeManagementWorkspace dragging={dragging} setDragging={setDragging}>
@@ -26,6 +28,22 @@ export default function BarcodeManagementBoard(): ReactElement {
             })
           : ""}
       </div>
+      <Fragment>
+        {waypoints?.map((waypoint, index) => {
+          return (
+            <div
+              className="absolute h-1 w-1 rounded-full bg-orange-500"
+              key={index}
+              style={{
+                position: "absolute",
+                left: waypoint.position_x * 100,
+                bottom: waypoint.position_y * 100,
+                zIndex: 100,
+              }}
+            />
+          );
+        })}
+      </Fragment>
       <div
         className="absolute h-1 w-1 rounded-full bg-red-500"
         style={{
