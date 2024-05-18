@@ -38,6 +38,18 @@ export default function RobotLocationLayer(): ReactElement {
     setLocation(await getLocationFC());
   }
 
+  function quaternionToYaw(q: { x: number; y: number; z: number; w: number }) {
+    // Assuming q is an object with properties x, y, z, and w
+    const { x, y, z, w } = q;
+
+    // Yaw calculation from quaternion
+    const siny_cosp = 2 * (w * z + x * y);
+    const cosy_cosp = 1 - 2 * (y * y + z * z);
+    const yaw = Math.atan2(siny_cosp, cosy_cosp);
+
+    return (yaw * 180) / Math.PI; // The yaw angle in radians
+  }
+
   return (
     <Tooltip
       content={
@@ -50,7 +62,16 @@ export default function RobotLocationLayer(): ReactElement {
           left: `${(location?.translation?.x || 0) * 100}px`,
           bottom: `${(location?.translation?.y || 0) * 100}px`,
           zIndex: 50,
-          rotate: `45deg`,
+          rotate: `${
+            -quaternionToYaw(
+              location?.rotation || {
+                x: 0,
+                y: 0,
+                z: 0,
+                w: 0,
+              },
+            ) + 45
+          }deg`,
         }}
       >
         <FaLocationArrow className="text-secondary-500" />

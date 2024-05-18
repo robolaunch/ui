@@ -15,7 +15,7 @@ export default function BarcodeManagementBoard(): ReactElement {
   const { waypoints } = useTaskManagement();
 
   return (
-    <BarcodeManagementWorkspace dragging={dragging} setDragging={setDragging}>
+    <BarcodeManagementWorkspace>
       <div className="relative z-40 h-full gap-10 bg-white">
         {barcodeItems?.length
           ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {

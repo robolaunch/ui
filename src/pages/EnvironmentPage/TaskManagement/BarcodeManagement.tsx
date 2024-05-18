@@ -11,7 +11,7 @@ export default function BarcodeManagement(): ReactElement {
   return (
     <div className="flex h-full w-full gap-6">
       <BarcodeManagementSidebar />
-      <BarcodeManagementWorkspace dragging={dragging} setDragging={setDragging}>
+      <BarcodeManagementWorkspace>
         <div className="relative h-full gap-10 bg-white">
           {barcodeItems?.length
             ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {

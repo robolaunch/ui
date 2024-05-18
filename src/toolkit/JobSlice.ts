@@ -53,6 +53,26 @@ export const removeJob = createAsyncThunk(
   },
 );
 
+export const startJob = createAsyncThunk("jobs/startJob", async (job: IJob) => {
+  try {
+    const response: any = await axios.post(
+      `http://localhost:8077/job/${job.job_id}/start`,
+    );
+
+    return response;
+  } catch (error) {}
+});
+
+export const stopJob = createAsyncThunk("jobs/stopJob", async (job: IJob) => {
+  try {
+    const response: any = await axios.post(
+      `http://localhost:8077/job/${job.job_id}/stop`,
+    );
+
+    return response;
+  } catch (error) {}
+});
+
 export const waypointSlice = createSlice({
   name: "job",
   initialState: {},
