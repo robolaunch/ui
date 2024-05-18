@@ -6,8 +6,6 @@ import RMTaskWaypointAddV2 from "../RMTaskWaypointAddV2/RMTaskWaypointAddV2";
 export default function RMTaskWaypointsMapperV2(): ReactElement {
   const { waypoints } = useTaskManagement();
 
-  console.log("waypointsXXXXXXXXXXXXXXXX", waypoints);
-
   return (
     <Fragment>
       {waypoints?.map((waypoint, index) => {

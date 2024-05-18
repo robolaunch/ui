@@ -228,7 +228,7 @@ export interface IuseFunctions {
       y: number;
       z: number;
     };
-    orientation: {
+    rotation: {
       x: number;
       y: number;
       z: number;

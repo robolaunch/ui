@@ -9,3 +9,9 @@ export interface IWaypoint {
   orientation_z: number;
   orientation_w: number;
 }
+
+export interface IJob {
+  job_id: number;
+  job_name: string;
+  waypoints: number[];
+}

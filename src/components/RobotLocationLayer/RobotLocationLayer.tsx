@@ -1,5 +1,8 @@
 import { ReactElement, useEffect, useState } from "react";
 import useFunctions from "../../hooks/useFunctions";
+import { FaLocationArrow } from "react-icons/fa6";
+import { Tooltip } from "@nextui-org/react";
+import BoardPointToolTipContent from "../BoardPointToolTipContent/BoardPointToolTipContent";
 
 export default function RobotLocationLayer(): ReactElement {
   const { getLocationFC } = useFunctions();
@@ -10,7 +13,7 @@ export default function RobotLocationLayer(): ReactElement {
       y: number;
       z: number;
     };
-    orientation: {
+    rotation: {
       x: number;
       y: number;
       z: number;
@@ -36,13 +39,22 @@ export default function RobotLocationLayer(): ReactElement {
   }
 
   return (
-    <div
-      className="absolute h-4 w-4 rounded-full bg-secondary-500"
-      style={{
-        left: `${(location?.translation?.x || 0) * 100}px`,
-        bottom: `${(location?.translation?.y || 0) * 100}px`,
-        zIndex: 50,
-      }}
-    />
+    <Tooltip
+      content={
+        <BoardPointToolTipContent type="robot" robotPosition={location} />
+      }
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: `${(location?.translation?.x || 0) * 100}px`,
+          bottom: `${(location?.translation?.y || 0) * 100}px`,
+          zIndex: 50,
+          rotate: `45deg`,
+        }}
+      >
+        <FaLocationArrow className="text-secondary-500" />
+      </div>
+    </Tooltip>
   );
 }

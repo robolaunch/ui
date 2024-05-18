@@ -23,8 +23,8 @@ export default function BarcodeManagementWorkspace({
         handle={handleFullScreen}
       >
         <TransformWrapper
-          initialPositionX={650}
-          initialPositionY={325}
+          initialPositionX={512}
+          initialPositionY={-512 + 128 + 64}
           smooth={true}
           centerOnInit={false}
           centerZoomedOut={false}

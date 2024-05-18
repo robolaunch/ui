@@ -1,9 +1,11 @@
 import { TaskManagementContext } from "../contexts/TaskManagementContext";
 import { useContext } from "react";
-import { IWaypoint } from "../interfaces/task-management.interface";
+import { IJob, IWaypoint } from "../interfaces/task-management.interface";
 
 interface IuseTaskManagement {
+  jobs: IJob[];
   waypoints: IWaypoint[];
+  reloadJobs: () => Promise<void>;
   reloadWaypoints: () => Promise<void>;
 }
 

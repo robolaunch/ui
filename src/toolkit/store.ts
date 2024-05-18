@@ -18,6 +18,18 @@ import FleetReducer from "./FleetSlice";
 import RobotReducer from "./RobotSlice";
 import UserReducer from "./UserSlice";
 import PortReducer from "./PortSlice";
+import JobReducer from "./JobSlice";
+
+const persistConfigJob = {
+  key: "job",
+  version: 1,
+  storage,
+};
+
+const persistedReducerJob = persistReducer<any, any>(
+  persistConfigJob,
+  JobReducer,
+);
 
 const persistConfigWaypoint = {
   key: "waypoint",
@@ -205,6 +217,7 @@ const store = configureStore({
     service: persistedReducerService,
     deploy: persistedReducerDeploy,
     waypoint: persistedReducerWaypoint,
+    job: persistedReducerJob,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
