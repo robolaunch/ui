@@ -6,7 +6,6 @@ import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher
 import RMSLogSettingsMapper from "../components/RMSLogSettingsMapper/RMSLogSettingsMapper";
 import RMSLogMapper from "../components/RMSLogMapper/RMSLogMapper";
 import RMBarcodeMapper from "../components/RMBarcodeMapper/RMBarcodeMapper";
-import RMTaskWaypointsMapperV2 from "../components/RMTaskWaypointsMapperV2/RMTaskWaypointsMapperV2";
 import RMTaskJobsMapperV2 from "../components/RMTaskJobsMapperV2/RMTaskJobsMapperV2";
 
 export default function RobotManagementLayout(): ReactElement {
@@ -17,9 +16,9 @@ export default function RobotManagementLayout(): ReactElement {
     "Robot Logs",
   );
 
-  const [currentTaskTab, setCurrentTaskTab] = useState<
-    "Waypoints" | "Jobs" | "Barcodes"
-  >("Waypoints");
+  const [currentTaskTab, setCurrentTaskTab] = useState<"Jobs" | "Barcodes">(
+    "Jobs",
+  );
 
   return (
     <div className="wh-full flex flex-col gap-6">
@@ -54,7 +53,7 @@ export default function RobotManagementLayout(): ReactElement {
             tabs={(() => {
               switch (currentMainTab) {
                 case "Task Management":
-                  return ["Waypoints", "Jobs", "Barcodes"];
+                  return ["Jobs", "Barcodes"];
                 case "Robot Logs":
                   return ["Robot Logs", "Settings"];
                 default:
@@ -65,15 +64,12 @@ export default function RobotManagementLayout(): ReactElement {
               switch (currentMainTab) {
                 case "Task Management":
                   switch (currentTaskTab) {
-                    case "Waypoints":
-                      return <RMTaskWaypointsMapperV2 />;
                     case "Jobs":
                       return <RMTaskJobsMapperV2 />;
                     case "Barcodes":
                       return <RMBarcodeMapper />;
-
                     default:
-                      return <RMTaskWaypointsMapperV2 />;
+                      return <></>;
                   }
                 case "Robot Logs":
                   switch (currentLogTab) {

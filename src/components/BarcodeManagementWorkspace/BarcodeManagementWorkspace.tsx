@@ -7,6 +7,7 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
+import useTaskManagement from "../../hooks/useTaskManagement";
 
 interface IBarcodeManagementWorkspace {
   children: ReactElement | ReactElement[];
@@ -15,6 +16,8 @@ export default function BarcodeManagementWorkspace({
   children,
 }: IBarcodeManagementWorkspace): ReactElement {
   const handleFullScreen = useFullScreenHandle();
+
+  const { setBoardScale } = useTaskManagement();
 
   return (
     <Card className="relative">
@@ -36,6 +39,9 @@ export default function BarcodeManagementWorkspace({
             event: MouseEvent | TouchEvent,
           ) => {
             console.log(ref, event);
+          }}
+          onWheel={(e) => {
+            setBoardScale(e.state.scale);
           }}
         >
           <TransformComponent>

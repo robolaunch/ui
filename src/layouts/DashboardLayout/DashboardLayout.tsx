@@ -17,7 +17,7 @@ export default function DashboardLayout({
   isMainDashboard,
 }: IDashboardLayout): ReactElement {
   return (
-    <div className="grid grid-cols-12 gap-6">
+    <div className=".my-element my-element grid grid-cols-12 gap-6">
       <div
         className={`col-span-full ${
           isMainDashboard ? "lg:col-span-9" : "lg:col-span-4"

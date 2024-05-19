@@ -2,27 +2,19 @@ import CFCancelButton from "../components/CFCancelButton/CFCancelButton";
 import Button from "../components/Button/Button";
 import { Dialog } from "primereact/dialog";
 import { ReactElement } from "react";
-import { IJob } from "../interfaces/task-management.interface";
-import { useAppDispatch } from "../hooks/redux";
-import { removeJob } from "../toolkit/JobSlice";
 import useTaskManagement from "../hooks/useTaskManagement";
 
 interface IRMTaskJobDeleteModal {
-  job: IJob;
   handleCloseModal: () => void;
 }
 
 export default function RMTaskJobDeleteModal({
-  job,
   handleCloseModal,
 }: IRMTaskJobDeleteModal): ReactElement {
-  const { reloadJobs } = useTaskManagement();
+  const { handleRemoveJob } = useTaskManagement();
 
-  const dispatch = useAppDispatch();
-
-  async function handleOnSubmit() {
-    await dispatch(removeJob(job));
-    await reloadJobs();
+  function handleDeleteJob() {
+    handleRemoveJob();
     handleCloseModal();
   }
 
@@ -42,7 +34,7 @@ export default function RMTaskJobDeleteModal({
             type="submit"
             className="!h-11 text-xs"
             text="Remove Job"
-            onClick={handleOnSubmit}
+            onClick={handleDeleteJob}
           />
         </div>
       </div>

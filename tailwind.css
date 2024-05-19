@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "cursor";
 
 .hw-full {
   @apply !h-full !w-full;

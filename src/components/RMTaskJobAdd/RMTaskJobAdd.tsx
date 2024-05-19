@@ -1,16 +1,13 @@
-import RMTaskJobAddModal from "../../modals/RMTaskJobAddModal";
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement } from "react";
 import CFAddButton from "../CFAddButton/CFAddButton";
+import useTaskManagement from "../../hooks/useTaskManagement";
 
 export default function RMTaskJobAdd(): ReactElement {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const { handleAddJob } = useTaskManagement();
 
   return (
     <Fragment>
-      <CFAddButton onClick={() => setIsOpened(true)} />
-      {isOpened && (
-        <RMTaskJobAddModal handleCloseModal={() => setIsOpened(false)} />
-      )}
+      <CFAddButton onClick={handleAddJob} />
     </Fragment>
   );
 }

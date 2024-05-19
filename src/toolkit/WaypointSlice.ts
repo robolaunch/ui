@@ -33,12 +33,11 @@ export const updateWaypoint = createAsyncThunk(
   "waypoints/updateWaypoint",
   async (waypoint: IWaypoint) => {
     try {
-      const response: any = await axios.put(
-        `http://localhost:8077/waypoint/${waypoint.waypoint_id}`,
-        waypoint,
-      );
-
-      return response;
+      // const response: any = await axios.put(
+      //   `http://localhost:8077/waypoint/${waypoint.waypoint_id}`,
+      //   waypoint,
+      // );
+      // return response;
     } catch (error) {}
   },
 );
@@ -47,11 +46,10 @@ export const removeWaypoint = createAsyncThunk(
   "waypoints/removeWaypoint",
   async (waypoint: IWaypoint) => {
     try {
-      const response: any = await axios.delete(
-        `http://localhost:8077/waypoint/${waypoint.waypoint_id}`,
-      );
-
-      return response;
+      // const response: any = await axios.delete(
+      //   `http://localhost:8077/waypoint/${waypoint.waypoint_id}`,
+      // );
+      // return response;
     } catch (error) {}
   },
 );

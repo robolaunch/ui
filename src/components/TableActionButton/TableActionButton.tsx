@@ -14,6 +14,7 @@ interface ITableActionButton {
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
+  onMouseDown?: () => void;
 }
 
 export default function TableActionButton({
@@ -21,6 +22,7 @@ export default function TableActionButton({
   disabled,
   loading,
   onClick,
+  onMouseDown,
 }: ITableActionButton): ReactElement {
   function colorHandle(): string {
     if (disabled) {
@@ -67,6 +69,7 @@ export default function TableActionButton({
         }
       })()}
       onClick={onClick}
+      onMouseDown={onMouseDown}
       disabled={disabled}
       loading={loading}
     />

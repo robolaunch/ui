@@ -6,21 +6,29 @@ import BoardPointToolTipContent from "../BoardPointToolTipContent/BoardPointTool
 
 interface IBoardWaypointPoint {
   waypoint: IWaypoint;
+  index: number;
 }
 
 export default function BoardWaypointPoint({
   waypoint,
+  index,
 }: IBoardWaypointPoint): ReactElement {
   return (
     <Tooltip
-      content={<BoardPointToolTipContent type="waypoint" waypoint={waypoint} />}
+      content={
+        <BoardPointToolTipContent
+          type="waypoint"
+          waypoint={waypoint}
+          waypointIndex={index}
+        />
+      }
     >
       <div
         className="absolute "
         style={{
           position: "absolute",
-          left: waypoint.position_x * 100,
-          bottom: waypoint.position_y * 100,
+          left: waypoint?.position?.x * 100,
+          bottom: waypoint?.position?.y * 100,
           zIndex: 100,
         }}
       >

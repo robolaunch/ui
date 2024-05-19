@@ -1,6 +1,7 @@
 import { Fragment, ReactElement } from "react";
 import useTaskManagement from "../../hooks/useTaskManagement";
-import RMTaskJobCardV2 from "../RMTaskJobCardV2/RMTaskJobCardV2";
+import RMTaskJobAdd from "../RMTaskJobAdd/RMTaskJobAdd";
+import RMJobCard from "../RMJobCard/RMJobCard";
 
 export default function RMTaskJobsMapperV2(): ReactElement {
   const { jobs } = useTaskManagement();
@@ -8,8 +9,10 @@ export default function RMTaskJobsMapperV2(): ReactElement {
   return (
     <Fragment>
       {jobs?.map((job, index) => {
-        return <RMTaskJobCardV2 key={index} job={job} />;
+        return <RMJobCard job={job} index={index} key={index} />;
       })}
+
+      <RMTaskJobAdd />
     </Fragment>
   );
 }

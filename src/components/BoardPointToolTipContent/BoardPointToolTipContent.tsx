@@ -7,6 +7,7 @@ import { FaLocationArrow } from "react-icons/fa";
 interface IBPToolTipContent {
   type: "waypoint" | "center" | "robot";
   waypoint?: IWaypoint;
+  waypointIndex?: number;
   robotPosition?: {
     translation: {
       x: number;
@@ -25,6 +26,7 @@ interface IBPToolTipContent {
 export default function BoardPointToolTipContent({
   type,
   waypoint,
+  waypointIndex,
   robotPosition,
 }: IBPToolTipContent): ReactElement {
   const domTitle = () => {
@@ -58,20 +60,20 @@ export default function BoardPointToolTipContent({
       case "waypoint":
         return (
           <ul className="flex flex-col items-center gap-1">
-            <li>{waypoint!.waypoint_name}</li>
+            <li>Index: {(waypointIndex || 0) + 1}</li>
             <li>
-              X: {waypoint!.position_x.toFixed(3)}
-              {" | "}Y: {waypoint!.position_y.toFixed(3)}
-              {" | "}Z: {waypoint!.position_z.toFixed(3)}
+              X: {waypoint!.position.x.toFixed(3)}
+              {" | "}Y: {waypoint!.position.y.toFixed(3)}
+              {" | "}Z: {waypoint!.position.z.toFixed(3)}
             </li>
             <li>
-              W: {waypoint!.orientation_w.toFixed(3)}
+              W: {waypoint!.orientation.w.toFixed(3)}
               {" | "}
-              X: {waypoint!.orientation_x.toFixed(3)}
+              X: {waypoint!.orientation.x.toFixed(3)}
               {" | "}
-              Y: {waypoint!.orientation_y.toFixed(3)}
+              Y: {waypoint!.orientation.y.toFixed(3)}
               {" | "}
-              Z: {waypoint!.orientation_z.toFixed(3)}
+              Z: {waypoint!.orientation.z.toFixed(3)}
             </li>
           </ul>
         );

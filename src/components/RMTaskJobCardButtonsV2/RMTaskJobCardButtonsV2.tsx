@@ -35,13 +35,11 @@ export default function RMTaskJobCardButtonsV2({
       />
       {isOpenedEditModal && (
         <RMTaskJobEditModal
-          job={job}
           handleCloseModal={() => setIsOpenedEditModal(false)}
         />
       )}
       {isOpenedDeleteModal && (
         <RMTaskJobDeleteModal
-          job={job}
           handleCloseModal={() => setIsOpenedDeleteModal(false)}
         />
       )}

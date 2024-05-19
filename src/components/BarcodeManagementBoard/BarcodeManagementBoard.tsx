@@ -12,7 +12,7 @@ import BoardPointCenter from "../BoardPointCenter/BoardPointCenter";
 export default function BarcodeManagementBoard(): ReactElement {
   const [dragging, setDragging] = useState<boolean>(false);
   const { barcodeItems } = useBarcode();
-  const { waypoints } = useTaskManagement();
+  const { waypoints, activeJob, jobs } = useTaskManagement();
 
   return (
     <BarcodeManagementWorkspace>
@@ -31,9 +31,16 @@ export default function BarcodeManagementBoard(): ReactElement {
           : ""}
       </div>
       <Fragment>
-        {waypoints?.map((waypoint, index) => {
-          return <BoardWaypointPoint waypoint={waypoint} key={index} />;
-        })}
+        {typeof activeJob === "number" &&
+          jobs?.[activeJob]?.waypoints?.map((waypoint, index) => {
+            return (
+              <BoardWaypointPoint
+                index={index}
+                waypoint={waypoint}
+                key={index}
+              />
+            );
+          })}
       </Fragment>
       <BoardPointCenter />
       <RobotLocationLayer />

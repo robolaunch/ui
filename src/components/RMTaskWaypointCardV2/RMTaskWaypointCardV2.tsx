@@ -1,25 +1,18 @@
 import { ReactElement } from "react";
 import Card from "../Card/Card";
 import { IWaypoint } from "../../interfaces/task-management.interface";
-import RMTaskWaypointCardButtonsV2 from "../RMTaskWaypointCardButtonsV2/RMTaskWaypointCardButtonsV2";
 import TableActionButton from "../TableActionButton/TableActionButton";
 
 interface IRMTaskWaypointCardV2 {
   waypoint: IWaypoint;
-  disabledButtons?: boolean;
-  enabledRemoveButtonForJob?: boolean;
-  onClickRemoveButtonForJob?: () => void;
-  enabledAddButtonForJob?: boolean;
-  onClickAddButtonForJob?: () => void;
+  index: number;
+  handleRemoveButton?: () => void;
 }
 
 export default function RMTaskWaypointCardV2({
   waypoint,
-  disabledButtons,
-  enabledRemoveButtonForJob,
-  onClickRemoveButtonForJob,
-  enabledAddButtonForJob,
-  onClickAddButtonForJob,
+  index,
+  handleRemoveButton,
 }: IRMTaskWaypointCardV2): ReactElement {
   return (
     <Card className="!h-24 p-4 text-xs shadow-sm">
@@ -27,16 +20,16 @@ export default function RMTaskWaypointCardV2({
         <div className="wh-full flex flex-col justify-between gap-2">
           {[
             {
-              name: "Waypoint Name",
-              value: waypoint?.waypoint_name,
+              name: "Waypoint Index",
+              value: index + 1,
             },
             {
               name: "Position",
-              value: `x: ${waypoint?.position_x} y: ${waypoint?.position_y} z: ${waypoint?.position_z}`,
+              value: `x: ${waypoint?.position.x?.toFixed(2)} y: ${waypoint?.position.y?.toFixed(2)} z: ${waypoint?.position.z?.toFixed(2)}`,
             },
             {
               name: "Orientation",
-              value: `w: ${waypoint?.orientation_w} x: ${waypoint?.orientation_x} y: ${waypoint?.orientation_y} z: ${waypoint?.orientation_z}`,
+              value: `w: ${waypoint?.orientation.w?.toFixed(2)} x: ${waypoint?.orientation.x?.toFixed(2)} y: ${waypoint?.orientation.y?.toFixed(2)} z: ${waypoint?.orientation.z?.toFixed(2)}`,
             },
           ].map((item, index) => {
             return (
@@ -49,18 +42,8 @@ export default function RMTaskWaypointCardV2({
             );
           })}
         </div>
-        {!disabledButtons && (
-          <RMTaskWaypointCardButtonsV2 waypoint={waypoint} />
-        )}
-        {enabledRemoveButtonForJob && (
-          <TableActionButton
-            onClick={onClickRemoveButtonForJob}
-            type="delete"
-          />
-        )}
-        {enabledAddButtonForJob && (
-          <TableActionButton onClick={onClickAddButtonForJob} type="add" />
-        )}
+
+        <TableActionButton onClick={handleRemoveButton} type="delete" />
       </div>
     </Card>
   );

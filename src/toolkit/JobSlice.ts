@@ -56,7 +56,8 @@ export const removeJob = createAsyncThunk(
 export const startJob = createAsyncThunk("jobs/startJob", async (job: IJob) => {
   try {
     const response: any = await axios.post(
-      `http://localhost:8077/job/${job.job_id}/start`,
+      `http://localhost:8077/job/start`,
+      job,
     );
 
     return response;
@@ -66,7 +67,8 @@ export const startJob = createAsyncThunk("jobs/startJob", async (job: IJob) => {
 export const stopJob = createAsyncThunk("jobs/stopJob", async (job: IJob) => {
   try {
     const response: any = await axios.post(
-      `http://localhost:8077/job/${job.job_id}/stop`,
+      `http://localhost:8077/job/stop`,
+      job,
     );
 
     return response;

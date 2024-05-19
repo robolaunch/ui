@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
 import TableActionButton from "../TableActionButton/TableActionButton";
-import RMTaskWaypointUpdateModalV2 from "../../modals/RMTaskWaypointUpdateModalV2";
 import { IWaypoint } from "../../interfaces/task-management.interface";
 import RMTaskWaypointDeleteModalV2 from "../../modals/RMTaskWaypointDeleteModalV2";
 
@@ -29,12 +28,12 @@ export default function RMTaskWaypointCardButtons({
         disabled={false}
         onClick={() => setIsOpenedDeleteModal(true)}
       />
-      {isOpenedEditModal && (
+      {/* {isOpenedEditModal && (
         <RMTaskWaypointUpdateModalV2
           waypoint={waypoint}
           handleCloseModal={() => setIsOpenedEditModal(false)}
         />
-      )}
+      )} */}
       {isOpenedDeleteModal && (
         <RMTaskWaypointDeleteModalV2
           waypoint={waypoint}

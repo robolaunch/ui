@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+const { nextui } = require("@nextui-org/react");
+
 module.exports = {
   mode: "jit",
   darkMode: "class",
@@ -69,5 +71,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [require("tailwind-scrollbar-hide"), nextui()],
 };

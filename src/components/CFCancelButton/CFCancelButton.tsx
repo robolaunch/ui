@@ -5,16 +5,19 @@ import Button from "../Button/Button";
 interface ICFCancelButton {
   disabled?: boolean;
   onClick?: () => void;
+  onMouseDown?: () => void;
 }
 
 export default function CFCancelButton({
   disabled,
   onClick,
+  onMouseDown,
 }: ICFCancelButton): ReactElement {
   const { setSidebarState } = useMain();
 
   return (
     <Button
+      onMouseDown={onMouseDown}
       onClick={() => {
         if (onClick) {
           onClick();
