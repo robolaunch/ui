@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useState } from "react";
+import { Fragment, ReactElement } from "react";
 import BarcodeManagementWorkspace from "../BarcodeManagementWorkspace/BarcodeManagementWorkspace";
 import useBarcode from "../../hooks/useBarcode";
 import BarcodeItem from "../BarcodeItem/BarcodeItem";
@@ -10,9 +10,8 @@ import BoardWaypointPoint from "../BoardWaypointPoint/BoardWaypointPoint";
 import BoardPointCenter from "../BoardPointCenter/BoardPointCenter";
 
 export default function BarcodeManagementBoard(): ReactElement {
-  const [dragging, setDragging] = useState<boolean>(false);
   const { barcodeItems } = useBarcode();
-  const { waypoints, activeJob, jobs } = useTaskManagement();
+  const { activeJob, jobs } = useTaskManagement();
 
   return (
     <BarcodeManagementWorkspace>
@@ -21,7 +20,6 @@ export default function BarcodeManagementBoard(): ReactElement {
           ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
               return (
                 <BarcodeItem
-                  dragging={dragging}
                   key={barcodeItemIndex}
                   barcodeItem={barcodeItem}
                   barcodeItemIndex={barcodeItemIndex}

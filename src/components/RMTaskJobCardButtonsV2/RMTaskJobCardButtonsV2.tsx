@@ -4,7 +4,7 @@ import RMTaskJobDeleteModal from "../../modals/RMTaskJobDeleteModal";
 import { IJob } from "../../interfaces/task-management.interface";
 import RMTaskJobEditModal from "../../modals/RMTaskJobEditModal";
 import { useAppDispatch } from "../../hooks/redux";
-import { startJob } from "../../toolkit/JobSlice";
+import { startJob, stopJob } from "../../toolkit/JobSlice";
 
 interface IRMTaskJobCardButtonsV2 {
   job: IJob;
@@ -22,9 +22,14 @@ export default function RMTaskJobCardButtonsV2({
     dispatch(startJob(job));
   }
 
+  function handleStopJob() {
+    dispatch(stopJob(job));
+  }
+
   return (
     <div className="flex gap-2">
       <TableActionButton type="start" onClick={handleStartJob} />
+      <TableActionButton type="stop" onClick={handleStopJob} />
       <TableActionButton
         type="edit"
         onClick={() => setIsOpenedEditModal(true)}

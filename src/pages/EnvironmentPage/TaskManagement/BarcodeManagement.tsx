@@ -1,11 +1,10 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import BarcodeManagementSidebar from "../../../components/BarcodeManagementSidebar/BarcodeManagementSidebar";
 import BarcodeManagementWorkspace from "../../../components/BarcodeManagementWorkspace/BarcodeManagementWorkspace";
 import useBarcode from "../../../hooks/useBarcode";
 import BarcodeItem from "../../../components/BarcodeItem/BarcodeItem";
 
 export default function BarcodeManagement(): ReactElement {
-  const [dragging, setDragging] = useState<boolean>(false);
   const { barcodeItems } = useBarcode();
 
   return (
@@ -17,7 +16,6 @@ export default function BarcodeManagement(): ReactElement {
             ? barcodeItems?.map((barcodeItem, barcodeItemIndex: number) => {
                 return (
                   <BarcodeItem
-                    dragging={dragging}
                     key={barcodeItemIndex}
                     barcodeItem={barcodeItem}
                     barcodeItemIndex={barcodeItemIndex}

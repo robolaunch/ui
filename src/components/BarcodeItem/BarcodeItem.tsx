@@ -9,13 +9,11 @@ import useRos from "../../hooks/useRos";
 interface IUIBarcodeItem {
   barcodeItem: IBarcodeItem;
   barcodeItemIndex: number;
-  dragging: boolean;
 }
 
 export default function BarcodeItem({
   barcodeItem,
   barcodeItemIndex,
-  dragging,
 }: IUIBarcodeItem) {
   const { findBarcodeInput } = useBarcode();
 

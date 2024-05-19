@@ -11,7 +11,6 @@ export default function RMTaskJobsMapperV2(): ReactElement {
       {jobs?.map((job, index) => {
         return <RMJobCard job={job} index={index} key={index} />;
       })}
-
       <RMTaskJobAdd />
     </Fragment>
   );
