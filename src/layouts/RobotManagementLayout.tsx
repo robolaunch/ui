@@ -1,12 +1,12 @@
-import { ReactElement, useState } from "react";
-import BarcodeManagementBoard from "../components/BarcodeManagementBoard/BarcodeManagementBoard";
-import LogManagementBoard from "../components/LogManagementBoard/LogManagementBoard";
 import RobotManagementSidebar from "../components/RobotManagementSidebar/RobotManagementSidebar";
-import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher";
 import RMSLogSettingsMapper from "../components/RMSLogSettingsMapper/RMSLogSettingsMapper";
-import RMSLogMapper from "../components/RMSLogMapper/RMSLogMapper";
-import RMBarcodeMapper from "../components/RMBarcodeMapper/RMBarcodeMapper";
+import TaskManagementBoard from "../components/TaskManagementBoard/TaskManagementBoard";
 import RMTaskJobsMapperV2 from "../components/RMTaskJobsMapperV2/RMTaskJobsMapperV2";
+import LogManagementBoard from "../components/LogManagementBoard/LogManagementBoard";
+import LayoutTabSwitcher from "../components/LayoutTabSwitcher/LayoutTabSwitcher";
+import RMBarcodeMapper from "../components/RMBarcodeMapper/RMBarcodeMapper";
+import RMSLogMapper from "../components/RMSLogMapper/RMSLogMapper";
+import { ReactElement, useState } from "react";
 
 export default function RobotManagementLayout(): ReactElement {
   const [currentMainTab, setCurrentMainTab] = useState<
@@ -15,7 +15,6 @@ export default function RobotManagementLayout(): ReactElement {
   const [currentLogTab, setCurrentLogTab] = useState<"Robot Logs" | "Settings">(
     "Robot Logs",
   );
-
   const [currentTaskTab, setCurrentTaskTab] = useState<"Jobs" | "Barcodes">(
     "Jobs",
   );
@@ -46,8 +45,6 @@ export default function RobotManagementLayout(): ReactElement {
                   return currentTaskTab;
                 case "Robot Logs":
                   return currentLogTab;
-                default:
-                  return "";
               }
             })()}
             tabs={(() => {
@@ -56,8 +53,6 @@ export default function RobotManagementLayout(): ReactElement {
                   return ["Jobs", "Barcodes"];
                 case "Robot Logs":
                   return ["Robot Logs", "Settings"];
-                default:
-                  return [];
               }
             })()}
             children={(() => {
@@ -86,7 +81,7 @@ export default function RobotManagementLayout(): ReactElement {
           {(() => {
             switch (currentMainTab) {
               case "Task Management":
-                return <BarcodeManagementBoard />;
+                return <TaskManagementBoard />;
               case "Robot Logs":
                 return <LogManagementBoard />;
             }

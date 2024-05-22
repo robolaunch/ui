@@ -1,8 +1,6 @@
 import { ReactElement } from "react";
-import MissionContext from "../../../contexts/MissionContext";
 import BarcodeContext from "../../../contexts/BarcodeContext";
 import TaskManagementLayout from "../../../layouts/TaskManagementLayout";
-import TaskContext from "../../../contexts/TaskContext";
 import LogContext from "../../../contexts/LogContext";
 import RosContext from "../../../contexts/RosContext";
 import TaskManagementContext from "../../../contexts/TaskManagementContext";
@@ -10,17 +8,13 @@ import TaskManagementContext from "../../../contexts/TaskManagementContext";
 export default function TaskManagement(): ReactElement {
   return (
     <TaskManagementContext>
-      <MissionContext>
-        <BarcodeContext>
-          <RosContext>
-            <LogContext>
-              <TaskContext>
-                <TaskManagementLayout />
-              </TaskContext>
-            </LogContext>
-          </RosContext>
-        </BarcodeContext>
-      </MissionContext>
+      <BarcodeContext>
+        <RosContext>
+          <LogContext>
+            <TaskManagementLayout />
+          </LogContext>
+        </RosContext>
+      </BarcodeContext>
     </TaskManagementContext>
   );
 }

@@ -3,32 +3,10 @@ import MainDashboardTour from "../../../components/MainDashboardTour/MainDashboa
 import DashboardLayout from "../../../layouts/DashboardLayout/DashboardLayout";
 import { MainTableData } from "../../../controllers/MainTableData";
 import GeneralTable from "../../../components/Table/GeneralTable";
-import { Fragment, ReactElement, useEffect } from "react";
-import Follower from "mouse-follower";
-import gsap from "gsap";
-
-Follower.registerGSAP(gsap);
+import { Fragment, ReactElement } from "react";
 
 export default function MainDashboardPage(): ReactElement {
   const { rows, columns, orgs, handleReload } = MainTableData();
-
-  useEffect(() => {
-    const cursor = new Follower({
-      speed: 0.3,
-    });
-
-    cursor.show();
-
-    const el: any = document.querySelector(".my-element");
-
-    el.addEventListener("mouseenter", () => {
-      cursor.setText("Hello!");
-    });
-
-    el.addEventListener("mouseleave", () => {
-      cursor.removeText();
-    });
-  }, []);
 
   return (
     <DashboardLayout

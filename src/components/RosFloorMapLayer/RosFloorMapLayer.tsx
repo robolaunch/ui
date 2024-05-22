@@ -47,6 +47,7 @@ export default function RosFloorMapLayer(): ReactElement {
     leaveDelay: 100,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const stick = () => {
     return (
       <p
