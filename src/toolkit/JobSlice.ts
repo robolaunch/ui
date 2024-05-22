@@ -2,9 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IJob } from "../interfaces/task-management.interface";
 
+const cloudUrl = "http://localhost:8077";
+
 export const getJobs = createAsyncThunk("jobs/getJobs", async () => {
   try {
-    const response: any = await axios.get("http://localhost:8077/job");
+    const response: any = await axios.get(`${cloudUrl}/job`);
 
     const jobs: IJob[] =
       response?.data?.data?.map((job: any) => {
@@ -20,7 +22,7 @@ export const getJobs = createAsyncThunk("jobs/getJobs", async () => {
 
 export const addJob = createAsyncThunk("jobs/addJob", async (job: IJob) => {
   try {
-    const response: any = await axios.post("http://localhost:8077/job", job);
+    const response: any = await axios.post(`${cloudUrl}/job`, job);
 
     return response;
   } catch (error) {}
@@ -31,7 +33,7 @@ export const updateJob = createAsyncThunk(
   async (job: IJob) => {
     try {
       const response: any = await axios.put(
-        `http://localhost:8077/job/${job.job_id}`,
+        `${cloudUrl}/job/${job.job_id}`,
         job,
       );
 
@@ -44,9 +46,7 @@ export const removeJob = createAsyncThunk(
   "jobs/removeJob",
   async (job: IJob) => {
     try {
-      const response: any = await axios.delete(
-        `http://localhost:8077/job/${job.job_id}`,
-      );
+      const response: any = await axios.delete(`${cloudUrl}/job/${job.job_id}`);
 
       return response;
     } catch (error) {}
@@ -55,10 +55,7 @@ export const removeJob = createAsyncThunk(
 
 export const startJob = createAsyncThunk("jobs/startJob", async (job: IJob) => {
   try {
-    const response: any = await axios.post(
-      `http://localhost:8077/job/start`,
-      job,
-    );
+    const response: any = await axios.post(`${cloudUrl}/job/start`, job);
 
     return response;
   } catch (error) {}
@@ -66,10 +63,7 @@ export const startJob = createAsyncThunk("jobs/startJob", async (job: IJob) => {
 
 export const stopJob = createAsyncThunk("jobs/stopJob", async (job: IJob) => {
   try {
-    const response: any = await axios.post(
-      `http://localhost:8077/job/stop`,
-      job,
-    );
+    const response: any = await axios.post(`${cloudUrl}/job/stop`, job);
 
     return response;
   } catch (error) {}
