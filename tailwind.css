@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "cursor";
+
+
+body {
+  font-family: Inter, sans-serif;
+}
 
 .hw-full {
   @apply !h-full !w-full;
