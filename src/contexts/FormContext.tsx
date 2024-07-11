@@ -173,6 +173,8 @@ export default ({ children }: any) => {
           });
 
           await createAppBuildManager();
+          // reset form after creation
+          step1AppFormik.resetForm()
         } else {
           step1AppFormik.setSubmitting(false);
           handleCreateRobotNextStep();
