@@ -1,4 +1,4 @@
-FROM node:alpine3.18 as build-stage
+FROM node:alpine as build-stage
 ARG REACT_APP_BACKEND_URL
 ARG REACT_APP_KEYCLOAK_URL
 ARG REACT_APP_KEYCLOAK_REALM
@@ -10,7 +10,7 @@ ARG REACT_APP_CREATABLE_REGION
 ARG REACT_APP_CREATABLE_INSTANCE
 COPY . /app
 WORKDIR /app
-RUN npm install -s
+RUN npm install -f -s
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 RUN npm run build --verbose
 RUN rm -rf /app/build/static/js/*.map
