@@ -15,7 +15,7 @@ export function environmentGPUCoreUsagebility(
     };
   }[],
 ): number {
-  const supportedGPUModels = ["T4", "A100", "V100", "A6000", "A30", "L40", "L4"];
+  const supportedGPUModels = ["T4", "A100", "V100", "A6000", "A30", "L40", "L4", "A40"];
 
   for (const gpu of gpuList) {
     for (const model of supportedGPUModels) {
