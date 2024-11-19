@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.41.8",
+  "version": "0.41.9",
   "private": true,
   "scripts": {
     "dev": "GENERATE_SOURCEMAP=false react-scripts start",
@@ -50,6 +50,7 @@
     "framer-motion": "^11.2.2",
     "gridstack": "^7.2.3",
     "jwt-decode": "^4.0.0",
+    "keycloak-js": "25.0.2",
     "lodash": "^4.17.21",
     "primeicons": "^6.0.1",
     "primereact": "^9.1.1",

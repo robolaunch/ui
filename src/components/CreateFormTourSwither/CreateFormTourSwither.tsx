@@ -2,7 +2,7 @@ import CreateEnvironmentFormStep1Tour from "../CreateEnvironmentFormStep1Tour/Cr
 import CreateRobotFormStep1Tour from "../CreateRobotFormStep1Tour/CreateRobotFormStep1Tour";
 import CreateFormStep3Tour from "../CreateFormStep3Tour/CreateFormStep3Tour";
 import CreateFormStep2Tour from "../CreateFormStep2Tour/CreateFormStep2Tour";
-import CreateFormStep4Tour from "../CreateFormStep4Tour /CreateFormStep4Tour ";
+import CreateFormStep4Tour from "../CreateFormStep4Tour/CreateFormStep4Tour";
 import { Fragment, ReactElement } from "react";
 
 interface ICreateFormTourSwither {
