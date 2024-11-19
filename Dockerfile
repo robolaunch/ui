@@ -10,7 +10,7 @@ ARG REACT_APP_CREATABLE_REGION
 ARG REACT_APP_CREATABLE_INSTANCE
 COPY . /app
 WORKDIR /app
-RUN npm install -s
+RUN npm install -f -s
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 RUN npm run build --verbose
 RUN rm -rf /app/build/static/js/*.map
