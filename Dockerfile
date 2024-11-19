@@ -1,4 +1,4 @@
-FROM node:20.15.1-alpine3.20 as build-stage
+FROM node:22.3.0-alpine3.19 as build-stage
 ARG REACT_APP_BACKEND_URL
 ARG REACT_APP_KEYCLOAK_URL
 ARG REACT_APP_KEYCLOAK_REALM
