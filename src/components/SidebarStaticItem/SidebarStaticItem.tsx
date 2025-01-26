@@ -17,11 +17,6 @@ export default function SidebarStaticItem({
 
   const navigate = useNavigate();
 
-  // Bu kontrol eklendi
-  if (to === "/user-role-management") {
-    return null;
-  }
-
   return (
     <div
       className={`animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 transition-all duration-500 hover:scale-90 ${
@@ -36,9 +31,7 @@ export default function SidebarStaticItem({
           ? "marketplace-sidebar-menu-item"
           : to === "/billing"
             ? "billing-sidebar-menu-item"
-            : to === "/user-role-management"
-              ? "user-role-management-sidebar-menu-item"
-              : "item"
+            : "item"
       }
     >
       <img
@@ -54,20 +47,16 @@ export default function SidebarStaticItem({
               ? "Marketplace"
               : to === "/billing"
                 ? "Billing"
-                : to === "/user-role-management"
-                  ? "User Role Management"
-                  : "Applications"
+                : "Applications"
           }
           description={
             to === "/marketplace"
               ? "You can access all your marketplace here."
               : to === "/billing"
                 ? "You can access all your bills here"
-                : to === "/user-role-management"
-                  ? "You can access all users here."
-                  : to === "/data-science"
-                    ? "You can access all your data science apps here."
-                    : ""
+                : to === "/data-science"
+                  ? "You can access all your data science apps here."
+                  : ""
           }
         />
       )}
