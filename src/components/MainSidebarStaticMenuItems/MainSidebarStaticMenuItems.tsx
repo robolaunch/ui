@@ -11,7 +11,6 @@ export default function MainSidebarStaticMenuItems(): ReactElement {
       <SidebarStaticItem
         to="/user-role-management"
         imgSrc={`/svg/general/users/users-gray.svg`}
-        className="hidden" 
       />
     </Fragment>
   );
