@@ -17,6 +17,10 @@ export default function SidebarStaticItem({
 
   const navigate = useNavigate();
 
+  // Bu kontrol eklendi
+  if (to === "/user-role-management") {
+    return null;
+
   return (
     <div
       className={`animate__animated animate__fadeInLeft relative cursor-pointer select-none rounded-md p-2 transition-all duration-500 hover:scale-90 ${
