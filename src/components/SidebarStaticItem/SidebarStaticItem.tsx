@@ -20,6 +20,7 @@ export default function SidebarStaticItem({
   // Bu kontrol eklendi
   if (to === "/user-role-management") {
     return null;
+  }
 
   return (
     <div
