@@ -3,7 +3,6 @@ import MainDashboardPage from "../pages/DashboardsPage/MainDashboardPage/MainDas
 import RegionDashboardPage from "../pages/DashboardsPage/RegionDashboard/RegionDashboard";
 import MarketplacePage from "../pages/Marketplace/MarketplacePage/MarketplacePage";
 import OrgDashboard from "../pages/DashboardsPage/OrgDashboard/OrgDashboard";
-#import UserRoleManagementLayout from "../layouts/UserRoleManagementLayout";
 import CIDashboard from "../pages/DashboardsPage/CIDashboard/CIDashboard";
 import NSDashboard from "../pages/DashboardsPage/NSDashboard/NSDashboard";
 import EnvironmentPage from "../pages/EnvironmentPage/EnvironmentPage";
@@ -17,10 +16,6 @@ export default function AppRoutes(): ReactElement {
   return (
     <Routes>
       <Route element={<PrivateProvider />}>
-        #<Route
-        #  path={`/user-role-management`}
-        #  element={<UserRoleManagementLayout />}
-        #/>
         <Route path={`/marketplace`} element={<MarketplacePage />} />
         <Route
           path={`/marketplace/:productName`}
