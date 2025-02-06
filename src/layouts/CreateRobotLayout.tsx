@@ -1,6 +1,6 @@
 import { Fragment, ReactElement } from "react";
 import useMain from "../hooks/useMain";
-import CFStep0 from "../components/CFStep0/CFStep0";
+//import CFStep0 from "../components/CFStep0/CFStep0";
 import CFAppStep1 from "../components/CreateForms/CFAppStep1";
 import CFStep1 from "../components/CreateForms/CFStep1";
 import CFStep2 from "../components/CreateForms/CFStep2";
@@ -15,8 +15,8 @@ export default function CreateRobotLayout(): ReactElement {
       <Fragment>
         {(() => {
           switch (sidebarState?.page) {
-            case "importmanager":
-              return <CFStep0 />;
+//            case "importmanager":
+//              return <CFStep0 />;
             case "robot":
               return applicationMode ? <CFAppStep1 /> : <CFStep1 />;
             case "workspacesmanager":

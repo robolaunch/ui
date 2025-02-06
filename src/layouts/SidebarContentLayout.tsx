@@ -26,7 +26,7 @@ import CFPhysical from "../components/CreateForms/CFPhysical";
 import { ReactElement, useEffect, useState } from "react";
 import CFRegion from "../components/CreateForms/CFRegion";
 import CFFleet from "../components/CreateForms/CFFleet";
-import CFStep0 from "../components/CFStep0/CFStep0";
+//import CFStep0 from "../components/CFStep0/CFStep0";
 import CreateRobotLayout from "./CreateRobotLayout";
 import Button from "../components/Button/Button";
 import { useParams } from "react-router-dom";
@@ -228,7 +228,8 @@ export default function SidebarContentLayout(): ReactElement {
             setSidebarState((prev: any) => ({
               ...prev,
               isCreateMode: true,
-              page: applicationMode ? "importmanager" : "robot",
+              //page: applicationMode ? "importmanager" : "robot",
+              page: "robot",
             }));
           }
       }
@@ -318,8 +319,8 @@ export default function SidebarContentLayout(): ReactElement {
                   }
                   break;
 
-                case "importmanager":
-                  return <CFStep0 />;
+                //case "importmanager":
+                //  return <CFStep0 />;
 
                 case "robot":
                   if (sidebarState?.isCreateMode) {
