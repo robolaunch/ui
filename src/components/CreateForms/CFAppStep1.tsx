@@ -101,11 +101,6 @@ export default function CFAppStep1({
       </Fragment>
 
       <CFSection>
-        <CFSharing formik={formik} />
-        <Seperator />
-      </CFSection>
-
-      <CFSection>
         <CFAdvancedSettings formik={formik} disabled={isImportRobot} />
       </CFSection>
 
